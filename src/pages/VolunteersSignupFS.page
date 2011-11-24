@@ -1,0 +1,52 @@
+<!-- 
+// Written by David Habib, copyright (c) 2010, 2011 Groundwire, 1402 3rd Avenue, Suite 1000, Seattle, WA 98101
+// This program is free software; you can redistribute it and/or modify it under the terms of the 
+// GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
+-->
+ 
+<apex:page controller="VOL_CTRL_VolunteersSignupFS" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false">
+
+    <apex:stylesheet value="{!strURLtoCSSFile}" /> 
+
+  	<apex:form styleClass="cssForm" >		
+		<table columns="2" >
+			<!-- first we specify the fields we require for Contact matching -->
+			<tr>
+	            <td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.FirstName.Label + '*'}" for="txtFirstName" /></td>
+    	        <td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.FirstName}" id="txtFirstName" required="true" styleClass="cssInputFields" /></td>
+        	</tr>
+        	<tr>    
+            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.LastName.Label + '*'}" for="txtLastName" /></td>
+            	<td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.LastName}" id="txtLastName" required="true" styleClass="cssInputFields" /></td>
+            </tr>
+            <tr>            
+            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.Email.Label + '*'}" for="txtEmail" /></td>
+            	<td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.Email}" id="txtEmail" required="true" styleClass="cssInputFields" /></td>
+			</tr>
+			
+			<!--  now add optional fields the user can specify -->
+			<apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersSignupFS}" var="f" >
+				<tr>
+					<td class="cssLabelsColumn" ><apex:outputLabel value="{!f.Label + IF(OR(f.DBRequired, f.Required), '*', '')}" /></td>
+   					<td class="cssInputFieldsColumn" ><apex:inputField value="{!Contact[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}"
+   						styleClass="{!IF(f.Type == 'Long Text Area', 'cssInputFields cssTextArea', 'cssInputFields')}" /></td>
+   				</tr>
+  			</apex:repeat>        
+
+			<!-- add optional File Upload -->
+            <tr>            
+            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!strFileUploadLabel}" for="txtFileUpload" /></td>
+            	<td class="cssInputFieldsColumn" ><apex:inputFile styleClass="cssInputFields" rendered="{!strFileUploadLabel!=null}" value="{!attachment.body}" filename="{!attachment.name}" id="txtFileUpload" /></td>
+			</tr>
+
+            <tr>
+            	<td></td>        
+           		<td class="cssInputFieldsColumn" ><apex:commandButton value="{!$Label.labelSubmitButton}" action="{!Save}" /></td>
+			</tr>	
+			<tr>
+				<td></td>
+				<td class="cssInputFieldsColumn" ><apex:outputLabel value="{!StrSaveResult}" /></td>
+			</tr>	
+		</table>		   	
+	</apex:form>
+</apex:page>

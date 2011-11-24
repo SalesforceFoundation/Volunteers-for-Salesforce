@@ -1,0 +1,212 @@
+<!-- 
+// Written by David Habib, copyright (c) 2010, 2011 Groundwire, 1402 3rd Avenue, Suite 1000, Seattle, WA 98101
+// This program is free software; you can redistribute it and/or modify it under the terms of the 
+// GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
+-->
+ 
+<apex:page controller="VOL_CTRL_VolunteersJobListingFS" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false">
+
+<script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
+<script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.8.7.custom.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.jQueryFiles, 'css/ui-lightness/jquery-ui-1.8.7.custom.css')}"/>
+<apex:stylesheet value="{!strURLtoCSSFile}" /> 
+
+<script type="text/javascript">
+    var j$ = jQuery.noConflict();
+
+    j$(function() {
+        j$("#dlgSignUp").dialog({modal: false, autoOpen: false, draggable: true, width: 400, resizeable: true });
+        j$("#dlgThankYou").dialog({modal: false, autoOpen: false, draggable: true, width: 400, resizeable: true });
+
+		// if there are errors, display the signup dialog.
+		// we detect this by seeing if Salesforce inserted the error style on any item.        
+        if (j$(".error").size() > 0) {
+			j$('#dlgSignUp').dialog('open');
+		} else if ('{!JSENCODE(volunteerHoursIdSignUp)}' != '') { // display thank you!
+			j$('#dlgThankYou').dialog('open');		
+		} 
+	     
+    });
+    
+    function OpenSignUpDlg(JobId, ShiftId, JobName, ShiftName) {
+        j$('input[name$=txtJobId]').val(JobId);                         
+        j$('input[name$=txtShiftId]').val(ShiftId);                         
+        j$('input[name$=txtJobDisplayName]').val(JobName); 
+        j$('input[name$=txtShiftDisplayName]').val(ShiftName); 
+        j$('#dlgSignUp').dialog('open'); 
+        return false;
+    };
+    
+    function MyDateFormat(dt, strDateFormat) {
+    	var strDt = strDateFormat;
+        strDt = strDt.replace('MM', ((dt.getMonth() < 9) ? ('0' + (dt.getMonth() + 1)) : (dt.getMonth() + 1)));
+        strDt = strDt.replace('M', (dt.getMonth() + 1));
+        strDt = strDt.replace('dd', ((dt.getDate() < 10) ? ('0' + dt.getDate()) : dt.getDate()));
+        strDt = strDt.replace('d', (dt.getDate()));
+        strDt = strDt.replace('yyyy', (dt.getFullYear()));
+        strDt = strDt.replace('yy', (dt.getFullYear().toString().substring(2,4)));
+    	return strDt;
+    }
+    
+    function MyTimeFormat(dt, strTimeFormat) {
+    	var strTm = strTimeFormat;
+		var is12hrFormat = strTimeFormat.indexOf('h') >= 0;
+		var includeAMPM = strTimeFormat.indexOf('tt') >= 0;
+        var intHours = dt.getHours();
+        var intMinutes = dt.getMinutes();
+        var strAM = (intHours >= 12) ? 'pm' : 'am';
+        if (!includeAMPM) strAM = '';
+        if (intHours > 12 && is12hrFormat) intHours = intHours - 12;    	
+        strTm = strTm.replace('hh', intHours < 10 ? ('0' + intHours) : intHours);
+        strTm = strTm.replace('h', intHours);
+        strTm = strTm.replace('HH', intHours < 10 ? ('0' + intHours) : intHours);
+        strTm = strTm.replace('H', intHours);
+        strTm = strTm.replace('mm', (intMinutes == 0) ? '00' : (intMinutes < 10 ? ('0' + intMinutes) : intMinutes));
+        strTm = strTm.replace('m', (intMinutes == 0) ? '00' : intMinutes);
+        strTm = strTm.replace('tt', strAM);    	
+    	return strTm;	
+    }
+    
+    function JobShiftDateTimeString(dt, duration) {
+        var dtStart = new Date(dt);        
+
+        // strDateFormat is a page parameter (set by the controller) that allows some simple date formatting.
+		var strStartDate = MyDateFormat(dtStart, '{!JSENCODE(strDateFormat)}');
+		        
+		// strTimeFormat is a page parameter (set by the controller) that allows some simple time formatting.
+        var strStartTime = MyTimeFormat(dtStart, '{!JSENCODE(strTimeFormat)}');
+        
+        var dtEnd = new Date(dt);
+        dtEnd.setMinutes(dtEnd.getMinutes() + (duration * 60));
+        var strEndTime = MyTimeFormat(dtEnd, '{!JSENCODE(strTimeFormat)}');
+        return strStartDate + ' ' + strStartTime + ' - ' + strEndTime;
+    }      
+      
+</script>
+    <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
+    	<apex:outputLink value="/GW_Volunteers__JobCalendar?{!strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+    </apex:outputPanel>
+
+    <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
+        <apex:outputPanel rendered="{!ShowJobName}" ><p><apex:outputText value="{!job.Name}" styleClass="cssJobName" /></p></apex:outputPanel>
+        <apex:outputPanel rendered="{!ShowDescription}" ><p><apex:outputField value="{!job.Description__c}" /></p></apex:outputPanel>
+        <apex:outputPanel rendered="{!ShowSkills && job.Skills_Needed__c <> null}" >
+            <p class="cssJobSkills" >{!$ObjectType.Contact.Fields.Volunteer_Skills__c.Label}:&nbsp;&nbsp;
+            <apex:outputField value="{!job.Skills_Needed__c}" />
+            </p>  
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!ShowLocationAddress && job.Location_Street__c <> null}" >
+            <p class="cssJobLocationAddress">
+            <apex:outputField value="{!job.Location_Street__c}" /><br/>
+            <apex:outputField value="{!job.Location_City__c}" />,&nbsp;
+            <apex:outputField value="{!job.Location__c}" />&nbsp;&nbsp;
+            <apex:outputField value="{!job.Location_Zip_Postal_Code__c}" />
+            </p>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!ShowLocationInfo && job.Location_Information__c <> null}">
+            <p>
+            <apex:outputField value="{!job.Location_Information__c}" />
+            </p>
+        </apex:outputPanel>
+        <apex:outputPanel id="panelJobOnly" rendered="{!job.Number_of_Shifts__c == 0 || ShowShifts == false}" >
+            <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup" onclick="OpenSignUpDlg('{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
+        </apex:outputPanel>         
+        <apex:dataTable value="{!job.Volunteer_Job_Slots__r}" var="shift" id="rptShifts" columnClasses="cssJobShiftSignup" rendered="{!ShowShifts}" >
+            <apex:column style="text-align:center;" >
+                <apex:outputPanel rendered="{!shift.Number_of_Volunteers_Still_Needed__c != 0}" >
+                    <a href="SignUp" onclick="
+                    	var x = JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}');            
+                        OpenSignUpDlg('{!job.Id}', '{!shift.Id}', '{!JSENCODE(job.Name)}', x); 
+                        return false;"
+                        >{!$Label.labelLinkSignUp}</a>
+                </apex:outputPanel>
+                <apex:outputText value="{!$Label.labelLinkFull}" style="font-style:italic;" rendered="{!BLANKVALUE(shift.Number_of_Volunteers_Still_Needed__c, -1) == 0}" />
+                &nbsp;&nbsp;&nbsp;
+            </apex:column>
+            <apex:column ><div id="txtShiftStartDateTime"><script>document.write(JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}'));</script>&nbsp;&nbsp;&nbsp;</div></apex:column>
+            <apex:column ><apex:outputField value="{!shift.Description__c}" /></apex:column>
+        </apex:dataTable>
+        <br/>
+        <br/> 
+        <apex:outputPanel rendered="{!NOT(fCalendar)}" ><hr/></apex:outputPanel>
+    </apex:repeat>
+    <apex:outputText value="{!$Label.labelMessageNoJobs}" rendered="{!NOT(VolunteersHasJobs)}" />
+    <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
+    	<apex:outputLink value="/GW_Volunteers__JobCalendar?{!strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+    </apex:outputPanel>
+
+<!-- this div contains the signup dialog we'll use jQuery to display -->
+<div id="dlgSignUp" title="{!$Label.labelTitleJobSignup}">
+    <apex:form styleClass="cssForm" id="frmSignUp" > 
+        <apex:outputPanel id="panelSignUp" >        
+			<table columns="2" >
+				<!-- first we specify the fields we require for Contact matching -->
+				<tr>
+		            <td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.FirstName.Label + '*'}" for="txtFirstName" /></td>
+	    	        <td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.FirstName}" id="txtFirstName" required="true" styleClass="cssInputFields" /></td>
+	        	</tr>
+	        	<tr>    
+	            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.LastName.Label + '*'}" for="txtLastName" /></td>
+	            	<td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.LastName}" id="txtLastName" required="true" styleClass="cssInputFields" /></td>
+	            </tr>
+	            <tr>            
+	            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.Email.Label + '*'}" for="txtEmail" /></td>
+	            	<td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.Email}" id="txtEmail" required="true" styleClass="cssInputFields" /></td>
+				</tr>
+				
+				<!--  now add optional fields the user can specify for Contacts -->
+				<apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersJobListingFS}" var="f" >
+					<tr>
+						<td class="cssLabelsColumn" ><apex:outputLabel value="{!f.Label + IF(OR(f.DBRequired, f.Required), '*', '')}" /></td>
+	   					<td class="cssInputFieldsColumn" ><apex:inputField value="{!Contact[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}"
+	   						styleClass="{!IF(f.Type == 'Long Text Area', 'cssInputFields cssTextArea', 'cssInputFields')}" /></td>
+	   				</tr>
+	  			</apex:repeat>        
+        
+				<!--  now add optional fields the user can specify for VolunteerHours -->
+				<apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS}" var="f" >
+					<tr>
+						<td class="cssLabelsColumn" ><apex:outputLabel value="{!f.Label + IF(OR(f.DBRequired, f.Required), '*', '')}" /></td>
+	   					<td class="cssInputFieldsColumn" ><apex:inputField value="{!vhours[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}"
+	   						styleClass="{!IF(f.Type == 'Long Text Area', 'cssInputFields cssTextArea', 'cssInputFields')}" /></td>
+	   				</tr>
+	  			</apex:repeat>
+	  			
+      			<!-- add optional File Upload -->
+	            <tr>            
+	            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!strFileUploadLabel}" for="txtFileUpload" /></td>
+	            	<td class="cssInputFieldsColumn" ><apex:inputFile styleClass="cssInputFields" rendered="{!strFileUploadLabel!=null}" value="{!attachment.body}" filename="{!attachment.name}" id="txtFileUpload" /></td>
+				</tr>	  			        
+			</table>                             
+            <p>         
+            <apex:inputText value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent;" size="60" /><br/>
+            <apex:inputText value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent;" size="60" />
+            </p>
+            
+            <!-- before calling the action method, clear the return value fields so we can detect validation failures. -->                          
+            <apex:commandButton value="{!$Label.labelButtonSignUp}" onclick="
+                    j$('input[name$=txtContactIdSignUp]').val(''); 
+                    j$('input[name$=txtVHIdSignUp]').val('');
+                    VolunteerShiftSignUp();
+                    return false;" 
+                immediate="false" status="statusSignUp" />              
+            <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close'); return false;" />            
+            <apex:actionStatus startText="{! '  ' + $Label.labelMessageSaving}" stopText="{!strSaveResult}" id="statusSignUp" startStyle="color:green; font-style:italic" stopStyle="color:black;" />                             
+        </apex:outputPanel>
+                
+        <apex:actionFunction name="VolunteerShiftSignUp" action="{!VolunteerShiftSignUp}" status="statusSignUp" />         
+        <apex:actionFunction name="ClearVolunteerHoursIdSignUp" action="{!ClearVolunteerHoursIdSignUp}" />      
+        <apex:inputHidden value="{!jobIdSignUp}" id="txtJobId" />               
+        <apex:inputHidden value="{!shiftIdSignUp}" id="txtShiftId" /><br/>  
+        <apex:inputHidden value="{!contactIdSignUp}" id="txtContactIdSignUp" />
+        <apex:inputHidden value="{!volunteerHoursIdSignUp}" id="txtVHIdSignUp" />
+    </apex:form>  
+</div> <!-- end of the signup dialog -->
+
+<!-- this div contains the thank you dialog we'll use jQuery to display -->
+<div id="dlgThankYou" title="{!$Label.labelTitleJobSignup}">
+            <p class="cssThankYou">{!$Label.labelVolunteerSignupThankYou}</p>
+            <input type="button" value="{!$Label.labelButtonClose}" onclick="j$('#dlgThankYou').dialog('close'); return false;"  />
+</div> <!-- end of the thank you dialog -->
+
+</apex:page>

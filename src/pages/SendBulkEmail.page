@@ -1,0 +1,79 @@
+<!-- 
+// Written by David Habib, copyright (c) 2011 Groundwire, 1402 3rd Avenue, Suite 1000, Seattle, WA 98101
+// This program is free software; you can redistribute it and/or modify it under the terms of the 
+// GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
+-->
+
+<apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" > 
+    <apex:sectionHeader title="{!$Label.labelMassEmailVolunteersTitle}" />      
+	<apex:form >  
+        <apex:pageBlock title="{!strJobName}" rendered="true"  mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!SendMail}" value="{!$Label.labelButtonSend}" immediate="false" />
+                <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonCancel}" immediate="true" />
+            </apex:pageBlockButtons>                                        
+
+            <apex:pageMessages showDetail="false" />
+		
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.labelFrom}" />
+	                <apex:selectList value="{!fromEmailId}" size="1" >
+	                    <apex:selectOptions value="{!listSOFromEmails}" /> 
+	                </apex:selectList>  
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" />
+					<apex:inputField value="{!hourStatus.Status__c}" >
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="statusLoadContacts"/>
+					</apex:inputField>		
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.labelNumberOfContacts}"  />
+					<apex:pageBlockSectionItem >
+    	               	<apex:actionStatus layout="inline" startText="{!$Label.labelMessageLoading}" stopText="" id="statusLoadContacts" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
+    	               	<apex:outputLabel id="lblNumberOfContacts" value="{!numberOfContacts}" style="font-weight:bold;" />                    					
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersLogActivity}" />
+					<apex:inputCheckbox value="{!fLogActivity}" />	
+				</apex:pageBlockSectionItem>
+
+            	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="{!$ObjectType.EmailTemplate.Label}" />
+					<apex:pageBlockSectionItem >
+						<apex:pageBlockSectionItem >
+			                <apex:selectList value="{!templateId}" size="1" >
+			                    <apex:actionSupport immediate="false" event="onchange" status="statusLoadTemplate" rerender="txtSubject,txtMessage,panelEditTemplate" action="{!LoadEmailTemplate}" />
+			                    <apex:selectOptions value="{!listSOTemplates}" /> 
+			                </apex:selectList>
+							<apex:pageBlockSectionItem >
+				                <apex:commandLink action="{!OpenEmailTemplateFolder}" immediate="true" target="_blank" value="{!$Label.labelMassEmailViewTemplates}" />  
+				                <apex:outputPanel id="panelEditTemplate">	
+				                	&nbsp;&nbsp;		                
+				                	<apex:commandLink action="{!EditEmailTemplate}" immediate="true" target="_blank" value="{!$Label.labelMassEmailEditTemplate}" rendered="{!templateId != null}" />
+				                </apex:outputPanel>  
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSectionItem>
+    	               	<apex:actionStatus layout="inline" startText="{!'    ' + $Label.labelMessageLoading}" stopText="" id="statusLoadTemplate" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
+					</apex:pageBlockSectionItem>
+        		</apex:pageBlockSectionItem> 
+
+				<apex:pageBlockSectionItem > 
+					<apex:outputLabel value="{!$Label.labelSubject}" />
+					<apex:outputText id="txtSubject" value="{!strSubject}"  />
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem > 
+					<apex:outputLabel value="{!$Label.labelMessageBody}" />
+					<apex:outputText id="txtMessage"  value="{!strMessage}" escape="false" />		
+				</apex:pageBlockSectionItem>
+				
+		</apex:pageBlockSection>			
+		</apex:pageBlock>
+	</apex:form>	
+</apex:page>
