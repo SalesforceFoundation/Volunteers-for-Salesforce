@@ -1,6 +1,11 @@
-// Written by Dave Habib, copyright (c) 2011 Groundwire
-// This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
-
+/*******************************************************************************************************
+* @author David Habib
+* @date 7/1/2011
+* @description Page Controller class for the Open Report visualforce page. 
+*
+* Written by Dave Habib, copyright (c) 2011 Groundwire
+* This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
+********************************************************************************************************/
 public with sharing class VOL_CTRL_OpenReport {
 	
 	//---------------------------------------------------------------------------------------------
