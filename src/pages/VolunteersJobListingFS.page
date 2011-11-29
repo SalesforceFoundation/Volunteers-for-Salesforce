@@ -56,7 +56,8 @@
         var intMinutes = dt.getMinutes();
         var strAM = (intHours >= 12) ? 'pm' : 'am';
         if (!includeAMPM) strAM = '';
-        if (intHours > 12 && is12hrFormat) intHours = intHours - 12;    	
+        if (intHours > 12 && is12hrFormat) intHours = intHours - 12;   
+        if (is12hrFormat && intHours == 0) intHours = 12; 	
         strTm = strTm.replace('hh', intHours < 10 ? ('0' + intHours) : intHours);
         strTm = strTm.replace('h', intHours);
         strTm = strTm.replace('HH', intHours < 10 ? ('0' + intHours) : intHours);

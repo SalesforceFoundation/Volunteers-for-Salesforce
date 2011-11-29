@@ -34,6 +34,7 @@
         var intMinutes = dtStart.getMinutes();
         var strAM = (intHours >= 12) ? 'pm' : 'am';
         if (intHours > 12) intHours = intHours - 12;
+        if (intHours == 0) intHours = 12;
         var strMinutes = (intMinutes > 0) ? ':' + intMinutes : '';
         var strStartTime = intHours + strMinutes + strAM;
         
@@ -43,6 +44,7 @@
         var intMinutesEnd = dtEnd.getMinutes();
         var strAMEnd = (intHoursEnd >= 12) ? 'pm' : 'am';
         if (intHoursEnd > 12) intHoursEnd = intHoursEnd - 12;
+        if (intHoursEnd == 0) intHoursEnd = 12;
         var strMinutesEnd = (intMinutesEnd > 0) ? ':' + intMinutesEnd : '';
         var strEndTime = intHoursEnd + strMinutesEnd + strAMEnd;
         

@@ -4,7 +4,7 @@
 // GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
 -->
  
-<apex:page controller="VOL_CTRL_JobCalendar" language="{!strLanguage}" showheader="{!AND(NOT(fPrint),NOT(fWeb))}" 
+<apex:page controller="VOL_CTRL_JobCalendar" language="{!HTMLENCODE(strLanguage)}" showheader="{!AND(NOT(fPrint),NOT(fWeb))}" 
 	sidebar="{!AND(NOT(fPrint),NOT(fWeb))}" standardStylesheets="{!NOT(fWeb)}" tabStyle="Shift_Calendar__tab" > 
  
 <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
@@ -148,11 +148,11 @@
     	});    // end of initializing fullcalendar
 
 		// set initial Calendar View based on parameters to page
-		if ('{!strCalendarView}' != '') {
-			j$('#calendar').fullCalendar('changeView', '{!strCalendarView}');
+		if ('{!JSENCODE(strCalendarView)}' != '') {
+			j$('#calendar').fullCalendar('changeView', '{!JSENCODE(strCalendarView)}');
 			
 			// make taller for full agenda views
-			if ('{!strCalendarView}' != 'month') {
+			if ('{!JSENCODE(strCalendarView)}' != 'month') {
 				j$('#calendar').fullCalendar('option', 'height', 1200);
 			}
 		}
@@ -203,12 +203,12 @@
 			'&initialDate=' + strApexDateLocale(j$('#calendar').fullCalendar('getDate'), true) +
 			'&CalendarView=' + j$('#calendar').fullCalendar('getView').name
 			);" 
-			class="configLinks" title="Printable View (New Window)">Printable View</a>
+			class="configLinks" title="Printable View (New Window)">{!$Label.labelCalendarPrintableView}</a>
 	</apex:outputPanel>
 	<apex:outputPanel layout="block" style="float:right" rendered="{!AND(fPrint,NOT(fWeb))}">
 		<ul>
-			<li><a href="javascript:window.close();">Close Window</a></li>
-			<li><a href="javascript:window.print();">Print This Page</a></li>
+			<li><a href="javascript:window.close();">{!$Label.labelCalendarCloseWindow}</a></li>
+			<li><a href="javascript:window.print();">{!$Label.labelCalendarPrintThisPage}</a></li>
 		</ul>
 	</apex:outputPanel>
 		

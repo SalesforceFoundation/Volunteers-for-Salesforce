@@ -55,10 +55,6 @@ global with sharing class VOL_CTRL_JobCalendar {
         	}
         }
 
-    	strLanguage = 'en-us'; 
-        p = params.get('Language');
-        if (p != null && p != '') strLanguage = p;
-
     	fPrint = false; 
         p = params.get('Print');
         if (p == '1') fPrint = true;
@@ -67,7 +63,11 @@ global with sharing class VOL_CTRL_JobCalendar {
     	fWeb = false; 
         fWeb = (Site.getName() != null);
 
-		p = params.get('initialDate');
+    	strLanguage = fWeb ? 'en-us' : null;  // don't set language if viewing in SF.  Let SF decide. 
+        p = params.get('Language');
+        if (p != null && p != '') strLanguage = p;
+        
+        p = params.get('initialDate');
 		if (p != null && p != '') initialDate = DateTime.valueOf(p);
 		
 		strCalendarView = 'month';
@@ -246,7 +246,7 @@ global with sharing class VOL_CTRL_JobCalendar {
         //instantiate the controller 
         VOL_CTRL_JobCalendar ctrl = new VOL_CTRL_JobCalendar();
 		system.assert(ctrl.strURLtoCSSFile == null || ctrl.strURLtoCSSFile != null);
-		system.assertEquals('en-us', ctrl.strLanguage);
+		system.assertEquals(null, ctrl.strLanguage);
 		system.assertEquals(cmp.Id, ctrl.campaignId);
 		system.assertEquals(job.Id, ctrl.volunteerJobId);
 		system.assert(ctrl.listSOCampaigns.size() >= 2);
