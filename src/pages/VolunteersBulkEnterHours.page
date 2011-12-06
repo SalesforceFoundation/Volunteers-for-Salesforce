@@ -1,0 +1,91 @@
+<!-- 
+// Written by David Habib, copyright (c) 2010, 2011 Groundwire, 1402 3rd Avenue, Suite 1000, Seattle, WA 98101
+// This program is free software; you can redistribute it and/or modify it under the terms of the 
+// GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
+-->
+ 
+<apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" >
+
+    <apex:sectionHeader title="{!$Label.labelMassEditTitle}" />      
+    <apex:form > 
+        
+        <apex:pageBlock title="{!$ObjectType.Volunteer_Hours__c.Label}" rendered="true"  mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" status="retrieveSaveStatus" id="btnSave" immediate="false" />
+                <apex:commandButton action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" status="retrieveSaveStatus" id="btnSaveClose" immediate="false" />
+                <apex:commandButton action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}"  immediate="true"/> 
+            </apex:pageBlockButtons>                                        
+            <apex:actionStatus layout="block" startText="{!$Label.labelMessageSaving}" stopText="" id="retrieveSaveStatus" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
+            <apex:pageMessage summary="{!strSaveResults}" severity="info" strength="2" rendered="{!strSaveResults!=null}" />  
+            <apex:pageMessages showDetail="false" />
+            <br/> 
+            <apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" /><br/>             
+            <br/>
+
+            <apex:pageBlockSection columns="1" >
+            	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="{!$ObjectType.Campaign.Label}" />
+	                <apex:selectList value="{!campaignId}" size="1" >
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeCampaign}" />
+	                    <apex:selectOptions value="{!listSOCampaigns}" /> 
+	                </apex:selectList>  
+        		</apex:pageBlockSectionItem>
+        		
+            	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" />
+	                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+	                    <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
+	                </apex:selectList>
+        		</apex:pageBlockSectionItem>
+    
+            	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="{!$ObjectType.Volunteer_Shift__c.Label + '  ' + $Label.labelMassEditOptional }" />
+	                <apex:selectList value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts">
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" />
+	                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
+	                </apex:selectList>
+        		</apex:pageBlockSectionItem>
+    
+            	<apex:pageBlockSectionItem >
+		            <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" /><br/>
+        		</apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+    
+            <apex:dataTable value="{!listVolunteerHours}" var="vh" rules="rows"  cellpadding="3" id="tblVolunteerHours" style="border-color:gray" >                 
+                <apex:column >
+                    <apex:facet name="header">Contact *</apex:facet>
+                    <apex:inputField value="{!vh.Contact__c}" style="width: 100px;" required="false" >
+                        <apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
+                            <apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
+                        </apex:actionSupport>
+                    </apex:inputField>
+                </apex:column> 
+                
+                <apex:column rendered="{!volunteerShiftId == null}" >
+					<apex:facet name="header">Volunteer Shift</apex:facet>
+	                <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts">
+	                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
+						<apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
+							<apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
+						</apex:actionSupport>
+	                </apex:selectList>				
+				</apex:column>	
+				
+				<!--  now add optional fields the user can specify -->
+				<apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours}" var="f" >
+	                <apex:column >
+	                    <apex:facet name="header">{!f.Label + IF(f.DBRequired, ' *', '')}</apex:facet>
+	                    <apex:inputField value="{!vh[f]}" style="{!IF(f.Type=='Number','width:50px;','') + IF(f.Type=='Long Text Area','Height:1.5em;','')}" required="false" > <!-- force not required, or you can't submit empty rows! -->
+	                        <apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
+	                            <apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
+	                        </apex:actionSupport>
+	                    </apex:inputField>
+	                </apex:column>
+	  			</apex:repeat>        
+				
+            </apex:dataTable>
+            &nbsp;&nbsp;&nbsp;&nbsp;<apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" />
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>
