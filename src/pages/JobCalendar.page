@@ -58,6 +58,7 @@
     	    // special case that '*' means all campaigns and/or all jobs.
     	    events: function(start, end, callback) {
     	    	var campaignId;
+    	    	// handle web page scenario where there is no campaign dropdown.
     	    	if (j$('select[name$=ddlCampaignId]').length == 0) {
     	    		campaignId = '{!campaignId}';
     	    	} else {
@@ -65,6 +66,7 @@
     	    	}
     	    	if (campaignId == null || campaignId == '') campaignId = '*';
     	    	var jobId;
+    	    	// handle web page scenario where there is no job dropdown.
     	    	if ( j$('select[name$=ddlJobId]').length == 0) {
     	    		jobId = '{!volunteerJobId}';
     	    	} else {
