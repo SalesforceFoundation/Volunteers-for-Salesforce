@@ -221,7 +221,8 @@ global with sharing class VOL_CTRL_JobCalendar {
     public static testmethod void TestJobCalendar() {
     	
 		// create test data
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Job Calendar Test Campaign');
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+        	name='Job Calendar Test Campaign', IsActive=true);
         insert cmp;
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
         insert job;

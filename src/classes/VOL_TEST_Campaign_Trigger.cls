@@ -8,7 +8,7 @@ private class VOL_TEST_Campaign_Trigger {
     static testMethod void myUnitTest() {
 
         // test creating a single campaign.
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign');
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign', IsActive=true);
         insert cmp;
         list<CampaignMemberStatus> listCMS = [Select Id From CampaignMemberStatus WHERE CampaignId = :cmp.Id];
         System.Assert(listCMS.Size() == 4);
@@ -16,7 +16,7 @@ private class VOL_TEST_Campaign_Trigger {
         // test creating multiple campaigns.
         list<Campaign> listCmp = new list<Campaign>();
         for (integer i = 0; i < 10; i++) {
-            Campaign cmpI = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign' + i);
+            Campaign cmpI = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign' + i, IsActive=true);
             listCmp.add(cmpI);
         }
         insert listCmp;
