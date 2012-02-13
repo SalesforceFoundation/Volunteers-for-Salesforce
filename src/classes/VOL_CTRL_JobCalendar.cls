@@ -236,11 +236,11 @@ global with sharing class VOL_CTRL_JobCalendar {
         Test.setCurrentPageReference(p);
     	
     	// start testing!
-		list<Volunteer_Shift__c> listS = getListShifts('*', '*', '2010-01-01 1:1:1', '2012-01-01 1:1:1');
+		list<Volunteer_Shift__c> listS = getListShifts('*', '*', '2010-01-01 1:1:1', '2050-01-01 1:1:1');
 		system.assert(listS.size() > 0); 
-		listS = getListShifts(cmp.Id, '*', '2010-01-01 1:1:1', '2012-01-01 1:1:1');
+		listS = getListShifts(cmp.Id, '*', '2010-01-01 1:1:1', '2050-01-01 1:1:1');
 		system.assert(listS.size() == 1); 
-		listS = getListShifts(cmp.Id, job.Id, '2010-01-01 1:1:1', '2012-01-01 1:1:1');
+		listS = getListShifts(cmp.Id, job.Id, '2010-01-01 1:1:1', '2050-01-01 1:1:1');
 		system.assert(listS.size() == 1); 
 		
         //instantiate the controller 
