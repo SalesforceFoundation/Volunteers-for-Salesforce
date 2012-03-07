@@ -182,6 +182,18 @@ global with sharing class VOL_CTRL_JobCalendar {
 	********************************************************************************************************/
     @RemoteAction global static list<Volunteer_Shift__c> getListShifts(string strCampaignId, string strJobId, 
     	string strStartDateTime, string strEndDateTime) {
+    	return getListShiftsWeb(strCampaignId, strJobId, strStartDateTime, strEndDateTime, false);		
+    }
+    
+	/*******************************************************************************************************
+	* @description Javascript Remoting method to return a list of Shifts, optionally filtered by strFilter.
+	* &param strStartDateTime filter for Logs >= startDate
+	* &param strEndDateTime filter for Logs <= endDate
+	* &param fWeb whether to filter out job's who are not display on web.
+	* @return list<Volunteer_Shift__c>, which will be turned into a Javascript collection.
+	********************************************************************************************************/
+    @RemoteAction global static list<Volunteer_Shift__c> getListShiftsWeb(string strCampaignId, string strJobId, 
+    	string strStartDateTime, string strEndDateTime, boolean fWeb) {
     	DateTime dtStart = datetime.valueOf(strStartDateTime);
     	DateTime dtEnd = datetime.valueOf(strEndDateTime);
     	boolean fAllCampaign = (strCampaignId == '*');
@@ -195,6 +207,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 				from Volunteer_Shift__c
 				where Start_Date_Time__c >= :dtStart and Start_Date_Time__c <= :dtEnd
 					and Volunteer_Job__c = :strJobId
+					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	} else if (fAllCampaign && fAllJob) {
 			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, 
@@ -203,6 +216,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 				from Volunteer_Shift__c
 				where Start_Date_Time__c >= :dtStart and Start_Date_Time__c <= :dtEnd
 					and Volunteer_Job__r.Campaign__r.IsActive = true
+					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	} else if (!fAllCampaign && fAllJob) {
 			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, 
@@ -211,6 +225,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 				from Volunteer_Shift__c
 				where Start_Date_Time__c >= :dtStart and Start_Date_Time__c <= :dtEnd
 					and Volunteer_Job__r.Campaign__c = :strCampaignId
+					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	}
     			
@@ -231,7 +246,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     	
         //point to our VF page
         PageReference p = new PageReference('Page.JobCalendar');
-        p.getParameters().put('campaignId', cmp.id);
+        p.getParameters().put('campaignId', cmp.id); 
         p.getParameters().put('volunteerJobId', job.id);
         p.getParameters().put('volunteerShiftId', shift.id);
         Test.setCurrentPageReference(p);
