@@ -167,7 +167,11 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 			return Cancel(); // this will take us back to our calling page.
 						
 		} catch (exception ex) {
-            ApexPages.addMessages(ex);            
+            ApexPages.addMessages(ex);   
+            if (fLogActivity) {
+	            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+	            	'Logging of Activities must be enabled for Volunteer Jobs and Volunteer Shifts.  Please see the Volunteers for Salesforce Installation and Configuration Guide.'));                    	
+            }
             return null;			
 		}
 	}
