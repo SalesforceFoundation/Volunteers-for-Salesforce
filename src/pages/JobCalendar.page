@@ -57,13 +57,25 @@
     	    // this calls our RemoteAction to query Salesforce.  
     	    // special case that '*' means all campaigns and/or all jobs.
     	    events: function(start, end, callback) {
-    	    	var campaignId = j$('select[name$=ddlCampaignId]').val();
+    	    	var campaignId;
+    	    	// handle web page scenario where there is no campaign dropdown.
+    	    	if (j$('select[name$=ddlCampaignId]').length == 0) {
+    	    		campaignId = '{!campaignId}';
+    	    	} else {
+    	    		campaignId = j$('select[name$=ddlCampaignId]').val();
+    	    	}
     	    	if (campaignId == null || campaignId == '') campaignId = '*';
-    	    	var jobId = j$('select[name$=ddlJobId]').val();
+    	    	var jobId;
+    	    	// handle web page scenario where there is no job dropdown.
+    	    	if ( j$('select[name$=ddlJobId]').length == 0) {
+    	    		jobId = '{!volunteerJobId}';
+    	    	} else {
+    	    		jobId = j$('select[name$=ddlJobId]').val();
+    	    	}
     	    	if (jobId == null || jobId == '') jobId = '*';
 
-				GW_Volunteers.VOL_CTRL_JobCalendar.getListShifts(
-					campaignId, jobId, strApexDateLocale(start, false), strApexDateLocale(end, false), function(result, event) {
+				GW_Volunteers.VOL_CTRL_JobCalendar.getListShiftsWeb(
+					campaignId, jobId, strApexDateLocale(start, false), strApexDateLocale(end, false), {!fWeb}, function(result, event) {
 	        		if (event.type == 'exception') {
 	        			alert(event.message);
 	        		} else {
