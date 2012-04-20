@@ -84,7 +84,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 		}		
     }
     
-    public string strURLtoCSSFile { 
+    global string strURLtoCSSFile { 
         get { 
         	// only specify the css file if in the web page scenario.
             if (strURLtoCSSFile == null && fWeb) {
@@ -104,18 +104,18 @@ global with sharing class VOL_CTRL_JobCalendar {
 
     private VOL_SharedCode volSharedCode;
     
-    // public properties
-    public string strLanguage { get; set; }
-    public boolean fPrint { get; set; }
-    public boolean fWeb { get; set; }
-    public string strCalendarView { get; set; }
-    public string strParams { get; set; }
+    // global properties
+    global string strLanguage { get; set; }
+    global boolean fPrint { get; set; }
+    global boolean fWeb { get; set; }
+    global string strCalendarView { get; set; }
+    global string strParams { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
-    public ID campaignId { get; set; }
+    global ID campaignId { get; set; }
 
     // the list of active Volunteer Campaigns 
-    public list<SelectOption> listSOCampaigns {
+    global list<SelectOption> listSOCampaigns {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', system.label.labelChoiceAllActiveCampaigns));
@@ -130,7 +130,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     }
     
     // the user has changed the Campaign dropdown
-    public virtual PageReference ChangeCampaign() {
+    global virtual PageReference ChangeCampaign() {
         // clear out all state that is specific to the campaign
         listSOVolunteerJobs = null;
         volunteerJobId = null;
@@ -139,13 +139,13 @@ global with sharing class VOL_CTRL_JobCalendar {
     }
 
     // holds the currently select Job in the Job dropdown
-    public ID volunteerJobId { get; set; }
+    global ID volunteerJobId { get; set; }
     
     // hold the initial date for the calendar
-    public DateTime initialDate { get; set; }
+    global DateTime initialDate { get; set; }
     
     // the list of Volunteer Jobs for the specified Campaign
-    public list<SelectOption> listSOVolunteerJobs {
+    global list<SelectOption> listSOVolunteerJobs {
     	get {
 	        list<SelectOption> listSO = new list<SelectOption>();
 	        listSO.add(new SelectOption('', system.label.labelChoiceAllJobs));
@@ -167,7 +167,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     }    
 
     // the user has changed the Volunteer Job dropdown
-    public virtual PageReference ChangeVolunteerJob() {
+    global virtual PageReference ChangeVolunteerJob() {
         // clear out all state that is specific to the Job
 
         return null;
@@ -233,7 +233,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     } 		
     
     //==================== TEST METHOD(s) ======================================
-    public static testmethod void TestJobCalendar() {
+    global static testmethod void TestJobCalendar() {
     	
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
