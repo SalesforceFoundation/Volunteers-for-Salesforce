@@ -105,7 +105,7 @@
 						        var strUrl;
 						        
 						        if ({!fWeb}) {
-						        	strUrl = '/GW_Volunteers__VolunteersJobListingFS?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
+						        	strUrl = '{!$Site.CurrentSiteUrl}GW_Volunteers__VolunteersJobListingFS?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
 						        		'{!IF(strParams != null, '&' + strParams, '')}';
 						        } else if ({!NOT(fPrint)}) {
 						        	strUrl = '/' + strShiftId;
