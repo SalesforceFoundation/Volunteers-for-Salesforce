@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Postes de Bénévoles</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Postes de Bénévoles</value>
+    </caseValues>
+    <fields>
+        <label>Campagne</label>
+        <name>Campaign__c</name>
+        <relationshipLabel>Postes Bénévoles</relationshipLabel>
+    </fields>
+    <fields>
+        <label>Descriptif</label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help>Cochez ce champ si ce Poste Bénévole doit être inclus dans la page des Postes Bénévoles Disponibles.</help>
+        <label>Affichage sur le site Web</label>
+        <name>Display_on_Website__c</name>
+    </fields>
+    <fields>
+        <label>Premier Quart de Travail</label>
+        <name>First_Shift__c</name>
+    </fields>
+    <fields>
+        <help>Ce poste bénévole n&apos;est plus actif?</help>
+        <label>Inactif</label>
+        <name>Inactive__c</name>
+    </fields>
+    <fields>
+        <label>Emplacement Centre-ville</label>
+        <name>Location_City__c</name>
+    </fields>
+    <fields>
+        <help>Mettre en tout détail supplémentaire, comme un itinéraire ou une URL d&apos;une carte, dans ce champ, et il sera inclus dans les rappels par email automatisé.</help>
+        <label>Information sur le lieu</label>
+        <name>Location_Information__c</name>
+    </fields>
+    <fields>
+        <label>Lieu - Rue</label>
+        <name>Location_Street__c</name>
+    </fields>
+    <fields>
+        <label>Lieu - Code Postal</label>
+        <name>Location_Zip_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label>Lieu - Département/Région</label>
+        <name>Location__c</name>
+    </fields>
+    <fields>
+        <help>Nombre total d&apos;heures qui sont complétés. Les heures avec d&apos;autres valeurs de Statut ne sont pas inclus.</help>
+        <label>Nombre d&apos;heures effectuées</label>
+        <name>Number_of_Completed_Hours__c</name>
+    </fields>
+    <fields>
+        <label>Nombre de Quarts de Travail</label>
+        <name>Number_of_Shifts__c</name>
+    </fields>
+    <fields>
+        <label>Nombre de Bénévoles Manquants</label>
+        <name>Number_of_Volunteers_Still_Needed__c</name>
+    </fields>
+    <fields>
+        <help>Le nombre total de bénévoles dont le Statut d&apos;Heures = Complété ou Confirmé.</help>
+        <label>Nombre de Bénévoles</label>
+        <name>Number_of_Volunteers__c</name>
+    </fields>
+    <fields>
+        <label>En cours</label>
+        <name>Ongoing__c</name>
+    </fields>
+    <fields>
+        <help>Les compétences que le bénévole doit avoir pour faire ce travail.</help>
+        <label>Compétences nécessaires</label>
+        <name>Skills_Needed__c</name>
+        <picklistValues>
+            <masterLabel>Computer usage</masterLabel>
+            <translation>Utilisation d&apos;ordinateur</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Event Planning</masterLabel>
+            <translation>Planification d&apos;événements</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fundraising</masterLabel>
+            <translation>Levée de fonds</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landscaping</masterLabel>
+            <translation>Aménagement paysager</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual Labor</masterLabel>
+            <translation>Travail manuel</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation>Marketing</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>basic accounting</masterLabel>
+            <translation><!-- basic accounting --></translation>
+        </picklistValues>
+    </fields>
+    <gender>Masculine</gender>
+    <layouts>
+        <layout>Volunteer Job Layout</layout>
+        <sections>
+            <label>Liens personnalisés</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>Descriptif</label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label>Lieu</label>
+            <section>Location</section>
+        </sections>
+        <sections>
+            <label>Information sur le lieu</label>
+            <section>Location Information</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel>Nom de Poste</nameFieldLabel>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label>Liste de Bénévoles</label>
+        <name>JobRoster</name>
+    </webLinks>
+    <webLinks>
+        <label>Calendrier des Quarts de Travail</label>
+        <name>Job_Shift_Calendar</name>
+    </webLinks>
+    <webLinks>
+        <label>(non utilisé)</label>
+        <name>Mass_Edit_Volunteer_Hours</name>
+    </webLinks>
+    <webLinks>
+        <label>Envoi Email aux Bénévoles en masse</label>
+        <name>Mass_Email_Volunteers</name>
+    </webLinks>
+</CustomObjectTranslation>

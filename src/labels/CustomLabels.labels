@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>labelButtonCancel</fullName>
+        <categories>VolunteersJobListingFS, VolunteersWizard, MassEditVolunteerHours,MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Cancel button used on several pages.</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>labelButtonClose</fullName>
+        <categories>VolunteersJobListingFS, MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Close button on various pages</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>labelButtonSave</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The label for the Save button used on several pages.</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>labelButtonSaveAndClose</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Save and Close button used on several pages</shortDescription>
+        <value>Save &amp; Close</value>
+    </labels>
+    <labels>
+        <fullName>labelButtonSend</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Send button</shortDescription>
+        <value>Send</value>
+    </labels>
+    <labels>
+        <fullName>labelButtonSignUp</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for VolunteersJobListingFS page&apos;s Sign Up button</shortDescription>
+        <value>Sign Up</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarAllDay</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar label for all-day slot</shortDescription>
+        <value>all-day</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarAxisFormat</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar label for axisFormat of agenda views</shortDescription>
+        <value>h(:mm)tt</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarButtonText</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar label for button text</shortDescription>
+        <value>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today:    &apos;today&apos;,
+month:    &apos;month&apos;,
+week:     &apos;week&apos;,
+day:      &apos;day&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarCloseWindow</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Close Window link in Calendar</shortDescription>
+        <value>Close Window</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarColumnFormat</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar label for Column Format</shortDescription>
+        <value>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarConfirmed</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for confirmed count on Calendar</shortDescription>
+        <value>confirmed:&amp;nbsp;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarDayNames</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar list of Day Names</shortDescription>
+        <value>&apos;Sunday&apos;, &apos;Monday&apos;, &apos;Tuesday&apos;, &apos;Wednesday&apos;, &apos;Thursday&apos;, &apos;Friday&apos;, &apos;Saturday&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarDayNamesShort</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar list of Short Day Names</shortDescription>
+        <value>&apos;Sun&apos;, &apos;Mon&apos;, &apos;Tue&apos;, &apos;Wed&apos;, &apos;Thu&apos;, &apos;Fri&apos;, &apos;Sat&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarMonthNames</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar list of Month Names</shortDescription>
+        <value>&apos;January&apos;, &apos;February&apos;, &apos;March&apos;, &apos;April&apos;, &apos;May&apos;, &apos;June&apos;, &apos;July&apos;, &apos;August&apos;, &apos;September&apos;, &apos;October&apos;, &apos;November&apos;, &apos;December&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarMonthNamesShort</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar list of Short Month Names</shortDescription>
+        <value>&apos;Jan&apos;, &apos;Feb&apos;, &apos;Mar&apos;, &apos;Apr&apos;, &apos;May&apos;, &apos;Jun&apos;, &apos;Jul&apos;, &apos;Aug&apos;, &apos;Sep&apos;, &apos;Oct&apos;, &apos;Nov&apos;, &apos;Dec&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarPageTitle</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Shift Calendar page</shortDescription>
+        <value>Volunteers Shift Calendar</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarPrintThisPage</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Print This Page link in calendar</shortDescription>
+        <value>Print This Page</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarPrintableView</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Printable View link in calendar</shortDescription>
+        <value>Printable View</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarRoster</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Roster link on Calendar</shortDescription>
+        <value>Roster</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarShiftFull</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for marking calendar shifts as full</shortDescription>
+        <value>(full)</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarStillNeeded</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for still needed count on calendar</shortDescription>
+        <value>&amp;nbsp;&amp;nbsp;still needed:&amp;nbsp;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarTimeFormat</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar label for  Time Format</shortDescription>
+        <value>agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelCalendarTitleFormat</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>calendar label for Title Format</shortDescription>
+        <value>month: &apos;MMMM yyyy&apos;, week: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, day: &apos;dddd, MMM d, yyyy&apos;</value>
+    </labels>
+    <labels>
+        <fullName>labelChoiceAllActiveCampaigns</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>all campaigns entry in the Campaign filter on the JobCalendar page</shortDescription>
+        <value>(all active volunteer campaigns)</value>
+    </labels>
+    <labels>
+        <fullName>labelChoiceAllJobs</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>all jobs entry in the Campaign filter on the JobCalendar page</shortDescription>
+        <value>(all jobs)</value>
+    </labels>
+    <labels>
+        <fullName>labelColorValues</fullName>
+        <categories>JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>list of browser color values for JobCalendar</shortDescription>
+        <value>&quot;MediumBlue&quot;,&quot;Green&quot;,&quot;DarkRed&quot;, &quot;Purple&quot;, &quot;DarkSlateGray&quot;, &quot;MidnightBlue&quot;</value>
+    </labels>
+    <labels>
+        <fullName>labelFileUploadDescription</fullName>
+        <categories>VolunteersSignupFS, VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Volunteers Signup File Upload description</shortDescription>
+        <value>(Uploaded from Volunteers Signup web page).</value>
+    </labels>
+    <labels>
+        <fullName>labelFrom</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the From dropdown on Mass Email</shortDescription>
+        <value>From</value>
+    </labels>
+    <labels>
+        <fullName>labelLinkAddMoreRows</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Add More Rows link in Mass Edit page.</shortDescription>
+        <value>Add more rows</value>
+    </labels>
+    <labels>
+        <fullName>labelLinkFull</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for VolunteersJobListingFS page&apos;s full link</shortDescription>
+        <value>full</value>
+    </labels>
+    <labels>
+        <fullName>labelLinkSignUp</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for VolunteersJobListingFS page&apos;s Sign Up link</shortDescription>
+        <value>sign up</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditErrorOnSave</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>error message when Mass Edit Volunteer Hours save fails.</shortDescription>
+        <value>Errors were encountered trying to save the Volunteer Hours.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditHelp</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>help text for the Mass Edit Volunteer Hours page</shortDescription>
+        <value>Choose the Campaign and Volunteer Job, and optional Volunteer Shift, and the page will display all Volunteer Hour records already saved for the job, as well as new records you can add.  Update all rows as appropriate, and then click Save.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditOptional</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the optional comment on the Volunteer Shift label.</shortDescription>
+        <value>(optional)</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditSaveSuccess</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>message displayed when Mass Edit Volunteer Hours saves successfully.</shortDescription>
+        <value>Volunteer Hours records have been saved.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditTitle</fullName>
+        <categories>VolunteersMassEditHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title for the Mass Edit Volunteers Hours page</shortDescription>
+        <value>Mass Edit Volunteer Hours</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditVolunteersStatus</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for status field on Mass Email Volunteers page</shortDescription>
+        <value>Email volunteers with Status</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailEditTemplate</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Edit Template button</shortDescription>
+        <value>Edit Template</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailErrorNoContacts</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>error message for no contacts to email</shortDescription>
+        <value>There are no contacts to email.  Try choosing another Status to filter on.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailErrorNoTemplate</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>error message for no template specified in MassEmail</shortDescription>
+        <value>Please specify an Email Template to send.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailViewTemplates</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for View Templates button</shortDescription>
+        <value>View Templates</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailVolunteersLogActivity</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Log Activity checkbox on Mass Email Volunteers page</shortDescription>
+        <value>Log an Activity for each Contact</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailVolunteersTitle</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Mass Email Volunteers title</shortDescription>
+        <value>Mass Email Volunteers</value>
+    </labels>
+    <labels>
+        <fullName>labelMessageBody</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the message body in MassEmailVolunteers</shortDescription>
+        <value>Message</value>
+    </labels>
+    <labels>
+        <fullName>labelMessageLoading</fullName>
+        <categories>MassEditVolunteerHours, MassEmailVolunteers, JobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the loading... message used in some pages</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>labelMessageNoJobs</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for VolunteersJobListingFS page&apos;s No Jobs message</shortDescription>
+        <value>Sorry, there are no volunteer jobs available at this time.</value>
+    </labels>
+    <labels>
+        <fullName>labelMessageSaving</fullName>
+        <categories>VolunteersJobListingFS, MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Saving... message on several pages</shortDescription>
+        <value>Saving...</value>
+    </labels>
+    <labels>
+        <fullName>labelNumberOfContacts</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Number Of Contacts field on MassEmailVolunteers</shortDescription>
+        <value>Number of Contacts</value>
+    </labels>
+    <labels>
+        <fullName>labelReturnToCalendar</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the return to Calendar link on VolunteersJobListingFS</shortDescription>
+        <value>return to Calendar</value>
+    </labels>
+    <labels>
+        <fullName>labelSubject</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Subject field in MassEmailVolunteers</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>labelSubmitButton</fullName>
+        <categories>VolunteersSignupFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for VolunteersSignupFS page&apos;s submit button</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>labelTitleJobSignup</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for VolunteersJobListingFS page&apos;s Signup Dialog Title</shortDescription>
+        <value>Volunteer Sign Up</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteerSignupThankYou</fullName>
+        <categories>VolunteersSignupFS, VolunteersJobListing</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Thank you message displayed after a successful Volunteer Signup on the web</shortDescription>
+        <value>Thank you for signing up for volunteering.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardCampaignInformation</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title of the Volunteers Wizard Campaign Information section.</shortDescription>
+        <value>Campaign Information</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardClone</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Close Existing Campaign</shortDescription>
+        <value>Clone Existing Campaign</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardCopyVolunteers</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Copy Volunteers checkbox on Volunteers Wizard</shortDescription>
+        <value>Copy Job and Shift Volunteers</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardErrorExistingOrSample</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>error message for not choosing an existing campaign or sample jobs</shortDescription>
+        <value>Please choose either an existing Campaign to copy, or the number of Sample Jobs and Shifts to create, but not both.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardErrorNoJobsWithShifts</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>error message for not choosing Sample Jobs along with Sample Shifts</shortDescription>
+        <value>Please specify the number of Sample Jobs along with the number of Sample Shifts.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardFirstShiftDate</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for first shift date on Volunteers Wizard</shortDescription>
+        <value>First Shift Date</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardHelp</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The help text displayed at the top of the Volunteers Wizard page.</shortDescription>
+        <value>The Volunteers Wizard creates a new Volunteer Campaign, and allows you to either copy all the Volunteer Jobs, Shifts, and Hours from an existing campaign, or to create sample Jobs and Shifts.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardJobAndShiftHelp</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>help text for the Volunteers Wizard Jobs &amp; Shifts section.</shortDescription>
+        <value>Choose an existing campaign to copy Jobs, Shifts, and Hours from, or fill out how many sample Jobs and Shifts to create.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardJobsAndShifts</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label for the Volunteers Wizard Volunteer Jobs &amp; Shifts section</shortDescription>
+        <value>Volunteer Jobs, Shifts &amp; Hours</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardNewCampaignTitle</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The title for the main section of the Volunteers Wizard.</shortDescription>
+        <value>New Volunteer Campaign</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardNewShiftDate</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for new shift date on Volunteers Wizard</shortDescription>
+        <value>New First Shift Date</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardOverrideHoursStatus</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Volunteer Hours Status picklist on Volunteers Wizard</shortDescription>
+        <value>Override Volunteer Hours Status</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardSampleJobName</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>name of sample jobs</shortDescription>
+        <value>Sample Job</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardSampleJobs</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for number of sample jobs</shortDescription>
+        <value>Number of Sample Jobs</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardSampleShiftName</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>name of sample shifts</shortDescription>
+        <value>Sample Shift</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardSampleShifts</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for number of sample shifts</shortDescription>
+        <value>Number of Sample Shifts per Job</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersWizardTitle</fullName>
+        <categories>VolunteersWizard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>the title of the Volunteers Wizard page.</shortDescription>
+        <value>Volunteers Wizard</value>
+    </labels>
+</CustomLabels>

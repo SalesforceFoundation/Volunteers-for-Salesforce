@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label>Bénévoles</label>
+        <name>Groundwire_Volunteers</name>
+    </customApplications>
+    <customLabels>
+        <label>Annuler</label>
+        <name>labelButtonCancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Fermer</label>
+        <name>labelButtonClose</name>
+    </customLabels>
+    <customLabels>
+        <label>Enregistrer</label>
+        <name>labelButtonSave</name>
+    </customLabels>
+    <customLabels>
+        <label>Enregistrer &amp; Fermer</label>
+        <name>labelButtonSaveAndClose</name>
+    </customLabels>
+    <customLabels>
+        <label>Envoyer</label>
+        <name>labelButtonSend</name>
+    </customLabels>
+    <customLabels>
+        <label>Inscription</label>
+        <name>labelButtonSignUp</name>
+    </customLabels>
+    <customLabels>
+        <label>toute la journée</label>
+        <name>labelCalendarAllDay</name>
+    </customLabels>
+    <customLabels>
+        <label>HH(:mm)</label>
+        <name>labelCalendarAxisFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>prev: &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;, 
+next: &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;, 
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;, 
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;, 
+today: &apos;aujourd&amp;#39;hui&apos;, 
+month: &apos;mois&apos;, 
+week: &apos;semaine&apos;, 
+day: &apos;jour&apos;</label>
+        <name>labelCalendarButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>Fermer Fenêtre</label>
+        <name>labelCalendarCloseWindow</name>
+    </customLabels>
+    <customLabels>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd dd/MM&apos;, day: &apos;dddd dd/MM&apos;</label>
+        <name>labelCalendarColumnFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>confirmé:&amp;nbsp;</label>
+        <name>labelCalendarConfirmed</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;dimanche&apos;, &apos;lundi&apos;, &apos;mardi&apos;, &apos;mercredi&apos;, &apos;jeudi&apos;, &apos;vendredi&apos;, &apos;samedi&apos;</label>
+        <name>labelCalendarDayNames</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;dim&apos;, &apos;lun&apos;, &apos;mar&apos;, &apos;mer&apos;, &apos;jeu&apos;, &apos;ven&apos;, &apos;sam&apos;</label>
+        <name>labelCalendarDayNamesShort</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;janvier&apos;, &apos;février&apos;, &apos;mars&apos;, &apos;avril&apos;, &apos;mai&apos;, &apos;juin&apos;, &apos;juillet&apos;, &apos;août&apos;, &apos;septembre&apos;, &apos;octobre&apos;, &apos;novembre&apos;, &apos;décembre&apos;</label>
+        <name>labelCalendarMonthNames</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;jan&apos;, &apos;fév&apos;, &apos;mar&apos;, &apos;avr&apos;, &apos;mai&apos;, &apos;jun&apos;, &apos;jul&apos;, &apos;aoû&apos;, &apos;sep&apos;, &apos;oct&apos;, &apos;nov&apos;, &apos;déc&apos;</label>
+        <name>labelCalendarMonthNamesShort</name>
+    </customLabels>
+    <customLabels>
+        <label>Calendrier des Bénévoles</label>
+        <name>labelCalendarPageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Imprimer Cette Page</label>
+        <name>labelCalendarPrintThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label>Vue Imprimable</label>
+        <name>labelCalendarPrintableView</name>
+    </customLabels>
+    <customLabels>
+        <label>Liste</label>
+        <name>labelCalendarRoster</name>
+    </customLabels>
+    <customLabels>
+        <label>(rempli)</label>
+        <name>labelCalendarShiftFull</name>
+    </customLabels>
+    <customLabels>
+        <label>&amp;nbsp;&amp;nbsp;encore nécessaire:&amp;nbsp;</label>
+        <name>labelCalendarStillNeeded</name>
+    </customLabels>
+    <customLabels>
+        <label>agenda: &apos;HH:mm{ - HH:mm}&apos;, &apos;&apos;: &apos;HH:mm&apos;</label>
+        <name>labelCalendarTimeFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>month: &apos;MMMM yyyy&apos;, week: &quot;d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d MMM yyyy}&quot;, day: &apos;dddd, d MMM, yyyy&apos;</label>
+        <name>labelCalendarTitleFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>(tous campagnes de bénévolat actifs)</label>
+        <name>labelChoiceAllActiveCampaigns</name>
+    </customLabels>
+    <customLabels>
+        <label>(tous les postes)</label>
+        <name>labelChoiceAllJobs</name>
+    </customLabels>
+    <customLabels>
+        <label>&quot;MediumBlue&quot;,&quot;Green&quot;,&quot;DarkRed&quot;, &quot;Purple&quot;, &quot;DarkSlateGray&quot;, &quot;MidnightBlue&quot;</label>
+        <name>labelColorValues</name>
+    </customLabels>
+    <customLabels>
+        <label>(chargé à partir de la page web d&apos;inscription des bénévoles).</label>
+        <name>labelFileUploadDescription</name>
+    </customLabels>
+    <customLabels>
+        <label>De</label>
+        <name>labelFrom</name>
+    </customLabels>
+    <customLabels>
+        <label>Ajouter des lignes</label>
+        <name>labelLinkAddMoreRows</name>
+    </customLabels>
+    <customLabels>
+        <label>complet</label>
+        <name>labelLinkFull</name>
+    </customLabels>
+    <customLabels>
+        <label>S&apos;inscrire</label>
+        <name>labelLinkSignUp</name>
+    </customLabels>
+    <customLabels>
+        <label>Des erreurs ont ete encontré pendant l&apos;enregistrement des Heures de Bénévolat.</label>
+        <name>labelMassEditErrorOnSave</name>
+    </customLabels>
+    <customLabels>
+        <label>Choisir la Campagne et le Poste Bénévole, et le Quart de Travail Bénévole en option, et la page affichera tous les Heures Benevoles déjà enregistrés pour ce poste, ainsi que de nouveaux lignes que vous pouvez ajouter. Mettez à jour les lignes ou nécéssaire, puis enregistrer.</label>
+        <name>labelMassEditHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>(facultatif)</label>
+        <name>labelMassEditOptional</name>
+    </customLabels>
+    <customLabels>
+        <label>Les Heures de Bénévolat ont été enregistré.</label>
+        <name>labelMassEditSaveSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>Modifier les Heures de Bénévolat en masse.</label>
+        <name>labelMassEditTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Email aux bénévoles avec Statut</label>
+        <name>labelMassEditVolunteersStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>Modifier Modèles</label>
+        <name>labelMassEmailEditTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label>Il n&apos;y a pas de Contacts à envoyer cet email. Essayez de choisir un autre statut à filtrer.</label>
+        <name>labelMassEmailErrorNoContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez spécifier un modèle de message a envoyer.</label>
+        <name>labelMassEmailErrorNoTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label>Voir Modèles</label>
+        <name>labelMassEmailViewTemplates</name>
+    </customLabels>
+    <customLabels>
+        <label>Saisir une Activité pour chaque Contact</label>
+        <name>labelMassEmailVolunteersLogActivity</name>
+    </customLabels>
+    <customLabels>
+        <label>Envoi Email aux Bénévoles en masse</label>
+        <name>labelMassEmailVolunteersTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the message body in MassEmailVolunteers --></label>
+        <name>labelMessageBody</name>
+    </customLabels>
+    <customLabels>
+        <label>Chargement...</label>
+        <name>labelMessageLoading</name>
+    </customLabels>
+    <customLabels>
+        <label>Désolé, il n&apos;y a pas de postes bénévoles disponibles en ce moment.</label>
+        <name>labelMessageNoJobs</name>
+    </customLabels>
+    <customLabels>
+        <label>Saving ...</label>
+        <name>labelMessageSaving</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre de Contacts</label>
+        <name>labelNumberOfContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>retour au Calendrier</label>
+        <name>labelReturnToCalendar</name>
+    </customLabels>
+    <customLabels>
+        <label>Sujet</label>
+        <name>labelSubject</name>
+    </customLabels>
+    <customLabels>
+        <label>Envoyer</label>
+        <name>labelSubmitButton</name>
+    </customLabels>
+    <customLabels>
+        <label>Inscription des bénévoles</label>
+        <name>labelTitleJobSignup</name>
+    </customLabels>
+    <customLabels>
+        <label>Merci de votre inscription pour le bénévolat.</label>
+        <name>labelVolunteerSignupThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Information de Campagne</label>
+        <name>labelVolunteersWizardCampaignInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Clone Campaigne Existant</label>
+        <name>labelVolunteersWizardClone</name>
+    </customLabels>
+    <customLabels>
+        <label>Copier Postes et Quarts des Bénévoles</label>
+        <name>labelVolunteersWizardCopyVolunteers</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez choisir un Campagne existant, ou le nombre de Postes et Quarts Exemples a créer, mais pas les deux.</label>
+        <name>labelVolunteersWizardErrorExistingOrSample</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez specifier le nombre de Postes Exemples en même temps que le nombre de Quarts Exemples.</label>
+        <name>labelVolunteersWizardErrorNoJobsWithShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>Première Date de Quart de Travail</label>
+        <name>labelVolunteersWizardFirstShiftDate</name>
+    </customLabels>
+    <customLabels>
+        <label>L&apos;Assistant de Bénévolat crée un nouveau Campagne de Bénévolat, et vous permet ou de copier tous les Postes, Quarts, et Heures de Bénévolat d&apos;un Campagne existant, ou de créer des Postes et Quarts exemples.</label>
+        <name>labelVolunteersWizardHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>Choisissez un Campagne existant d&apos;ou copier les Postes, Quarts et Heures, ou remplir combien d&apos;exemple Postes et Quarts a créer.</label>
+        <name>labelVolunteersWizardJobAndShiftHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>Postes, Quarts &amp; Heures de Bénévolat</label>
+        <name>labelVolunteersWizardJobsAndShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>Nouveau Campagne de Bénévolat</label>
+        <name>labelVolunteersWizardNewCampaignTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Nouveau Date de Premier Quart</label>
+        <name>labelVolunteersWizardNewShiftDate</name>
+    </customLabels>
+    <customLabels>
+        <label>Outrepasser le Statut des Heures de Bénévolat</label>
+        <name>labelVolunteersWizardOverrideHoursStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>Poste Exemple</label>
+        <name>labelVolunteersWizardSampleJobName</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre de Postes Exemples</label>
+        <name>labelVolunteersWizardSampleJobs</name>
+    </customLabels>
+    <customLabels>
+        <label>Quart Exemple</label>
+        <name>labelVolunteersWizardSampleShiftName</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre de Quarts Exemples</label>
+        <name>labelVolunteersWizardSampleShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>Assistant de Bénévolat</label>
+        <name>labelVolunteersWizardTitle</name>
+    </customLabels>
+    <customTabs>
+        <label>À propos de Bénévoles</label>
+        <name>About_Volunteers</name>
+    </customTabs>
+    <customTabs>
+        <label>Calendrier des Bénévoles</label>
+        <name>Shift_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label>Assistant de Bénévoles</label>
+        <name>Volunteers_Wizard</name>
+    </customTabs>
+    <reportTypes>
+        <description>Les comptes avec les heures de bénévolat à travers des contacts associés.</description>
+        <label>Les comptes avec des heures de bénévolat</label>
+        <name>Accounts</name>
+        <sections>
+            <label>Comptes</label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+        <sections>
+            <label>Heures de bénévolat</label>
+            <name>Volunteer Hours</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description>Campagnes avec les dossiers des postes bénévoles.</description>
+        <label>Campagnes des bénévoles</label>
+        <name>Volunteer_Campaigns</name>
+        <sections>
+            <label>Campagnes</label>
+            <name>Campaigns</name>
+        </sections>
+        <sections>
+            <label>Postes de Bénévolat</label>
+            <name>Volunteer Jobs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description>Tous les postes bénévoles et de leurs heures connexes.</description>
+        <label>Postes bénévoles et les heures</label>
+        <name>Volunteer_Jobs_and_Hours</name>
+        <sections>
+            <label>Heures de Bénévolat</label>
+            <name>Volunteer Hours</name>
+        </sections>
+        <sections>
+            <label>Postes de Bénévolat</label>
+            <name>Volunteer Jobs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description>Les postes bénévoles avec des archives des heures et les quarts de travail.</description>
+        <label>Les postes bénévoles avec les heures et les quarts de travail</label>
+        <name>Volunteer_Jobs_with_Shifts_Hours</name>
+        <sections>
+            <label>Heures de Bénévolat</label>
+            <name>Volunteer Hours</name>
+        </sections>
+        <sections>
+            <label>Postes de Bénévolat</label>
+            <name>Volunteer Jobs</name>
+        </sections>
+        <sections>
+            <label>Quarts de Travail de Bénévolat</label>
+            <name>Volunteer Shifts</name>
+        </sections>
+    </reportTypes>
+</Translations>

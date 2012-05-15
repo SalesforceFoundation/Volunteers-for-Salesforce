@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Volunteer Job</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Volunteer Jobs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Campaign --></label>
+        <name>Campaign__c</name>
+        <relationshipLabel><!-- Volunteer Jobs --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page. --></help>
+        <label><!-- Display on Website --></label>
+        <name>Display_on_Website__c</name>
+    </fields>
+    <fields>
+        <label><!-- First Shift --></label>
+        <name>First_Shift__c</name>
+    </fields>
+    <fields>
+        <help><!-- Is this Volunteer Job no longer active. --></help>
+        <label><!-- Inactive --></label>
+        <name>Inactive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location City --></label>
+        <name>Location_City__c</name>
+    </fields>
+    <fields>
+        <help><!-- Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders. --></help>
+        <label><!-- Location Information --></label>
+        <name>Location_Information__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Street --></label>
+        <name>Location_Street__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Zip/Postal Code --></label>
+        <name>Location_Zip_Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location State/Province --></label>
+        <name>Location__c</name>
+    </fields>
+    <fields>
+        <help><!-- Total number of Hours that are Completed.  Hours with other status values are not included. --></help>
+        <label><!-- Number of Completed Hours --></label>
+        <name>Number_of_Completed_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Shifts --></label>
+        <name>Number_of_Shifts__c</name>
+    </fields>
+    <fields>
+        <label><!-- # of Volunteers Still Needed --></label>
+        <name>Number_of_Volunteers_Still_Needed__c</name>
+    </fields>
+    <fields>
+        <help><!-- The total number of volunteers whose Hours Status = Completed or Confirmed. --></help>
+        <label><!-- Number of Volunteers --></label>
+        <name>Number_of_Volunteers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Ongoing --></label>
+        <name>Ongoing__c</name>
+    </fields>
+    <fields>
+        <help><!-- the skills the volunteer should have to do this job --></help>
+        <label><!-- Skills Needed --></label>
+        <name>Skills_Needed__c</name>
+        <picklistValues>
+            <masterLabel>Computer usage</masterLabel>
+            <translation><!-- Computer usage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Event Planning</masterLabel>
+            <translation><!-- Event Planning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fundraising</masterLabel>
+            <translation><!-- Fundraising --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landscaping</masterLabel>
+            <translation><!-- Landscaping --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual Labor</masterLabel>
+            <translation><!-- Manual Labor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation><!-- Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>basic accounting</masterLabel>
+            <translation><!-- basic accounting --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Volunteer Job Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description --></label>
+            <section>Description</section>
+        </sections>
+        <sections>
+            <label><!-- Location --></label>
+            <section>Location</section>
+        </sections>
+        <sections>
+            <label><!-- Location Information --></label>
+            <section>Location Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- JobRoster --></label>
+        <name>JobRoster</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Job_Shift_Calendar --></label>
+        <name>Job_Shift_Calendar</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mass_Edit_Volunteer_Hours --></label>
+        <name>Mass_Edit_Volunteer_Hours</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mass_Email_Volunteers --></label>
+        <name>Mass_Email_Volunteers</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Campaign__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Campaign</label>
+        <referenceTo>Campaign</referenceTo>
+        <relationshipLabel>Volunteer Jobs</relationshipLabel>
+        <relationshipName>Volunteer_Jobs</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32000</length>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Display_on_Website__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page.</inlineHelpText>
+        <label>Display on Website</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>First_Shift__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>First Shift</label>
+        <summarizedField>Volunteer_Shift__c.Start_Date_Time__c</summarizedField>
+        <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Inactive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Is this Volunteer Job no longer active.</inlineHelpText>
+        <label>Inactive</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Location_City__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Location City</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Information__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders.</inlineHelpText>
+        <label>Location Information</label>
+        <length>32000</length>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Location_Street__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Location Street</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Zip_Postal_Code__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Location Zip/Postal Code</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Location State/Province</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Completed_Hours__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of Hours that are Completed.  Hours with other status values are not included.</inlineHelpText>
+        <label>Number of Completed Hours</label>
+        <summarizedField>Volunteer_Hours__c.Total_Hours_Worked__c</summarizedField>
+        <summaryFilterItems>
+            <field>Volunteer_Hours__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Volunteer_Hours__c.Volunteer_Job__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Shifts__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Number of Shifts</label>
+        <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Volunteers_Still_Needed__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label># of Volunteers Still Needed</label>
+        <summarizedField>Volunteer_Shift__c.Number_of_Volunteers_Still_Needed__c</summarizedField>
+        <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Volunteers__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The total number of volunteers whose Hours Status = Completed or Confirmed.</inlineHelpText>
+        <label>Number of Volunteers</label>
+        <summarizedField>Volunteer_Hours__c.Number_of_Volunteers__c</summarizedField>
+        <summaryFilterItems>
+            <field>Volunteer_Hours__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Confirmed, Completed</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Volunteer_Hours__c.Volunteer_Job__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Ongoing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Ongoing</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Skills_Needed__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>the skills the volunteer should have to do this job</inlineHelpText>
+        <label>Skills Needed</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Computer usage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manual Labor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fundraising</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Event Planning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Landscaping</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>basic accounting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>MultiselectPicklist</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <label>Volunteer Job</label>
+    <listViews>
+        <fullName>All_Jobs</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign__c</columns>
+        <columns>Number_of_Volunteers_Still_Needed__c</columns>
+        <columns>Number_of_Completed_Hours__c</columns>
+        <columns>Ongoing__c</columns>
+        <columns>Display_on_Website__c</columns>
+        <columns>Inactive__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Jobs</label>
+    </listViews>
+    <listViews>
+        <fullName>Available_Jobs</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign__c</columns>
+        <columns>Number_of_Volunteers_Still_Needed__c</columns>
+        <columns>Number_of_Completed_Hours__c</columns>
+        <columns>Ongoing__c</columns>
+        <columns>Inactive__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Inactive__c</field>
+            <operation>notEqual</operation>
+            <value>1</value>
+        </filters>
+        <label>Available Jobs</label>
+    </listViews>
+    <listViews>
+        <fullName>Ongoing_Jobs</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign__c</columns>
+        <columns>Number_of_Volunteers_Still_Needed__c</columns>
+        <columns>Number_of_Completed_Hours__c</columns>
+        <columns>Ongoing__c</columns>
+        <columns>Inactive__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Ongoing__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Inactive__c</field>
+            <operation>notEqual</operation>
+            <value>1</value>
+        </filters>
+        <label>Ongoing Jobs</label>
+    </listViews>
+    <nameField>
+        <label>Volunteer Job Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Volunteer Jobs</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Campaign__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ongoing__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Campaign__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ongoing__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Campaign__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ongoing__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Campaign__c</searchFilterFields>
+        <searchFilterFields>Ongoing__c</searchFilterFields>
+        <searchResultsAdditionalFields>Campaign__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ongoing__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>JobRoster</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Volunteer Roster</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Volunteer_Job__c.CampaignId__c}&amp;pv1={!Volunteer_Job__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Job_Shift_Calendar</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Shift Calendar</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/GW_Volunteers__JobCalendar?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Mass_Edit_Volunteer_Hours</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>(not used)</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>&quot;/&quot;</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Mass_Email_Volunteers</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Mass Email Volunteers</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/GW_Volunteers__SendBulkEmail?jobId={!Volunteer_Job__c.Id}&amp;retURL={! 
+URLFOR( $Action.Volunteer_Job__c.View , Volunteer_Job__c.Id ) }</url>
+    </webLinks>
+</CustomObject>

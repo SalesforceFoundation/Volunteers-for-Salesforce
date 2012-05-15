@@ -189,10 +189,49 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             		}
             	}
             }
-            return listVolunteerJobs;
+            return sortVolunteerJobs(listVolunteerJobs);
         }
         
         set;
+    }
+    
+    global virtual list<Volunteer_Job__c> sortVolunteerJobs (list<Volunteer_Job__c> jobsList) {
+    	list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
+    	DateTime faroutFuture = System.Now().addYears(100);
+    	
+    	//create a map of earliest shift datetime to job list
+    	map<DateTime, list<Volunteer_Job__c>> jobMap = new map<DateTime, list<Volunteer_Job__c>>();
+    	
+    	for (Volunteer_Job__c vj : jobsList) {
+    		DateTime nextShift = faroutFuture;
+    		
+    		//if the job has no shifts, set it in the past so it appears first on the page, otherwise get the first shift
+    		if (vj.Volunteer_Job_Slots__r.size() == 0) {
+    			nextShift = faroutFuture.addYears(-200);
+    		} else if (vj.Volunteer_Job_Slots__r.size() > 0) {
+    			for (Volunteer_Shift__c vs : vj.Volunteer_Job_Slots__r) {
+    				if (vs.Start_Date_Time__c < nextshift) {
+    					nextShift = vs.Start_Date_Time__c;
+    				}
+    			}
+    		}
+    		
+    		//if our map doesn't contain this shift, create a new list, otherwise add to the list
+    		if (jobMap.get(nextShift) == null) {
+    			jobMap.put(nextShift, new List<Volunteer_Job__c>());
+    		}
+    		jobMap.get(nextShift).add(vj);
+    	}
+    	
+    	//use SF's standard sort method on the datetimes
+    	list<DateTime> keys = new list<DateTime>(jobMap.keySet());
+    	keys.sort();
+    	
+    	//rebuild list in order
+    	for (DateTime key:keys) {
+    		resultList.addAll(jobMap.get(key));
+    	}
+    	return resultlist;
     }
     
     global virtual boolean getVolunteersHasJobs() {

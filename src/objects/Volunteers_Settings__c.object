@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Custom settings used by Volunteers for Salesforce.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Signup_Bucket_Account_On_Create__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The name of the account to use when creating new Contacts during Signup.  If you are using the Non Profit Start Pack One-to-One model, leave this setting blank.  If you are using the bucket model, set this to the name of the account; usually &apos;Individual&apos;.</inlineHelpText>
+        <label>Signup Bucket Account On Create</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Signup_Creates_Contacts_If_No_Match__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Should the Volunteer Signup form create new Contact records, if no existing contact is found (or Signup Matches Existing Contacts is unchecked).  If this setting is unchecked, it will create Leads when no matches found.</inlineHelpText>
+        <label>Signup Creates Contacts If No Match</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Signup_Matches_Existing_Contacts__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Should the Volunteer Signup page try to match the person to an existing Contact (by First Name, Last Name, Email).</inlineHelpText>
+        <label>Signup Matches Existing Contacts</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>Volunteers Settings</label>
+</CustomObject>
