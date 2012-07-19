@@ -37,8 +37,7 @@
         </actions>
         <active>true</active>
         <description>When a contact is updated or created during a Volunteer Signup, thank them and notify the volunteer manager.</description>
-        <formula>OR(ISCHANGED( Volunteer_Last_Web_Signup_Date__c ),
-AND(ISNEW(), NOT(ISNULL(Volunteer_Last_Web_Signup_Date__c ))))</formula>
+        <formula>OR(ISCHANGED( Volunteer_Last_Web_Signup_Date__c ), AND(ISNEW(), NOT(ISNULL(Volunteer_Last_Web_Signup_Date__c ))))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <tasks>
