@@ -190,8 +190,8 @@ public with sharing class VOL_SharedCode {
         	strSoql += strComma + strF;
         	strComma = ', ';
         }
-        strSoql += ' from Contact where Lastname=\'' + contact.Lastname + '\'';
-        strSoql += ' and Firstname=\'' + contact.Firstname + '\'';
+        strSoql += ' from Contact where Lastname=\'' + StrEscape(contact.Lastname) + '\'';
+        strSoql += ' and Firstname=\'' + StrEscape(contact.Firstname) + '\'';
         strSoql += ' and Email=\'' + contact.Email + '\' limit 1';      
         list<Contact> listCon = Database.Query(strSoql); 
 
@@ -250,7 +250,11 @@ public with sharing class VOL_SharedCode {
         }
     }    
 
-
+	// public utility to escape a string.
+	public static string StrEscape(string str) {
+		if (str == null) return null;
+		return string.escapeSingleQuotes(str);
+	}
 
     //==================== TEST METHOD(s) ======================================
     static testmethod void CodeCoverageTests() {
