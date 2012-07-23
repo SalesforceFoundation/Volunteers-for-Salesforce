@@ -116,7 +116,6 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             return null; 			
 		}
 		
-		
 		try {
 			list<Messaging.SingleEmailMessage> listEmail = new list<Messaging.SingleEmailMessage>();
 
@@ -162,18 +161,49 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 						
 			// send the email and return
 			if (listEmail.size() > 0) {
-				Messaging.sendEmail(listEmail);
+				list<Messaging.SendEmailResult> listSER;
+				listSER = Messaging.sendEmail(listEmail, false);
+				
+				// report problems
+				integer cSuccess = 0;
+				for (Messaging.SendEmailResult ser : listSER) {
+					if (ser.isSuccess()) {
+						cSuccess++;
+					} else {
+						list<Messaging.SendEmailError> listSEE = ser.getErrors();
+						for (Messaging.SendEmailError see : listSEE) {
+							ID objId = see.getTargetObjectId();
+							if (objId == null) {
+								// see if we can parse it out of the error string.
+								string strErr = see.getMessage();
+								integer ich = strErr.lastIndexOf(' for id : ');
+								if (ich > = 0) {
+									objId = strErr.substring(ich + 10);
+								}
+							}
+							list<Contact> listCon = [select Name, Email from Contact where Id =: objId];
+							string strDetails = '';
+							if (listCon.size() > 0) 
+								strDetails = ' ' + listCon[0].Name + ' (' + listCon[0].Email + ') '; 
+							// special case logging Activity failing
+							if (see.getStatusCode() == System.StatusCode.FIELD_INTEGRITY_EXCEPTION && fLogActivity)
+								strDetails += ' ' + ' - Logging of Activities must be enabled for Volunteer Jobs and Volunteer Shifts.  Please see the Volunteers for Salesforce Installation and Configuration Guide.'; 
+
+							ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, see.getStatusCode() + ': ' + see.getMessage() + strDetails));
+						}
+					}
+				}
+				if (cSuccess > 0) 
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Successfully sent emails: ' + cSuccess));						
+				if (listSER.size() > 0)  
+				    return null;  // stay on the page
 			}
 			return Cancel(); // this will take us back to our calling page.
 						
 		} catch (exception ex) {
             ApexPages.addMessages(ex);   
-            if (fLogActivity) {
-	            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
-	            	'Logging of Activities must be enabled for Volunteer Jobs and Volunteer Shifts.  Please see the Volunteers for Salesforce Installation and Configuration Guide.'));                    	
-            }
             return null;			
-		}
+		} 
 	}
 	
     // action method that user wants to close this page
