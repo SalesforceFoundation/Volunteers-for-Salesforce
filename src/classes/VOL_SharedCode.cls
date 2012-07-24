@@ -227,7 +227,6 @@ public with sharing class VOL_SharedCode {
         } else  {  // No Match found, create a Contact
             contact.LeadSource = 'Web Volunteer Signup';
             contact.Volunteer_Status__c = 'New Sign Up';
-            
             Account accToUse = null;
             
             // see if we can find their company 
@@ -243,10 +242,20 @@ public with sharing class VOL_SharedCode {
                 contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
             }
             
-            insert contact;
+            // don't assume the contact object wasn't already used.
+            // since we can't null out Id for the insert, copy all
+            // the fields to a new object and use it.
+        	Contact conNew = new Contact();
+            //  now copy over all the non-null fields from the form's contact to the existing contact.
+            for (string strF : listStrFields) {
+            	if (strF != 'Id' && contact.get(strF) != null) {
+            		conNew.put(strF, contact.get(strF));
+            	}
+            }
+            insert conNew;
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
-            return contact.Id;
+            return conNew.Id;
         }
     }    
 
