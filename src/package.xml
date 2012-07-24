@@ -17,157 +17,16 @@
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>*</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomLabels</name>
-    </types>
-    <types>
-        <members>*</members>
-        <members>Account</members>
-        <members>AccountContactRole</members>
-        <members>Activity</members>
-        <members>Asset</members>
-        <members>Campaign</members>
-        <members>CampaignMember</members>
-        <members>Case</members>
-        <members>CaseContactRole</members>
-        <members>Contact</members>
-        <members>ContentVersion</members>
-        <members>Contract</members>
-        <members>ContractContactRole</members>
-        <members>Event</members>
-        <members>Idea</members>
-        <members>JigsawSavedSearch</members>
-        <members>Lead</members>
-        <members>Opportunity</members>
-        <members>OpportunityContactRole</members>
-        <members>OpportunityLineItem</members>
-        <members>PartnerRole</members>
-        <members>Product2</members>
-        <members>Site</members>
-        <members>Solution</members>
-        <members>Task</members>
-        <members>User</members>
-        <members>UserLicense</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomObjectTranslation</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomPageWebLink</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomSite</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>Volunteer_Dashboards</members>
-        <members>Volunteer_Dashboards/Volunteers_Dashboard2</members>
-        <name>Dashboard</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>DataCategoryGroup</name>
-    </types>
-    <types>
-        <members>Volunteers_Documents</members>
-        <members>Volunteers_Documents/JobCalendarCSS_css.css</members>
         <members>Volunteers_Documents/VolunteersJobListingCSS_css.css</members>
-        <members>Volunteers_Documents/VolunteersSignupCSS_css.css</members>
-        <members>Volunteers_Documents/Volunteers_Logo.gif</members>
         <name>Document</name>
     </types>
     <types>
-        <members>*</members>
-        <name>HomePageComponent</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>HomePageLayout</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Letterhead</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>volunteers Profile</members>
         <name>Profile</name>
-    </types>
-    <types>
-        <members>ApexDevNet</members>
-        <name>RemoteSiteSetting</name>
-    </types>
-    <types>
-        <members>Volunteer_Reports</members>
-        <members>Volunteer_Reports/Active_Volunteers</members>
-        <members>Volunteer_Reports/Available_Volunteer_Jobs</members>
-        <members>Volunteer_Reports/Inactive_Volunteers</members>
-        <members>Volunteer_Reports/New_Sign_Ups_Contacts</members>
-        <members>Volunteer_Reports/New_Sign_Ups_Leads</members>
-        <members>Volunteer_Reports/Prospective_Volunteers</members>
-        <members>Volunteer_Reports/Recent_Volunteers</members>
-        <members>Volunteer_Reports/Top_Volunteers_by_Lifetime_Hours</members>
-        <members>Volunteer_Reports/Top_Volunteers_by_Recent_Hours</members>
-        <members>Volunteer_Reports/Unassigned_Volunteers2</members>
-        <members>Volunteer_Reports/Unique_Volunteers2</members>
-        <members>Volunteer_Reports/Upcoming_Shifts_Needing_Volunteers</members>
-        <members>Volunteer_Reports/Upcoming_Shifts_with_Volunteers</members>
-        <members>Volunteer_Reports/Upcoming_Volunteers</members>
-        <members>Volunteer_Reports/Volunteer_Hours_By_Month_Matrix</members>
-        <members>Volunteer_Reports/Volunteer_Hours_This_Year2</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Account</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Campaign</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Job</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Month2</members>
-        <members>Volunteer_Reports/Volunteer_Hours_for_Dashboard2</members>
-        <members>Volunteer_Reports/Volunteer_Jobs_With_Shift_Summary</members>
-        <members>Volunteer_Reports/Volunteer_Roster</members>
-        <members>Volunteer_Reports/Volunteers_Last_Month</members>
-        <members>Volunteer_Reports/Volunteers_This_Year</members>
-        <members>Volunteer_Reports/Volunteers_by_Account</members>
-        <members>Volunteer_Reports/Volunteers_by_Availability</members>
-        <members>Volunteer_Reports/Volunteers_by_Skill</members>
-        <members>Volunteer_Reports/Volunteers_with_any_Volunteer_Status</members>
-        <members>unfiled$public</members>
-        <name>Report</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ReportType</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Scontrol</name>
     </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Translations</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Workflow</name>
     </types>
     <version>23.0</version>
 </Package>
