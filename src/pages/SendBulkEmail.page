@@ -10,7 +10,7 @@
         <apex:pageBlock title="{!strJobName}" rendered="true"  mode="edit">
             <apex:pageBlockButtons >
                 <apex:commandButton action="{!SendMail}" value="{!$Label.labelButtonSend}" immediate="false" />
-                <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonCancel}" immediate="true" />
+                <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonClose}" immediate="true" />
             </apex:pageBlockButtons>                                        
 
             <apex:pageMessages showDetail="false" />
