@@ -275,17 +275,25 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		
 		ctrl.fLogActivity = false; // upgraders might not have Activities on for Jobs and Shifts
 		PageReference p2 = ctrl.SendMail();
-		system.assertEquals(p1.getUrl(), p2.getUrl());
+		system.assertEquals(null, p2);
 		
+		// misc 
+		system.assert(ctrl.OpenEmailTemplateFolder() != null);
+		system.assert(ctrl.EditEmailTemplate() != null);
+
 		// test no template
 		ctrl.templateId = null;
+        ctrl.LoadEmailTemplate();
+        System.assert(ctrl.strSubject == null);
+        System.assert(ctrl.strMessage == null);
 		system.assertEquals(null, ctrl.SendMail());
 		
 		// test no contacts found
 		ctrl.hourStatus.Status__c = 'Bogus';
         ctrl.StatusChanged();
         System.assertEquals(0, ctrl.numberOfContacts);
-		system.assertEquals(null, ctrl.SendMail()); 		
+		system.assertEquals(null, ctrl.SendMail()); 	
+		
     }
         
     public static testmethod void TestJobOnly() {
@@ -343,7 +351,13 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		
 		ctrl.fLogActivity = false; // upgraders might not have Activities on for Jobs and Shifts
 		PageReference p2 = ctrl.SendMail();
-		system.assertEquals(p1.getUrl(), p2.getUrl());
+		system.assertEquals(null, p2);
+		
+		// test bounced email handling
+		con.EmailBouncedReason = 'testing';
+		con.EmailBouncedDate = system.Today();
+		update con;
+		system.assertEquals(null, ctrl.SendMail());		
 		
     }
 }
