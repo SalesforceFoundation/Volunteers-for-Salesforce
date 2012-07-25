@@ -30,10 +30,23 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         
         
 		// initialize the list of all fields on Volunteer Hours.
-		// ideally, we'd only soql the fields in the field set, but there is no way to read them.
 		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
 		listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet());            
+		listStrFields.addAll(mapS.keySet());  
+		
+		/* here is code that would use metadata api for fieldsets.
+		unfortunately, the user then won't get an error if they include a field from a related object,
+		but we won't update it either.  Thus I think it is better to just get the fields on the Hours
+		object so if they add a related field to contacts (for example), they will get a runtime error
+		trying to display the page.
+		
+        for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.GW_Volunteers__MassEditVolunteerHours.getFields()) {
+            listStrFields.add(f.getFieldPath());
+        }
+        // add fields we hardcode on the page
+        listStrFields.add('Volunteer_Shift__c');
+        listStrFields.add('Contact__c');
+		*/        		          
     }   
 
     
