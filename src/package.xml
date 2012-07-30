@@ -28,5 +28,9 @@
         <members>*</members>
         <name>StaticResource</name>
     </types>
+    <types>
+        <members>Contact</members>
+        <name>Workflow</name>
+    </types>
     <version>23.0</version>
 </Package>
