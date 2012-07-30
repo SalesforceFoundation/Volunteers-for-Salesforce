@@ -12,8 +12,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 	public ID fromEmailId { get; set; }
 	public string strJobName { get; set; }
 	public boolean fLogActivity { get; set; }
+	public boolean fEmailContactsOnlyOnce { get; set; }
 
 	private ID folderId { get; set; }
+	private ID campaignId { get; set; }
 	private ID shiftId { get; set; }
 	private ID jobId { get; set; }
 	
@@ -21,12 +23,21 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 	public VOL_CTRL_SendBulkEmail() { 
 		
 		// figure out what object we were invoked from
+		campaignId = ApexPages.currentPage().getParameters().get('campaignId');
 		jobId = ApexPages.currentPage().getParameters().get('jobId');
 		shiftId = ApexPages.currentPage().getParameters().get('shiftId');
 		
-		if (jobId != null) {
+		if (shiftId != null) {
+			Volunteer_Shift__c shift = [select Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Id = :shiftId];
+			strJobName = shift.Volunteer_Job__r.Name + ' - ' + shift.Name;			
+		} else if (jobId != null) {
 			Volunteer_Job__c job = [select Name from Volunteer_Job__c where Id = :jobId];
 			strJobName = job.Name;
+		} else if (campaignId != null) {
+			Campaign cmp = [select Name from Campaign where Id = :campaignId];
+			strJobName = cmp.Name;
+			// in the Campaign case, default to Unique Contacts
+			fEmailContactsOnlyOnce = true;
 		}
 		hourStatus = new Volunteer_Hours__c();
 		numberOfContacts = 0;
@@ -94,11 +105,26 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
     // action method called when status picklist has changed.  requery for number of contacts to email.
     public PageReference StatusChanged() {
+    	list<Volunteer_Hours__c> listHr;
+    	
     	if (shiftId != null) {
-    		NumberOfContacts = [select count() from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Shift__c = :shiftId];    		
-    	} else {
-    		NumberOfContacts = [select count() from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__c = :jobId];
+    		listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Shift__c = :shiftId];    		
+    	} else if (jobId != null){
+    		listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__c = :jobId];
+    	} else if (campaignId != null) {
+    		// Salesforce failed to match our campaignId against the formula field which is text, so use full reference.
+    		listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__r.Campaign__c = :campaignId ];
     	}
+
+		if (fEmailContactsOnlyOnce) {    	
+    		set<ID> setContactId = new set<ID>();
+    		for (Volunteer_Hours__c hr : listHr) {
+    			setContactId.add(hr.contact__c);
+    		}
+    		NumberOfContacts = setContactId.size();
+		} else {
+			NumberOfContacts = listHr.size();
+		}    		
     	return null;
     }
 
@@ -118,13 +144,53 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		
 		try {
 			list<Messaging.SingleEmailMessage> listEmail = new list<Messaging.SingleEmailMessage>();
+			
+			
+			// cases:
+			// specific shift
+			// specific job with or without shifts (or mixture)
+			// specific campaign, with or without jobs, with or without shifts
+			
+			string strSoql = 'select Contact__c, Volunteer_Shift__c, Volunteer_Job__c, Volunteer_Job__r.Campaign__c from Volunteer_Hours__c ' + 
+		    				' where Status__c = \'' + hourStatus.Status__c + '\' and ' + 
+		    					' Contact__r.Email != null ';			
+			
+			if (shiftId != null) {
+				strSoql += ' and Volunteer_Shift__c = :shiftId '; 
+			} else if (jobId != null) {
+				strSoql += ' and Volunteer_Job__c = :jobId '; 
+			} else if (campaignId != null) {
+				strSoql += ' and Volunteer_Job__r.Campaign__c = :campaignId '; // don't use formula field which is text!		
+			}			
+			
+			// to keep track of unique contacts
+			set<ID> setContactId = new set<ID>();
+			
+			for (Volunteer_Hours__c hr : database.query(strSoql)) {
+				if (!fEmailContactsOnlyOnce || setContactId.add(hr.Contact__c)) {
+			    	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+					mail.setTargetObjectId(hr.Contact__c);
+					mail.setWhatId(fEmailContactsOnlyOnce ? hr.Volunteer_Job__r.Campaign__c : 
+						(hr.Volunteer_Shift__c != null ? hr.Volunteer_Shift__c : hr.Volunteer_Job__c));
+					mail.setSaveAsActivity(fLogActivity);
+					if (fromEmailId != null) {
+						mail.setOrgWideEmailAddressId(fromEmailId);
+					}
+					mail.setTemplateID(templateId);	
+					listEmail.add(mail);
+				}					
+	    	}								
 
-			// handle a job with no shifts, a job with shift(s), and a single specific shift.
+/***************
+			// handle a job with no shifts, a job with shift(s), a job with both shifts and hours just on the job,
+			// and a single specific shift. also handle a campaign.
 			list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
 			if (shiftId != null) {
 				listShift = [select Id from Volunteer_Shift__c where Id = :shiftId];
-			} else {
+			} else if (jobId != null){
 				listShift = [select Id from Volunteer_Shift__c where Volunteer_Job__c = :jobId];
+			} else if (campaignId != null) {
+				listShift = [select Id from Volunteer_Shift__c where Volunteer_Campaign__c = :campaignId];				
 			}
 			
 			if (listShift.size() == 0) {
@@ -158,6 +224,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 			    	}				
 				}
 			}
+*************************/
 						
 			// send the email and return
 			if (listEmail.size() > 0) {

@@ -30,7 +30,14 @@
 					</apex:inputField>		
 				</apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem >
+				<apex:pageBlockSectionItem helptext="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}" >
+					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersUniqueContacts}" />
+					<apex:inputCheckbox value="{!fEmailContactsOnlyOnce}" >	
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="statusLoadContacts"/>
+	                </apex:inputCheckbox>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem helptext="{!$Label.labelNumberOfContactsHelpText}" >
 					<apex:outputLabel value="{!$Label.labelNumberOfContacts}"  />
 					<apex:pageBlockSectionItem >
     	               	<apex:actionStatus layout="inline" startText="{!$Label.labelMessageLoading}" stopText="" id="statusLoadContacts" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
