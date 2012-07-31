@@ -26,6 +26,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		campaignId = ApexPages.currentPage().getParameters().get('campaignId');
 		jobId = ApexPages.currentPage().getParameters().get('jobId');
 		shiftId = ApexPages.currentPage().getParameters().get('shiftId');
+		fEmailContactsOnlyOnce = false;
 		
 		if (shiftId != null) {
 			Volunteer_Shift__c shift = [select Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Id = :shiftId];
@@ -170,8 +171,13 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 				if (!fEmailContactsOnlyOnce || setContactId.add(hr.Contact__c)) {
 			    	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 					mail.setTargetObjectId(hr.Contact__c);
-					mail.setWhatId(fEmailContactsOnlyOnce ? hr.Volunteer_Job__r.Campaign__c : 
+					
+					// the rules for which object (and thus template) to support:
+					// if we aren't doing each contact once, then use the shift if we got it, otherwise use the job.
+					// if we are doing contacts only once, then always use the job, which seems more useful than the campaign.
+					mail.setWhatId(fEmailContactsOnlyOnce ? hr.Volunteer_Job__c : 
 						(hr.Volunteer_Shift__c != null ? hr.Volunteer_Shift__c : hr.Volunteer_Job__c));
+						
 					mail.setSaveAsActivity(fLogActivity);
 					if (fromEmailId != null) {
 						mail.setOrgWideEmailAddressId(fromEmailId);
@@ -180,51 +186,6 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 					listEmail.add(mail);
 				}					
 	    	}								
-
-/***************
-			// handle a job with no shifts, a job with shift(s), a job with both shifts and hours just on the job,
-			// and a single specific shift. also handle a campaign.
-			list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-			if (shiftId != null) {
-				listShift = [select Id from Volunteer_Shift__c where Id = :shiftId];
-			} else if (jobId != null){
-				listShift = [select Id from Volunteer_Shift__c where Volunteer_Job__c = :jobId];
-			} else if (campaignId != null) {
-				listShift = [select Id from Volunteer_Shift__c where Volunteer_Campaign__c = :campaignId];				
-			}
-			
-			if (listShift.size() == 0) {
-		    	for (Volunteer_Hours__c hr : [select Contact__c from Volunteer_Hours__c 
-		    			where Status__c = :hourStatus.Status__c and Volunteer_Job__c = :jobId 
-		    			and Contact__r.Email != null ]) {
-			    	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-					mail.setTargetObjectId(hr.Contact__c);
-					mail.setWhatId(jobId);
-					mail.setSaveAsActivity(fLogActivity);
-					if (fromEmailId != null) {
-						mail.setOrgWideEmailAddressId(fromEmailId);
-					}
-					mail.setTemplateID(templateId);	
-					listEmail.add(mail);					
-		    	}								
-			} else {
-				for (Volunteer_Shift__c shift : listShift) {					
-			    	for (Volunteer_Hours__c hr : [select Contact__c from Volunteer_Hours__c 
-			    			where Status__c = :hourStatus.Status__c and Volunteer_Shift__c = :shift.Id 
-			    			and Contact__r.Email != null ]) {
-				    	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-						mail.setTargetObjectId(hr.Contact__c);
-						mail.setWhatId(shift.Id);
-						mail.setSaveAsActivity(fLogActivity);
-						if (fromEmailId != null) {
-							mail.setOrgWideEmailAddressId(fromEmailId);
-						}
-						mail.setTemplateID(templateId);	
-						listEmail.add(mail);					
-			    	}				
-				}
-			}
-*************************/
 						
 			// send the email and return
 			if (listEmail.size() > 0) {
@@ -254,14 +215,14 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 								strDetails = ' ' + listCon[0].Name + ' (' + listCon[0].Email + ') '; 
 							// special case logging Activity failing
 							if (see.getStatusCode() == System.StatusCode.FIELD_INTEGRITY_EXCEPTION && fLogActivity)
-								strDetails += ' ' + ' - Logging of Activities must be enabled for Volunteer Jobs and Volunteer Shifts.  Please see the Volunteers for Salesforce Installation and Configuration Guide.'; 
+								strDetails += ' ' + Label.labelMassEmailVolunteersActivityLoggingError; 
 
 							ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, see.getStatusCode() + ': ' + see.getMessage() + strDetails));
 						}
 					}
 				}
 				if (cSuccess > 0) 
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Successfully sent emails: ' + cSuccess));						
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, Label.labelMassEmailVolunteersSuccessCount + ' ' + cSuccess));						
 				if (listSER.size() > 0)  
 				    return null;  // stay on the page
 			}
@@ -427,4 +388,68 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		system.assertEquals(null, ctrl.SendMail());		
 		
     }
+    
+public static testmethod void TestCampaign() {
+    
+        // set up intial test data
+        Account acc = new Account(name='Individual Test Account');
+        insert acc;
+        Contact con = new Contact(Lastname='Testy', Email='testy@foo.com', AccountId=acc.Id);
+        insert con;
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+        	name='Test Campaign', IsActive=true);
+        insert cmp;
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        insert job;
+        list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();   
+        integer cHours = 3;     
+        for (integer i = 0; i < cHours; i++) {
+            Volunteer_Hours__c hours = new Volunteer_Hours__c(
+                Volunteer_Job__c=job.id, 
+                Contact__c=con.Id,
+                Number_of_Volunteers__c=3,
+                Start_Date__c=System.today(), 
+                Status__c='Confirmed'
+                );
+            listHours.add(hours);
+        }                       
+        insert listHours;
+        
+        //point to our VF page
+        PageReference p = new PageReference('Page.SendBulkEmail');
+        p.getParameters().put('campaignId', cmp.id);
+        Test.setCurrentPageReference(p);
+        
+        //instantiate the controller for this opp
+        VOL_CTRL_SendBulkEmail ctrl = new VOL_CTRL_SendBulkEmail();
+        System.AssertEquals(cmp.Id, ctrl.campaignId);
+        System.AssertEquals(null, ctrl.jobId);
+        System.AssertEquals(null, ctrl.shiftId);
+        System.Assert(ctrl.strJobName != null);
+        
+        // load a template
+        EmailTemplate et = [select Id from EmailTemplate where DeveloperName='Volunteer_Shift_Reminder'];
+        ctrl.templateId = et.Id;
+        ctrl.LoadEmailTemplate();
+        System.assert(ctrl.strSubject != null);
+        System.assert(ctrl.strMessage != null);
+        
+        // find contacts
+		ctrl.fEmailContactsOnlyOnce = false;
+        ctrl.hourStatus.Status__c = 'Confirmed';
+        ctrl.StatusChanged();
+        System.assertEquals(cHours, ctrl.numberOfContacts);
+		
+		PageReference p1 = ctrl.Cancel();
+		system.assert(p1 != null);
+		
+		ctrl.fLogActivity = false; // upgraders might not have Activities on for Jobs and Shifts
+		PageReference p2 = ctrl.SendMail();
+		system.assertEquals(null, p2);
+		
+		// test fEmailContactsOnlyOnce
+		ctrl.fEmailContactsOnlyOnce = true;
+        ctrl.StatusChanged();
+        System.assertEquals(1, ctrl.numberOfContacts);		
+    }   
 }
