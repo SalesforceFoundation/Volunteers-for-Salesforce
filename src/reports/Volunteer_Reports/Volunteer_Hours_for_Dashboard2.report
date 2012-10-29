@@ -5,6 +5,7 @@
         <datatype>number</datatype>
         <developerName>FORMULA1</developerName>
         <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
         <masterLabel>Unique Volunteers</masterLabel>
         <scale>0</scale>
     </aggregates>

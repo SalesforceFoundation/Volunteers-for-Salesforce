@@ -344,12 +344,28 @@ day:      &apos;day&apos;</value>
         <value>View Templates</value>
     </labels>
     <labels>
+        <fullName>labelMassEmailVolunteersActivityLoggingError</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Activity logging error on the MassEmailVolunteers page</shortDescription>
+        <value>- Logging of Activities must be enabled for Volunteer Jobs and Volunteer Shifts.  Please see the Volunteers for Salesforce Installation and Configuration Guide.</value>
+    </labels>
+    <labels>
         <fullName>labelMassEmailVolunteersLogActivity</fullName>
         <categories>MassEmailVolunteers</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for Log Activity checkbox on Mass Email Volunteers page</shortDescription>
-        <value>Log an Activity for each Contact</value>
+        <value>Log an Activity for each email</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailVolunteersSuccessCount</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>success message on the Mass Email Volunteers page</shortDescription>
+        <value>Successfully sent emails:</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersTitle</fullName>
@@ -358,6 +374,22 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>Mass Email Volunteers title</shortDescription>
         <value>Mass Email Volunteers</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailVolunteersUniqueContacts</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Include Contacts Only Once checkbox on Mass Email Volunteers page</shortDescription>
+        <value>Include Contacts only once</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailVolunteersUniqueContactsHelpText</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>help text for Include Contacts Only Once checkbox</shortDescription>
+        <value>If unchecked, email the volunteer Contact for every Hours record on a Job or Shift. Checking this box will limit to only one email for each unique Contact.</value>
     </labels>
     <labels>
         <fullName>labelMessageBody</fullName>
@@ -397,7 +429,15 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for the Number Of Contacts field on MassEmailVolunteers</shortDescription>
-        <value>Number of Contacts</value>
+        <value>Number of Contact Emails</value>
+    </labels>
+    <labels>
+        <fullName>labelNumberOfContactsHelpText</fullName>
+        <categories>MassEmailVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>help text for Number of Contacts</shortDescription>
+        <value>The number of emails that will be sent. Changing the &quot;Include Contacts only once&quot; checkbox may change this number.</value>
     </labels>
     <labels>
         <fullName>labelReturnToCalendar</fullName>

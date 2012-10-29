@@ -180,12 +180,28 @@ day: &apos;jour&apos;</label>
         <name>labelMassEmailViewTemplates</name>
     </customLabels>
     <customLabels>
+        <label>Suivi des Activités doit être activé pour les objets Poste de Bénévolat et les Quart de Travail. Veuillez voir le &quot;Volunteers for Salesforce Installation and Configuration Guide&quot; pour plus d&apos;informations.</label>
+        <name>labelMassEmailVolunteersActivityLoggingError</name>
+    </customLabels>
+    <customLabels>
         <label>Saisir une Activité pour chaque Contact</label>
         <name>labelMassEmailVolunteersLogActivity</name>
     </customLabels>
     <customLabels>
+        <label>Nombre d&apos;emails envoyées avec succes:</label>
+        <name>labelMassEmailVolunteersSuccessCount</name>
+    </customLabels>
+    <customLabels>
         <label>Envoi Email aux Bénévoles en masse</label>
         <name>labelMassEmailVolunteersTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Inclure les Contacts une fois seulement</label>
+        <name>labelMassEmailVolunteersUniqueContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>Si décochée, envoyer un email au bénévole pour chaque instance d&apos;Heures de Bénévolat sur un Poste ou Quart de Travail. Cocher cette case limite à un seule email pour chaque Contact unique.</label>
+        <name>labelMassEmailVolunteersUniqueContactsHelpText</name>
     </customLabels>
     <customLabels>
         <label><!-- label for the message body in MassEmailVolunteers --></label>
@@ -206,6 +222,10 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>Nombre de Contacts</label>
         <name>labelNumberOfContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>Le nombre d&apos;emails qui seront envoyée. Changer la case &quot;Inclure les Contacts une fois seulement&quot; peut changer ce nombre.</label>
+        <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
         <label>retour au Calendrier</label>

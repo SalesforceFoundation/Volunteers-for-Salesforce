@@ -154,6 +154,7 @@
         <referenceTo>Volunteer_Job__c</referenceTo>
         <relationshipName>Volunteer_Job_Slots</relationshipName>
         <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>

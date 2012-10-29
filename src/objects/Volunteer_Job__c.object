@@ -47,6 +47,7 @@
         <relationshipLabel>Volunteer Jobs</relationshipLabel>
         <relationshipName>Volunteer_Jobs</relationshipName>
         <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>

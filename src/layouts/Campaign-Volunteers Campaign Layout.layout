@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>Mass_Email_Volunteers</customButtons>
     <customButtons>Campaign_Shift_Calendar</customButtons>
     <customButtons>CampaignRoster</customButtons>
     <excludeButtons>Submit</excludeButtons>

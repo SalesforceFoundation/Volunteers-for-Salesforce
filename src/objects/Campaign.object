@@ -319,6 +319,18 @@
         <url>/apex/GW_Volunteers__JobCalendar?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
+        <fullName>Mass_Email_Volunteers</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Mass Email Volunteers</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/GW_Volunteers__SendBulkEmail?campaignId={!Campaign.Id}&amp;retURL={! 
+URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
+    </webLinks>
+    <webLinks>
         <fullName>New_Volunteer_Campaign</fullName>
         <availability>online</availability>
         <displayType>massActionButton</displayType>

@@ -317,7 +317,7 @@
         <fullName>InternationalLeads</fullName>
         <filterScope>Queue</filterScope>
         <label>International Leads</label>
-        <queue>International Leads</queue>
+        <queue>InternationalLeads</queue>
     </listViews>
     <listViews>
         <fullName>MyUnreadLeads</fullName>
@@ -343,7 +343,7 @@
         <fullName>USLeads</fullName>
         <filterScope>Queue</filterScope>
         <label>US Leads</label>
-        <queue>US Leads</queue>
+        <queue>USLeads</queue>
     </listViews>
     <listViews>
         <fullName>ViewCustom1</fullName>

@@ -123,6 +123,10 @@
         <name>Campaign_Shift_Calendar</name>
     </webLinks>
     <webLinks>
+        <label>Envoi Email aux Bénévoles en masse</label>
+        <name>Mass_Email_Volunteers</name>
+    </webLinks>
+    <webLinks>
         <label>Nouveau Campagne de Bénévolat</label>
         <name>New_Volunteer_Campaign</name>
     </webLinks>

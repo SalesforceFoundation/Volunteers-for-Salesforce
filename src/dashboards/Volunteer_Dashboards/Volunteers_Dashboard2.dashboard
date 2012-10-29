@@ -7,6 +7,7 @@
     <leftSection>
         <columnSize>Medium</columnSize>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <componentType>Table</componentType>
             <displayUnits>Auto</displayUnits>
             <header>Volunteer Leaderboard</header>
@@ -20,6 +21,7 @@
             <title>Top Volunteers by Lifetime Hours</title>
         </components>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <componentType>Table</componentType>
             <displayUnits>Auto</displayUnits>
             <footer>Click on the table to edit the underlying report&apos;s Time Frame to specify the time period to use.</footer>
@@ -33,6 +35,7 @@
             <title>Top Volunteers by Recent Hours</title>
         </components>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <componentType>Table</componentType>
             <displayUnits>Auto</displayUnits>
             <indicatorHighColor>#54C254</indicatorHighColor>
@@ -47,6 +50,7 @@
     <middleSection>
         <columnSize>Medium</columnSize>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <componentType>Gauge</componentType>
             <displayUnits>Integer</displayUnits>
             <gaugeMax>1000.0</gaugeMax>
@@ -63,6 +67,7 @@
             <title>Total Hours This Year</title>
         </components>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Column</componentType>
             <displayUnits>Auto</displayUnits>
@@ -82,6 +87,7 @@
     <rightSection>
         <columnSize>Medium</columnSize>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <componentType>Gauge</componentType>
             <displayUnits>Auto</displayUnits>
             <footer>(non-unique counts)</footer>
@@ -99,6 +105,7 @@
             <title>Total Volunteers This Year</title>
         </components>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <componentType>Gauge</componentType>
             <displayUnits>Auto</displayUnits>
             <gaugeMax>200.0</gaugeMax>
@@ -115,6 +122,7 @@
             <title>Unique Volunteers This Year</title>
         </components>
         <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Pie</componentType>
             <displayUnits>Auto</displayUnits>
