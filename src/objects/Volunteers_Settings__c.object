@@ -5,6 +5,18 @@
     <description>Custom settings used by Volunteers for Salesforce.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Recurring_Job_Future_Months__c</fullName>
+        <defaultValue>12</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>How many months into the future should the recurring job shift be scheduled?</inlineHelpText>
+        <label>Recurring Job Future Months</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Signup_Bucket_Account_On_Create__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
