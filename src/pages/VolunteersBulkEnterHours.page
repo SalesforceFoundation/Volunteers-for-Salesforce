@@ -6,6 +6,12 @@
  
 <apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" >
 
+<script type="text/javascript">
+	// hack that prevents Salesforce from always putting focus
+	// on the first date field, which pops up the ugly calendar control!
+    window.onload = function() { }
+</script>
+
     <apex:sectionHeader title="{!$Label.labelMassEditTitle}" />      
     <apex:form > 
         
@@ -22,7 +28,7 @@
             <apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" /><br/>             
             <br/>
 
-            <apex:pageBlockSection columns="1" >
+            <apex:pageBlockSection columns="2" >
             	<apex:pageBlockSectionItem >
 	                <apex:outputLabel value="{!$ObjectType.Campaign.Label}" />
 	                <apex:selectList value="{!campaignId}" size="1" >
@@ -32,6 +38,11 @@
         		</apex:pageBlockSectionItem>
         		
             	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="Show Shifts & Hours in this time frame" />
+	                <apex:outputLabel value=" " />
+	            </apex:pageBlockSectionItem>
+	            
+            	<apex:pageBlockSectionItem >
 	                <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" />
 	                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
 	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
@@ -40,6 +51,13 @@
         		</apex:pageBlockSectionItem>
     
             	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="From" />
+	                <apex:inputField value="{!vhDateFilter.Start_Date__c}" required="false" >
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+					</apex:inputField>	                    
+        		</apex:pageBlockSectionItem>
+
+            	<apex:pageBlockSectionItem >
 	                <apex:outputLabel value="{!$ObjectType.Volunteer_Shift__c.Label + '  ' + $Label.labelMassEditOptional }" />
 	                <apex:selectList value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts">
 	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" />
@@ -47,6 +65,13 @@
 	                </apex:selectList>
         		</apex:pageBlockSectionItem>
     
+            	<apex:pageBlockSectionItem >
+	                <apex:outputLabel value="To" />
+	                <apex:inputField value="{!vhDateFilter.End_Date__c}" >
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+					</apex:inputField>
+        		</apex:pageBlockSectionItem>
+
             	<apex:pageBlockSectionItem >
 		            <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" /><br/>
         		</apex:pageBlockSectionItem>
