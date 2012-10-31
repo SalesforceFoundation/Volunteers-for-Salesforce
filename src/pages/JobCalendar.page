@@ -89,10 +89,13 @@
 						        
 						        // map JobId's to unique colors.
 						        var jobId = result[i].GW_Volunteers__Volunteer_Job__c;
-						        var icolor = jQuery.inArray(jobId, jobIds);
-						        if (icolor == -1) {
-						        	icolor = jobIds.push(jobId) - 1;
-						        }  
+						        
+						        // used to map job to colors on a first come basis,
+						        // but now try to match a color to a job regardless of
+						        // what order the job appears on the page.
+						        // var icolor = jQuery.inArray(jobId, jobIds);
+						        // if (icolor == -1) { icolor = jobIds.push(jobId) - 1; } 
+						        var icolor = numFromId(jobId); 
 						        var colorShift = colors[icolor % colors.length];
 						        						        	
 						        var intTotalVolunteers = result[i].GW_Volunteers__Total_Volunteers__c;
@@ -105,7 +108,9 @@
 						        var strUrl;
 						        
 						        if ({!fWeb}) {
-						        	strUrl = '{!$Site.CurrentSiteUrl}GW_Volunteers__VolunteersJobListingFS?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
+						        	strUrl = '{!$Site.CurrentSiteUrl + IF(fPortal, 'VolunteersPortalJobListing', 'VolunteersJobListingFS')}' + 
+						        		'?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
+						        		'&dtMonthFilter=' + strApexDateLocale(dtStart, true) +
 						        		'{!IF(strParams != null, '&' + strParams, '')}';
 						        } else if ({!NOT(fPrint)}) {
 						        	strUrl = '/' + strShiftId;
@@ -204,6 +209,20 @@
 		var popWin = window.open(url,"win","dependent=no,toolbar=1,directories=0,location=0,status=1," + 
 			"menubar=1,scrollbars=1,resizable=1,width=1200,height=600",false);
 		popWin.focus();
+	}
+	
+	/*******************************************************************************************************
+	* utility to create a number out of a Salesforce ID.
+	********************************************************************************************************/
+	function numFromId(id) {
+		var len = id.length;
+		var num = 0;
+		var i = 0; 
+		while (i < len) {
+			num += id.charCodeAt(i);
+			i++;
+		}
+		return num;
 	}
 	
 </script>
