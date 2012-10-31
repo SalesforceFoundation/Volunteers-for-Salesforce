@@ -46,7 +46,8 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         // add fields we hardcode on the page
         listStrFields.add('Volunteer_Shift__c');
         listStrFields.add('Contact__c');
-		*/        		          
+		*/
+		      		          
     }   
 
     
@@ -79,6 +80,23 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         
         set;
     }
+    
+	// dates to filter the list of shifts and hours we are displaying
+    global date startDate { get; set; }
+    global date endDate { get; set; }
+    
+    global Volunteer_Hours__c vhDateFilter {
+    	get {
+    		if (vhDateFilter == null) {
+    			vhDateFilter = new Volunteer_Hours__c();
+				// initial date range
+				vhDateFilter.Start_Date__c = system.today().addMonths(-1).toStartOfMonth();
+				vhDateFilter.End_Date__c = system.today().addMonths(2).toStartOfMonth().addDays(-1);      			
+    		}
+    		return vhDateFilter;
+    	}
+    	set;
+    }
 
     // the user has changed the Volunteer Job dropdown
     global virtual PageReference ChangeVolunteerJob() {
@@ -97,7 +115,8 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     global list<SelectOption> listSOVolunteerShifts {
         get {
             if (listSOVolunteerShifts == null && volunteerJobId != null) {
-                listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId);
+                listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId, 
+                	vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c);
             }
             return listSOVolunteerShifts;
         }
@@ -144,7 +163,15 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         if (volunteerShiftId != null) {
         	strSoql += ' and Volunteer_Shift__c = :volunteerShiftId ';
         }
-        strSoql += ' order by Full_Name__c';
+        if (vhDateFilter.Start_Date__c != null) {
+        	Date dtStart = vhDateFilter.Start_Date__c;
+        	strSoql += ' and Start_Date__c >= :dtStart ';
+        }
+        if (vhDateFilter.End_Date__c != null) {
+        	Date dtEnd = vhDateFilter.End_Date__c;
+        	strSoql += ' and Start_Date__c <= :dtEnd ';
+        }
+        strSoql += ' order by Full_Name__c, Start_Date__c ';
         
         listVolunteerHours = Database.Query(strSoql); 
                 
