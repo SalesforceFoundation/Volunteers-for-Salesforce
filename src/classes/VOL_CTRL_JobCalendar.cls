@@ -59,6 +59,9 @@ global with sharing class VOL_CTRL_JobCalendar {
         p = params.get('Print');
         if (p == '1') fPrint = true;
 
+    	// we can derive whether we are within the Portal or not, so no need for parameter.
+    	fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
+
 		// we can derive whether we are within Sites or not, so no need for parameter.
     	fWeb = false; 
         fWeb = (Site.getName() != null);
@@ -75,13 +78,17 @@ global with sharing class VOL_CTRL_JobCalendar {
         if (p != null && p != '') strCalendarView = p;
 
 		// finally, keep all parameters for passing to VolunteersJobListingFS
-		strParams = ApexPages.currentPage().getUrl();
-		integer iparams = strParams.indexOf('?');
-		if (iparams >= 0){
-			strParams = strParams.substring(iparams+1);
-		} else {
-			strParams = '';
-		}		
+		// (but remove the params that the page will explicitly add to the url)
+		params.remove('Calendar');
+		params.remove('volunteerShiftId');
+		params.remove('jobId');
+		params.remove('dtMonthFilter');
+		strParams = '';
+		string strAmp = '';
+		for (string str : params.keySet()) {
+			strParams += strAmp + str + '=' + params.get(str);
+			strAmp = '&';
+		}
     }
     
     global string strURLtoCSSFile { 
@@ -110,6 +117,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     global boolean fWeb { get; set; }
     global string strCalendarView { get; set; }
     global string strParams { get; set; }
+    global boolean fPortal { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
     global ID campaignId { get; set; }
@@ -169,7 +177,6 @@ global with sharing class VOL_CTRL_JobCalendar {
     // the user has changed the Volunteer Job dropdown
     global virtual PageReference ChangeVolunteerJob() {
         // clear out all state that is specific to the Job
-
         return null;
     }
     
