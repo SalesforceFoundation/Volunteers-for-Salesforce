@@ -114,6 +114,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Job_Recurrence_Schedule__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Job Recurrence Schedule</label>
+        <referenceTo>Job_Recurrence_Schedule__c</referenceTo>
+        <relationshipLabel>Volunteer Shifts</relationshipLabel>
+        <relationshipName>Volunteer_Shifts</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Number_of_Volunteers_Still_Needed__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -132,6 +143,16 @@
         <label>Start Date &amp; Time</label>
         <required>true</required>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>System_Note__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Text information from the system scheduler.</inlineHelpText>
+        <label>System Note</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Total_Volunteers__c</fullName>
