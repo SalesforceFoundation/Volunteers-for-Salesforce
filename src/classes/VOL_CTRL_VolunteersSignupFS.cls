@@ -66,7 +66,7 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     global virtual PageReference Save() {  
     	try { 
     		// save or update the contact              
-	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(contact, contact.Volunteer_Organization__c, listStrFields);
+	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(null, contact, contact.Volunteer_Organization__c, listStrFields);
 			
 			// upload any attachment
 			if (contactId != null && attachment != null && attachment.body != null) {
