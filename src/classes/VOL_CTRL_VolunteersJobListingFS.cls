@@ -8,6 +8,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global ID campaignIdFilter { get; set; }
     global ID jobIdFilter { get; set; }
     global boolean fCalendar { get; set; }
+    global boolean fPortal { get; set; }
     global boolean ShowJobName { get; set; }
     global boolean ShowDescription { get; set; }
     global boolean ShowLocationAddress { get; set; }
@@ -22,12 +23,23 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global string strFileUploadLabel { get; set; }
     global Attachment attachment { get; set; }   
     global string strParams { get; set; }
+    global integer nMonthsToShow { get; set; }
+    global date dtMonthFilter { get; set; }
     
     
     // contact record to bind the Contact SignUp form to.
     global Contact contact { 
         get {
-            if (contact == null) contact = new Contact();
+            if (contact == null) {
+           		contact = new Contact();
+           		
+		        // when used within the Portal, we should use the logged in Contact
+		        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
+		        if (cId != null) contactIdSignUp = cId.getValue();
+				if (contactIdSignUp != null && contactIdSignUp != '') {
+            		VOL_SharedCode.LoadAndCopyObject(contactIdSignUp, contact);            		
+            	}
+            }
             return contact;
         }
         set; 
@@ -84,8 +96,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowSkills = false;
         ShowShifts = true;
     	strLanguage = 'en-us'; 
-    	strDateFormat = 'M/d/yyyy';
+    	strDateFormat = 'EEEE M/d/yyyy';
     	strTimeFormat = 'h:mm tt';
+    	nMonthsToShow = 24;	// default to large value to support backward compatibility.
+    	dtMonthFilter = system.today(); // default to current month.
     	        
         // handle optional parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
@@ -113,11 +127,18 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p != null && p != '') strDateFormat = p;
         p = params.get('TimeFormat');
         if (p != null && p != '') strTimeFormat = p;
+        p = params.get('nMonthsToShow');
+        if (p != null && p != '') nMonthsToShow = integer.valueOf(p);
+        p = params.get('dtMonthFilter');
+        if (p != null && p != '') dtMonthFilter = date.valueOf(p);
         p = params.get('FileUploadLabel');
         if (p != null && p != '') {
         	strFileUploadLabel = p;
         	attachment = new Attachment();
         }
+
+    	// we can derive whether we are within the Portal or not, so no need for parameter.
+    	fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
         
 		// finally, keep all parameters for passing back to JobCalendar
 		strParams = ApexPages.currentPage().getUrl();
@@ -127,8 +148,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 		} else {
 			strParams = '';
 		}		
-        
-        
+                
 		// initialize the list of all fields on Contact.
 		// ideally, we'd only include the fields in the Field Set,
 		// but Apex currently has no way to see what those are.
@@ -138,7 +158,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 		listStrFields.addAll(mapS.keySet());    		
         
         contactIdSignUp = null;
-        volunteerHoursIdSignUp = null;
+        volunteerHoursIdSignUp = null;        
     }
 
     // The list of Volunteer Jobs.
@@ -147,38 +167,40 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (listVolunteerJobs == null) {
                         
                 listVolunteerJobs = new list<Volunteer_Job__c>();
-                DateTime dtNow = system.Now().addHours(-1);
+                //DateTime dtNow = system.Now().addHours(-1);
+                DateTime dtNow = dtMonthFilter.toStartOfMonth();
+                DateTime dtLast = dtNow.date().addMonths(nMonthsToShow);
                 
                 if (jobIdFilter != null) {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c,
+                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c From Volunteer_Job_Slots__r 
-                            where Start_Date_Time__c >= :dtNow 
+                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
                         from Volunteer_Job__c where Id = :jobIdFilter 
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else if (campaignIdFilter != null) {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c,
+                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c From Volunteer_Job_Slots__r 
-                            where Start_Date_Time__c >= :dtNow 
+                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
                         from Volunteer_Job__c where Campaign__c = :campaignIdFilter and Display_on_Website__c = true 
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c,
+                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c From Volunteer_Job_Slots__r 
-                            where Start_Date_Time__c >= :dtNow 
-                            order by Start_Date_Time__c) 
+                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast 
+                            order by Start_Date_Time__c LIMIT 100) 
                         from Volunteer_Job__c where Campaign__r.IsActive = true and Display_on_Website__c = true 
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name LIMIT 999];
                 }
                 
             	// now remove any jobs whose shifts are all past date.
@@ -189,10 +211,37 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             		}
             	}
             }
+            dateTimeFixup(listVolunteerJobs);
             return sortVolunteerJobs(listVolunteerJobs);
         }
         
         set;
+    }
+    
+    private void dateTimeFixup(list<Volunteer_Job__c> listJob) {
+    	// get default time zone for site guest user
+    	User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+    	string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
+    	string strFormatEndTime = strTimeFormat.replace('tt','a');
+    	
+    	for (Volunteer_Job__c job : listJob) {
+			string strTimeZone = job.Volunteer_Website_Time_Zone__c;
+			if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
+			if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
+
+    		for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
+    			
+    			DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
+    			string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
+    			
+    			// see if start and end are on the same day
+    			if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
+    				shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);	
+    			} else {
+    				shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);	    				
+    			}    			
+    		}
+    	}
     }
     
     global virtual list<Volunteer_Job__c> sortVolunteerJobs (list<Volunteer_Job__c> jobsList) {
@@ -245,6 +294,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         return null;
     }
     
+    // action method to cancel the signup dialog,
+    // clearing any cached state.
+    global virtual PageReference CancelSignUp() {
+        volunteerHoursIdSignUp = null;
+        strSaveResult = null;
+        return null;
+    }
     // just before we insert the new Volunteer Hours record,
     // give clients a chance to set any additional information they want.
     global virtual void VolunteerHoursBeforeInsert(Volunteer_Hours__c vh) {
@@ -252,14 +308,19 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     }   
     
     global virtual PageReference VolunteerShiftSignUp() {
-		try {    	
+		try { 			   	
 	        // clear return variables in case we fail.
 	        contactIdSignUp = null;
 	        volunteerHoursIdSignUp = null;
 	        strSaveResult = null;
 	                    
+	        // when used within the Portal, we should use the logged in Contact
+	        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
+	        ID contactIdPortal = null;
+	        if (cId != null) contactIdPortal = cId.getValue();
+
     		// save or update the contact              
-	        contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contact, contact.Volunteer_Organization__c, listStrFields);
+	        contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPortal, contact, contact.Volunteer_Organization__c, listStrFields);
 
 			// upload any attachment
 			if (contactIdSignUp != null && attachment != null && attachment.body != null) {
@@ -276,7 +337,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 	            if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
 	            vhours.Status__c = 'Web Sign Up';
 	            vhours.Start_Date__c = system.today();
-	            VolunteerHoursBeforeInsert(vhours); 
+	            VolunteerHoursBeforeInsert(vhours);
 	            insert vhours;
 	            volunteerHoursIdSignUp = vhours.Id;
 	            
@@ -285,8 +346,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 	        }
     	} catch (exception ex) {
     		StrSaveResult = ex.getMessage(); 
+    		StrSaveResult += ' stack: ' + ex.getStackTraceString();
+    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage())); 		
     	}
-        return null;
+        return null; 
     }
 
     //==================== TEST METHOD(s) ======================================
