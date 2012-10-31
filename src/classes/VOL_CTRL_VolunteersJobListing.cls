@@ -122,9 +122,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
                             Description__c From Volunteer_Job_Slots__r 
                         	where Start_Date_Time__c >= :dtNow                        
-                            order by Start_Date_Time__c) 
+                            order by Start_Date_Time__c LIMIT 100) 
                         from Volunteer_Job__c where Campaign__r.IsActive = true and Display_on_Website__c = true 
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name LIMIT 999];
                 }
                 
             	// now remove any jobs whose shifts are all past date.
