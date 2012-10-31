@@ -6,9 +6,9 @@
  
 <apex:page controller="VOL_CTRL_VolunteersJobListingFS" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false">
 
-<script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
-<script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.8.7.custom.min.js')}"/>
-<apex:stylesheet value="{!URLFOR($Resource.jQueryFiles, 'css/ui-lightness/jquery-ui-1.8.7.custom.css')}"/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js" type="text/javascript"></script>
+<apex:stylesheet value="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/ui-lightness/jquery-ui.css" />
 <apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
 <script type="text/javascript">
@@ -20,7 +20,7 @@
 
 		// if there are errors, display the signup dialog.
 		// we detect this by seeing if Salesforce inserted the error style on any item.        
-        if (j$(".error").size() > 0) {
+        if (j$(".error").size() > 0 || '{!JSENCODE(strSaveResult)}' != '') {
 			j$('#dlgSignUp').dialog('open');
 		} else if ('{!JSENCODE(volunteerHoursIdSignUp)}' != '') { // display thank you!
 			j$('#dlgThankYou').dialog('open');		
@@ -85,8 +85,9 @@
     }      
       
 </script>
+	
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
-    	<apex:outputLink value="/GW_Volunteers__JobCalendar?{!strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+    	<apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPortal, 'VolunteersPortalJobCalendar', 'JobCalendar') + '?' + strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
     </apex:outputPanel>
 
     <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
@@ -117,7 +118,7 @@
             <apex:column style="text-align:center;" >
                 <apex:outputPanel rendered="{!shift.Number_of_Volunteers_Still_Needed__c != 0}" >
                     <a href="SignUp" onclick="
-                    	var x = JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}');            
+                    	var x = '{!shift.System_Note__c}';            
                         OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '{!shift.Id}', '{!JSENCODE(job.Name)}', x); 
                         return false;"
                         >{!$Label.labelLinkSignUp}</a>
@@ -125,7 +126,7 @@
                 <apex:outputText value="{!$Label.labelLinkFull}" style="font-style:italic;" rendered="{!BLANKVALUE(shift.Number_of_Volunteers_Still_Needed__c, -1) == 0}" />
                 &nbsp;&nbsp;&nbsp;
             </apex:column>
-            <apex:column ><div id="txtShiftStartDateTime"><script>document.write(JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}'));</script>&nbsp;&nbsp;&nbsp;</div></apex:column>
+            <apex:column ><div id="txtShiftStartDateTime"><script>document.write('{!shift.System_Note__c}');</script>&nbsp;&nbsp;&nbsp;</div></apex:column>
             <apex:column ><apex:outputField value="{!shift.Description__c}" /></apex:column>
         </apex:dataTable>
         <br/>
@@ -134,13 +135,14 @@
     </apex:repeat>
     <apex:outputText value="{!$Label.labelMessageNoJobs}" rendered="{!NOT(VolunteersHasJobs)}" />
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
-    	<apex:outputLink value="/GW_Volunteers__JobCalendar?{!strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+    	<apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPortal, 'VolunteersPortalJobCalendar', 'JobCalendar') + '?' + strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>
     </apex:outputPanel>
 
 <!-- this div contains the signup dialog we'll use jQuery to display -->
 <div id="dlgSignUp" title="{!$Label.labelTitleJobSignup}">
     <apex:form styleClass="cssForm" id="frmSignUp" > 
-        <apex:outputPanel id="panelSignUp" >        
+        <apex:outputPanel id="panelSignUp" > 
+        	<apex:pageMessages />       
 			<table columns="2" >
 				<!-- first we specify the fields we require for Contact matching -->
 				<tr>
@@ -181,8 +183,8 @@
 				</tr>	  			        
 			</table>                             
             <p>         
-            <apex:inputText value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent;" size="60" /><br/>
-            <apex:inputText value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent;" size="60" />
+            <apex:inputText disabled="true" value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="color:black; border-style:none; background-color:transparent;" size="60" /><br/>
+            <apex:inputText disabled="true" value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="color:black; border-style:none; background-color:transparent;" size="60" />
             </p>
             
             <!-- before calling the action method, clear the return value fields so we can detect validation failures. -->                          
@@ -192,8 +194,8 @@
                     VolunteerShiftSignUp();
                     return false;" 
                 immediate="false" status="statusSignUp" />              
-            <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close'); return false;" />            
-            <apex:actionStatus startText="{! '  ' + $Label.labelMessageSaving}" stopText="{!strSaveResult}" id="statusSignUp" startStyle="color:green; font-style:italic" stopStyle="color:black;" />                             
+            <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" />            
+            <apex:actionStatus startText="{! '  ' + $Label.labelMessageSaving}" stopText="" id="statusSignUp" startStyle="color:green; font-style:italic" stopStyle="color:black;" />                             
         </apex:outputPanel>
                 
         <apex:actionFunction name="VolunteerShiftSignUp" action="{!VolunteerShiftSignUp}" status="statusSignUp" />         
