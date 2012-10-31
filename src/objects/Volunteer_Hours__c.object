@@ -104,6 +104,75 @@
         </displayedFields>
         <label>VolunteersJobListingFS</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>VolunteersPortalReportHours</fullName>
+        <availableFields>
+            <field>Full_Name__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Name</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastModifiedDate</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastModifiedById</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Id</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>CreatedDate</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>CreatedById</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>SystemModstamp</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Recurrence_Schedule__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <description>This field set specifies the Volunteer Hours fields displayed on the VolunteersPortalRecportHours visualforce page, which is exposed through Sites for hosting on public websites</description>
+        <displayedFields>
+            <field>Volunteer_Shift__c</field>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Status__c</field>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Hours_Worked__c</field>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Number_of_Volunteers__c</field>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Start_Date__c</field>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>End_Date__c</field>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Comments__c</field>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>VolunteersPortalReportHours</label>
+    </fieldSets>
     <fields>
         <fullName>Comments__c</fullName>
         <deprecated>false</deprecated>
@@ -169,6 +238,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Planned_Start_Date_Time__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( Volunteer_Recurrence_Schedule__r.Schedule_Start_Date_Time__c +
+(DateValue( Shift_Start_Date_Time__c) - DateValue(Volunteer_Recurrence_Schedule__r.Schedule_Start_Date_Time__c)),
+
+Shift_Start_Date_Time__c)</formula>
+        <inlineHelpText>Formula field that shows the Volunteer&apos;s planned start date and time for the given shift.</inlineHelpText>
+        <label>Planned Start Date &amp; Time</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Planned_Start_Time__c</fullName>
+        <externalId>false</externalId>
+        <formula>DATETIMEVALUE(&apos;2012-11-04&apos; + &apos; &apos; + MID(TEXT( Volunteer_Recurrence_Schedule__r.Schedule_Start_Date_Time__c ), 12, 7))</formula>
+        <label>Planned Start Time</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Shift_Start_Date_Time__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -211,9 +300,21 @@
                 <fullName>Web Sign Up</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>System_Note__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Text information from the system scheduler.</inlineHelpText>
+        <label>System Note</label>
+        <required>false</required>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Total_Hours_Worked__c</fullName>
@@ -258,9 +359,20 @@
         <relationshipLabel>Volunteer Hours</relationshipLabel>
         <relationshipName>Volunteer_Hours</relationshipName>
         <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Volunteer_Recurrence_Schedule__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Volunteer Recurrence Schedule</label>
+        <referenceTo>Volunteer_Recurrence_Schedule__c</referenceTo>
+        <relationshipLabel>Volunteer Hours</relationshipLabel>
+        <relationshipName>Volunteer_Hours</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Volunteer_Shift__c</fullName>
@@ -336,7 +448,7 @@
         <openType>sidebar</openType>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
-        <url>/apex/GW_Volunteers__VolunteersBulkEnterHours?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}&amp;volunteerShiftId={!Volunteer_Shift__c.Id}&amp;retURL={!
+        <url>/apex/VolunteersBulkEnterHours?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}&amp;volunteerShiftId={!Volunteer_Shift__c.Id}&amp;retURL={!
 
 IF(ISNULL( Volunteer_Job__c.Id), 
     URLFOR($Action.Contact.View, Contact.Id), 
