@@ -156,7 +156,7 @@ public with sharing class VOL_VRS {
 				hr.Number_of_Volunteers__c = 1;
 				hr.Start_Date__c = dtShift;
 				hr.End_Date__c = dtShift;
-				hr.Status__c = 'Confirmed';	// we agreed to assume Confirmed. no need for custom setting.
+				hr.Status__c = (vrs.Volunteer_Hours_Status__c == null ? 'Confirmed' : vrs.Volunteer_Hours_Status__c);
 				hr.Volunteer_Job__c = shift.Volunteer_Job__c;
 				hr.Volunteer_Shift__c = shift.Id;	
 				hr.Volunteer_Recurrence_Schedule__c = vrs.Id;			
