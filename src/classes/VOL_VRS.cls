@@ -159,7 +159,8 @@ public with sharing class VOL_VRS {
 				hr.Status__c = (vrs.Volunteer_Hours_Status__c == null ? 'Confirmed' : vrs.Volunteer_Hours_Status__c);
 				hr.Volunteer_Job__c = shift.Volunteer_Job__c;
 				hr.Volunteer_Shift__c = shift.Id;	
-				hr.Volunteer_Recurrence_Schedule__c = vrs.Id;			
+				hr.Volunteer_Recurrence_Schedule__c = vrs.Id;	
+				hr.Planned_Start_Date_Time__c = datetime.newInstance(shift.Start_Date_Time__c.date(), vrs.Schedule_Start_Date_Time__c.time());
 				listHoursNew.add(hr);
 				//cDesiredVols--;
 			}			 		
