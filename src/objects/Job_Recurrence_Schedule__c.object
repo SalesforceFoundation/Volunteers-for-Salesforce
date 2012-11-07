@@ -127,7 +127,6 @@
         <referenceTo>Volunteer_Job__c</referenceTo>
         <relationshipName>Volunteer_Job_Recurrence_Schedules</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>

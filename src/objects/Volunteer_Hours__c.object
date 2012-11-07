@@ -191,7 +191,6 @@
         <relationshipLabel>Volunteer Hours</relationshipLabel>
         <relationshipName>Volunteer_Hours</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
@@ -347,7 +346,6 @@
         <relationshipLabel>Volunteer Hours</relationshipLabel>
         <relationshipName>Volunteer_Hours</relationshipName>
         <relationshipOrder>1</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>

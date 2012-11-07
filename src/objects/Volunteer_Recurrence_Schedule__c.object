@@ -107,7 +107,6 @@
         <relationshipLabel>Volunteer Recurrence Schedules</relationshipLabel>
         <relationshipName>Volunteer_Recurrence_Schedules</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
