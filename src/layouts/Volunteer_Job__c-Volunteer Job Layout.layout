@@ -15,6 +15,10 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Campaign__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Ongoing__c</field>
             </layoutItems>
@@ -27,8 +31,8 @@
                 <field>Display_on_Website__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Campaign__c</field>
+                <behavior>Edit</behavior>
+                <field>Volunteer_Website_Time_Zone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -142,6 +146,15 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Days_of_Week__c</fields>
+        <fields>Weekly_Occurrence__c</fields>
+        <fields>Schedule_Start_Date_Time__c</fields>
+        <fields>Duration__c</fields>
+        <fields>Desired_Number_of_Volunteers__c</fields>
+        <relatedList>Job_Recurrence_Schedule__c.Volunteer_Job__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Start_Date_Time__c</fields>
         <fields>Duration__c</fields>
         <fields>Total_Volunteers__c</fields>
@@ -152,10 +165,20 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Contact__c</fields>
+        <fields>Days_of_Week__c</fields>
+        <fields>Weekly_Occurrence__c</fields>
+        <fields>Schedule_Start_Date_Time__c</fields>
+        <fields>Duration__c</fields>
+        <relatedList>Volunteer_Recurrence_Schedule__c.Volunteer_Job__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Mass_Edit_Volunteer_Hours</customButtons>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
         <fields>Shift_Start_Date_Time__c</fields>
+        <fields>Planned_Start_Date_Time__c</fields>
         <fields>Status__c</fields>
         <fields>Number_of_Volunteers__c</fields>
         <fields>Hours_Worked__c</fields>

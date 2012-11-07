@@ -149,6 +149,10 @@
                 <behavior>Readonly</behavior>
                 <field>Volunteer_Shifts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Volunteer_Website_Time_Zone__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
