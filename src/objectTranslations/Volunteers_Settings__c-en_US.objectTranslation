@@ -9,6 +9,11 @@
         <value>Volunteers Settings</value>
     </caseValues>
     <fields>
+        <help><!-- How many months into the future should the recurring job shift be scheduled? --></help>
+        <label><!-- Recurring Job Future Months --></label>
+        <name>Recurring_Job_Future_Months__c</name>
+    </fields>
+    <fields>
         <help><!-- The name of the account to use when creating new Contacts during Signup.  If you are using the Non Profit Start Pack One-to-One model, leave this setting blank.  If you are using the bucket model, set this to the name of the account; usually &apos;Individual&apos;. --></help>
         <label><!-- Signup Bucket Account On Create --></label>
         <name>Signup_Bucket_Account_On_Create__c</name>
