@@ -310,7 +310,7 @@ public with sharing class VOL_SharedCode {
         	strSoql += strComma + strF;
         	strComma = ', ';
         }
-        strSoql += ' from ' + des.getName() + ' where Id=\'' + id + '\'';
+        strSoql += ' from ' + des.getName() + ' where Id = :id ';
         strSoql += ' limit 1';      
         list<SObject> listSObj = Database.Query(strSoql); 
         

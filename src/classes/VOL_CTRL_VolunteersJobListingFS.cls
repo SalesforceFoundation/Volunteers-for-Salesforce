@@ -218,9 +218,16 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         set;
     }
     
+    // routine to go through all the shifts, and create the display string
+    // for the shifts start date & time - end date & time, using the appropriate
+    // time zone that might be specified on the Job, Campaign, or Site Guest User.
+    // Note that it stores this string in the Shift's System_Note__c field (in memory only).
     private void dateTimeFixup(list<Volunteer_Job__c> listJob) {
+    	
     	// get default time zone for site guest user
     	User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+    	
+    	// javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
     	string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
     	string strFormatEndTime = strTimeFormat.replace('tt','a');
     	

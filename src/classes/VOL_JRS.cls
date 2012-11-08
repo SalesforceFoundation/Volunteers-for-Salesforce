@@ -1,3 +1,11 @@
+/*******************************************************************************************************
+* @author David Habib
+* @date 11/1/2012
+* @description Main class for managing Volunteer Job Recurrence Schedules (JRS). 
+*
+* Written by Dave Habib, copyright (c) 2012 Groundwire
+* This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
+********************************************************************************************************/
 public with sharing class VOL_JRS {
 
     //******************************************************************************************************
@@ -80,8 +88,8 @@ public with sharing class VOL_JRS {
 			setJobId.add(shift.Volunteer_Job__c);
 		}
 		list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
-		listVRS = [select Id, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
-			Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c
+		listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
+			Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c
 			from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
 			
 		// process the VRS's to create hours as needed.
@@ -148,7 +156,7 @@ public with sharing class VOL_JRS {
 				mapDtShift.remove(dtLast);			
 			} else {
 				Volunteer_Shift__c shift = new Volunteer_Shift__c();
-				shift.System_Note__c = 'Auto-created for Job Recurrence Schedule: ' + jrs.Name + '.';
+				shift.System_Note__c = label.labelJRSShiftCreatedSystemNote + ' ' + jrs.Name + '.';
 				shift.Description__c = jrs.Description__c;
 				shift.Job_Recurrence_Schedule__c = jrs.Id;
 				shift.Duration__c = jrs.Duration__c;
@@ -165,7 +173,7 @@ public with sharing class VOL_JRS {
 			for (Volunteer_Shift__c shift: mapDtShift.values()) {
 				if (shift.Total_Volunteers__c > 0) {
 					shift.Job_Recurrence_Schedule__c = null;
-					shift.System_Note__c += ' Removed from Job Recurrence Schedule: ' + jrs.Name + '.';					
+					shift.System_Note__c += ' ' + label.labelJRSShiftRemovedSystemNote + ' ' + jrs.Name + '.';					
 					listShiftUpdate.add(shift);	
 				} else {
 					listShiftDelete.add(shift);
@@ -334,7 +342,6 @@ public with sharing class VOL_JRS {
 					continue;
 				}
 				if (listWhichWeeks[n]) { 
-					system.debug ('n:' + n + ' nweek:' + nweek + ' cweeks:' + cweeks);
 					return (n - nweek + cweeks);
 				}
 			}

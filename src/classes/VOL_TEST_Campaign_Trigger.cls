@@ -11,7 +11,7 @@ private class VOL_TEST_Campaign_Trigger {
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign', IsActive=true);
         insert cmp;
         list<CampaignMemberStatus> listCMS = [Select Id From CampaignMemberStatus WHERE CampaignId = :cmp.Id];
-        System.Assert(listCMS.Size() == 4);
+        System.Assert(listCMS.Size() == 5);
         
         // test creating multiple campaigns.
         list<Campaign> listCmp = new list<Campaign>();
@@ -25,7 +25,7 @@ private class VOL_TEST_Campaign_Trigger {
             setCmpId.add(cmpT.Id);
         }
         list<CampaignMemberStatus> listCMS2 = [Select Id From CampaignMemberStatus WHERE CampaignId in :setCmpId];
-        System.Assert(listCMS2.Size() == 40);
+        System.Assert(listCMS2.Size() == 50);
         
     }
 }

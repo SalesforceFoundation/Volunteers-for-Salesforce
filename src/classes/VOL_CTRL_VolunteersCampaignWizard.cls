@@ -150,7 +150,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
         	strSoql += strComma + strF;
         	strComma = ', ';
         }
-        strSoql += ' from Volunteer_Job__c where Campaign__c = \'' + campaignIdClone + '\' order by CreatedDate';    
+        strSoql += ' from Volunteer_Job__c where Campaign__c = :campaignIdClone order by CreatedDate';    
         listJobsExisting = Database.Query(strSoql); 
 
 		// initialize the list of all fields on Shift.

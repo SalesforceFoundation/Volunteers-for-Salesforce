@@ -1,3 +1,11 @@
+/*******************************************************************************************************
+* @author David Habib
+* @date 11/1/2012
+* @description Main class for managing Volunteer Recurrence Schedules (VRS). 
+*
+* Written by Dave Habib, copyright (c) 2012 Groundwire
+* This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
+********************************************************************************************************/
 public with sharing class VOL_VRS {
 
 
@@ -150,7 +158,7 @@ public with sharing class VOL_VRS {
 				}	
 					
 				Volunteer_Hours__c hr = new Volunteer_Hours__c();
-				hr.System_Note__c = 'Auto-created for Volunteer Recurrence Schedule.';
+				hr.System_Note__c = label.labelVRSHoursCreatedSystemNote + ' ' + vrs.Name + '.';
 				hr.Contact__c = vrs.Contact__c;
 				hr.Hours_Worked__c = vrs.Duration__c;
 				hr.Number_of_Volunteers__c = 1;
