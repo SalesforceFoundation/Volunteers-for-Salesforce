@@ -31,9 +31,9 @@
     function OpenSignUpDlg(x, y, JobId, ShiftId, JobName, ShiftName) {
         j$('input[name$=txtJobId]').val(JobId);                         
         j$('input[name$=txtShiftId]').val(ShiftId);                         
-        j$('input[name$=txtJobDisplayName]').val(JobName); 
-        j$('input[name$=txtShiftDisplayName]').val(ShiftName); 
-        j$('#dlgSignUp').dialog("option", "position", [x + 20, y + 20] ); 
+        j$('span[id$="txtJobDisplayName"]').text(JobName); 
+        j$('span[id$="txtShiftDisplayName"]').text(ShiftName); 
+        j$('#dlgSignUp').dialog("option", "position", [(document.documentElement.offsetWidth /2)-225, y + 20] );          
         j$('#dlgSignUp').dialog('open'); 
         return false;
     };
@@ -185,8 +185,8 @@
 				</tr>	  			        
 			</table>                             
             <p>         
-            <apex:inputText disabled="true" value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="color:black; border-style:none; background-color:transparent;" size="60" /><br/>
-            <apex:inputText disabled="true" value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="color:black; border-style:none; background-color:transparent;" size="60" />
+            <apex:outputText value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent; width:100%;" /><br/>
+            <apex:outputText value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent; width:100%;" /><br/>
             </p>
             
             <!-- before calling the action method, clear the return value fields so we can detect validation failures. -->                          
