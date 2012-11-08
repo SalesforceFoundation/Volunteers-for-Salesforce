@@ -14,6 +14,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>VOL_CTRL_BatchProgress</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>VOL_CTRL_JobCalendar</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1652,6 +1656,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>VolunteersAbout</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VolunteersBatchJobsProgress</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

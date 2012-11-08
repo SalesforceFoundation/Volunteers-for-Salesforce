@@ -1,0 +1,39 @@
+<apex:page controller="VOL_CTRL_BatchProgress" title="Volunteer Job Recurrence Schedules" >
+
+	<!--
+	Visualforce Rollup Page
+	Written by David Habib copyright (c) 2012 Groundwire, 1402 3rd Avenue, Suite 1000, Seattle, WA 98101
+	This program is released under the GNU General Public License. http://www.gnu.org/licenses/
+	-->
+	
+	<style>
+	ul.err li {
+		list-style-type: none;
+		color: #cc0000;
+		font-weight: bold;
+	}
+	
+	</style>
+
+	<apex:sectionHeader title="Volunteer Job Recurrence Schedules" />
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockButtons rendered="{!batching}">
+				<apex:commandButton action="{!rollup}" value="Begin" disabled="{!batchRunning}" />
+				<apex:commandButton action="{!cancel}" value="Close" />
+			</apex:pageBlockButtons>
+			<apex:messages styleClass="err" />
+			<apex:outputText rendered="{!batching}">
+				<p>Volunteers for Salesforce supports Volunteer Job Recurrence Schedules with the help of a batch process to
+				create future shifts.  You can run this process manually, by clicking the Begin button, or you can schedule it
+				to automatically run nightly.</p>
+				<p>You will see a progress bar below for the most recent batch process.
+				 The process may take some time; it will take longer the more data you have in your database.  You can close this page 
+				and the process will continue in the background.   Go to Setup > Monitoring > Apex Jobs for more detailed information.</p>
+			</apex:outputText>
+		</apex:pageBlock>
+		<apex:outputPanel >
+			<c:batchJobs batchComponentLabel="Volunteer Job Recurrence Schedule Progress" numberOfJobs="1" />
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>
