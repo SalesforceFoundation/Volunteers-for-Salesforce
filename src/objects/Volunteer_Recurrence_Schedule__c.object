@@ -38,67 +38,6 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
-    <fieldSets>
-        <fullName>VolunteersPortalVRS_FS</fullName>
-        <availableFields>
-            <field>CreatedById</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Name</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>LastModifiedDate</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>LastModifiedById</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>IsDeleted</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Id</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>SystemModstamp</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>CreatedDate</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <description>This field set specifies the Volunteer Recurrence Schedule fields displayed on the VolunteersPortalVRS visualforce page, which is exposed through Sites for hosting on public websites.</description>
-        <displayedFields>
-            <field>Volunteer_Job__c</field>
-            <isRequired>true</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Days_of_Week__c</field>
-            <isRequired>true</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Weekly_Occurrence__c</field>
-            <isRequired>true</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Schedule_Start_Date_Time__c</field>
-            <isRequired>true</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Duration__c</field>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Schedule_End_Date__c</field>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>VolunteersPortalVRS_FS</label>
-    </fieldSets>
     <fields>
         <fullName>Contact__c</fullName>
         <externalId>false</externalId>
