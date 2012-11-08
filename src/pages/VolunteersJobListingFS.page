@@ -68,7 +68,8 @@
         strTm = strTm.replace('tt', strAM);    	
     	return strTm;	
     }
-    
+
+/**** Starting in version 3.0, date time formatting is done in Apex on the server.    
     function JobShiftDateTimeString(dt, duration) {
         var dtStart = new Date(dt);        
 
@@ -83,6 +84,7 @@
         var strEndTime = MyTimeFormat(dtEnd, '{!JSENCODE(strTimeFormat)}');
         return strStartDate + ' ' + strStartTime + ' - ' + strEndTime;
     }      
+******/
       
 </script>
 	

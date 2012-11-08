@@ -49,6 +49,14 @@ trigger VOL_Campaign_CreateStatuses on Campaign (after insert) {
 		        SortOrder = 400
 		    );
 		    listCMSTOAdd.add(cms4);
+
+		    CampaignMemberStatus cms5 = new CampaignMemberStatus(
+		        Label = 'Canceled',
+		        CampaignId = cmp.Id,
+		        HasResponded = true,
+		        SortOrder = 500
+		    );
+		    listCMSTOAdd.add(cms5);
     	}		        
     }
 

@@ -36,12 +36,14 @@
 	                    <apex:selectOptions value="{!listSOCampaigns}" /> 
 	                </apex:selectList>  
         		</apex:pageBlockSectionItem>
-        		
+        		            
             	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="Show Shifts & Hours in this time frame" />
-	                <apex:outputLabel value=" " />
-	            </apex:pageBlockSectionItem>
-	            
+	                <apex:outputLabel value="{!$Label.labelMassEditDateFilterFrom}" />
+	                <apex:inputField value="{!vhDateFilter.Start_Date__c}" required="false" >
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+					</apex:inputField>	                    
+        		</apex:pageBlockSectionItem>
+
             	<apex:pageBlockSectionItem >
 	                <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" />
 	                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
@@ -51,10 +53,10 @@
         		</apex:pageBlockSectionItem>
     
             	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="From" />
-	                <apex:inputField value="{!vhDateFilter.Start_Date__c}" required="false" >
+	                <apex:outputLabel value="{!$Label.labelMassEditDateFilterTo}"  />
+	                <apex:inputField value="{!vhDateFilter.End_Date__c}" >
 	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
-					</apex:inputField>	                    
+					</apex:inputField>
         		</apex:pageBlockSectionItem>
 
             	<apex:pageBlockSectionItem >
@@ -66,20 +68,13 @@
         		</apex:pageBlockSectionItem>
     
             	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="To" />
-	                <apex:inputField value="{!vhDateFilter.End_Date__c}" >
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
-					</apex:inputField>
-        		</apex:pageBlockSectionItem>
-
-            	<apex:pageBlockSectionItem >
 		            <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" /><br/>
         		</apex:pageBlockSectionItem>
             </apex:pageBlockSection>
     
             <apex:dataTable value="{!listVolunteerHours}" var="vh" rules="rows"  cellpadding="3" id="tblVolunteerHours" style="border-color:gray" >                 
                 <apex:column >
-                    <apex:facet name="header">Contact *</apex:facet>
+                    <apex:facet name="header">{!$ObjectType.Contact.Label} *</apex:facet>
                     <apex:inputField value="{!vh.Contact__c}" style="width: 100px;" required="false" >
                         <apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
                             <apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
@@ -88,7 +83,7 @@
                 </apex:column> 
                 
                 <apex:column rendered="{!volunteerShiftId == null}" >
-					<apex:facet name="header">Volunteer Shift</apex:facet>
+					<apex:facet name="header">{!$ObjectType.Volunteer_Shift__c.Label}</apex:facet>
 	                <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts">
 	                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
 						<apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
