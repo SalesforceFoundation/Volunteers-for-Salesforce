@@ -240,6 +240,22 @@ day:      &apos;day&apos;</value>
         <value>From</value>
     </labels>
     <labels>
+        <fullName>labelJRSShiftCreatedSystemNote</fullName>
+        <categories>JRS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>System Note added to Shift when created by a JRS.</shortDescription>
+        <value>Auto-created for Job Recurrence Schedule:</value>
+    </labels>
+    <labels>
+        <fullName>labelJRSShiftRemovedSystemNote</fullName>
+        <categories>JRS</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>System Note added to Shift when removed from a JRS.</shortDescription>
+        <value>Removed from Job Recurrence Schedule:</value>
+    </labels>
+    <labels>
         <fullName>labelLinkAddMoreRows</fullName>
         <categories>MassEditVolunteerHours</categories>
         <language>en_US</language>
@@ -262,6 +278,22 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for VolunteersJobListingFS page&apos;s Sign Up link</shortDescription>
         <value>sign up</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditDateFilterFrom</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>label for the date filter From field.</shortDescription>
+        <value>Show Shifts &amp; Hours From</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEditDateFilterTo</fullName>
+        <categories>MassEditVolunteerHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the date filter section To field.</shortDescription>
+        <value>To</value>
     </labels>
     <labels>
         <fullName>labelMassEditErrorOnSave</fullName>
@@ -472,6 +504,14 @@ day:      &apos;day&apos;</value>
         <value>Volunteer Sign Up</value>
     </labels>
     <labels>
+        <fullName>labelVRSHoursCreatedSystemNote</fullName>
+        <categories>VRS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>System Note added to Hour when created by a VRS.</shortDescription>
+        <value>Auto-created for Volunteer Recurrence Schedule:</value>
+    </labels>
+    <labels>
         <fullName>labelVolunteerSignupThankYou</fullName>
         <categories>VolunteersSignupFS, VolunteersJobListing</categories>
         <language>en_US</language>
@@ -541,7 +581,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for the Volunteers Wizard Jobs &amp; Shifts section.</shortDescription>
-        <value>Choose an existing campaign to copy Jobs, Shifts, and Hours from, or fill out how many sample Jobs and Shifts to create.</value>
+        <value>Choose an existing campaign to copy Jobs, Shifts, and Hours from, or fill out how many sample Jobs and Shifts to create.  Note that you can also use Job Recurrence Schedules to repeat Jobs and Shifts into the future.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersWizardJobsAndShifts</fullName>

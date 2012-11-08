@@ -128,6 +128,14 @@ day: &apos;jour&apos;</label>
         <name>labelFrom</name>
     </customLabels>
     <customLabels>
+        <label><!-- System Note added to Shift when created by a JRS. --></label>
+        <name>labelJRSShiftCreatedSystemNote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- System Note added to Shift when removed from a JRS. --></label>
+        <name>labelJRSShiftRemovedSystemNote</name>
+    </customLabels>
+    <customLabels>
         <label>Ajouter des lignes</label>
         <name>labelLinkAddMoreRows</name>
     </customLabels>
@@ -138,6 +146,14 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>S&apos;inscrire</label>
         <name>labelLinkSignUp</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the date filter From field. --></label>
+        <name>labelMassEditDateFilterFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the date filter section To field. --></label>
+        <name>labelMassEditDateFilterTo</name>
     </customLabels>
     <customLabels>
         <label>Des erreurs ont ete encontré pendant l&apos;enregistrement des Heures de Bénévolat.</label>
@@ -242,6 +258,10 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>Inscription des bénévoles</label>
         <name>labelTitleJobSignup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- System Note added to Hour when created by a VRS. --></label>
+        <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
         <label>Merci de votre inscription pour le bénévolat.</label>
