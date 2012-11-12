@@ -47,6 +47,7 @@
 				<td></td>
 				<td class="cssInputFieldsColumn" ><apex:outputLabel value="{!StrSaveResult}" /></td>
 			</tr>	
-		</table>		   	
+		</table>
+		<apex:Messages style="color:red;" />		   	
 	</apex:form>
 </apex:page>

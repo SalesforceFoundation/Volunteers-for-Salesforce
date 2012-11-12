@@ -79,6 +79,7 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
 	        contact = null; // so fields get reset to null.
     	} catch (exception ex) {
     		StrSaveResult = ex.getMessage(); 
+    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage())); 		    		
     	}
         return null;
     }

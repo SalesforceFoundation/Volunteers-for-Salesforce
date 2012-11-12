@@ -144,7 +144,6 @@
 <div id="dlgSignUp" title="{!$Label.labelTitleJobSignup}">
     <apex:form styleClass="cssForm" id="frmSignUp" > 
         <apex:outputPanel id="panelSignUp" > 
-        	<apex:pageMessages />       
 			<table columns="2" >
 				<!-- first we specify the fields we require for Contact matching -->
 				<tr>
@@ -184,6 +183,7 @@
 	            	<td class="cssInputFieldsColumn" ><apex:inputFile styleClass="cssInputFields" rendered="{!strFileUploadLabel!=null}" value="{!attachment.body}" filename="{!attachment.name}" id="txtFileUpload" /></td>
 				</tr>	  			        
 			</table>                             
+        	<apex:Messages style="color:red;" />       
             <p>         
             <apex:outputText value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent; width:100%;" /><br/>
             <apex:outputText value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent; width:100%;" /><br/>
