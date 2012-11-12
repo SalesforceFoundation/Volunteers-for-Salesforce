@@ -31,9 +31,10 @@ public with sharing class VOL_SharedCode {
     public list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+        dtEnd = dtEnd.addDays(1);
         for (Volunteer_Shift__c vs : [select Id, Name, Start_Date_Time__c from Volunteer_Shift__c 
         	where Volunteer_Job__c = :volunteerJobId 
-        		and Start_Date_Time__c >= :dtStart and Start_Date_Time__c <= :dtEnd
+        		and Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
         	order by Start_Date_Time__c limit 999]) {
             SelectOption so = new SelectOption(vs.id, vs.Start_Date_Time__c.format() + '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' );
             so.setEscapeItem(false); 
