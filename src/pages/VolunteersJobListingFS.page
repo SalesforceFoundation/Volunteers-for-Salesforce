@@ -120,7 +120,7 @@
             <apex:column style="text-align:center;" >
                 <apex:outputPanel rendered="{!shift.Number_of_Volunteers_Still_Needed__c != 0}" >
                     <a href="SignUp" onclick="
-                    	var x = '{!shift.System_Note__c}';            
+                    	var x = '{!shift.System_Note__c}';   
                         OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '{!shift.Id}', '{!JSENCODE(job.Name)}', x); 
                         return false;"
                         >{!$Label.labelLinkSignUp}</a>
@@ -193,7 +193,7 @@
             <apex:commandButton value="{!$Label.labelButtonSignUp}" onclick="
                     j$('input[name$=txtContactIdSignUp]').val(''); 
                     j$('input[name$=txtVHIdSignUp]').val('');
-                    VolunteerShiftSignUp();
+                   	VolunteerShiftSignUp();
                     return false;" 
                 immediate="false" status="statusSignUp" />              
             <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" />            
