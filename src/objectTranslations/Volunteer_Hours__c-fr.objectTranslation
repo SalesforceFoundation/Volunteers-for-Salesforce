@@ -35,8 +35,8 @@
         <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>
-        <help><!-- The actual date &amp; time the volunteer is planning on starting. --></help>
-        <label><!-- Planned Start Date &amp; Time --></label>
+        <help>La date et l&apos;heure que le bénévole compte commencer.</help>
+        <label>Date et Heure de Début Planifié</label>
         <name>Planned_Start_Date_Time__c</name>
     </fields>
     <fields>
@@ -52,7 +52,7 @@
         <name>Status__c</name>
         <picklistValues>
             <masterLabel>Canceled</masterLabel>
-            <translation><!-- Canceled --></translation>
+            <translation>Annulé</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Completed</masterLabel>
@@ -76,8 +76,8 @@
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- Text information from the system scheduler. --></help>
-        <label><!-- System Note --></label>
+        <help>Informations texte de l&apos;ordonnanceur du système.</help>
+        <label>Remarque système</label>
         <name>System_Note__c</name>
     </fields>
     <fields>
@@ -98,9 +98,9 @@
         <relationshipLabel>Heures de Bénévolat</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Volunteer Recurrence Schedule --></label>
+        <label>Horaires de Récurrence des Bénévoles</label>
         <name>Volunteer_Recurrence_Schedule__c</name>
-        <relationshipLabel><!-- Volunteer Hours --></relationshipLabel>
+        <relationshipLabel>Heures de Bénévolat</relationshipLabel>
     </fields>
     <fields>
         <label>Quart de Travail de Bénévolat</label>

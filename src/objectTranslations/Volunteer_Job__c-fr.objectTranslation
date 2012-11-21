@@ -104,12 +104,12 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>basic accounting</masterLabel>
-            <translation><!-- basic accounting --></translation>
+            <translation>comptabilité de base</translation>
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- The Time Zone to use when displaying Shift times on Sites pages. --></help>
-        <label><!-- Volunteer Website Time Zone --></label>
+        <help>Le fuseau horaire à utiliser lors de l&apos;affichage des quarts de travail sur les pages Sites.</help>
+        <label>Fuseau Horaire du Site Web Bénévole</label>
         <name>Volunteer_Website_Time_Zone__c</name>
         <picklistValues>
             <masterLabel>Africa/Algiers</masterLabel>

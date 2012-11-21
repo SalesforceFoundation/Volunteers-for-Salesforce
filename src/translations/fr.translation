@@ -37,13 +37,13 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label>prev: &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;, 
-next: &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;, 
-prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;, 
-nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;, 
-today: &apos;aujourd&amp;#39;hui&apos;, 
-month: &apos;mois&apos;, 
-week: &apos;semaine&apos;, 
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today:    &apos;aujourd&amp;#39;hui&apos;,    
+month: &apos;mois&apos;,     
+week: &apos;semaine&apos;,     
 day: &apos;jour&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
@@ -128,11 +128,11 @@ day: &apos;jour&apos;</label>
         <name>labelFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- System Note added to Shift when created by a JRS. --></label>
+        <label>Automatiquement Crée pour l&apos;Horaire de Récurrence des Postes:</label>
         <name>labelJRSShiftCreatedSystemNote</name>
     </customLabels>
     <customLabels>
-        <label><!-- System Note added to Shift when removed from a JRS. --></label>
+        <label>Enlevé de l&apos;Horaire de Récurrence des Postes:</label>
         <name>labelJRSShiftRemovedSystemNote</name>
     </customLabels>
     <customLabels>
@@ -148,11 +148,11 @@ day: &apos;jour&apos;</label>
         <name>labelLinkSignUp</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the date filter From field. --></label>
+        <label>Montrer les Quarts et les Heures De</label>
         <name>labelMassEditDateFilterFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the date filter section To field. --></label>
+        <label>À</label>
         <name>labelMassEditDateFilterTo</name>
     </customLabels>
     <customLabels>
@@ -196,11 +196,11 @@ day: &apos;jour&apos;</label>
         <name>labelMassEmailViewTemplates</name>
     </customLabels>
     <customLabels>
-        <label>Suivi des Activités doit être activé pour les objets Poste de Bénévolat et les Quart de Travail. Veuillez voir le &quot;Volunteers for Salesforce Installation and Configuration Guide&quot; pour plus d&apos;informations.</label>
+        <label>Suivi des Activités doit être activé pour les objets Poste de Bénévolat et les Quart de Travail. Veuillez voir le Volunteers for Salesforce Installation and Configuration Guide pour plus d&apos;informations.</label>
         <name>labelMassEmailVolunteersActivityLoggingError</name>
     </customLabels>
     <customLabels>
-        <label>Saisir une Activité pour chaque Contact</label>
+        <label>Saisir une Activité pour chaque email</label>
         <name>labelMassEmailVolunteersLogActivity</name>
     </customLabels>
     <customLabels>
@@ -236,11 +236,11 @@ day: &apos;jour&apos;</label>
         <name>labelMessageSaving</name>
     </customLabels>
     <customLabels>
-        <label>Nombre de Contacts</label>
+        <label>Nombre d&apos;Email des Contacts</label>
         <name>labelNumberOfContacts</name>
     </customLabels>
     <customLabels>
-        <label>Le nombre d&apos;emails qui seront envoyée. Changer la case &quot;Inclure les Contacts une fois seulement&quot; peut changer ce nombre.</label>
+        <label>Le nombre d&apos;emails qui seront envoyée. Changer la case Inclure les Contacts une fois seulement peut changer ce nombre.</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
@@ -260,7 +260,7 @@ day: &apos;jour&apos;</label>
         <name>labelTitleJobSignup</name>
     </customLabels>
     <customLabels>
-        <label><!-- System Note added to Hour when created by a VRS. --></label>
+        <label>Automatiquement Crée pour l&apos;Horaire de Récurrence des Bénévoles:</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
@@ -296,7 +296,7 @@ day: &apos;jour&apos;</label>
         <name>labelVolunteersWizardHelp</name>
     </customLabels>
     <customLabels>
-        <label>Choisissez un Campagne existant d&apos;ou copier les Postes, Quarts et Heures, ou remplir combien d&apos;exemple Postes et Quarts a créer.</label>
+        <label>Choisissez un Campagne existant d&apos;ou copier les Postes, Quarts et Heures, ou remplir combien d&apos;exemple Postes et Quarts a créer. Vous pouvez aussi utiliser les Horaires de Récurrence des Postes pour créer des Postes et les Quarts dans le future.</label>
         <name>labelVolunteersWizardJobAndShiftHelp</name>
     </customLabels>
     <customLabels>
@@ -338,6 +338,10 @@ day: &apos;jour&apos;</label>
     <customTabs>
         <label>À propos de Bénévoles</label>
         <name>About_Volunteers</name>
+    </customTabs>
+    <customTabs>
+        <label>Progrès de l&apos;Horaire de Récurrence</label>
+        <name>Job_Recurring_Schedule_Progress</name>
     </customTabs>
     <customTabs>
         <label>Calendrier des Bénévoles</label>
