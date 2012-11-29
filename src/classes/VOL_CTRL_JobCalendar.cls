@@ -60,7 +60,7 @@ global with sharing class VOL_CTRL_JobCalendar {
         if (p == '1') fPrint = true;
 
     	// we can derive whether we are within the Portal or not, so no need for parameter.
-    	fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
+    	//fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
 
 		// we can derive whether we are within Sites or not, so no need for parameter.
     	fWeb = false; 
@@ -117,7 +117,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     global boolean fWeb { get; set; }
     global string strCalendarView { get; set; }
     global string strParams { get; set; }
-    global boolean fPortal { get; set; }
+    //global boolean fPortal { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
     global ID campaignId { get; set; }

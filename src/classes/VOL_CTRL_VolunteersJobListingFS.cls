@@ -8,7 +8,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global ID campaignIdFilter { get; set; }
     global ID jobIdFilter { get; set; }
     global boolean fCalendar { get; set; }
-    global boolean fPortal { get; set; }
+    //global boolean fPortal { get; set; }
     global boolean ShowJobName { get; set; }
     global boolean ShowDescription { get; set; }
     global boolean ShowLocationAddress { get; set; }
@@ -34,8 +34,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
            		contact = new Contact();
            		
 		        // when used within the Portal, we should use the logged in Contact
-		        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
-		        if (cId != null) contactIdSignUp = cId.getValue();
+		        //Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
+		        //if (cId != null) contactIdSignUp = cId.getValue();
 				if (contactIdSignUp != null && contactIdSignUp != '') {
             		VOL_SharedCode.LoadAndCopyObject(contactIdSignUp, contact);            		
             	}
@@ -138,7 +138,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         }
 
     	// we can derive whether we are within the Portal or not, so no need for parameter.
-    	fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
+    	//fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
         
 		// finally, keep all parameters for passing back to JobCalendar
 		strParams = ApexPages.currentPage().getUrl();
@@ -322,9 +322,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 	        strSaveResult = null;
 	                    
 	        // when used within the Portal, we should use the logged in Contact
-	        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
+	        //Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
 	        ID contactIdPortal = null;
-	        if (cId != null) contactIdPortal = cId.getValue();
+	        //if (cId != null) contactIdPortal = cId.getValue();
 
     		// save or update the contact              
 	        contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPortal, contact, contact.Volunteer_Organization__c, listStrFields);

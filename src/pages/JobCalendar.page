@@ -108,7 +108,7 @@
 						        var strUrl;
 						        
 						        if ({!fWeb}) {
-						        	strUrl = '{!$Site.CurrentSiteUrl + IF(fPortal, 'VolunteersPortalJobListing', 'VolunteersJobListingFS')}' + 
+						        	strUrl = '{!$Site.CurrentSiteUrl + IF(false, 'VolunteersPortalJobListing', 'VolunteersJobListingFS')}' + 
 						        		'?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
 						        		'&dtMonthFilter=' + strApexDateLocale(dtStart, true) +
 						        		'{!IF(strParams != null, '&' + strParams, '')}';
