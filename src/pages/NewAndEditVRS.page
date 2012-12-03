@@ -1,0 +1,36 @@
+<!-- 
+// Written by David Habib, copyright (c) 2012, 2013
+// This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
+ -->
+
+<apex:page standardController="Volunteer_Recurrence_Schedule__c" extensions="VOL_CTRL_NewAndEditVRS" title="{!$ObjectType.Volunteer_Recurrence_Schedule__c.Label}" tabStyle="Volunteer_Recurrence_Schedule__c" >
+	<apex:sectionHeader title="{!$ObjectType.Volunteer_Recurrence_Schedule__c.Label}" subtitle="{!$ObjectType.Volunteer_Recurrence_Schedule__c.Label}" />	
+	<apex:form >
+		<apex:pageBlock title="{!$ObjectType.Volunteer_Recurrence_Schedule__c.Label}" mode="edit" id="pbMain" >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!Save}" value="{!$Label.labelButtonSave}"/>
+                <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonCancel}" immediate="true"/>
+            </apex:pageBlockButtons> 
+            <apex:pageBlockSection title="{!$Label.labelInformation}" columns="1" >                        
+				<!--  now add fields the user can specify -->
+				<apex:repeat value="{!$ObjectType.Volunteer_Recurrence_Schedule__c.FieldSets.NewAndEditVRSFS}" var="f" >
+					<apex:inputField value="{!vrs[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" >
+               	        <apex:actionSupport immediate="false" event="onchange" 
+               	        	rerender="pbsJRS" status="retrieveStatus" rendered="{!IF(f == 'GW_Volunteers__Volunteer_Job__c', 'true', 'false')}" 
+               	        	action="{!refreshListSOJRS}" />                        
+					</apex:inputField> 
+	  			</apex:repeat>                    
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.labelCopySchedule}" columns="1" id="pbsJRS" >
+				<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Job_Recurrence_Schedule__c.Label}" />
+			    	<apex:selectList value="{!jrsId}" size="1" required="false">
+			    		<apex:selectOptions value="{!listSOJRS}" />			    		
+               	        <apex:actionSupport immediate="false" event="onchange" rerender="pbMain" status="retrieveStatus" action="{!copyScheduleFromJRS}" />                        
+			    	</apex:selectList>									    	
+			    </apex:pageBlockSectionItem>
+			    <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />			    
+			</apex:pageBlockSection>
+        </apex:pageBlock>	
+	</apex:form> 
+</apex:page>
