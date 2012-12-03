@@ -224,6 +224,14 @@ day:      &apos;day&apos;</value>
         <value>&quot;MediumBlue&quot;,&quot;Green&quot;,&quot;DarkRed&quot;, &quot;Purple&quot;, &quot;DarkSlateGray&quot;, &quot;MidnightBlue&quot;</value>
     </labels>
     <labels>
+        <fullName>labelCopySchedule</fullName>
+        <categories>NewAndEditVRS</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>section title for the Copy Schedule From section on the New and Edit VRS page</shortDescription>
+        <value>Copy Schedule From</value>
+    </labels>
+    <labels>
         <fullName>labelFileUploadDescription</fullName>
         <categories>VolunteersSignupFS, VolunteersJobListingFS</categories>
         <language>en_US</language>
@@ -238,6 +246,14 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for the From dropdown on Mass Email</shortDescription>
         <value>From</value>
+    </labels>
+    <labels>
+        <fullName>labelInformation</fullName>
+        <categories>NewAndEditVRS</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>title of Information section on NewAndEditVRS page</shortDescription>
+        <value>Information</value>
     </labels>
     <labels>
         <fullName>labelJRSShiftCreatedSystemNote</fullName>

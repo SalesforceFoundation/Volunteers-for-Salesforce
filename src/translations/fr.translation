@@ -120,12 +120,20 @@ day: &apos;jour&apos;</label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
+        <label>Copiez le programme de</label>
+        <name>labelCopySchedule</name>
+    </customLabels>
+    <customLabels>
         <label>(chargé à partir de la page web d&apos;inscription des bénévoles).</label>
         <name>labelFileUploadDescription</name>
     </customLabels>
     <customLabels>
         <label>De</label>
         <name>labelFrom</name>
+    </customLabels>
+    <customLabels>
+        <label>Information</label>
+        <name>labelInformation</name>
     </customLabels>
     <customLabels>
         <label>Automatiquement Crée pour l&apos;Horaire de Récurrence des Postes:</label>

@@ -22,6 +22,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>VOL_CTRL_NewAndEditVRS</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>VOL_CTRL_OpenReport</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1645,6 +1649,10 @@
     <pageAccesses>
         <apexPage>JobCalendar</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>NewAndEditVRS</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>OpenReport</apexPage>
