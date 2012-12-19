@@ -28,7 +28,7 @@ public with sharing class VOL_SharedCode {
     }
 
     // the list of Volunteer Job Shifts for the specified Job
-    public list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd) {
+    public list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
         dtEnd = dtEnd.addDays(1);
@@ -36,7 +36,8 @@ public with sharing class VOL_SharedCode {
         	where Volunteer_Job__c = :volunteerJobId 
         		and Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
         	order by Start_Date_Time__c limit 999]) {
-            SelectOption so = new SelectOption(vs.id, vs.Start_Date_Time__c.format() + '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' );
+            SelectOption so = new SelectOption(vs.id, vs.Start_Date_Time__c.format() + 
+            	(fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ));
             so.setEscapeItem(false); 
             listSO.add(so);
         }       

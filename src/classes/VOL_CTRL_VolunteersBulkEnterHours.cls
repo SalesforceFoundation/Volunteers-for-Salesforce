@@ -116,7 +116,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         get {
             if (listSOVolunteerShifts == null && volunteerJobId != null) {
                 listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId, 
-                	vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c);
+                	vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c, true); 
             }
             return listSOVolunteerShifts;
         }
