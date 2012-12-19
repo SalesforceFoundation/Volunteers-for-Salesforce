@@ -54,8 +54,7 @@ public with sharing class VOL_CTRL_OpenReport {
 	//---------------------------------------------------------------------------------------------
 	// TEST CODE
 	//---------------------------------------------------------------------------------------------
-
-	static testmethod void TestOpenReport() {
+@isTest(SeeAllData=true) static void TestOpenReport() {
 		PageReference pageRef = Page.OpenReport; 
 		Test.setCurrentPage(pageRef); 
 
