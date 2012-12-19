@@ -353,7 +353,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 	        }
     	} catch (exception ex) {
     		StrSaveResult = ex.getMessage(); 
-    		StrSaveResult += ' stack: ' + ex.getStackTraceString();
+    		//StrSaveResult += ' stack: ' + ex.getStackTraceString();
     		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage())); 		
     	}
         return null; 
