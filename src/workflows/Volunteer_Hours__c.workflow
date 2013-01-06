@@ -21,6 +21,17 @@
         <senderType>CurrentUser</senderType>
         <template>Volunteers_Email_Templates/Volunteer_Job_Signup_Thank_You</template>
     </alerts>
+    <alerts>
+        <fullName>Volunteer_Shift_Reminder_Email_Alert</fullName>
+        <description>Volunteer Shift Reminder Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Volunteers_Email_Templates/Volunteer_Hours_Reminder_Email</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Set_End_Date</fullName>
         <description>Set End Date to Start Date</description>
@@ -68,6 +79,40 @@
         </criteriaItems>
         <description>If Planned Start Date &amp; Time is empty, set it to the Shift&apos;s Start Date &amp; Time</description>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Volunteer Hours Reminder Email</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Volunteer_Hours__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Confirmed,Completed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Email</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Volunteer_Hours__c.Start_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <description>a time based workflow rule to send a Contact an email reminding them of their upcoming Job Shift.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Volunteer_Shift_Reminder_Email_Alert</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Volunteer_Hours__c.Shift_Start_Date_Time__c</offsetFromField>
+            <timeLength>-4</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Volunteer Job Signup</fullName>

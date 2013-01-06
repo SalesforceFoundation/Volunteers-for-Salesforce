@@ -227,7 +227,7 @@ day:      &apos;day&apos;</value>
         <fullName>labelCopySchedule</fullName>
         <categories>NewAndEditVRS</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>section title for the Copy Schedule From section on the New and Edit VRS page</shortDescription>
         <value>Copy Schedule From</value>
     </labels>
@@ -251,7 +251,7 @@ day:      &apos;day&apos;</value>
         <fullName>labelInformation</fullName>
         <categories>NewAndEditVRS</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>title of Information section on NewAndEditVRS page</shortDescription>
         <value>Information</value>
     </labels>
@@ -267,7 +267,7 @@ day:      &apos;day&apos;</value>
         <fullName>labelJRSShiftRemovedSystemNote</fullName>
         <categories>JRS</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>System Note added to Shift when removed from a JRS.</shortDescription>
         <value>Removed from Job Recurrence Schedule:</value>
     </labels>
@@ -299,7 +299,7 @@ day:      &apos;day&apos;</value>
         <fullName>labelMassEditDateFilterFrom</fullName>
         <categories>MassEditVolunteerHours</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>label for the date filter From field.</shortDescription>
         <value>Show Shifts &amp; Hours From</value>
     </labels>
@@ -526,6 +526,30 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>System Note added to Hour when created by a VRS.</shortDescription>
         <value>Auto-created for Volunteer Recurrence Schedule:</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteerReportHoursNotesNoShifts</fullName>
+        <categories>VolunteersReportHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The help text displayed on the VolunteersReportHours Sites page with No Shifts</shortDescription>
+        <value>Specify the time frame you are reporting on, and the total hours you worked.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteerReportHoursNotesShifts</fullName>
+        <categories>VolunteersReportHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The help text displayed on the VolunteersReportHours Sites page with Shifts</shortDescription>
+        <value>Select the Shift you worked, and update the number of hours you worked if needed.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteerReportHoursThankYou</fullName>
+        <categories>VolunteersReportHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The message displayed when a volunteer successfully records their hours.</shortDescription>
+        <value>Thank you for reporting your volunteer hours.</value>
     </labels>
     <labels>
         <fullName>labelVolunteerSignupThankYou</fullName>

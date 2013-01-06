@@ -83,7 +83,7 @@
         <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
-        <inlineHelpText>Is this Volunteer Job no longer active.</inlineHelpText>
+        <inlineHelpText>Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page.</inlineHelpText>
         <label>Inactive</label>
         <type>Checkbox</type>
     </fields>

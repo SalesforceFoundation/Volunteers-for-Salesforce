@@ -27,7 +27,7 @@
         <name>First_Shift__c</name>
     </fields>
     <fields>
-        <help><!-- Is this Volunteer Job no longer active. --></help>
+        <help><!-- Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page. --></help>
         <label><!-- Inactive --></label>
         <name>Inactive__c</name>
     </fields>

@@ -272,6 +272,18 @@ day: &apos;jour&apos;</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
+        <label><!-- The help text displayed on the VolunteersReportHours Sites page with No Shifts --></label>
+        <name>labelVolunteerReportHoursNotesNoShifts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The help text displayed on the VolunteersReportHours Sites page with Shifts --></label>
+        <name>labelVolunteerReportHoursNotesShifts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The message displayed when a volunteer successfully records their hours. --></label>
+        <name>labelVolunteerReportHoursThankYou</name>
+    </customLabels>
+    <customLabels>
         <label>Merci de votre inscription pour le bénévolat.</label>
         <name>labelVolunteerSignupThankYou</name>
     </customLabels>

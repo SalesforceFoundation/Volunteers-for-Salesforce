@@ -50,6 +50,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>VOL_CTRL_VolunteersReportHours</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>VOL_CTRL_VolunteersSignup</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -695,6 +699,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Unique_Volunteer_Count__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1569,7 +1578,7 @@
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Job_Recurrence_Schedule__c</object>
         <viewAllRecords>false</viewAllRecords>
@@ -1632,13 +1641,13 @@
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Volunteer_Recurrence_Schedule__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -1684,6 +1693,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>VolunteersJobListingFS</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VolunteersReportHours</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

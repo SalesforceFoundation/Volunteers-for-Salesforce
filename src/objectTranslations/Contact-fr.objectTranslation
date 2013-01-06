@@ -38,6 +38,11 @@
         <name>Unique_Volunteer_Count__c</name>
     </fields>
     <fields>
+        <help><!-- Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule. --></help>
+        <label><!-- Volunteer Auto-Reminder Email Opt Out --></label>
+        <name>Volunteer_Auto_Reminder_Email_Opt_Out__c</name>
+    </fields>
+    <fields>
         <label>Disponibilités des bénévoles</label>
         <name>Volunteer_Availability__c</name>
         <picklistValues>
