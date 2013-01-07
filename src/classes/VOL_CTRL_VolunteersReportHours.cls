@@ -147,9 +147,52 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         return null;        
     }
 
+	private class MyException extends Exception {}
+
+
     // action method for saving the the volunteer's hours.    
     global virtual PageReference Save() {  
     	try { 
+    		// because we need to use actionSupport immediate=false to support the combo's,
+    		// we couldn't actually use visualforce's required=true property on fields.
+    		// so we must manually enforce the fields we want required ourselves.
+    		boolean hasErrors = false;
+
+			// first deal with fields on the contact.
+	        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersReportHoursFS.getFields()) {
+	        	if (contact.get(f.getFieldPath()) == null && (f.getDBRequired() || f.getRequired())) {
+		    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+		    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { f.getLabel() }))); 	
+		    		hasErrors = true;	
+	        	}    		
+	        }   
+	        	         		
+    		if (volunteerJobId == null) {
+	    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+	    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { Schema.sObjectType.Volunteer_Hours__c.fields.Volunteer_Job__c.getLabel() }))); 	
+	    		hasErrors = true;	    		
+    		}
+    		if (vhours.Start_Date__c == null) {
+	    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+	    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { Schema.sObjectType.Volunteer_Hours__c.fields.Start_Date__c.getLabel() }))); 	
+	    		hasErrors = true;	    		
+    		}
+    		if (vhours.End_Date__c == null) {
+	    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+	    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { Schema.sObjectType.Volunteer_Hours__c.fields.End_Date__c.getLabel() }))); 	
+	    		hasErrors = true;	    		
+    		}
+    		if (vhours.Hours_Worked__c == null) {
+	    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+	    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { Schema.sObjectType.Volunteer_Hours__c.fields.Hours_Worked__c.getLabel() }))); 	
+	    		hasErrors = true;	    		
+    		}
+			// now bail out if any required fields are missing.    					
+			if (hasErrors) {
+	    		strSaveResult = null;
+				return null;			
+			}    		
+			
     		// save or update the contact              
 	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(contact.Id, contact, contact.Volunteer_Organization__c, listStrFields);
 	        

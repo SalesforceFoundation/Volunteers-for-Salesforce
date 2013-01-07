@@ -14,25 +14,11 @@
        		<!--  NOTE: had to put rendered check on each element.  using a panel around the TR or TD's did not work! -->
        		<!--  NOTE: all of these fields need to be filled in, but couldn't mark them required, or we couldn't use actionSupport with immediate=false. -->
        		
-			<!-- first we specify the fields we require for Contact matching -->
-			<tr>
-	            <td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.FirstName.Label + '*'}" for="txtFirstName" /></td>
-    	        <td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.FirstName}" id="txtFirstName" required="true" styleClass="cssInputFields" /></td>
-        	</tr>
-        	<tr>    
-            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.LastName.Label + '*'}" for="txtLastName" /></td>
-            	<td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.LastName}" id="txtLastName" required="true" styleClass="cssInputFields" /></td>
-            </tr>
-            <tr>            
-            	<td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Contact.Fields.Email.Label + '*'}" for="txtEmail" /></td>
-            	<td class="cssInputFieldsColumn" ><apex:inputField value="{!contact.Email}" id="txtEmail" required="true" styleClass="cssInputFields" /></td>
-			</tr>
-			
-			<!--  now add optional fields the user can specify -->
+			<!-- the fields we require for Contact matching (firstname, lastname, email) are already required in the fieldset -->
 			<apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersReportHoursFS}" var="f" >
 				<tr>
 					<td class="cssLabelsColumn" ><apex:outputLabel value="{!f.Label + IF(OR(f.DBRequired, f.Required), '*', '')}" /></td>
-   					<td class="cssInputFieldsColumn" ><apex:inputField value="{!Contact[f]}" required="{!OR(f.DBRequired, f.Required)}"
+   					<td class="cssInputFieldsColumn" ><apex:inputField value="{!Contact[f]}" required="false"
    						styleClass="{!IF(f.Type == 'Long Text Area', 'cssInputFields cssTextArea', 'cssInputFields')}" /></td>
    				</tr>
   			</apex:repeat>        
@@ -67,21 +53,21 @@
                 <td class="cssLabelsColumn" ><apex:outputLabel rendered="{!volunteerJobId != null && NOT(hasShifts)}" 
                 	value="{!$ObjectType.Volunteer_Hours__c.Fields.Start_Date__c.Label + '*'}" /></td>
 	            <td class="cssInputFieldsColumn" ><apex:inputField rendered="{!volunteerJobId != null && NOT(hasShifts)}" 
-	            	value="{!vhours.Start_Date__c}" required="true" styleClass="cssInputFields" /></td>
+	            	value="{!vhours.Start_Date__c}" required="false" styleClass="cssInputFields" /></td>
        		</tr>
 
            	<tr>
                 <td class="cssLabelsColumn" ><apex:outputLabel rendered="{!volunteerJobId != null && NOT(hasShifts)}" 
                 	value="{!$ObjectType.Volunteer_Hours__c.Fields.End_Date__c.Label + '*'}" /></td>
 	            <td class="cssInputFieldsColumn" ><apex:inputField rendered="{!volunteerJobId != null && NOT(hasShifts)}" 
-	            	value="{!vhours.End_Date__c}" required="true" styleClass="cssInputFields" /></td>
+	            	value="{!vhours.End_Date__c}" required="false" styleClass="cssInputFields" /></td>
        		</tr>
 
            	<tr>
                 <td class="cssLabelsColumn" ><apex:outputLabel rendered="{!volunteerJobId != null && (NOT(hasShifts) || volunteerShiftId != null)}" 
                 	value="{!$ObjectType.Volunteer_Hours__c.Fields.Hours_Worked__c.Label + '*'}" /></td>
 	            <td class="cssInputFieldsColumn" ><apex:inputField rendered="{!volunteerJobId != null && (NOT(hasShifts) || volunteerShiftId != null)}" 
-	            	value="{!vhours.Hours_Worked__c}" required="true" styleClass="cssInputFields" /></td>
+	            	value="{!vhours.Hours_Worked__c}" required="false" styleClass="cssInputFields" /></td>
        		</tr>
 
             <tr>
