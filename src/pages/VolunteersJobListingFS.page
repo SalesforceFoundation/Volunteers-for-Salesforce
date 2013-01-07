@@ -40,6 +40,7 @@
     
     function MyDateFormat(dt, strDateFormat) {
     	var strDt = strDateFormat;
+    	strDt = strDt.replace('EEEE', '');  // server formatting supports this.  backward compat doesn't have to support it.
         strDt = strDt.replace('MM', ((dt.getMonth() < 9) ? ('0' + (dt.getMonth() + 1)) : (dt.getMonth() + 1)));
         strDt = strDt.replace('M', (dt.getMonth() + 1));
         strDt = strDt.replace('dd', ((dt.getDate() < 10) ? ('0' + dt.getDate()) : dt.getDate()));
@@ -69,7 +70,9 @@
     	return strTm;	
     }
 
-/**** Starting in version 3.0, date time formatting is done in Apex on the server.    
+	// Starting in version 3.0, date time formatting is done in Apex on the server, but we still use this
+	// for backward compatibility, if the System Note field hasn't been made visible on the Site's Guest User Profile,
+	// which is the field we temporarily store the server datetime formatted string to use.
     function JobShiftDateTimeString(dt, duration) {
         var dtStart = new Date(dt);        
 
@@ -84,7 +87,6 @@
         var strEndTime = MyTimeFormat(dtEnd, '{!JSENCODE(strTimeFormat)}');
         return strStartDate + ' ' + strStartTime + ' - ' + strEndTime;
     }      
-******/
       
 </script>
 	
@@ -121,6 +123,7 @@
                 <apex:outputPanel rendered="{!shift.Number_of_Volunteers_Still_Needed__c != 0}" >
                     <a href="SignUp" onclick="
                     	var x = '{!shift.System_Note__c}';   
+                    	if (x == '') x = JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}');
                         OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '{!shift.Id}', '{!JSENCODE(job.Name)}', x); 
                         return false;"
                         >{!$Label.labelLinkSignUp}</a>
@@ -128,7 +131,15 @@
                 <apex:outputText value="{!$Label.labelLinkFull}" style="font-style:italic;" rendered="{!BLANKVALUE(shift.Number_of_Volunteers_Still_Needed__c, -1) == 0}" />
                 &nbsp;&nbsp;&nbsp;
             </apex:column>
-            <apex:column ><div id="txtShiftStartDateTime"><script>document.write('{!shift.System_Note__c}');</script>&nbsp;&nbsp;&nbsp;</div></apex:column>
+            <apex:column >
+            	<div id="txtShiftStartDateTime">
+            		<script>
+		            	var strDT = '{!shift.System_Note__c}';
+		            	if (strDT == '') strDT = JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}'); 
+		            	document.write(strDT);
+		            </script>&nbsp;&nbsp;&nbsp;
+		        </div>
+		    </apex:column>
             <apex:column ><apex:outputField value="{!shift.Description__c}" /></apex:column>
         </apex:dataTable>
         <br/>
