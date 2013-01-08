@@ -17,7 +17,7 @@
             background-color: #f8f8f8;
             border:1px solid #DDDDDD;
             height: 19px;
-            width: 300px;
+            width: 200px;
             -moz-border-radius: 5px; 
             -webkit-border-radius: 5px;
         }
@@ -45,7 +45,7 @@
             <apex:column value="{!b.job.TotalJobItems}"/> 
             <apex:column value="{!b.job.JobItemsProcessed}"/>
             <apex:column value="{!b.job.NumberOfErrors}"/> 
-            <apex:column width="320px" >
+            <apex:column width="220px" >
  
                 <!-- Here with have two divs that construct our progresses bar. An outer which is the entire bar,
                 and and inner that represents the percent complete. We simply pass the percentComplete value to

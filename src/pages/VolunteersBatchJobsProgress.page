@@ -1,4 +1,4 @@
-<apex:page controller="VOL_CTRL_BatchProgress" title="Volunteer Job Recurrence Schedules" >
+<apex:page controller="VOL_CTRL_BatchProgress" tabStyle="Process_Recurrence_Schedules__tab" >
 
 	<!--
 	Visualforce Rollup Page
@@ -15,7 +15,7 @@
 	
 	</style>
 
-	<apex:sectionHeader title="Volunteer Job Recurrence Schedules" />
+	<apex:sectionHeader title="Process Recurrence Schedules" />
 	<apex:form >
 		<apex:pageBlock >
 			<apex:pageBlockButtons rendered="{!batching}">
@@ -24,16 +24,22 @@
 			</apex:pageBlockButtons>
 			<apex:messages styleClass="err" />
 			<apex:outputText rendered="{!batching}">
-				<p>Volunteers for Salesforce supports Volunteer Job Recurrence Schedules with the help of a batch process to
-				create future shifts.  You can run this process manually, by clicking the Begin button, or you can schedule it
+				<p>Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to
+				create future shifts and assign volunteers to them.  You can run this process manually, by clicking the Begin button, or you can schedule it
 				to automatically run nightly.</p>
 				<p>You will see a progress bar below for the most recent batch process.
 				 The process may take some time; it will take longer the more data you have in your database.  You can close this page 
-				and the process will continue in the background.   Go to Setup > Monitoring > Apex Jobs for more detailed information.</p>
+				and the process will continue in the background.</p>
 			</apex:outputText>
+					
+			<p>To view currently scheduled jobs, go to the 
+		       				<a  href='/08e?setupid=ScheduledJobs'>Scheduled Jobs page.</a></p>
+			
+			<p>To schedule the Recurrence Schedules process to run automatically, go to the 
+		       				<a  href='/ui/setup/apex/batch/ScheduleBatchApexPage'>Schedule Apex Jobs page.</a></p>
 		</apex:pageBlock>
 		<apex:outputPanel >
-			<c:batchJobs batchComponentLabel="Volunteer Job Recurrence Schedule Progress" numberOfJobs="1" />
+			<c:batchJobs batchComponentLabel="Process Recurrence Schedules Progress" numberOfJobs="1" />
 		</apex:outputPanel>
 	</apex:form>
 </apex:page>
