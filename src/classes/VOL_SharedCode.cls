@@ -57,6 +57,8 @@ public with sharing class VOL_SharedCode {
                     VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c = false;
                     VolunteersSettings.Signup_Bucket_Account_On_Create__c = null;
                     VolunteersSettings.Recurring_Job_Future_Months__c = 12;
+                    VolunteersSettings.Contact_Match_Email_Fields__c = null;
+                    VolunteersSettings.Contact_Match_First_Name_Fields__c = null;
                     insert VolunteersSettings;
                 }           
             }
@@ -93,7 +95,9 @@ public with sharing class VOL_SharedCode {
             Signup_Matches_Existing_Contacts__c = mySettings.Signup_Matches_Existing_Contacts__c,
             Signup_Creates_Contacts_If_No_Match__c = mySettings.Signup_Creates_Contacts_If_No_Match__c,
             Signup_Bucket_Account_On_Create__c = mySettings.Signup_Bucket_Account_On_Create__c,
-            Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c
+            Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c,
+            Contact_Match_Email_Fields__c = mySettings.Contact_Match_Email_Fields__c,
+            Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c
             );
         insert VolunteersSettings;                      
         return VolunteersSettings;
@@ -211,8 +215,34 @@ public with sharing class VOL_SharedCode {
         	strComma = ', ';
         }
         strSoql += ' from Contact where Lastname=\'' + StrEscape(contact.Lastname) + '\'';
-        strSoql += ' and Firstname=\'' + StrEscape(contact.Firstname) + '\'';
-        strSoql += ' and Email=\'' + contact.Email + '\' limit 999 ';      
+        strSoql += ' and (Firstname=\'' + StrEscape(contact.Firstname) + '\'';
+        
+        // any additional firstname fields to check
+        if (VolunteersSettings.Contact_Match_First_Name_Fields__c != null) {
+	        list<string> listStrFname = new list<string>();
+    	    listStrFname = VolunteersSettings.Contact_Match_First_Name_Fields__c.split(';');
+        	for (string str : listStrFname) {
+        		strSoql += ' or ' + str + '=\'' + StrEscape(contact.Firstname) + '\'';
+        	}
+        }
+        strSoql += ') and (Email=\'' + contact.Email + '\'';
+        
+        // any additional email fields to check
+        if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
+	        list<string> listStrEmail = new list<string>();
+    	    listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
+        	for (string str : listStrEmail) {
+        		strSoql += ' or ' + str + '=\'' + contact.Email + '\'';
+        	}
+        }
+       	// handle NPSP email fields 
+       	if (IsNPSPInstalled) {
+			strSoql += ' or npe01__AlternateEmail__c=\'' + contact.Email + '\'';
+			strSoql += ' or npe01__HomeEmail__c=\'' + contact.Email + '\'';
+			strSoql += ' or npe01__WorkEmail__c=\'' + contact.Email + '\'';
+       	}
+        
+        strSoql += ') limit 999 ';      
         list<Contact> listCon = Database.Query(strSoql); 
 
         // if we found a match                      
@@ -246,9 +276,10 @@ public with sharing class VOL_SharedCode {
             	conExisting.Volunteer_Status__c = 'New Sign Up';
             }
             
-            //  now copy over all the non-null fields from the form's contact to the existing contact.
+            // now copy over all the non-null fields from the form's contact to the existing contact.
+            // avoid overwriting existing first name or existing email, since we might match it from in a different field.
             for (string strF : listStrFields) {
-            	if (strF != 'Id' && contact.get(strF) != null) {
+            	if (strF != 'Id' && strF != 'Firstname' && strF != 'Email' && contact.get(strF) != null) {
             		conExisting.put(strF, contact.get(strF));
             	}
             }
@@ -323,13 +354,27 @@ public with sharing class VOL_SharedCode {
             	if (sobjT.get(strF) != null) {
             		try {
             			sobj.put(strF, sobjT.get(strF));
-            		} catch(exception ex) {
+            		} catch(exception ex) { 
             			
             		}
             	}
             }
         }
 	}
+	
+	// public utility used to detect whether the Non Profit Starter Pack is installed in this instance.
+	private static boolean fCheckedForNPSP = false;
+	public static boolean IsNPSPInstalled {
+		get {
+			if (!fCheckedForNPSP) {
+				Schema.SObjectType token = Schema.getGlobalDescribe().get('npe01__OppPayment__c');
+				IsNPSPInstalled = (token != null);
+				fCheckedForNPSP = true;
+			}
+			return IsNPSPInstalled;
+		}
+		set;
+	}	
 	
     //==================== TEST METHOD(s) ======================================
     static testmethod void CodeCoverageTests() {
