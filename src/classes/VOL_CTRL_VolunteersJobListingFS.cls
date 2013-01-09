@@ -314,12 +314,27 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         
     }   
     
+    private class MyException extends Exception {}
+    
     global virtual PageReference VolunteerShiftSignUp() {
 		try { 			   	
 	        // clear return variables in case we fail.
 	        contactIdSignUp = null;
 	        volunteerHoursIdSignUp = null;
 	        strSaveResult = null;
+	        
+	        // do any validation we weren't able to do directly on the client.
+	        if (shiftIdSignUp != null && shiftIdSignUp != '') {
+	        	// make sure we don't go over the number of volunteers still needed on the shift.
+	        	list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
+	        	if (listShift != null) {
+	        		if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {
+	        			string strError = String.Format(system.label.labelVolunteersJobListingErrorTooManyVols, 
+	        				new string[] { string.valueOf(listShift[0].Number_of_Volunteers_Still_Needed__c) }); 
+						throw (new MyException(strError));    				
+	        		}
+	        	}
+	        }
 	                    
 	        // when used within the Portal, we should use the logged in Contact
 	        //Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');

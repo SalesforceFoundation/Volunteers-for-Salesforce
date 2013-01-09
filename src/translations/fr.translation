@@ -272,6 +272,10 @@ day: &apos;jour&apos;</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
+        <label>{0} est exigé.</label>
+        <name>labelVolunteerReportHoursErrorRequiredField</name>
+    </customLabels>
+    <customLabels>
         <label><!-- The help text displayed on the VolunteersReportHours Sites page with No Shifts --></label>
         <name>labelVolunteerReportHoursNotesNoShifts</name>
     </customLabels>
@@ -286,6 +290,10 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>Merci de votre inscription pour le bénévolat.</label>
         <name>labelVolunteerSignupThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Il y a seulement {0} volontaires toujours requis sur ce décalage.</label>
+        <name>labelVolunteersJobListingErrorTooManyVols</name>
     </customLabels>
     <customLabels>
         <label>Information de Campagne</label>
@@ -361,7 +369,7 @@ day: &apos;jour&apos;</label>
     </customTabs>
     <customTabs>
         <label>Progrès de l&apos;Horaire de Récurrence</label>
-        <name>Job_Recurring_Schedule_Progress</name>
+        <name>Process_Recurrence_Schedules</name>
     </customTabs>
     <customTabs>
         <label>Calendrier des Bénévoles</label>

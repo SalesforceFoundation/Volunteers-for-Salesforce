@@ -204,7 +204,7 @@
             <apex:commandButton value="{!$Label.labelButtonSignUp}" onclick="
                     j$('input[name$=txtContactIdSignUp]').val(''); 
                     j$('input[name$=txtVHIdSignUp]').val('');
-                   	VolunteerShiftSignUp();
+               		VolunteerShiftSignUp();
                     return false;" 
                 immediate="false" status="statusSignUp" />              
             <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" />            
