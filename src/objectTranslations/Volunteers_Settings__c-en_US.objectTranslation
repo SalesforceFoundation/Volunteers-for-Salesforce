@@ -9,6 +9,16 @@
         <value>Volunteers Settings</value>
     </caseValues>
     <fields>
+        <help><!-- A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full Developer name, including namespace prefix. NPSP email fields are automatically checked. --></help>
+        <label><!-- Contact Match Email Fields --></label>
+        <name>Contact_Match_Email_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- A semicolon separated list of additional Contact first name fields to try to match against when doing Contact matching. E.g., a nickname field.  Note that the fields are specified by their full Developer name, including namespace prefix. --></help>
+        <label><!-- Contact Match First Name Fields --></label>
+        <name>Contact_Match_First_Name_Fields__c</name>
+    </fields>
+    <fields>
         <help><!-- How many months into the future should the recurring job shift be scheduled? --></help>
         <label><!-- Recurring Job Future Months --></label>
         <name>Recurring_Job_Future_Months__c</name>

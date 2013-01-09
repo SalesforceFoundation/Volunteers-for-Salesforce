@@ -5,6 +5,26 @@
     <description>Custom settings used by Volunteers for Salesforce.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Contact_Match_Email_Fields__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full Developer name, including namespace prefix. NPSP email fields are automatically checked.</inlineHelpText>
+        <label>Contact Match Email Fields</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Match_First_Name_Fields__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>A semicolon separated list of additional Contact first name fields to try to match against when doing Contact matching. E.g., a nickname field.  Note that the fields are specified by their full Developer name, including namespace prefix.</inlineHelpText>
+        <label>Contact Match First Name Fields</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Recurring_Job_Future_Months__c</fullName>
         <defaultValue>12</defaultValue>
         <externalId>false</externalId>
