@@ -145,7 +145,27 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>Volunteer_Status__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Salutation</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Phone</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>Fax</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>HasOptedOutOfEmail</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>HasOptedOutOfFax</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -204,15 +224,19 @@
             <field>OtherStreet</field>
             <isRequired>false</isRequired>
         </availableFields>
-        <availableFields>
-            <field>Phone</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Status__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
         <description>VolunteersReportHours visualforce page</description>
+        <displayedFields>
+            <field>FirstName</field>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastName</field>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isRequired>true</isRequired>
+        </displayedFields>
         <label>VolunteersReportHoursFS</label>
     </fieldSets>
     <fieldSets>
