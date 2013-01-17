@@ -1,0 +1,79 @@
+<!-- 
+// Written by David Habib, copyright (c) 2013 
+// This program is free software; you can redistribute it and/or modify it under the terms of the 
+// GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
+-->
+ 
+<apex:page controller="VOL_CTRL_VolunteersFind" >
+
+<style>	
+
+	.pbBody .cssFilterLabel {
+    	font-weight: bold;
+	}
+
+</style>	
+
+    <apex:sectionHeader title="{!$Label.labelFindVolunteers}" />       
+    <apex:form > 
+        
+        <apex:pageBlock title="{!$Label.labelFindVolunteers}" rendered="true"  mode="detail" >
+            <apex:pageMessages id="msgs" />
+            
+            <apex:pageBlockSection title="{!$Label.labelFindVolunteersCriteria}" columns="1" id="pbsFind" collapsible="true" > 
+	            <apex:outputText value="{!$Label.labelFindVolunteersHelpCriteria}" style="font-style:italic" />
+	            
+	            <apex:pageBlockSection columns="3" >  
+	            	<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!$ObjectType.Contact.Fields.Volunteer_Status__c.Label}</apex:pageBlockSectionItem>
+	            	<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!$ObjectType.Contact.Fields.Volunteer_Availability__c.Label}</apex:pageBlockSectionItem>
+	            	<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!$ObjectType.Contact.Fields.Volunteer_Skills__c.Label}</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter.Volunteer_Status__c}" /></apex:pageBlockSectionItem>  
+					<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter.Volunteer_Availability__c}" /></apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter.Volunteer_Skills__c}" /></apex:pageBlockSectionItem>            
+	                <apex:commandButton action="{!Find}" value="{!$Label.labelButtonFind}" rerender="msgs,pbsVolunteers,pbsAssign" status="statusLoad" immediate="false" />
+	            </apex:pageBlockSection>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="{!$Label.labelFindVolunteersFindResults}" columns="1" id="pbsVolunteers" collapsible="true" >
+            	<script>if ({!NOT(hasFilterCriteria)}) { twistSection(document.getElementById("{!$Component.pbsVolunteers}").childNodes[0].childNodes[0]); } </script>
+            	<apex:outputText value="{!$Label.labelFindVolunteersHelpFindResults}" rendered="{!NOT(hasFilterCriteria)}" style="font-style:italic;" /> 
+				<c:SoqlListView pageController="{!this}" ></c:SoqlListView>
+			</apex:pageBlockSection>
+			
+            <apex:pageBlockSection title="{!$Label.labelFindVolunteersAssign}" columns="1" id="pbsAssign" collapsible="true" > 
+            	<script>if ({!NOT(hasFilterCriteria)}) { twistSection(document.getElementById("{!$Component.pbsAssign}").childNodes[0].childNodes[0]); } </script>
+	            <apex:outputText value="{!$Label.labelFindVolunteersHelpAssign}" style="font-style:italic" />
+	            
+	            <apex:pageBlockSection columns="2" >
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="{!$ObjectType.Campaign.Label}" />
+		                <apex:selectList value="{!campaignId}" size="1" >
+		                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts" status="statusLoad" action="{!ChangeCampaign}" />
+		                    <apex:selectOptions value="{!listSOCampaigns}" /> 
+		                </apex:selectList>  
+	        		</apex:pageBlockSectionItem>
+	            	<apex:pageBlockSectionItem />
+	            	<apex:pageBlockSectionItem >
+						<apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" />
+		                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
+		                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts" status="statusLoad" action="{!ChangeVolunteerJob}" />
+		                    <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
+		                </apex:selectList>
+	        		</apex:pageBlockSectionItem>
+	            	<apex:pageBlockSectionItem >
+						<apex:outputLabel value="{!$ObjectType.Volunteer_Shift__c.Label}" />
+		                <apex:selectList value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts">
+		                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
+		                </apex:selectList>
+	        		</apex:pageBlockSectionItem>
+	        		<apex:inputField value="{!vhAssign.Status__c}" />	              
+	        		<apex:inputField value="{!vhAssign.Hours_Worked__c}" />	              
+	                <apex:commandButton action="{!Assign}" value="{!$Label.labelButtonAssign}" rerender="msgs,pbsAssign" status="statusLoad" immediate="false" />
+	            </apex:pageBlockSection>
+	            <apex:pageMessages />
+            </apex:pageBlockSection>
+
+		</apex:pageBlock>
+	</apex:form>
+
+</apex:page>
