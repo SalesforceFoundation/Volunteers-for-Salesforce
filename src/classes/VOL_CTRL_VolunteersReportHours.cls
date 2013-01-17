@@ -109,7 +109,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         get {
             if (listSOVolunteerShifts == null && volunteerJobId != null) {
                 listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId, 
-                	system.today().addMonths(-2), system.today().addMonths(1), false); 
+                	system.today().addMonths(-2), system.today().addMonths(1), false, false); 
             }
             return listSOVolunteerShifts;
         }

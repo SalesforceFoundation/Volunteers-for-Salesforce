@@ -28,16 +28,20 @@ public with sharing class VOL_SharedCode {
     }
 
     // the list of Volunteer Job Shifts for the specified Job
-    public list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName) {
+    public list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName, boolean fIncludeNumberNeeded) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
         dtEnd = dtEnd.addDays(1);
-        for (Volunteer_Shift__c vs : [select Id, Name, Start_Date_Time__c from Volunteer_Shift__c 
+        for (Volunteer_Shift__c vs : [select Id, Name, Start_Date_Time__c, Number_of_Volunteers_Still_Needed__c from Volunteer_Shift__c 
         	where Volunteer_Job__c = :volunteerJobId 
         		and Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
         	order by Start_Date_Time__c limit 999]) {
             SelectOption so = new SelectOption(vs.id, vs.Start_Date_Time__c.format() + 
-            	(fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ));
+            	(fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
+            	(fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
+            		(vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
+            			system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
+            		' ' : '' ));
             so.setEscapeItem(false); 
             listSO.add(so);
         }       
