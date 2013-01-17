@@ -9,7 +9,7 @@
         <value><!-- Volunteer Recurrence Schedule --></value>
     </caseValues>
     <fields>
-        <label><!-- Contact --></label>
+        <label>Contact</label>
         <name>Contact__c</name>
         <relationshipLabel>Horaires de récurrence des bénévoles</relationshipLabel>
     </fields>
@@ -92,7 +92,7 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>2nd</masterLabel>
-            <translation><!-- 2nd --></translation>
+            <translation>2ième</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>3rd</masterLabel>

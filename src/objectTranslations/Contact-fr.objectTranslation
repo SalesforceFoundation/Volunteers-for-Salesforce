@@ -39,7 +39,7 @@
     </fields>
     <fields>
         <help><!-- Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule. --></help>
-        <label><!-- Volunteer Auto-Reminder Email Opt Out --></label>
+        <label>L&apos;email bénévolat d&apos;auto choisissent</label>
         <name>Volunteer_Auto_Reminder_Email_Opt_Out__c</name>
     </fields>
     <fields>

@@ -42,7 +42,7 @@
     </fields>
     <fields>
         <help>Description texte a copier sur les Quarts crée par cette horaire.</help>
-        <label><!-- Description --></label>
+        <label>Descriptif</label>
         <name>Description__c</name>
     </fields>
     <fields>
@@ -76,7 +76,7 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>2nd</masterLabel>
-            <translation><!-- 2nd --></translation>
+            <translation>2ième</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>3rd</masterLabel>

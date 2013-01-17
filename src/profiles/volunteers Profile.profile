@@ -6,7 +6,19 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>ComponentControllerBase</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GW_CTRL_BatchJobsProgress</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PageControllerBase</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SoqlListView</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -40,6 +52,10 @@
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersCampaignWizard</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>VOL_CTRL_VolunteersFind</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersJobListing</apexClass>
@@ -1685,6 +1701,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>VolunteersCampaignWizard</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>VolunteersFind</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

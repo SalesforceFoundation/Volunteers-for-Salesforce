@@ -7,6 +7,7 @@
     <tab>Volunteers_Wizard</tab>
     <tab>Volunteer_Job__c</tab>
     <tab>Shift_Calendar</tab>
+    <tab>Find_Volunteers</tab>
     <tab>standard-Lead</tab>
     <tab>standard-Contact</tab>
     <tab>standard-Campaign</tab>

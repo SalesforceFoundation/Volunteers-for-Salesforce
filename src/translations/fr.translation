@@ -5,12 +5,20 @@
         <name>Groundwire_Volunteers</name>
     </customApplications>
     <customLabels>
+        <label>Assignez</label>
+        <name>labelButtonAssign</name>
+    </customLabels>
+    <customLabels>
         <label>Annuler</label>
         <name>labelButtonCancel</name>
     </customLabels>
     <customLabels>
         <label>Fermer</label>
         <name>labelButtonClose</name>
+    </customLabels>
+    <customLabels>
+        <label>Trouver</label>
+        <name>labelButtonFind</name>
     </customLabels>
     <customLabels>
         <label>Enregistrer</label>
@@ -128,6 +136,42 @@ day: &apos;jour&apos;</label>
         <name>labelFileUploadDescription</name>
     </customLabels>
     <customLabels>
+        <label>Trouver de Bénévoles</label>
+        <name>labelFindVolunteers</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} bénévoles sélectionnés ont été déjà affectés à ce travail ou décalent.</label>
+        <name>labelFindVolunteersAlreadyAssigned</name>
+    </customLabels>
+    <customLabels>
+        <label>Assignez à un travail ou décalez</label>
+        <name>labelFindVolunteersAssign</name>
+    </customLabels>
+    <customLabels>
+        <label>Critère</label>
+        <name>labelFindVolunteersCriteria</name>
+    </customLabels>
+    <customLabels>
+        <label>Bénévoles</label>
+        <name>labelFindVolunteersFindResults</name>
+    </customLabels>
+    <customLabels>
+        <label>Vérifiez les bénévoles que vous voulez s&apos;ajouter au travail ou au décalage volontaire spécifique, et le clic assignent.</label>
+        <name>labelFindVolunteersHelpAssign</name>
+    </customLabels>
+    <customLabels>
+        <label>Choisissez vos critères et cliquez sur la découverte. Offre le match si les valeurs sélectionnées l&apos;unes des dans un champ s&apos;assortissent. Laissez les critères de blanc, pas au filtre là-dessus.</label>
+        <name>labelFindVolunteersHelpCriteria</name>
+    </customLabels>
+    <customLabels>
+        <label>Spécifiez les critères de filtre pour voir des résultats.</label>
+        <name>labelFindVolunteersHelpFindResults</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} bénévoles sélectionnés ont été affectés à ce travail ou décalent.</label>
+        <name>labelFindVolunteersNewlyAssigned</name>
+    </customLabels>
+    <customLabels>
         <label>De</label>
         <name>labelFrom</name>
     </customLabels>
@@ -154,6 +198,26 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>S&apos;inscrire</label>
         <name>labelLinkSignUp</name>
+    </customLabels>
+    <customLabels>
+        <label>Premier</label>
+        <name>labelListViewFirst</name>
+    </customLabels>
+    <customLabels>
+        <label>Dernier</label>
+        <name>labelListViewLast</name>
+    </customLabels>
+    <customLabels>
+        <label>Suivant</label>
+        <name>labelListViewNext</name>
+    </customLabels>
+    <customLabels>
+        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;Page {0} de {1} &amp;nbsp;&amp;nbsp;({2} disques)</label>
+        <name>labelListViewPageInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>Précédent</label>
+        <name>labelListViewPrevious</name>
     </customLabels>
     <customLabels>
         <label>Montrer les Quarts et les Heures De</label>
@@ -256,6 +320,10 @@ day: &apos;jour&apos;</label>
         <name>labelReturnToCalendar</name>
     </customLabels>
     <customLabels>
+        <label>Montrez plus</label>
+        <name>labelShowMore</name>
+    </customLabels>
+    <customLabels>
         <label>Sujet</label>
         <name>labelSubject</name>
     </customLabels>
@@ -276,15 +344,15 @@ day: &apos;jour&apos;</label>
         <name>labelVolunteerReportHoursErrorRequiredField</name>
     </customLabels>
     <customLabels>
-        <label><!-- The help text displayed on the VolunteersReportHours Sites page with No Shifts --></label>
+        <label>Spécifiez le délai où vous signalez, et toutes les heures vous avez travaillées.</label>
         <name>labelVolunteerReportHoursNotesNoShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- The help text displayed on the VolunteersReportHours Sites page with Shifts --></label>
+        <label>Sélectionnez le décalage que vous avez travaillé, et mettez à jour le nombre d&apos;heures vous avez travaillées si nécessaire.</label>
         <name>labelVolunteerReportHoursNotesShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- The message displayed when a volunteer successfully records their hours. --></label>
+        <label>Merci de rapporter vos heures bénévoles.</label>
         <name>labelVolunteerReportHoursThankYou</name>
     </customLabels>
     <customLabels>
@@ -292,7 +360,7 @@ day: &apos;jour&apos;</label>
         <name>labelVolunteerSignupThankYou</name>
     </customLabels>
     <customLabels>
-        <label>Il y a seulement {0} volontaires toujours requis sur ce décalage.</label>
+        <label>Il y a seulement {0} bénévoles toujours requis sur ce décalage.</label>
         <name>labelVolunteersJobListingErrorTooManyVols</name>
     </customLabels>
     <customLabels>
@@ -368,6 +436,10 @@ day: &apos;jour&apos;</label>
         <name>About_Volunteers</name>
     </customTabs>
     <customTabs>
+        <label>Découverte de Bénévoles</label>
+        <name>Find_Volunteers</name>
+    </customTabs>
+    <customTabs>
         <label>Progrès de l&apos;Horaire de Récurrence</label>
         <name>Process_Recurrence_Schedules</name>
     </customTabs>
@@ -388,7 +460,7 @@ day: &apos;jour&apos;</label>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Contacts</label>
             <name>Contacts</name>
         </sections>
         <sections>

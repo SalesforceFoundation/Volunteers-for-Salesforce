@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>labelButtonAssign</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Assign button</shortDescription>
+        <value>Assign</value>
+    </labels>
+    <labels>
         <fullName>labelButtonCancel</fullName>
         <categories>VolunteersJobListingFS, VolunteersWizard, MassEditVolunteerHours,MassEmailVolunteers</categories>
         <language>en_US</language>
@@ -15,6 +23,14 @@
         <protected>false</protected>
         <shortDescription>label for the Close button on various pages</shortDescription>
         <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>labelButtonFind</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Find button</shortDescription>
+        <value>Find</value>
     </labels>
     <labels>
         <fullName>labelButtonSave</fullName>
@@ -240,6 +256,78 @@ day:      &apos;day&apos;</value>
         <value>(Uploaded from Volunteers Signup web page).</value>
     </labels>
     <labels>
+        <fullName>labelFindVolunteers</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Find Volunteers page and sections</shortDescription>
+        <value>Find Volunteers</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersAlreadyAssigned</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number already assigned in Find Volunteers page.</shortDescription>
+        <value>{0} selected volunteer(s) were already assigned to this job or shift.</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersAssign</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Assign section</shortDescription>
+        <value>Assign To A Job or Shift</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersCriteria</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Criteria section</shortDescription>
+        <value>Criteria</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersFindResults</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Find Results section</shortDescription>
+        <value>Volunteers</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersHelpAssign</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for help text in the Assign section.</shortDescription>
+        <value>Check the volunteers you want to add to the specified Volunteer Job or Shift, and click Assign.</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersHelpCriteria</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for help text in the Criteria section.</shortDescription>
+        <value>Choose your criteria and click Find.  Volunteers match if any of the selected values within a field match.  Leave a criteria blank, to not filter on it.</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersHelpFindResults</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for help text in the Find Results section.</shortDescription>
+        <value>Specify filter criteria to see results.</value>
+    </labels>
+    <labels>
+        <fullName>labelFindVolunteersNewlyAssigned</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number newly assigned in Find Volunteers page.</shortDescription>
+        <value>{0} selected volunteer(s) have been assigned to this job or shift.</value>
+    </labels>
+    <labels>
         <fullName>labelFrom</fullName>
         <categories>MassEmailVolunteers</categories>
         <language>en_US</language>
@@ -294,6 +382,46 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for VolunteersJobListingFS page&apos;s Sign Up link</shortDescription>
         <value>sign up</value>
+    </labels>
+    <labels>
+        <fullName>labelListViewFirst</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for First link in list view</shortDescription>
+        <value>First</value>
+    </labels>
+    <labels>
+        <fullName>labelListViewLast</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Last link in list view</shortDescription>
+        <value>Last</value>
+    </labels>
+    <labels>
+        <fullName>labelListViewNext</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Next link in list view</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>labelListViewPageInfo</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for page info in list view</shortDescription>
+        <value>&amp;nbsp;&amp;nbsp;&amp;nbsp;Page {0} of {1} &amp;nbsp;&amp;nbsp;({2} records)</value>
+    </labels>
+    <labels>
+        <fullName>labelListViewPrevious</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Previous link in list view</shortDescription>
+        <value>Previous</value>
     </labels>
     <labels>
         <fullName>labelMassEditDateFilterFrom</fullName>
@@ -494,6 +622,14 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for the return to Calendar link on VolunteersJobListingFS</shortDescription>
         <value>return to Calendar</value>
+    </labels>
+    <labels>
+        <fullName>labelShowMore</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Show More on list views</shortDescription>
+        <value>Show more</value>
     </labels>
     <labels>
         <fullName>labelSubject</fullName>
