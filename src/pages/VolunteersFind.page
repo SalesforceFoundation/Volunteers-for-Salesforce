@@ -21,15 +21,14 @@
             <apex:pageMessages id="msgs" />
             
             <apex:pageBlockSection title="{!$Label.labelFindVolunteersCriteria}" columns="1" id="pbsFind" collapsible="true" > 
-	            <apex:outputText value="{!$Label.labelFindVolunteersHelpCriteria}" style="font-style:italic" />
-	            
-	            <apex:pageBlockSection columns="3" >  
-	            	<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!$ObjectType.Contact.Fields.Volunteer_Status__c.Label}</apex:pageBlockSectionItem>
-	            	<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!$ObjectType.Contact.Fields.Volunteer_Availability__c.Label}</apex:pageBlockSectionItem>
-	            	<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!$ObjectType.Contact.Fields.Volunteer_Skills__c.Label}</apex:pageBlockSectionItem>
-					<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter.Volunteer_Status__c}" /></apex:pageBlockSectionItem>  
-					<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter.Volunteer_Availability__c}" /></apex:pageBlockSectionItem>
-					<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter.Volunteer_Skills__c}" /></apex:pageBlockSectionItem>            
+	            <apex:outputText value="{!$Label.labelFindVolunteersHelpCriteria}" style="font-style:italic" />	            
+	            <apex:pageBlockSection columns="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS.size}" >  	            
+					<apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="f" >
+	            		<apex:pageBlockSectionItem dataStyleClass="cssFilterLabel" >{!f.Label}</apex:pageBlockSectionItem>
+		  			</apex:repeat>        
+					<apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="f" >
+						<apex:pageBlockSectionItem ><apex:inputField value="{!conFilter[f]}" /></apex:pageBlockSectionItem>  
+		  			</apex:repeat>        	            
 	                <apex:commandButton action="{!Find}" value="{!$Label.labelButtonFind}" rerender="msgs,pbsVolunteers,pbsAssign" status="statusLoad" immediate="false" />
 	            </apex:pageBlockSection>
             </apex:pageBlockSection>

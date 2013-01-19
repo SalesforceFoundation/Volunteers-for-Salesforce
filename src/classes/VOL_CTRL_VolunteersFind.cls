@@ -31,7 +31,6 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
         	strComma = ', ';
         }
         strSoql += ' from Contact where ';
-        boolean fAndNeeded = false;
         
 		// only load contacts once we have some criteria
 		// force empty result set.
@@ -39,38 +38,34 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
 			strSoql += ' Id = null ';
 			return strSoql;
 		}
-
-        if (conFilter.Volunteer_Status__c != null) {
-        	strSoql += ' Volunteer_Status__c = \'' + conFilter.Volunteer_Status__c + '\' ';
-        	fAndNeeded = true;
-        }
-        
-        if (conFilter.Volunteer_Availability__c != null) {
-        	if (fAndNeeded) strSoql += ' and ';
-        	fAndNeeded = true;
-        	strSoql += ' Volunteer_Availability__c includes (';      
-        	for (string str : conFilter.Volunteer_Availability__c.split(';')) {
-        		strSoql += '\'' + str + '\',';
-        	}
-        	strSoql += '\'bogus\') ';
-        }
-        
-        if (conFilter.Volunteer_Skills__c != null) {
-        	if (fAndNeeded) strSoql += ' and ';
-        	fAndNeeded = true;
-        	strSoql += ' Volunteer_Skills__c includes (';      
-        	for (string str : conFilter.Volunteer_Skills__c.split(';')) {
-        		strSoql += '\'' + str + '\',';
-        	}
-        	strSoql += '\'bogus\') ';
-        }
-                
+		
+		// criteria section driven by a fieldset
+        boolean fAndNeeded = false;
+        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersFindCriteriaFS.getFields()) {
+        	string strVal = string.valueOf(conFilter.get(f.getFieldPath()));
+			if (strVal != null && strVal != '') {
+	        	if (fAndNeeded) strSoql += ' and ';
+	        	
+	        	if (f.getType() == Schema.DisplayType.multipicklist) {
+		        	strSoql += f.getFieldPath() + ' includes (';      
+		        	for (string str : strVal.split(';')) {
+		        		strSoql += '\'' + str + '\',';
+		        	}
+		        	strSoql = strSoql.removeEnd(',');
+		        	strSoql += ') ';	        		
+	        	} else {
+					strSoql += f.getFieldPath() + ' = \'' + strVal  + '\' ';
+	        	}
+	        	fAndNeeded = true;
+			}
+        }										
+		                
 		if (ctrlSoqlListView.strAlphaFilter != null) {
 			strSoql += ' and Name like \'' + ctrlSoqlListView.strAlphaFilter + '%\'';
 		}        		
 
-        // sorting handled by SoqlListView;      
-		
+        // sorting handled by SoqlListView;     
+        
        	return strSoql;			
 	}
 	
@@ -116,9 +111,11 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
 	// helper to test whether filter criteria have been specified
 	public boolean hasFilterCriteria {
 		get {
-			return (conFilter.Volunteer_Status__c != null ||
-				conFilter.Volunteer_Availability__c != null ||
-				conFilter.Volunteer_Skills__c != null);
+	        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersFindCriteriaFS.getFields()) {
+				if (conFilter.get(f.getFieldPath()) != null) 
+					return true;
+	        }
+	        return false;
 		}
 	}
 	
