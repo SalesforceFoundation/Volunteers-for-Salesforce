@@ -165,7 +165,6 @@ public with sharing class SoqlListView extends ComponentControllerBase {
 	}
 
 	//==================== TEST METHOD(s) ======================================
-	static testmethod void CodeCoverageTests() {
-		
-	}	
+	// tested by tests in VOL_CTRL_VolunteersFind.cls
+	
 }
