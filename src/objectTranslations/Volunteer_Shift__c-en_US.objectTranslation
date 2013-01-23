@@ -78,6 +78,10 @@
     </layouts>
     <startsWith>Consonant</startsWith>
     <webLinks>
+        <label><!-- Find_Volunteers --></label>
+        <name>Find_Volunteers</name>
+    </webLinks>
+    <webLinks>
         <label><!-- Mass_Email_Volunteers --></label>
         <name>Mass_Email_Volunteers</name>
     </webLinks>

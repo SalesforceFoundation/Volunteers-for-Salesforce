@@ -487,6 +487,10 @@
     <nameFieldLabel>Nom de Poste</nameFieldLabel>
     <startsWith>Consonant</startsWith>
     <webLinks>
+        <label><!-- Find_Volunteers --></label>
+        <name>Find_Volunteers</name>
+    </webLinks>
+    <webLinks>
         <label>Liste de Bénévoles</label>
         <name>JobRoster</name>
     </webLinks>

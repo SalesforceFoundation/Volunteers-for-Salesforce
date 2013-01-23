@@ -1036,6 +1036,17 @@
         <url>/apex/GW_Volunteers__JobCalendar?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
+        <fullName>Find_Volunteers</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Find Volunteers</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/VolunteersFind?campaignId={!Campaign.Id}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>

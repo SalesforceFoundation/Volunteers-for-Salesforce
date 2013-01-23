@@ -214,6 +214,17 @@
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <webLinks>
+        <fullName>Find_Volunteers</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Find Volunteers</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/GW_Volunteers__VolunteersFind?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Shift__c.Volunteer_JobId__c}&amp;volunteerShiftId={!Volunteer_Shift__c.Id}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>

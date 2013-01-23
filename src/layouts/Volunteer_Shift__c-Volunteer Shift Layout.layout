@@ -3,6 +3,7 @@
     <customButtons>Mass_Email_Volunteers</customButtons>
     <customButtons>Shift_Calendar</customButtons>
     <customButtons>Roster</customButtons>
+    <customButtons>Find_Volunteers</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>

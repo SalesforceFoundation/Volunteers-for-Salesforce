@@ -4,7 +4,7 @@
 // GNU General Public License version 3 as published by the Free Software Foundation. http://www.gnu.org/licenses/gpl.html
 -->
  
-<apex:page controller="VOL_CTRL_VolunteersFind" >
+<apex:page controller="VOL_CTRL_VolunteersFind" tabStyle="Find_Volunteers__tab" >
 
 <style>	
 

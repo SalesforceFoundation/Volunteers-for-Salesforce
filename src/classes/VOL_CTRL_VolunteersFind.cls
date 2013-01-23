@@ -16,7 +16,18 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
        	
        	// setup the Assign panel
        	volSharedCode = new VOL_SharedCode();
-        listSOCampaigns = volSharedCode.listSOCampaignsWithJobs;      			
+        listSOCampaigns = volSharedCode.listSOCampaignsWithJobs;  
+        
+        // handle optional parameters (must use string, not ID, to handle null)
+        string id = ApexPages.currentPage().getParameters().get('campaignId');
+        if (id != null && id != '') campaignId = id;
+        
+        id = ApexPages.currentPage().getParameters().get('volunteerJobId');
+        if (id != null && id != '') volunteerJobId = id;
+
+        id = ApexPages.currentPage().getParameters().get('volunteerShiftId');
+        if (id != null && id != '') volunteerShiftId = id;
+            			
 	}
 	
 	// the SoqlListView component calls this method to get the query string.

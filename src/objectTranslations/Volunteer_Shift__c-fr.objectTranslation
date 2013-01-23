@@ -84,6 +84,10 @@
     </namedFilters>
     <startsWith>Consonant</startsWith>
     <webLinks>
+        <label><!-- Find_Volunteers --></label>
+        <name>Find_Volunteers</name>
+    </webLinks>
+    <webLinks>
         <label>Envoi Email aux Bénévoles en masse</label>
         <name>Mass_Email_Volunteers</name>
     </webLinks>
