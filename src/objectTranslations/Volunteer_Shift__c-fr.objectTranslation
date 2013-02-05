@@ -38,6 +38,7 @@
         <name>Job_Location_Zip_Postal_Code__c</name>
     </fields>
     <fields>
+        <help><!-- Automatically set by the system scheduler to show the Job Recurrence Schedule this shift is associated with. --></help>
         <label>Horaires de Récurrence des Postes</label>
         <name>Job_Recurrence_Schedule__c</name>
         <relationshipLabel>Quarts de Travail de Bénévolat</relationshipLabel>

@@ -39,14 +39,6 @@
                 <behavior>Readonly</behavior>
                 <field>Number_of_Volunteers_Still_Needed__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Job_Recurrence_Schedule__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>System_Note__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
@@ -60,6 +52,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Total_Volunteers__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Job_Recurrence_Schedule__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>System_Note__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

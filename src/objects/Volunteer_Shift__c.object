@@ -117,6 +117,7 @@
         <fullName>Job_Recurrence_Schedule__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Automatically set by the system scheduler to show the Job Recurrence Schedule this shift is associated with.</inlineHelpText>
         <label>Job Recurrence Schedule</label>
         <referenceTo>Job_Recurrence_Schedule__c</referenceTo>
         <relationshipLabel>Volunteer Shifts</relationshipLabel>
