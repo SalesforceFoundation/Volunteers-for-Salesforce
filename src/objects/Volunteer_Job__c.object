@@ -239,7 +239,7 @@
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.</inlineHelpText>
+        <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
         <picklist>
             <picklistValues>

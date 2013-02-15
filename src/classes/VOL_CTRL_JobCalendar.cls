@@ -4,7 +4,7 @@
 * @description Page Controller class for the Job Calendar visualforce page.  Provides Javascript remoting
 * method for getting Job Shift data. 
 *
-* Written by Dave Habib, copyright (c) 2011 Groundwire
+* Written by David Habib, copyright (c) 2011-2013 DJH Consulting, djhconsulting.com 
 * This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 ********************************************************************************************************/
 global with sharing class VOL_CTRL_JobCalendar {

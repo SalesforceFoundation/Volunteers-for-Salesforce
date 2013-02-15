@@ -10,5 +10,6 @@
     <masterLabel>volunteers</masterLabel>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>davidhabibvol@groundwire.org</siteAdmin>
+    <siteType>Visualforce</siteType>
     <subdomain>volunteers-developer-edition</subdomain>
 </CustomSite>

@@ -4,7 +4,11 @@
     <fieldSets>
         <fullName>VolunteersWizardFS</fullName>
         <availableFields>
-            <field>ActualCost</field>
+            <field>ExpectedRevenue</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>ExpectedResponse</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -12,11 +16,7 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>ExpectedRevenue</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>ExpectedResponse</field>
+            <field>ActualCost</field>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set is used by the Volunteers Wizard, to allow the user to specify which Campaign fields to display on the New Volunteer Campaign section.</description>
@@ -46,6 +46,10 @@
         </displayedFields>
         <displayedFields>
             <field>EndDate</field>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Volunteer_Website_Time_Zone__c</field>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
@@ -176,7 +180,7 @@
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.</inlineHelpText>
+        <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.  You only need to set this if you want to override the Time Zone set on the Site Guest User profile.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
         <picklist>
             <picklistValues>

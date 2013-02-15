@@ -1,4 +1,4 @@
-// Written by David Habib, copyright (c) 2010, 2011 Groundwire, 1402 3rd Avenue, Suite 1000, Seattle, WA 98101
+// Written by David Habib, copyright (c) 2010-2013 DJH Consulting, djhconsulting.com 
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 
 trigger VOL_VolunteerHours_AddToCampaign on Volunteer_Hours__c (after insert, after update) {

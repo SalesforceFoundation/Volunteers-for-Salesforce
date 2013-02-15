@@ -6,6 +6,9 @@
 * Component that displays progress for batch apex jobs 
 * Usage:
 *		<c:batchJobs batchComponentLabel="Batch Progress" numberOfJobs="1" />
+*
+* modified by David Habib, copyright (c) 2013 DJH Consulting, djhconsulting.com 
+* This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 -->  
 
     <apex:attribute name="numberOfJobs" type="Integer" assignTo="{!numberOfJobs}" description="The number of batch jobs to display in the table."/>

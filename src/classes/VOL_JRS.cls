@@ -3,7 +3,7 @@
 * @date 11/1/2012
 * @description Main class for managing Volunteer Job Recurrence Schedules (JRS). 
 *
-* Written by Dave Habib, copyright (c) 2012 Groundwire
+* Written by David Habib, copyright (c) 2013 DJH Consulting, djhconsulting.com 
 * This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 ********************************************************************************************************/
 public with sharing class VOL_JRS {

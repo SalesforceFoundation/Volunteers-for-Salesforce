@@ -11,7 +11,8 @@
 * modified 6/12/12 by Matthew Scholtz for Groundwire
 *  to omit BatchApexWorker records, and to limit to batches created in last 2 hours
 *
-* This program is released under the GNU General Public License. http://www.gnu.org/licenses/
+* modified by David Habib, copyright (c) 2013 DJH Consulting, djhconsulting.com 
+* This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 */
 public with sharing class GW_CTRL_BatchJobsProgress {
  

@@ -31,7 +31,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_JobCalendar</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_NewAndEditVRS</apexClass>
@@ -39,19 +39,19 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_OpenReport</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_SendBulkEmail</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersBulkEnterHours</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersCampaignWizard</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersFind</apexClass>
@@ -59,11 +59,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersJobListing</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersJobListingFS</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersReportHours</apexClass>
@@ -71,11 +71,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersSignup</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_CTRL_VolunteersSignupFS</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_JRS</apexClass>
@@ -83,15 +83,15 @@
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_SharedCode</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_TEST_Campaign_Trigger</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_TEST_VolunteerHours_Trigger</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>VOL_VRS</apexClass>
@@ -670,7 +670,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Last_Volunteer_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -733,9 +733,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.Volunteer_Last_Web_Signup_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1638,7 +1638,7 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Volunteer_Hours__c</object>

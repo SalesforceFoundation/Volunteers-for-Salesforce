@@ -108,7 +108,7 @@
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- The Time Zone to use when displaying Shift times on Sites pages. --></help>
+        <help><!-- The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign. --></help>
         <label><!-- Volunteer Website Time Zone --></label>
         <name>Volunteer_Website_Time_Zone__c</name>
         <picklistValues>

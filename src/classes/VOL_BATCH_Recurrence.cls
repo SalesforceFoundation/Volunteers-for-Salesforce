@@ -4,9 +4,10 @@
 * @description Batchable and Schedulable class to find the list of active Job Recurrence Schedules,
 * and process them to add shifts into the future. 
 *
-* Written by Dave Habib, copyright (c) 2012 Groundwire
+* Written by David Habib, copyright (c) 2013 DJH Consulting, djhconsulting.com 
 * This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 ********************************************************************************************************/
+
 global with sharing class VOL_BATCH_Recurrence implements Database.Batchable<Sobject>, Schedulable {
 
 	private string strSoql { get; set; }
