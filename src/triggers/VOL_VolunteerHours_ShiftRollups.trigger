@@ -1,7 +1,7 @@
 // Written by David Habib, copyright (c) 2010-2013 DJH Consulting, djhconsulting.com 
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 
-trigger VOL_VolunteerHours_ShiftRollups on Volunteer_Hours__c (after delete, after insert, after undelete, after update) {
+trigger VOL_VolunteerHours_ShiftRollups on Volunteer_Hours__c (before delete, after insert, after undelete, after update) {
 	
 	// consider both newMap and oldMap.
 	// for each hours object, there are two potential shifts it interacts with.
@@ -13,6 +13,9 @@ trigger VOL_VolunteerHours_ShiftRollups on Volunteer_Hours__c (after delete, aft
 	// Update scenario: just treat as a delete and an insert, since we already have to handle multiple changes to same job!
 	
 
+	// WARNING: deleting a Contact, does NOT call any trigger on the Hours!
+	// thus I've manually deleted the hours from the before delete trigger on Contacts (VOL_Contact_MaintainHours).
+	
 	map<Id, Double> mpShiftIdDelta = new map<Id, Double>();
 	
 	// first we go through the new hours, and add up the number of volunteers per shift
