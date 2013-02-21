@@ -107,7 +107,8 @@
 						        var strUrl;
 						        
 						        if ({!fWeb}) {
-						        	strUrl = '{!$Site.CurrentSiteUrl + IF(false, 'VolunteersPortalJobListing', 'VolunteersJobListingFS')}' + 
+						        	// would need to put in portal support for which page to show.
+						        	strUrl = '{!$Site.CurrentSiteUrl + 'GW_Volunteers__VolunteersJobListingFS'}' + 
 						        		'?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
 						        		'&dtMonthFilter=' + strApexDateLocale(dtStart, true) +
 						        		'{!IF(strParams != null, '&' + strParams, '')}';
