@@ -33,6 +33,7 @@
         <type>Default</type>
     </actionOverrides>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
@@ -40,6 +41,7 @@
     <enableReports>true</enableReports>
     <fields>
         <fullName>Days_of_Week__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Days of Week</label>
         <picklist>
@@ -78,6 +80,7 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Description text to copy to shift records created on this schedule.</inlineHelpText>
         <label>Description</label>
@@ -87,6 +90,7 @@
     </fields>
     <fields>
         <fullName>Desired_Number_of_Volunteers__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Desired Number of Volunteers</label>
         <precision>6</precision>
@@ -97,6 +101,7 @@
     </fields>
     <fields>
         <fullName>Duration__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Duration</label>
         <precision>4</precision>
@@ -107,6 +112,7 @@
     </fields>
     <fields>
         <fullName>Schedule_End_Date__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Schedule End Date</label>
         <required>false</required>
@@ -114,6 +120,7 @@
     </fields>
     <fields>
         <fullName>Schedule_Start_Date_Time__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Schedule Start Date &amp; Time</label>
         <required>false</required>
@@ -121,6 +128,7 @@
     </fields>
     <fields>
         <fullName>Volunteer_Job__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Job this Recurrence Schedule is for.</inlineHelpText>
         <label>Volunteer Job</label>
@@ -132,6 +140,7 @@
     </fields>
     <fields>
         <fullName>Weekly_Occurrence__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Weekly Occurrence</label>
         <picklist>

@@ -179,6 +179,7 @@
     </fields>
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.  You only need to set this if you want to override the Time Zone set on the Site Guest User profile.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
@@ -1048,7 +1049,7 @@
         <masterLabel>Find Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/VolunteersFind?campaignId={!Campaign.Id}</url>
+        <url>/apex/GW_Volunteers__VolunteersFind?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Mass_Email_Volunteers</fullName>
@@ -1072,7 +1073,7 @@ URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
         <openType>sidebar</openType>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
-        <url>/apex/VolunteersCampaignWizard</url>
+        <url>/apex/GW_Volunteers__VolunteersCampaignWizard</url>
     </webLinks>
     <webLinks>
         <fullName>ViewCampaignInfluenceReport</fullName>

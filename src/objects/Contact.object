@@ -885,6 +885,7 @@
     <fields>
         <fullName>Volunteer_Auto_Reminder_Email_Opt_Out__c</fullName>
         <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule.</inlineHelpText>
         <label>Volunteer Auto-Reminder Email Opt Out</label>

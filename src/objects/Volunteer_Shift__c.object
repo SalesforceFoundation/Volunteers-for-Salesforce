@@ -116,6 +116,7 @@
     <fields>
         <fullName>Job_Recurrence_Schedule__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Automatically set by the system scheduler to show the Job Recurrence Schedule this shift is associated with.</inlineHelpText>
         <label>Job Recurrence Schedule</label>
@@ -147,6 +148,7 @@
     </fields>
     <fields>
         <fullName>System_Note__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Text information from the system scheduler.</inlineHelpText>
         <label>System Note</label>

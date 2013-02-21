@@ -82,7 +82,7 @@
     </rules>
     <rules>
         <fullName>Volunteer Hours Reminder Email</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Volunteer_Hours__c.Status__c</field>
             <operation>equals</operation>
@@ -102,17 +102,8 @@
             <operation>greaterOrEqual</operation>
             <value>TODAY</value>
         </criteriaItems>
-        <description>a time based workflow rule to send a Contact an email reminding them of their upcoming Job Shift.</description>
+        <description>TEMPLATE TO CLONE, for a time based workflow rule to send a Contact an email reminding them of their upcoming Job Shift.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Volunteer_Shift_Reminder_Email_Alert</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Volunteer_Hours__c.Shift_Start_Date_Time__c</offsetFromField>
-            <timeLength>-4</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Volunteer Job Signup</fullName>
