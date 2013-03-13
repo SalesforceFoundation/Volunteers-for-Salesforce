@@ -58,14 +58,14 @@ private class VOL_TEST_VolunteerHours_Trigger {
         shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
         system.AssertEquals(0, shift.Total_Volunteers__c );
         
-        // note that undeleting a contact does not restore their child objects
+        // test undeleting a contact that restores their child objects
         undelete conT;
         shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
-        system.AssertEquals(0, shift.Total_Volunteers__c );
+        system.AssertEquals(3, shift.Total_Volunteers__c );
         
         // test changing of Hours from one Shift to another Shift.
         listHours = new list<Volunteer_Hours__c>();        
-        for (integer i = 0; i < 10; i++) {
+        for (integer i = 0; i < 9; i++) {
             Volunteer_Hours__c hours = new Volunteer_Hours__c(
                 Volunteer_Job__c=job.id, 
                 Volunteer_Shift__c=shift.Id,
@@ -105,7 +105,32 @@ private class VOL_TEST_VolunteerHours_Trigger {
 		job2 = [select Id, Number_of_Volunteers__c from Volunteer_Job__c where Id = : job2.Id limit 1];
 		system.AssertEquals(9, job2.Number_of_Volunteers__c);
 
-
+		// test merging of contacts.
+        Contact con2 = new Contact(Lastname='Testy2', AccountId=acc.Id, Volunteer_Status__c='inactive');
+        insert con2;
+        shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
+        system.AssertEquals(21, shift.Total_Volunteers__c );		
+        Volunteer_Hours__c hours2 = new Volunteer_Hours__c(
+            Volunteer_Job__c=job.id, 
+            Volunteer_Shift__c=shift.Id,
+            Contact__c=con2.Id,
+            Number_of_Volunteers__c=4,
+            Start_Date__c=System.today(), 
+            Status__c='Confirmed'
+            );
+        insert hours2;
+		listHours = [select Id from Volunteer_Hours__c where contact__c = :con.Id];
+		system.AssertEquals(12, listHours.size());
+		listHours = [select Id from Volunteer_Hours__c where contact__c = :con2.Id];
+		system.AssertEquals(1, listHours.size());
+        shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
+        system.AssertEquals(25, shift.Total_Volunteers__c );		
+		merge con con2;
+		listHours = [select Id from Volunteer_Hours__c where contact__c = :con.Id];
+		system.AssertEquals(13, listHours.size());
+        shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
+        system.AssertEquals(25, shift.Total_Volunteers__c );		
+						    
     }
     
 }
