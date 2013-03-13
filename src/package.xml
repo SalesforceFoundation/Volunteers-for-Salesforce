@@ -42,6 +42,7 @@
         <members>Idea</members>
         <members>Lead</members>
         <members>Opportunity</members>
+        <members>OpportunityCompetitor</members>
         <members>OpportunityContactRole</members>
         <members>OpportunityLineItem</members>
         <members>PartnerRole</members>
