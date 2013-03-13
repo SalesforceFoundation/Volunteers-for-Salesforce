@@ -84,7 +84,7 @@
         <fullName>Job_Location_State_Province__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
-        <formula>Volunteer_Job__r.Location_Street__c</formula>
+        <formula>Volunteer_Job__r.Location__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Job Location State/Province</label>
         <required>false</required>
@@ -176,10 +176,11 @@
         <externalId>false</externalId>
         <label>Volunteer Job</label>
         <referenceTo>Volunteer_Job__c</referenceTo>
+        <relationshipLabel>Volunteer Shifts</relationshipLabel>
         <relationshipName>Volunteer_Job_Slots</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <label>Volunteer Shift</label>
     <nameField>
