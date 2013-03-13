@@ -48,7 +48,7 @@
         <relationshipName>Volunteer_Jobs</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Description__c</fullName>

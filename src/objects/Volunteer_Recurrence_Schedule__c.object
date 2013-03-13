@@ -110,7 +110,7 @@
         <relationshipName>Volunteer_Recurrence_Schedules</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Days_of_Week__c</fullName>

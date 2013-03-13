@@ -123,7 +123,7 @@
         <relationshipName>Volunteer_Hours</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>End_Date__c</fullName>
