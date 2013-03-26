@@ -88,9 +88,17 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     	get {
     		if (vhDateFilter == null) {
     			vhDateFilter = new Volunteer_Hours__c();
-				// initial date range
-				vhDateFilter.Start_Date__c = system.today().addMonths(-1).toStartOfMonth();
-				vhDateFilter.End_Date__c = system.today().addMonths(2).toStartOfMonth().addDays(-1);      			
+				
+				// initial date range +- 1 month around passed in Shift or today (if no shift)
+				Date dt;
+				if (volunteerShiftId != null) {
+					Volunteer_Shift__c shift = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
+					dt = shift.Start_Date_Time__c.date();
+				} else {
+					dt = system.today();
+				}
+				vhDateFilter.Start_Date__c = dt.addMonths(-1).toStartOfMonth();
+				vhDateFilter.End_Date__c = dt.addMonths(2).toStartOfMonth().addDays(-1);      			
     		}
     		return vhDateFilter;
     	}
@@ -273,6 +281,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     //save the Volunteer Hours created or modified, and then close the page.
     global virtual PageReference SaveAndCloseVolunteerHours() {
         SaveVolunteerHours();
+        if (ApexPages.hasMessages()) return null; // don't close window.
         return Cancel();    
     }
     

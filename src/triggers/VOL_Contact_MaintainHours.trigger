@@ -14,7 +14,7 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
 		list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();
 		listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Contact__c in :setContactId];
 		
-		VOL_HoursTrigger.VolunteerHoursTrigger(listHours, null, false);		
+		VOL_SharedCode.VolunteerHoursTrigger(listHours, null, false);		
 	}
 
 	// in the case of Merge, we've removed the hours from the old shift during the Before Delete.
@@ -36,7 +36,7 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
 		}
 		listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Volunteer_Shift__c in :setShiftId];
 		
-		VOL_HoursTrigger.VolunteerHoursTrigger(null, listHours, true);		
+		VOL_SharedCode.VolunteerHoursTrigger(null, listHours, true);		
 	}
 
 	// similar issue with undeletes of contacts.  
@@ -50,7 +50,7 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
 		list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();
 		listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Contact__c in :setContactId];
 		
-		VOL_HoursTrigger.VolunteerHoursTrigger(null, listHours, false);		
+		VOL_SharedCode.VolunteerHoursTrigger(null, listHours, false);		
 	}
 
 

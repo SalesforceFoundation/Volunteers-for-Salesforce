@@ -78,10 +78,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_HoursTrigger</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>VOL_JRS</apexClass>
         <enabled>false</enabled>
     </classAccesses>
