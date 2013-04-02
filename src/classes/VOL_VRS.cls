@@ -126,6 +126,8 @@ public with sharing class VOL_VRS {
 		//if (shift.Desired_Number_of_Volunteers__c != null) 
 		//	cDesiredVols = integer.valueOf(shift.Desired_Number_of_Volunteers__c);
 		Date dtShift = shift.Start_Date_Time__c.Date();
+		Time tmShiftStart = shift.Start_Date_Time__c.Time();
+		Time tmShiftEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60)).Time();
 		integer nday = VOL_JRS.nDayOfWeek(dtShift);
 		
 		for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
@@ -147,6 +149,7 @@ public with sharing class VOL_VRS {
 					vrs.Weekly_Occurrence__c.contains('Every') ||
 					(vrs.Weekly_Occurrence__c.contains('Alternate') && alternateWeekVRS(vrs, dtShift))) && 
 				listWhichDays[nday] &&
+				vrs.Schedule_Start_Date_Time__c != null &&
 				dtShift >= vrs.Schedule_Start_Date_Time__c.Date() &&
 				(vrs.Schedule_End_Date__c == null || vrs.Schedule_End_Date__c > dtShift)) {
 					
@@ -155,6 +158,12 @@ public with sharing class VOL_VRS {
 				// avoid creating another confirmed record.
 				if (setShiftIdContactId.contains(shift.Id + '|' + vrs.Contact__c)) {
 					continue;
+				}
+									
+				// only take volunteers whose time fits in the shift time (to handle multiple shifts per day)
+				Time tmVRS = vrs.Schedule_Start_Date_Time__c.Time();				
+				if (tmVRS < tmShiftStart  || tmVRS > tmShiftEnd) {
+					continue;					
 				}	
 					
 				Volunteer_Hours__c hr = new Volunteer_Hours__c();
@@ -180,6 +189,7 @@ public with sharing class VOL_VRS {
     //******************************************************************************************************
 	// returns whether the nweek of the specified date is an alternate week for this schedule
 	private static boolean alternateWeekVRS(Volunteer_Recurrence_Schedule__c vrs, Date dt) {
+		if (vrs.Schedule_Start_Date_Time__c == null) return false;
 		Date dtStart = vrs.Schedule_Start_Date_Time__c.Date().toStartOfWeek();
 		Date dtEnd = dt.toStartOfWeek();
 		integer cdays = dtStart.daysBetween(dtEnd);
