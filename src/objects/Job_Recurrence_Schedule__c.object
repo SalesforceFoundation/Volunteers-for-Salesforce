@@ -123,7 +123,7 @@
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Schedule Start Date &amp; Time</label>
-        <required>false</required>
+        <required>true</required>
         <type>DateTime</type>
     </fields>
     <fields>
