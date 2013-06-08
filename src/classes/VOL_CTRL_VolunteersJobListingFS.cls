@@ -166,8 +166,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (listVolunteerJobs == null) {
                         
                 listVolunteerJobs = new list<Volunteer_Job__c>();
-                //DateTime dtNow = system.Now().addHours(-1);
                 DateTime dtNow = dtMonthFilter.toStartOfMonth();
+                if (dtNow < system.Now()) dtNow = system.Now().Date();
                 DateTime dtLast = dtNow.date().addMonths(nMonthsToShow + 1).toStartOfMonth();
                 
                 if (jobIdFilter != null) {
