@@ -3,40 +3,132 @@
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 -->
 
-<apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" > 
+<apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" >
+
+<!-- 
+	the common styles below used by various visualforce pages should be a separate resource
+	but we are pushing this out with a push upgrade that won't allow us to add any new component.
+	redo this for the next major release.
+-->
+
+<style>
+	.cssLabelColumn {
+		min-width: 200px;
+		vertical-align: middle;
+	}
+	
+	.cssTabHelpLink {
+		cursor: pointer;
+		border-style: solid;
+		border-radius: 4px;
+		border-width: 1px;
+		border-color: #DEEFF5;
+		width: 110px;
+		height: 20px; 
+		color: black;
+		vertical-align: middle;
+		text-align: center;
+		background-color: #FCFFFE;
+		margin-top: 10px;
+		margin-left: 10px;
+		margin-bottom: 10px;
+		padding-top: 4px;	
+	}
+		
+	.cssTabHelpLink .helpLink {
+		text-decoration: none;
+		color: black;
+		font-size: 105%;
+		vertical-align: bottom;
+	}
+
+	.hideHelpLink {
+		cursor: pointer;
+		color: black;
+	}
+		
+	.hideHelpLink .helpLink {
+		color: grey;
+		text-decoration: none;
+	}
+		
+	.cssHelpText {
+		background-color: mintcream;
+		border-style: solid;
+		border-width: 1px;
+		border-color: lightBlue;
+		border-radius: 10px;
+		padding-top: 5px;	
+		padding-bottom: 10px;
+		padding-left: 10px;
+		padding-right: 10px;	
+		margin-top: 10px;
+		margin-bottom: 10px;
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+
+	.Error { 
+    		color: red; 
+	}
+	
+</style> 
+
     <apex:sectionHeader title="{!$Label.labelMassEmailVolunteersTitle}" />      
 	<apex:form >  
-        <apex:pageBlock title="{!strJobName}" rendered="true"  mode="edit">
+        <apex:pageBlock title="Mass Email Volunteers from {!strJobName}" rendered="true"  mode="edit">
             <apex:pageBlockButtons >
                 <apex:commandButton action="{!SendMail}" value="{!$Label.labelButtonSend}" immediate="false" />
                 <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonClose}" immediate="true" />
             </apex:pageBlockButtons>                                        
 
             <apex:pageMessages showDetail="false" />
-		
+            
+ 			<div class="cssTabHelpLink" id="linkHelp">
+	  			<a class="helpLink" onclick="document.getElementById('linkHelp').style.display='none'; document.getElementById('divHelp').style.display='block';">
+					<img src="/img/arrowRight.gif" />Show Help&nbsp;<img src="/s.gif" alt="" class="helpIcon" title=""/>
+				</a>
+			</div>
+	   		<div id="divHelp" class="cssHelpText" style="display:none" >
+	       		<div class="hideHelpLink">	       			
+					<a class="helpLink" onclick="document.getElementById('divHelp').style.display='none';document.getElementById('linkHelp').style.display='block';">
+						<img src="/img/arrowDown.gif" />Hide
+					</a>
+				</div>
+				<ul>
+					<li><b>Mass Email Volunteers</b> will look at all <b>Volunteer Hours</b> records for <b>{!strJobName}</b>.</li>
+					<li>Choose the <b>Status</b> to specify which records to include.</li>
+					<li>if <b>{!$Label.labelMassEmailVolunteersUniqueContacts}</b> is <i>unchecked</i>, one email for each Volunteer Hours record will be sent.</li>
+					<li>if <b>{!$Label.labelMassEmailVolunteersUniqueContacts}</b> is <i>checked</i>, only one email for the Contact's first Volunteer Hours record will be sent.</li>
+					<li>Check <b>{!$Label.labelMassEmailVolunteersLogActivity}</b> to save an Activity with the Contact.</li>
+					<li>Choose the <b>Template based on object</b> to specify which object to use with the Email Template.</li>
+					<li>Salesforce limits how many emails you can send each day, so it is recommended you don't use <b>Mass Email Volunteers</b> for large amounts of email.</li>
+				</ul>
+	  		</div> 
+            
 			<apex:pageBlockSection columns="1">
-				<apex:pageBlockSectionItem >
+				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" >
 					<apex:outputLabel value="{!$Label.labelFrom}" />
 	                <apex:selectList value="{!fromEmailId}" size="1" >
 	                    <apex:selectOptions value="{!listSOFromEmails}" /> 
 	                </apex:selectList>  
 				</apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem >
+				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" >
 					<apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" />
 					<apex:inputField value="{!hourStatus.Status__c}" >
 	                    <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="statusLoadContacts"/>
 					</apex:inputField>		
 				</apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem helptext="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}" >
+				<apex:pageBlockSectionItem helptext="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}"  labelStyleClass="cssLabelColumn" >
 					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersUniqueContacts}" />
 					<apex:inputCheckbox value="{!fEmailContactsOnlyOnce}" >	
 	                    <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="statusLoadContacts"/>
 	                </apex:inputCheckbox>
 				</apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem helptext="{!$Label.labelNumberOfContactsHelpText}" >
+				<apex:pageBlockSectionItem helptext="{!$Label.labelNumberOfContactsHelpText}"  labelStyleClass="cssLabelColumn" >
 					<apex:outputLabel value="{!$Label.labelNumberOfContacts}"  />
 					<apex:pageBlockSectionItem >
     	               	<apex:actionStatus layout="inline" startText="{!$Label.labelMessageLoading}" stopText="" id="statusLoadContacts" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
@@ -44,12 +136,24 @@
 					</apex:pageBlockSectionItem>
 				</apex:pageBlockSectionItem>
 				
-				<apex:pageBlockSectionItem >
+				<apex:pageBlockSectionItem helptext="The activity will be logged on the Contact's record."  labelStyleClass="cssLabelColumn" >
 					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersLogActivity}" />
 					<apex:inputCheckbox value="{!fLogActivity}" />	
 				</apex:pageBlockSectionItem>
 
-            	<apex:pageBlockSectionItem >
+				<apex:pageBlockSectionItem helptext="Make sure the template and the object match each other.  
+					If {!$Label.labelMassEmailVolunteersUniqueContacts} is checked, only the first {!$ObjectType.Volunteer_Hours__c.Label} record is emailed, so
+					you may want to use a less specific template object."  labelStyleClass="cssLabelColumn" >
+					<apex:outputLabel value="Template based on object" />
+	                <apex:selectList value="{!templateObject}" size="1" >
+						<apex:selectOption itemValue="Campaign" itemLabel="{!$ObjectType.Campaign.Label}" />
+						<apex:selectOption itemValue="Job" itemLabel="{!$ObjectType.Volunteer_Job__c.Label}" />
+						<apex:selectOption itemValue="Shift" itemLabel="{!$ObjectType.Volunteer_Shift__c.Label}" />
+						<apex:selectOption itemValue="Hours" itemLabel="{!$ObjectType.Volunteer_Hours__c.Label}" />
+	                </apex:selectList>  
+				</apex:pageBlockSectionItem>
+
+            	<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" >
 	                <apex:outputLabel value="{!$ObjectType.EmailTemplate.Label}" />
 					<apex:pageBlockSectionItem >
 						<apex:pageBlockSectionItem >
@@ -68,18 +172,17 @@
     	               	<apex:actionStatus layout="inline" startText="{!'    ' + $Label.labelMessageLoading}" stopText="" id="statusLoadTemplate" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
 					</apex:pageBlockSectionItem>
         		</apex:pageBlockSectionItem> 
-
-				<apex:pageBlockSectionItem > 
+				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" > 
 					<apex:outputLabel value="{!$Label.labelSubject}" />
 					<apex:outputText id="txtSubject" value="{!strSubject}"  />
 				</apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem > 
+				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" > 
 					<apex:outputLabel value="{!$Label.labelMessageBody}" />
 					<apex:outputText id="txtMessage"  value="{!strMessage}" escape="false" />		
 				</apex:pageBlockSectionItem>
 				
-		</apex:pageBlockSection>			
+			</apex:pageBlockSection>	
 		</apex:pageBlock>
 	</apex:form>	
 </apex:page>

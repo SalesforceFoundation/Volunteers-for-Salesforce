@@ -29,13 +29,16 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		
 		if (shiftId != null) {
 			Volunteer_Shift__c shift = [select Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Id = :shiftId];
-			strJobName = shift.Volunteer_Job__r.Name + ' - ' + shift.Name;			
+			strJobName = shift.Volunteer_Job__r.Name + ' - ' + shift.Name;	
+			templateObject = 'Shift';		
 		} else if (jobId != null) {
 			Volunteer_Job__c job = [select Name from Volunteer_Job__c where Id = :jobId];
 			strJobName = job.Name;
+			templateObject = 'Job';		
 		} else if (campaignId != null) {
 			Campaign cmp = [select Name from Campaign where Id = :campaignId];
 			strJobName = cmp.Name;
+			templateObject = 'Campaign';					
 			// in the Campaign case, default to Unique Contacts
 			fEmailContactsOnlyOnce = true;
 		}
@@ -69,6 +72,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         }       
         return listSO;
     }
+	
+	public string templateObject { get; set; }
 	
 	// action method to load up the email template the user has chosen
 	public PageReference LoadEmailTemplate() {
@@ -161,7 +166,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 				strSoql += ' and Volunteer_Job__c = :jobId '; 
 			} else if (campaignId != null) {
 				strSoql += ' and Volunteer_Job__r.Campaign__c = :campaignId '; // don't use formula field which is text!		
-			}			
+			}	
+			strSoql += ' order by Start_Date__c ';		
 			
 			// to keep track of unique contacts
 			set<ID> setContactId = new set<ID>();
@@ -174,9 +180,22 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 					// the rules for which object (and thus template) to support:
 					// if we aren't doing each contact once, then use the shift if we got it, otherwise use the job.
 					// if we are doing contacts only once, then always use the job, which seems more useful than the campaign.
-					mail.setWhatId(fEmailContactsOnlyOnce ? hr.Volunteer_Job__c : 
-						(hr.Volunteer_Shift__c != null ? hr.Volunteer_Shift__c : hr.Volunteer_Job__c));
+					//mail.setWhatId(fEmailContactsOnlyOnce ? hr.Volunteer_Job__c : 
+					//	(hr.Volunteer_Shift__c != null ? hr.Volunteer_Shift__c : hr.Volunteer_Job__c));
 						
+					ID whatId = null;
+					if (templateObject == 'Campaign') {
+						whatId = hr.Volunteer_Job__r.Campaign__c;
+					} else if (templateObject == 'Job') {
+						whatId = hr.Volunteer_Job__c;
+					} else if (templateObject == 'Shift') {
+						whatId = (hr.Volunteer_Shift__c != null ? hr.Volunteer_Shift__c : hr.Volunteer_Job__c);
+					} else if (templateObject == 'Hours') {
+						whatId = hr.Id;
+					}
+					mail.setWhatId(whatId);
+					
+					
 					mail.setSaveAsActivity(fLogActivity);
 					if (fromEmailId != null) {
 						mail.setOrgWideEmailAddressId(fromEmailId);
