@@ -1,56 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddToCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EnableCustomerPortal</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EnablePartnerPortalUser</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EnableSelfService</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Merge</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>NewContact</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>RequestUpdate</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewCustomerPortal</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewPartnerPortalUser</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ViewSelfService</actionName>
+        <type>Default</type>
+    </actionOverrides>
     <enableFeeds>true</enableFeeds>
     <fieldSets>
         <fullName>VolunteersFindCriteriaFS</fullName>
-        <availableFields>
-            <field>Volunteer_Hours__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Id</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>SystemModstamp</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Salutation</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Notes__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Last_Volunteer_Date__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>First_Volunteer_Date__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Manager_Notes__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Organization__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Last_Web_Signup_Date__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Unique_Volunteer_Count__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
         <availableFields>
             <field>AccountId</field>
             <isRequired>false</isRequired>
@@ -108,6 +124,10 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>First_Volunteer_Date__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>HasOptedOutOfEmail</field>
             <isRequired>false</isRequired>
         </availableFields>
@@ -120,7 +140,7 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>Title</field>
+            <field>Id</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -157,6 +177,10 @@
         </availableFields>
         <availableFields>
             <field>LastName</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Last_Volunteer_Date__c</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -231,6 +255,46 @@
             <field>ReportsToId</field>
             <isRequired>false</isRequired>
         </availableFields>
+        <availableFields>
+            <field>Salutation</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>SystemModstamp</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Title</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Unique_Volunteer_Count__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Hours__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Last_Web_Signup_Date__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Manager_Notes__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Notes__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Organization__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
         <description>controls the list of fields displayed in the Criteria section of the Find Volunteers page.</description>
         <displayedFields>
             <field>Volunteer_Status__c</field>
@@ -248,54 +312,6 @@
     </fieldSets>
     <fieldSets>
         <fullName>VolunteersFindFS</fullName>
-        <availableFields>
-            <field>Volunteer_Hours__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>HasOptedOutOfFax</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Salutation</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Phone</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OwnerId</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherStreet</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherState</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherPostalCode</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Notes__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>First_Volunteer_Date__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Manager_Notes__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
         <availableFields>
             <field>AccountId</field>
             <isRequired>false</isRequired>
@@ -353,11 +369,15 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
+            <field>First_Volunteer_Date__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
             <field>HasOptedOutOfEmail</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>Title</field>
+            <field>HasOptedOutOfFax</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -436,6 +456,50 @@
             <field>OtherPhone</field>
             <isRequired>false</isRequired>
         </availableFields>
+        <availableFields>
+            <field>OtherPostalCode</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherState</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherStreet</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OwnerId</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Phone</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Salutation</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Title</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Hours__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Manager_Notes__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Notes__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
         <description>VolunteersFind visualforce page</description>
         <displayedFields>
             <field>Name</field>
@@ -469,38 +533,6 @@
     </fieldSets>
     <fieldSets>
         <fullName>VolunteersJobListingFS</fullName>
-        <availableFields>
-            <field>Volunteer_Skills__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Availability__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Salutation</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherStreet</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherState</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherPostalCode</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherPhone</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Notes__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
         <availableFields>
             <field>Birthdate</field>
             <isRequired>false</isRequired>
@@ -541,6 +573,38 @@
             <field>OtherCountry</field>
             <isRequired>false</isRequired>
         </availableFields>
+        <availableFields>
+            <field>OtherPhone</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherPostalCode</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherState</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherStreet</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Salutation</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Availability__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Notes__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Skills__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
         <description>This field set specifies the Contact fields displayed on the VolunteersJobListingFS visualforce page, which is exposed through Sites for hosting on public websites.</description>
         <displayedFields>
             <field>Phone</field>
@@ -571,30 +635,6 @@
     <fieldSets>
         <fullName>VolunteersReportHoursFS</fullName>
         <availableFields>
-            <field>Volunteer_Skills__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Title</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Availability__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Notes__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Organization__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
             <field>AssistantName</field>
             <isRequired>false</isRequired>
         </availableFields>
@@ -608,18 +648,6 @@
         </availableFields>
         <availableFields>
             <field>Department</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Status__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Salutation</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Phone</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -690,6 +718,42 @@
             <field>OtherStreet</field>
             <isRequired>false</isRequired>
         </availableFields>
+        <availableFields>
+            <field>Phone</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Salutation</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Title</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Availability__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Notes__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Organization__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Skills__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Status__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
         <description>VolunteersReportHours visualforce page</description>
         <displayedFields>
             <field>FirstName</field>
@@ -707,30 +771,6 @@
     </fieldSets>
     <fieldSets>
         <fullName>VolunteersSignupFS</fullName>
-        <availableFields>
-            <field>MailingPostalCode</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Salutation</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherStreet</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherState</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherPostalCode</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>OtherPhone</field>
-            <isRequired>false</isRequired>
-        </availableFields>
         <availableFields>
             <field>Birthdate</field>
             <isRequired>false</isRequired>
@@ -760,7 +800,7 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>Title</field>
+            <field>MailingPostalCode</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -781,6 +821,30 @@
         </availableFields>
         <availableFields>
             <field>OtherCountry</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherPhone</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherPostalCode</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherState</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OtherStreet</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Salutation</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Title</field>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set specifies the Contact fields displayed on the VolunteersSignupFS visualforce page, which is exposed through Sites for hosting on public websites.</description>
@@ -810,6 +874,10 @@
         </displayedFields>
         <label>VolunteersSignupFS</label>
     </fieldSets>
+    <fields>
+        <fullName>AccountId</fullName>
+        <type>Lookup</type>
+    </fields>
     <fields>
         <fullName>First_Volunteer_Date__c</fullName>
         <deprecated>false</deprecated>
@@ -868,6 +936,14 @@
             <sorted>false</sorted>
         </picklist>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ReportsToId</fullName>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Unique_Volunteer_Count__c</fullName>

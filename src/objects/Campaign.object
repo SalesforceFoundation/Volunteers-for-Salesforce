@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AdvancedSetup</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
     <enableFeeds>false</enableFeeds>
     <fieldSets>
         <fullName>VolunteersWizardFS</fullName>
         <availableFields>
-            <field>ExpectedRevenue</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>ExpectedResponse</field>
+            <field>ActualCost</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -16,7 +48,11 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>ActualCost</field>
+            <field>ExpectedResponse</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>ExpectedRevenue</field>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set is used by the Volunteers Wizard, to allow the user to specify which Campaign fields to display on the New Volunteer Campaign section.</description>
@@ -59,6 +95,10 @@
         <label>VolunteersWizardFS</label>
     </fieldSets>
     <fields>
+        <fullName>CampaignMemberRecordTypeId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Number_of_Volunteers__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -68,6 +108,14 @@
         <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
         <summaryOperation>sum</summaryOperation>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ParentId</fullName>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Status</fullName>

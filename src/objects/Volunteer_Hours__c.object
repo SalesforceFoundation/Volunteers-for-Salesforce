@@ -41,11 +41,11 @@
     <fieldSets>
         <fullName>MassEditVolunteerHours</fullName>
         <availableFields>
-            <field>End_Date__c</field>
+            <field>Comments__c</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>Comments__c</field>
+            <field>End_Date__c</field>
             <isRequired>false</isRequired>
         </availableFields>
         <description>specifies the list of fields to display in the Mass Edit Volunteer Hours page.</description>
@@ -70,19 +70,7 @@
     <fieldSets>
         <fullName>VolunteersJobListingFS</fullName>
         <availableFields>
-            <field>Hours_Worked__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Volunteer_Shift__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Status__c</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>Start_Date__c</field>
+            <field>Comments__c</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -90,11 +78,23 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>Comments__c</field>
+            <field>Hours_Worked__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Start_Date__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Status__c</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Job__c</field>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Shift__c</field>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set specifies the Volunteer Hours fields displayed on the VolunteersJobListingFS visualforce page, which is exposed through Sites for hosting on public websites.</description>

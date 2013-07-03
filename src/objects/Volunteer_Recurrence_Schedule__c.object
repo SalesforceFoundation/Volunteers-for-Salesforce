@@ -46,7 +46,7 @@
     <fieldSets>
         <fullName>NewAndEditVRSFS</fullName>
         <availableFields>
-            <field>LastModifiedById</field>
+            <field>CreatedById</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
@@ -54,7 +54,7 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>CreatedById</field>
+            <field>LastModifiedById</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
