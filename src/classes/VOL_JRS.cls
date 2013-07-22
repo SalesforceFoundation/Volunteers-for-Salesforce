@@ -87,14 +87,31 @@ public with sharing class VOL_JRS {
 		for (Volunteer_Shift__c shift : listShiftNew) {
 			setJobId.add(shift.Volunteer_Job__c);
 		}
+		//list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
+		//listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
+			//Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c
+			//from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
+			
+		// process the VRS's to create hours as needed.
+		//VOL_VRS.ProcessListVRS(listVRS);
+		ProcessListVRSFuture(setJobId);
+	}
+	
+    //******************************************************************************************************
+	// Process all the VRS's for the set of Job's.  This Future cover was created to avoid
+	// hitting apex system statement limits that we would hit if there were many VRS's for a given job.
+	@future (callout=false)	
+	private static void ProcessListVRSFuture(set<ID> setJobId) {
+		
 		list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
 		listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
 			Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c
 			from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
-			
+
 		// process the VRS's to create hours as needed.
 		VOL_VRS.ProcessListVRS(listVRS);
-	}
+	}	
+	
 
     //******************************************************************************************************
 	// Process a single recurrence schedule, adding new shifts to the passed in list.
