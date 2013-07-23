@@ -102,7 +102,7 @@ public with sharing class VOL_VRS {
 			insert listHoursNew;								
 		
 	}
-
+	
     //******************************************************************************************************
 	// for the specified shift, create VolunteerHours records for all volunteers
 	// who have a recurring schedule which should include this shift.
@@ -279,7 +279,9 @@ public with sharing class VOL_VRS {
 		jrs.Schedule_End_Date__c = date.parse('12/31/2012');
 		jrs.Weekly_Occurrence__c = 'Every';
 		jrs.Desired_Number_of_Volunteers__c = 5;
+		Test.startTest();
 		insert jrs;
+		Test.stopTest();
 		
 		list<Volunteer_Shift__c> listShift = [select Id, Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
 		system.debug(listShift);
