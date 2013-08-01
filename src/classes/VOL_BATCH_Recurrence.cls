@@ -22,7 +22,8 @@ global with sharing class VOL_BATCH_Recurrence implements Database.Batchable<Sob
 	* a scheduled job.  
 	*/    
     global void execute(SchedulableContext sc) {
-		database.executebatch(this);                 
+    	// choose a very small scope (1 JRS at a time) to avoid statement limits we can hit.
+		database.executebatch(this, 1);                  
     }
     
     /*******************************************************************************************************
