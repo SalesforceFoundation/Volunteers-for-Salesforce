@@ -25,6 +25,14 @@
         <value>Close</value>
     </labels>
     <labels>
+        <fullName>labelButtonEdit</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>label for Update button</shortDescription>
+        <value>Update</value>
+    </labels>
+    <labels>
         <fullName>labelButtonFind</fullName>
         <categories>FindVolunteers</categories>
         <language>en_US</language>
@@ -238,6 +246,126 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>list of browser color values for JobCalendar</shortDescription>
         <value>&quot;MediumBlue&quot;,&quot;Green&quot;,&quot;DarkRed&quot;, &quot;Purple&quot;, &quot;DarkSlateGray&quot;, &quot;MidnightBlue&quot;</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoCancelMessage</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the cancel messagbox on the PersonalSiteContactInfo page</shortDescription>
+        <value>Are you sure you want to cancel this shift?</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoChart</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title of contact info chart</shortDescription>
+        <value>How are you tracking?</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoChartXAxis</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label of chart x axis on Contact Info page</shortDescription>
+        <value>Month</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoChartYAxis</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for chart y axis on Contact Info page</shortDescription>
+        <value>Volunteer Hours</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoDateTableColumn</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Date table column on PersonalSiteContactInfo</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoDetails</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Details link on PersonalSiteContactInfo</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoHistory</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Volunteer History on PersonalSiteContactInfo page</shortDescription>
+        <value>Your Recent Volunteer History</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoLookupTitle</fullName>
+        <categories>PersonalSiteContactLookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title for the Contact Lookup widget page</shortDescription>
+        <value>Your Volunteer Info</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoRankText</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Top % on Contact Info page</shortDescription>
+        <value>Top</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoRankTitle</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for Rank field on Contact Info page</shortDescription>
+        <value>How You Rank</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoTimeTableColumn</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Time table column on PersonalSiteContactInfo page</shortDescription>
+        <value>Time</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoUpcomingShifts</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Upcoming Shifts on PersonalSiteContactInfo page</shortDescription>
+        <value>Scheduled Volunteer Shifts</value>
+    </labels>
+    <labels>
+        <fullName>labelContactLookupInstructions</fullName>
+        <categories>PersonalSiteContactLookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for instructions on the PersonalSiteContactLookup Sites page</shortDescription>
+        <value>Fill in your name and email, and a link to your volunteer information will be emailed to you.</value>
+    </labels>
+    <labels>
+        <fullName>labelContactLookupNotFound</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>the message displayed if the name &amp; email lookup to a contact fails</shortDescription>
+        <value>Your information was not found.  Please try a different name or email.</value>
+    </labels>
+    <labels>
+        <fullName>labelContactLookupSuccess</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label displayed on PersonalSiteContactInfo if the lookup and email succeed</shortDescription>
+        <value>Message sent.  Please check your email for a message that contains a link to your Volunteer information.  Thank you.</value>
     </labels>
     <labels>
         <fullName>labelCopySchedule</fullName>
@@ -614,6 +742,30 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>help text for Number of Contacts</shortDescription>
         <value>The number of emails that will be sent. Changing the &quot;Include Contacts only once&quot; checkbox may change this number.</value>
+    </labels>
+    <labels>
+        <fullName>labelPersonalSiteJobCalendarTitle</fullName>
+        <categories>PersonalSiteJobCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title for the Job Calendar under Personal Site</shortDescription>
+        <value>Job Calendar</value>
+    </labels>
+    <labels>
+        <fullName>labelPersonalSiteJobListingTitle</fullName>
+        <categories>PersonalSiteJobListing</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title for JobListing page in Personal Site</shortDescription>
+        <value>Volunteer Jobs</value>
+    </labels>
+    <labels>
+        <fullName>labelPersonalSiteReportHoursTitle</fullName>
+        <categories>PersonalSiteReportHours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>title of the Report Hours page under Personal Site</shortDescription>
+        <value>Report Hours</value>
     </labels>
     <labels>
         <fullName>labelReturnToCalendar</fullName>

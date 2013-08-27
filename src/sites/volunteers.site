@@ -6,10 +6,11 @@
     <allowStandardIdeasPages>false</allowStandardIdeasPages>
     <allowStandardLookups>false</allowStandardLookups>
     <allowStandardSearch>false</allowStandardSearch>
-    <indexPage>VolunteersSignup</indexPage>
+    <indexPage>VolunteersSignupFS</indexPage>
     <masterLabel>volunteers</masterLabel>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>davidhabibvol@groundwire.org</siteAdmin>
+    <siteTemplate>PersonalSiteTemplate</siteTemplate>
     <siteType>Visualforce</siteType>
     <subdomain>volunteers-developer-edition</subdomain>
     <urlPathPrefix>Volunteers</urlPathPrefix>

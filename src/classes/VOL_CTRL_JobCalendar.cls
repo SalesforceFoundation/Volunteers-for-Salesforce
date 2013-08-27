@@ -59,8 +59,8 @@ global with sharing class VOL_CTRL_JobCalendar {
         p = params.get('Print');
         if (p == '1') fPrint = true;
 
-    	// we can derive whether we are within the Portal or not, so no need for parameter.
-    	//fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
+    	// we can derive whether we are within the Personal Site or not, so no need for parameter.
+    	fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');
 
 		// we can derive whether we are within Sites or not, so no need for parameter.
     	fWeb = false; 
@@ -93,6 +93,8 @@ global with sharing class VOL_CTRL_JobCalendar {
     
     global string strURLtoCSSFile { 
         get { 
+        	if (fPersonalSite) return null;	// just use whatever CSS the Site Template includes.
+        	
         	// only specify the css file if in the web page scenario.
             if (strURLtoCSSFile == null && fWeb) {
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'JobCalendarCSS.css' LIMIT 1 ];
@@ -117,7 +119,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     global boolean fWeb { get; set; }
     global string strCalendarView { get; set; }
     global string strParams { get; set; }
-    //global boolean fPortal { get; set; }
+    global boolean fPersonalSite { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
     global ID campaignId { get; set; }

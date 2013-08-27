@@ -5,11 +5,11 @@
  
 <apex:page controller="VOL_CTRL_VolunteersJobListingFS" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false">
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js" type="text/javascript"></script>
 
 <!-- had to put the http: to avoid the site label being added to the url -->
-<apex:stylesheet value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/ui-lightness/jquery-ui.css" /> 
+<apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/ui-lightness/jquery-ui.css" /> 
 <apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
 <script type="text/javascript">
@@ -90,10 +90,8 @@
     }      
       
 </script>
-	
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
-    	<!-- would need to put in support for portal page to return to. -->
-    	<apex:outputLink value="{!$Site.CurrentSiteUrl + 'GW_Volunteers__JobCalendar' + '?' + strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+    	<apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobCalendar', 'GW_Volunteers__JobCalendar') + '?' + strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
     </apex:outputPanel>
 
     <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
@@ -118,7 +116,7 @@
             </p>
         </apex:outputPanel>
         <apex:outputPanel id="panelJobOnly" rendered="{!job.Number_of_Shifts__c == 0 || ShowShifts == false}" >
-            <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup" onclick="OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
+            <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
         </apex:outputPanel>         
         <apex:dataTable value="{!job.Volunteer_Job_Slots__r}" var="shift" id="rptShifts" columnClasses="cssJobShiftSignup" rendered="{!ShowShifts}" >
             <apex:column style="text-align:center;" >
@@ -150,8 +148,7 @@
     </apex:repeat>
     <apex:outputText value="{!$Label.labelMessageNoJobs}" rendered="{!NOT(VolunteersHasJobs)}" />
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
-    	<!-- would need to put in support for portal page to return to. -->
-    	<apex:outputLink value="{!$Site.CurrentSiteUrl + 'GW_Volunteers__JobCalendar' + '?' + strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+    	<apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobCalendar', 'GW_Volunteers__JobCalendar') + '?' + strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>    	
     </apex:outputPanel>
 
 <!-- this div contains the signup dialog we'll use jQuery to display -->
@@ -209,8 +206,8 @@
                     j$('input[name$=txtVHIdSignUp]').val('');
                		VolunteerShiftSignUp();
                     return false;" 
-                immediate="false" status="statusSignUp" />              
-            <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" />            
+                immediate="false" status="statusSignUp" styleClass="cssButton btn" />              
+            <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" styleClass="cssButton btn" />            
             <apex:actionStatus startText="{! '  ' + $Label.labelMessageSaving}" stopText="" id="statusSignUp" startStyle="color:green; font-style:italic" stopStyle="color:black;" />                             
         </apex:outputPanel>
                 
@@ -226,7 +223,7 @@
 <!-- this div contains the thank you dialog we'll use jQuery to display -->
 <div id="dlgThankYou" title="{!$Label.labelTitleJobSignup}">
             <p class="cssThankYou">{!$Label.labelVolunteerSignupThankYou}</p>
-            <input type="button" value="{!$Label.labelButtonClose}" onclick="j$('#dlgThankYou').dialog('close'); return false;"  />
+            <input type="button" value="{!$Label.labelButtonClose}" onclick="j$('#dlgThankYou').dialog('close'); return false;" class="cssButton btn" />
 </div> <!-- end of the thank you dialog -->
 
 </apex:page>

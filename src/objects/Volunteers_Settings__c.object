@@ -27,6 +27,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Personal_Site_Org_Wide_Email_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The Display Name of the Organization-Wide Email Address to use on the email sent from the PersonalSiteContactLookup Sites page.</inlineHelpText>
+        <label>Personal Site Org-Wide Email Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Recurring_Job_Future_Months__c</fullName>
         <defaultValue>12</defaultValue>
         <deprecated>false</deprecated>

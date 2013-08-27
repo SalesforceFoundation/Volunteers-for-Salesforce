@@ -7,7 +7,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global ID campaignIdFilter { get; set; }
     global ID jobIdFilter { get; set; }
     global boolean fCalendar { get; set; }
-    //global boolean fPortal { get; set; }
+    global boolean fPersonalSite { get; set; }
     global boolean ShowJobName { get; set; }
     global boolean ShowDescription { get; set; }
     global boolean ShowLocationAddress { get; set; }
@@ -32,9 +32,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (contact == null) {
            		contact = new Contact();
            		
-		        // when used within the Portal, we should use the logged in Contact
-		        //Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
-		        //if (cId != null) contactIdSignUp = cId.getValue();
+		        // when used within the Personal Site, we should use the appropriate Contact
+		        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
+		        if (cId != null) contactIdSignUp = cId.getValue();
 				if (contactIdSignUp != null && contactIdSignUp != '') {
             		VOL_SharedCode.LoadAndCopyObject(contactIdSignUp, contact);            		
             	}
@@ -66,7 +66,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     
     // the instance specific url to the css that can be modified by the user.
     global string strURLtoCSSFile { 
-        get { 
+        get {
+        	if (fPersonalSite) return null;	// just use whatever CSS the Site Template includes.
+        	 
             if (strURLtoCSSFile == null) {
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersJobListingCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
@@ -136,8 +138,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         	attachment = new Attachment();
         }
 
-    	// we can derive whether we are within the Portal or not, so no need for parameter.
-    	//fPortal = ApexPages.currentPage().getUrl().contains('VolunteersPortal');
+    	// we can derive whether we are within the Personal Site or not, so no need for parameter.
+    	fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');
         
 		// finally, keep all parameters for passing back to JobCalendar
 		strParams = ApexPages.currentPage().getUrl();
@@ -168,7 +170,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 listVolunteerJobs = new list<Volunteer_Job__c>();
                 DateTime dtNow = dtMonthFilter.toStartOfMonth();
                 if (dtNow < system.Now()) dtNow = system.Now().Date();
-                DateTime dtLast = dtNow.date().addMonths(nMonthsToShow + 1).toStartOfMonth();
+                // note use of dateGMT to stay on the correct day.  
+                // eg. date(8/1/2013) gave 7/30/2013 but dateGMT(8/1/2013) gave 8/1/2013.
+                DateTime dtLast = dtNow.addMonths(nMonthsToShow).dateGMT().toStartOfMonth();
                 
                 if (jobIdFilter != null) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
@@ -338,13 +342,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 	        	}
 	        }
 	                    
-	        // when used within the Portal, we should use the logged in Contact
-	        //Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPortal');
-	        ID contactIdPortal = null;
-	        //if (cId != null) contactIdPortal = cId.getValue();
+	        // when used within the Personal Site, we should use the appropriate Contact
+	        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
+	        ID contactIdPersonalSite = null;
+	        if (cId != null) contactIdPersonalSite = cId.getValue();
 
     		// save or update the contact              
-	        contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPortal, contact, contact.Volunteer_Organization__c, listStrFields);
+	        contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields);
 
 			// upload any attachment
 			if (contactIdSignUp != null && attachment != null && attachment.body != null) {
@@ -354,17 +358,51 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 				attachment = new Attachment();
 			}
 				        
-	        // then create hours if it was successful.
-	        if (contactIdSignUp != null) {
-	            vhours.Contact__c = contactIdSignUp;
-	            vhours.Volunteer_Job__c = jobIdSignUp;
-	            if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
-	            vhours.Status__c = 'Web Sign Up';
-	            vhours.Start_Date__c = dtStart;
-	            VolunteerHoursBeforeInsert(vhours);
-	            insert vhours;
-	            volunteerHoursIdSignUp = vhours.Id;
-	            
+	        // then Update or Create hours if it was successful.
+	        if (contactIdSignUp != null) {	        	
+	        	// if signing up for a specific shift, see if they already have an Hours record.
+	        	list<Volunteer_Hours__c> listVHours = new list<Volunteer_Hours__c>();
+	        	if (shiftIdSignUp != null && shiftIdSignUp != '') {
+			        string strSoql = 'select ';
+			        string strComma = '';
+			        for (string strF : listStrFieldsVHours) {
+			        	strSoql += strComma + strF;
+			        	strComma = ', ';
+			        }
+			        strSoql += ' from GW_Volunteers__Volunteer_Hours__c ';
+			        strSoql += ' where Contact__c = :contactIdSignUp ';
+			        strSoql += ' and Volunteer_Job__c = :jobIdSignUp ';
+			        strSoql += ' and Volunteer_Shift__c = :shiftIdSignUp ';		        
+			        strSoql += ' limit 1';      
+			        listVHours = Database.Query(strSoql); 		        
+	        	}
+	        	
+				// if existing Hours found, use the first one.
+		        if (listVHours.size() > 0) {      
+		            //  now copy over all the non-null fields from the form's Hours to the existing Hours.
+		            for (string strF : listStrFieldsVHours) {
+		            	if (vhours.get(strF) != null) {
+		            		try {
+		            			listVHours[0].put(strF, vhours.get(strF));
+		            		} catch(exception ex) { 
+		            			// ignore and continue;
+		            		}
+		            	}
+		            }
+		            VolunteerHoursBeforeInsert(listVHours[0]);
+		            update listVHours[0];
+		        	volunteerHoursIdSignUp = listVHours[0].Id;
+		        } else {  	
+		            vhours.Contact__c = contactIdSignUp;
+		            vhours.Volunteer_Job__c = jobIdSignUp;
+		            if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
+		            vhours.Status__c = 'Web Sign Up';
+		            vhours.Start_Date__c = dtStart;
+		            VolunteerHoursBeforeInsert(vhours);
+		            insert vhours;
+		            volunteerHoursIdSignUp = vhours.Id;
+		        }
+		        
 	            // force recreate new hours record to use for next submit.
 	            vhours = null;
 	        }
@@ -375,6 +413,20 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     	}
         return null; 
     }
+
+    private list<string> listStrFieldsVHours {
+    	get {
+    		if (listStrFieldsVHours == null) {
+				// initialize the list of all fields on Volunteer Hours.
+				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
+				listStrFieldsVHours = new list<string>();
+				listStrFieldsVHours.addAll(mapS.keySet());    		   			
+    		}
+    		return listStrFieldsVHours;
+    	}
+    	set;
+    }
+
 
     //==================== TEST METHOD(s) ======================================
     global static testmethod void UnitTest1() {
@@ -472,10 +524,22 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ctrl.contact.LastName = 'New person for my test';
         ctrl.contact.Email = 'newperson@volunteersjoblisting.com';
         ctrl.jobIdSignUp = job.id;
+        ctrl.shiftIdSignUp = shift.id;
         ctrl.VolunteerShiftSignUp();
         System.Assert(ctrl.contactIdSignUp != null);
         System.Assert(ctrl.volunteerHoursIdSignUp != null);
         
+        // test shift reuse
+        ID hoursId = ctrl.volunteerHoursIdSignUp;
+        System.AssertEquals(1, ctrl.vhours.Number_Of_Volunteers__c);
+		ctrl.vhours.Number_Of_Volunteers__c = 2;        
+        ctrl.ClearVolunteerHoursIdSignUp();
+        ctrl.VolunteerShiftSignUp();
+        System.Assert(ctrl.contactIdSignUp != null);
+        System.Assert(ctrl.volunteerHoursIdSignUp != null);
+        System.AssertEquals(hoursId, ctrl.volunteerHoursIdSignUp);
+        Volunteer_Hours__c vh = [select Number_Of_Volunteers__c from Volunteer_Hours__c where Id = :hoursId];
+	    System.AssertEquals(2, vh.Number_Of_Volunteers__c);
     }
     
 }

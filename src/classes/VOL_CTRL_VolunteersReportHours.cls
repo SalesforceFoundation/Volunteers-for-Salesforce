@@ -23,17 +23,32 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 		// so for now, we just include all fields on Contact.
 		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap();
 		listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet());    		
+		listStrFields.addAll(mapS.keySet()); 
+		
+		// we can derive whether we are within the Personal Site or not, so no need for parameter.
+    	fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');		   		
     } 
             
 	// holds the contact fields on the page            
     global Contact contact { 
         get {
-            if (contact == null) contact = new Contact();
+            if (contact == null) {
+           		contact = new Contact();
+
+		        // when used within the Personal Site, we should use the appropriate Contact
+		        contactIdPersonalSite = null;
+		        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
+		        if (cId != null) contactIdPersonalSite = cId.getValue();
+				if (contactIdPersonalSite != null && contactIdPersonalSite != '') {
+            		VOL_SharedCode.LoadAndCopyObject(contactIdPersonalSite, contact);            		
+            	}
+            }
             return contact;
         }       
         set; 
     }
+    
+    private string contactIdPersonalSite { get; set; }
     
 	// holds the dates and hours fields on the page
     global Volunteer_Hours__c vhours {
@@ -47,6 +62,8 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 	// returns the correct URL for the CSS override file
     global string strURLtoCSSFile { 
         get { 
+        	if (fPersonalSite) return null;	// just use whatever CSS the Site Template includes.
+
             if (strURLtoCSSFile == null) {
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersReportHoursCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
@@ -65,10 +82,10 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     // global properties
     global string strLanguage { get; set; }
     global list<string> listStrFields { get; set; } 
+    global boolean fPersonalSite { get; set; }
 
     // status string for reporting the results of saving.
-    global String strSaveResult { get; set; }
-    
+    global String strSaveResult { get; set; }    
     
     // holds the currently select Job in the Job dropdown
     global ID volunteerJobId { get; set; }
@@ -123,7 +140,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     	}
     	set; 
     }
-
 
     // the user has changed the Volunteer Shift dropdown
     global virtual PageReference ChangeVolunteerShift() {
@@ -193,7 +209,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 			}    		
 			
     		// save or update the contact              
-	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(contact.Id, contact, contact.Volunteer_Organization__c, listStrFields);
+	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields);
 	        
 	        list<Volunteer_Hours__c> listHours = null;
 

@@ -80,8 +80,8 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
 		jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
 		jrs.Duration__c = 1;
-		jrs.Schedule_Start_Date_Time__c = datetime.parse('1/1/2012 10:00 AM');
-		jrs.Schedule_End_Date__c = date.parse('12/31/2012');
+		jrs.Schedule_Start_Date_Time__c = datetime.newInstance(2012, 1, 1, 3, 30, 0);
+		jrs.Schedule_End_Date__c = date.newInstance(2012, 12, 31);
 		jrs.Weekly_Occurrence__c = 'Every';
 		jrs.Desired_Number_of_Volunteers__c = 5;
 		insert jrs;
@@ -94,8 +94,8 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
 		ctrl.vrs.Volunteer_Job__c = job.Id;
 		ctrl.vrs.Days_of_Week__c = 'Monday;Friday';
 		ctrl.vrs.Duration__c = 1.5;
-		ctrl.vrs.Schedule_Start_Date_Time__c = datetime.parse('2/1/2012 10:00 AM');
-		ctrl.vrs.Schedule_End_Date__c = date.parse('6/30/2012');
+		ctrl.vrs.Schedule_Start_Date_Time__c = datetime.newInstance(2012, 2, 1, 3, 30, 0);
+		ctrl.vrs.Schedule_End_Date__c = date.newInstance(2012, 6, 3);
 		ctrl.vrs.Weekly_Occurrence__c = '1st';
 		stdCtrl.Save();
 		

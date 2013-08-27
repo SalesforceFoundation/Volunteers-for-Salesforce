@@ -19,6 +19,11 @@
         <name>Contact_Match_First_Name_Fields__c</name>
     </fields>
     <fields>
+        <help><!-- The Display Name of the Organization-Wide Email Address to use on the email sent from the PersonalSiteContactLookup Sites page. --></help>
+        <label><!-- Personal Site Org-Wide Email Name --></label>
+        <name>Personal_Site_Org_Wide_Email_Name__c</name>
+    </fields>
+    <fields>
         <help><!-- How many months into the future should the recurring job shift be scheduled? --></help>
         <label><!-- Recurring Job Future Months --></label>
         <name>Recurring_Job_Future_Months__c</name>

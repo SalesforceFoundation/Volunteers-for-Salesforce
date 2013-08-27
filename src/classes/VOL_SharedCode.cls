@@ -62,6 +62,7 @@ public with sharing class VOL_SharedCode {
                     VolunteersSettings.Recurring_Job_Future_Months__c = 12;
                     VolunteersSettings.Contact_Match_Email_Fields__c = null;
                     VolunteersSettings.Contact_Match_First_Name_Fields__c = null;
+                    VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     insert VolunteersSettings;
                 }           
             }
@@ -100,7 +101,8 @@ public with sharing class VOL_SharedCode {
             Signup_Bucket_Account_On_Create__c = mySettings.Signup_Bucket_Account_On_Create__c,
             Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c,
             Contact_Match_Email_Fields__c = mySettings.Contact_Match_Email_Fields__c,
-            Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c
+            Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c,
+            Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c
             );
         insert VolunteersSettings;                      
         return VolunteersSettings;
@@ -196,26 +198,23 @@ public with sharing class VOL_SharedCode {
             insert lead;      
             return lead.Id;              
         }
-    }    
-
-
-    // public code to create a new contact, or update an existing contact, for web volunteer signup.  
-    // this code is used by both the VolunteersSignupFS page, and the VolunteersJobListingFS page.
-    // if creating a new Contact, it uses the custom setting for the bucket account, but takes parameters for
-    // the account name to try to lookup and match.
-    // It also takes the list of fields on the contact object to copy over.
-    public static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields) {
-        
-        // update the date before we start
-        contact.Volunteer_Last_Web_Signup_Date__c = system.today();
-        
+    }   
+    
+    // public code to lookup an existing contact
+    // listStrFields are optional fields to include in the soql call
+    public static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
+    
         // let's see if we can find any matching Contacts.
         // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
         string strSoql = 'select ';
         string strComma = '';
-        for (string strF : listStrFields) {
-        	strSoql += strComma + strF;
-        	strComma = ', ';
+        if (listStrFields == null) {
+        	strSoql += 'Id';
+        } else {
+	        for (string strF : listStrFields) {
+	        	strSoql += strComma + strF;
+	        	strComma = ', ';
+	        }
         }
         strSoql += ' from Contact where Lastname=\'' + StrEscape(contact.Lastname) + '\'';
         strSoql += ' and (Firstname=\'' + StrEscape(contact.Firstname) + '\'';
@@ -247,6 +246,20 @@ public with sharing class VOL_SharedCode {
         
         strSoql += ') limit 999 ';      
         list<Contact> listCon = Database.Query(strSoql); 
+		return listCon;
+	}
+
+    // public code to create a new contact, or update an existing contact, for web volunteer signup.  
+    // this code is used by both the VolunteersSignupFS page, and the VolunteersJobListingFS page.
+    // if creating a new Contact, it uses the custom setting for the bucket account, but takes parameters for
+    // the account name to try to lookup and match.
+    // It also takes the list of fields on the contact object to copy over.
+    public static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields) {
+        
+        // update the date before we start
+        contact.Volunteer_Last_Web_Signup_Date__c = system.today();
+        
+		list<Contact> listCon = LookupContact(contact, listStrFields);
 
         // if we found a match                      
         if (listCon.size() > 0) {

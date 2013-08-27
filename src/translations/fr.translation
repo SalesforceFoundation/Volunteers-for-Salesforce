@@ -17,6 +17,10 @@
         <name>labelButtonClose</name>
     </customLabels>
     <customLabels>
+        <label><!-- label for Update button --></label>
+        <name>labelButtonEdit</name>
+    </customLabels>
+    <customLabels>
         <label>Trouver</label>
         <name>labelButtonFind</name>
     </customLabels>
@@ -126,6 +130,66 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>&quot;MediumBlue&quot;,&quot;Green&quot;,&quot;DarkRed&quot;, &quot;Purple&quot;, &quot;DarkSlateGray&quot;, &quot;MidnightBlue&quot;</label>
         <name>labelColorValues</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the cancel messagbox on the PersonalSiteContactInfo page --></label>
+        <name>labelContactInfoCancelMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- title of contact info chart --></label>
+        <name>labelContactInfoChart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label of chart x axis on Contact Info page --></label>
+        <name>labelContactInfoChartXAxis</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for chart y axis on Contact Info page --></label>
+        <name>labelContactInfoChartYAxis</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the Date table column on PersonalSiteContactInfo --></label>
+        <name>labelContactInfoDateTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the Details link on PersonalSiteContactInfo --></label>
+        <name>labelContactInfoDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the Volunteer History on PersonalSiteContactInfo page --></label>
+        <name>labelContactInfoHistory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- title for the Contact Lookup widget page --></label>
+        <name>labelContactInfoLookupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for Top % on Contact Info page --></label>
+        <name>labelContactInfoRankText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for Rank field on Contact Info page --></label>
+        <name>labelContactInfoRankTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the Time table column on PersonalSiteContactInfo page --></label>
+        <name>labelContactInfoTimeTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the Upcoming Shifts on PersonalSiteContactInfo page --></label>
+        <name>labelContactInfoUpcomingShifts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for instructions on the PersonalSiteContactLookup Sites page --></label>
+        <name>labelContactLookupInstructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- the message displayed if the name &amp; email lookup to a contact fails --></label>
+        <name>labelContactLookupNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label displayed on PersonalSiteContactInfo if the lookup and email succeed --></label>
+        <name>labelContactLookupSuccess</name>
     </customLabels>
     <customLabels>
         <label>Copiez le programme de</label>
@@ -314,6 +378,18 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>Le nombre d&apos;emails qui seront envoyée. Changer la case Inclure les Contacts une fois seulement peut changer ce nombre.</label>
         <name>labelNumberOfContactsHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- title for the Job Calendar under Personal Site --></label>
+        <name>labelPersonalSiteJobCalendarTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- title for JobListing page in Personal Site --></label>
+        <name>labelPersonalSiteJobListingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- title of the Report Hours page under Personal Site --></label>
+        <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>
     <customLabels>
         <label>retour au Calendrier</label>
