@@ -126,8 +126,7 @@ public with sharing class VOL_VRS {
 		//if (shift.Desired_Number_of_Volunteers__c != null) 
 		//	cDesiredVols = integer.valueOf(shift.Desired_Number_of_Volunteers__c);
 		Date dtShift = shift.Start_Date_Time__c.Date();
-		Time tmShiftStart = shift.Start_Date_Time__c.Time();
-		Time tmShiftEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60)).Time();
+		DateTime dtShiftEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
 		integer nday = VOL_JRS.nDayOfWeek(dtShift);
 		
 		for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
@@ -162,7 +161,8 @@ public with sharing class VOL_VRS {
 									
 				// only take volunteers whose time fits in the shift time (to handle multiple shifts per day)
 				Time tmVRS = vrs.Schedule_Start_Date_Time__c.Time();				
-				if (tmVRS < tmShiftStart  || tmVRS > tmShiftEnd) {
+				DateTime dtVRSStart =  datetime.newInstance(dtShift, tmVRS);
+				if (dtVRSStart < shift.Start_Date_Time__c  || dtVRSStart > dtShiftEnd) {
 					continue;					
 				}	
 					
@@ -202,14 +202,16 @@ public with sharing class VOL_VRS {
 	// note that you should index by nDay (ie, Mon = index 2).
 	private static list<boolean> WhichDaysVRS (Volunteer_Recurrence_Schedule__c vrs) {
 		list<boolean> listWhichDays = new boolean[] { false, false, false, false, false, false, false, false };
+		boolean isSun = VOL_JRS.isSundayFirstOfWeek();
+		
 		if (vrs.Days_of_Week__c != null) {
-			listWhichDays[1] = vrs.Days_of_Week__c.contains('Sunday');
-			listWhichDays[2] = vrs.Days_of_Week__c.contains('Monday');
-			listWhichDays[3] = vrs.Days_of_Week__c.contains('Tuesday');
-			listWhichDays[4] = vrs.Days_of_Week__c.contains('Wednesday');
-			listWhichDays[5] = vrs.Days_of_Week__c.contains('Thursday');
-			listWhichDays[6] = vrs.Days_of_Week__c.contains('Friday');
-			listWhichDays[7] = vrs.Days_of_Week__c.contains('Saturday');
+			listWhichDays[isSun ? 1 : 7] = vrs.Days_of_Week__c.contains('Sunday');
+			listWhichDays[isSun ? 2 : 1] = vrs.Days_of_Week__c.contains('Monday');
+			listWhichDays[isSun ? 3 : 2] = vrs.Days_of_Week__c.contains('Tuesday');
+			listWhichDays[isSun ? 4 : 3] = vrs.Days_of_Week__c.contains('Wednesday');
+			listWhichDays[isSun ? 5 : 4] = vrs.Days_of_Week__c.contains('Thursday');
+			listWhichDays[isSun ? 6 : 5] = vrs.Days_of_Week__c.contains('Friday');
+			listWhichDays[isSun ? 7 : 6] = vrs.Days_of_Week__c.contains('Saturday');
 		}
 		return listWhichDays; 
 	}
@@ -261,27 +263,27 @@ public with sharing class VOL_VRS {
 			Volunteer_Job__c = job.Id,
 			Days_of_Week__c = 'Monday;Friday',
 			Duration__c = 1.5,
-			Schedule_Start_Date_Time__c = datetime.parse('2/1/2012 10:00 AM'),
-			Schedule_End_Date__c = date.parse('6/30/2012'),
+			Schedule_Start_Date_Time__c = date.newInstance(2012,2,1),
+			Schedule_End_Date__c = date.newInstance(2012,6,30),
 			Weekly_Occurrence__c = '1st');
 		insert vrs;
 		
-		system.assertEquals(true, alternateWeekVRS(vrs, date.parse('2/1/2012')));
-		system.assertEquals(true, alternateWeekVRS(vrs, date.parse('2/4/2012')));
-		system.assertEquals(false, alternateWeekVRS(vrs, date.parse('2/5/2012')));
-		system.assertEquals(false, alternateWeekVRS(vrs, date.parse('2/11/2012')));
-		system.assertEquals(true, alternateWeekVRS(vrs, date.parse('2/12/2012')));
+		system.assertEquals(true, alternateWeekVRS(vrs, date.newInstance(2012,2,1)));
+		system.assertEquals(true, alternateWeekVRS(vrs, date.newInstance(2012,2,4)));
+		system.assertEquals(false, alternateWeekVRS(vrs, date.newInstance(2012,2,6)));
+		system.assertEquals(false, alternateWeekVRS(vrs, date.newInstance(2012,2,11)));
+		system.assertEquals(true, alternateWeekVRS(vrs, date.newInstance(2012,2,13)));
 			
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
 		jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
 		jrs.Duration__c = 1;
-		jrs.Schedule_Start_Date_Time__c = datetime.parse('1/1/2012 10:00 AM');
-		jrs.Schedule_End_Date__c = date.parse('12/31/2012');
+		jrs.Schedule_Start_Date_Time__c = date.newInstance(2012,1,1);
+		jrs.Schedule_End_Date__c = date.newInstance(2012,12,31);
 		jrs.Weekly_Occurrence__c = 'Every';
 		jrs.Desired_Number_of_Volunteers__c = 5;
 		Test.startTest();
 		insert jrs;
-		Test.stopTest();
+		Test.stopTest(); 
 		
 		list<Volunteer_Shift__c> listShift = [select Id, Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
 		system.debug(listShift);
@@ -317,8 +319,8 @@ public with sharing class VOL_VRS {
 			Volunteer_Job__c = job.Id,
 			Days_of_Week__c = 'Monday;Friday',
 			Duration__c = 1.5,
-			Schedule_Start_Date_Time__c = datetime.parse('2/1/2012 10:00 AM'),
-			Schedule_End_Date__c = date.parse('6/30/2012'),
+			Schedule_Start_Date_Time__c = date.newInstance(2012, 2, 1),
+			Schedule_End_Date__c = date.newInstance(2012,6,30),
 			Weekly_Occurrence__c = '1st');
 		insert vrs;
 		
