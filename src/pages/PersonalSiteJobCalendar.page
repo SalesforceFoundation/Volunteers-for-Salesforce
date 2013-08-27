@@ -1,0 +1,13 @@
+<!-- 
+// Written by David Habib, copyright (c) 2013 DJH Consulting, djhconsulting.com 
+// This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
+-->
+
+<apex:page showheader="false" sidebar="false" standardStylesheets="false"  >
+	<apex:composition template="{!$Site.Template}">
+		<apex:define name="body">
+			<h3>{!$Label.labelPersonalSiteJobCalendarTitle}</h3>
+			<apex:include pageName="JobCalendar"/>
+   		</apex:define>
+   	</apex:composition>
+</apex:page>
