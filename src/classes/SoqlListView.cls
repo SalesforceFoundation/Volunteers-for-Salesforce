@@ -18,7 +18,7 @@ public with sharing class SoqlListView extends ComponentControllerBase {
             	if (SortItemField != null) {
             		strSoql += ' ORDER BY ' + SortItemField + (SortItemAsc ? ' ASC' : ' DESC');
             	}
-
+				strSoql += ' LIMIT 10000';
             	setCon = new ApexPages.StandardSetController(Database.getQueryLocator(strSoql));
             	setCon.setPageSize(cRecordsPerPage);
             }
