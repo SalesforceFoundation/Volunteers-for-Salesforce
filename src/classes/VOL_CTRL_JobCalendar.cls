@@ -210,7 +210,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     	list<Volunteer_Shift__c> listShifts;
     	
     	if (!fAllJob) {
-			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, 
+			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
 				Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c, 
 				Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
 				from Volunteer_Shift__c
@@ -219,7 +219,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	} else if (fAllCampaign && fAllJob) {
-			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, 
+			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
 				Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
 				Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
 				from Volunteer_Shift__c
@@ -228,7 +228,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	} else if (!fAllCampaign && fAllJob) {
-			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, 
+			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
 				Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
 				Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
 				from Volunteer_Shift__c
@@ -236,6 +236,19 @@ global with sharing class VOL_CTRL_JobCalendar {
 					and Volunteer_Job__r.Campaign__c = :strCampaignId
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
+    	}
+    	
+    	
+    	// to avoid FullCalendar from displaying shifts based on the user's machine time zone,
+    	// we translate it to the desired time zone, then say it is GMT.
+    	// get default time zone for site guest user
+    	User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+    	    	
+    	for (Volunteer_Shift__c shift : listShifts) {
+			string strTimeZone = shift.Volunteer_Job__r.Volunteer_Website_Time_Zone__c;
+			if (strTimeZone == null) strTimeZone = shift.Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c;
+			if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
+    		shift.Start_Date_Time__c = DateTime.valueOfGmt(shift.Start_Date_Time__c.format('yyyy-MM-dd HH:mm:ss', strTimeZone));
     	}
     			
 		return listShifts;

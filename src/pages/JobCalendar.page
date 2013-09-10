@@ -115,10 +115,11 @@
                                     strUrl = '/' + strShiftId;
                                 }                                
                                                 
+								// note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.                                                
                                 shifts.push({
                                     title: result[i].GW_Volunteers__Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
                                         '{!$Label.labelCalendarShiftFull}' : ''),
-                                    description: result[i].GW_Volunteers__Description__c,
+                                    description: result[i].GW_Volunteers__Description__c,                           
                                     strNumbers: '{!$Label.labelCalendarConfirmed}' +  intTotalVolunteers  + 
                                                 '{!$Label.labelCalendarStillNeeded}' + (intStillNeeded == null ? '' : intStillNeeded),
                                     urlRoster:  '/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster' + 
@@ -126,8 +127,8 @@
                                                 '&pv1=' + strJobId.substr(0, 15) +     
                                                 '&pv2=' + strShiftId.substr(0,15),    
                                     jobId: strJobId,            
-                                    start: dtStart,
-                                    end: dtEnd,
+                                    start: dtStart.toISOString().substring(0, 22),
+                                    end: dtEnd.toISOString().substring(0, 22),
                                     allDay: false, 
                                     color: colorShift,
                                     url: strUrl
@@ -137,7 +138,7 @@
                         }
                     }
                 }, {escape:false});
-            },
+            },             
             
             // the callback to handle any customization of the event's display 
             eventRender: function(event, element, view) {
@@ -181,8 +182,8 @@
             j$('#calendar').fullCalendar('gotoDate', dt);
             j$('#calendar').fullCalendar('select', dt, dt, false);
             j$('#calendar').fullCalendar('render'); // hack: force repaint so selection appears correctly.
-        }       
-
+        } 
+        
     });
     
     /*******************************************************************************************************
