@@ -102,10 +102,6 @@
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
-            <field>LastActivityDate</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
             <field>LastModifiedById</field>
             <isRequired>false</isRequired>
         </availableFields>
@@ -216,10 +212,6 @@
         </availableFields>
         <availableFields>
             <field>IsDeleted</field>
-            <isRequired>false</isRequired>
-        </availableFields>
-        <availableFields>
-            <field>LastActivityDate</field>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>

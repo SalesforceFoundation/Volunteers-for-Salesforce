@@ -322,7 +322,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 			      	}
 		      	}
 		      	if (iVol > 2) {
-		      		strRank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1))) + '%';
+		      		integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
+		      		if (irank == 0) irank = 1;
+		      		strRank = irank +  + '%';
 		      	}			
 			}
 			return strRank;
