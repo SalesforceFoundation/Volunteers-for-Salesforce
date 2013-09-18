@@ -1,10 +1,10 @@
 // Written by David Habib, copyright (c) 2010-2013 DJH Consulting, djhconsulting.com 
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 
-public with sharing class VOL_SharedCode {
+global with sharing class VOL_SharedCode {
 
     // the list of Campaigns that have Volunteer Jobs
-    public list<SelectOption> listSOCampaignsWithJobs {
+    global list<SelectOption> listSOCampaignsWithJobs {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', ''));
@@ -17,7 +17,7 @@ public with sharing class VOL_SharedCode {
     }
 
     // the list of Volunteer Jobs for the specified Campaign
-    public list<SelectOption> listSOVolunteerJobsOfCampaignId(ID campaignId) {
+    global list<SelectOption> listSOVolunteerJobsOfCampaignId(ID campaignId) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
         for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
@@ -27,7 +27,7 @@ public with sharing class VOL_SharedCode {
     }
 
     // the list of Volunteer Job Shifts for the specified Job
-    public list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName, boolean fIncludeNumberNeeded) {
+    global list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName, boolean fIncludeNumberNeeded) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
         dtEnd = dtEnd.addDays(1);
@@ -48,7 +48,7 @@ public with sharing class VOL_SharedCode {
     }
     
     // Volunteer Custom Settings object.  Loads an existing, and if not found creates one with default values.
-    public static Volunteers_Settings__c VolunteersSettings {
+    global static Volunteers_Settings__c VolunteersSettings {
         get {
             if (VolunteersSettings == null) {
                 VolunteersSettings = Volunteers_Settings__c.getInstance();  
@@ -73,7 +73,7 @@ public with sharing class VOL_SharedCode {
     }
     
     // helper to get the AccoutId of the Bucket Account specified in Custom Settings.
-    public static ID SettingsBucketAccountId {
+    global static ID SettingsBucketAccountId {
         get {
             if (SettingsBucketAccountId == null) {
                 if (VolunteersSettings.Signup_Bucket_Account_On_Create__c != null) {
@@ -88,7 +88,7 @@ public with sharing class VOL_SharedCode {
     }
 
     // test helper that allows one to override the users's Custom Settings with the settings we want to test with.
-    public static Volunteers_Settings__c getVolunteersSettingsForTests(Volunteers_Settings__c mySettings) {
+    global static Volunteers_Settings__c getVolunteersSettingsForTests(Volunteers_Settings__c mySettings) {
         
         //clear out whatever settings exist
         delete [select id from Volunteers_Settings__c];
@@ -108,9 +108,9 @@ public with sharing class VOL_SharedCode {
         return VolunteersSettings;
     }
 
-    // public helper to get the Volunteers Campaign recordtype.
+    // global helper to get the Volunteers Campaign recordtype.
 	private class MyException extends Exception {}
-    public static Id recordtypeIdVolunteersCampaign {
+    global static Id recordtypeIdVolunteersCampaign {
     	get {
     		if (recordtypeIdVolunteersCampaign == null) {
     			list<RecordType> listRT = [SELECT Id FROM RecordType WHERE DeveloperName='Volunteers_Campaign'];
@@ -124,13 +124,13 @@ public with sharing class VOL_SharedCode {
     	set;
     }
     
-    // public code to create a new lead or contact for web volunteer signup.  
+    // global code to create a new lead or contact for web volunteer signup.  
     // this code is used by both the VolunteersSignup page, and the VolunteersJobListing page.
     // it uses the custom setting for the bucket account, but takes parameters for
     // matching existing contacts, and create contacts vs. leads.  this is because the two pages have different use cases.
     // it also assumes that the contact that is passed in is the dummy record from the web page, and thus isn't real, and
     // uses the Department field to track the user's company name.
-    public static ID CreateContactOrLead(Contact contact, boolean fMatchExistingContacts, boolean fCreateContacts) {
+    global static ID CreateContactOrLead(Contact contact, boolean fMatchExistingContacts, boolean fCreateContacts) {
         // update the date before we start
         contact.Volunteer_Last_Web_Signup_Date__c = system.today();
 
@@ -200,9 +200,9 @@ public with sharing class VOL_SharedCode {
         }
     }   
     
-    // public code to lookup an existing contact
+    // global code to lookup an existing contact
     // listStrFields are optional fields to include in the soql call
-    public static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
+    global static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
     
         // let's see if we can find any matching Contacts.
         // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
@@ -249,12 +249,12 @@ public with sharing class VOL_SharedCode {
 		return listCon;
 	}
 
-    // public code to create a new contact, or update an existing contact, for web volunteer signup.  
+    // global code to create a new contact, or update an existing contact, for web volunteer signup.  
     // this code is used by both the VolunteersSignupFS page, and the VolunteersJobListingFS page.
     // if creating a new Contact, it uses the custom setting for the bucket account, but takes parameters for
     // the account name to try to lookup and match.
     // It also takes the list of fields on the contact object to copy over.
-    public static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields) {
+    global static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields) {
         
         // update the date before we start
         contact.Volunteer_Last_Web_Signup_Date__c = system.today();
@@ -338,14 +338,14 @@ public with sharing class VOL_SharedCode {
         }
     }    
 
-	// public utility to escape a string.
-	public static string StrEscape(string str) {
+	// global utility to escape a string.
+	global static string StrEscape(string str) {
 		if (str == null) return null;
 		return string.escapeSingleQuotes(str);
 	}
 	
-	// public utility to load up an existing object and copy it to the provided object
-	public static void LoadAndCopyObject(ID id, SObject sobj) {
+	// global utility to load up an existing object and copy it to the provided object
+	global static void LoadAndCopyObject(ID id, SObject sobj) {
 		
 		// get the fields for the object
 		Schema.DescribeSObjectResult des = sobj.getSObjectType().getDescribe();
@@ -435,9 +435,9 @@ public with sharing class VOL_SharedCode {
 	}
 	
 	
-	// public utility used to detect whether the Non Profit Starter Pack is installed in this instance.
+	// global utility used to detect whether the Non Profit Starter Pack is installed in this instance.
 	private static boolean fCheckedForNPSP = false;
-	public static boolean IsNPSPInstalled {
+	global static boolean IsNPSPInstalled {
 		get {
 			if (!fCheckedForNPSP) {
 				Schema.SObjectType token = Schema.getGlobalDescribe().get('npe01__OppPayment__c');
