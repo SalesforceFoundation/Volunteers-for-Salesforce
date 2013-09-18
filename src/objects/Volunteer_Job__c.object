@@ -47,6 +47,7 @@
         <relationshipLabel>Volunteer Jobs</relationshipLabel>
         <relationshipName>Volunteer_Jobs</relationshipName>
         <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
@@ -676,6 +677,7 @@
         <fullName>Find_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Find Volunteers</masterLabel>
@@ -687,6 +689,7 @@
         <fullName>JobRoster</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Volunteer Roster</masterLabel>
         <openType>replace</openType>
@@ -697,6 +700,7 @@
         <fullName>Job_Shift_Calendar</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Shift Calendar</masterLabel>
         <openType>replace</openType>
@@ -707,6 +711,7 @@
         <fullName>Mass_Edit_Volunteer_Hours</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>(not used)</masterLabel>
@@ -718,6 +723,7 @@
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Mass Email Volunteers</masterLabel>

@@ -373,7 +373,7 @@
         <fullName>InternationalLeads</fullName>
         <filterScope>Queue</filterScope>
         <label>International Leads</label>
-        <queue>International Leads</queue>
+        <queue>InternationalLeads</queue>
     </listViews>
     <listViews>
         <fullName>MyUnreadLeads</fullName>
@@ -399,7 +399,7 @@
         <fullName>USLeads</fullName>
         <filterScope>Queue</filterScope>
         <label>US Leads</label>
-        <queue>US Leads</queue>
+        <queue>USLeads</queue>
     </listViews>
     <listViews>
         <fullName>ViewCustom1</fullName>
@@ -428,4 +428,22 @@
         <filterScope>Everything</filterScope>
         <label>View - Custom 2</label>
     </listViews>
+    <searchLayouts>
+        <customTabListAdditionalFields>FULL_NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LEAD.COMPANY</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LEAD.PHONE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>LEAD.COMPANY</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>LEAD.COMPANY</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>LEAD.PHONE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>LEAD.MOBILE_PHONE</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LEAD.TITLE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LEAD.PHONE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LEAD.COMPANY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LEAD.EMAIL</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LEAD.STATUS</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
 </CustomObject>

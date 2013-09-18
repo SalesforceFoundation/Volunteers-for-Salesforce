@@ -6,6 +6,7 @@
         <developerName>FORMULA1</developerName>
         <downGroupingContext>GRAND_SUMMARY</downGroupingContext>
         <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
         <masterLabel>Number of Volunteers</masterLabel>
         <scale>0</scale>
     </aggregates>

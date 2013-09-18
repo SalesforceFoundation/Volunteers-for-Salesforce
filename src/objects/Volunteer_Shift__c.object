@@ -179,6 +179,7 @@
         <relationshipLabel>Volunteer Shifts</relationshipLabel>
         <relationshipName>Volunteer_Job_Slots</relationshipName>
         <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
@@ -221,6 +222,7 @@
         <fullName>Find_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Find Volunteers</masterLabel>
@@ -232,6 +234,7 @@
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Mass Email Volunteers</masterLabel>
@@ -244,6 +247,7 @@ URLFOR( $Action.Volunteer_Shift__c.View , Volunteer_Shift__c.Id ) }</url>
         <fullName>Roster</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Volunteer Roster</masterLabel>
         <openType>replace</openType>
@@ -254,6 +258,7 @@ URLFOR( $Action.Volunteer_Shift__c.View , Volunteer_Shift__c.Id ) }</url>
         <fullName>Shift_Calendar</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Shift Calendar</masterLabel>
         <openType>replace</openType>

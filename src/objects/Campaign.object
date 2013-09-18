@@ -41,55 +41,68 @@
         <fullName>VolunteersWizardFS</fullName>
         <availableFields>
             <field>ActualCost</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>BudgetedCost</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>ExpectedResponse</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>ExpectedRevenue</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set is used by the Volunteers Wizard, to allow the user to specify which Campaign fields to display on the New Volunteer Campaign section.</description>
         <displayedFields>
             <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>true</isRequired>
         </displayedFields>
         <displayedFields>
             <field>ParentId</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>IsActive</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Status</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Type</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>StartDate</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>EndDate</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Volunteer_Website_Time_Zone__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Description</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <label>VolunteersWizardFS</label>
@@ -1068,10 +1081,21 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>CAMPAIGN.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.STATUS</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.START_DATE</customTabListAdditionalFields>
+        <listViewButtons>New_Volunteer_Campaign</listViewButtons>
+        <lookupDialogsAdditionalFields>CAMPAIGN.NAME</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CAMPAIGN.NAME</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
     <webLinks>
         <fullName>CampaignRoster</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Volunteer Roster</masterLabel>
         <openType>replace</openType>
@@ -1082,6 +1106,7 @@
         <fullName>Campaign_Shift_Calendar</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
         <masterLabel>Shift Calendar</masterLabel>
         <openType>replace</openType>
@@ -1092,6 +1117,7 @@
         <fullName>Find_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Find Volunteers</masterLabel>
@@ -1103,6 +1129,7 @@
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Mass Email Volunteers</masterLabel>
@@ -1115,6 +1142,7 @@ URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
         <fullName>New_Volunteer_Campaign</fullName>
         <availability>online</availability>
         <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>New Volunteer Campaign</masterLabel>
@@ -1127,6 +1155,7 @@ URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
         <fullName>ViewCampaignInfluenceReport</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <hasMenubar>false</hasMenubar>
         <hasScrollbars>true</hasScrollbars>
         <hasToolbar>false</hasToolbar>

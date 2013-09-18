@@ -42,27 +42,33 @@
         <fullName>MassEditVolunteerHours</fullName>
         <availableFields>
             <field>Comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>End_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <description>specifies the list of fields to display in the Mass Edit Volunteer Hours page.</description>
         <displayedFields>
             <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Hours_Worked__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Number_of_Volunteers__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <label>MassEditVolunteerHours</label>
@@ -71,253 +77,313 @@
         <fullName>PersonalSiteContactInfoHistory</fullName>
         <availableFields>
             <field>Comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Contact__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>CreatedById</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>CreatedDate</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>End_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Full_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Hours_Worked__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>IsDeleted</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Job__r.Name</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Number_of_Volunteers__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Planned_Start_Date_Time__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Shift_Start_Date_Time__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>SystemModstamp</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>System_Note__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Total_Hours_Worked__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Campaign_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Campaign__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Job__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Recurrence_Schedule__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Shift__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <description>PersonalSiteContactInfo - in the Volunteer History section.</description>
-        <displayedFields>
-            <field>Volunteer_Job__r.Name</field>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Hours_Worked__c</field>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>PersonalSiteContactInfoHistory</label>
     </fieldSets>
     <fieldSets>
         <fullName>PersonalSiteContactInfoUpcomingShifts</fullName>
         <availableFields>
             <field>Comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Contact__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>CreatedById</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>CreatedDate</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>End_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Full_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Hours_Worked__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>IsDeleted</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Volunteer_Job__r.Name</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Number_of_Volunteers__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Planned_Start_Date_Time__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Shift_Start_Date_Time__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>SystemModstamp</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>System_Note__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Total_Hours_Worked__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Campaign_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Campaign__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Job__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Shift__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <description>PersonalSiteContactInfo - in the Upcoming Shifts panel.</description>
-        <displayedFields>
-            <field>Volunteer_Job__r.Name</field>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>PersonalSiteContactInfoUpcomingShifts</label>
     </fieldSets>
     <fieldSets>
         <fullName>VolunteersJobListingFS</fullName>
         <availableFields>
             <field>Comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>End_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Hours_Worked__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Planned_Start_Date_Time__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Job__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>Volunteer_Shift__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set specifies the Volunteer Hours fields displayed on the VolunteersJobListingFS visualforce page, which is exposed through Sites for hosting on public websites.</description>
         <displayedFields>
             <field>Number_of_Volunteers__c</field>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <label>VolunteersJobListingFS</label>
@@ -340,6 +406,7 @@
         <relationshipLabel>Volunteer Hours</relationshipLabel>
         <relationshipName>Volunteer_Hours</relationshipName>
         <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
@@ -497,6 +564,7 @@
         <relationshipLabel>Volunteer Hours</relationshipLabel>
         <relationshipName>Volunteer_Hours</relationshipName>
         <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
@@ -580,6 +648,7 @@
         <fullName>Mass_Edit_Volunteer_Hours</fullName>
         <availability>online</availability>
         <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Mass Edit Volunteer Hours</masterLabel>
