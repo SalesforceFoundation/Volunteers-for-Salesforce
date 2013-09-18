@@ -145,6 +145,13 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         set;
     }
     
+    // does this Volunteer have any completed hours?
+    global boolean hasCompletedHours {
+    	get {
+    		return listCompletedVolunteerHours.size() > 0;
+    	}
+    }
+    
     // The list of Upcoming Volunteer Hours.
     global list<Volunteer_Hours__c> listUpcomingVolunteerHours {
         get {

@@ -304,12 +304,44 @@ day:      &apos;day&apos;</value>
         <value>Your Recent Volunteer History</value>
     </labels>
     <labels>
+        <fullName>labelContactInfoHoursTableColumn</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Hours table column on PersonalSiteContactInfo</shortDescription>
+        <value>Hours</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoJobTableColumn</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label for the Job table column on PersonalSiteContactInfo</shortDescription>
+        <value>Job</value>
+    </labels>
+    <labels>
         <fullName>labelContactInfoLookupTitle</fullName>
         <categories>PersonalSiteContactLookup</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>title for the Contact Lookup widget page</shortDescription>
         <value>Your Volunteer Info</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoNewVolunteerText</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>sub message on PersonalSiteContactInfo if the volunteer has no completed hours.</shortDescription>
+        <value>See your volunteer statistics and history after your first participation.</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoNewVolunteerTitle</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label on PersonalSiteContactInfo if the volunteer has no completed hours.</shortDescription>
+        <value>Welcome New Volunteer</value>
     </labels>
     <labels>
         <fullName>labelContactInfoRankText</fullName>

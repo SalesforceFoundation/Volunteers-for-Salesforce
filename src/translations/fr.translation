@@ -160,8 +160,24 @@ day: &apos;jour&apos;</label>
         <name>labelContactInfoHistory</name>
     </customLabels>
     <customLabels>
+        <label><!-- label for the Hours table column on PersonalSiteContactInfo --></label>
+        <name>labelContactInfoHoursTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label for the Job table column on PersonalSiteContactInfo --></label>
+        <name>labelContactInfoJobTableColumn</name>
+    </customLabels>
+    <customLabels>
         <label><!-- title for the Contact Lookup widget page --></label>
         <name>labelContactInfoLookupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- sub message on PersonalSiteContactInfo if the volunteer has no completed hours. --></label>
+        <name>labelContactInfoNewVolunteerText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- label on PersonalSiteContactInfo if the volunteer has no completed hours. --></label>
+        <name>labelContactInfoNewVolunteerTitle</name>
     </customLabels>
     <customLabels>
         <label><!-- label for Top % on Contact Info page --></label>
