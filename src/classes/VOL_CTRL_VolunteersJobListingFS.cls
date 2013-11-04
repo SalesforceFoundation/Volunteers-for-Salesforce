@@ -159,13 +159,22 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         // listStrFields.addAll(mapS.keySet());            
         
         // we now get the fields from the fieldset
-        listStrFields = new list<string>();
+        set<string> setStrFields = new set<string>();
         for (Schema.FieldSetMember f : Schema.SObjectType.Contact.fieldSets.VolunteersJobListingFS.getFields()) {
-            listStrFields.add(f.getFieldPath());
-        }   
-        listStrFields.add('Firstname');
-        listStrFields.add('Lastname');
-        listStrFields.add('Email');
+            setStrFields.add(f.getFieldPath());
+        }  
+        // also add the fields we explicitly refer to in CreateOrUpdateContactFS()
+        // we use a set to avoid creating duplicates.
+        setStrFields.add('Firstname');
+        setStrFields.add('Lastname');
+        setStrFields.add('Email');
+        setStrFields.add('GW_Volunteers__Volunteer_Status__c');
+        setStrFields.add('GW_Volunteers__Volunteer_Notes__c');
+        setStrFields.add('LeadSource');
+        setStrFields.add('AccountId');
+        
+        listStrFields = new list<string>();
+        listStrFields.addAll(setStrFields);
         
         contactIdSignUp = null;
         volunteerHoursIdSignUp = null;        
