@@ -1,3 +1,7 @@
 .settings
 .project
 salesforce.schema
+
+/src/workflows/User.workflow
+
+/src/layouts/Global-Global Layout.layout

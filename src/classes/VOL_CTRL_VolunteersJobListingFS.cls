@@ -14,11 +14,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global boolean ShowLocationInfo { get; set; }
     global boolean ShowSkills { get; set; }
     global boolean ShowShifts { get; set; }
- 	global string strLanguage { get; set; }
- 	global string strDateFormat { get; set; }
- 	global string strTimeFormat { get; set; }
+    global string strLanguage { get; set; }
+    global string strDateFormat { get; set; }
+    global string strTimeFormat { get; set; }
     global list<string> listStrFields { get; set; } 
- 	global string strSaveResult { get; set; }
+    global string strSaveResult { get; set; }
     global string strFileUploadLabel { get; set; }
     global Attachment attachment { get; set; }   
     global string strParams { get; set; }
@@ -30,14 +30,14 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global Contact contact { 
         get {
             if (contact == null) {
-           		contact = new Contact();
-           		
-		        // when used within the Personal Site, we should use the appropriate Contact
-		        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
-		        if (cId != null) contactIdSignUp = cId.getValue();
-				if (contactIdSignUp != null && contactIdSignUp != '') {
-            		VOL_SharedCode.LoadAndCopyObject(contactIdSignUp, contact);            		
-            	}
+                contact = new Contact();
+                
+                // when used within the Personal Site, we should use the appropriate Contact
+                Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
+                if (cId != null) contactIdSignUp = cId.getValue();
+                if (contactIdSignUp != null && contactIdSignUp != '') {
+                    VOL_SharedCode.LoadAndCopyObject(contactIdSignUp, contact);                 
+                }
             }
             return contact;
         }
@@ -67,8 +67,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     // the instance specific url to the css that can be modified by the user.
     global string strURLtoCSSFile { 
         get {
-        	if (fPersonalSite) return null;	// just use whatever CSS the Site Template includes.
-        	 
+            if (fPersonalSite) return null; // just use whatever CSS the Site Template includes.
+             
             if (strURLtoCSSFile == null) {
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersJobListingCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
@@ -96,12 +96,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowLocationInfo = true;
         ShowSkills = false;
         ShowShifts = true;
-    	strLanguage = 'en-us'; 
-    	strDateFormat = 'EEEE M/d/yyyy';
-    	strTimeFormat = 'h:mm tt';
-    	nMonthsToShow = 3;	
-    	dtMonthFilter = system.today(); // default to current month.
-    	        
+        strLanguage = 'en-us'; 
+        strDateFormat = 'EEEE M/d/yyyy';
+        strTimeFormat = 'h:mm tt';
+        nMonthsToShow = 3;  
+        dtMonthFilter = system.today(); // default to current month.
+                
         // handle optional parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
         string p = params.get('campaignId');
@@ -134,29 +134,38 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p != null && p != '') dtMonthFilter = date.valueOf(p);
         p = params.get('FileUploadLabel');
         if (p != null && p != '') {
-        	strFileUploadLabel = p;
-        	attachment = new Attachment();
+            strFileUploadLabel = p;
+            attachment = new Attachment();
         }
 
-    	// we can derive whether we are within the Personal Site or not, so no need for parameter.
-    	fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');
+        // we can derive whether we are within the Personal Site or not, so no need for parameter.
+        fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');
         
-		// finally, keep all parameters for passing back to JobCalendar
-		strParams = ApexPages.currentPage().getUrl();
-		integer iparams = strParams.indexOf('?');
-		if (iparams >= 0){
-			strParams = strParams.substring(iparams+1);
-		} else {
-			strParams = '';
-		}		
+        // finally, keep all parameters for passing back to JobCalendar
+        strParams = ApexPages.currentPage().getUrl();
+        integer iparams = strParams.indexOf('?');
+        if (iparams >= 0){
+            strParams = strParams.substring(iparams+1);
+        } else {
+            strParams = '';
+        }       
                 
-		// initialize the list of all fields on Contact.
-		// ideally, we'd only include the fields in the Field Set,
-		// but Apex currently has no way to see what those are.
-		// so for now, we just include all fields on Contact.
-		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap();
-		listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet());    		
+        // initialize the list of all fields on Contact.
+        // ideally, we'd only include the fields in the Field Set,
+        // but Apex currently has no way to see what those are.
+        // so for now, we just include all fields on Contact.
+        // Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap();
+        // listStrFields = new list<string>();
+        // listStrFields.addAll(mapS.keySet());            
+        
+        // we now get the fields from the fieldset
+        listStrFields = new list<string>();
+        for (Schema.FieldSetMember f : Schema.SObjectType.Contact.fieldSets.VolunteersJobListingFS.getFields()) {
+            listStrFields.add(f.getFieldPath());
+        }   
+        listStrFields.add('Firstname');
+        listStrFields.add('Lastname');
+        listStrFields.add('Email');
         
         contactIdSignUp = null;
         volunteerHoursIdSignUp = null;        
@@ -206,13 +215,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name LIMIT 999];
                 }
                 
-            	// now remove any jobs whose shifts are all past date.
-            	for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
-            		Volunteer_Job__c job = listVolunteerJobs[i];
-            		if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
-            			listVolunteerJobs.remove(i);            		
-            		}
-            	}
+                // now remove any jobs whose shifts are all past date.
+                for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
+                    Volunteer_Job__c job = listVolunteerJobs[i];
+                    if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
+                        listVolunteerJobs.remove(i);                    
+                    }
+                }
             }
             dateTimeFixup(listVolunteerJobs);
             return sortVolunteerJobs(listVolunteerJobs);
@@ -226,71 +235,71 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     // time zone that might be specified on the Job, Campaign, or Site Guest User.
     // Note that it stores this string in the Shift's System_Note__c field (in memory only).
     private void dateTimeFixup(list<Volunteer_Job__c> listJob) {
-    	
-    	// get default time zone for site guest user
-    	User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
-    	
-    	// javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
-    	string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
-    	string strFormatEndTime = strTimeFormat.replace('tt','a');
-    	
-    	for (Volunteer_Job__c job : listJob) {
-			string strTimeZone = job.Volunteer_Website_Time_Zone__c;
-			if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
-			if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
+        
+        // get default time zone for site guest user
+        User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+        
+        // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
+        string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
+        string strFormatEndTime = strTimeFormat.replace('tt','a');
+        
+        for (Volunteer_Job__c job : listJob) {
+            string strTimeZone = job.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
 
-    		for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
-    			
-    			DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
-    			string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
-    			
-    			// see if start and end are on the same day
-    			if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
-    				shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);	
-    			} else {
-    				shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);	    				
-    			}    			
-    		}
-    	}
+            for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
+                
+                DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
+                string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
+                
+                // see if start and end are on the same day
+                if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
+                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone); 
+                } else {
+                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);                        
+                }               
+            }
+        }
     }
     
     global virtual list<Volunteer_Job__c> sortVolunteerJobs (list<Volunteer_Job__c> jobsList) {
-    	list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
-    	DateTime faroutFuture = System.Now().addYears(100);
-    	
-    	//create a map of earliest shift datetime to job list
-    	map<DateTime, list<Volunteer_Job__c>> jobMap = new map<DateTime, list<Volunteer_Job__c>>();
-    	
-    	for (Volunteer_Job__c vj : jobsList) {
-    		DateTime nextShift = faroutFuture;
-    		
-    		//if the job has no shifts, set it in the past so it appears first on the page, otherwise get the first shift
-    		if (vj.Volunteer_Job_Slots__r.size() == 0) {
-    			nextShift = faroutFuture.addYears(-200);
-    		} else if (vj.Volunteer_Job_Slots__r.size() > 0) {
-    			for (Volunteer_Shift__c vs : vj.Volunteer_Job_Slots__r) {
-    				if (vs.Start_Date_Time__c < nextshift) {
-    					nextShift = vs.Start_Date_Time__c;
-    				}
-    			}
-    		}
-    		
-    		//if our map doesn't contain this shift, create a new list, otherwise add to the list
-    		if (jobMap.get(nextShift) == null) {
-    			jobMap.put(nextShift, new List<Volunteer_Job__c>());
-    		}
-    		jobMap.get(nextShift).add(vj);
-    	}
-    	
-    	//use SF's standard sort method on the datetimes
-    	list<DateTime> keys = new list<DateTime>(jobMap.keySet());
-    	keys.sort();
-    	
-    	//rebuild list in order
-    	for (DateTime key:keys) {
-    		resultList.addAll(jobMap.get(key));
-    	}
-    	return resultlist;
+        list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
+        DateTime faroutFuture = System.Now().addYears(100);
+        
+        //create a map of earliest shift datetime to job list
+        map<DateTime, list<Volunteer_Job__c>> jobMap = new map<DateTime, list<Volunteer_Job__c>>();
+        
+        for (Volunteer_Job__c vj : jobsList) {
+            DateTime nextShift = faroutFuture;
+            
+            //if the job has no shifts, set it in the past so it appears first on the page, otherwise get the first shift
+            if (vj.Volunteer_Job_Slots__r.size() == 0) {
+                nextShift = faroutFuture.addYears(-200);
+            } else if (vj.Volunteer_Job_Slots__r.size() > 0) {
+                for (Volunteer_Shift__c vs : vj.Volunteer_Job_Slots__r) {
+                    if (vs.Start_Date_Time__c < nextshift) {
+                        nextShift = vs.Start_Date_Time__c;
+                    }
+                }
+            }
+            
+            //if our map doesn't contain this shift, create a new list, otherwise add to the list
+            if (jobMap.get(nextShift) == null) {
+                jobMap.put(nextShift, new List<Volunteer_Job__c>());
+            }
+            jobMap.get(nextShift).add(vj);
+        }
+        
+        //use SF's standard sort method on the datetimes
+        list<DateTime> keys = new list<DateTime>(jobMap.keySet());
+        keys.sort();
+        
+        //rebuild list in order
+        for (DateTime key:keys) {
+            resultList.addAll(jobMap.get(key));
+        }
+        return resultlist;
     }
     
     global virtual boolean getVolunteersHasJobs() {
@@ -320,111 +329,111 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     private class MyException extends Exception {}
     
     global virtual PageReference VolunteerShiftSignUp() {
-		try { 			   	
-	        // clear return variables in case we fail.
-	        contactIdSignUp = null;
-	        volunteerHoursIdSignUp = null;
-	        strSaveResult = null;
-	        Date dtStart = system.today();
-	        
-	        // do any validation we weren't able to do directly on the client.
-	        // also find the shift's start date.
-	        if (shiftIdSignUp != null && shiftIdSignUp != '') {
-	        	// make sure we don't go over the number of volunteers still needed on the shift.
-	        	list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
-	        	if (listShift != null) {
-	        		if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {
-	        			string strError = String.Format(system.label.labelVolunteersJobListingErrorTooManyVols, 
-	        				new string[] { string.valueOf(listShift[0].Number_of_Volunteers_Still_Needed__c) }); 
-						throw (new MyException(strError));    				
-	        		}
-	        		dtStart = listShift[0].Start_Date_Time__c.date();
-	        	}
-	        }
-	                    
-	        // when used within the Personal Site, we should use the appropriate Contact
-	        Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
-	        ID contactIdPersonalSite = null;
-	        if (cId != null) contactIdPersonalSite = cId.getValue();
+        try {               
+            // clear return variables in case we fail.
+            contactIdSignUp = null;
+            volunteerHoursIdSignUp = null;
+            strSaveResult = null;
+            Date dtStart = system.today();
+            
+            // do any validation we weren't able to do directly on the client.
+            // also find the shift's start date.
+            if (shiftIdSignUp != null && shiftIdSignUp != '') {
+                // make sure we don't go over the number of volunteers still needed on the shift.
+                list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
+                if (listShift != null) {
+                    if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {
+                        string strError = String.Format(system.label.labelVolunteersJobListingErrorTooManyVols, 
+                            new string[] { string.valueOf(listShift[0].Number_of_Volunteers_Still_Needed__c) }); 
+                        throw (new MyException(strError));                  
+                    }
+                    dtStart = listShift[0].Start_Date_Time__c.date();
+                }
+            }
+                        
+            // when used within the Personal Site, we should use the appropriate Contact
+            Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
+            ID contactIdPersonalSite = null;
+            if (cId != null) contactIdPersonalSite = cId.getValue();
 
-    		// save or update the contact              
-	        contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields);
+            // save or update the contact              
+            contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields);
 
-			// upload any attachment
-			if (contactIdSignUp != null && attachment != null && attachment.body != null) {
-				attachment.ParentId = contactIdSignUp;
-				attachment.Description = strFileUploadLabel + ' ' + system.label.labelFileUploadDescription;
-				insert attachment;
-				attachment = new Attachment();
-			}
-				        
-	        // then Update or Create hours if it was successful.
-	        if (contactIdSignUp != null) {	        	
-	        	// if signing up for a specific shift, see if they already have an Hours record.
-	        	list<Volunteer_Hours__c> listVHours = new list<Volunteer_Hours__c>();
-	        	if (shiftIdSignUp != null && shiftIdSignUp != '') {
-			        string strSoql = 'select ';
-			        string strComma = '';
-			        for (string strF : listStrFieldsVHours) {
-			        	strSoql += strComma + strF;
-			        	strComma = ', ';
-			        }
-			        strSoql += ' from GW_Volunteers__Volunteer_Hours__c ';
-			        strSoql += ' where Contact__c = :contactIdSignUp ';
-			        strSoql += ' and Volunteer_Job__c = :jobIdSignUp ';
-			        strSoql += ' and Volunteer_Shift__c = :shiftIdSignUp ';		        
-			        strSoql += ' limit 1';      
-			        listVHours = Database.Query(strSoql); 		        
-	        	}
-	        	
-				// if existing Hours found, use the first one.
-		        if (listVHours.size() > 0) {      
-		            //  now copy over all the non-null fields from the form's Hours to the existing Hours.
-		            for (string strF : listStrFieldsVHours) {
-		            	if (vhours.get(strF) != null) {
-		            		try {
-		            			listVHours[0].put(strF, vhours.get(strF));
-		            		} catch(exception ex) { 
-		            			// ignore and continue;
-		            		}
-		            	}
-		            }
-		            VolunteerHoursBeforeInsert(listVHours[0]);
-		            update listVHours[0];
-		        	volunteerHoursIdSignUp = listVHours[0].Id;
-		        } else {  	
-		            vhours.Contact__c = contactIdSignUp;
-		            vhours.Volunteer_Job__c = jobIdSignUp;
-		            if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
-		            vhours.Status__c = 'Web Sign Up';
-		            vhours.Start_Date__c = dtStart;
-		            VolunteerHoursBeforeInsert(vhours);
-		            insert vhours;
-		            volunteerHoursIdSignUp = vhours.Id;
-		        }
-		        
-	            // force recreate new hours record to use for next submit.
-	            vhours = null;
-	        }
-    	} catch (exception ex) {
-    		StrSaveResult = ex.getMessage(); 
-    		//StrSaveResult += ' stack: ' + ex.getStackTraceString();
-    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage())); 		
-    	}
+            // upload any attachment
+            if (contactIdSignUp != null && attachment != null && attachment.body != null) {
+                attachment.ParentId = contactIdSignUp;
+                attachment.Description = strFileUploadLabel + ' ' + system.label.labelFileUploadDescription;
+                insert attachment;
+                attachment = new Attachment();
+            }
+                        
+            // then Update or Create hours if it was successful.
+            if (contactIdSignUp != null) {              
+                // if signing up for a specific shift, see if they already have an Hours record.
+                list<Volunteer_Hours__c> listVHours = new list<Volunteer_Hours__c>();
+                if (shiftIdSignUp != null && shiftIdSignUp != '') {
+                    string strSoql = 'select ';
+                    string strComma = '';
+                    for (string strF : listStrFieldsVHours) {
+                        strSoql += strComma + strF;
+                        strComma = ', ';
+                    }
+                    strSoql += ' from GW_Volunteers__Volunteer_Hours__c ';
+                    strSoql += ' where Contact__c = :contactIdSignUp ';
+                    strSoql += ' and Volunteer_Job__c = :jobIdSignUp ';
+                    strSoql += ' and Volunteer_Shift__c = :shiftIdSignUp ';             
+                    strSoql += ' limit 1';      
+                    listVHours = Database.Query(strSoql);               
+                }
+                
+                // if existing Hours found, use the first one.
+                if (listVHours.size() > 0) {      
+                    //  now copy over all the non-null fields from the form's Hours to the existing Hours.
+                    for (string strF : listStrFieldsVHours) {
+                        if (vhours.get(strF) != null) {
+                            try {
+                                listVHours[0].put(strF, vhours.get(strF));
+                            } catch(exception ex) { 
+                                // ignore and continue;
+                            }
+                        }
+                    }
+                    VolunteerHoursBeforeInsert(listVHours[0]);
+                    update listVHours[0];
+                    volunteerHoursIdSignUp = listVHours[0].Id;
+                } else {    
+                    vhours.Contact__c = contactIdSignUp;
+                    vhours.Volunteer_Job__c = jobIdSignUp;
+                    if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
+                    vhours.Status__c = 'Web Sign Up';
+                    vhours.Start_Date__c = dtStart;
+                    VolunteerHoursBeforeInsert(vhours);
+                    insert vhours;
+                    volunteerHoursIdSignUp = vhours.Id;
+                }
+                
+                // force recreate new hours record to use for next submit.
+                vhours = null;
+            }
+        } catch (exception ex) {
+            StrSaveResult = ex.getMessage(); 
+            //StrSaveResult += ' stack: ' + ex.getStackTraceString();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage()));         
+        }
         return null; 
     }
 
     private list<string> listStrFieldsVHours {
-    	get {
-    		if (listStrFieldsVHours == null) {
-				// initialize the list of all fields on Volunteer Hours.
-				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
-				listStrFieldsVHours = new list<string>();
-				listStrFieldsVHours.addAll(mapS.keySet());    		   			
-    		}
-    		return listStrFieldsVHours;
-    	}
-    	set;
+        get {
+            if (listStrFieldsVHours == null) {
+                // initialize the list of all fields on Volunteer Hours.
+                Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
+                listStrFieldsVHours = new list<string>();
+                listStrFieldsVHours.addAll(mapS.keySet());                      
+            }
+            return listStrFieldsVHours;
+        }
+        set;
     }
 
 
@@ -532,14 +541,14 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         // test shift reuse
         ID hoursId = ctrl.volunteerHoursIdSignUp;
         System.AssertEquals(1, ctrl.vhours.Number_Of_Volunteers__c);
-		ctrl.vhours.Number_Of_Volunteers__c = 2;        
+        ctrl.vhours.Number_Of_Volunteers__c = 2;        
         ctrl.ClearVolunteerHoursIdSignUp();
         ctrl.VolunteerShiftSignUp();
         System.Assert(ctrl.contactIdSignUp != null);
         System.Assert(ctrl.volunteerHoursIdSignUp != null);
         System.AssertEquals(hoursId, ctrl.volunteerHoursIdSignUp);
         Volunteer_Hours__c vh = [select Number_Of_Volunteers__c from Volunteer_Hours__c where Id = :hoursId];
-	    System.AssertEquals(2, vh.Number_Of_Volunteers__c);
+        System.AssertEquals(2, vh.Number_Of_Volunteers__c);
     }
     
 }
