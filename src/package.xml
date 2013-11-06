@@ -83,8 +83,11 @@
         <members>Volunteers_Documents</members>
         <members>Volunteers_Documents/JobCalendarCSS_css.css</members>
         <members>Volunteers_Documents/VolunteersJobListingCSS_css.css</members>
+        <members>Volunteers_Documents/VolunteersPersonalSiteCSS_css.css</members>
+        <members>Volunteers_Documents/VolunteersReportHoursCSS_css.css</members>
         <members>Volunteers_Documents/VolunteersSignupCSS_css.css</members>
         <members>Volunteers_Documents/Volunteers_Logo.gif</members>
+        <members>Volunteers_Documents/Volunteers_Logo_V3.gif</members>
         <name>Document</name>
     </types>
     <types>
