@@ -3,7 +3,7 @@
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 -->
  
-<apex:page controller="VOL_CTRL_VolunteersJobListing" showheader="false" sidebar="false" standardStylesheets="false">
+<apex:page controller="VOL_CTRL_VolunteersJobListing" showheader="false" sidebar="false" standardStylesheets="false" cache="false">
 
 <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
 <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.8.7.custom.min.js')}"/>
