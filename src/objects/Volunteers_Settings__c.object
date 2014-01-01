@@ -12,6 +12,7 @@
         <label>Contact Match Email Fields</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -23,6 +24,7 @@
         <label>Contact Match First Name Fields</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -34,6 +36,7 @@
         <label>Personal Site Org-Wide Email Name</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -47,6 +50,7 @@
         <precision>3</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -58,6 +62,7 @@
         <label>Signup Bucket Account On Create</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -68,6 +73,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Should the Volunteer Signup form create new Contact records, if no existing contact is found (or Signup Matches Existing Contacts is unchecked).  If this setting is unchecked, it will create Leads when no matches found.</inlineHelpText>
         <label>Signup Creates Contacts If No Match</label>
+        <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -77,6 +83,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Should the Volunteer Signup page try to match the person to an existing Contact (by First Name, Last Name, Email).</inlineHelpText>
         <label>Signup Matches Existing Contacts</label>
+        <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <label>Volunteers Settings</label>

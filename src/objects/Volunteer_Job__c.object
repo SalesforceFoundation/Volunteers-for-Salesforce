@@ -5,6 +5,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Clone</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -17,11 +21,19 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -32,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <deprecated>false</deprecated>
     <enableActivities>true</enableActivities>
@@ -48,6 +61,7 @@
         <relationshipName>Volunteer_Jobs</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
@@ -57,6 +71,7 @@
         <externalId>false</externalId>
         <label>Description</label>
         <length>32000</length>
+        <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>10</visibleLines>
     </fields>
@@ -67,6 +82,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page.</inlineHelpText>
         <label>Display on Website</label>
+        <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -77,6 +93,7 @@
         <summarizedField>Volunteer_Shift__c.Start_Date_Time__c</summarizedField>
         <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
         <summaryOperation>min</summaryOperation>
+        <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>
     <fields>
@@ -86,6 +103,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page.</inlineHelpText>
         <label>Inactive</label>
+        <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -95,6 +113,7 @@
         <label>Location City</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -105,6 +124,7 @@
         <inlineHelpText>Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders.</inlineHelpText>
         <label>Location Information</label>
         <length>32000</length>
+        <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>10</visibleLines>
     </fields>
@@ -115,6 +135,7 @@
         <label>Location Street</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -125,6 +146,7 @@
         <label>Location Zip/Postal Code</label>
         <length>100</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -135,6 +157,7 @@
         <label>Location State/Province</label>
         <length>100</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -152,6 +175,7 @@
         </summaryFilterItems>
         <summaryForeignKey>Volunteer_Hours__c.Volunteer_Job__c</summaryForeignKey>
         <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>
     <fields>
@@ -161,6 +185,7 @@
         <label>Number of Shifts</label>
         <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
         <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>
     <fields>
@@ -171,6 +196,7 @@
         <summarizedField>Volunteer_Shift__c.Number_of_Volunteers_Still_Needed__c</summarizedField>
         <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
         <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>
     <fields>
@@ -187,6 +213,7 @@
         </summaryFilterItems>
         <summaryForeignKey>Volunteer_Hours__c.Volunteer_Job__c</summaryForeignKey>
         <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
         <type>Summary</type>
     </fields>
     <fields>
@@ -195,6 +222,7 @@
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Ongoing</label>
+        <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -234,6 +262,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
     </fields>
@@ -598,6 +627,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
     <label>Volunteer Job</label>

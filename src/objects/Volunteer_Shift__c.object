@@ -5,6 +5,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Clone</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -17,11 +21,19 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -32,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <deprecated>false</deprecated>
     <enableActivities>true</enableActivities>
@@ -44,6 +57,7 @@
         <externalId>false</externalId>
         <label>Description</label>
         <length>32000</length>
+        <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
@@ -55,6 +69,7 @@
         <precision>5</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -67,6 +82,7 @@
         <precision>5</precision>
         <required>true</required>
         <scale>2</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -77,6 +93,7 @@
         <formula>Volunteer_Job__r.Location_City__c</formula>
         <label>Job Location City</label>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -88,6 +105,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Job Location State/Province</label>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -99,6 +117,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Job Location Street</label>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -110,6 +129,7 @@
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Job Location Zip/Postal Code</label>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -124,6 +144,7 @@
         <relationshipLabel>Volunteer Shifts</relationshipLabel>
         <relationshipName>Volunteer_Shifts</relationshipName>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -135,6 +156,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -144,6 +166,7 @@
         <externalId>false</externalId>
         <label>Start Date &amp; Time</label>
         <required>true</required>
+        <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
     <fields>
@@ -154,6 +177,7 @@
         <label>System Note</label>
         <length>255</length>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -167,6 +191,7 @@
         <precision>5</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -180,6 +205,7 @@
         <relationshipName>Volunteer_Job_Slots</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>

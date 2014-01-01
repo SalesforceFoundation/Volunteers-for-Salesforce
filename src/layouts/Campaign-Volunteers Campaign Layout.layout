@@ -167,6 +167,14 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedContent>
+        <relatedContentItems>
+            <layoutItem>
+                <behavior>Readonly</behavior>
+                <field>ParentId</field>
+            </layoutItem>
+        </relatedContentItems>
+    </relatedContent>
     <relatedLists>
         <fields>MEMBER_TYPE</fields>
         <fields>STATUS</fields>

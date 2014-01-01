@@ -5,6 +5,10 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Clone</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -17,11 +21,19 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -32,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
@@ -75,6 +88,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>8</visibleLines>
     </fields>
@@ -85,6 +99,7 @@
         <inlineHelpText>Description text to copy to shift records created on this schedule.</inlineHelpText>
         <label>Description</label>
         <length>32768</length>
+        <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
@@ -96,6 +111,7 @@
         <precision>6</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -107,6 +123,7 @@
         <precision>4</precision>
         <required>true</required>
         <scale>2</scale>
+        <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -116,6 +133,7 @@
         <externalId>false</externalId>
         <label>Schedule End Date</label>
         <required>false</required>
+        <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
@@ -124,6 +142,7 @@
         <externalId>false</externalId>
         <label>Schedule Start Date &amp; Time</label>
         <required>true</required>
+        <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
     <fields>
@@ -136,6 +155,7 @@
         <relationshipName>Volunteer_Job_Recurrence_Schedules</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
@@ -175,6 +195,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>8</visibleLines>
     </fields>
