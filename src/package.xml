@@ -1,83 +1,352 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Volunteers for Salesforce</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <description>Volunteers for Salesforce managed package, by David Habib of DJH Consulting.</description>
+    <namespacePrefix>GW_Volunteers</namespacePrefix>
     <types>
-        <members>*</members>
+        <members>ComponentControllerBase</members>
+        <members>GW_CTRL_BatchJobsProgress</members>
+        <members>PageControllerBase</members>
+        <members>SoqlListView</members>
+        <members>VOL_BATCH_Recurrence</members>
+        <members>VOL_CTRL_BatchProgress</members>
+        <members>VOL_CTRL_JobCalendar</members>
+        <members>VOL_CTRL_NewAndEditVRS</members>
+        <members>VOL_CTRL_OpenReport</members>
+        <members>VOL_CTRL_PersonalSiteContactInfo</members>
+        <members>VOL_CTRL_PersonalSiteContactLookup</members>
+        <members>VOL_CTRL_PersonalSiteTemplate</members>
+        <members>VOL_CTRL_SendBulkEmail</members>
+        <members>VOL_CTRL_VolunteersBulkEnterHours</members>
+        <members>VOL_CTRL_VolunteersCampaignWizard</members>
+        <members>VOL_CTRL_VolunteersFind</members>
+        <members>VOL_CTRL_VolunteersJobListing</members>
+        <members>VOL_CTRL_VolunteersJobListingFS</members>
+        <members>VOL_CTRL_VolunteersReportHours</members>
+        <members>VOL_CTRL_VolunteersSignup</members>
+        <members>VOL_CTRL_VolunteersSignupFS</members>
+        <members>VOL_JRS</members>
+        <members>VOL_SharedCode</members>
+        <members>VOL_TEST_Campaign_Trigger</members>
+        <members>VOL_TEST_VolunteerHours_Trigger</members>
+        <members>VOL_VRS</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>*</members>
+        <members>SoqlListView</members>
+        <members>batchJobs</members>
         <name>ApexComponent</name>
     </types>
     <types>
-        <members>*</members>
+        <members>JobCalendar</members>
+        <members>NewAndEditVRS</members>
+        <members>OpenReport</members>
+        <members>PersonalSiteContactInfo</members>
+        <members>PersonalSiteContactLookup</members>
+        <members>PersonalSiteJobCalendar</members>
+        <members>PersonalSiteJobListing</members>
+        <members>PersonalSiteReportHours</members>
+        <members>PersonalSiteTemplate</members>
+        <members>SendBulkEmail</members>
+        <members>VolunteersAbout</members>
+        <members>VolunteersBatchJobsProgress</members>
+        <members>VolunteersBulkEnterHours</members>
+        <members>VolunteersCampaignWizard</members>
+        <members>VolunteersFind</members>
+        <members>VolunteersJobListing</members>
+        <members>VolunteersJobListingFS</members>
+        <members>VolunteersReportHours</members>
+        <members>VolunteersSignup</members>
+        <members>VolunteersSignupFS</members>
         <name>ApexPage</name>
     </types>
     <types>
-        <members>*</members>
+        <members>VOL_Campaign_CreateStatuses</members>
+        <members>VOL_Contact_MaintainHours</members>
+        <members>VOL_JRS_MaintainShifts</members>
+        <members>VOL_Job_Before</members>
+        <members>VOL_VRS_MaintainHours</members>
+        <members>VOL_VolunteerHours_AddToCampaign</members>
+        <members>VOL_VolunteerHours_ShiftRollups</members>
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Groundwire_Volunteers</members>
         <name>CustomApplication</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Campaign.Number_of_Volunteers__c</members>
+        <members>Campaign.Volunteer_Completed_Hours__c</members>
+        <members>Campaign.Volunteer_Jobs__c</members>
+        <members>Campaign.Volunteer_Shifts__c</members>
+        <members>Campaign.Volunteer_Website_Time_Zone__c</members>
+        <members>Campaign.Volunteers_Still_Needed__c</members>
+        <members>Contact.First_Volunteer_Date__c</members>
+        <members>Contact.Last_Volunteer_Date__c</members>
+        <members>Contact.Unique_Volunteer_Count__c</members>
+        <members>Contact.Volunteer_Auto_Reminder_Email_Opt_Out__c</members>
+        <members>Contact.Volunteer_Availability__c</members>
+        <members>Contact.Volunteer_Hours__c</members>
+        <members>Contact.Volunteer_Last_Web_Signup_Date__c</members>
+        <members>Contact.Volunteer_Manager_Notes__c</members>
+        <members>Contact.Volunteer_Notes__c</members>
+        <members>Contact.Volunteer_Organization__c</members>
+        <members>Contact.Volunteer_Skills__c</members>
+        <members>Contact.Volunteer_Status__c</members>
+        <members>Job_Recurrence_Schedule__c.Days_of_Week__c</members>
+        <members>Job_Recurrence_Schedule__c.Description__c</members>
+        <members>Job_Recurrence_Schedule__c.Desired_Number_of_Volunteers__c</members>
+        <members>Job_Recurrence_Schedule__c.Duration__c</members>
+        <members>Job_Recurrence_Schedule__c.Schedule_End_Date__c</members>
+        <members>Job_Recurrence_Schedule__c.Schedule_Start_Date_Time__c</members>
+        <members>Job_Recurrence_Schedule__c.Volunteer_Job__c</members>
+        <members>Job_Recurrence_Schedule__c.Weekly_Occurrence__c</members>
+        <members>Lead.Volunteer_Availability__c</members>
+        <members>Lead.Volunteer_Notes__c</members>
+        <members>Lead.Volunteer_Skills__c</members>
+        <members>Lead.Volunteer_Status__c</members>
+        <members>Volunteer_Hours__c.Comments__c</members>
+        <members>Volunteer_Hours__c.Contact__c</members>
+        <members>Volunteer_Hours__c.End_Date__c</members>
+        <members>Volunteer_Hours__c.Full_Name__c</members>
+        <members>Volunteer_Hours__c.Hours_Worked__c</members>
+        <members>Volunteer_Hours__c.Number_of_Volunteers__c</members>
+        <members>Volunteer_Hours__c.Planned_Start_Date_Time__c</members>
+        <members>Volunteer_Hours__c.Shift_Start_Date_Time__c</members>
+        <members>Volunteer_Hours__c.Start_Date__c</members>
+        <members>Volunteer_Hours__c.Status__c</members>
+        <members>Volunteer_Hours__c.System_Note__c</members>
+        <members>Volunteer_Hours__c.Total_Hours_Worked__c</members>
+        <members>Volunteer_Hours__c.Volunteer_Campaign_Name__c</members>
+        <members>Volunteer_Hours__c.Volunteer_Campaign__c</members>
+        <members>Volunteer_Hours__c.Volunteer_Job__c</members>
+        <members>Volunteer_Hours__c.Volunteer_Recurrence_Schedule__c</members>
+        <members>Volunteer_Hours__c.Volunteer_Shift__c</members>
+        <members>Volunteer_Job__c.Campaign__c</members>
+        <members>Volunteer_Job__c.Description__c</members>
+        <members>Volunteer_Job__c.Display_on_Website__c</members>
+        <members>Volunteer_Job__c.First_Shift__c</members>
+        <members>Volunteer_Job__c.Inactive__c</members>
+        <members>Volunteer_Job__c.Location_City__c</members>
+        <members>Volunteer_Job__c.Location_Information__c</members>
+        <members>Volunteer_Job__c.Location_Street__c</members>
+        <members>Volunteer_Job__c.Location_Zip_Postal_Code__c</members>
+        <members>Volunteer_Job__c.Location__c</members>
+        <members>Volunteer_Job__c.Number_of_Completed_Hours__c</members>
+        <members>Volunteer_Job__c.Number_of_Shifts__c</members>
+        <members>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</members>
+        <members>Volunteer_Job__c.Number_of_Volunteers__c</members>
+        <members>Volunteer_Job__c.Ongoing__c</members>
+        <members>Volunteer_Job__c.Skills_Needed__c</members>
+        <members>Volunteer_Job__c.Volunteer_Website_Time_Zone__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Contact__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Days_of_Week__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Duration__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Schedule_End_Date__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Schedule_Start_Date_Time__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Volunteer_Hours_Status__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Volunteer_Job__c</members>
+        <members>Volunteer_Recurrence_Schedule__c.Weekly_Occurrence__c</members>
+        <members>Volunteer_Shift__c.Description__c</members>
+        <members>Volunteer_Shift__c.Desired_Number_of_Volunteers__c</members>
+        <members>Volunteer_Shift__c.Duration__c</members>
+        <members>Volunteer_Shift__c.Job_Location_City__c</members>
+        <members>Volunteer_Shift__c.Job_Location_State_Province__c</members>
+        <members>Volunteer_Shift__c.Job_Location_Street__c</members>
+        <members>Volunteer_Shift__c.Job_Location_Zip_Postal_Code__c</members>
+        <members>Volunteer_Shift__c.Job_Recurrence_Schedule__c</members>
+        <members>Volunteer_Shift__c.Number_of_Volunteers_Still_Needed__c</members>
+        <members>Volunteer_Shift__c.Start_Date_Time__c</members>
+        <members>Volunteer_Shift__c.System_Note__c</members>
+        <members>Volunteer_Shift__c.Total_Volunteers__c</members>
+        <members>Volunteer_Shift__c.Volunteer_Job__c</members>
+        <members>Volunteers_Settings__c.Contact_Match_Email_Fields__c</members>
+        <members>Volunteers_Settings__c.Contact_Match_First_Name_Fields__c</members>
+        <members>Volunteers_Settings__c.Personal_Site_Org_Wide_Email_Name__c</members>
+        <members>Volunteers_Settings__c.Recurring_Job_Future_Months__c</members>
+        <members>Volunteers_Settings__c.Signup_Bucket_Account_On_Create__c</members>
+        <members>Volunteers_Settings__c.Signup_Creates_Contacts_If_No_Match__c</members>
+        <members>Volunteers_Settings__c.Signup_Matches_Existing_Contacts__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>labelButtonAssign</members>
+        <members>labelButtonCancel</members>
+        <members>labelButtonClose</members>
+        <members>labelButtonEdit</members>
+        <members>labelButtonFind</members>
+        <members>labelButtonSave</members>
+        <members>labelButtonSaveAndClose</members>
+        <members>labelButtonSend</members>
+        <members>labelButtonSignUp</members>
+        <members>labelCalendarAllDay</members>
+        <members>labelCalendarAxisFormat</members>
+        <members>labelCalendarButtonText</members>
+        <members>labelCalendarCloseWindow</members>
+        <members>labelCalendarColumnFormat</members>
+        <members>labelCalendarConfirmed</members>
+        <members>labelCalendarDayNames</members>
+        <members>labelCalendarDayNamesShort</members>
+        <members>labelCalendarMonthNames</members>
+        <members>labelCalendarMonthNamesShort</members>
+        <members>labelCalendarPageTitle</members>
+        <members>labelCalendarPrintThisPage</members>
+        <members>labelCalendarPrintableView</members>
+        <members>labelCalendarRoster</members>
+        <members>labelCalendarShiftFull</members>
+        <members>labelCalendarStillNeeded</members>
+        <members>labelCalendarTimeFormat</members>
+        <members>labelCalendarTitleFormat</members>
+        <members>labelChoiceAllActiveCampaigns</members>
+        <members>labelChoiceAllJobs</members>
+        <members>labelColorValues</members>
+        <members>labelContactInfoCancelMessage</members>
+        <members>labelContactInfoChart</members>
+        <members>labelContactInfoChartXAxis</members>
+        <members>labelContactInfoChartYAxis</members>
+        <members>labelContactInfoDateTableColumn</members>
+        <members>labelContactInfoDetails</members>
+        <members>labelContactInfoHistory</members>
+        <members>labelContactInfoHoursTableColumn</members>
+        <members>labelContactInfoJobTableColumn</members>
+        <members>labelContactInfoLookupTitle</members>
+        <members>labelContactInfoNewVolunteerText</members>
+        <members>labelContactInfoNewVolunteerTitle</members>
+        <members>labelContactInfoRankText</members>
+        <members>labelContactInfoRankTitle</members>
+        <members>labelContactInfoTimeTableColumn</members>
+        <members>labelContactInfoUpcomingShifts</members>
+        <members>labelContactLookupInstructions</members>
+        <members>labelContactLookupNotFound</members>
+        <members>labelContactLookupSuccess</members>
+        <members>labelCopySchedule</members>
+        <members>labelFileUploadDescription</members>
+        <members>labelFindVolunteers</members>
+        <members>labelFindVolunteersAlreadyAssigned</members>
+        <members>labelFindVolunteersAssign</members>
+        <members>labelFindVolunteersCriteria</members>
+        <members>labelFindVolunteersFindResults</members>
+        <members>labelFindVolunteersHelpAssign</members>
+        <members>labelFindVolunteersHelpCriteria</members>
+        <members>labelFindVolunteersHelpFindResults</members>
+        <members>labelFindVolunteersNewlyAssigned</members>
+        <members>labelFrom</members>
+        <members>labelInformation</members>
+        <members>labelJRSShiftCreatedSystemNote</members>
+        <members>labelJRSShiftRemovedSystemNote</members>
+        <members>labelLinkAddMoreRows</members>
+        <members>labelLinkFull</members>
+        <members>labelLinkSignUp</members>
+        <members>labelListViewFirst</members>
+        <members>labelListViewLast</members>
+        <members>labelListViewNext</members>
+        <members>labelListViewPageInfo</members>
+        <members>labelListViewPrevious</members>
+        <members>labelMassEditDateFilterFrom</members>
+        <members>labelMassEditDateFilterTo</members>
+        <members>labelMassEditErrorOnSave</members>
+        <members>labelMassEditHelp</members>
+        <members>labelMassEditOptional</members>
+        <members>labelMassEditSaveSuccess</members>
+        <members>labelMassEditTitle</members>
+        <members>labelMassEditVolunteersStatus</members>
+        <members>labelMassEmailEditTemplate</members>
+        <members>labelMassEmailErrorNoContacts</members>
+        <members>labelMassEmailErrorNoTemplate</members>
+        <members>labelMassEmailViewTemplates</members>
+        <members>labelMassEmailVolunteersActivityLoggingError</members>
+        <members>labelMassEmailVolunteersLogActivity</members>
+        <members>labelMassEmailVolunteersSuccessCount</members>
+        <members>labelMassEmailVolunteersTitle</members>
+        <members>labelMassEmailVolunteersUniqueContacts</members>
+        <members>labelMassEmailVolunteersUniqueContactsHelpText</members>
+        <members>labelMessageBody</members>
+        <members>labelMessageLoading</members>
+        <members>labelMessageNoJobs</members>
+        <members>labelMessageSaving</members>
+        <members>labelNumberOfContacts</members>
+        <members>labelNumberOfContactsHelpText</members>
+        <members>labelPersonalSiteJobCalendarTitle</members>
+        <members>labelPersonalSiteJobListingTitle</members>
+        <members>labelPersonalSiteReportHoursTitle</members>
+        <members>labelReturnToCalendar</members>
+        <members>labelShowMore</members>
+        <members>labelSubject</members>
+        <members>labelSubmitButton</members>
+        <members>labelTitleJobSignup</members>
+        <members>labelVRSHoursCreatedSystemNote</members>
+        <members>labelVolunteerReportHoursErrorRequiredField</members>
+        <members>labelVolunteerReportHoursNotesNoShifts</members>
+        <members>labelVolunteerReportHoursNotesShifts</members>
+        <members>labelVolunteerReportHoursThankYou</members>
+        <members>labelVolunteerSignupThankYou</members>
+        <members>labelVolunteersJobListingErrorTooManyVols</members>
+        <members>labelVolunteersWizardCampaignInformation</members>
+        <members>labelVolunteersWizardClone</members>
+        <members>labelVolunteersWizardCopyVolunteers</members>
+        <members>labelVolunteersWizardErrorExistingOrSample</members>
+        <members>labelVolunteersWizardErrorNoJobsWithShifts</members>
+        <members>labelVolunteersWizardFirstShiftDate</members>
+        <members>labelVolunteersWizardHelp</members>
+        <members>labelVolunteersWizardJobAndShiftHelp</members>
+        <members>labelVolunteersWizardJobsAndShifts</members>
+        <members>labelVolunteersWizardNewCampaignTitle</members>
+        <members>labelVolunteersWizardNewShiftDate</members>
+        <members>labelVolunteersWizardOverrideHoursStatus</members>
+        <members>labelVolunteersWizardSampleJobName</members>
+        <members>labelVolunteersWizardSampleJobs</members>
+        <members>labelVolunteersWizardSampleShiftName</members>
+        <members>labelVolunteersWizardSampleShifts</members>
+        <members>labelVolunteersWizardTitle</members>
+        <name>CustomLabel</name>
+    </types>
+    <types>
+        <members>CustomLabels</members>
         <name>CustomLabels</name>
     </types>
     <types>
-        <members>*</members>
-        <members>Account</members>
-        <members>AccountContactRole</members>
-        <members>Activity</members>
-        <members>Asset</members>
-        <members>Campaign</members>
-        <members>CampaignMember</members>
-        <members>Case</members>
-        <members>CaseContactRole</members>
-        <members>Contact</members>
-        <members>ContentVersion</members>
-        <members>Contract</members>
-        <members>ContractContactRole</members>
-        <members>Event</members>
-        <members>Idea</members>
-        <members>Lead</members>
-        <members>Opportunity</members>
-        <members>OpportunityCompetitor</members>
-        <members>OpportunityContactRole</members>
-        <members>OpportunityLineItem</members>
-        <members>PartnerRole</members>
-        <members>Product2</members>
-        <members>Site</members>
-        <members>Solution</members>
-        <members>Task</members>
-        <members>User</members>
-        <members>UserLicense</members>
+        <members>Job_Recurrence_Schedule__c</members>
+        <members>Volunteer_Hours__c</members>
+        <members>Volunteer_Job__c</members>
+        <members>Volunteer_Recurrence_Schedule__c</members>
+        <members>Volunteer_Shift__c</members>
+        <members>Volunteers_Settings__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Campaign-fr</members>
+        <members>Contact-fr</members>
+        <members>Job_Recurrence_Schedule__c-en_US</members>
+        <members>Job_Recurrence_Schedule__c-fr</members>
+        <members>Lead-fr</members>
+        <members>Volunteer_Hours__c-en_US</members>
+        <members>Volunteer_Hours__c-fr</members>
+        <members>Volunteer_Job__c-en_US</members>
+        <members>Volunteer_Job__c-fr</members>
+        <members>Volunteer_Recurrence_Schedule__c-en_US</members>
+        <members>Volunteer_Recurrence_Schedule__c-fr</members>
+        <members>Volunteer_Shift__c-en_US</members>
+        <members>Volunteer_Shift__c-fr</members>
+        <members>Volunteers_Settings__c-en_US</members>
+        <members>Volunteers_Settings__c-fr</members>
         <name>CustomObjectTranslation</name>
     </types>
     <types>
-        <members>*</members>
-        <name>CustomPageWebLink</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomSite</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>About_Volunteers</members>
+        <members>Find_Volunteers</members>
+        <members>Job_Recurrence_Schedule__c</members>
+        <members>Process_Recurrence_Schedules</members>
+        <members>Shift_Calendar</members>
+        <members>Volunteer_Job__c</members>
+        <members>Volunteer_Recurrence_Schedule__c</members>
+        <members>Volunteers_Wizard</members>
         <name>CustomTab</name>
     </types>
     <types>
         <members>Volunteer_Dashboards</members>
         <members>Volunteer_Dashboards/Volunteers_Dashboard2</members>
         <name>Dashboard</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>DataCategoryGroup</name>
     </types>
     <types>
         <members>Volunteers_Documents</members>
@@ -92,41 +361,63 @@
     </types>
     <types>
         <members>Volunteers_Email_Templates</members>
+        <members>Volunteers_Email_Templates/Volunteer_Hours_Reminder_Email</members>
         <members>Volunteers_Email_Templates/Volunteer_Job_Reminder</members>
         <members>Volunteers_Email_Templates/Volunteer_Job_Reminder_letterhead</members>
+        <members>Volunteers_Email_Templates/Volunteer_Job_Signup_Notification</members>
+        <members>Volunteers_Email_Templates/Volunteer_Job_Signup_Thank_You</members>
         <members>Volunteers_Email_Templates/Volunteer_Shift_Reminder</members>
         <members>Volunteers_Email_Templates/Volunteer_Shift_Reminder_using_letterhead</members>
         <members>Volunteers_Email_Templates/Volunteer_Signup_Notification</members>
         <members>Volunteers_Email_Templates/Volunteer_Signup_Thank_You</members>
+        <members>Volunteers_Email_Templates/Volunteers_Personal_Site_Contact_Lookup</members>
         <name>EmailTemplate</name>
     </types>
     <types>
-        <members>*</members>
-        <name>HomePageComponent</name>
+        <members>Campaign.VolunteersWizardFS</members>
+        <members>Contact.PersonalSiteContactInfoPanel1FS</members>
+        <members>Contact.PersonalSiteContactInfoPanel2FS</members>
+        <members>Contact.VolunteersFindCriteriaFS</members>
+        <members>Contact.VolunteersFindFS</members>
+        <members>Contact.VolunteersJobListingFS</members>
+        <members>Contact.VolunteersReportHoursFS</members>
+        <members>Contact.VolunteersSignupFS</members>
+        <members>Volunteer_Hours__c.MassEditVolunteerHours</members>
+        <members>Volunteer_Hours__c.PersonalSiteContactInfoHistory</members>
+        <members>Volunteer_Hours__c.PersonalSiteContactInfoUpcomingShifts</members>
+        <members>Volunteer_Hours__c.VolunteersJobListingFS</members>
+        <members>Volunteer_Recurrence_Schedule__c.NewAndEditVRSFS</members>
+        <name>FieldSet</name>
     </types>
     <types>
-        <members>*</members>
-        <name>HomePageLayout</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>Campaign-Volunteers Campaign Layout</members>
+        <members>Job_Recurrence_Schedule__c-Volunteer Job Recurrence Schedule Layout</members>
+        <members>Volunteer_Hours__c-Volunteer Hours Layout</members>
+        <members>Volunteer_Job__c-Volunteer Job Layout</members>
+        <members>Volunteer_Recurrence_Schedule__c-Volunteer Recurrence Schedule Layout</members>
+        <members>Volunteer_Shift__c-Volunteer Shift Layout</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Volunteer_Sample_Letterhead</members>
         <name>Letterhead</name>
     </types>
     <types>
-        <members>*</members>
-        <name>PermissionSet</name>
+        <members>Campaign.Volunteer_Campaigns</members>
+        <members>Job_Recurrence_Schedule__c.AllJRS</members>
+        <members>Volunteer_Job__c.All_Jobs</members>
+        <members>Volunteer_Job__c.Available_Jobs</members>
+        <members>Volunteer_Job__c.Ongoing_Jobs</members>
+        <members>Volunteer_Recurrence_Schedule__c.AllVRS</members>
+        <name>ListView</name>
     </types>
     <types>
-        <members>*</members>
-        <name>Profile</name>
+        <members>Volunteer_Shift__c.nf_01I500000006jXXEAY_00N500000026yY5EAI</members>
+        <name>NamedFilter</name>
     </types>
     <types>
-        <members>ApexDevNet</members>
-        <name>RemoteSiteSetting</name>
+        <members>Campaign.Volunteers_Campaign</members>
+        <name>RecordType</name>
     </types>
     <types>
         <members>Volunteer_Reports</members>
@@ -153,34 +444,85 @@
         <members>Volunteer_Reports/Volunteer_Hours_for_Dashboard2</members>
         <members>Volunteer_Reports/Volunteer_Jobs_With_Shift_Summary</members>
         <members>Volunteer_Reports/Volunteer_Roster</members>
+        <members>Volunteer_Reports/Volunteers_Daily_Roster</members>
         <members>Volunteer_Reports/Volunteers_Last_Month</members>
         <members>Volunteer_Reports/Volunteers_This_Year</members>
         <members>Volunteer_Reports/Volunteers_by_Account</members>
         <members>Volunteer_Reports/Volunteers_by_Availability</members>
         <members>Volunteer_Reports/Volunteers_by_Skill</members>
         <members>Volunteer_Reports/Volunteers_with_any_Volunteer_Status</members>
-        <members>unfiled$public</members>
         <name>Report</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Accounts</members>
+        <members>Volunteer_Campaigns</members>
+        <members>Volunteer_Jobs_and_Hours</members>
+        <members>Volunteer_Jobs_with_Shifts_Hours</members>
         <name>ReportType</name>
     </types>
     <types>
-        <members>*</members>
-        <name>Scontrol</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>Bootstrap</members>
+        <members>Bootstrap4Force</members>
+        <members>FullCalendar</members>
+        <members>jQueryFiles</members>
+        <members>wtooltip</members>
         <name>StaticResource</name>
     </types>
     <types>
-        <members>*</members>
+        <members>fr</members>
         <name>Translations</name>
     </types>
     <types>
-        <members>*</members>
-        <name>Workflow</name>
+        <members>Volunteer_Hours__c.HoursRequiredOnCompletion</members>
+        <members>Volunteer_Hours__c.StatusMustBeSet</members>
+        <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>Campaign.CampaignRoster</members>
+        <members>Campaign.Campaign_Shift_Calendar</members>
+        <members>Campaign.Find_Volunteers</members>
+        <members>Campaign.Mass_Email_Volunteers</members>
+        <members>Campaign.New_Volunteer_Campaign</members>
+        <members>Volunteer_Hours__c.Mass_Edit_Volunteer_Hours</members>
+        <members>Volunteer_Job__c.Find_Volunteers</members>
+        <members>Volunteer_Job__c.JobRoster</members>
+        <members>Volunteer_Job__c.Job_Shift_Calendar</members>
+        <members>Volunteer_Job__c.Mass_Edit_Volunteer_Hours</members>
+        <members>Volunteer_Job__c.Mass_Email_Volunteers</members>
+        <members>Volunteer_Shift__c.Find_Volunteers</members>
+        <members>Volunteer_Shift__c.Mass_Email_Volunteers</members>
+        <members>Volunteer_Shift__c.Roster</members>
+        <members>Volunteer_Shift__c.Shift_Calendar</members>
+        <name>WebLink</name>
+    </types>
+    <types>
+        <members>Contact.Volunteer_Signup_Notification_Email_Alert_Contact</members>
+        <members>Contact.Volunteer_Signup_Thank_You_Email_Alert_Contact</members>
+        <members>Lead.Volunteer_Signup_Notification_Email_Alert_Lead</members>
+        <members>Lead.Volunteer_Signup_Thank_You_Email_Alert_Lead</members>
+        <members>Volunteer_Hours__c.Volunteer_Job_Signup_Notification_Email_Alert</members>
+        <members>Volunteer_Hours__c.Volunteer_Job_Signup_Thank_You_Email_Alert</members>
+        <members>Volunteer_Hours__c.Volunteer_Shift_Reminder_Email_Alert</members>
+        <name>WorkflowAlert</name>
+    </types>
+    <types>
+        <members>Volunteer_Hours__c.Set_End_Date</members>
+        <members>Volunteer_Hours__c.Set_Volunteer_Hours_Planned_Start_Date</members>
+        <name>WorkflowFieldUpdate</name>
+    </types>
+    <types>
+        <members>Contact.Volunteer Signup - Contact</members>
+        <members>Lead.Volunteer Signup - Lead</members>
+        <members>Volunteer_Hours__c.Volunteer Hours - Set End Date</members>
+        <members>Volunteer_Hours__c.Volunteer Hours - Set Planned Start Date %26 Time</members>
+        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
+        <members>Volunteer_Hours__c.Volunteer Job Signup</members>
+        <name>WorkflowRule</name>
+    </types>
+    <types>
+        <members>Contact.Volunteer_Signup_Thank_You_Sent_Contact</members>
+        <members>Lead.Volunteer_Signup_Thank_You_Sent_Lead</members>
+        <name>WorkflowTask</name>
     </types>
     <version>29.0</version>
 </Package>
