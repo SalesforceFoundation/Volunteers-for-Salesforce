@@ -32,11 +32,14 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
 		// get all the Hours for the affected Shifts
 		set<ID> setShiftId = new set<ID>();
 		for (Volunteer_Hours__c hr : listHours) {
-			setShiftId.add(hr.Volunteer_Shift__c);
+			if (hr.Volunteer_Shift__c != null)
+				setShiftId.add(hr.Volunteer_Shift__c);
 		}
-		listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Volunteer_Shift__c in :setShiftId];
-		
-		VOL_SharedCode.VolunteerHoursTrigger(null, listHours, true);		
+		if (setShiftId.size() > 0) {
+			listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Volunteer_Shift__c in :setShiftId];
+			
+			VOL_SharedCode.VolunteerHoursTrigger(null, listHours, true);
+		}		
 	}
 
 	// similar issue with undeletes of contacts.  
