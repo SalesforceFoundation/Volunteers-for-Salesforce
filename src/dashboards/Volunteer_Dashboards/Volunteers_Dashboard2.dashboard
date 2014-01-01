@@ -139,7 +139,7 @@
             <useReportChart>false</useReportChart>
         </components>
     </rightSection>
-    <runningUser>davidhabibvol@groundwire.org</runningUser>
+    <runningUser>david@gw_volunteers_3.55.patch</runningUser>
     <textColor>#000000</textColor>
     <title>Volunteers Dashboard</title>
     <titleColor>#000000</titleColor>
