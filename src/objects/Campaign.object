@@ -4,68 +4,68 @@
         <fullName>VolunteersWizardFS</fullName>
         <availableFields>
             <field>ActualCost</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>BudgetedCost</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>ExpectedResponse</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <availableFields>
             <field>ExpectedRevenue</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </availableFields>
         <description>This field set is used by the Volunteers Wizard, to allow the user to specify which Campaign fields to display on the New Volunteer Campaign section.</description>
         <displayedFields>
             <field>Name</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>true</isRequired>
         </displayedFields>
         <displayedFields>
             <field>ParentId</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>IsActive</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Status</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Type</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>StartDate</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>EndDate</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Volunteer_Website_Time_Zone__c</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Description</field>
-            <isFieldManaged>true</isFieldManaged>
+            <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <label>VolunteersWizardFS</label>
