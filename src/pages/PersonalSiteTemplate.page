@@ -3,7 +3,7 @@
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 -->
 
-<apex:page showHeader="false" id="SiteTemplate" standardStylesheets="false" controller="VOL_CTRL_PersonalSiteTemplate" >
+<apex:page showHeader="false" id="SiteTemplate" standardStylesheets="false" controller="VOL_CTRL_PersonalSiteTemplate" cache="false">
 
 <!-- Load jQuery  -->
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>

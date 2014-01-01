@@ -3,7 +3,7 @@
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 -->
 
-<apex:page showheader="false" sidebar="false" standardStylesheets="false" controller="VOL_CTRL_PersonalSiteContactLookup" language="strLanguage" >
+<apex:page showheader="false" sidebar="false" standardStylesheets="false" controller="VOL_CTRL_PersonalSiteContactLookup" language="strLanguage" cache="false" >
 
 <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" />
 
