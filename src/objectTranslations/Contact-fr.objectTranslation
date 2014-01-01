@@ -11,29 +11,6 @@
         <name>Last_Volunteer_Date__c</name>
     </fields>
     <fields>
-        <name>LeadSource</name>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Partner Referral</masterLabel>
-            <translation><!-- Partner Referral --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Phone Inquiry</masterLabel>
-            <translation><!-- Phone Inquiry --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Purchased List</masterLabel>
-            <translation><!-- Purchased List --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Web</masterLabel>
-            <translation><!-- Web --></translation>
-        </picklistValues>
-    </fields>
-    <fields>
         <label>Comte de Bénévoles Uniques</label>
         <name>Unique_Volunteer_Count__c</name>
     </fields>
@@ -140,17 +117,6 @@
             <translation>Prospectives</translation>
         </picklistValues>
     </fields>
-    <layouts>
-        <layout>Contact Layout</layout>
-        <sections>
-            <label>Liens personnalisés</label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label>Information de bénévoles</label>
-            <section>Volunteer Information</section>
-        </sections>
-    </layouts>
     <workflowTasks>
         <description>Un email automatique a été envoyé au contact en leur remerciant de l&apos;inscription pour devenir bénévole.</description>
         <name>Volunteer_Signup_Thank_You_Sent_Contact</name>
