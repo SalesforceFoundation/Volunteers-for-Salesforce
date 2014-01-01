@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Volunteers Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Volunteers Settings --></value>
+    </caseValues>
+    <fields>
+        <help><!-- A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full Developer name, including namespace prefix. NPSP email fields are automatically checked. --></help>
+        <label>Champs d&apos;email de match de contact</label>
+        <name>Contact_Match_Email_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- A semicolon separated list of additional Contact first name fields to try to match against when doing Contact matching. E.g., a nickname field.  Note that the fields are specified by their full Developer name, including namespace prefix. --></help>
+        <label>Champs de prénom de match de contact</label>
+        <name>Contact_Match_First_Name_Fields__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Display Name of the Organization-Wide Email Address to use on the email sent from the PersonalSiteContactLookup Sites page. --></help>
+        <label><!-- Personal Site Org-Wide Email Name --></label>
+        <name>Personal_Site_Org_Wide_Email_Name__c</name>
+    </fields>
+    <fields>
+        <help>Combien de mois dans le futur doit-on programmer les quarts de travail?</help>
+        <label>Poste Récurrant Mois Futures</label>
+        <name>Recurring_Job_Future_Months__c</name>
+    </fields>
+    <fields>
+        <help>Le nom du Compte a utiliser pour créer des nouveaux Contacts pendant l&apos;enregistrement. Si vous utilisez le Non Profit Starter Pack &apos;modèle un-à-un&apos;, laisser vide. Si vous utilisez le &apos;modèle sceau&apos;, mettez le nom du compte; normallement &apos;Individual&apos;.</help>
+        <label>Inscrire le Compte Globale sur Création</label>
+        <name>Signup_Bucket_Account_On_Create__c</name>
+    </fields>
+    <fields>
+        <help>Est-ce que l&apos;inscription devrai créer des nouveaux Contacts s&apos;il ny a pas de correspondance trouvé (ou &apos;Inscription correspond Contacts existant&apos; n&apos;est pas coché). Si ce paramètre n&apos;est pas coché, un Piste sera crée.</help>
+        <label>Créer les Contacts sans correspondence</label>
+        <name>Signup_Creates_Contacts_If_No_Match__c</name>
+    </fields>
+    <fields>
+        <help>Si la page Inscription des bénévoles essaie de faire correspondre la personne à un contact existant (par nom, prénom, email).</help>
+        <label>Inscription correspond Contacts existant</label>
+        <name>Signup_Matches_Existing_Contacts__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+    <startsWith><!-- Consonant --></startsWith>
+</CustomObjectTranslation>
