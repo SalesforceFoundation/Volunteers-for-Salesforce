@@ -420,6 +420,10 @@ global with sharing class VOL_SharedCode {
 					}
 			} 
 		}
+		
+		// bail out if nothing found (to avoid runtime error!)
+		if (mpShiftIdDelta.size() == 0)
+			return;
 			
 		// now that we have the Id's of the shifts, let's get them from the database, update them by the number of volunteers, and then commit.
 		list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
