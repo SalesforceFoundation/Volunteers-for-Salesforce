@@ -50,7 +50,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
 		
 		// criteria section driven by a fieldset
         boolean fAndNeeded = false;
-        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersFindCriteriaFS.getFields()) {
+        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.VolunteersFindCriteriaFS.getFields()) {
         	string strVal = string.valueOf(conFilter.get(f.getFieldPath()));
 			if (strVal != null && strVal != '') {
 	        	if (f.getType() == Schema.DisplayType.multipicklist) {
@@ -101,7 +101,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
 		get {
 			if (listStrFields == null) {
 				listStrFields = new list<string>();
-		        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersFindFS.getFields()) {
+		        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.VolunteersFindFS.getFields()) {
 		            listStrFields.add(f.getFieldPath());
 		        }										
 			}
@@ -130,7 +130,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
 	// helper to test whether filter criteria have been specified
 	public boolean hasFilterCriteria {
 		get {
-	        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersFindCriteriaFS.getFields()) {	        	
+	        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.VolunteersFindCriteriaFS.getFields()) {	        	
 	        	string strVal = string.valueOf(conFilter.get(f.getFieldPath()));
 				if (strVal != null && strVal != '') {
 		        	if (f.getType() != Schema.DisplayType.Boolean || strVal == 'true') {

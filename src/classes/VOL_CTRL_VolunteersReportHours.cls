@@ -174,7 +174,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     		boolean hasErrors = false;
 
 			// first deal with fields on the contact.
-	        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.GW_Volunteers__VolunteersReportHoursFS.getFields()) {
+	        for (Schema.FieldSetMember f : SObjectType.Contact.FieldSets.VolunteersReportHoursFS.getFields()) {
 	        	if (contact.get(f.getFieldPath()) == null && (f.getDBRequired() || f.getRequired())) {
 		    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
 		    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { f.getLabel() }))); 	

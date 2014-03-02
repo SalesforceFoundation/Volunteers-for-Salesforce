@@ -39,7 +39,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
 		object so if they add a related field to contacts (for example), they will get a runtime error
 		trying to display the page.
 		
-        for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.GW_Volunteers__MassEditVolunteerHours.getFields()) {
+        for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours.getFields()) {
             listStrFields.add(f.getFieldPath());
         }
         // add fields we hardcode on the page
