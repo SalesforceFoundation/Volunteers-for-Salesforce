@@ -168,8 +168,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         setStrFields.add('Firstname');
         setStrFields.add('Lastname');
         setStrFields.add('Email');
-        setStrFields.add('GW_Volunteers__Volunteer_Status__c');
-        setStrFields.add('GW_Volunteers__Volunteer_Notes__c');
+        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Status__c'));
+        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Notes__c'));
         setStrFields.add('LeadSource');
         setStrFields.add('AccountId');
         
@@ -387,11 +387,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         strSoql += strComma + strF;
                         strComma = ', ';
                     }
-                    strSoql += ' from GW_Volunteers__Volunteer_Hours__c ';
-                    strSoql += ' where Contact__c = :contactIdSignUp ';
-                    strSoql += ' and Volunteer_Job__c = :jobIdSignUp ';
-                    strSoql += ' and Volunteer_Shift__c = :shiftIdSignUp ';             
-                    strSoql += ' limit 1';      
+                    strSoql += ' from ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c');
+                    strSoql += ' where ' + VOL_SharedCode.StrTokenNSPrefix('Contact__c') + ' = :contactIdSignUp ';
+                    strSoql += ' and ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c') + ' = :jobIdSignUp ';
+                    strSoql += ' and ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c') + ' = :shiftIdSignUp ';             
+                    strSoql += ' limit 1';  
                     listVHours = Database.Query(strSoql);               
                 }
                 

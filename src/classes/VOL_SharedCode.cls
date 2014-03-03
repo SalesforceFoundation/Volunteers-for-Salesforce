@@ -453,6 +453,33 @@ global with sharing class VOL_SharedCode {
 		set;
 	}	
 	
+    // global utility used to detect whether the Volunteers is running in a managed instance or unmanaged instance
+    private static boolean fCheckedForVolunteersNamespace = false;
+    global static boolean IsManagedCode {
+        get {
+            if (!fCheckedForVolunteersNamespace) {
+                Schema.SObjectType token = Schema.getGlobalDescribe().get('GW_Volunteers__Volunteer_Job__c');
+                IsManagedCode = (token != null);
+                fCheckedForVolunteersNamespace = true;
+            }
+            return IsManagedCode;
+        }
+        set;
+    }   
+
+    /*******************************************************************************************************
+    * @description Static method that takes a string
+    * If we are in a managed package, tokens in dynamic SOQL must include the package namespace prefix.
+    * If you ever deploy this package as unmanaged, this routine will do nothing!
+    * @param str token name 
+    * @return token name, with namespace prefix, if required.
+    ********************************************************************************************************/
+    public static string StrTokenNSPrefix(string str) {
+        if (!IsManagedCode) return str;
+        str = 'GW_Volunteers__' + str;
+        return str;
+    }
+  
     //==================== TEST METHOD(s) ======================================
     static testmethod void CodeCoverageTests() {
         // since this class is all shared code, it gets heavily exercised by all other test code.       
