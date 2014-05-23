@@ -178,7 +178,9 @@
         // note that we assume all dates coming from Salesforce are in GMT.
         if ('{!initialDate}' != '') {
             var dt = new Date('{!initialDate}');
-            dt = new Date(dt.toLocaleString());
+            //some browsers (IE & mobile Safari) didn't support this,
+            //but we didn't really need it!
+            //dt = new Date(dt.toLocaleString());
             j$('#calendar').fullCalendar('gotoDate', dt);
             j$('#calendar').fullCalendar('select', dt, dt, false);
             j$('#calendar').fullCalendar('render'); // hack: force repaint so selection appears correctly.
