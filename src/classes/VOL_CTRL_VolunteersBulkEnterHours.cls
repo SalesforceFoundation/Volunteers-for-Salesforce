@@ -46,7 +46,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         listStrFields.add('Volunteer_Shift__c');
         listStrFields.add('Contact__c');
 		*/
-		      		          
+		 
     }   
 
     
@@ -245,7 +245,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         if (strId != null && strId != '') setVolunteerHoursIdDirty.add(strId);
         return null;
     }
-
+    
     //save the Volunteer Hours created or modified
     global virtual PageReference SaveVolunteerHours() {
         
@@ -260,7 +260,10 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
 
             for (Volunteer_Hours__c vh : listVolunteerHours) {
                 if (vh.Id != null) {
-                    if (setVolunteerHoursIdDirty.contains(vh.Id)) listVolunteerHoursUpdate.add(vh);
+                    // we couldn't reliably mark dirty records in all scenarios,
+                    // so we've decided it is better to always update all records.
+                    //if (setVolunteerHoursIdDirty.contains(vh.Id)) 
+                    	listVolunteerHoursUpdate.add(vh);
                 } else if (vh.Contact__c != null) {
                     listVolunteerHoursCreate.add(vh);
                 }

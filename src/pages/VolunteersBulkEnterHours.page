@@ -75,19 +75,13 @@
                 <apex:column >
                     <apex:facet name="header">{!$ObjectType.Contact.Label} *</apex:facet>
                     <apex:inputField value="{!vh.Contact__c}" style="width: 100px;" required="false" >
-                        <apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
-                            <apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
-                        </apex:actionSupport>
                     </apex:inputField>
                 </apex:column> 
                 
                 <apex:column rendered="{!volunteerShiftId == null}" >
 					<apex:facet name="header">{!$ObjectType.Volunteer_Shift__c.Label}</apex:facet>
-	                <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts">
+	                <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts" >
 	                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
-						<apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
-							<apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
-						</apex:actionSupport>
 	                </apex:selectList>				
 				</apex:column>	
 				
@@ -95,16 +89,13 @@
 				<apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours}" var="f" >
 	                <apex:column >
 	                    <apex:facet name="header">{!f.Label + IF(f.DBRequired, ' *', '')}</apex:facet>
-	                    <apex:inputField value="{!vh[f]}" style="{!IF(f.Type=='Number','width:50px;','') + IF(f.Type=='Long Text Area','Height:1.5em;','')}" required="false" > <!-- force not required, or you can't submit empty rows! -->
-	                        <apex:actionSupport immediate="true" event="onfocus" action="{!VolunteerHoursRecordModified}" rerender=""> 
-	                            <apex:param name="volunteerHoursIdDirtied" value="{!vh.Id}" />
-	                        </apex:actionSupport>
-	                    </apex:inputField>
+	                    <apex:inputField value="{!vh[f]}" style="{!IF(f.Type=='Number','width:50px;','') + IF(f.Type=='Long Text Area','Height:1.5em;','')}" required="false" /> <!-- force not required, or you can't submit empty rows! -->
 	                </apex:column>
 	  			</apex:repeat>        
 				
             </apex:dataTable>
             &nbsp;&nbsp;&nbsp;&nbsp;<apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" />
         </apex:pageBlock>
+            
     </apex:form>    
 </apex:page>
