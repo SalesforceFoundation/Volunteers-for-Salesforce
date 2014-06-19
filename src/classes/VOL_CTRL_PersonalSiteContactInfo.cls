@@ -100,7 +100,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     private list<string> listStrContactFields { 
     	get {
     		if (listStrContactFields == null) {
-				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap();
+				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap().clone();
+				mapS.remove('mailingaddress');
+				mapS.remove('otheraddress');
 				listStrContactFields = new list<string>();
 				listStrContactFields.addAll(mapS.keySet());    		    			
     		}

@@ -349,7 +349,9 @@ global with sharing class VOL_SharedCode {
 		
 		// get the fields for the object
 		Schema.DescribeSObjectResult des = sobj.getSObjectType().getDescribe();
-		Map<String, Schema.SObjectField> mapS = des.fields.getMap();
+		Map<String, Schema.SObjectField> mapS = des.fields.getMap().clone();
+		mapS.remove('mailingaddress');
+		mapS.remove('otheraddress');
 		list<string> listStrFields = new list<string>();
 		listStrFields.addAll(mapS.keySet());  		
 		
