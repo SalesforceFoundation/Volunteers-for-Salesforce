@@ -209,7 +209,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 				hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);	
 			} else {
 				hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormat, strTimeZone);	    				
-			}    			
+			} 
+			
+			// also save user formated Start Date in Comments field
+			hr.Comments__c = dtStart.format(strDateFormat, strTimeZone);  			
     	}
     }
         

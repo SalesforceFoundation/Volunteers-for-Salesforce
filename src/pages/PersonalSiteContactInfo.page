@@ -112,12 +112,9 @@
 	                <div class="span6">
 	                    <apex:pageBlockSection title="{!$Label.labelContactInfoUpcomingShifts}" columns="1" rendered="{!NOT(isEditing)}" >                               
 	                        <apex:pageBlockTable value="{!listUpcomingVolunteerHours}" var="hr" rules="none" styleClass="table" >
-	                            <apex:column headerValue="{!$Label.labelContactInfoDateTableColumn}" width="99px" >
-	                               <apex:outputText value="{0,date,{!strDateFormat}}" >
-	                                    <apex:param value="{!BLANKVALUE(hr.Planned_Start_Date_Time__c, BLANKVALUE(hr.Shift_Start_Date_Time__c, DATETIMEVALUE(hr.Start_Date__c)))}" />
-	                                </apex:outputText>
-	                            </apex:column>
-	                            <!-- holds nicely formatted time string. -->
+	                            <!-- holds user formatted date string. -->
+	                            <apex:column value="{!hr.Comments__c}" headerValue="{!$Label.labelContactInfoDateTableColumn}" width="99px" />
+	                            <!-- holds user formatted time string. -->
 	                            <apex:column value="{!hr.System_Note__c}" headerValue="{!$Label.labelContactInfoTimeTableColumn}" width="140px" /> 
 	                            <apex:column value="{!hr.Volunteer_Job__r.Name}" headerValue="{!$Label.labelContactInfoJobTableColumn}" width="100px" /> 
 	                            <!-- now field set defined columns -->
@@ -148,11 +145,8 @@
 	                <div class="span5">
 	                    <apex:pageBlockSection title="{!$Label.labelContactInfoHistory}" columns="1" rendered="{!NOT(isEditing)}" >
 	                        <apex:pageBlockTable value="{!listCompletedVolunteerHours}" var="hr" rules="none" styleClass="table" >
-	                            <apex:column headerValue="{!$Label.labelContactInfoDateTableColumn}" width="99px" >
-	                                <apex:outputText value="{0,date,{!strDateFormat}}" >
-	                                    <apex:param value="{!BLANKVALUE(hr.Planned_Start_Date_Time__c, BLANKVALUE(hr.Shift_Start_Date_Time__c, DATETIMEVALUE(hr.Start_Date__c)))}" />
-	                                </apex:outputText>
-	                            </apex:column>	                        
+	                            <!-- holds user formatted date string. -->
+	                            <apex:column value="{!hr.Comments__c}" headerValue="{!$Label.labelContactInfoDateTableColumn}" width="99px" />
 	                            <apex:column value="{!hr.Volunteer_Job__r.Name}" headerValue="{!$Label.labelContactInfoJobTableColumn}" /> 
 	                            <apex:column headerValue="{!$Label.labelContactInfoHoursTableColumn}">
 	                               <apex:outputText value="{0,number}" >
