@@ -17,15 +17,8 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         string p = params.get('Language');
         if (p != null && p != '') strLanguage = p;
 
-		// initialize the list of all fields on Contact.
-		// ideally, we'd only include the fields in the Field Set,
-		// but Apex currently has no way to see what those are.
-		// so for now, we just include all fields on Contact.
-		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap().clone();
-		mapS.remove('mailingaddress');
-		mapS.remove('otheraddress');		
-		listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet()); 
+        // we now get the fields from the fieldset
+        listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersReportHoursFS);
 		
 		// we can derive whether we are within the Personal Site or not, so no need for parameter.
     	fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');		   		
@@ -312,8 +305,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         contact.FirstName = 'TestFirstName';
         contact.LastName = 'TestLastName';
         contact.Email = 'foovolunteer@bar.com';
-        contact.Phone = '425-123-4567';
-        contact.HomePhone = '206-123-4567';
         ctrl.volunteerJobId = job.Id;
         ctrl.volunteerShiftId = shift.Id;
         ctrl.ChangeVolunteerShift();
@@ -323,7 +314,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         // make sure the existing contact's volunteer status field was updated          
         contact = [select Id, Volunteer_Status__c, Phone from Contact where Email='foovolunteer@bar.com' and Firstname='TestFirstName' limit 1];
         System.AssertEquals('Active', contact.Volunteer_Status__c);
-        System.Assert(('425-123-4567' == contact.Phone) || ('206-123-4567' == contact.Phone));
         Volunteer_Hours__c vh2 = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Volunteer_Shift__c = :shift.Id];
         system.assertEquals('Completed', vh2.Status__c);
         system.assertEquals(1, vh2.Hours_Worked__c);

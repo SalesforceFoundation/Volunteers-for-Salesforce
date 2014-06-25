@@ -100,9 +100,15 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     private list<string> listStrContactFields { 
     	get {
     		if (listStrContactFields == null) {
+    			// since two different field sets on Contact are used in this form, just get all fields.
 				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap().clone();
+				
+				// starting in API version 30, new compound fields are included.
+				// but you have to special case these, and they cause problems in our general code,
+				// so we remove them. 
 				mapS.remove('mailingaddress');
 				mapS.remove('otheraddress');
+				
 				listStrContactFields = new list<string>();
 				listStrContactFields.addAll(mapS.keySet());    		    			
     		}

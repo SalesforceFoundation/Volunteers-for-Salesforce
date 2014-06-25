@@ -21,15 +21,8 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
         	attachment = new Attachment();
         }
 
-		// initialize the list of all fields on Contact.
-		// ideally, we'd only include the fields in the Field Set,
-		// but Apex currently has no way to see what those are.
-		// so for now, we just include all fields on Contact.
-		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap().clone();
-		mapS.remove('mailingaddress');
-		mapS.remove('otheraddress');
-		listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet());    		
+        // we now get the fields from the fieldset
+        listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersSignupFS);
     } 
             
     global Contact contact { 

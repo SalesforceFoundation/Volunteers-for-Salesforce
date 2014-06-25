@@ -1,4 +1,4 @@
-// Written by David Habib, copyright (c) 2010-2013 DJH Consulting, djhconsulting.com 
+// Written by David Habib, copyright (c) 2010-2014 DJH Consulting, djhconsulting.com 
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 
 global with sharing class VOL_SharedCode {
@@ -122,6 +122,25 @@ global with sharing class VOL_SharedCode {
     		return recordtypeIdVolunteersCampaign;
     	}
     	set;
+    }
+    
+    // shared routine to get all Fields names form the specified Field Set on Contact
+    // also explicitly adds additional Contact fields that we will always use in our Sites pages.
+    public static list<string> listStrFieldsFromContactFieldSet(Schema.FieldSet fs) {
+        set<string> setStrFields = new set<string>();
+        for (Schema.FieldSetMember f : fs.getFields()) {
+            setStrFields.add(f.getFieldPath().toLowerCase());
+        }  
+        // also add the fields we explicitly refer to in CreateOrUpdateContactFS()
+        // we use a set (with lowercase) to avoid creating duplicates.
+        setStrFields.add('firstname');
+        setStrFields.add('lastname');
+        setStrFields.add('email');
+        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
+        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());        
+        list<string> listStrFields = new list<string>();
+        listStrFields.addAll(setStrFields);
+        return listStrFields;
     }
     
     // global code to create a new lead or contact for web volunteer signup.  
@@ -314,13 +333,6 @@ global with sharing class VOL_SharedCode {
                 if (listAccount.size() > 0) accToUse = listAccount.get(0);
             }
             
-            // if company found, use it
-            if (accToUse != null) {
-                contact.AccountId = accToUse.Id;
-            } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
-                contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
-            }
-            
             // don't assume the contact object wasn't already used.
             // since we can't null out Id for the insert, copy all
             // the fields to a new object and use it.
@@ -331,9 +343,18 @@ global with sharing class VOL_SharedCode {
             		conNew.put(strF, contact.get(strF));
             	}
             }
+
+            // if company found, use it
+            if (accToUse != null) {
+                conNew.AccountId = accToUse.Id;
+            } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
+                conNew.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
+            }
+            
             insert conNew;
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
+            contact.AccountId = conNew.AccountId;
             return conNew.Id;
         }
     }    
@@ -350,6 +371,8 @@ global with sharing class VOL_SharedCode {
 		// get the fields for the object
 		Schema.DescribeSObjectResult des = sobj.getSObjectType().getDescribe();
 		Map<String, Schema.SObjectField> mapS = des.fields.getMap().clone();
+		// avoid any of the API version 30 compound fields
+		// we only worry about Contact ones, since all callers are giving us contacts to copy.
 		mapS.remove('mailingaddress');
 		mapS.remove('otheraddress');
 		list<string> listStrFields = new list<string>();
@@ -460,8 +483,15 @@ global with sharing class VOL_SharedCode {
     global static boolean IsManagedCode {
         get {
             if (!fCheckedForVolunteersNamespace) {
-                Schema.SObjectType token = Schema.getGlobalDescribe().get('GW_Volunteers__Volunteer_Job__c');
-                IsManagedCode = (token != null);
+            	// in order for this call to work as expected, we must be API Version 28, but we
+            	// want to stay at version 25, so let's find another way!!
+                //Schema.SObjectType token = Schema.getGlobalDescribe().get('GW_Volunteers__Volunteer_Job__c');
+                //IsManagedCode = (token != null);
+
+    			Map<String, Schema.SObjectField> M = Schema.SObjectType.Contact.fields.getMap();
+    			Schema.SObjectField fld = M.get('gw_volunteers__volunteer_status__c');
+				IsManagedCode = (fld != null);
+                
                 fCheckedForVolunteersNamespace = true;
             }
             return IsManagedCode;

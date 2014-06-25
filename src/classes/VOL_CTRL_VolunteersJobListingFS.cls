@@ -150,31 +150,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             strParams = '';
         }       
                 
-        // initialize the list of all fields on Contact.
-        // ideally, we'd only include the fields in the Field Set,
-        // but Apex currently has no way to see what those are.
-        // so for now, we just include all fields on Contact.
-        // Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap();
-        // listStrFields = new list<string>();
-        // listStrFields.addAll(mapS.keySet());            
-        
         // we now get the fields from the fieldset
-        set<string> setStrFields = new set<string>();
-        for (Schema.FieldSetMember f : Schema.SObjectType.Contact.fieldSets.VolunteersJobListingFS.getFields()) {
-            setStrFields.add(f.getFieldPath());
-        }  
-        // also add the fields we explicitly refer to in CreateOrUpdateContactFS()
-        // we use a set to avoid creating duplicates.
-        setStrFields.add('Firstname');
-        setStrFields.add('Lastname');
-        setStrFields.add('Email');
-        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Status__c'));
-        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Notes__c'));
-        setStrFields.add('LeadSource');
-        setStrFields.add('AccountId');
-        
-        listStrFields = new list<string>();
-        listStrFields.addAll(setStrFields);
+        listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersJobListingFS);
         
         contactIdSignUp = null;
         volunteerHoursIdSignUp = null;        
