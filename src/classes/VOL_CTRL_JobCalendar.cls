@@ -21,6 +21,8 @@ global with sharing class VOL_CTRL_JobCalendar {
         	list<Campaign> listCampaign = [select Id, StartDate from Campaign where Id = :p];
         	if (listCampaign.size() > 0) {
         		initialDate = Date.valueOf(listCampaign[0].StartDate);
+        		if (initialDate < Date.Today()) 
+        			initialDate = Date.Today();
         		// because this is a GMT time, we should add some padding, so we'll stick
         		// with the same day, even if the locale time zone is up to 12 hours before GMT.
         		if (initialDate != null) initialDate = initialDate.addHours(12);  
@@ -35,6 +37,8 @@ global with sharing class VOL_CTRL_JobCalendar {
         		from Volunteer_Job__c where Id = :p];
         	if (listJob.size() > 0) {
         		initialDate = Date.valueOf(listJob[0].First_Shift__c);
+        		if (initialDate < Date.Today()) 
+        			initialDate = Date.Today();
         		volunteerJobId = p;
         		// let caller control whether to filter by campaign or not.
         		//campaignId = listJob[0].Campaign__c;        		
