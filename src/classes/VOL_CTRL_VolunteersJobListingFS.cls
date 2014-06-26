@@ -343,7 +343,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (cId != null) contactIdPersonalSite = cId.getValue();
 
             // save or update the contact              
-            contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields);
+            contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields, true);
 
             // upload any attachment
             if (contactIdSignUp != null && attachment != null && attachment.body != null) {

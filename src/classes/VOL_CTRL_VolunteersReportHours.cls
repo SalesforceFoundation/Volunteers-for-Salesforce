@@ -3,7 +3,7 @@
 
 global virtual with sharing class VOL_CTRL_VolunteersReportHours {
   
-    private VOL_SharedCode volSharedCode;
+    private VOL_SharedCode volSharedCode; 
      
     // constructor
     global VOL_CTRL_VolunteersReportHours() {
@@ -203,8 +203,8 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 				return null;			
 			}    		
 			
-    		// save or update the contact              
-	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields);
+    		// save or update the contact               
+	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields, false);
 	        
 	        list<Volunteer_Hours__c> listHours = null;
 

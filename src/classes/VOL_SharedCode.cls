@@ -1,7 +1,7 @@
 // Written by David Habib, copyright (c) 2010-2014 DJH Consulting, djhconsulting.com 
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 
-global with sharing class VOL_SharedCode {
+global with sharing class VOL_SharedCode { 
 
     // the list of Campaigns that have Volunteer Jobs
     global list<SelectOption> listSOCampaignsWithJobs {
@@ -136,8 +136,8 @@ global with sharing class VOL_SharedCode {
         setStrFields.add('firstname');
         setStrFields.add('lastname');
         setStrFields.add('email');
-        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
-        setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());        
+        //setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
+        //setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());        
         list<string> listStrFields = new list<string>();
         listStrFields.addAll(setStrFields);
         return listStrFields;
@@ -274,11 +274,23 @@ global with sharing class VOL_SharedCode {
     // the account name to try to lookup and match.
     // It also takes the list of fields on the contact object to copy over.
     global static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields) {
+    	return CreateOrUpdateContactFS(contactIdExisting, contact, strAccountName, listStrFields, true); 
+    }
+    
+    global static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields, boolean setLastWebSignup) {
+    	
+    	// listStrFields is the specific list of fields on the form's fieldset, which we should assume we want to save.
+    	// we also need to special case several fields we will potentially set, but we also need to know,
+    	// if they are in the fieldset or not.
+    	set<string> setStrFields = new set<string>();
+    	setStrFields.addAll(listStrFields);
+    	boolean isStatusInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
+        boolean isNotesInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());    
         
-        // update the date before we start
-        contact.Volunteer_Last_Web_Signup_Date__c = system.today();
+        // create a new list with all the fields
+        list<string> listStrFieldsAll = new list<string>(setStrFields);
         
-		list<Contact> listCon = LookupContact(contact, listStrFields);
+		list<Contact> listCon = LookupContact(contact, listStrFieldsAll);
 
         // if we found a match                      
         if (listCon.size() > 0) {
@@ -297,13 +309,15 @@ global with sharing class VOL_SharedCode {
         	}                  
     		
     		// special case appending Volunteer Notes, rather than overwriting.
-            if (contact.Volunteer_Notes__c != null && contact.Volunteer_Notes__c != conExisting.Volunteer_Notes__c) {
-                contact.Volunteer_Notes__c = (conExisting.Volunteer_Notes__c != null ? (conExisting.Volunteer_Notes__c + '  ') : '') + 
-                	'[' + string.valueof(System.today()) + ']: ' + contact.Volunteer_Notes__c;
-            } else {
-            	contact.Volunteer_Notes__c = conExisting.Volunteer_Notes__c;
-            }
-            
+    		if (isNotesInFS) {
+	            if (contact.Volunteer_Notes__c != null && contact.Volunteer_Notes__c != conExisting.Volunteer_Notes__c) {
+	                contact.Volunteer_Notes__c = (conExisting.Volunteer_Notes__c != null ? (conExisting.Volunteer_Notes__c + '  ') : '') + 
+	                	'[' + string.valueof(System.today()) + ']: ' + contact.Volunteer_Notes__c;
+	            } else {
+	            	contact.Volunteer_Notes__c = conExisting.Volunteer_Notes__c;
+	            }
+    		}
+    		            
             // special case setting Volunteer Status, only if not currently set.
             if (conExisting.Volunteer_Status__c != null) {
             	contact.Volunteer_Status__c = null;
@@ -318,21 +332,16 @@ global with sharing class VOL_SharedCode {
             		conExisting.put(strF, contact.get(strF));
             	}
             }
+
+	        if (setLastWebSignup)
+	        	conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
+        
             update conExisting;
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
             return conExisting.Id;
         } else  {  // No Match found, create a Contact
-            contact.LeadSource = 'Web Volunteer Signup';
-            contact.Volunteer_Status__c = 'New Sign Up';
-            Account accToUse = null;
-            
-            // see if we can find their company 
-            if (strAccountName != null) {
-                list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
-                if (listAccount.size() > 0) accToUse = listAccount.get(0);
-            }
-            
+
             // don't assume the contact object wasn't already used.
             // since we can't null out Id for the insert, copy all
             // the fields to a new object and use it.
@@ -344,6 +353,13 @@ global with sharing class VOL_SharedCode {
             	}
             }
 
+            // see if we can find their company 
+            Account accToUse = null;            
+            if (strAccountName != null) {
+                list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
+                if (listAccount.size() > 0) accToUse = listAccount.get(0);
+            }
+            
             // if company found, use it
             if (accToUse != null) {
                 conNew.AccountId = accToUse.Id;
@@ -351,10 +367,14 @@ global with sharing class VOL_SharedCode {
                 conNew.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
             }
             
+	        if (setLastWebSignup)
+	        	conNew.Volunteer_Last_Web_Signup_Date__c = system.today();
+            conNew.LeadSource = 'Web Volunteer Signup';
+            conNew.Volunteer_Status__c = 'New Sign Up';
+
             insert conNew;
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
-            contact.AccountId = conNew.AccountId;
             return conNew.Id;
         }
     }    
