@@ -16,6 +16,9 @@
         <members>VOL_CTRL_OpenReport</members>
         <members>VOL_CTRL_PersonalSiteContactInfo</members>
         <members>VOL_CTRL_PersonalSiteContactLookup</members>
+        <members>VOL_CTRL_PersonalSiteJobCalendar</members>
+        <members>VOL_CTRL_PersonalSiteJobListing</members>
+        <members>VOL_CTRL_PersonalSiteReportHours</members>
         <members>VOL_CTRL_PersonalSiteTemplate</members>
         <members>VOL_CTRL_SendBulkEmail</members>
         <members>VOL_CTRL_VolunteersBulkEnterHours</members>
