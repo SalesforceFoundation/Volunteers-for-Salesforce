@@ -321,12 +321,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             volunteerHoursIdSignUp = null;
             strSaveResult = null;
             Date dtStart = system.today();
+            decimal duration = null; 
             
             // do any validation we weren't able to do directly on the client.
             // also find the shift's start date.
             if (shiftIdSignUp != null && shiftIdSignUp != '') {
                 // make sure we don't go over the number of volunteers still needed on the shift.
-                list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
+                list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
                 if (listShift != null) {
                     if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {
                         string strError = String.Format(system.label.labelVolunteersJobListingErrorTooManyVols, 
@@ -334,6 +335,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         throw (new MyException(strError));                  
                     }
                     dtStart = listShift[0].Start_Date_Time__c.date();
+                    duration = listShift[0].Duration__c;
                 }
             }
                         
@@ -393,6 +395,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
                     vhours.Status__c = 'Web Sign Up';
                     vhours.Start_Date__c = dtStart;
+                    vhours.Hours_Worked__c = duration;
                     VolunteerHoursBeforeInsert(vhours);
                     insert vhours;
                     volunteerHoursIdSignUp = vhours.Id;
@@ -435,7 +438,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         insert cmp;
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id, Display_on_Website__c=true);
         insert job;
-        Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
+        Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=2, Start_Date_Time__c=System.now());
         insert shift;        
         
         // specify our settings        
@@ -495,6 +498,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ctrl.VolunteerShiftSignUp();
         System.AssertEquals(con.Id, ctrl.contactIdSignUp);
         System.Assert(ctrl.volunteerHoursIdSignUp != null);
+        Volunteer_Hours__c vh = [select Volunteer_Job__c, Volunteer_Shift__c, Hours_Worked__c, Contact__c from Volunteer_Hours__c 
+        	where Volunteer_Job__c = :job.Id];
+        system.assertEquals(shift.Duration__c, vh.Hours_Worked__c);
         
         // pass cmp.Id as filter, verify only 2 jobs.
         // pass Show params with 0, verify values.
@@ -533,7 +539,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         System.Assert(ctrl.contactIdSignUp != null);
         System.Assert(ctrl.volunteerHoursIdSignUp != null);
         System.AssertEquals(hoursId, ctrl.volunteerHoursIdSignUp);
-        Volunteer_Hours__c vh = [select Number_Of_Volunteers__c from Volunteer_Hours__c where Id = :hoursId];
+        vh = [select Number_Of_Volunteers__c from Volunteer_Hours__c where Id = :hoursId];
         System.AssertEquals(2, vh.Number_Of_Volunteers__c);
     }
     
