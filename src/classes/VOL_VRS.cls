@@ -171,6 +171,8 @@ public with sharing class VOL_VRS {
 				hr.Contact__c = vrs.Contact__c;
 				hr.Hours_Worked__c = vrs.Duration__c;
 				hr.Number_of_Volunteers__c = 1;
+				if (vrs.Number_of_Volunteers__c != null && vrs.Number_of_Volunteers__c > 1)
+					hr.Number_of_Volunteers__c = vrs.Number_of_Volunteers__c; 
 				hr.Start_Date__c = dtShift;
 				hr.End_Date__c = dtShift;
 				hr.Status__c = (vrs.Volunteer_Hours_Status__c == null ? 'Confirmed' : vrs.Volunteer_Hours_Status__c);
@@ -263,6 +265,7 @@ public with sharing class VOL_VRS {
 			Volunteer_Job__c = job.Id,
 			Days_of_Week__c = 'Monday;Friday',
 			Duration__c = 1.5,
+			Number_of_Volunteers__c = 2,
 			Schedule_Start_Date_Time__c = date.newInstance(2012,2,1),
 			Schedule_End_Date__c = date.newInstance(2012,6,30),
 			Weekly_Occurrence__c = '1st');
@@ -289,8 +292,9 @@ public with sharing class VOL_VRS {
 		system.debug(listShift);
 		system.assertEquals(157, listShift.size());
 		
-		list<Volunteer_Hours__c> listHours = [select Id, Status__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id];
+		list<Volunteer_Hours__c> listHours = [select Id, Status__c, Number_of_Volunteers__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id];
 		system.assertEquals(10, listHours.size());
+		system.assertEquals(vrs.Number_of_Volunteers__c, listHours[0].Number_of_Volunteers__c);
 		
 		listHours[0].Status__c = 'Completed';
 		update listHours[0];
