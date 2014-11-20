@@ -48,9 +48,12 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <deprecated>false</deprecated>
     <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
     <fieldSets>
         <fullName>MassEditVolunteerHours</fullName>
         <availableFields>
@@ -615,6 +618,16 @@
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Shift</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Volunteer_Shift__c.Volunteer_Job__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Volunteer_Job__c</valueField>
+            </filterItems>
+            <infoMessage>You can only pick a Shift which belongs to the current Job.</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Volunteer_Shift__c</referenceTo>
         <relationshipLabel>Volunteer Hours</relationshipLabel>
         <relationshipName>Volunteer_Hours</relationshipName>

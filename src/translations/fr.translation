@@ -80,6 +80,10 @@ day: &apos;jour&apos;</label>
         <name>labelCalendarDayNamesShort</name>
     </customLabels>
     <customLabels>
+        <label><!-- the first day of the week the calendar should start on --></label>
+        <name>labelCalendarFirstDay</name>
+    </customLabels>
+    <customLabels>
         <label>&apos;janvier&apos;, &apos;février&apos;, &apos;mars&apos;, &apos;avril&apos;, &apos;mai&apos;, &apos;juin&apos;, &apos;juillet&apos;, &apos;août&apos;, &apos;septembre&apos;, &apos;octobre&apos;, &apos;novembre&apos;, &apos;décembre&apos;</label>
         <name>labelCalendarMonthNames</name>
     </customLabels>
@@ -256,6 +260,10 @@ day: &apos;jour&apos;</label>
         <name>labelFrom</name>
     </customLabels>
     <customLabels>
+        <label>Masquer</label>
+        <name>labelHide</name>
+    </customLabels>
+    <customLabels>
         <label>Information</label>
         <name>labelInformation</name>
     </customLabels>
@@ -344,6 +352,38 @@ day: &apos;jour&apos;</label>
         <name>labelMassEmailErrorNoTemplate</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelMassEmailHelp1 --></label>
+        <name>labelMassEmailHelp1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailHelp2 --></label>
+        <name>labelMassEmailHelp2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailHelp3 --></label>
+        <name>labelMassEmailHelp3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailHelp4 --></label>
+        <name>labelMassEmailHelp4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailHelp5 --></label>
+        <name>labelMassEmailHelp5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailHelp6 --></label>
+        <name>labelMassEmailHelp6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailHelp7 --></label>
+        <name>labelMassEmailHelp7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailTitle --></label>
+        <name>labelMassEmailTitle</name>
+    </customLabels>
+    <customLabels>
         <label>Voir Modèles</label>
         <name>labelMassEmailViewTemplates</name>
     </customLabels>
@@ -354,6 +394,10 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>Saisir une Activité pour chaque email</label>
         <name>labelMassEmailVolunteersLogActivity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelMassEmailVolunteersLogActivityHelpText --></label>
+        <name>labelMassEmailVolunteersLogActivityHelpText</name>
     </customLabels>
     <customLabels>
         <label>Nombre d&apos;emails envoyées avec succes:</label>
@@ -396,6 +440,18 @@ day: &apos;jour&apos;</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelPersonalSiteEmailError --></label>
+        <name>labelPersonalSiteEmailError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelPersonalSiteEmailRequired --></label>
+        <name>labelPersonalSiteEmailRequired</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelPersonalSiteFirstnameRequired --></label>
+        <name>labelPersonalSiteFirstnameRequired</name>
+    </customLabels>
+    <customLabels>
         <label><!-- title for the Job Calendar under Personal Site --></label>
         <name>labelPersonalSiteJobCalendarTitle</name>
     </customLabels>
@@ -404,12 +460,20 @@ day: &apos;jour&apos;</label>
         <name>labelPersonalSiteJobListingTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelPersonalSiteLastnameRequired --></label>
+        <name>labelPersonalSiteLastnameRequired</name>
+    </customLabels>
+    <customLabels>
         <label><!-- title of the Report Hours page under Personal Site --></label>
         <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>
     <customLabels>
         <label>retour au Calendrier</label>
         <name>labelReturnToCalendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelShowHelp --></label>
+        <name>labelShowHelp</name>
     </customLabels>
     <customLabels>
         <label>Montrez plus</label>
@@ -422,6 +486,14 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>Envoyer</label>
         <name>labelSubmitButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelTemplateObject --></label>
+        <name>labelTemplateObject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelTemplateObjectHelpText --></label>
+        <name>labelTemplateObjectHelpText</name>
     </customLabels>
     <customLabels>
         <label>Inscription des bénévoles</label>

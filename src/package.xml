@@ -51,6 +51,7 @@
         <members>PersonalSiteJobListing</members>
         <members>PersonalSiteReportHours</members>
         <members>PersonalSiteTemplate</members>
+        <members>PersonalSiteTemplateEspanol</members>
         <members>SendBulkEmail</members>
         <members>VolunteersAbout</members>
         <members>VolunteersBatchJobsProgress</members>
@@ -191,6 +192,7 @@
         <members>labelCalendarConfirmed</members>
         <members>labelCalendarDayNames</members>
         <members>labelCalendarDayNamesShort</members>
+        <members>labelCalendarFirstDay</members>
         <members>labelCalendarMonthNames</members>
         <members>labelCalendarMonthNamesShort</members>
         <members>labelCalendarPageTitle</members>
@@ -235,6 +237,7 @@
         <members>labelFindVolunteersHelpFindResults</members>
         <members>labelFindVolunteersNewlyAssigned</members>
         <members>labelFrom</members>
+        <members>labelHide</members>
         <members>labelInformation</members>
         <members>labelJRSShiftCreatedSystemNote</members>
         <members>labelJRSShiftRemovedSystemNote</members>
@@ -257,9 +260,18 @@
         <members>labelMassEmailEditTemplate</members>
         <members>labelMassEmailErrorNoContacts</members>
         <members>labelMassEmailErrorNoTemplate</members>
+        <members>labelMassEmailHelp1</members>
+        <members>labelMassEmailHelp2</members>
+        <members>labelMassEmailHelp3</members>
+        <members>labelMassEmailHelp4</members>
+        <members>labelMassEmailHelp5</members>
+        <members>labelMassEmailHelp6</members>
+        <members>labelMassEmailHelp7</members>
+        <members>labelMassEmailTitle</members>
         <members>labelMassEmailViewTemplates</members>
         <members>labelMassEmailVolunteersActivityLoggingError</members>
         <members>labelMassEmailVolunteersLogActivity</members>
+        <members>labelMassEmailVolunteersLogActivityHelpText</members>
         <members>labelMassEmailVolunteersSuccessCount</members>
         <members>labelMassEmailVolunteersTitle</members>
         <members>labelMassEmailVolunteersUniqueContacts</members>
@@ -270,13 +282,20 @@
         <members>labelMessageSaving</members>
         <members>labelNumberOfContacts</members>
         <members>labelNumberOfContactsHelpText</members>
+        <members>labelPersonalSiteEmailError</members>
+        <members>labelPersonalSiteEmailRequired</members>
+        <members>labelPersonalSiteFirstnameRequired</members>
         <members>labelPersonalSiteJobCalendarTitle</members>
         <members>labelPersonalSiteJobListingTitle</members>
+        <members>labelPersonalSiteLastnameRequired</members>
         <members>labelPersonalSiteReportHoursTitle</members>
         <members>labelReturnToCalendar</members>
+        <members>labelShowHelp</members>
         <members>labelShowMore</members>
         <members>labelSubject</members>
         <members>labelSubmitButton</members>
+        <members>labelTemplateObject</members>
+        <members>labelTemplateObjectHelpText</members>
         <members>labelTitleJobSignup</members>
         <members>labelVRSHoursCreatedSystemNote</members>
         <members>labelVolunteerReportHoursErrorRequiredField</members>
@@ -318,20 +337,29 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>Campaign-es</members>
         <members>Campaign-fr</members>
+        <members>Contact-es</members>
         <members>Contact-fr</members>
         <members>Job_Recurrence_Schedule__c-en_US</members>
+        <members>Job_Recurrence_Schedule__c-es</members>
         <members>Job_Recurrence_Schedule__c-fr</members>
+        <members>Lead-es</members>
         <members>Lead-fr</members>
         <members>Volunteer_Hours__c-en_US</members>
+        <members>Volunteer_Hours__c-es</members>
         <members>Volunteer_Hours__c-fr</members>
         <members>Volunteer_Job__c-en_US</members>
+        <members>Volunteer_Job__c-es</members>
         <members>Volunteer_Job__c-fr</members>
         <members>Volunteer_Recurrence_Schedule__c-en_US</members>
+        <members>Volunteer_Recurrence_Schedule__c-es</members>
         <members>Volunteer_Recurrence_Schedule__c-fr</members>
         <members>Volunteer_Shift__c-en_US</members>
+        <members>Volunteer_Shift__c-es</members>
         <members>Volunteer_Shift__c-fr</members>
         <members>Volunteers_Settings__c-en_US</members>
+        <members>Volunteers_Settings__c-es</members>
         <members>Volunteers_Settings__c-fr</members>
         <name>CustomObjectTranslation</name>
     </types>
@@ -348,6 +376,7 @@
     </types>
     <types>
         <members>Volunteer_Dashboards</members>
+        <members>Volunteer_Dashboards/Panel_de_Voluntarios</members>
         <members>Volunteer_Dashboards/Volunteers_Dashboard2</members>
         <name>Dashboard</name>
     </types>
@@ -363,6 +392,17 @@
         <name>Document</name>
     </types>
     <types>
+        <members>Voluntarios_Espa_oles</members>
+        <members>Voluntarios_Espa_oles/Agradecimiento_Registro_Voluntario</members>
+        <members>Voluntarios_Espa_oles/Agradecimiento_por_Registro_a_un_Trabajo_Voluntario</members>
+        <members>Voluntarios_Espa_oles/B_squeda_de_Contactos_en_las_p_ginas_personales_de_los_Voluntarios</members>
+        <members>Voluntarios_Espa_oles/Email_de_recordatorio_de_las_Horas_Voluntarias</members>
+        <members>Voluntarios_Espa_oles/Notificaci_n_de_Registro_de_un_Voluntario</members>
+        <members>Voluntarios_Espa_oles/Notificaci_n_por_Registro_a_un_Trabajo_Voluntario</members>
+        <members>Voluntarios_Espa_oles/Recordatorio_Trabajo_Voluntario</members>
+        <members>Voluntarios_Espa_oles/Recordatorio_Trabajo_Voluntario_usando_membrete</members>
+        <members>Voluntarios_Espa_oles/Recordatorio_de_Jornada_Voluntaria</members>
+        <members>Voluntarios_Espa_oles/Recordatorio_de_Jornada_Voluntaria_usando_Membrete</members>
         <members>Volunteers_Email_Templates</members>
         <members>Volunteers_Email_Templates/Volunteer_Hours_Reminder_Email</members>
         <members>Volunteers_Email_Templates/Volunteer_Job_Reminder</members>
@@ -413,10 +453,6 @@
         <members>Volunteer_Job__c.Ongoing_Jobs</members>
         <members>Volunteer_Recurrence_Schedule__c.AllVRS</members>
         <name>ListView</name>
-    </types>
-    <types>
-        <members>Volunteer_Shift__c.nf_01I500000006jXXEAY_00N500000026yY5EAI</members>
-        <name>NamedFilter</name>
     </types>
     <types>
         <members>Campaign.Volunteers_Campaign</members>
@@ -472,6 +508,7 @@
         <name>StaticResource</name>
     </types>
     <types>
+        <members>es</members>
         <members>fr</members>
         <name>Translations</name>
     </types>
@@ -527,5 +564,5 @@
         <members>Lead.Volunteer_Signup_Thank_You_Sent_Lead</members>
         <name>WorkflowTask</name>
     </types>
-    <version>29.0</version>
+    <version>31.0</version>
 </Package>
