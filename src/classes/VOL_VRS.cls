@@ -162,7 +162,7 @@ public with sharing class VOL_VRS {
 				// only take volunteers whose time fits in the shift time (to handle multiple shifts per day)
 				Time tmVRS = vrs.Schedule_Start_Date_Time__c.Time();				
 				DateTime dtVRSStart =  datetime.newInstance(dtShift, tmVRS);
-				if (dtVRSStart < shift.Start_Date_Time__c  || dtVRSStart > dtShiftEnd) {
+				if (dtVRSStart < shift.Start_Date_Time__c  || dtVRSStart >= dtShiftEnd) {
 					continue;					
 				}	
 					
