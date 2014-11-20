@@ -75,7 +75,7 @@ global with sharing class VOL_CTRL_JobCalendar {
         if (p != null && p != '') strLanguage = p;
         
         p = params.get('initialDate');
-		if (p != null && p != '') initialDate = DateTime.valueOf(p);
+		if (p != null && p != '') initialDate = Date.valueOf(p);
 		
 		strCalendarView = 'month';
         p = params.get('CalendarView');
