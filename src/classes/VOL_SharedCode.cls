@@ -126,7 +126,7 @@ global with sharing class VOL_SharedCode {
     
     // shared routine to get all Fields names form the specified Field Set on Contact
     // also explicitly adds additional Contact fields that we will always use in our Sites pages.
-    public static list<string> listStrFieldsFromContactFieldSet(Schema.FieldSet fs) {
+    global static list<string> listStrFieldsFromContactFieldSet(Schema.FieldSet fs) {
         set<string> setStrFields = new set<string>();
         for (Schema.FieldSetMember f : fs.getFields()) {
             setStrFields.add(f.getFieldPath().toLowerCase());
@@ -526,7 +526,7 @@ global with sharing class VOL_SharedCode {
     * @param str token name 
     * @return token name, with namespace prefix, if required.
     ********************************************************************************************************/
-    public static string StrTokenNSPrefix(string str) {
+    global static string StrTokenNSPrefix(string str) {
         if (!IsManagedCode) return str;
         str = 'GW_Volunteers__' + str;
         return str;
