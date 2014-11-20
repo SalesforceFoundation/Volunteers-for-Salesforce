@@ -9,6 +9,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 		cRowsCompleted = 10;
 		cRowsUpcoming = 10;
     	strDateFormat = 'E M/d/yy';
+    	strChartDateFormat = 'MMM yyyy';
     	strTimeFormat = 'h:mm tt';
     	strLanguage = 'en-us'; 
     	isEditing = false;
@@ -19,6 +20,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         if (p != null && p != '') strLanguage = p;
         p = params.get('DateFormat');
         if (p != null && p != '') strDateFormat = p;
+        p = params.get('ChartDateFormat');
+        if (p != null && p != '') strChartDateFormat = p;
         p = params.get('TimeFormat');
         if (p != null && p != '') strTimeFormat = p;
         
@@ -94,6 +97,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global integer cRowsCompleted { get; set; }
     global integer cRowsUpcoming { get; set; }
     global string strDateFormat { get; set; }
+    global string strChartDateFormat { get; set; }
  	global string strTimeFormat { get; set; }
  	global string strLanguage { get; set; }
  	
@@ -296,11 +300,11 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
       		
       		// handle months with no data
       		while (dtNext < dt) {
-	      		listCD.add(new ChartData(datetime.newInstance(dtNext,timeT).format('MMM yyyy'), 0));  	
+	      		listCD.add(new ChartData(datetime.newInstance(dtNext,timeT).format(strChartDateFormat), 0));  	
 	      		dtNext = dtNext.addMonths(1);  		
       		}
       		
-      		listCD.add(new ChartData(datetime.newInstance(dt,timeT).format('MMM yyyy'), integer.valueOf(ag.get('sumHours'))));
+      		listCD.add(new ChartData(datetime.newInstance(dt,timeT).format(strChartDateFormat), integer.valueOf(ag.get('sumHours'))));
       		dtNext = dt.addMonths(1);
       	}
       	return listCD;
