@@ -76,7 +76,7 @@
 
     <apex:sectionHeader title="{!$Label.labelMassEmailVolunteersTitle}" />      
 	<apex:form >  
-        <apex:pageBlock title="Mass Email Volunteers from {!strJobName}" rendered="true"  mode="edit">
+        <apex:pageBlock title="{!$Label.labelMassEmailTitle} {!strJobName}" rendered="true"  mode="edit">
             <apex:pageBlockButtons >
                 <apex:commandButton action="{!SendMail}" value="{!$Label.labelButtonSend}" immediate="false" />
                 <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonClose}" immediate="true" />
@@ -86,23 +86,23 @@
             
  			<div class="cssTabHelpLink" id="linkHelp">
 	  			<a class="helpLink" onclick="document.getElementById('linkHelp').style.display='none'; document.getElementById('divHelp').style.display='block';">
-					<img src="/img/arrowRight.gif" />Show Help&nbsp;<img src="/s.gif" alt="" class="helpIcon" title=""/>
+					<img src="/img/arrowRight.gif" />{!$Label.labelShowHelp}&nbsp;<img src="/s.gif" alt="" class="helpIcon" title=""/>
 				</a>
 			</div>
 	   		<div id="divHelp" class="cssHelpText" style="display:none" >
 	       		<div class="hideHelpLink">	       			
 					<a class="helpLink" onclick="document.getElementById('divHelp').style.display='none';document.getElementById('linkHelp').style.display='block';">
-						<img src="/img/arrowDown.gif" />Hide
+						<img src="/img/arrowDown.gif" />{!$Label.labelHide}
 					</a>
 				</div>
 				<ul>
-					<li><b>Mass Email Volunteers</b> will look at all <b>Volunteer Hours</b> records for <b>{!strJobName}</b>.</li>
-					<li>Choose the <b>Status</b> to specify which records to include.</li>
-					<li>if <b>{!$Label.labelMassEmailVolunteersUniqueContacts}</b> is <i>unchecked</i>, one email for each Volunteer Hours record will be sent.</li>
-					<li>if <b>{!$Label.labelMassEmailVolunteersUniqueContacts}</b> is <i>checked</i>, only one email for the Contact's first Volunteer Hours record will be sent.</li>
-					<li>Check <b>{!$Label.labelMassEmailVolunteersLogActivity}</b> to save an Activity with the Contact.</li>
-					<li>Choose the <b>Template based on object</b> to specify which object to use with the Email Template.</li>
-					<li>Salesforce limits how many emails you can send each day, so it is recommended you don't use <b>Mass Email Volunteers</b> for large amounts of email.</li>
+					<li>{!$Label.labelMassEmailHelp1} {!strJobName}.</li>
+					<li>{!$Label.labelMassEmailHelp2}</li>
+					<li>{!$Label.labelMassEmailHelp3}</li>
+					<li>{!$Label.labelMassEmailHelp4}</li>
+					<li>{!$Label.labelMassEmailHelp5}</li>
+					<li>{!$Label.labelMassEmailHelp6}</li>
+					<li>{!$Label.labelMassEmailHelp7}</li>
 				</ul>
 	  		</div> 
             
@@ -136,15 +136,13 @@
 					</apex:pageBlockSectionItem>
 				</apex:pageBlockSectionItem>
 				
-				<apex:pageBlockSectionItem helptext="The activity will be logged on the Contact's record."  labelStyleClass="cssLabelColumn" >
+				<apex:pageBlockSectionItem helptext="{!$Label.labelMassEmailVolunteersLogActivityHelpText}"  labelStyleClass="cssLabelColumn" >
 					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersLogActivity}" />
 					<apex:inputCheckbox value="{!fLogActivity}" />	
 				</apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem helptext="Make sure the template and the object match each other.  
-					If {!$Label.labelMassEmailVolunteersUniqueContacts} is checked, only the first {!$ObjectType.Volunteer_Hours__c.Label} record is emailed, so
-					you may want to use a less specific template object."  labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="Template based on object" />
+				<apex:pageBlockSectionItem helptext="{!$Label.labelTemplateObjectHelpText}"  labelStyleClass="cssLabelColumn" >
+					<apex:outputLabel value="{!$Label.labelTemplateObject}" />
 	                <apex:selectList value="{!templateObject}" size="1" >
 						<apex:selectOption itemValue="Campaign" itemLabel="{!$ObjectType.Campaign.Label}" />
 						<apex:selectOption itemValue="Job" itemLabel="{!$ObjectType.Volunteer_Job__c.Label}" />
