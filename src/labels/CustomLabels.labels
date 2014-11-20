@@ -144,6 +144,14 @@ day:      &apos;day&apos;</value>
         <value>&apos;Sun&apos;, &apos;Mon&apos;, &apos;Tue&apos;, &apos;Wed&apos;, &apos;Thu&apos;, &apos;Fri&apos;, &apos;Sat&apos;</value>
     </labels>
     <labels>
+        <fullName>labelCalendarFirstDay</fullName>
+        <categories>Job Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the first day of the week the calendar should start on</shortDescription>
+        <value>0</value>
+    </labels>
+    <labels>
         <fullName>labelCalendarMonthNames</fullName>
         <categories>JobCalendar</categories>
         <language>en_US</language>
@@ -496,6 +504,14 @@ day:      &apos;day&apos;</value>
         <value>From</value>
     </labels>
     <labels>
+        <fullName>labelHide</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelHide</shortDescription>
+        <value>Hide</value>
+    </labels>
+    <labels>
         <fullName>labelInformation</fullName>
         <categories>NewAndEditVRS</categories>
         <language>en_US</language>
@@ -672,6 +688,70 @@ day:      &apos;day&apos;</value>
         <value>Please specify an Email Template to send.</value>
     </labels>
     <labels>
+        <fullName>labelMassEmailHelp1</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp1</shortDescription>
+        <value>Mass Email Volunteers will look at all Volunteer Hours records for Recurring Jobs.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailHelp2</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp2</shortDescription>
+        <value>Choose the Status to specify which records to include.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailHelp3</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp3</shortDescription>
+        <value>If Include Contacts only once is unchecked, one email for each Volunteer Hours record will be sent.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailHelp4</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp4</shortDescription>
+        <value>If Include Contacts only once is checked, only one email for the Contact&apos;s first Volunteer Hours record will be sent.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailHelp5</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp5</shortDescription>
+        <value>Check Log an Activity for each email to save an Activity with the Contact.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailHelp6</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp6</shortDescription>
+        <value>Choose the Template based on object to specify which object to use with the Email Template.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailHelp7</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailHelp7</shortDescription>
+        <value>Salesforce limits how many emails you can send each day, so it is recommended you don&apos;t use Mass Email Volunteers for large amounts of email.</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailTitle</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailTitle</shortDescription>
+        <value>Mass Email Volunteers from</value>
+    </labels>
+    <labels>
         <fullName>labelMassEmailViewTemplates</fullName>
         <categories>MassEmailVolunteers</categories>
         <language>en_US</language>
@@ -694,6 +774,14 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for Log Activity checkbox on Mass Email Volunteers page</shortDescription>
         <value>Log an Activity for each email</value>
+    </labels>
+    <labels>
+        <fullName>labelMassEmailVolunteersLogActivityHelpText</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelMassEmailVolunteersLogActivityHelpText</shortDescription>
+        <value>The activity will be logged on the Contact&apos;s record.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersSuccessCount</fullName>
@@ -776,6 +864,30 @@ day:      &apos;day&apos;</value>
         <value>The number of emails that will be sent. Changing the &quot;Include Contacts only once&quot; checkbox may change this number.</value>
     </labels>
     <labels>
+        <fullName>labelPersonalSiteEmailError</fullName>
+        <categories>PersonalSiteContactLookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelPersonalSiteEmailError</shortDescription>
+        <value>Please enter a valid email.</value>
+    </labels>
+    <labels>
+        <fullName>labelPersonalSiteEmailRequired</fullName>
+        <categories>PersonalSiteContactLookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelPersonalSiteEmailRequired</shortDescription>
+        <value>Email is required.</value>
+    </labels>
+    <labels>
+        <fullName>labelPersonalSiteFirstnameRequired</fullName>
+        <categories>PersonalSiteContactLookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelPersonalSiteFirstnameRequired</shortDescription>
+        <value>First name is required.</value>
+    </labels>
+    <labels>
         <fullName>labelPersonalSiteJobCalendarTitle</fullName>
         <categories>PersonalSiteJobCalendar</categories>
         <language>en_US</language>
@@ -792,6 +904,14 @@ day:      &apos;day&apos;</value>
         <value>Volunteer Jobs</value>
     </labels>
     <labels>
+        <fullName>labelPersonalSiteLastnameRequired</fullName>
+        <categories>PersonalSiteContactLookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelPersonalSiteLastnameRequired</shortDescription>
+        <value>Last name is required.</value>
+    </labels>
+    <labels>
         <fullName>labelPersonalSiteReportHoursTitle</fullName>
         <categories>PersonalSiteReportHours</categories>
         <language>en_US</language>
@@ -806,6 +926,14 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for the return to Calendar link on VolunteersJobListingFS</shortDescription>
         <value>return to Calendar</value>
+    </labels>
+    <labels>
+        <fullName>labelShowHelp</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelShowHelp</shortDescription>
+        <value>Show Help</value>
     </labels>
     <labels>
         <fullName>labelShowMore</fullName>
@@ -830,6 +958,22 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>label for VolunteersSignupFS page&apos;s submit button</shortDescription>
         <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>labelTemplateObject</fullName>
+        <categories>Mass Email Volunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelTemplateObject</shortDescription>
+        <value>Template based on object</value>
+    </labels>
+    <labels>
+        <fullName>labelTemplateObjectHelpText</fullName>
+        <categories>Mass Email Volunteer Hours</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelTemplateObjectHelpText</shortDescription>
+        <value>Make sure the template and the object match each other. If Include Contacts only once is checked, only the first Volunteer Hours record is emailed, so you may want to use a less specific template object.</value>
     </labels>
     <labels>
         <fullName>labelTitleJobSignup</fullName>
