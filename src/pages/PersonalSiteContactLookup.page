@@ -31,30 +31,30 @@
 	     
 	    jQuery('[id$=FirstName]').rules("add",{
 	        required: true,
-	        notEqual: "First Name",
+	        notEqual: "{!$ObjectType.Contact.Fields.FirstName.Label}",
 	        messages: {
-	          required: "First name is required.",
-	          notEqual: "First name is required."
+	          required: "{!$Label.labelPersonalSiteFirstnameRequired}",
+	          notEqual: "{!$Label.labelPersonalSiteFirstnameRequired}"
 	        }
 	    });    
 	        
 	    jQuery('[id$=LastName]').rules("add",{
 	        required: true,
-	        notEqual: "Last Name",
+	        notEqual: "{!$ObjectType.Contact.Fields.LastName.Label}",
 	        messages: {
-	          required: "Last name is required.",
-	          notEqual: "Last name is required."
+	          required: "{!$Label.labelPersonalSiteLastnameRequired}",
+	          notEqual: "{!$Label.labelPersonalSiteLastnameRequired}"
 	        }
 	    });    
 	    
 	    jQuery('[id$=Email]').rules("add",{
 	        required: true,
 	        email: true,
-	        notEqual: "your@email.com",
+	        notEqual: "{!$ObjectType.Contact.Fields.Email.Label}",
 	        messages: {
-	          required: "Email is required.",
-	          email: "Please enter a valid email.",
-	          notEqual: "Please enter a valid email."
+	          required: "{!$Label.labelPersonalSiteEmailRequired}",
+	          email: "{!$Label.labelPersonalSiteEmailError}",
+	          notEqual: "{!$Label.labelPersonalSiteEmailError}"
 	        }
 	    });     
 	    
@@ -68,11 +68,11 @@
 	}
 	
 	function Prefill(){	
-	  jQuery(".FirstName").val('First Name');
+	  jQuery(".FirstName").val('{!$ObjectType.Contact.Fields.Firstname.Label}');
 	  jQuery(".FirstName").css("color","gray");
-	  jQuery(".LastName").val('Last Name');
+	  jQuery(".LastName").val('{!$ObjectType.Contact.Fields.Lastname.Label}');
 	  jQuery(".LastName").css("color","gray");
-	  jQuery(".Email").val('your@email.com');
+	  jQuery(".Email").val('{!$ObjectType.Contact.Fields.Email.Label}');
 	  jQuery(".Email").css("color","gray");	
 	}
 </script>   
