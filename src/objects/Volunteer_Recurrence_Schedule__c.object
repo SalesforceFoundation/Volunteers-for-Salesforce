@@ -113,6 +113,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>Number_of_Volunteers__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Volunteer_Hours_Status__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -127,8 +132,24 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>Comments__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NewAndEditVRSFS</label>
     </fieldSets>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <description>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</inlineHelpText>
+        <label>Comments</label>
+        <length>32000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
     <fields>
         <fullName>Contact__c</fullName>
         <deprecated>false</deprecated>

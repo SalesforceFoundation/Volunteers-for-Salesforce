@@ -180,6 +180,7 @@ public with sharing class VOL_VRS {
 				hr.Volunteer_Shift__c = shift.Id;	
 				hr.Volunteer_Recurrence_Schedule__c = vrs.Id;	
 				hr.Planned_Start_Date_Time__c = datetime.newInstance(shift.Start_Date_Time__c.date(), vrs.Schedule_Start_Date_Time__c.time());
+				hr.Comments__c = vrs.Comments__c;
 				listHoursNew.add(hr);
 				//cDesiredVols--;
 			}			 		
@@ -266,6 +267,7 @@ public with sharing class VOL_VRS {
 			Days_of_Week__c = 'Monday;Friday',
 			Duration__c = 1.5,
 			Number_of_Volunteers__c = 2,
+			Comments__c = 'my comments!',
 			Schedule_Start_Date_Time__c = date.newInstance(2012,2,1),
 			Schedule_End_Date__c = date.newInstance(2012,6,30),
 			Weekly_Occurrence__c = '1st');
@@ -292,9 +294,11 @@ public with sharing class VOL_VRS {
 		system.debug(listShift);
 		system.assertEquals(157, listShift.size());
 		
-		list<Volunteer_Hours__c> listHours = [select Id, Status__c, Number_of_Volunteers__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id];
+		list<Volunteer_Hours__c> listHours = [select Id, Status__c, Number_of_Volunteers__c, Comments__c 
+			from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id];
 		system.assertEquals(10, listHours.size());
 		system.assertEquals(vrs.Number_of_Volunteers__c, listHours[0].Number_of_Volunteers__c);
+		system.assertEquals(vrs.Comments__c, listHours[0].Comments__c);
 		
 		listHours[0].Status__c = 'Completed';
 		update listHours[0];
