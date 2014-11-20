@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Volunteers Settings --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Volunteers Settings --></value>
+    </caseValues>
+    <fields>
+        <help>Lista de campos de correos electrónicos de contactos adicionales separados por punto y coma para realizar una comparación cuando se realice la combinación de contactos.</help>
+        <label>Contacto Partido Email Campos</label>
+        <name>Contact_Match_Email_Fields__c</name>
+    </fields>
+    <fields>
+        <help>Una lista de campos de correos electrónicos de contactos adicionales separados por punto y coma para realizar una comparación cuando se realice la combinación de contactos. . Por ejemplo, el campo del sobrenombre.</help>
+        <label>Campo para el primer nombre del Contacto</label>
+        <name>Contact_Match_First_Name_Fields__c</name>
+    </fields>
+    <fields>
+        <help>Nombre visualizado de la dirección de correo electrónico de la Organization-Wide que debe utilicarse en el correo electrónico enviado desde la página web de Busqueda de Contactos Sitio Personal</help>
+        <label>Sitio Personal Org-Wide Email</label>
+        <name>Personal_Site_Org_Wide_Email_Name__c</name>
+    </fields>
+    <fields>
+        <help>¿En cuánto meses a futuro se debe programar el turno del trabajo recurrente?</help>
+        <label>Trabajos recurrentes en los Meses Futuro</label>
+        <name>Recurring_Job_Future_Months__c</name>
+    </fields>
+    <fields>
+        <help>Nombre de la cuenta a utilizar cuando se crean nuevos contactos. Si está utilizando el modelo One-to-One, deje este campo en blanco. Si está utilizando el modelo bucket/ account, ajuste este campo con el nombre de la cuenta</help>
+        <label>Registra Bucket Acount en Crear</label>
+        <name>Signup_Bucket_Account_On_Create__c</name>
+    </fields>
+    <fields>
+        <help>Si no se encuentra un contacto existente (o no está marcado Registro de coincidencias con contactos existentes),  el formulario de Registro de Voluntarios creará nuevos registros de contactos.</help>
+        <label>Crear contactos si no puede competir</label>
+        <name>Signup_Creates_Contacts_If_No_Match__c</name>
+    </fields>
+    <fields>
+        <help>En el caso de que la página de Registro de Voluntarios intente hace coincidir a la persona con un contacto existente (por Nombre, Apellido, Correo electrónico)</help>
+        <label>Registro de coincidencias con contactos</label>
+        <name>Signup_Matches_Existing_Contacts__c</name>
+    </fields>
+    <gender><!-- Feminine --></gender>
+</CustomObjectTranslation>
