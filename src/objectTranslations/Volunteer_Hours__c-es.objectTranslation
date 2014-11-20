@@ -104,6 +104,9 @@
     </fields>
     <fields>
         <label>Jornada Voluntaria</label>
+        <lookupFilter>
+            <informationalMessage>Solo se puede escoger una jornada que pertenezca al trabajo actual</informationalMessage>
+        </lookupFilter>
         <name>Volunteer_Shift__c</name>
         <relationshipLabel>Horas Voluntarias</relationshipLabel>
     </fields>

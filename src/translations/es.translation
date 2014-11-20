@@ -80,6 +80,10 @@ day: &apos;día&apos;</label>
         <name>labelCalendarDayNamesShort</name>
     </customLabels>
     <customLabels>
+        <label>1</label>
+        <name>labelCalendarFirstDay</name>
+    </customLabels>
+    <customLabels>
         <label>&apos;Enero&apos;, &apos;Febrero&apos;, &apos;Marzo&apos;, &apos;Abril&apos;, &apos;Mayo&apos;, &apos;Junio&apos;, &apos;Julio&apos;, &apos;Augosto&apos;, &apos;Septiembre&apos;, &apos;Octubre&apos;, &apos;Noviembrer&apos;, &apos;Diciembrer&apos;</label>
         <name>labelCalendarMonthNames</name>
     </customLabels>
@@ -256,6 +260,10 @@ day: &apos;día&apos;</label>
         <name>labelFrom</name>
     </customLabels>
     <customLabels>
+        <label>Esconder</label>
+        <name>labelHide</name>
+    </customLabels>
+    <customLabels>
         <label>Información</label>
         <name>labelInformation</name>
     </customLabels>
@@ -344,6 +352,38 @@ day: &apos;día&apos;</label>
         <name>labelMassEmailErrorNoTemplate</name>
     </customLabels>
     <customLabels>
+        <label>Emails Masivos a Voluntarios se verá en todos los registros de Horas Voluntarias por</label>
+        <name>labelMassEmailHelp1</name>
+    </customLabels>
+    <customLabels>
+        <label>Elija el Estado especificando que registros se deben incluir.</label>
+        <name>labelMassEmailHelp2</name>
+    </customLabels>
+    <customLabels>
+        <label>Si Incluya contactos solo una vez no está marcado, será enviado un mail por cada registro de Hora Voluntaria.</label>
+        <name>labelMassEmailHelp3</name>
+    </customLabels>
+    <customLabels>
+        <label>Si Incluya contactos solo una vez está marcado, solo se enviara un mail por el primer registro de Horas Voluntarias.</label>
+        <name>labelMassEmailHelp4</name>
+    </customLabels>
+    <customLabels>
+        <label>Marque Registrar una actividad por cada email para crear una tarea en cada Contacto.</label>
+        <name>labelMassEmailHelp5</name>
+    </customLabels>
+    <customLabels>
+        <label>Marque Plantilla basada en el Objeto para especificar que Objeto se usara en la Plantilla de Correo.</label>
+        <name>labelMassEmailHelp6</name>
+    </customLabels>
+    <customLabels>
+        <label>Salesforce limita en número de correos electrónicos que se pueden enviar cada día. Se recomiendo no usar Emails Masivo a Voluntarios para el envió de grandes cantidades de correos.</label>
+        <name>labelMassEmailHelp7</name>
+    </customLabels>
+    <customLabels>
+        <label>Correo Electrónico Masivo a voluntarios de</label>
+        <name>labelMassEmailTitle</name>
+    </customLabels>
+    <customLabels>
         <label>Ver plantillas</label>
         <name>labelMassEmailViewTemplates</name>
     </customLabels>
@@ -354,6 +394,10 @@ day: &apos;día&apos;</label>
     <customLabels>
         <label>Registrar una actividad por cada email</label>
         <name>labelMassEmailVolunteersLogActivity</name>
+    </customLabels>
+    <customLabels>
+        <label>Una Tarea será creada en el Registro del Contacto.</label>
+        <name>labelMassEmailVolunteersLogActivityHelpText</name>
     </customLabels>
     <customLabels>
         <label>Emails enviados exitosamente</label>
@@ -396,6 +440,18 @@ day: &apos;día&apos;</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
+        <label>Introduzca una dirección de correo electrónico válida.</label>
+        <name>labelPersonalSiteEmailError</name>
+    </customLabels>
+    <customLabels>
+        <label>Correo electrónico es obligatorio.</label>
+        <name>labelPersonalSiteEmailRequired</name>
+    </customLabels>
+    <customLabels>
+        <label>El nombre es obligatorio.</label>
+        <name>labelPersonalSiteFirstnameRequired</name>
+    </customLabels>
+    <customLabels>
         <label>Calendario de Trabajos</label>
         <name>labelPersonalSiteJobCalendarTitle</name>
     </customLabels>
@@ -404,12 +460,20 @@ day: &apos;día&apos;</label>
         <name>labelPersonalSiteJobListingTitle</name>
     </customLabels>
     <customLabels>
+        <label>El apellido es obligatorio.</label>
+        <name>labelPersonalSiteLastnameRequired</name>
+    </customLabels>
+    <customLabels>
         <label>Reporte de Horas</label>
         <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>
     <customLabels>
         <label>volver al Calendario</label>
         <name>labelReturnToCalendar</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar Ayuda</label>
+        <name>labelShowHelp</name>
     </customLabels>
     <customLabels>
         <label>Mostrar más</label>
@@ -422,6 +486,14 @@ day: &apos;día&apos;</label>
     <customLabels>
         <label>Presentar</label>
         <name>labelSubmitButton</name>
+    </customLabels>
+    <customLabels>
+        <label>Plantilla basado en el Objeto</label>
+        <name>labelTemplateObject</name>
+    </customLabels>
+    <customLabels>
+        <label>Asegúrese de que la Plantilla y el Objeto coinciden entre sí. Sí incluya Contactos solo una vez está marcado, solo por el primer registro de Horas de Trabajo voluntario se enviara un email, por lo que es posible que desee un objeto menos especifico.</label>
+        <name>labelTemplateObjectHelpText</name>
     </customLabels>
     <customLabels>
         <label>Registro del Voluntario</label>
@@ -444,7 +516,7 @@ day: &apos;día&apos;</label>
         <name>labelVolunteerReportHoursNotesShifts</name>
     </customLabels>
     <customLabels>
-        <label>Gracias por reportar sus horias voluntarias.</label>
+        <label>Gracias por reportar sus horas voluntarias.</label>
         <name>labelVolunteerReportHoursThankYou</name>
     </customLabels>
     <customLabels>

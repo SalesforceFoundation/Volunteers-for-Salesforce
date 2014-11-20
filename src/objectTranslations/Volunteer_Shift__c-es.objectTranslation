@@ -79,10 +79,6 @@
         </sections>
     </layouts>
     <nameFieldLabel>ShiftID</nameFieldLabel>
-    <namedFilters>
-        <informationalMessage>Solo se puede escoger una jornada que pertenezca al trabajo actual</informationalMessage>
-        <name>nf_01I500000006jXXEAY_00N500000026yY5EAI</name>
-    </namedFilters>
     <webLinks>
         <label>Buscador de Voluntarios</label>
         <name>Find_Volunteers</name>

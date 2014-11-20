@@ -104,6 +104,9 @@
     </fields>
     <fields>
         <label>Quart de Travail de Bénévolat</label>
+        <lookupFilter>
+            <informationalMessage>Vous ne pouvez choisir qu&apos;un quart de travail qui appartient au poste actuel.</informationalMessage>
+        </lookupFilter>
         <name>Volunteer_Shift__c</name>
         <relationshipLabel>Heures de Bénévolat</relationshipLabel>
     </fields>

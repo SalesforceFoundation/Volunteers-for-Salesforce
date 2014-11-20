@@ -81,7 +81,7 @@
     <fields>
         <label>Trabajo Voluntario</label>
         <name>Volunteer_Job__c</name>
-        <relationshipLabel>Horarios Recurrentes del Trabajo</relationshipLabel>
+        <relationshipLabel>Horarios Recurrentes del Voluntario</relationshipLabel>
     </fields>
     <fields>
         <label>Incidencia Semanal</label>

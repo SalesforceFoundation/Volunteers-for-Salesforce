@@ -79,10 +79,6 @@
         </sections>
     </layouts>
     <nameFieldLabel>ShiftID</nameFieldLabel>
-    <namedFilters>
-        <informationalMessage>Vous ne pouvez choisir qu&apos;un quart de travail qui appartient au poste actuel.</informationalMessage>
-        <name>nf_01I500000006jXXEAY_00N500000026yY5EAI</name>
-    </namedFilters>
     <startsWith>Consonant</startsWith>
     <webLinks>
         <label>Découverte de Bénévoles</label>
