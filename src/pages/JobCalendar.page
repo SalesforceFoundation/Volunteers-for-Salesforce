@@ -26,6 +26,7 @@
             selectable: true,
             aspectRatio: 2,
             firstHour: 8,
+            firstDay: {!$Label.labelCalendarFirstDay},
             
             buttonText:     { {!$Label.labelCalendarButtonText} },
             timeFormat:     { {!$Label.labelCalendarTimeFormat} },
