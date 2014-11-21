@@ -6,6 +6,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     // page parameters that can get passed into the page to control its behavior.
     global ID campaignIdFilter { get; set; }
     global ID jobIdFilter { get; set; }
+    global ID shiftIdFilter { get; set; }
     global boolean fCalendar { get; set; }
     global boolean fPersonalSite { get; set; }
     global boolean ShowJobName { get; set; }
@@ -89,6 +90,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         // set default's for page parameters
         campaignIdFilter = null;
         jobIdFilter = null;
+        shiftIdFilter = null;
         fCalendar = false;
         ShowJobName = true;
         ShowDescription = true;
@@ -108,6 +110,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p != null && p != '') campaignIdFilter = p;
         p = params.get('jobId');
         if (p != null && p != '') jobIdFilter = p;
+        p = params.get('volunteerShiftId');  // this is the param the JobCalendar page has always been passing.
+        if (p != null && p != '') shiftIdFilter = p;
         p = params.get('Calendar');
         if (p == '1') fCalendar = true;
         p = params.get('ShowJobName');
@@ -169,7 +173,16 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // eg. date(8/1/2013) gave 7/30/2013 but dateGMT(8/1/2013) gave 8/1/2013.
                 DateTime dtLast = dtNow.addMonths(nMonthsToShow).dateGMT().toStartOfMonth();
                 
-                if (jobIdFilter != null) {
+                if (shiftIdFilter != null && nMonthsToShow == 0) {
+                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
+                        (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
+                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            where Id = :shiftIdFilter) 
+                        from Volunteer_Job__c where Id = :jobIdFilter  
+                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                } else if (jobIdFilter != null) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
