@@ -9,6 +9,11 @@
         <value><!-- Volunteer Recurrence Schedule --></value>
     </caseValues>
     <fields>
+        <help><!-- Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule. --></help>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
         <label>Contact</label>
         <name>Contact__c</name>
         <relationshipLabel>Horaires de récurrence des bénévoles</relationshipLabel>
@@ -48,6 +53,11 @@
     <fields>
         <label>Durée</label>
         <name>Duration__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours. --></help>
+        <label><!-- Number of Volunteers --></label>
+        <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>
         <label>Date de Fin de l&apos;Horaire</label>
