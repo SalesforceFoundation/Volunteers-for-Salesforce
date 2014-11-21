@@ -24,7 +24,7 @@
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
-        <help><!-- How many months into the future should the recurring job shift be scheduled? --></help>
+        <help><!-- How many months into the future should Recurring Job Shifts be scheduled?  If this number is too large, you may run into Salesforce CPU time limits which will prevent the Job Scheduler from running completely.  It is recommended to use 4 months or less. --></help>
         <label><!-- Recurring Job Future Months --></label>
         <name>Recurring_Job_Future_Months__c</name>
     </fields>
