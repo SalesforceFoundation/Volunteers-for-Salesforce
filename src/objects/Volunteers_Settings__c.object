@@ -29,6 +29,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Matching_Rule__c</fullName>
+        <defaultValue>&quot;Firstname;Lastname;Email&quot;</defaultValue>
+        <description>Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email.</inlineHelpText>
+        <label>Contact Matching Rule</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Personal_Site_Org_Wide_Email_Name__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
