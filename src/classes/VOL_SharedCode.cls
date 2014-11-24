@@ -53,18 +53,27 @@ global with sharing class VOL_SharedCode {
             if (VolunteersSettings == null) {
                 VolunteersSettings = Volunteers_Settings__c.getInstance();  
                 
-                if (VolunteersSettings == null) {
+                if (VolunteersSettings.Id == null) {
+	                VolunteersSettings = Volunteers_Settings__c.getOrgDefaults();                  	
+                }
+                
+                if (VolunteersSettings.Id == null) {
+					VolunteersSettings.Setupownerid = UserInfo.getOrganizationId();
+
                     // create reasonable defaults
-                    VolunteersSettings = new Volunteers_Settings__c();
                     VolunteersSettings.Signup_Matches_Existing_Contacts__c = false;
                     VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c = false;
                     VolunteersSettings.Signup_Bucket_Account_On_Create__c = null;
-                    VolunteersSettings.Recurring_Job_Future_Months__c = 12;
+                    VolunteersSettings.Recurring_Job_Future_Months__c = 4;
                     VolunteersSettings.Contact_Match_Email_Fields__c = null;
                     VolunteersSettings.Contact_Match_First_Name_Fields__c = null;
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
-                    insert VolunteersSettings;
-                }           
+                    VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
+                    upsert VolunteersSettings;
+                } else if (VolunteersSettings.Contact_Matching_Rule__c == null) {
+                    VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
+                    upsert VolunteersSettings;                	
+                }
             }
             return VolunteersSettings;
         }
@@ -102,6 +111,7 @@ global with sharing class VOL_SharedCode {
             Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c,
             Contact_Match_Email_Fields__c = mySettings.Contact_Match_Email_Fields__c,
             Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c,
+            Contact_Matching_Rule__c = mySettings.Contact_Matching_Rule__c,
             Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c
             );
         insert VolunteersSettings;                      
@@ -234,36 +244,53 @@ global with sharing class VOL_SharedCode {
 	        	strSoql += strComma + strF;
 	        	strComma = ', ';
 	        }
-        }
-        strSoql += ' from Contact where Lastname=\'' + StrEscape(contact.Lastname) + '\'';
-        strSoql += ' and (Firstname=\'' + StrEscape(contact.Firstname) + '\'';
+        }        
+        strSoql += ' from Contact ';
+        string strAnd = ' where ';
         
-        // any additional firstname fields to check
-        if (VolunteersSettings.Contact_Match_First_Name_Fields__c != null) {
-	        list<string> listStrFname = new list<string>();
-    	    listStrFname = VolunteersSettings.Contact_Match_First_Name_Fields__c.split(';');
-        	for (string str : listStrFname) {
-        		strSoql += ' or ' + str + '=\'' + StrEscape(contact.Firstname) + '\'';
-        	}
+        // make sure their settings haven't been completely cleared
+        if (VolunteersSettings.Contact_Matching_Rule__c == null || VolunteersSettings.Contact_Matching_Rule__c == '') {
+        	VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
         }
-        strSoql += ') and (Email=\'' + contact.Email + '\'';
         
-        // any additional email fields to check
-        if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
-	        list<string> listStrEmail = new list<string>();
-    	    listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
-        	for (string str : listStrEmail) {
-        		strSoql += ' or ' + str + '=\'' + contact.Email + '\'';
-        	}
+        if (isLastnameInContactMatchRules) {
+            strSoql += strAnd + ' (Lastname=\'' + StrEscape(contact.Lastname) + '\') ';
+            strAnd = ' and ';
         }
-       	// handle NPSP email fields 
-       	if (IsNPSPInstalled) {
-			strSoql += ' or npe01__AlternateEmail__c=\'' + contact.Email + '\'';
-			strSoql += ' or npe01__HomeEmail__c=\'' + contact.Email + '\'';
-			strSoql += ' or npe01__WorkEmail__c=\'' + contact.Email + '\'';
-       	}
-        
-        strSoql += ') limit 999 ';      
+        if (isFirstnameInContactMatchRules) {
+            strSoql += strAnd + ' (Firstname=\'' + StrEscape(contact.Firstname) + '\'';
+            strAnd = ' and ';
+
+	        // any additional firstname fields to check
+	        if (VolunteersSettings.Contact_Match_First_Name_Fields__c != null) {
+		        list<string> listStrFname = new list<string>();
+	    	    listStrFname = VolunteersSettings.Contact_Match_First_Name_Fields__c.split(';');
+	        	for (string str : listStrFname) {
+	        		strSoql += ' or ' + str + '=\'' + StrEscape(contact.Firstname) + '\'';
+	        	}
+	        }
+	        strSoql += ') ';
+        }
+        if (isEmailInContactMatchRules) {
+            strSoql += strAnd + ' (Email=\'' + contact.Email + '\'';
+            strAnd = ' and ';
+	        // any additional email fields to check
+	        if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
+		        list<string> listStrEmail = new list<string>();
+	    	    listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
+	        	for (string str : listStrEmail) {
+	        		strSoql += ' or ' + str + '=\'' + contact.Email + '\'';
+	        	}
+	        }
+	       	// handle NPSP email fields 
+	       	if (IsNPSPInstalled) {
+				strSoql += ' or npe01__AlternateEmail__c=\'' + contact.Email + '\'';
+				strSoql += ' or npe01__HomeEmail__c=\'' + contact.Email + '\'';
+				strSoql += ' or npe01__WorkEmail__c=\'' + contact.Email + '\'';
+	       	}
+	       	strSoql += ') ';
+        }        
+        strSoql += ' limit 999 ';      
         list<Contact> listCon = Database.Query(strSoql); 
 		return listCon;
 	}
@@ -532,6 +559,33 @@ global with sharing class VOL_SharedCode {
         return str;
     }
   
+    private static boolean isFirstnameInContactMatchRules {
+    	get {
+    		string str = VolunteersSettings.Contact_Matching_Rule__c;
+    		if (str == null || str == '')
+                return false;
+    		return str.contains('Firstname');
+    	}
+    }
+
+    private static boolean isLastnameInContactMatchRules {
+        get {
+            string str = VolunteersSettings.Contact_Matching_Rule__c;
+            if (str == null || str == '')
+                return false;
+            return str.contains('Lastname');
+        }
+    }
+
+    private static boolean isEmailInContactMatchRules {
+        get {
+            string str = VolunteersSettings.Contact_Matching_Rule__c;
+            if (str == null || str == '')
+                return false;
+            return str.contains('Email');
+        }
+    }
+ 
     //==================== TEST METHOD(s) ======================================
     static testmethod void CodeCoverageTests() {
         // since this class is all shared code, it gets heavily exercised by all other test code.       
@@ -548,6 +602,76 @@ global with sharing class VOL_SharedCode {
         VOL_SharedCode.LoadAndCopyObject(c.Id, c2);
         System.assertEquals('foo', c2.LastName);
             
+    }
+    
+    static testmethod void testContactMatchRule1() {
+    	testContactMatchRule('Firstname;Lastname;Email');
+    }
+    static testmethod void testContactMatchRule2() {
+    	testContactMatchRule('Firstname;Lastname');
+    }
+    static testmethod void testContactMatchRule3() {
+    	testContactMatchRule('Firstname;Email');
+    }
+    static testmethod void testContactMatchRule4() {
+    	testContactMatchRule('Lastname;Email');
+    }
+    static testmethod void testContactMatchRule5() {
+    	testContactMatchRule('');
+    }
+    static testmethod void testContactMatchRule6() {
+    	testContactMatchRule('Firstname;');
+    }
+    static testmethod void testContactMatchRule7() {
+    	testContactMatchRule('Lastname');
+    }
+    static testmethod void testContactMatchRule8() {
+    	testContactMatchRule('Email');
+    }
+    static void testContactMatchRule(string strRule) {
+
+        Volunteers_Settings__c settings = new Volunteers_Settings__c();
+        settings.Signup_Creates_Contacts_If_No_Match__c = true;
+        settings.Signup_Matches_Existing_Contacts__c = true;
+        settings.Contact_Matching_Rule__c = strRule;
+        VOL_SharedCode.getVolunteersSettingsForTests(settings);
+
+		// test data
+		list<Contact> listCon = new list<Contact>();
+		listCon.add(new Contact(Firstname='Fred', Lastname='Smith', Email='fred@smith.com'));
+		listCon.add(new Contact(Firstname='Fred', Lastname='Smith', Email=null));
+		listCon.add(new Contact(Firstname='Fred', Lastname='Smith', Email='NOTfred@smith.com'));
+		listCon.add(new Contact(Firstname='NOTFred', Lastname='Smith', Email='fred@smith.com'));
+		listCon.add(new Contact(Firstname='Fred', Lastname='NOTSmith', Email='fred@smith.com'));
+		insert listCon;
+		
+        list<string> listStrFields = new list<string>{'Id', 'Firstname', 'Lastname', 'Email'};        
+		list<Contact> listCon2 = LookupContact(listCon[0], listStrFields);
+		
+		if (strRule == 'Firstname;Lastname;Email') {
+			system.assertEquals(1, listCon2.size());
+		}
+		if (strRule == 'Firstname;Email') {
+			system.assertEquals(2, listCon2.size());
+		}
+		if (strRule == 'Lastname;Email') {
+			system.assertEquals(2, listCon2.size());
+		}
+		if (strRule == 'Firstname;Lastname') {
+			system.assertEquals(3, listCon2.size());
+		}
+		if (strRule == 'Email') {
+			system.assertEquals(3, listCon2.size());
+		}
+		if (strRule == 'Firstname') {
+			system.assertEquals(4, listCon2.size());
+		}
+		if (strRule == 'Lastname') {
+			system.assertEquals(4, listCon2.size());
+		}
+		if (strRule == '') {  // we treat blank as 'Firstname;Lastname;Email'
+			system.assertEquals(1, listCon2.size());
+		}
     }
 
 }
