@@ -175,6 +175,7 @@
         <members>Volunteer_Shift__c.Volunteer_Job__c</members>
         <members>Volunteers_Settings__c.Contact_Match_Email_Fields__c</members>
         <members>Volunteers_Settings__c.Contact_Match_First_Name_Fields__c</members>
+        <members>Volunteers_Settings__c.Contact_Matching_Rule__c</members>
         <members>Volunteers_Settings__c.Personal_Site_Org_Wide_Email_Name__c</members>
         <members>Volunteers_Settings__c.Recurring_Job_Future_Months__c</members>
         <members>Volunteers_Settings__c.Signup_Bucket_Account_On_Create__c</members>

@@ -141,6 +141,7 @@
     </fieldSets>
     <fields>
         <fullName>Comments__c</fullName>
+        <deprecated>false</deprecated>
         <description>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</description>
         <externalId>false</externalId>
         <inlineHelpText>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</inlineHelpText>
@@ -219,6 +220,7 @@
     <fields>
         <fullName>Number_of_Volunteers__c</fullName>
         <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
         <description>Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours.</description>
         <externalId>false</externalId>
         <inlineHelpText>Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours.</inlineHelpText>

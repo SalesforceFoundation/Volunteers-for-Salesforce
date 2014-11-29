@@ -19,6 +19,11 @@
         <name>Contact_Match_First_Name_Fields__c</name>
     </fields>
     <fields>
+        <help><!-- Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email. --></help>
+        <label><!-- Contact Matching Rule --></label>
+        <name>Contact_Matching_Rule__c</name>
+    </fields>
+    <fields>
         <help>Nombre visualizado de la dirección de correo electrónico de la Organization-Wide que debe utilicarse en el correo electrónico enviado desde la página web de Busqueda de Contactos Sitio Personal</help>
         <label>Sitio Personal Org-Wide Email</label>
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
