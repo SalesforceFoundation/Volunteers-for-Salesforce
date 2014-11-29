@@ -7,7 +7,7 @@
 
     <apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
-  	<apex:form styleClass="cssForm" >		
+  	<apex:form styleClass="cssForm" >	
 		<table columns="2" >
 			<!-- first we specify the fields we require for Contact matching -->
 			<tr>
@@ -47,6 +47,6 @@
 				<td class="cssInputFieldsColumn" ><apex:outputLabel value="{!StrSaveResult}" /></td>
 			</tr>	
 		</table>
-		<apex:Messages style="color:red;" />		   	
+		<apex:messages style="color:red;" />		   	
 	</apex:form>
 </apex:page>

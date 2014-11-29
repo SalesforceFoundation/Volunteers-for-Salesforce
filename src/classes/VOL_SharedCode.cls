@@ -310,7 +310,11 @@ global with sharing class VOL_SharedCode {
     	// we also need to special case several fields we will potentially set, but we also need to know,
     	// if they are in the fieldset or not.
     	set<string> setStrFields = new set<string>();
-    	setStrFields.addAll(listStrFields);
+
+    	// store all fields in lower case
+    	for (string strField : listStrFields)
+    		setStrFields.add(strField.toLowerCase());
+    		
     	boolean isStatusInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
         boolean isNotesInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());    
         
@@ -354,12 +358,28 @@ global with sharing class VOL_SharedCode {
             
             // now copy over all the non-null fields from the form's contact to the existing contact.
             // avoid overwriting existing first name or existing email, since we might match it from in a different field.
+            // special case address fields
+            boolean hasMailingAddress = false;
+            boolean hasOtherAddress = false;
             for (string strF : listStrFields) {
-            	if (strF != 'Id' && strF != 'Firstname' && strF != 'Email' && contact.get(strF) != null) {
+            	strF = strF.toLowerCase();
+            	if (strF != 'id' && strF != 'firstname' && strF != 'email' && contact.get(strF) != null) {
+            		if (strF.contains('mailing')) {
+            			hasMailingAddress = true;
+            			continue;
+            		}
+            		if (strF.contains('other')) {
+            			hasOtherAddress = true;
+            			continue;
+            		}
             		conExisting.put(strF, contact.get(strF));
             	}
-            }
-
+            }            
+            if (hasMailingAddress)
+            	VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', conExisting, 'Mailing');
+            if (hasOtherAddress)
+            	VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', conExisting, 'Other');
+            	
 	        if (setLastWebSignup)
 	        	conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
         
@@ -374,11 +394,27 @@ global with sharing class VOL_SharedCode {
             // the fields to a new object and use it.
         	Contact conNew = new Contact();
             //  now copy over all the non-null fields from the form's contact to the existing contact.
+            // special case address fields
+            boolean hasMailingAddress = false;
+            boolean hasOtherAddress = false;
             for (string strF : listStrFields) {
-            	if (strF != 'Id' && contact.get(strF) != null) {
+            	strF = strF.toLowerCase();
+            	if (strF != 'id' && contact.get(strF) != null) {
+            		if (strF.contains('mailing')) {
+            			hasMailingAddress = true;
+            			continue;
+            		}
+            		if (strF.contains('other')) {
+            			hasOtherAddress = true;
+            			continue;
+            		}
             		conNew.put(strF, contact.get(strF));
             	}
             }
+            if (hasMailingAddress)
+            	VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', conNew, 'Mailing');
+            if (hasOtherAddress)
+            	VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', conNew, 'Other');
 
             // see if we can find their company 
             Account accToUse = null;            
@@ -415,39 +451,11 @@ global with sharing class VOL_SharedCode {
 	// global utility to load up an existing object and copy it to the provided object
 	global static void LoadAndCopyObject(ID id, SObject sobj) {
 		
-		// get the fields for the object
-		Schema.DescribeSObjectResult des = sobj.getSObjectType().getDescribe();
-		Map<String, Schema.SObjectField> mapS = des.fields.getMap().clone();
-		// avoid any of the API version 30 compound fields
-		// we only worry about Contact ones, since all callers are giving us contacts to copy.
-		mapS.remove('mailingaddress');
-		mapS.remove('otheraddress');
-		list<string> listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet());  		
-		
-        string strSoql = 'select ';
-        string strComma = '';
-        for (string strF : listStrFields) {
-        	strSoql += strComma + strF;
-        	strComma = ', ';
-        }
-        strSoql += ' from ' + des.getName() + ' where Id = :id ';
-        strSoql += ' limit 1';      
-        list<SObject> listSObj = Database.Query(strSoql); 
-        
-        if (listSObj.size() > 0) {        	
-        	SObject sobjT = listSObj[0];
-            //  now copy over all the non-null fields from the form's contact to the existing contact.
-            for (string strF : listStrFields) {
-            	if (sobjT.get(strF) != null) {
-            		try {
-            			sobj.put(strF, sobjT.get(strF));
-            		} catch(exception ex) { 
-            			
-            		}
-            	}
-            }
-        }
+		// this code moved to VOL_SharedCodeAPI25 to keep it running with api 25
+		// behavior, which is that the Sites Guest User Profile can still edit
+		// this new contact object we created.  Under api 31, the contact object is readonly.
+		// we needed to update the rest of this class to api 31 to handle state & country picklists.
+		VOL_SharedCodeAPI25.LoadAndCopyObject(id, sobj);
 	}
 	
 	public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {
@@ -585,93 +593,5 @@ global with sharing class VOL_SharedCode {
             return str.contains('Email');
         }
     }
- 
-    //==================== TEST METHOD(s) ======================================
-    static testmethod void CodeCoverageTests() {
-        // since this class is all shared code, it gets heavily exercised by all other test code.       
-        // we just need to add a test for hitting the scenario where there aren't any settings specified in the instance.
-        
-        //clear out whatever settings exist
-        delete [select id from Volunteers_Settings__c];
-        System.Assert(VOL_SharedCode.VolunteersSettings != null);
-        System.Assert(VOL_SharedCode.VolunteersSettings.Signup_Bucket_Account_On_Create__c == null);
-        
-        Contact c = new Contact(lastname='foo');
-        insert c;
-        Contact c2 = new Contact();
-        VOL_SharedCode.LoadAndCopyObject(c.Id, c2);
-        System.assertEquals('foo', c2.LastName);
-            
-    }
-    
-    static testmethod void testContactMatchRule1() {
-    	testContactMatchRule('Firstname;Lastname;Email');
-    }
-    static testmethod void testContactMatchRule2() {
-    	testContactMatchRule('Firstname;Lastname');
-    }
-    static testmethod void testContactMatchRule3() {
-    	testContactMatchRule('Firstname;Email');
-    }
-    static testmethod void testContactMatchRule4() {
-    	testContactMatchRule('Lastname;Email');
-    }
-    static testmethod void testContactMatchRule5() {
-    	testContactMatchRule('');
-    }
-    static testmethod void testContactMatchRule6() {
-    	testContactMatchRule('Firstname;');
-    }
-    static testmethod void testContactMatchRule7() {
-    	testContactMatchRule('Lastname');
-    }
-    static testmethod void testContactMatchRule8() {
-    	testContactMatchRule('Email');
-    }
-    static void testContactMatchRule(string strRule) {
-
-        Volunteers_Settings__c settings = new Volunteers_Settings__c();
-        settings.Signup_Creates_Contacts_If_No_Match__c = true;
-        settings.Signup_Matches_Existing_Contacts__c = true;
-        settings.Contact_Matching_Rule__c = strRule;
-        VOL_SharedCode.getVolunteersSettingsForTests(settings);
-
-		// test data
-		list<Contact> listCon = new list<Contact>();
-		listCon.add(new Contact(Firstname='Fred', Lastname='Smith', Email='fred@smith.com'));
-		listCon.add(new Contact(Firstname='Fred', Lastname='Smith', Email=null));
-		listCon.add(new Contact(Firstname='Fred', Lastname='Smith', Email='NOTfred@smith.com'));
-		listCon.add(new Contact(Firstname='NOTFred', Lastname='Smith', Email='fred@smith.com'));
-		listCon.add(new Contact(Firstname='Fred', Lastname='NOTSmith', Email='fred@smith.com'));
-		insert listCon;
-		
-        list<string> listStrFields = new list<string>{'Id', 'Firstname', 'Lastname', 'Email'};        
-		list<Contact> listCon2 = LookupContact(listCon[0], listStrFields);
-		
-		if (strRule == 'Firstname;Lastname;Email') {
-			system.assertEquals(1, listCon2.size());
-		}
-		if (strRule == 'Firstname;Email') {
-			system.assertEquals(2, listCon2.size());
-		}
-		if (strRule == 'Lastname;Email') {
-			system.assertEquals(2, listCon2.size());
-		}
-		if (strRule == 'Firstname;Lastname') {
-			system.assertEquals(3, listCon2.size());
-		}
-		if (strRule == 'Email') {
-			system.assertEquals(3, listCon2.size());
-		}
-		if (strRule == 'Firstname') {
-			system.assertEquals(4, listCon2.size());
-		}
-		if (strRule == 'Lastname') {
-			system.assertEquals(4, listCon2.size());
-		}
-		if (strRule == '') {  // we treat blank as 'Firstname;Lastname;Email'
-			system.assertEquals(1, listCon2.size());
-		}
-    }
-
+     
 }

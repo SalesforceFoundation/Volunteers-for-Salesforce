@@ -26,11 +26,17 @@
         <members>VOL_CTRL_VolunteersFind</members>
         <members>VOL_CTRL_VolunteersJobListing</members>
         <members>VOL_CTRL_VolunteersJobListingFS</members>
+        <members>VOL_CTRL_VolunteersJobListingFS_TEST</members>
         <members>VOL_CTRL_VolunteersReportHours</members>
         <members>VOL_CTRL_VolunteersSignup</members>
         <members>VOL_CTRL_VolunteersSignupFS</members>
+        <members>VOL_CTRL_VolunteersSignupFS_TEST</members>
         <members>VOL_JRS</members>
         <members>VOL_SharedCode</members>
+        <members>VOL_SharedCodeAPI25</members>
+        <members>VOL_SharedCode_TEST</members>
+        <members>VOL_StateCountryPicklists</members>
+        <members>VOL_StateCountryPicklists_TEST</members>
         <members>VOL_TEST_Campaign_Trigger</members>
         <members>VOL_TEST_VolunteerHours_Trigger</members>
         <members>VOL_VRS</members>
