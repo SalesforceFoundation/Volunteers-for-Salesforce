@@ -20,6 +20,9 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         // we now get the fields from the fieldset
         listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersReportHoursFS);
 		
+        // output error page messages for any field that doesn't have visibility correctly set.
+        VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
+
 		// we can derive whether we are within the Personal Site or not, so no need for parameter.
     	fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');		   		
     } 

@@ -23,6 +23,9 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
 
         // we now get the fields from the fieldset
         listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersSignupFS);
+
+        // output error page messages for any field that doesn't have visibility correctly set.
+        VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
     } 
             
     global Contact contact { 

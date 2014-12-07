@@ -90,6 +90,7 @@
     }      
       
 </script>
+	<apex:Messages style="color:red;" />		   	
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
     	<apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobCalendar', 'GW_Volunteers__JobCalendar') + '?' + strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
     </apex:outputPanel>

@@ -153,6 +153,15 @@ global with sharing class VOL_SharedCode {
         return listStrFields;
     }
     
+    // shared routine to get all Fields names form the specified Field Set 
+    public static list<string> listStrFieldsFromFieldSet(Schema.FieldSet fs) {
+        list<string> listStrFields = new list<string>();
+        for (Schema.FieldSetMember f : fs.getFields()) {
+            listStrFields.add(f.getFieldPath());
+        }  
+        return listStrFields;
+    }
+
     // global code to create a new lead or contact for web volunteer signup.  
     // this code is used by both the VolunteersSignup page, and the VolunteersJobListing page.
     // it uses the custom setting for the bucket account, but takes parameters for
@@ -593,5 +602,32 @@ global with sharing class VOL_SharedCode {
             return str.contains('Email');
         }
     }
+
+	// utility to verify all the specified fields are accessible to the current user.
+	// fields that are not accessible will have a pageMessage added to the current page
+	// so the warning is displayed to the user.
+	public static void testObjectFieldVisibility(string strObj, list<string>listStrField) {
+		
+		Map<String, Schema.SObjectType> gd;
+		Schema.DescribeSObjectResult sobjDescr;
+		Map<String, Schema.SObjectField> mapFieldDesc;
+		
+		// Obtaining the field name/token map for the object
+	    gd = Schema.getGlobalDescribe();
+	    if (gd != null)
+	    	sobjDescr = gd.get(strObj).getDescribe();
+	    if (sobjDescr != null)
+	    	mapFieldDesc = sobjDescr.fields.getMap();
+	    if (mapFieldDesc !=  null)
+		    for (String strField : listStrField) {
+				// Check if the user has access on the each field
+		        // note that fields in our own package must not have their prefix for the Describe Field Map        
+		        if (!mapFieldDesc.get(strField.replace('GW_Volunteers__', '')).getDescribe().isAccessible()) {
+		        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Field ' + strObj + '.' + strField +
+		          		' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Installation & Configuration Guide.'));
+		        } 
+		    }
+	}
+
      
 }

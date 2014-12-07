@@ -72,6 +72,16 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             contactReadOnly = con;
         }
         
+        // output error page messages for any field that doesn't have visibility correctly set.
+       	VOL_SharedCode.testObjectFieldVisibility('Contact', 
+       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel1FS));
+       	VOL_SharedCode.testObjectFieldVisibility('Contact', 
+       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel2FS));
+       	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
+       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.PersonalSiteContactInfoUpcomingShifts));
+       	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
+       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.PersonalSiteContactInfoHistory));
+        
 	}
 
     global Contact contactEdit { 
@@ -357,6 +367,27 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     //******************************************************************************************************
     // Test Code
     public static testmethod void TestPage() {
+    	// run our tests as the Site Guest User
+    	// documentation says The runAs method doesn't enforce user permissions or field-level permissions, only record sharing.
+    	// However, the test would fail if I set up the test data as system, and then only did the page controller testing
+    	// as guest, because under the Site's Guest User Profile, it didn't see any completed volunteer hours.  This is
+    	// inconsistent with the real behavior we see with this page that correctly allows the guest profile to view and edit
+    	// information previously created by a different user.
+    	// anyways, I figured doing the whole test under the Sites Guest User Profile was better than not trying at all!
+    	list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and 
+    		Name like '%Site Guest User%'];
+    	if (listU.size() > 0) {
+	    	system.debug('Running test as Sites Guest User: ' + listU[0]);
+	    	system.runAs(listU[0]) {
+	    		testPSC();
+	    	}
+    	} else {
+    		system.debug('Running test as system.');
+    		testPSC();
+    	}
+    }
+    	
+    private static void testPSC() {
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
         	name='Volunteer Personal Site Test Campaign', IsActive=true);
@@ -384,10 +415,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 			Weekly_Occurrence__c = '1st');
 		insert vrs;
 		system.assertNotEquals(null, vrs.Id);
-    	
     	// setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
-        pageRef.getParameters().put('contactId', contact.Id);        
+        pageRef.getParameters().put('contactId', contact.Id);     
+        system.assertNotEquals(null, contact.Id);   
         Test.setCurrentPage(pageRef); 
 
         //instantiate the controller 
