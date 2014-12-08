@@ -154,7 +154,7 @@ global with sharing class VOL_SharedCode {
     }
     
     // shared routine to get all Fields names form the specified Field Set 
-    public static list<string> listStrFieldsFromFieldSet(Schema.FieldSet fs) {
+    global static list<string> listStrFieldsFromFieldSet(Schema.FieldSet fs) {
         list<string> listStrFields = new list<string>();
         for (Schema.FieldSetMember f : fs.getFields()) {
             listStrFields.add(f.getFieldPath());
@@ -606,7 +606,7 @@ global with sharing class VOL_SharedCode {
 	// utility to verify all the specified fields are accessible to the current user.
 	// fields that are not accessible will have a pageMessage added to the current page
 	// so the warning is displayed to the user.
-	public static void testObjectFieldVisibility(string strObj, list<string>listStrField) {
+	global static void testObjectFieldVisibility(string strObj, list<string>listStrField) {
 		
 		Map<String, Schema.SObjectType> gd;
 		Schema.DescribeSObjectResult sobjDescr;
