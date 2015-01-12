@@ -43,13 +43,4 @@ public with sharing class VOL_CTRL_BatchProgress {
         return ref;
     }
 
-    // TEST METHOD
-    public static testMethod void testRollup() {
-        VOL_CTRL_BatchProgress controller = new VOL_CTRL_BatchProgress();
-        system.assertEquals(true, controller.batching);
-        system.assertEquals(false, controller.batchRunning);
-        system.assertNotEquals(null, controller.cancel());
-        // specifically not calling rollup, since we'll test the batch class seperately,
-        // and we don't need to see its potential errors here!
-   }
 }

@@ -103,7 +103,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global ID contactId { get; set; }
     global boolean isEditing { get; set; }
     global ID hoursId { get; set; }	// to hold the ID of the hours record an action is being performed on.
-    private list<Contact> listCon { get; set; }	// to hold the loaded contact record
+    public list<Contact> listCon { get; set; }	// to hold the loaded contact record
     global integer cRowsCompleted { get; set; }
     global integer cRowsUpcoming { get; set; }
     global string strDateFormat { get; set; }
@@ -111,9 +111,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
  	global string strTimeFormat { get; set; }
  	global string strLanguage { get; set; }
  	
-    private list<string> listStrContactFields { 
+    public list<string> listStrContactFields { 
     	get {
     		if (listStrContactFields == null) {
+    			/***
     			// since two different field sets on Contact are used in this form, just get all fields.
 				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap().clone();
 				
@@ -125,13 +126,23 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 				
 				listStrContactFields = new list<string>();
 				listStrContactFields.addAll(mapS.keySet());    		    			
+				***/
+
+		        list<string> listStrFields1 = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.PersonalSiteContactInfoPanel1FS);
+		        list<string> listStrFields2 = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.PersonalSiteContactInfoPanel2FS);
+		        set<string> setStrFields = new set<string>();
+		        setStrFields.addAll(listStrFields1);
+		        setStrFields.addAll(listStrFields2);
+		        listStrContactFields = new list<string>();
+	        	listStrContactFields.addAll(setStrFields);
+	        	system.debug('***DJH listSTrContactFields: ' + listStrContactFields);
     		}
     		return listStrContactFields;
     	}
     	set;
     }
         
-    private list<string> listStrHoursFields { 
+    public list<string> listStrHoursFields { 
     	get {
     		if (listStrHoursFields == null) {
 				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
@@ -363,102 +374,5 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 		}
 		private set;
 	}
-	
-    //******************************************************************************************************
-    // Test Code
-    public static testmethod void TestPage() {
-    	// run our tests as the Site Guest User
-    	// documentation says The runAs method doesn't enforce user permissions or field-level permissions, only record sharing.
-    	// However, the test would fail if I set up the test data as system, and then only did the page controller testing
-    	// as guest, because under the Site's Guest User Profile, it didn't see any completed volunteer hours.  This is
-    	// inconsistent with the real behavior we see with this page that correctly allows the guest profile to view and edit
-    	// information previously created by a different user.
-    	// anyways, I figured doing the whole test under the Sites Guest User Profile was better than not trying at all!
-    	list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and 
-    		Name like '%Site Guest User%'];
-    	if (listU.size() > 0) {
-	    	system.debug('Running test as Sites Guest User: ' + listU[0]);
-	    	system.runAs(listU[0]) {
-	    		testPSC();
-	    	}
-    	} else {
-    		system.debug('Running test as system.');
-    		testPSC();
-    	}
-    }
-    	
-    private static void testPSC() {
-		// create test data
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-        	name='Volunteer Personal Site Test Campaign', IsActive=true);
-        insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
-        insert job;
-		Contact contact = new Contact(firstname='test', lastname='test');
-		insert contact;
-		
-		Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
-			Volunteer_Job__c = job.Id,
-			Days_of_Week__c = 'Monday;Friday',
-			Duration__c = 1.5,
-			Schedule_Start_Date_Time__c = datetime.now(),
-			Weekly_Occurrence__c = '1st');
-		insert jrs;
-		system.assertNotEquals(null, jrs.Id);
-    	
-		Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
-			Contact__c = contact.Id, 
-			Volunteer_Job__c = job.Id,
-			Days_of_Week__c = 'Monday;Friday',
-			Duration__c = 1.5,
-			Schedule_Start_Date_Time__c = datetime.now(),
-			Weekly_Occurrence__c = '1st');
-		insert vrs;
-		system.assertNotEquals(null, vrs.Id);
-    	// setup page
-        PageReference pageRef = Page.PersonalSiteContactInfo;
-        pageRef.getParameters().put('contactId', contact.Id);     
-        system.assertNotEquals(null, contact.Id);   
-        Test.setCurrentPage(pageRef); 
-
-        //instantiate the controller 
-        VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
-        System.AssertNotEquals(null, ctrl.listStrHoursFields);
-        System.AssertNotEquals(null, ctrl.contactEdit);
-        System.AssertNotEquals(null, ctrl.contactReadOnly);
-        System.AssertNotEquals(null, ctrl.contactId);
-        System.AssertNotEquals(null, ctrl.listCompletedVolunteerHours);
-        System.AssertEquals(0, ctrl.listCompletedVolunteerHours.size());
-        System.AssertNotEquals(null, ctrl.listUpcomingVolunteerHours);
-        System.AssertNotEquals(0, ctrl.listUpcomingVolunteerHours.size());
-        ctrl.showMoreRowsCompleted();
-        ctrl.showMoreRowsUpcoming();
-        
-        // mark some hours completed
-        list<Volunteer_Hours__c> listHours = [select Id, Status__c from Volunteer_Hours__c where Contact__c = :contact.Id];
-        system.assertNotEquals(null, listHours);
-        system.assert(listHours.size() > 2);
-        listHours[0].Status__c = 'Completed';
-        listHours[1].Status__c = 'Completed';
-        update listHours;
-        
-        system.assertNotEquals(null, ctrl.getChartData());
-        system.assertEquals(null, ctrl.strRank); // null because we don't have enough other volunteers in test data.
-        
-        system.assertEquals(null, ctrl.Edit());
-        system.assertEquals(null, ctrl.Cancel());
-        
-        ctrl.contactEdit.LastName = 'TestIsNowTesty';
-        ctrl.save();
-        Contact con = [select Id, LastName from Contact where Id = :ctrl.contactId];
-        system.assertEquals('TestIsNowTesty', con.LastName);
-        
-        // CancelShift
-        ctrl.hoursId = listHours[0].Id;
-        ctrl.cancelShift();
-        listHours = [select Id, Status__c from Volunteer_Hours__c where Contact__c = :contact.Id and Status__c = 'Canceled'];
-        system.assertEquals(1, listHours.size());
-        
-    }
 	
 }

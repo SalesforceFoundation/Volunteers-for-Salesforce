@@ -11,8 +11,8 @@
 * This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 -->  
 
-    <apex:attribute name="numberOfJobs" type="Integer" assignTo="{!numberOfJobs}" description="The number of batch jobs to display in the table."/>
-    <apex:attribute name="batchComponentLabel" type="String" assignTo="{!batchComponentLabel}" description="The label of the progress bar section."/>
+    <apex:attribute name="cnumberOfJobs" type="Integer" assignTo="{!numberOfJobs}" description="The number of batch jobs to display in the table."/>
+    <apex:attribute name="strBatchComponentLabel" type="String" assignTo="{!batchComponentLabel}" description="The label of the progress bar section."/>
  
     <!-- Here is the css styles that will be used for the progress bars -->
     <style>

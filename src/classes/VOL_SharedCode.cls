@@ -601,7 +601,7 @@ global with sharing class VOL_SharedCode {
                 return false;
             return str.contains('Email');
         }
-    }
+    } 
 
 	// utility to verify all the specified fields are accessible to the current user.
 	// fields that are not accessible will have a pageMessage added to the current page
@@ -621,8 +621,9 @@ global with sharing class VOL_SharedCode {
 	    if (mapFieldDesc !=  null)
 		    for (String strField : listStrField) {
 				// Check if the user has access on the each field
-		        // note that fields in our own package must not have their prefix for the Describe Field Map        
-		        if (!mapFieldDesc.get(strField.replace('GW_Volunteers__', '')).getDescribe().isAccessible()) {
+		        // note that fields in our own package must not have their prefix for the Describe Field Map  
+		        Schema.SObjectField fld = mapFieldDesc.get(strField.replace('GW_Volunteers__', ''));     
+		        if (fld != null && !fld.getDescribe().isAccessible()) {
 		        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Field ' + strObj + '.' + strField +
 		          		' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Installation & Configuration Guide.'));
 		        } 

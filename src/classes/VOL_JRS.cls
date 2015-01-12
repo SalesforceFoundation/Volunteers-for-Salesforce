@@ -209,7 +209,7 @@ public with sharing class VOL_JRS {
     //******************************************************************************************************
 	// return the next scheduled date for the given schedule, from the passed in date (exclusive).
 	// DOES NOT assume the passed in date is valid for the schedule.
-	private static Date dtNextDateforJRS(Job_Recurrence_Schedule__c jrs, Date dt) {
+	public static Date dtNextDateforJRS(Job_Recurrence_Schedule__c jrs, Date dt) {
 		
 		// strategy is to find the first valid nday, and then find its next nweek.
 		Date dtFirst = dtFirstOccurrenceInWeek(jrs, dt);
@@ -279,7 +279,7 @@ public with sharing class VOL_JRS {
     //******************************************************************************************************
 	// returns an array of booleans for which weeks are on the schedule.
 	// note that you should index by nWeek (ie, first = index 1).
-	private static list<boolean> WhichWeeksJRS(Job_Recurrence_Schedule__c jrs) { 
+	public static list<boolean> WhichWeeksJRS(Job_Recurrence_Schedule__c jrs) { 
 		list<boolean> listWhichWeeks = new boolean[] { false, false, false, false, false, false };
 		if (jrs.Weekly_Occurrence__c != null) {
 			listWhichWeeks[1] = jrs.Weekly_Occurrence__c.contains('1st');
@@ -345,7 +345,7 @@ public with sharing class VOL_JRS {
 	
     //******************************************************************************************************
 	// returns how many weeks until the next recurrence on the schedule
-	private static integer cWeeksNext(Job_Recurrence_Schedule__c jrs, Date dt, boolean fAlternate) {
+	public static integer cWeeksNext(Job_Recurrence_Schedule__c jrs, Date dt, boolean fAlternate) {
 		if (jrs.Weekly_Occurrence__c == null) {
 			// treat empty as every week, so we avoid infinite loops.
 			return 1;
@@ -373,133 +373,5 @@ public with sharing class VOL_JRS {
 		}
 		return 0;
 	}  
-	 
-
-
-    //******************************************************************************************************
-    // TEST METHODS
-
-    //******************************************************************************************************
-    // Test Job Recurrence Schedules    
-    public static testmethod void TestJRS() {
-
-		// create test data
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-        	name='Job Calendar Test Campaign', IsActive=true);
-        insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
-        insert job;
-        Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, 
-        	Start_Date_Time__c=date.newInstance(2012, 1, 1));  // 1/1/2012 was a Sunday
-        insert shift;
-        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
-		jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-		jrs.Duration__c = 1;
-
-		jrs.Schedule_Start_Date_Time__c = date.newInstance(2012, 1, 1);
-		jrs.Weekly_Occurrence__c = 'Every';
-		jrs.Desired_Number_of_Volunteers__c = 5;
-		insert jrs;
-		
-		// test Day of Week
-		boolean isSun = isSundayFirstOfWeek();		
-		system.assertEquals(isSun ? 1 : 7, nDayOfWeek(date.valueOf('2012-1-1')));
-		system.assertEquals(isSun ? 7 : 6, nDayOfWeek(date.valueOf('2012-1-7')));
-		system.assertEquals(isSun ? 3 : 2, nDayOfWeek(date.valueOf('2012-1-31')));
-		system.assertEquals(isSun ? 4 : 3, nDayOfWeek(date.valueOf('2012-2-1')));
-		system.assertEquals(isSun ? 4 : 3, nDayOfWeek(date.valueOf('2012-2-29')));
-		
-		// test dtNthDay
-		system.assertEquals(Date.Today(), dtNthDay(2012, 1, 1, 1));
-		
-		// test Every week.
-		Date dtNext =  dtNextDateforJRS(jrs, date.valueOf(shift.Start_Date_Time__c));
-		system.assertEquals(1, cWeeksNext(jrs, dtNext, false));		
-		system.assertEquals(date.valueOf('2012-1-2'), dtNext); 	
-		dtNext =  dtNextDateforJRS(jrs, dtNext);
-		system.assertEquals(date.valueOf('2012-1-4'), dtNext); 	
-		dtNext =  dtNextDateforJRS(jrs, dtNext);
-		system.assertEquals(date.valueOf('2012-1-6'), dtNext); 	
-		dtNext =  dtNextDateforJRS(jrs, dtNext);
-		system.assertEquals(date.valueOf('2012-1-9'), dtNext); 	
-		
-		// test Alternate weeks.
-		jrs.Weekly_Occurrence__c = 'Alternate';
-		update jrs;
-		system.assertEquals(2, cWeeksNext(jrs, dtNext, true));		
-		dtNext =  dtNextDateforJRS(jrs, dtNext);
-		system.assertEquals(date.valueOf('2012-1-11'), dtNext); 	
-		dtNext =  dtNextDateforJRS(jrs, dtNext);
-		system.assertEquals(date.valueOf('2012-1-13'), dtNext); 	
-		dtNext =  dtNextDateforJRS(jrs, dtNext);
-		system.assertEquals(date.valueOf('2012-1-23'), dtNext); 
-		
-		// test figuring out occurrence of day in month
-		system.assertEquals(1, nWeekOfDate(date.valueOf('2012-1-1')));
-		system.assertEquals(1, nWeekOfDate(date.valueOf('2012-1-7')));
-		system.assertEquals(2, nWeekOfDate(date.valueOf('2012-1-8')));
-		system.assertEquals(5, nWeekOfDate(date.valueOf('2012-1-29')));
-		system.assertEquals(5, nWeekOfDate(date.valueOf('2012-1-31')));
-		system.assertEquals(1, nWeekOfDate(date.valueOf('2012-2-1')));
-		system.assertEquals(1, nWeekOfDate(date.valueOf('2012-2-4')));
-		system.assertEquals(1, nWeekOfDate(date.valueOf('2012-2-5')));
-		system.assertEquals(5, nWeekOfDate(date.valueOf('2012-2-29')));
-		system.assertEquals(1, nWeekOfDate(date.valueOf('2012-2-6')));
-		
-		// test Nth week of Month
-		jrs.Weekly_Occurrence__c = '3rd';
-		update jrs;
-		list<boolean> listWhichWeeks = WhichWeeksJRS(jrs);
-		system.assertEquals(false, listWhichWeeks[0]);
-		system.assertEquals(false, listWhichWeeks[1]);
-		system.assertEquals(false, listWhichWeeks[2]);
-		system.assertEquals(true, listWhichWeeks[3]);
-		system.assertEquals(false, listWhichWeeks[4]);
-		system.assertEquals(false, listWhichWeeks[5]);
-
-		system.assertEquals(2, cWeeksNext(jrs, date.valueOf('2012-1-1'), false));		
-		system.assertEquals(2, cWeeksNext(jrs, date.valueOf('2012-1-7'), false));		
-		system.assertEquals(1, cWeeksNext(jrs, date.valueOf('2012-1-8'), false));		
-		system.assertEquals(1, cWeeksNext(jrs, date.valueOf('2012-1-14'), false));		
-		system.assertEquals(5, cWeeksNext(jrs, date.valueOf('2012-1-15'), false));		
-
-		dtNext =  dtNextDateforJRS(jrs, date.valueOf('2012-1-7')); 
-		system.assertEquals(date.valueOf('2012-1-16'), dtNext); 
-
-		jrs.Days_of_Week__c = 'Monday';
-		update jrs;
-		dtNext =  dtNextDateforJRS(jrs, date.valueOf('2012-4-16'));
-		system.assertEquals(date.valueOf('2012-5-21'), dtNext); 
-
-		jrs.Days_of_Week__c = 'Wednesday';
-		update jrs;
-		dtNext =  dtNextDateforJRS(jrs, date.valueOf('2012-4-18'));
-		system.assertEquals(date.valueOf('2012-5-16'), dtNext); 
-
-		jrs.Weekly_Occurrence__c = '1st';
-		jrs.Days_of_Week__c = 'Monday';
-		update jrs;
-		dtNext =  dtNextDateforJRS(jrs, date.valueOf('2012-2-6'));
-		system.assertEquals(date.valueOf('2012-3-5'), dtNext); 
-		
-		jrs.Weekly_Occurrence__c = '2nd;4th;';
-		jrs.Days_of_Week__c = 'Sunday';
-		update jrs;
-		dtNext =  dtNextDateforJRS(jrs, date.valueOf('2012-8-1'));
-		system.assertEquals(date.valueOf('2012-8-12'), dtNext);  
-		
-		// test batch calculations
-       	VOL_BATCH_Recurrence r = new VOL_BATCH_Recurrence();
-    	r.execute(null);	
-		
-		// test deleting the JRS
-		list<Volunteer_Shift__c> listShift = [select Id, Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
-		system.assert(listShift.size() > 0);
-		delete jrs;
-		listShift = [select Id, Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
-		system.assertEquals(0, listShift.size());
-		
-    }   
-
-
+	
 }

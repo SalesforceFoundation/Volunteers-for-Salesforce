@@ -35,7 +35,7 @@
     
     </script>
 
-	<apex:attribute name="pageController" type="PageControllerBase" assignTo="{!pageController}" required="true" 
+	<apex:attribute name="pcPageController" type="PageControllerBase" assignTo="{!pageController}" required="true" 
 		description="the controller of the page" />
 
 	<apex:outputPanel id="panelData" >

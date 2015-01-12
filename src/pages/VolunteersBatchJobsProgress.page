@@ -38,7 +38,7 @@
 		       				<a  href='/ui/setup/apex/batch/ScheduleBatchApexPage'>Schedule Apex Jobs page.</a></p>
 		</apex:pageBlock>
 		<apex:outputPanel >
-			<c:batchJobs batchComponentLabel="Process Recurrence Schedules Progress" numberOfJobs="1" />
+			<c:batchJobs strBatchComponentLabel="Process Recurrence Schedules Progress" cNumberOfJobs="1" />
 		</apex:outputPanel>
 	</apex:form>
 </apex:page>

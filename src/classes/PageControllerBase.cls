@@ -1,7 +1,7 @@
 // Written by David Habib, copyright (c) 2013 DJH Consulting, djhconsulting.com 
 // This program is released under the GNU Affero General Public License, Version 3. http://www.gnu.org/licenses/
 
-public abstract with sharing class PageControllerBase {
+global abstract with sharing class PageControllerBase {
 	
   	private ComponentControllerBase componentController;
 	
@@ -17,7 +17,7 @@ public abstract with sharing class PageControllerBase {
     	return this;
   	}
 	
-	abstract public string getStrSoql();
+	abstract global string getStrSoql();
 	
 	public list<string> strFields { get; set; } 
 	
@@ -25,7 +25,7 @@ public abstract with sharing class PageControllerBase {
 	
 	public string strObjectType { get; set; }
 
-	abstract public PageReference NewItem();
+	abstract global PageReference NewItem();
 	
 	public SoqlListView ctrlSoqlListView {
 		get {

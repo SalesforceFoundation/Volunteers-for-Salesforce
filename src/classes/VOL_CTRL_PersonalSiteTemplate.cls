@@ -24,19 +24,5 @@ global with sharing class VOL_CTRL_PersonalSiteTemplate {
         
         set;
     }
-
-    //==================== TEST METHOD(s) ======================================
-    
-    @isTest(SeeAllData=true)
-    public static void TestPersonalSiteTemplate() {
-
-        //point to our VF page
-        PageReference p = new PageReference('Page.PersonalSiteTemplate');
-        Test.setCurrentPageReference(p);
-        
-        //instantiate the controller for this page
-        VOL_CTRL_PersonalSiteTemplate ctrl = new VOL_CTRL_PersonalSiteTemplate();
-		system.assertNotEquals(null, ctrl.strURLtoCSSFile);
-    }    	
 	
 }

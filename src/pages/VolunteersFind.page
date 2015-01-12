@@ -35,7 +35,7 @@
             <apex:pageBlockSection title="{!$Label.labelFindVolunteersFindResults}" columns="1" id="pbsVolunteers" collapsible="true" >
             	<script>if ({!NOT(hasFilterCriteria)}) { twistSection(document.getElementById("{!$Component.pbsVolunteers}").childNodes[0].childNodes[0]); } </script>
             	<apex:outputText value="{!$Label.labelFindVolunteersHelpFindResults}" rendered="{!NOT(hasFilterCriteria)}" style="font-style:italic;" /> 
-				<c:SoqlListView pageController="{!this}" ></c:SoqlListView>
+				<c:SoqlListView pcPageController="{!this}" ></c:SoqlListView>
 			</apex:pageBlockSection>
 			
             <apex:pageBlockSection title="{!$Label.labelFindVolunteersAssign}" columns="1" id="pbsAssign" collapsible="true" > 

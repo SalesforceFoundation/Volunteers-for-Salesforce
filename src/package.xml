@@ -11,27 +11,42 @@
         <members>SoqlListView</members>
         <members>VOL_BATCH_Recurrence</members>
         <members>VOL_CTRL_BatchProgress</members>
+        <members>VOL_CTRL_BatchProgress_TEST</members>
         <members>VOL_CTRL_JobCalendar</members>
+        <members>VOL_CTRL_JobCalendar_TEST</members>
         <members>VOL_CTRL_NewAndEditVRS</members>
+        <members>VOL_CTRL_NewAndEditVRS_TEST</members>
         <members>VOL_CTRL_OpenReport</members>
+        <members>VOL_CTRL_OpenReport_TEST</members>
         <members>VOL_CTRL_PersonalSiteContactInfo</members>
+        <members>VOL_CTRL_PersonalSiteContactInfo_TEST</members>
         <members>VOL_CTRL_PersonalSiteContactLookup</members>
+        <members>VOL_CTRL_PersonalSiteContactLookup_TEST</members>
         <members>VOL_CTRL_PersonalSiteJobCalendar</members>
         <members>VOL_CTRL_PersonalSiteJobListing</members>
         <members>VOL_CTRL_PersonalSiteReportHours</members>
         <members>VOL_CTRL_PersonalSiteTemplate</members>
+        <members>VOL_CTRL_PersonalSiteTemplate_TEST</members>
         <members>VOL_CTRL_SendBulkEmail</members>
+        <members>VOL_CTRL_SendBulkEmail_TEST</members>
         <members>VOL_CTRL_VolunteersBulkEnterHours</members>
+        <members>VOL_CTRL_VolunteersBulkEnterHours_TEST</members>
         <members>VOL_CTRL_VolunteersCampaignWizard</members>
+        <members>VOL_CTRL_VolunteersCampaignWizard_TEST</members>
         <members>VOL_CTRL_VolunteersFind</members>
+        <members>VOL_CTRL_VolunteersFind_TEST</members>
         <members>VOL_CTRL_VolunteersJobListing</members>
         <members>VOL_CTRL_VolunteersJobListingFS</members>
         <members>VOL_CTRL_VolunteersJobListingFS_TEST</members>
+        <members>VOL_CTRL_VolunteersJobListing_TEST</members>
         <members>VOL_CTRL_VolunteersReportHours</members>
+        <members>VOL_CTRL_VolunteersReportHours_TEST</members>
         <members>VOL_CTRL_VolunteersSignup</members>
         <members>VOL_CTRL_VolunteersSignupFS</members>
         <members>VOL_CTRL_VolunteersSignupFS_TEST</members>
+        <members>VOL_CTRL_VolunteersSignup_TEST</members>
         <members>VOL_JRS</members>
+        <members>VOL_JRS_TEST</members>
         <members>VOL_SharedCode</members>
         <members>VOL_SharedCodeAPI25</members>
         <members>VOL_SharedCode_TEST</members>
@@ -40,6 +55,7 @@
         <members>VOL_TEST_Campaign_Trigger</members>
         <members>VOL_TEST_VolunteerHours_Trigger</members>
         <members>VOL_VRS</members>
+        <members>VOL_VRS_TEST</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -346,13 +362,16 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>Campaign-en_US</members>
         <members>Campaign-es</members>
         <members>Campaign-fr</members>
+        <members>Contact-en_US</members>
         <members>Contact-es</members>
         <members>Contact-fr</members>
         <members>Job_Recurrence_Schedule__c-en_US</members>
         <members>Job_Recurrence_Schedule__c-es</members>
         <members>Job_Recurrence_Schedule__c-fr</members>
+        <members>Lead-en_US</members>
         <members>Lead-es</members>
         <members>Lead-fr</members>
         <members>Volunteer_Hours__c-en_US</members>
@@ -517,6 +536,7 @@
         <name>StaticResource</name>
     </types>
     <types>
+        <members>en_US</members>
         <members>es</members>
         <members>fr</members>
         <name>Translations</name>

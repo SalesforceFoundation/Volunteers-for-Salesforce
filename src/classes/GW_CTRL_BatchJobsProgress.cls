@@ -81,11 +81,5 @@ public with sharing class GW_CTRL_BatchJobsProgress {
         public AsyncApexJob job {get; set;}
         public Integer percentComplete {get; set;}
     }
- 
-    //--------------------TEST METHOD------------------------
-    static testMethod void batchStatusBarTest(){
-        GW_CTRL_BatchJobsProgress controller = new GW_CTRL_BatchJobsProgress();
-        controller.getBatchJobs();
-    }
     
 }
