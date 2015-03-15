@@ -64,7 +64,10 @@
             <apex:outputField value="{!job.Location_Street__c}" /><br/>
             <apex:outputField value="{!job.Location_City__c}" />,&nbsp;
             <apex:outputField value="{!job.Location__c}" />&nbsp;&nbsp;
-            <apex:outputField value="{!job.Location_Zip_Postal_Code__c}" />
+            <apex:outputField value="{!job.Location_Zip_Postal_Code__c}" /><br/>
+            <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Google_Maps_API_Key__c <> null}">
+                <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={!job.Location_Street__c}+{!job.Location_City__c}+{!job.Location__c}+{!job.Location_Zip_Postal_Code__c}&key={!$Setup.Volunteers_Settings__c.Google_Maps_API_Key__c}"></iframe>
+            </apex:outputPanel>
             </p>
         </apex:outputPanel>
         <apex:outputPanel rendered="{!ShowLocationInfo && job.Location_Information__c <> null}">

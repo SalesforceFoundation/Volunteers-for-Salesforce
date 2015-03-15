@@ -101,5 +101,12 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+        <fields>
+        <fullName>Google_Maps_API_Key__c</fullName>
+        <inlineHelpText>If you include a Google Maps API Key, the JobListing page will display a map on your volunteers site for the Job Location..</inlineHelpText>
+        <label>Google Maps API Key</label>
+        <type>Text</type>
+        <length>255</length>
+    </fields>
     <label>Volunteers Settings</label>
 </CustomObject>
