@@ -43,6 +43,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         	return;
         }
 
+		/**********
         // let's see if we can find any matching Contacts.
         // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
         string strSoql = 'select ';
@@ -71,12 +72,17 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             // also maintain a readonly version of the contact to display rollup summary fields.
             contactReadOnly = con;
         }
+        ********/
+        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit);                 
+        
         
         // output error page messages for any field that doesn't have visibility correctly set.
        	VOL_SharedCode.testObjectFieldVisibility('Contact', 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel1FS));
        	VOL_SharedCode.testObjectFieldVisibility('Contact', 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel2FS));
+       	VOL_SharedCode.testObjectFieldVisibility('Contact', 
+       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoExtraFS));
        	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.PersonalSiteContactInfoUpcomingShifts));
        	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
@@ -94,7 +100,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     
     global Contact contactReadOnly { 
         get {
-            if (contactReadOnly == null) contactReadOnly = new Contact();
+            //if (contactReadOnly == null) contactReadOnly = new Contact();
             return contactReadOnly;
         }       
         set; 
@@ -103,7 +109,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global ID contactId { get; set; }
     global boolean isEditing { get; set; }
     global ID hoursId { get; set; }	// to hold the ID of the hours record an action is being performed on.
-    public list<Contact> listCon { get; set; }	// to hold the loaded contact record
+    //public list<Contact> listCon { get; set; }	// to hold the loaded contact record
     global integer cRowsCompleted { get; set; }
     global integer cRowsUpcoming { get; set; }
     global string strDateFormat { get; set; }
@@ -114,28 +120,17 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     public list<string> listStrContactFields { 
     	get {
     		if (listStrContactFields == null) {
-    			/***
-    			// since two different field sets on Contact are used in this form, just get all fields.
-				Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Contact.fields.getMap().clone();
-				
-				// starting in API version 30, new compound fields are included.
-				// but you have to special case these, and they cause problems in our general code,
-				// so we remove them. 
-				mapS.remove('mailingaddress');
-				mapS.remove('otheraddress');
-				
-				listStrContactFields = new list<string>();
-				listStrContactFields.addAll(mapS.keySet());    		    			
-				***/
-
 		        list<string> listStrFields1 = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.PersonalSiteContactInfoPanel1FS);
 		        list<string> listStrFields2 = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.PersonalSiteContactInfoPanel2FS);
+				// because we used to get all Contact fields, we need a way for people extending the page to tell us additional fields to query for.
+		        list<string> listStrFields3 = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.PersonalSiteContactInfoExtraFS);
+
 		        set<string> setStrFields = new set<string>();
 		        setStrFields.addAll(listStrFields1);
 		        setStrFields.addAll(listStrFields2);
+		        setStrFields.addAll(listStrFields3);
 		        listStrContactFields = new list<string>();
 	        	listStrContactFields.addAll(setStrFields);
-	        	system.debug('***DJH listSTrContactFields: ' + listStrContactFields);
     		}
     		return listStrContactFields;
     	}
@@ -253,20 +248,20 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 	}
 
 	global PageReference save() {  
-        if (listCon.size() > 0) {        	
-        	Contact con = listCon[0];       	
+        if (contactReadOnly != null) {        	
+        	//Contact con = listCon[0];       	
             //  now copy over all the non-null fields from the form's contact to the existing contact.
             for (string strF : listStrContactFields) {
             	if (contactEdit.get(strF) != null) {
             		try {
-            			con.put(strF, contactEdit.get(strF));
+            			contactReadOnly.put(strF, contactEdit.get(strF));
             		} catch(exception ex) {
             			
             		}
             	}
             }            
             // save the changes
-            update con;
+            update contactReadOnly;
         }
 		isEditing = false;
 		return null;
