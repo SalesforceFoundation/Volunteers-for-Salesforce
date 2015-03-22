@@ -1045,7 +1045,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Thank you message displayed after a successful Volunteer Signup on the web</shortDescription>
-        <value>Thank you for signing up for volunteering.</value>
+        <value>Thank you for signing up to volunteer.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersJobListingErrorTooManyVols</fullName>
