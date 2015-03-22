@@ -88,7 +88,7 @@
 		                <!-- Volunteer Stats ----------------------------------------- -->
 		                <div class="row-fluid">
 		                    <!-- volunteer activity label {!$Label.labelContactInfoPanel2} -->
-		                    <div class="span3" style="text-align:center; line-height:50%;"><h3 style="line-height:120%;">{!$Label.labelContactInfoRankText}<br/>{!strRank}</h3>{!$Label.labelContactInfoRankTitle}</div>
+		                    <div class="span3" style="text-align:center; line-height:50%;"><h4 style="line-height:120%;">{!strRank}</h4>{!$Label.labelContactInfoRankTitle}</div>
 		                    <div class="span9">
 		                        <div class="row-fluid">
 		                            <!--  use the field set for specifying all fields to display -->

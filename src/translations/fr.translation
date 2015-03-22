@@ -188,6 +188,14 @@ day: &apos;jour&apos;</label>
         <name>labelContactInfoRankText</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelContactInfoRankText12Months --></label>
+        <name>labelContactInfoRankText12Months</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelContactInfoRankTextLifetime --></label>
+        <name>labelContactInfoRankTextLifetime</name>
+    </customLabels>
+    <customLabels>
         <label><!-- label for Rank field on Contact Info page --></label>
         <name>labelContactInfoRankTitle</name>
     </customLabels>

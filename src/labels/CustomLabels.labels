@@ -360,6 +360,22 @@ day:      &apos;day&apos;</value>
         <value>Top</value>
     </labels>
     <labels>
+        <fullName>labelContactInfoRankText12Months</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelContactInfoRankText12Months</shortDescription>
+        <value>Top {0} last 12 months</value>
+    </labels>
+    <labels>
+        <fullName>labelContactInfoRankTextLifetime</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelContactInfoRankTextLifetime</shortDescription>
+        <value>Top {0} lifetime</value>
+    </labels>
+    <labels>
         <fullName>labelContactInfoRankTitle</fullName>
         <categories>PersonalSiteContactInfo</categories>
         <language>en_US</language>

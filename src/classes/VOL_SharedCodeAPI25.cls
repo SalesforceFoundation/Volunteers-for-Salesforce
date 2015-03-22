@@ -8,7 +8,7 @@ public with sharing class VOL_SharedCodeAPI25 {
 	// behavior, which is that the Sites Guest User Profile can still edit
 	// this new contact object we created.  Under api 31, the contact object is readonly.
 	// we needed to update the rest of the VOL_SharedCode class to api 31 to handle state & country picklists.	
-	public static void LoadAndCopyObject(ID id, SObject sobj) {
+	public static SObject LoadAndCopyObject(ID id, SObject sobj) {
 		
 		// get the fields for the object
 		Schema.DescribeSObjectResult des = sobj.getSObjectType().getDescribe();
@@ -42,7 +42,9 @@ public with sharing class VOL_SharedCodeAPI25 {
             		}
             	}
             }
+            return sobjT;
         }
+        return null;
 	}
 
 }

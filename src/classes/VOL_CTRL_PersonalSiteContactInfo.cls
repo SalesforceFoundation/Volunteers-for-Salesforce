@@ -344,35 +344,65 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 	global string strRank {
 		get {
 			if (strRank == null) {
-				integer cMonths = 12;
-				Date dtStart = date.today().addMonths(-cMonths + 1).toStartOfMonth();
-				
-		      	integer iVol = 0;
-		      	integer iCurrent = 0;
-
-				for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
-				    from Volunteer_Hours__c 
-				    where Status__c = 'Completed' and Start_Date__c >= :dtStart
-		      		group by Contact__c 
-		      		having SUM(Hours_Worked__c) > 0 
-		      		order by SUM(Hours_Worked__c) desc ]) {
-		      	
-			      	for (AggregateResult ag : listAG) {
-			      		if (ag.get('cId') == contactId) {
-			      			iCurrent = iVol;
-			      		}
-			      		iVol++;
-			      	}
-		      	}
-		      	if (iVol > 2) {
-		      		integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
-		      		if (irank == 0) irank = 1;
-		      		strRank = irank +  + '%';
-		      	}			
+				try {
+					strRank = strRankLast12Months();
+				} catch(exception ex) {
+					strRank = strRankLifetime();
+				}
 			}
 			return strRank;
 		}
 		private set;
 	}
+
+	private string strRankLast12Months() {
+		integer cMonths = 12;
+		Date dtStart = date.today().addMonths(-cMonths + 1).toStartOfMonth();
+      	integer iVol = 0;
+      	integer iCurrent = 0;
+
+		for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
+		    from Volunteer_Hours__c 
+		    where Status__c = 'Completed' and Start_Date__c >= :dtStart
+      		group by Contact__c 
+      		having SUM(Hours_Worked__c) > 0 
+      		order by SUM(Hours_Worked__c) desc ]) {
+      	
+		      	for (AggregateResult ag : listAG) {
+		      		if (ag.get('cId') == contactId) {
+		      			iCurrent = iVol;
+		      		}
+		      		iVol++;
+		      	}
+      	}
+      	if (iVol > 2) {
+      		integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
+      		if (irank == 0) irank = 1;
+      		return string.format(label.labelContactInfoRankText12Months, new string[]{irank + '%'});
+      	} else {
+      		return '';
+      	}			
+	}
 	
+	private string strRankLifetime() {
+      	integer iVol = 0;
+      	integer iCurrent = 0;
+		for (list<Contact> listCon : [select Id, Volunteer_Hours__c
+			from Contact where Volunteer_Hours__c > 0 order by Volunteer_Hours__c desc]) {
+				
+		      	for (Contact con : listCon) {
+		      		if (con.Id == contactId) {
+		      			iCurrent = iVol;
+		      		}
+		      		iVol++;
+		      	}
+		}
+      	if (iVol > 2) {
+      		integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
+      		if (irank == 0) irank = 1;
+      		return string.format(label.labelContactInfoRankTextLifetime, new string[]{irank + '%'});
+      	} else {
+      		return '';	
+      	}			
+	}	
 }

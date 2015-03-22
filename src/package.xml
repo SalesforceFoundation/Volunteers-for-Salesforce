@@ -244,6 +244,8 @@
         <members>labelContactInfoNewVolunteerText</members>
         <members>labelContactInfoNewVolunteerTitle</members>
         <members>labelContactInfoRankText</members>
+        <members>labelContactInfoRankText12Months</members>
+        <members>labelContactInfoRankTextLifetime</members>
         <members>labelContactInfoRankTitle</members>
         <members>labelContactInfoTimeTableColumn</members>
         <members>labelContactInfoUpcomingShifts</members>
@@ -446,6 +448,7 @@
     </types>
     <types>
         <members>Campaign.VolunteersWizardFS</members>
+        <members>Contact.PersonalSiteContactInfoExtraFS</members>
         <members>Contact.PersonalSiteContactInfoPanel1FS</members>
         <members>Contact.PersonalSiteContactInfoPanel2FS</members>
         <members>Contact.VolunteersFindCriteriaFS</members>

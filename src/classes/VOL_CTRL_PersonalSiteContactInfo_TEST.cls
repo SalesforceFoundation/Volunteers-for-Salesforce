@@ -83,7 +83,7 @@ public with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         update listHours;
         
         system.assertNotEquals(null, ctrl.getChartData());
-        system.assertEquals(null, ctrl.strRank); // null because we don't have enough other volunteers in test data.
+        system.assertEquals('', ctrl.strRank); // null because we don't have enough other volunteers in test data.
         
         system.assertEquals(null, ctrl.Edit());
         system.assertEquals(null, ctrl.Cancel());
