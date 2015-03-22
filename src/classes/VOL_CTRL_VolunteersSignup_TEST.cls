@@ -34,7 +34,7 @@ public with sharing class VOL_CTRL_VolunteersSignup_TEST {
         contact.LastName = 'TestLastName';
         contact.Email = 'foovolunteer@bar.com';
         ctrl.Save();
-        System.AssertEquals('Thank you for signing up to volunteer.', ctrl.StrSaveResult);
+        System.AssertEquals(system.label.labelVolunteerSignupThankYou, ctrl.StrSaveResult);
                 
         // make sure it got created correctly
         contact = [select Id, AccountId from Contact where Email='foovolunteer@bar.com' and Firstname='TestFirstName' limit 1];
@@ -52,7 +52,7 @@ public with sharing class VOL_CTRL_VolunteersSignup_TEST {
         contact.Email = 'foo2volunteer@bar.com';
         contact.Department = 'My GW Volunteers Test Company';      // this is a dummy we use for the company name in the page.
         ctrl.Save();
-        System.AssertEquals('Thank you for signing up to volunteer.', ctrl.StrSaveResult);
+        System.AssertEquals(system.label.labelVolunteerSignupThankYou, ctrl.StrSaveResult);
                 
         // make sure it got created
         contact = [select Id, AccountId from Contact where Email='foo2volunteer@bar.com' and Firstname='TestFirstName2' limit 1];
@@ -69,7 +69,7 @@ public with sharing class VOL_CTRL_VolunteersSignup_TEST {
         contact.Phone = '425-123-4567';
         contact.HomePhone = '206-123-4567';
         ctrl.Save();
-        System.AssertEquals('Thank you for signing up to volunteer.', ctrl.StrSaveResult);
+        System.AssertEquals(system.label.labelVolunteerSignupThankYou, ctrl.StrSaveResult);
                 
         // make sure the existing contact's volunteer status field was updated          
         contact = [select Id, Volunteer_Status__c, Phone from Contact where Email='foo2volunteer@bar.com' and Firstname='TestFirstName2' limit 1];
@@ -91,7 +91,7 @@ public with sharing class VOL_CTRL_VolunteersSignup_TEST {
         contact.Email = 'foovolunteer@bar.com';
         contact.Department = 'Some Random Company';
         ctrl.Save();
-        System.AssertEquals('Thank you for signing up to volunteer.', ctrl.StrSaveResult);
+        System.AssertEquals(system.label.labelVolunteerSignupThankYou, ctrl.StrSaveResult);
                 
         // make sure it got created correctly
         Lead lead = [select Id, Company, Volunteer_Status__c from Lead where Email='foovolunteer@bar.com' and Firstname='TestFirstName' limit 1];

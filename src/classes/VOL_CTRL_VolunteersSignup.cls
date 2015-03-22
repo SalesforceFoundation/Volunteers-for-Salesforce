@@ -38,7 +38,7 @@ global virtual with sharing class VOL_CTRL_VolunteersSignup {
             VOL_SharedCode.VolunteersSettings.Signup_Matches_Existing_Contacts__c,
             VOL_SharedCode.VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c);   
                          
-        StrSaveResult = 'Thank you for signing up to volunteer.';
+        StrSaveResult = system.label.labelVolunteerSignupThankYou;
         contact = null; // so fields get reset to null.
         return null;
         }
