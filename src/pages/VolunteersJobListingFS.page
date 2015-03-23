@@ -109,6 +109,13 @@
             <apex:outputField value="{!job.Location_City__c}" />,&nbsp;
             <apex:outputField value="{!job.Location__c}" />&nbsp;&nbsp;
             <apex:outputField value="{!job.Location_Zip_Postal_Code__c}" />
+			<apex:outputPanel rendered="{!ShowLocationMap && strGoogleMapAPIKey <> null}">
+				<p class="cssJobLocationMap">
+				<iframe class="cssGoogleMapIFrame" 
+					src="https://www.google.com/maps/embed/v1/place?q={!job.Location_Street__c}+{!job.Location_City__c}+{!job.Location__c}+{!job.Location_Zip_Postal_Code__c}&key={!strGoogleMapAPIKey}">
+				</iframe>
+				</p>
+			</apex:outputPanel>            
             </p>
         </apex:outputPanel>
         <apex:outputPanel rendered="{!ShowLocationInfo && job.Location_Information__c <> null}">

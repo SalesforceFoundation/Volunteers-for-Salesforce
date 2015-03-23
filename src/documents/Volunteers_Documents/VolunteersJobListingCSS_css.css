@@ -49,6 +49,24 @@ a:hover {
 	font-style: italic;
 }
 
+.cssJobLocationAddress {
+
+}
+
+.cssJobLocationMap {
+
+}
+
+.cssGoogleMapIFrame {
+	height: 300px;
+	width: 400px;
+	border: 0;
+} 
+
+.cssThankYou {
+
+}
+
 .ui-widget {
 	font-family: Arial,Verdana,sans-serif;
 	font-weight: normal;
@@ -66,7 +84,7 @@ a:hover {
 
 /*=======================================================================
 
-    SAMPLE UGLY CSS for the Volunteers Signup page that while ugly,
+    SAMPLE UGLY CSS for the Volunteers Job Listing pages that while ugly,
 	makes it clear what you can visually control.
 	Comment out the CSS above, and remove the trailing comment
 	on this CSS to see some ugly stuff!

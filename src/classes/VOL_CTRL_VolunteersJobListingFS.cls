@@ -12,6 +12,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global boolean ShowJobName { get; set; }
     global boolean ShowDescription { get; set; }
     global boolean ShowLocationAddress { get; set; }
+    global boolean ShowLocationMap { get; set; }
     global boolean ShowLocationInfo { get; set; }
     global boolean ShowSkills { get; set; }
     global boolean ShowShifts { get; set; }
@@ -82,6 +83,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             return strURLtoCSSFile;
         }       
         set;
+    }
+    
+    global string strGoogleMapAPIKey {
+    	get {
+    		return VOL_SharedCode.VolunteersSettings.Google_Maps_API_Key__c;
+    	}
     }  
     
     // constructor
@@ -95,6 +102,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowJobName = true;
         ShowDescription = true;
         ShowLocationAddress = true;
+        ShowLocationMap = true;
         ShowLocationInfo = true;
         ShowSkills = false;
         ShowShifts = true;
@@ -120,6 +128,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p == '0') ShowDescription = false;
         p = params.get('ShowLocationAddress');
         if (p == '0') ShowLocationAddress = false;
+        p = params.get('ShowLocationMap');
+        if (p == '0') ShowLocationMap = false;
         p = params.get('ShowLocationInfo');
         if (p == '0') ShowLocationInfo = false;
         p = params.get('ShowSkills');
