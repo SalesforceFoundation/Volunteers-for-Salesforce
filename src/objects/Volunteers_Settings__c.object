@@ -43,6 +43,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Google_Maps_API_Key__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If you include a Google Maps API Key, the JobListing pages will display a map on your volunteers site for the Job Location.</inlineHelpText>
+        <label>Google Maps API Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Personal_Site_Org_Wide_Email_Name__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
