@@ -20,32 +20,32 @@
     <apex:stylesheet value="{!strURLtoCSSFile}" />
 
     <apex:insert name="header">
-	    <div class="navbar navbar-static-top">
-	        <div class="navbar-inner" style="padding:20px 40px; background-color: #39c; background-image: none; background-repeat: no-repeat; filter: none;">
-	            <h2 style="color:white;">Volunteers Personal Site</h2>
-	        </div>
-	        <div class="navbar-inner" style="padding:0 20px;">	            
-	            <ul class="nav">
-	                <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteJobListing', 'active', '')}"><a href="{!$Page.PersonalSiteJobListing + '?nMonthsToShow=1'}" >Volunteer Job Listing</a></li>
-	                <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteJobCalendar', 'active', '')}"><a href="{!$Page.PersonalSiteJobCalendar + '?nMonthsToShow=1'}" >Volunteer Job Calendar</a></li>
-	                <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteContactInfo', 'active', '')}"><a href="{!$Page.PersonalSiteContactInfo}" >View your information</a></li>
-	                <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteReportHours', 'active', '')}"><a href="{!$Page.PersonalSiteReportHours}" >Report your volunteer hours</a></li>                
-	            </ul>
-	        </div>	        
-	    </div>
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner" style="padding:20px 40px; background-color: #39c; background-image: none; background-repeat: no-repeat; filter: none;">
+                <h2 style="color:white;">{!$Label.labelPersonalSiteTitle}</h2>
+            </div>
+            <div class="navbar-inner" style="padding:0 20px;">              
+                <ul class="nav">
+                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteJobListing', 'active', '')}"><a href="{!$Page.PersonalSiteJobListing + '?nMonthsToShow=1'}" >{!$Label.labelPersonalSiteJobListingTitle}</a></li>
+                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteJobCalendar', 'active', '')}"><a href="{!$Page.PersonalSiteJobCalendar + '?nMonthsToShow=1'}" >{!$Label.labelPersonalSiteJobCalendarTitle}</a></li>
+                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteContactInfo', 'active', '')}"><a href="{!$Page.PersonalSiteContactInfo}" >{!$Label.labelPersonalSiteContactInfoTitle}</a></li>
+                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteReportHours', 'active', '')}"><a href="{!$Page.PersonalSiteReportHours}" >{!$Label.labelPersonalSiteReportHoursTitle}</a></li>                
+                </ul>
+            </div>          
+        </div>
     </apex:insert>
-	
-	<div style="padding:20px;" >
-	    <apex:insert name="body" />
-	</div>
+    
+    <div style="padding:20px;" >
+        <apex:insert name="body" />
+    </div>
     
     <apex:insert name="footer">    
-	    <div class="navbar navbar-static-bottom">
-	        <div class="navbar-inner" style="padding:18px 0 0 20px;">
-	            <p>&copy; Volunteers for SalesForce 2014</p>
-	        </div>
-	    </div>    
-	    <site:googleAnalyticsTracking />            
+        <div class="navbar navbar-static-bottom">
+            <div class="navbar-inner" style="padding:18px 0 0 20px;">
+                <p>&copy; Volunteers for SalesForce 2015</p>
+            </div>
+        </div>    
+        <site:googleAnalyticsTracking />            
     </apex:insert>
     
 </apex:page>

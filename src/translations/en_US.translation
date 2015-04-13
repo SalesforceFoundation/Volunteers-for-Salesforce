@@ -441,6 +441,10 @@
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelPersonalSiteContactInfoTitle --></label>
+        <name>labelPersonalSiteContactInfoTitle</name>
+    </customLabels>
+    <customLabels>
         <label><!-- labelPersonalSiteEmailError --></label>
         <name>labelPersonalSiteEmailError</name>
     </customLabels>
@@ -467,6 +471,10 @@
     <customLabels>
         <label><!-- title of the Report Hours page under Personal Site --></label>
         <name>labelPersonalSiteReportHoursTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelPersonalSiteTitle --></label>
+        <name>labelPersonalSiteTitle</name>
     </customLabels>
     <customLabels>
         <label><!-- label for the return to Calendar link on VolunteersJobListingFS --></label>

@@ -24,6 +24,11 @@
         <name>Contact_Matching_Rule__c</name>
     </fields>
     <fields>
+        <help><!-- If you include a Google Maps API Key, the JobListing pages will display a map on your volunteers site for the Job Location. --></help>
+        <label><!-- Google Maps API Key --></label>
+        <name>Google_Maps_API_Key__c</name>
+    </fields>
+    <fields>
         <help>Nombre visualizado de la dirección de correo electrónico de la Organization-Wide que debe utilicarse en el correo electrónico enviado desde la página web de Busqueda de Contactos Sitio Personal</help>
         <label>Sitio Personal Org-Wide Email</label>
         <name>Personal_Site_Org_Wide_Email_Name__c</name>

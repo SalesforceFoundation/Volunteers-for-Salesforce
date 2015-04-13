@@ -14,7 +14,7 @@ ADMIN: You must edit this template to put in the full URL to your PersonalSiteCo
 
 The URL should look something like:  
 
- https://volunteers-developer-edition.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}
+ https://xxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}
 
 
 Thank you.</textOnly>

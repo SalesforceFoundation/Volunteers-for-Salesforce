@@ -880,6 +880,14 @@ day:      &apos;day&apos;</value>
         <value>The number of emails that will be sent. Changing the &quot;Include Contacts only once&quot; checkbox may change this number.</value>
     </labels>
     <labels>
+        <fullName>labelPersonalSiteContactInfoTitle</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelPersonalSiteContactInfoTitle</shortDescription>
+        <value>View your information</value>
+    </labels>
+    <labels>
         <fullName>labelPersonalSiteEmailError</fullName>
         <categories>PersonalSiteContactLookup</categories>
         <language>en_US</language>
@@ -934,6 +942,14 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>title of the Report Hours page under Personal Site</shortDescription>
         <value>Report Hours</value>
+    </labels>
+    <labels>
+        <fullName>labelPersonalSiteTitle</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelPersonalSiteTitle</shortDescription>
+        <value>Volunteers Personal Site</value>
     </labels>
     <labels>
         <fullName>labelReturnToCalendar</fullName>

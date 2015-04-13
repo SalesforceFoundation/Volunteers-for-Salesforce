@@ -448,6 +448,10 @@ day: &apos;jour&apos;</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelPersonalSiteContactInfoTitle --></label>
+        <name>labelPersonalSiteContactInfoTitle</name>
+    </customLabels>
+    <customLabels>
         <label><!-- labelPersonalSiteEmailError --></label>
         <name>labelPersonalSiteEmailError</name>
     </customLabels>
@@ -474,6 +478,10 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label><!-- title of the Report Hours page under Personal Site --></label>
         <name>labelPersonalSiteReportHoursTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelPersonalSiteTitle --></label>
+        <name>labelPersonalSiteTitle</name>
     </customLabels>
     <customLabels>
         <label>retour au Calendrier</label>

@@ -448,6 +448,10 @@ day: &apos;día&apos;</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelPersonalSiteContactInfoTitle --></label>
+        <name>labelPersonalSiteContactInfoTitle</name>
+    </customLabels>
+    <customLabels>
         <label>Introduzca una dirección de correo electrónico válida.</label>
         <name>labelPersonalSiteEmailError</name>
     </customLabels>
@@ -474,6 +478,10 @@ day: &apos;día&apos;</label>
     <customLabels>
         <label>Reporte de Horas</label>
         <name>labelPersonalSiteReportHoursTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelPersonalSiteTitle --></label>
+        <name>labelPersonalSiteTitle</name>
     </customLabels>
     <customLabels>
         <label>volver al Calendario</label>

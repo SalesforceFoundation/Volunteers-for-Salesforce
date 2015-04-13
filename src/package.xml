@@ -192,6 +192,7 @@
         <members>Volunteers_Settings__c.Contact_Match_Email_Fields__c</members>
         <members>Volunteers_Settings__c.Contact_Match_First_Name_Fields__c</members>
         <members>Volunteers_Settings__c.Contact_Matching_Rule__c</members>
+        <members>Volunteers_Settings__c.Google_Maps_API_Key__c</members>
         <members>Volunteers_Settings__c.Personal_Site_Org_Wide_Email_Name__c</members>
         <members>Volunteers_Settings__c.Recurring_Job_Future_Months__c</members>
         <members>Volunteers_Settings__c.Signup_Bucket_Account_On_Create__c</members>
@@ -309,6 +310,7 @@
         <members>labelMessageSaving</members>
         <members>labelNumberOfContacts</members>
         <members>labelNumberOfContactsHelpText</members>
+        <members>labelPersonalSiteContactInfoTitle</members>
         <members>labelPersonalSiteEmailError</members>
         <members>labelPersonalSiteEmailRequired</members>
         <members>labelPersonalSiteFirstnameRequired</members>
@@ -316,6 +318,7 @@
         <members>labelPersonalSiteJobListingTitle</members>
         <members>labelPersonalSiteLastnameRequired</members>
         <members>labelPersonalSiteReportHoursTitle</members>
+        <members>labelPersonalSiteTitle</members>
         <members>labelReturnToCalendar</members>
         <members>labelShowHelp</members>
         <members>labelShowMore</members>
@@ -422,6 +425,17 @@
         <name>Document</name>
     </types>
     <types>
+        <members>Benevoles_Email_Templates</members>
+        <members>Benevoles_Email_Templates/Volunteer_Hours_Reminder_Email_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Job_Reminder_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Job_Reminder_using_letterhead_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Job_Signup_Notification_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Job_Signup_Thank_You_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Shift_Reminder_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Shift_Reminder_using_letterhead_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Signup_Notification_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteer_Signup_Thank_You_Fr</members>
+        <members>Benevoles_Email_Templates/Volunteers_Personal_Site_Contact_Lookup_Fr</members>
         <members>Voluntarios_Espa_oles</members>
         <members>Voluntarios_Espa_oles/Agradecimiento_Registro_Voluntario</members>
         <members>Voluntarios_Espa_oles/Agradecimiento_por_Registro_a_un_Trabajo_Voluntario</members>
