@@ -4,9 +4,16 @@
 global with sharing class VOL_CTRL_PersonalSiteTemplate {
 
 	global VOL_CTRL_PersonalSiteTemplate() {
+    	Language = 'en-us'; 
+        map<string, string> params = ApexPages.currentPage().getParameters();
+        string p;
+        p = params.get('Language');
+        if (p != null && p != '') Language = p;
 		
 	}
 	
+ 	global string Language { get; set; }
+
 	// returns the correct URL for the CSS override file
     global string strURLtoCSSFile { 
         get { 
