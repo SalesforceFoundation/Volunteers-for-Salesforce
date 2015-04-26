@@ -28,7 +28,8 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
 		        
 		        for (Job_Recurrence_Schedule__c jrs : [select Id, Name, Days_of_Week__c, Duration__c, 
 		        	Schedule_Start_Date_Time__c, Schedule_End_Date__c, Weekly_Occurrence__c from Job_Recurrence_Schedule__c 
-		        	where Volunteer_Job__c = :jobId limit 999]) {
+		        	where Volunteer_Job__c = :jobId and (Schedule_End_Date__c = null or Schedule_End_Date__c >= TODAY)
+		        	limit 999]) {
 		            SelectOption so = new SelectOption(jrs.id, jrs.Weekly_Occurrence__c + ' ' + jrs.Days_of_Week__c + ' ' + jrs.Schedule_Start_Date_Time__c.format() + '&nbsp;&nbsp;&nbsp;&nbsp;(' + jrs.name + ')' );
 		            so.setEscapeItem(false); 
 		            listSO.add(so);
