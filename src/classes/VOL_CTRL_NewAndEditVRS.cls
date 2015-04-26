@@ -57,7 +57,10 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
 		    // copy appropriate values
 		    vrs.Days_of_Week__c = jrs.Days_of_Week__c;
 		    vrs.Duration__c = jrs.Duration__c;
-		    vrs.Schedule_Start_Date_Time__c = datetime.newInstance(system.today(), jrs.Schedule_Start_Date_Time__c.time());
+		    DateTime dt = jrs.Schedule_Start_Date_Time__c;
+		    if (dt < system.now())
+		    	dt = datetime.newInstance(system.today(), jrs.Schedule_Start_Date_Time__c.time());
+		    vrs.Schedule_Start_Date_Time__c = dt;
 		    vrs.Schedule_End_Date__c = jrs.Schedule_End_Date__c;
 		    vrs.Weekly_Occurrence__c = jrs.Weekly_Occurrence__c;
 		}    	
