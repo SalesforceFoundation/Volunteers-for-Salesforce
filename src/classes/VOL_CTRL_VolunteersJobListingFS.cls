@@ -107,7 +107,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowLocationInfo = true;
         ShowSkills = false;
         ShowShifts = true;
-        ShowCampaignHierarchy = true;
+        ShowCampaignHierarchy = false;
         strLanguage = 'en-us'; 
         strDateFormat = 'EEEE M/d/yyyy';
         strTimeFormat = 'h:mm tt';
@@ -139,7 +139,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         p = params.get('ShowShifts');
         if ( p == '0') ShowShifts = false;
         p = params.get('ShowCampaignHierarchy');
-        if ( p == '0') ShowCampaignHierarchy = false;
+        if ( p == '1') ShowCampaignHierarchy = true;
         p = params.get('Language');
         if (p != null && p != '') strLanguage = p;
         p = params.get('DateFormat');

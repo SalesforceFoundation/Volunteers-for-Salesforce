@@ -74,7 +74,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
         ShowLocationInfo = true;
         ShowSkills = false;
         ShowShifts = true;
-        ShowCampaignHierarchy = true;
+        ShowCampaignHierarchy = false;
         
         // handle optional parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
@@ -93,7 +93,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
         p = params.get('ShowShifts');
         if (p != null && p == '0') ShowShifts = false;
         p = params.get('ShowCampaignHierarchy');
-        if (p != null && p == '0') ShowCampaignHierarchy = false;
+        if (p != null && p == '1') ShowCampaignHierarchy = true;
         
         vhTemp.Number_of_Volunteers__c = 1;
         contactIdSignUp = null;
