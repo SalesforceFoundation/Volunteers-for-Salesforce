@@ -629,6 +629,29 @@ global with sharing class VOL_SharedCode {
 		        } 
 		    }
 	}
+    // This massively nested SOQL where statement looks hard coded and dumb, but as it turns out
+    // there's a limit on number of campaign hierarchy levels anyway, so this isn't as dumb as it 
+    // seems. This method will get all campaigns in hierarchy, and keeps the logic in a single query
+
+    /*******************************************************************************************************
+    * @description Static method that takes an Id
+    * Return a list of Campaign Ids that are children/grand-children &c of the given Campaign.
+    * @param Id for any campaign 
+    * @return List<Id> of child campaigns
+    ********************************************************************************************************/
+
+    global static List<Id> listIdsCampaignsInHierarchy(Id campaignId) {
+        Map<Id,Campaign> campaignsInHierarchy = new Map<Id,Campaign>(
+            [SELECT Id,Name FROM Campaign WHERE IsActive =:true AND 
+            (Id =: campaignId
+             OR ParentId =: campaignId
+             OR Parent.ParentId =: campaignId
+             OR Parent.Parent.ParentId =: campaignId
+             OR Parent.Parent.Parent.ParentId =: campaignId
+             OR Parent.Parent.Parent.Parent.ParentId =: campaignId)]
+        );
+        return new List<Id>(campaignsInHierarchy.keySet());
+    }
 
      
 }
