@@ -16,6 +16,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global boolean ShowLocationInfo { get; set; }
     global boolean ShowSkills { get; set; }
     global boolean ShowShifts { get; set; }
+    global boolean ShowCampaignHierarchy { get; set; }
     global string strLanguage { get; set; }
     global string strDateFormat { get; set; }
     global string strTimeFormat { get; set; }
@@ -106,6 +107,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowLocationInfo = true;
         ShowSkills = false;
         ShowShifts = true;
+        ShowCampaignHierarchy = true;
         strLanguage = 'en-us'; 
         strDateFormat = 'EEEE M/d/yyyy';
         strTimeFormat = 'h:mm tt';
@@ -136,6 +138,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p == '1') ShowSkills = true;
         p = params.get('ShowShifts');
         if ( p == '0') ShowShifts = false;
+        p = params.get('ShowCampaignHierarchy');
+        if ( p == '0') ShowCampaignHierarchy = false;
         p = params.get('Language');
         if (p != null && p != '') strLanguage = p;
         p = params.get('DateFormat');
@@ -213,7 +217,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         from Volunteer_Job__c where Id = :jobIdFilter  
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else if (campaignIdFilter != null) {
-                    List<Id> listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);
+                    List<Id> listCampaignIds = new List<Id> {campaignIdFilter};
+                    if (ShowCampaignHierarchy) {
+                        listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);    
+                    }
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
