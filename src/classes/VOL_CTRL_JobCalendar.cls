@@ -169,8 +169,10 @@ global with sharing class VOL_CTRL_JobCalendar {
 		            listSO.add(new SelectOption(vj.id, vj.name));
 		        }        	
 	        } else {
+                List<Id> listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignId);
+
 		        for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
-		        	where Campaign__c = :campaignId order by name limit 999]) {
+		        	where Campaign__c IN :listCampaignIds order by name limit 999]) {
 		            listSO.add(new SelectOption(vj.id, vj.name));
 		        }
 	        }       
@@ -232,12 +234,13 @@ global with sharing class VOL_CTRL_JobCalendar {
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	} else if (!fAllCampaign && fAllJob) {
+            List<Id> listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy((Id)strCampaignId);
 			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
 				Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
 				Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
 				from Volunteer_Shift__c
 				where Start_Date_Time__c >= :dtStart and Start_Date_Time__c <= :dtEnd
-					and Volunteer_Job__r.Campaign__c = :strCampaignId
+					and Volunteer_Job__r.Campaign__c IN :listCampaignIds
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	}

@@ -105,6 +105,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                 DateTime dtNow = system.Now().addHours(-1);
                 
                 if (campaignIdFilter != null) {
+                    List<Id> listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
@@ -112,7 +113,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                             Description__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow 
                             order by Start_Date_Time__c) 
-                        from Volunteer_Job__c where Campaign__c = :campaignIdFilter and Display_on_Website__c = true 
+                        from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
