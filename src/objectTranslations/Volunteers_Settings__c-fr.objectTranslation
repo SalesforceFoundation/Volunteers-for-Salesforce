@@ -9,18 +9,18 @@
         <value><!-- Volunteers Settings --></value>
     </caseValues>
     <fields>
-        <help><!-- A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full Developer name, including namespace prefix. NPSP email fields are automatically checked. --></help>
+        <help>Une liste séparée par des &apos;;&apos; de champs emails additionnels pour essayer de les relier à un contact existant. Note: ces champs sont déclarés avec leur nom complet de développeur, incluant le &apos;namespace prefix&apos;. Les emails du &apos;npsp&apos; sont auto. utilisés.</help>
         <label>Champs d&apos;email de match de contact</label>
         <name>Contact_Match_Email_Fields__c</name>
     </fields>
     <fields>
-        <help><!-- A semicolon separated list of additional Contact first name fields to try to match against when doing Contact matching. E.g., a nickname field.  Note that the fields are specified by their full Developer name, including namespace prefix. --></help>
+        <help>Une liste séparée par des &apos;;&apos; de champs prénoms additionnels pour essayer de les relier à un contact existant, comme par exemple un surnom. Notez que ces champs sont déclarés avec leur nom complet de développeur, incluant le &apos;namespace prefix&apos;.</help>
         <label>Champs de prénom de match de contact</label>
         <name>Contact_Match_First_Name_Fields__c</name>
     </fields>
     <fields>
-        <help><!-- Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email. --></help>
-        <label><!-- Contact Matching Rule --></label>
+        <help>Spécifie quelle règle à suivre lorsqu&apos;on essaie de faire correspondre avec des contacts existants depuis les pages bénévoles du site. Une suite de caractères séparés par des points-virgules qui contiennent plus que le prénom, le nom et l&apos;email.</help>
+        <label>Règle de correspondance pour le contact</label>
         <name>Contact_Matching_Rule__c</name>
     </fields>
     <fields>
@@ -29,8 +29,8 @@
         <name>Google_Maps_API_Key__c</name>
     </fields>
     <fields>
-        <help><!-- The Display Name of the Organization-Wide Email Address to use on the email sent from the PersonalSiteContactLookup Sites page. --></help>
-        <label><!-- Personal Site Org-Wide Email Name --></label>
+        <help>Le nom affiché de l&apos;adresses e-mail à l&apos;échelle de l&apos;organisation utilisée pour envoyer des emails depuis la page du site &apos;personalsitecontactlookup&apos;.</help>
+        <label>Adresse email pour toute l&apos;organisation</label>
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>

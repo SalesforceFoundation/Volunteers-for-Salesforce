@@ -15,7 +15,7 @@
         <name>Unique_Volunteer_Count__c</name>
     </fields>
     <fields>
-        <help><!-- Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule. --></help>
+        <help>Cochée si le contact ne veut pas recevoir de rappels automatiques sur ses prochaines plages horaires.  Utilisé dans la règle de flux &apos;volunteer hours reminder email&apos;.</help>
         <label>L&apos;email bénévolat d&apos;auto choisissent</label>
         <name>Volunteer_Auto_Reminder_Email_Opt_Out__c</name>
     </fields>

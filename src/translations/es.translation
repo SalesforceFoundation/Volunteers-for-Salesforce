@@ -188,11 +188,11 @@ day: &apos;día&apos;</label>
         <name>labelContactInfoRankText</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelContactInfoRankText12Months --></label>
+        <label>Top {0} últimos 12 meses</label>
         <name>labelContactInfoRankText12Months</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelContactInfoRankTextLifetime --></label>
+        <label>Top {0} de por vida</label>
         <name>labelContactInfoRankTextLifetime</name>
     </customLabels>
     <customLabels>
@@ -308,7 +308,7 @@ day: &apos;día&apos;</label>
         <name>labelListViewNext</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for page info in list view --></label>
+        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;Página {0} de {1} &amp;nbsp;&amp;nbsp;({2} registros)</label>
         <name>labelListViewPageInfo</name>
     </customLabels>
     <customLabels>
@@ -448,7 +448,7 @@ day: &apos;día&apos;</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteContactInfoTitle --></label>
+        <label>Ver la información</label>
         <name>labelPersonalSiteContactInfoTitle</name>
     </customLabels>
     <customLabels>
@@ -480,7 +480,7 @@ day: &apos;día&apos;</label>
         <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteTitle --></label>
+        <label>Voluntarios Página Personal</label>
         <name>labelPersonalSiteTitle</name>
     </customLabels>
     <customLabels>
