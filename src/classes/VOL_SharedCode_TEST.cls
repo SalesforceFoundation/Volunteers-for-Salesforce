@@ -99,11 +99,6 @@ public with sharing class VOL_SharedCode_TEST {
 			system.assertEquals(1, listCon2.size());
 		}
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 263044f... VOL_SharedCode.listIdsCampaignsInHierarchy will return a list of all child, grandchild, &c campaigns from a given campaign Id.
     /*
     * └── grandparent
     *     ├── parent1
@@ -153,15 +148,9 @@ public with sharing class VOL_SharedCode_TEST {
         System.assert(child5Set.contains(grandchild3.Id));
         System.assert(!child5Set.contains(parent2.Id));
 
-<<<<<<< HEAD
         // check that it won't screw up w/ no children
         System.assertEquals(1, VOL_SharedCode.listIdsCampaignsInHierarchy(grandchild3.Id).size());
 
     }
->>>>>>> 15030a2... last assert for more comprehensive testing
-=======
-    }
->>>>>>> 263044f... VOL_SharedCode.listIdsCampaignsInHierarchy will return a list of all child, grandchild, &c campaigns from a given campaign Id.
-
 
 }

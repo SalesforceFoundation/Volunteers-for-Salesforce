@@ -642,7 +642,8 @@ global with sharing class VOL_SharedCode {
 
     global static List<Id> listIdsCampaignsInHierarchy(Id campaignId) {
         Map<Id,Campaign> campaignsInHierarchy = new Map<Id,Campaign>(
-            [SELECT Id,Name FROM Campaign WHERE IsActive =:true AND 
+            [SELECT Id,Name FROM Campaign WHERE IsActive =:true  
+             AND RecordTypeId =: recordtypeIdVolunteersCampaign AND
             (Id =: campaignId
              OR ParentId =: campaignId
              OR Parent.ParentId =: campaignId
