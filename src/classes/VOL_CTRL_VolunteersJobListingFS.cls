@@ -169,12 +169,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
-        VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Job__c', 
+        VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c'), 
         	new list<string>{'Name','Description__c','Campaign__c','Location_Information__c','Number_of_Shifts__c','Skills_Needed__c',
         					'Volunteer_Website_Time_Zone__c','Location_Street__c','First_Shift__c'});
-        VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Shift__c', 
+        VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c'), 
         	new list<string>{'Start_Date_Time__c','Duration__c','Number_of_Volunteers_Still_Needed__c','Description__c','System_Note__c'});
-       	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
+       	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS));
         
         contactIdSignUp = null;

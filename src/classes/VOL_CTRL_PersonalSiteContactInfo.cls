@@ -83,9 +83,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel2FS));
        	VOL_SharedCode.testObjectFieldVisibility('Contact', 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoExtraFS));
-       	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
+       	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.PersonalSiteContactInfoUpcomingShifts));
-       	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
+       	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.PersonalSiteContactInfoHistory));
         
 	}
