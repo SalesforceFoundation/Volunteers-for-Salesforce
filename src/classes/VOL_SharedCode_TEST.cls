@@ -99,6 +99,58 @@ public with sharing class VOL_SharedCode_TEST {
 			system.assertEquals(1, listCon2.size());
 		}
     }
+    /*
+    * └── grandparent
+    *     ├── parent1
+    *     │   ├── child1
+    *     │   ├── child2
+    *     │   └── child3
+    *     └── parent2
+    *         ├── child4
+    *         └── child5
+    *             ├── grandchild1
+    *             ├── grandchild2
+    *             └── grandchild3
+* 
+    */
+    static testmethod void testCampaignHierarchy() {
+        // build campaign hierarchy as shown above
+        Campaign grandParent = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Grandparent', IsActive=true);
+        insert grandParent;
+        Campaign parent1 = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = grandParent.Id, name='Parent 1 of 2', IsActive=true);
+        Campaign parent2 = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = grandParent.Id, name='Parent 2 of 2', IsActive=true);
+        insert new List<Campaign> {parent1, parent2};
+        Campaign child1 = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = parent1.Id, name='Child 1 of 5', IsActive=true);
+        Campaign child2 = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = parent1.Id, name='Child 2 of 5', IsActive=true);
+        Campaign child3 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = parent1.Id, name='Child 3 of 5', IsActive=true);
+        Campaign child4 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = parent2.Id, name='Child 4 of 5', IsActive=true);
+        Campaign child5 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = parent2.Id, name='Child 5 of 5', IsActive=true);
+        insert new List<Campaign> {child1,child2,child3,child4,child5};
+        Campaign grandchild1 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = child5.Id, name='Grandchild 1 of 3', IsActive=true);
+        Campaign grandchild2 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = child5.Id, name='Grandchild 2 of 3', IsActive=true);
+        Campaign grandchild3 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = child5.Id, name='Grandchild 3 of 3', IsActive=true);
+        insert new List<Campaign> {grandchild1,grandchild2,grandchild3};
 
+        // get a few trees
+        List<Id> parent2Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(parent2.Id);
+        List<Id> parent1Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(parent1.Id);
+        List<Id> grandparentTree = VOL_SharedCode.listIdsCampaignsInHierarchy(grandParent.Id);
+        List<Id> child5Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(child5.Id);
+
+        // check tree sizes
+        System.assertEquals(4,child5Tree.size());
+        System.assertEquals(6, parent2Tree.size());
+        System.assertEquals(4, parent1Tree.size());
+        System.assertEquals(11, grandparentTree.size());
+
+        // check that tree is legit
+        Set<Id> child5Set = new Set<Id>(child5Tree);
+        System.assert(child5Set.contains(grandchild3.Id));
+        System.assert(!child5Set.contains(parent2.Id));
+
+        // check that it won't screw up w/ no children
+        System.assertEquals(1, VOL_SharedCode.listIdsCampaignsInHierarchy(grandchild3.Id).size());
+
+    }
 
 }
