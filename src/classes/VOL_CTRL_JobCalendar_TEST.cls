@@ -46,4 +46,18 @@ public with sharing class VOL_CTRL_JobCalendar_TEST {
 		system.assert(ctrl.listSOVolunteerJobs.size() >= 2);
 
     }
+    
+    public static testmethod void testCampaignHierarchies() {
+
+		//create our test data
+		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();
+		ID cmpIdGrandparent = mapCmp.get('Grandparent').Id;
+		system.assertNotEquals(null, cmpIdGrandparent);
+    
+    	// start testing!
+		list<Volunteer_Shift__c> listS = VOL_CTRL_JobCalendar.getListShiftsWeb2(cmpIdGrandparent, '*', '2010-01-01 1:1:1', '2050-01-01 1:1:1', false, false);
+		system.assertEquals(1, listS.size()); 
+		listS = VOL_CTRL_JobCalendar.getListShiftsWeb2(cmpIdGrandparent, '*', '2010-01-01 1:1:1', '2050-01-01 1:1:1', false, true);
+		system.assertEquals(mapCmp.size(), listS.size()); 
+    }
 }

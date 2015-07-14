@@ -99,7 +99,12 @@ public with sharing class VOL_SharedCode_TEST {
 			system.assertEquals(1, listCon2.size());
 		}
     }
-    /*
+    
+    
+	/*******************************************************************************************************
+	* @description creates a hierarchy of volunteer campaigns, each with a job and a shift.
+	* @return a map of campaigns created, with name as their key.
+	*
     * └── grandparent
     *     ├── parent1
     *     │   ├── child1
@@ -111,9 +116,9 @@ public with sharing class VOL_SharedCode_TEST {
     *             ├── grandchild1
     *             ├── grandchild2
     *             └── grandchild3
-* 
+	* 
     */
-    static testmethod void testCampaignHierarchy() {
+    public static map<string, Campaign> mapCampaignTestHierarchy() {
         // build campaign hierarchy as shown above
         Campaign grandParent = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Grandparent', IsActive=true);
         insert grandParent;
@@ -130,12 +135,36 @@ public with sharing class VOL_SharedCode_TEST {
         Campaign grandchild2 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = child5.Id, name='Grandchild 2 of 3', IsActive=true);
         Campaign grandchild3 =  new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, ParentId = child5.Id, name='Grandchild 3 of 3', IsActive=true);
         insert new List<Campaign> {grandchild1,grandchild2,grandchild3};
+    
+    	list<Campaign> listCampaign = new list<Campaign> {grandParent, parent1, parent2, child1, child2, child3, child4, child5, grandchild1, grandchild2, grandchild3};
+    	list<Volunteer_Job__c> listJob = new list<Volunteer_Job__c>();
+    	map<string, Campaign> mapCampaign = new map<string, Campaign>();
+    	for (Campaign cmp : listCampaign) {
+    		listJob.add(new Volunteer_Job__c(name=cmp.Name, Campaign__c=cmp.Id, Display_on_Website__c=true));
+    		mapCampaign.put(cmp.Name, cmp);
+    	}
+    	insert listJob;
+    	
+    	
+    	list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
+    	for (Volunteer_Job__c job : listJob) {
+    		listShift.add(new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.Today().addDays(1)));
+    	}
+    	insert listShift;
+    	
+    	return mapCampaign;
+    }
+
+
+    static testmethod void testCampaignHierarchy() {
+        // build campaign hierarchy as shown above
+		map<string, Campaign> mapCmp = mapCampaignTestHierarchy();
 
         // get a few trees
-        List<Id> parent2Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(parent2.Id);
-        List<Id> parent1Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(parent1.Id);
-        List<Id> grandparentTree = VOL_SharedCode.listIdsCampaignsInHierarchy(grandParent.Id);
-        List<Id> child5Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(child5.Id);
+        List<Id> parent2Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(mapCmp.get('Parent 2 of 2').Id);
+        List<Id> parent1Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(mapCmp.get('Parent 1 of 2').Id);
+        List<Id> grandparentTree = VOL_SharedCode.listIdsCampaignsInHierarchy(mapCmp.get('Grandparent').Id);
+        List<Id> child5Tree = VOL_SharedCode.listIdsCampaignsInHierarchy(mapCmp.get('Child 5 of 5').Id);
 
         // check tree sizes
         System.assertEquals(4,child5Tree.size());
@@ -145,11 +174,11 @@ public with sharing class VOL_SharedCode_TEST {
 
         // check that tree is legit
         Set<Id> child5Set = new Set<Id>(child5Tree);
-        System.assert(child5Set.contains(grandchild3.Id));
-        System.assert(!child5Set.contains(parent2.Id));
+        System.assert(child5Set.contains(mapCmp.get('Grandchild 3 of 3').Id));
+        System.assert(!child5Set.contains(mapCmp.get('Parent 2 of 2').Id));
 
         // check that it won't screw up w/ no children
-        System.assertEquals(1, VOL_SharedCode.listIdsCampaignsInHierarchy(grandchild3.Id).size());
+        System.assertEquals(1, VOL_SharedCode.listIdsCampaignsInHierarchy(mapCmp.get('Grandchild 3 of 3').Id).size());
 
     }
 
