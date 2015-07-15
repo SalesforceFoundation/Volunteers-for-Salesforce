@@ -250,46 +250,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     }
                 }
             }
-            dateTimeFixup(listVolunteerJobs);
+            VOL_SharedCode.dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
             return sortVolunteerJobs(listVolunteerJobs);
         }
         
         set;
     }
-    
-    // routine to go through all the shifts, and create the display string
-    // for the shifts start date & time - end date & time, using the appropriate
-    // time zone that might be specified on the Job, Campaign, or Site Guest User.
-    // Note that it stores this string in the Shift's System_Note__c field (in memory only).
-    private void dateTimeFixup(list<Volunteer_Job__c> listJob) {
         
-        // get default time zone for site guest user
-        User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
-        
-        // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
-        string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
-        string strFormatEndTime = strTimeFormat.replace('tt','a');
-        
-        for (Volunteer_Job__c job : listJob) {
-            string strTimeZone = job.Volunteer_Website_Time_Zone__c;
-            if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
-            if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
-
-            for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
-                
-                DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
-                string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
-                
-                // see if start and end are on the same day
-                if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
-                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone); 
-                } else {
-                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);                        
-                }               
-            }
-        }
-    }
-    
     global virtual list<Volunteer_Job__c> sortVolunteerJobs (list<Volunteer_Job__c> jobsList) {
         list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
         DateTime faroutFuture = System.Now().addYears(100);

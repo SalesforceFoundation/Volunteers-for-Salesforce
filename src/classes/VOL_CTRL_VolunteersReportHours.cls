@@ -11,11 +11,17 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
 		// initial values for potential parameters
     	strLanguage = 'en-us'; 
+        strDateFormat = 'EEEE M/d/yyyy';
+        strTimeFormat = 'h:mm tt';
 
         // handle optional page parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
         string p = params.get('Language');
         if (p != null && p != '') strLanguage = p;
+        p = params.get('DateFormat');
+        if (p != null && p != '') strDateFormat = p;
+        p = params.get('TimeFormat');
+        if (p != null && p != '') strTimeFormat = p;
 
         // we now get the fields from the fieldset
         listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersReportHoursFS);
@@ -79,6 +85,8 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     
     // global properties
     global string strLanguage { get; set; }
+    global string strDateFormat { get; set; }
+    global string strTimeFormat { get; set; }
     global list<string> listStrFields { get; set; } 
     global boolean fPersonalSite { get; set; }
 
@@ -122,8 +130,8 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     global list<SelectOption> listSOVolunteerShifts {
         get {
             if (listSOVolunteerShifts == null && volunteerJobId != null) {
-                listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId, 
-                	system.today().addMonths(-2), system.today().addMonths(1), false, false); 
+                listSOVolunteerShifts = VOL_SharedCode.listSOVolunteerShiftsOfVolunteerJobIdFormat(volunteerJobId, 
+                	system.today().addMonths(-2), system.today().addMonths(1), false, false, strDateFormat, strTimeFormat); 
             }
             return listSOVolunteerShifts;
         }
