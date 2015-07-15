@@ -209,7 +209,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     // routine to go through all the hours, and create the display string
     // for the shifts start time - end date & time, using the appropriate
     // time zone that might be specified on the Job, Campaign, or Site Guest User.
-    // Note that it stores this string in the Hours' System_Note__c field (in memory only).
+    // Note that it stores the formatted Time in the Hours' System_Note__c field (in memory only).
+    // Note that it stores the formatted Date in the Hours' Comment field (in memory only).
     private void dateTimeFixup(list<Volunteer_Hours__c> listHours) {
     	
     	// get default time zone for site guest user
@@ -223,22 +224,27 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 			string strTimeZone = hr.Volunteer_Job__r.Volunteer_Website_Time_Zone__c;
 			if (strTimeZone == null) strTimeZone = hr.Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c;
 			if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
-
+			
 			DateTime dtStart = hr.Planned_Start_Date_Time__c == null ? hr.Shift_Start_Date_Time__c : hr.Planned_Start_Date_Time__c;
-			if (dtStart == null) dtStart = hr.Start_Date__c;
-			double duration = hr.Hours_Worked__c == null ? hr.Volunteer_Shift__r.Duration__c : hr.Hours_Worked__c;
-			DateTime dtEnd = dtStart.addMinutes(integer.valueOf(duration * 60));
-			string strStart = dtStart.format(strFormat, strTimeZone);
-			
-			// see if start and end are on the same day
-			if (dtStart.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
-				hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);	
+			if (dtStart == null) {
+				// if we don't have a start time, then format by GMT, to avoid timezones moving the date!
+				dtStart = hr.Start_Date__c;
+				hr.Comments__c = dtStart.formatGmt(strDateFormat);
 			} else {
-				hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormat, strTimeZone);	    				
-			} 
-			
-			// also save user formated Start Date in Comments field
-			hr.Comments__c = dtStart.format(strDateFormat, strTimeZone);  			
+				double duration = hr.Hours_Worked__c == null ? hr.Volunteer_Shift__r.Duration__c : hr.Hours_Worked__c;
+				DateTime dtEnd = dtStart.addMinutes(integer.valueOf(duration * 60));
+				string strStart = dtStart.format(strFormat, strTimeZone);
+				
+				// see if start and end are on the same day
+				if (dtStart.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
+					hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);	
+				} else {
+					hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormat, strTimeZone);	    				
+				} 
+				
+				// also save user formated Start Date in Comments field
+				hr.Comments__c = dtStart.format(strDateFormat, strTimeZone);
+			}  			
     	}
     }
         
