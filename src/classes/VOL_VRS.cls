@@ -150,7 +150,7 @@ public with sharing class VOL_VRS {
 				listWhichDays[nday] &&
 				vrs.Schedule_Start_Date_Time__c != null &&
 				dtShift >= vrs.Schedule_Start_Date_Time__c.Date() &&
-				(vrs.Schedule_End_Date__c == null || vrs.Schedule_End_Date__c > dtShift)) {
+				(vrs.Schedule_End_Date__c == null || vrs.Schedule_End_Date__c >= dtShift)) {
 					
 				// we need to deal with the person already having hours on this shift
 				// that might be completed, or canceled, or web signup.  
