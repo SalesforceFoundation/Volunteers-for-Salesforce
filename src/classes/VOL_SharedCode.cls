@@ -37,6 +37,12 @@ global with sharing class VOL_SharedCode {
      
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+        
+        // ensure valid date ranges
+        if (dtStart == null)
+        	dtStart = system.today();
+        if (dtEnd == null)
+        	dtEnd = system.today().addMonths(12);
         dtEnd = dtEnd.addDays(1);
         
         // get our shifts in a Job query, so we can use our common date/time formatting routine.
@@ -571,16 +577,17 @@ global with sharing class VOL_SharedCode {
 			return;
 			
 		// now that we have the Id's of the shifts, let's get them from the database, update them by the number of volunteers, and then commit.
-		list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
-		listShifts = [select Id, Total_Volunteers__c from Volunteer_Shift__c where Id in :mpShiftIdDelta.keySet()];
-		
-		// loop through and update them
-		for (Volunteer_Shift__c shift : listShifts) {
-			Double numVols = shift.Total_Volunteers__c;
-			if (numVols == null || resetTotals) numVols = 0;
-			shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
+		//list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
+		for (list<Volunteer_Shift__c> listShifts : [select Id, Total_Volunteers__c from Volunteer_Shift__c where Id in :mpShiftIdDelta.keySet()]) {
+			
+			// loop through and update them
+			for (Volunteer_Shift__c shift : listShifts) {
+				Double numVols = shift.Total_Volunteers__c;
+				if (numVols == null || resetTotals) numVols = 0;
+				shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
+			}
+			update listShifts;
 		}
-		update listShifts;
 	}
 	
 	
