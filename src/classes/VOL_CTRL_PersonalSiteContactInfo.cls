@@ -27,7 +27,11 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         
         p = params.get('contactId');
         if (p != null && p != '') {
-        	contactId = p;
+        	try {
+        		contactId = p;
+        	} catch (Exception ex) {
+        		contactId = null;
+        	}
         	// cache the contactId for all pages to use.
 			Cookie cId = new cookie('contactIdPersonalSite', contactId, null, -1, false);
         	ApexPages.currentPage().setCookies(new Cookie[] {cId});
@@ -39,7 +43,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         
 		// if we still don't know who we are editing, need to bail out.
         if (contactId == null) {    	
-    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL,'Please pass in a contactId with the URL.')); 	
+    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL,'Please pass in a valid contactId with the URL.')); 	
         	return;
         }
 
