@@ -128,7 +128,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     		}
     		NumberOfContacts = setContactId.size();
 		} else {
-			NumberOfContacts = listHr.size();
+			NumberOfContacts = (listHR != null ? listHr.size() : 0);
 		}    		
     	return null;
     }
