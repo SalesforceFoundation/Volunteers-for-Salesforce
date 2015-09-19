@@ -294,13 +294,19 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 	            
 	            // override start date and end date
 	            if (hoursNew.Volunteer_Shift__c != null) {
-					hoursNew.Start_Date__c = mapIdToShift.get(hoursNew.Volunteer_Shift__c).Start_Date_Time__c.date();
-					hoursNew.End_Date__c = hoursNew.Start_Date__c;	            	
+	            	Date dtNew = mapIdToShift.get(hoursNew.Volunteer_Shift__c).Start_Date_Time__c.date();
+					hoursNew.Start_Date__c = dtNew;
+					hoursNew.End_Date__c = dtNew;	            	
+		            // fixup Planned_Start_Date_Time__c
+		            if (hours.Planned_Start_Date_Time__c != null) {
+		            	Time tm = hours.Planned_Start_Date_Time__c.timeGmt();
+		            	hoursNew.Planned_Start_Date_Time__c = DateTime.newInstanceGmt(dtNew, tm);
+		            }
 	            } else {
 	            	hoursNew.Start_Date__c = cmpVols.StartDate;
 	            	hoursNew.End_Date__c = null;
 	            }
-	                        
+	            	                        
 	            listHours.add(hoursNew);
 	        }
 	        insert listHours;

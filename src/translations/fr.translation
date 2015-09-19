@@ -17,7 +17,7 @@
         <name>labelButtonClose</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Update button --></label>
+        <label>Enregistrer</label>
         <name>labelButtonEdit</name>
     </customLabels>
     <customLabels>
@@ -136,51 +136,51 @@ day: &apos;jour&apos;</label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the cancel messagbox on the PersonalSiteContactInfo page --></label>
+        <label>Etes-vous sur de vouloir annuler cette plage horaire ?</label>
         <name>labelContactInfoCancelMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- title of contact info chart --></label>
+        <label>Vos heures par mois</label>
         <name>labelContactInfoChart</name>
     </customLabels>
     <customLabels>
-        <label><!-- label of chart x axis on Contact Info page --></label>
+        <label>Mois</label>
         <name>labelContactInfoChartXAxis</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for chart y axis on Contact Info page --></label>
+        <label>Heures de bénévolat</label>
         <name>labelContactInfoChartYAxis</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Date table column on PersonalSiteContactInfo --></label>
+        <label>Date</label>
         <name>labelContactInfoDateTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Details link on PersonalSiteContactInfo --></label>
+        <label>Détails</label>
         <name>labelContactInfoDetails</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Volunteer History on PersonalSiteContactInfo page --></label>
+        <label>Votre historique récent de bénévole</label>
         <name>labelContactInfoHistory</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Hours table column on PersonalSiteContactInfo --></label>
+        <label>Heure</label>
         <name>labelContactInfoHoursTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Job table column on PersonalSiteContactInfo --></label>
+        <label>Activité</label>
         <name>labelContactInfoJobTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for the Contact Lookup widget page --></label>
+        <label>Vos informations de bénévole</label>
         <name>labelContactInfoLookupTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- sub message on PersonalSiteContactInfo if the volunteer has no completed hours. --></label>
+        <label>Voir ses statistiques et son historique de bénévole après une première participation.</label>
         <name>labelContactInfoNewVolunteerText</name>
     </customLabels>
     <customLabels>
-        <label><!-- label on PersonalSiteContactInfo if the volunteer has no completed hours. --></label>
+        <label>Nouveau bénévole, bienvenue !</label>
         <name>labelContactInfoNewVolunteerTitle</name>
     </customLabels>
     <customLabels>
@@ -188,35 +188,35 @@ day: &apos;jour&apos;</label>
         <name>labelContactInfoRankText</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelContactInfoRankText12Months --></label>
+        <label>Top {0} des 12 derniers mois</label>
         <name>labelContactInfoRankText12Months</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelContactInfoRankTextLifetime --></label>
+        <label>Top {0} durée de vie</label>
         <name>labelContactInfoRankTextLifetime</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Rank field on Contact Info page --></label>
+        <label>Comment vous vous situez</label>
         <name>labelContactInfoRankTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Time table column on PersonalSiteContactInfo page --></label>
+        <label>Temps</label>
         <name>labelContactInfoTimeTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Upcoming Shifts on PersonalSiteContactInfo page --></label>
+        <label>Plages horaires programmées</label>
         <name>labelContactInfoUpcomingShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for instructions on the PersonalSiteContactLookup Sites page --></label>
+        <label>Remplissez vos noms et email, et un lien vers vos informations vous sera envoyé.</label>
         <name>labelContactLookupInstructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- the message displayed if the name &amp; email lookup to a contact fails --></label>
+        <label>Vos informations n&apos;ont pas été trouvée. Essayez avec un nom différent ou une autre adresse email.</label>
         <name>labelContactLookupNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- label displayed on PersonalSiteContactInfo if the lookup and email succeed --></label>
+        <label>Message envoyé.  Merci de vérifier votre email pour le message qui contient le liens vers vos informations de bénévoles. Merci.</label>
         <name>labelContactLookupSuccess</name>
     </customLabels>
     <customLabels>
@@ -360,35 +360,35 @@ day: &apos;jour&apos;</label>
         <name>labelMassEmailErrorNoTemplate</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp1 --></label>
+        <label>L&apos;envoi en masse des emails bénévoles regardera dans toutes les enregistrements d&apos;heures pour les activités récurrentes.</label>
         <name>labelMassEmailHelp1</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp2 --></label>
+        <label>Choisir un statut pour spécifier quels enregistrements inclure.</label>
         <name>labelMassEmailHelp2</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp3 --></label>
+        <label>Si la case &apos;envoyer une seule fois aux contacts&apos; est décochée, un email pour chaque heure de bénévolat sera envoyé.</label>
         <name>labelMassEmailHelp3</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp4 --></label>
+        <label>Si la case &apos;envoyer une seule fois aux contacts&apos; est cochée, un seul email sera envoyé pour les premières heures de bénévolat.</label>
         <name>labelMassEmailHelp4</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp5 --></label>
+        <label>Consigner une activité pour chaque email pour sauvegarder une activité avec le contact.</label>
         <name>labelMassEmailHelp5</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp6 --></label>
+        <label>Choisir le modèle à partir de l&apos;objet pour spécifier quel objet utiliser avec le modèle d&apos;email.</label>
         <name>labelMassEmailHelp6</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp7 --></label>
+        <label>Salesforce limite le nombre d&apos;email que vous pouvez envoyer chaque jours, il est donc recommandé de ne pas utilisé la fonction envoi d&apos;email en masse si vous avez un grand nombre d&apos;email à envoyer.</label>
         <name>labelMassEmailHelp7</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailTitle --></label>
+        <label>Envoi d&apos;email en masse aux bénévoles depuis</label>
         <name>labelMassEmailTitle</name>
     </customLabels>
     <customLabels>
@@ -404,7 +404,7 @@ day: &apos;jour&apos;</label>
         <name>labelMassEmailVolunteersLogActivity</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailVolunteersLogActivityHelpText --></label>
+        <label>L&apos;activité sera consignée sur le contact.</label>
         <name>labelMassEmailVolunteersLogActivityHelpText</name>
     </customLabels>
     <customLabels>
@@ -448,39 +448,39 @@ day: &apos;jour&apos;</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteContactInfoTitle --></label>
+        <label>Voir vos informations</label>
         <name>labelPersonalSiteContactInfoTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteEmailError --></label>
+        <label>Merci d&apos;entrer un email valide.</label>
         <name>labelPersonalSiteEmailError</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteEmailRequired --></label>
+        <label>L&apos;email est obligatoire.</label>
         <name>labelPersonalSiteEmailRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteFirstnameRequired --></label>
+        <label>Le prénom est obligatoire.</label>
         <name>labelPersonalSiteFirstnameRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for the Job Calendar under Personal Site --></label>
+        <label>Calendrier des activités</label>
         <name>labelPersonalSiteJobCalendarTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for JobListing page in Personal Site --></label>
+        <label>Activités de bénévolat</label>
         <name>labelPersonalSiteJobListingTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteLastnameRequired --></label>
+        <label>Le nom est obligatoire.</label>
         <name>labelPersonalSiteLastnameRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- title of the Report Hours page under Personal Site --></label>
+        <label>Annonce d&apos;heures</label>
         <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteTitle --></label>
+        <label>Volontaires site personnel</label>
         <name>labelPersonalSiteTitle</name>
     </customLabels>
     <customLabels>
@@ -488,7 +488,7 @@ day: &apos;jour&apos;</label>
         <name>labelReturnToCalendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelShowHelp --></label>
+        <label>Montrer l&apos;aide</label>
         <name>labelShowHelp</name>
     </customLabels>
     <customLabels>
@@ -504,11 +504,11 @@ day: &apos;jour&apos;</label>
         <name>labelSubmitButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelTemplateObject --></label>
+        <label>Modèle basé sur l&apos;objet</label>
         <name>labelTemplateObject</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelTemplateObjectHelpText --></label>
+        <label>Assurez-vous que le modèle et l&apos;objet soient identique. Si &apos;envoyer une seule fois aux contacts&apos; est cochée, les premières heures de bénévolat uniquement seront envoyée par email, vous pouvez donc vouloir utiliser un modèle moins spécifique.</label>
         <name>labelTemplateObjectHelpText</name>
     </customLabels>
     <customLabels>

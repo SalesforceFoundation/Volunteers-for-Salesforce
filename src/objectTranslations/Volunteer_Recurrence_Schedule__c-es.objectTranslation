@@ -9,8 +9,8 @@
         <value>Horarios de Voluntarios de recurrencia</value>
     </caseValues>
     <fields>
-        <help><!-- Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule. --></help>
-        <label><!-- Comments --></label>
+        <help>Texto que se copian al campo Horas comentario Voluntarios por todas las horas creados por esta recurrencia Horario Voluntarios.</help>
+        <label>Comentarios</label>
         <name>Comments__c</name>
     </fields>
     <fields>
@@ -55,8 +55,8 @@
         <name>Duration__c</name>
     </fields>
     <fields>
-        <help><!-- Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours. --></help>
-        <label><!-- Number of Volunteers --></label>
+        <help>Se establece en 1 para un individuo. Se establece en un número mayor si el contacto representa un grupo , y no será el seguimiento de horas de cada individuo.</help>
+        <label>Número de Voluntarios</label>
         <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>

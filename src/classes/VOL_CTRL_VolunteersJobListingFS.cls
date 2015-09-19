@@ -16,6 +16,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global boolean ShowLocationInfo { get; set; }
     global boolean ShowSkills { get; set; }
     global boolean ShowShifts { get; set; }
+    global boolean ShowCampaignHierarchy { get; set; }
     global string strLanguage { get; set; }
     global string strDateFormat { get; set; }
     global string strTimeFormat { get; set; }
@@ -106,6 +107,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowLocationInfo = true;
         ShowSkills = false;
         ShowShifts = true;
+        ShowCampaignHierarchy = false;
         strLanguage = 'en-us'; 
         strDateFormat = 'EEEE M/d/yyyy';
         strTimeFormat = 'h:mm tt';
@@ -136,6 +138,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p == '1') ShowSkills = true;
         p = params.get('ShowShifts');
         if ( p == '0') ShowShifts = false;
+        p = params.get('ShowCampaignHierarchy');
+        if ( p == '1') ShowCampaignHierarchy = true;
         p = params.get('Language');
         if (p != null && p != '') strLanguage = p;
         p = params.get('DateFormat');
@@ -169,12 +173,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
-        VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Job__c', 
+        VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c'), 
         	new list<string>{'Name','Description__c','Campaign__c','Location_Information__c','Number_of_Shifts__c','Skills_Needed__c',
         					'Volunteer_Website_Time_Zone__c','Location_Street__c','First_Shift__c'});
-        VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Shift__c', 
+        VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c'), 
         	new list<string>{'Start_Date_Time__c','Duration__c','Number_of_Volunteers_Still_Needed__c','Description__c','System_Note__c'});
-       	VOL_SharedCode.testObjectFieldVisibility('GW_Volunteers__Volunteer_Hours__c', 
+       	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS));
         
         contactIdSignUp = null;
@@ -213,6 +217,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         from Volunteer_Job__c where Id = :jobIdFilter  
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else if (campaignIdFilter != null) {
+                    List<Id> listCampaignIds = new List<Id> {campaignIdFilter};
+                    if (ShowCampaignHierarchy) {
+                        listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);    
+                    }
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
@@ -220,7 +228,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
-                        from Volunteer_Job__c where Campaign__c = :campaignIdFilter and Display_on_Website__c = true 
+                        from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
@@ -242,46 +250,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     }
                 }
             }
-            dateTimeFixup(listVolunteerJobs);
+            VOL_SharedCode.dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
             return sortVolunteerJobs(listVolunteerJobs);
         }
         
         set;
     }
-    
-    // routine to go through all the shifts, and create the display string
-    // for the shifts start date & time - end date & time, using the appropriate
-    // time zone that might be specified on the Job, Campaign, or Site Guest User.
-    // Note that it stores this string in the Shift's System_Note__c field (in memory only).
-    private void dateTimeFixup(list<Volunteer_Job__c> listJob) {
         
-        // get default time zone for site guest user
-        User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
-        
-        // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
-        string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
-        string strFormatEndTime = strTimeFormat.replace('tt','a');
-        
-        for (Volunteer_Job__c job : listJob) {
-            string strTimeZone = job.Volunteer_Website_Time_Zone__c;
-            if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
-            if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
-
-            for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
-                
-                DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
-                string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
-                
-                // see if start and end are on the same day
-                if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
-                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone); 
-                } else {
-                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);                        
-                }               
-            }
-        }
-    }
-    
     global virtual list<Volunteer_Job__c> sortVolunteerJobs (list<Volunteer_Job__c> jobsList) {
         list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
         DateTime faroutFuture = System.Now().addYears(100);

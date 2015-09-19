@@ -9,7 +9,7 @@ global with sharing class VOL_SharedCode {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', ''));
             for (Campaign c : [select Name, Id, StartDate from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign 
-            	and IsActive = true order by StartDate desc limit 999]) {
+            	and IsActive = true order by StartDate desc, Name asc limit 999]) {
                 listSO.add(new SelectOption(c.id, c.name));
             }       
             return listSO;
@@ -27,15 +27,43 @@ global with sharing class VOL_SharedCode {
     }
 
     // the list of Volunteer Job Shifts for the specified Job
-    global list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName, boolean fIncludeNumberNeeded) {
+	global list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName, boolean fIncludeNumberNeeded) {
+		return listSOVolunteerShiftsOfVolunteerJobIdFormat(volunteerJobId, dtStart, dtEnd, fIncludeShiftName, fIncludeNumberNeeded, null, null);
+	}
+     
+    // list of select options of Shifts for the specified job, using the date & time format strings for the shifts
+    public static list<SelectOption> listSOVolunteerShiftsOfVolunteerJobIdFormat(ID volunteerJobId, Date dtStart, Date dtEnd, 
+    	boolean fIncludeShiftName, boolean fIncludeNumberNeeded, string strDateFormat, string strTimeFormat) {
+     
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+        
+        // ensure valid date ranges
+        if (dtStart == null)
+        	dtStart = system.today();
+        if (dtEnd == null)
+        	dtEnd = system.today().addMonths(12);
         dtEnd = dtEnd.addDays(1);
-        for (Volunteer_Shift__c vs : [select Id, Name, Start_Date_Time__c, Number_of_Volunteers_Still_Needed__c from Volunteer_Shift__c 
-        	where Volunteer_Job__c = :volunteerJobId 
-        		and Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
-        	order by Start_Date_Time__c limit 999]) {
-            SelectOption so = new SelectOption(vs.id, vs.Start_Date_Time__c.format() + 
+        
+        // get our shifts in a Job query, so we can use our common date/time formatting routine.
+        list<Volunteer_Job__c> listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
+            Volunteer_Website_Time_Zone__c,
+            (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
+                Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
+                order by Start_Date_Time__c LIMIT 999) 
+            from Volunteer_Job__c where Campaign__r.IsActive = true and Id = :volunteerJobId];
+                
+        // whether to use our datetime formatting, or salesforce default for the current user
+        boolean useDateTimeFixup = (strDateFormat != null && strTimeFormat != null);        
+        
+        // put correct date/time format with appropriate timezone in system note field (in memory only)
+        if (useDateTimeFixup)
+        	dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
+        
+        for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
+            SelectOption so = new SelectOption(vs.id, 
+            	(useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) + 
             	(fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
             	(fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
             		(vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
@@ -46,6 +74,40 @@ global with sharing class VOL_SharedCode {
         }       
         return listSO;
     }
+    
+    // routine to go through all the shifts, and create the display string
+    // for the shifts start date & time - end date & time, using the appropriate
+    // time zone that might be specified on the Job, Campaign, or Site Guest User.
+    // Note that it stores this string in the Shift's System_Note__c field (in memory only).
+    public static void dateTimeFixup(list<Volunteer_Job__c> listJob, string strDateFormat, string strTimeFormat) {
+        
+        // get default time zone for site guest user
+        User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+        
+        // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
+        string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
+        string strFormatEndTime = strTimeFormat.replace('tt','a');
+        
+        for (Volunteer_Job__c job : listJob) {
+            string strTimeZone = job.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
+
+            for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
+                
+                DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
+                string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
+                
+                // see if start and end are on the same day
+                if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
+                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone); 
+                } else {
+                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);                        
+                }               
+            }
+        }
+    }
+    
     
     // Volunteer Custom Settings object.  Loads an existing, and if not found creates one with default values.
     global static Volunteers_Settings__c VolunteersSettings {
@@ -515,16 +577,17 @@ global with sharing class VOL_SharedCode {
 			return;
 			
 		// now that we have the Id's of the shifts, let's get them from the database, update them by the number of volunteers, and then commit.
-		list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
-		listShifts = [select Id, Total_Volunteers__c from Volunteer_Shift__c where Id in :mpShiftIdDelta.keySet()];
-		
-		// loop through and update them
-		for (Volunteer_Shift__c shift : listShifts) {
-			Double numVols = shift.Total_Volunteers__c;
-			if (numVols == null || resetTotals) numVols = 0;
-			shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
+		//list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
+		for (list<Volunteer_Shift__c> listShifts : [select Id, Total_Volunteers__c from Volunteer_Shift__c where Id in :mpShiftIdDelta.keySet()]) {
+			
+			// loop through and update them
+			for (Volunteer_Shift__c shift : listShifts) {
+				Double numVols = shift.Total_Volunteers__c;
+				if (numVols == null || resetTotals) numVols = 0;
+				shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
+			}
+			update listShifts;
 		}
-		update listShifts;
 	}
 	
 	
@@ -629,6 +692,30 @@ global with sharing class VOL_SharedCode {
 		        } 
 		    }
 	}
+    // This massively nested SOQL where statement looks hard coded and dumb, but as it turns out
+    // there's a limit on number of campaign hierarchy levels anyway, so this isn't as dumb as it 
+    // seems. This method will get all campaigns in hierarchy, and keeps the logic in a single query
+
+    /*******************************************************************************************************
+    * @description Static method that takes an Id
+    * Return a list of Campaign Ids that are children/grand-children &c of the given Campaign.
+    * @param Id for any campaign 
+    * @return List<Id> of child campaigns
+    ********************************************************************************************************/
+
+    global static List<Id> listIdsCampaignsInHierarchy(Id campaignId) {
+        Map<Id,Campaign> campaignsInHierarchy = new Map<Id,Campaign>(
+            [SELECT Id,Name FROM Campaign WHERE IsActive =:true  
+             AND RecordTypeId =: recordtypeIdVolunteersCampaign AND
+            (Id =: campaignId
+             OR ParentId =: campaignId
+             OR Parent.ParentId =: campaignId
+             OR Parent.Parent.ParentId =: campaignId
+             OR Parent.Parent.Parent.ParentId =: campaignId
+             OR Parent.Parent.Parent.Parent.ParentId =: campaignId)]
+        );
+        return new List<Id>(campaignsInHierarchy.keySet());
+    }
 
      
 }

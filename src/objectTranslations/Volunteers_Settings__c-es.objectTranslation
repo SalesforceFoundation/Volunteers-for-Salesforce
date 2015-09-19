@@ -19,12 +19,12 @@
         <name>Contact_Match_First_Name_Fields__c</name>
     </fields>
     <fields>
-        <help><!-- Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email. --></help>
-        <label><!-- Contact Matching Rule --></label>
+        <help>Especifica qué regla a seguir cuando se trata de igualar Contactos contra contactos existentes de las páginas Voluntarios Sites . Punto y coma cadena que contiene uno o más de los campos de nombre, apellido y correo electrónico separadas .</help>
+        <label>Contacto Matching Regla</label>
         <name>Contact_Matching_Rule__c</name>
     </fields>
     <fields>
-        <help><!-- If you include a Google Maps API Key, the JobListing pages will display a map on your volunteers site for the Job Location. --></help>
+        <help>Si se incluye una clave de API de Google Maps , las páginas JobListing mostrará un mapa en su sitio voluntarios para el Lugar del Trabajo .</help>
         <label><!-- Google Maps API Key --></label>
         <name>Google_Maps_API_Key__c</name>
     </fields>

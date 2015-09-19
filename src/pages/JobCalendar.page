@@ -74,8 +74,8 @@
                 }
                 if (jobId == null || jobId == '') jobId = '*';
 
-                GW_Volunteers.VOL_CTRL_JobCalendar.getListShiftsWeb(
-                    campaignId, jobId, strApexDateLocale(start, false), strApexDateLocale(end, false), {!fWeb}, function(result, event) {
+                GW_Volunteers.VOL_CTRL_JobCalendar.getListShiftsWeb2(
+                    campaignId, jobId, strApexDateLocale(start, false), strApexDateLocale(end, false), {!fWeb}, {!fShowCampaignHierarchy}, function(result, event) {
                     if (event.type == 'exception') {
                         alert(event.message);
                     } else {

@@ -16,8 +16,8 @@
     var j$ = jQuery.noConflict();
 
     j$(function() {
-        j$("#dlgSignUp").dialog({modal: false, autoOpen: false, draggable: true, width: 400, resizeable: true });
-        j$("#dlgThankYou").dialog({modal: false, autoOpen: false, draggable: true, width: 400, resizeable: true });
+        j$("#dlgSignUp").dialog({modal: true, autoOpen: false, draggable: true, width: 400, resizeable: true });
+        j$("#dlgThankYou").dialog({modal: true, autoOpen: false, draggable: true, width: 400, resizeable: true });
 
 		// if there are errors, display the signup dialog.
 		// we detect this by seeing if Salesforce inserted the error style on any item.        

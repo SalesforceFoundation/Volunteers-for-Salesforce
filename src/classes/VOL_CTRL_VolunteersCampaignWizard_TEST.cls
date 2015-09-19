@@ -50,7 +50,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
         	Contact__c = c1.Id,
         	Volunteer_Job__c = listShift[0].Volunteer_Job__c,
         	Volunteer_Shift__c = listShift[0].Id,
-        	Start_Date__c = cmp2.StartDate,
+        	Start_Date__c = listShift[0].Start_Date_Time__c.Date(),
+        	Planned_Start_Date_Time__c = System.DateTime.newInstance(listShift[0].Start_Date_Time__c.Date(), system.now().Time()),
         	Status__c = 'Confirmed'        	
         	);
         insert hours;
@@ -70,10 +71,11 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
         Campaign cmp3 = [select Id, Volunteer_Jobs__c, Volunteer_Shifts__c from Campaign where Name = 'My Test Volunteer Campaign 3'];
         System.AssertEquals(cmp2.Volunteer_Jobs__c, cmp3.Volunteer_Jobs__c);
         System.AssertEquals(cmp2.Volunteer_Shifts__c, cmp3.Volunteer_Shifts__c);
-        Volunteer_Hours__c hours3 = [select Id, Start_Date__c, Volunteer_Job__c, Volunteer_Shift__c, 
+        Volunteer_Hours__c hours3 = [select Id, Start_Date__c, Volunteer_Job__c, Volunteer_Shift__c, Planned_Start_Date_Time__c,
         	Status__c, Contact__c from Volunteer_Hours__c where Contact__c = :c1.id and Volunteer_Job__r.Campaign__c = :cmp3.id];
         system.assertEquals('Prospect', hours3.Status__c);
         system.assertEquals(system.today().addmonths(1), hours3.Start_Date__c);
+        system.assertEquals(system.today().addmonths(1), hours3.Planned_Start_Date_Time__c.Date());
         
         
         // scenario 4: test validation

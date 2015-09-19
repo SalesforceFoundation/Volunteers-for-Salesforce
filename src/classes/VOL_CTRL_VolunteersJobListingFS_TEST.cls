@@ -121,4 +121,27 @@ public with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.AssertEquals(2, vh.Number_Of_Volunteers__c);
     }
 
+    public static testmethod void testCampaignHierarchies() {
+
+		//create our test data
+		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();
+		ID cmpIdGrandparent = mapCmp.get('Grandparent').Id;
+		system.assertNotEquals(null, cmpIdGrandparent);
+    
+		// verify w/ no hierarchy
+        PageReference pageRef = Page.VolunteersJobListingFS;
+        pageRef.getParameters().put('campaignId', cmpIdGrandparent);
+        Test.setCurrentPage(pageRef); 
+        VOL_CTRL_VolunteersJobListingFS ctrl = new VOL_CTRL_VolunteersJobListingFS();
+		system.assertEquals(1, ctrl.listVolunteerJobs.size()); 
+
+		// verify w/ hierarchy
+        PageReference pageRef2 = Page.VolunteersJobListingFS;
+        pageRef2.getParameters().put('campaignId', cmpIdGrandparent);
+        pageRef2.getParameters().put('ShowCampaignHierarchy', '1');
+        Test.setCurrentPage(pageRef2); 
+        VOL_CTRL_VolunteersJobListingFS ctrl2 = new VOL_CTRL_VolunteersJobListingFS();
+		system.assertEquals(mapCmp.size(), ctrl2.listVolunteerJobs.size()); 
+    }
+
 }

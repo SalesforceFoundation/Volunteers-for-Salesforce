@@ -81,6 +81,10 @@ global with sharing class VOL_CTRL_JobCalendar {
         p = params.get('CalendarView');
         if (p != null && p != '') strCalendarView = p;
 
+		fShowCampaignHierarchy = false;
+        p = params.get('ShowCampaignHierarchy');
+        if (p == '1') fShowCampaignHierarchy = true;
+
 		// finally, keep all parameters for passing to VolunteersJobListingFS
 		// (but remove the params that the page will explicitly add to the url)
 		params.remove('Calendar');
@@ -124,6 +128,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     global string strCalendarView { get; set; }
     global string strParams { get; set; }
     global boolean fPersonalSite { get; set; }
+    global boolean fShowCampaignHierarchy { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
     global ID campaignId { get; set; }
@@ -189,30 +194,44 @@ global with sharing class VOL_CTRL_JobCalendar {
     
 	/*******************************************************************************************************
 	* @description Javascript Remoting method to return a list of Shifts, optionally filtered by strFilter.
-	* &param strStartDateTime filter for Logs >= startDate
-	* &param strEndDateTime filter for Logs <= endDate
+	* @param strStartDateTime filter for Logs >= startDate
+	* @param strEndDateTime filter for Logs <= endDate
 	* @return list<Volunteer_Shift__c>, which will be turned into a Javascript collection.
 	********************************************************************************************************/
     @RemoteAction global static list<Volunteer_Shift__c> getListShifts(string strCampaignId, string strJobId, 
     	string strStartDateTime, string strEndDateTime) {
-    	return getListShiftsWeb(strCampaignId, strJobId, strStartDateTime, strEndDateTime, false);		
+    	return getListShiftsWeb2(strCampaignId, strJobId, strStartDateTime, strEndDateTime, false, false);		
     }
     
 	/*******************************************************************************************************
 	* @description Javascript Remoting method to return a list of Shifts, optionally filtered by strFilter.
-	* &param strStartDateTime filter for Logs >= startDate
-	* &param strEndDateTime filter for Logs <= endDate
-	* &param fWeb whether to filter out job's who are not display on web.
+	* @param strStartDateTime filter for Logs >= startDate
+	* @param strEndDateTime filter for Logs <= endDate
+	* @param fWeb whether to filter out job's who are not display on web.
 	* @return list<Volunteer_Shift__c>, which will be turned into a Javascript collection.
 	********************************************************************************************************/
     @RemoteAction global static list<Volunteer_Shift__c> getListShiftsWeb(string strCampaignId, string strJobId, 
-    	string strStartDateTime, string strEndDateTime, boolean fWeb) {
+    	string strStartDateTime, string strEndDateTime, boolean fWeb) {    
+    	return getListShiftsWeb2(strCampaignId, strJobId, strStartDateTime, strEndDateTime, false, false);		
+	}
+    
+	/*******************************************************************************************************
+	* @description Javascript Remoting method to return a list of Shifts, optionally filtered by strFilter.
+	* @param strStartDateTime filter for Logs >= startDate
+	* @param strEndDateTime filter for Logs <= endDate
+	* @param fWeb whether to filter out job's who are not display on web.
+	* @param fShowCampaignHierarchy whether do to include descendant campaigns of strCampaignId
+	* @return list<Volunteer_Shift__c>, which will be turned into a Javascript collection.
+	********************************************************************************************************/
+    @RemoteAction global static list<Volunteer_Shift__c> getListShiftsWeb2(string strCampaignId, string strJobId, 
+    	string strStartDateTime, string strEndDateTime, boolean fWeb, boolean fShowCampaignHierarchy) {
+
     	DateTime dtStart = datetime.valueOf(strStartDateTime);
     	DateTime dtEnd = datetime.valueOf(strEndDateTime);
     	boolean fAllCampaign = (strCampaignId == '*');
     	boolean fAllJob = (strJobId == '*');
     	list<Volunteer_Shift__c> listShifts;
-    	
+    	    	
     	if (!fAllJob) {
 			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
 				Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c, 
@@ -232,12 +251,16 @@ global with sharing class VOL_CTRL_JobCalendar {
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	} else if (!fAllCampaign && fAllJob) {
+            List<Id> listCampaignIds = new List<Id> {strCampaignId};
+            if (fShowCampaignHierarchy) {
+                listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(strCampaignId);    
+            }
 			listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
 				Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
 				Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
 				from Volunteer_Shift__c
 				where Start_Date_Time__c >= :dtStart and Start_Date_Time__c <= :dtEnd
-					and Volunteer_Job__r.Campaign__c = :strCampaignId
+					and Volunteer_Job__r.Campaign__c = :listCampaignIds
 					and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
 				order by Start_Date_Time__c asc];    		
     	}
