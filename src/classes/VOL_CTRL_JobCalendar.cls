@@ -212,7 +212,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 	********************************************************************************************************/
     @RemoteAction global static list<Volunteer_Shift__c> getListShiftsWeb(string strCampaignId, string strJobId, 
     	string strStartDateTime, string strEndDateTime, boolean fWeb) {    
-    	return getListShiftsWeb2(strCampaignId, strJobId, strStartDateTime, strEndDateTime, false, false);		
+    	return getListShiftsWeb2(strCampaignId, strJobId, strStartDateTime, strEndDateTime, fWeb, false);		
 	}
     
 	/*******************************************************************************************************
