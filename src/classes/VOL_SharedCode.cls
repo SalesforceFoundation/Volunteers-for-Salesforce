@@ -52,8 +52,12 @@ global with sharing class VOL_SharedCode {
                 Description__c, System_Note__c From Volunteer_Job_Slots__r 
                 where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
                 order by Start_Date_Time__c LIMIT 999) 
-            from Volunteer_Job__c where Campaign__r.IsActive = true and Id = :volunteerJobId];
+            from Volunteer_Job__c where Id = :volunteerJobId];
                 
+        // bail out if no jobs found
+        if (listVolunteerJobs.size() == 0)
+        	return listSO;
+        
         // whether to use our datetime formatting, or salesforce default for the current user
         boolean useDateTimeFixup = (strDateFormat != null && strTimeFormat != null);        
         
