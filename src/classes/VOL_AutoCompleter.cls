@@ -14,11 +14,12 @@ global class VOL_AutoCompleter implements Database.Batchable<SObject>, Schedulab
     * @description contains the query that will find all Confimed hours records from shifts
     * in the past.
     */
-    global static String query = 'SELECT Id,Hours_Worked__c,'+
+    global static String query = 'SELECT Id,Hours_Worked__c, '+
             'Volunteer_Shift__r.Duration__c '+
             'FROM Volunteer_Hours__c '+
             'WHERE Status__c = \'Confirmed\' '+
             'AND Shift_Start_Date_Time__c < TODAY '+
+            'AND Volunteer_Job__r.AutoComplete__c = true ' 
             'AND Do_Not_AutoComplete__c != true';
 
     /**********************************************************************************************
