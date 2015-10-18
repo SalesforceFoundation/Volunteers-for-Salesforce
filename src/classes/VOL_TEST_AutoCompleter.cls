@@ -9,7 +9,7 @@ public class TestAutoCompleter {
         Campaign v = new Campaign(Name='Volunteering', IsActive=true);
         insert v;
 
-        Volunteer_Job__c job1 = new Volunteer_Job__c(Name='Work', Campaign__c = v.Id);
+        Volunteer_Job__c job1 = new Volunteer_Job__c(Name='Work', Campaign__c = v.Id, AutoComplete__c = true);
         insert job1;
         
         Volunteer_Shift__c pastShift = new Volunteer_Shift__c(Start_Date_Time__c = DateTime.now().addDays(-10), Volunteer_Job__c = job1.Id, Duration__c = 2);
