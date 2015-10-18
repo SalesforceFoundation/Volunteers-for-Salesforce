@@ -228,6 +228,16 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+        <fields>
+        <fullName>AutoComplete__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Used by the Volunteers Auto Completer to indicate that this record should be completed by the scheduled job. Opt-in...</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Should this job's hours be autocompleted?</inlineHelpText>
+        <label>Autocomplete?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Skills_Needed__c</fullName>
         <deprecated>false</deprecated>
