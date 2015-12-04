@@ -3,7 +3,6 @@
     <fullName>Volunteers for Salesforce</fullName>
     <apiAccessLevel>Unrestricted</apiAccessLevel>
     <description>Volunteers for Salesforce managed package, by David Habib of DJH Consulting.</description>
-    <namespacePrefix>GW_Volunteers</namespacePrefix>
     <types>
         <members>ComponentControllerBase</members>
         <members>GW_CTRL_BatchJobsProgress</members>

@@ -114,6 +114,7 @@
 				<iframe class="cssGoogleMapIFrame" 
 					src="https://www.google.com/maps/embed/v1/place?q={!job.Location_Street__c}+{!job.Location_City__c}+{!job.Location__c}+{!job.Location_Zip_Postal_Code__c}&key={!strGoogleMapAPIKey}">
 				</iframe>
+                YAY MAP
 				</p>
 			</apex:outputPanel>            
             </p>
