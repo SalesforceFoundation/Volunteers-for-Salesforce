@@ -127,6 +127,10 @@ public with sharing class VOL_JRS {
 		list<Volunteer_Shift__c> listShiftDelete,
 		list<Volunteer_Shift__c> listShiftUpdate,
 		boolean fReviewAllShifts ) {
+			
+		// bullet proof for previously non-required fields
+		if (jrs.Weekly_Occurrence__c == null || jrs.Days_of_Week__c == null)
+			return;
 	
 		// assume custom setting to specify how far into future shifts should populate to.
 		Date dtStop = system.today();

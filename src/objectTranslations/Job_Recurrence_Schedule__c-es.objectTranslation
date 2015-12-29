@@ -108,4 +108,12 @@
         </sections>
     </layouts>
     <nameFieldLabel>JRS ID</nameFieldLabel>
+    <validationRules>
+        <errorMessage><!-- You must specify at least one value for Days of Week. --></errorMessage>
+        <name>JRS_Days_Of_Week_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You must specify at least one value for Weekly Occurrence --></errorMessage>
+        <name>JRS_Weekly_Occurrence_Required</name>
+    </validationRules>
 </CustomObjectTranslation>

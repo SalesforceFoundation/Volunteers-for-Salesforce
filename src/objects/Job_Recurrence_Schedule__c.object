@@ -250,4 +250,18 @@
         <searchResultsAdditionalFields>Duration__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>JRS_Days_Of_Week_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISNULL(Days_of_Week__c)</errorConditionFormula>
+        <errorDisplayField>Days_of_Week__c</errorDisplayField>
+        <errorMessage>You must specify at least one value for Days of Week.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>JRS_Weekly_Occurrence_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISNULL(Weekly_Occurrence__c)</errorConditionFormula>
+        <errorDisplayField>Weekly_Occurrence__c</errorDisplayField>
+        <errorMessage>You must specify at least one value for Weekly Occurrence</errorMessage>
+    </validationRules>
 </CustomObject>

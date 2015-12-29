@@ -560,8 +560,12 @@
         <name>Translations</name>
     </types>
     <types>
+        <members>Job_Recurrence_Schedule__c.JRS_Days_Of_Week_Required</members>
+        <members>Job_Recurrence_Schedule__c.JRS_Weekly_Occurrence_Required</members>
         <members>Volunteer_Hours__c.HoursRequiredOnCompletion</members>
         <members>Volunteer_Hours__c.StatusMustBeSet</members>
+        <members>Volunteer_Recurrence_Schedule__c.VRS_Days_of_Week_Required</members>
+        <members>Volunteer_Recurrence_Schedule__c.VRS_Weekly_Occurrence_Required</members>
         <name>ValidationRule</name>
     </types>
     <types>
