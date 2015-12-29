@@ -53,7 +53,7 @@ trigger VOL_Campaign_CreateStatuses on Campaign (after insert) {
 		    CampaignMemberStatus cms5 = new CampaignMemberStatus(
 		        Label = 'Canceled',
 		        CampaignId = cmp.Id,
-		        HasResponded = true,
+		        HasResponded = false,
 		        SortOrder = 500
 		    );
 		    listCMSTOAdd.add(cms5);
