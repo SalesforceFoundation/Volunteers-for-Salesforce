@@ -67,12 +67,12 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Personal_Site_requires_URL_Email_match__c</fullName>
+        <fullName>Personal_Site_Requires_URL_Email_Match__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact.</description>
         <externalId>false</externalId>
         <inlineHelpText>If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact.</inlineHelpText>
-        <label>Personal Site requires URL Email match</label>
+        <label>Personal Site Requires URL Email Match</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

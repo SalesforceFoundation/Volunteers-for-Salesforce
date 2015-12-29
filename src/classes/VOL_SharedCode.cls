@@ -308,7 +308,7 @@ global with sharing class VOL_SharedCode {
     // exists on the Contact record.
     global static boolean isValidContactIdAndEmail(ID contactId, string strEmail) {
     	string strSoql = 'select Id from Contact where Id = :contactId ';
-        if (VolunteersSettings.Personal_Site_requires_URL_Email_match__c) {
+        if (VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c) {
         	if (strEmail == null || strEmail == '')
         		return false;
             strSoql += 'and (Email= :strEmail';
