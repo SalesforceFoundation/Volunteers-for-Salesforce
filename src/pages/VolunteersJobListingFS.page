@@ -103,22 +103,22 @@
             <apex:outputField value="{!job.Skills_Needed__c}" />
             </p>  
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!ShowLocationAddress && job.Location_Street__c <> null}" >
+         <apex:outputPanel rendered="{!ShowLocationAddress && job.Location_Street__c <> null}" >
             <p class="cssJobLocationAddress">
             <apex:outputField value="{!job.Location_Street__c}" /><br/>
             <apex:outputField value="{!job.Location_City__c}" />,&nbsp;
             <apex:outputField value="{!job.Location__c}" />&nbsp;&nbsp;
             <apex:outputField value="{!job.Location_Zip_Postal_Code__c}" />
-			</p>
-        </apex:outputPanel>
-        <apex:outputPanel rendered="{!ShowLocationMap && job.Location_Street__c <> null && strGoogleMapAPIKey <> null}">
-            <p class="cssJobLocationMap">
-            <iframe class="cssGoogleMapIFrame" 
-                src="https://www.google.com/maps/embed/v1/place?q={!job.Location_Street__c}+{!job.Location_City__c}+{!job.Location__c}+{!job.Location_Zip_Postal_Code__c}&key={!strGoogleMapAPIKey}">
-            </iframe>
+            <apex:outputPanel rendered="{!ShowLocationMap && strGoogleMapAPIKey <> null}">
+                <p class="cssJobLocationMap">
+                <iframe class="cssGoogleMapIFrame" 
+                    src="https://www.google.com/maps/embed/v1/place?q={!job.Location_Street__c}+{!job.Location_City__c}+{!job.Location__c}+{!job.Location_Zip_Postal_Code__c}&key={!strGoogleMapAPIKey}">
+                </iframe>
+                </p>
+            </apex:outputPanel>            
             </p>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!ShowLocationInfo && job.Location_Information__c <> null}">
+       <apex:outputPanel rendered="{!ShowLocationInfo && job.Location_Information__c <> null}">
             <p>
             <apex:outputField value="{!job.Location_Information__c}" />
             </p>
