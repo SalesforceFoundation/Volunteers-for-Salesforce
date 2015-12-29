@@ -182,4 +182,28 @@ public with sharing class VOL_SharedCode_TEST {
 
     }
 
+	// tests for the isValidContactIdAndEmail(ID contactId, string strEmail) method
+	static testmethod void testIsValidContactIdAndEmail() {
+		// create an account and contact
+		Account acc = new Account(Name='my test account');
+		insert acc;
+		Contact con = new Contact(Lastname='test contact', AccountId=acc.Id, Email='foo@bar.com');
+		insert con;
+		Contact con2 = new Contact(Lastname='another test contact', AccountId=acc.Id, Email='bar@baz.com');
+		insert con2;
+		
+		// tests with email matching not required
+		VOL_SharedCode.VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c = false;
+		system.assertEquals(false, VOL_SharedCode.isValidContactIdAndEmail(null, null));
+		system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, null));
+		system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'bar@baz.com'));
+		system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'foo@bar.com'));
+
+		// tests with email matching required
+		VOL_SharedCode.VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c = true;
+		system.assertEquals(false, VOL_SharedCode.isValidContactIdAndEmail(null, null));
+		system.assertEquals(false, VOL_SharedCode.isValidContactIdAndEmail(con.Id, null));
+		system.assertEquals(false, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'bar@baz.com'));
+		system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'foo@bar.com'));
+	}
 }
