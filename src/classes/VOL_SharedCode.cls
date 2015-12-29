@@ -466,6 +466,11 @@ global with sharing class VOL_SharedCode {
             boolean hasOtherAddress = false;
             for (string strF : listStrFields) {
             	strF = strF.toLowerCase();
+            	// we actually still want to copy email if it is currently empty
+            	if (strF == 'email' && conExisting.Email == null) {
+            		conExisting.Email = contact.Email;
+            		continue;
+            	}
             	if (strF != 'id' && strF != 'firstname' && strF != 'email' && contact.get(strF) != null) {
             		if (strF.contains('mailing')) {
             			hasMailingAddress = true;
