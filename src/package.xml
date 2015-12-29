@@ -194,6 +194,7 @@
         <members>Volunteers_Settings__c.Contact_Matching_Rule__c</members>
         <members>Volunteers_Settings__c.Google_Maps_API_Key__c</members>
         <members>Volunteers_Settings__c.Personal_Site_Org_Wide_Email_Name__c</members>
+        <members>Volunteers_Settings__c.Personal_Site_Requires_URL_Email_Match__c</members>
         <members>Volunteers_Settings__c.Recurring_Job_Future_Months__c</members>
         <members>Volunteers_Settings__c.Signup_Bucket_Account_On_Create__c</members>
         <members>Volunteers_Settings__c.Signup_Creates_Contacts_If_No_Match__c</members>

@@ -34,6 +34,11 @@
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
+        <help><!-- If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact. --></help>
+        <label><!-- Personal Site Requires URL Email Match --></label>
+        <name>Personal_Site_Requires_URL_Email_Match__c</name>
+    </fields>
+    <fields>
         <help><!-- How many months into the future should Recurring Job Shifts be scheduled?  If this number is too large, you may run into Salesforce CPU time limits which will prevent the Job Scheduler from running completely.  It is recommended to use 4 months or less. --></help>
         <label><!-- Recurring Job Future Months --></label>
         <name>Recurring_Job_Future_Months__c</name>

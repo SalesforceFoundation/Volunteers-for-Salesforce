@@ -6,7 +6,7 @@
 </b>
 
 <i>
-https://xxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}
+https://xxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}&Email={!Contact.Email}
 </i><br/>
 
 <a href="YOUR HTTPS URL HERE!!!!!">Informations du bénévole</a>

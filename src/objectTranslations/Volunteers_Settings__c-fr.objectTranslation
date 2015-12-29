@@ -34,6 +34,11 @@
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
+        <help><!-- If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact. --></help>
+        <label><!-- Personal Site Requires URL Email Match --></label>
+        <name>Personal_Site_Requires_URL_Email_Match__c</name>
+    </fields>
+    <fields>
         <help>Combien de mois dans le futur doit-on programmer les quarts de travail?</help>
         <label>Poste Récurrant Mois Futures</label>
         <name>Recurring_Job_Future_Months__c</name>

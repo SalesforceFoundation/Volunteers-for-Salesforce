@@ -7,7 +7,7 @@
 
 <p>
 <i>
-https://xxxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}
+https://xxxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}&Email={!Contact.Email}
 </i>
 </p>
 <br/>
