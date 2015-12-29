@@ -32,6 +32,12 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         	} catch (Exception ex) {
         		contactId = null;
         	}
+        	
+        	// now get new email parameter for extra validation
+        	// note that the validation routine only uses it if the setting for this extra validation is set
+        	if (!VOL_SharedCode.isValidContactIdAndEmail(contactId, params.get('Email')))
+        		contactId = null;        	
+        	
         	// cache the contactId for all pages to use.
 			Cookie cId = new cookie('contactIdPersonalSite', contactId, null, -1, false);
         	ApexPages.currentPage().setCookies(new Cookie[] {cId});
@@ -43,7 +49,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         
 		// if we still don't know who we are editing, need to bail out.
         if (contactId == null) {    	
-    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL,'Please pass in a valid contactId with the URL.')); 	
+    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL,'Please pass in a valid contactId and Email with the URL.')); 	
         	return;
         }
 

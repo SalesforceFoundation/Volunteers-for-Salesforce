@@ -304,6 +304,34 @@ global with sharing class VOL_SharedCode {
         }
     }   
     
+    // global code to verify the passed in ContactId is valid, as well as the email
+    // exists on the Contact record.
+    global static boolean isValidContactIdAndEmail(ID contactId, string strEmail) {
+    	string strSoql = 'select Id from Contact where Id = :contactId ';
+        if (VolunteersSettings.Personal_Site_requires_URL_Email_match__c) {
+        	if (strEmail == null || strEmail == '')
+        		return false;
+            strSoql += 'and (Email= :strEmail';
+	        // any additional email fields to check
+	        if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
+		        list<string> listStrEmail = new list<string>();
+	    	    listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
+	        	for (string str : listStrEmail) {
+	        		strSoql += ' or ' + str + ' = :strEmail ';
+	        	}
+	        }
+	       	// handle NPSP email fields 
+	       	if (IsNPSPInstalled) {
+				strSoql += ' or npe01__AlternateEmail__c = :strEmail ';
+				strSoql += ' or npe01__HomeEmail__c = :strEmail ';
+				strSoql += ' or npe01__WorkEmail__c = :strEmail ';
+	       	}
+	       	strSoql += ') ';
+        }        
+        list<Contact> listCon = Database.Query(strSoql); 
+		return listCon.size() > 0;
+    }
+    
     // global code to lookup an existing contact
     // listStrFields are optional fields to include in the soql call
     global static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
