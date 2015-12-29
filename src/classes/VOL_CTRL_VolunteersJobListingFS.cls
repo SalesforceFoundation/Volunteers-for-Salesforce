@@ -394,6 +394,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                             }
                         }
                     }
+                    // update the  status if not already Confirmed or Completed
+                    if (listVHours[0].Status__c != 'Confirmed' && listVHours[0].Status__c != 'Completed')
+                    	listVHours[0].Status__c = 'Web Sign Up';
+                    	
                     VolunteerHoursBeforeInsert(listVHours[0]);
                     update listVHours[0];
                     volunteerHoursIdSignUp = listVHours[0].Id;
