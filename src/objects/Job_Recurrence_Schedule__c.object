@@ -123,7 +123,7 @@
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Duration</label>
-        <precision>4</precision>
+        <precision>5</precision>
         <required>true</required>
         <scale>2</scale>
         <trackTrending>false</trackTrending>
