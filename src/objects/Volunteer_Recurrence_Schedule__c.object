@@ -211,7 +211,7 @@
         <externalId>false</externalId>
         <label>Duration</label>
         <precision>4</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>2</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -226,7 +226,7 @@
         <inlineHelpText>Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours.</inlineHelpText>
         <label>Number of Volunteers</label>
         <precision>5</precision>
-        <required>false</required>
+        <required>true</required>
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -246,7 +246,7 @@
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Schedule Start Date &amp; Time</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
