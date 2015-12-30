@@ -112,6 +112,11 @@ global with sharing class VOL_SharedCode {
         }
     }
     
+    // return the GMT datetime for a datetime in the specified timezone
+    public static DateTime dtGmtFromDtTimeZone(DateTime dt, TimeZone tz) {
+        integer offset = tz.getOffset(dt);
+        return dt.addSeconds(-offset / 1000);
+    }
     
     // Volunteer Custom Settings object.  Loads an existing, and if not found creates one with default values.
     global static Volunteers_Settings__c VolunteersSettings {

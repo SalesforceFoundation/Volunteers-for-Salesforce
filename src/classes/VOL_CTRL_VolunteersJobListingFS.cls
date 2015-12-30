@@ -191,11 +191,27 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (listVolunteerJobs == null) {
                         
                 listVolunteerJobs = new list<Volunteer_Job__c>();
-                DateTime dtNow = dtMonthFilter.toStartOfMonth();
-                if (dtNow < system.Now()) dtNow = system.Now().Date();
-                // note use of dateGMT to stay on the correct day.  
-                // eg. date(8/1/2013) gave 7/30/2013 but dateGMT(8/1/2013) gave 8/1/2013.
-                DateTime dtLast = dtNow.addMonths(nMonthsToShow).dateGMT().toStartOfMonth();
+                Date dateNow = dtMonthFilter.toStartOfMonth();
+                if (dateNow < system.Today()) dateNow = system.Today();
+                DateTime dtNow = dateNow;
+                
+                // NOTE: the following GMT date mappings are to help improve
+                // our filtering for the correct shifts.  Unfortunately, the 
+                // best way of doing this would be based on the specific timezone 
+                // specified for each Campaign or Job, but there is no way to do that
+                // within a single query.  So we will live with optimizing our filtering
+                // based off the Site's Guest User timezone.
+                TimeZone tz = UserInfo.getTimeZone();
+                
+                // map dtNow to GMT based on the Site User, to avoid getting
+                // days that are from the last day of the previous month locally,
+                // but are in this month GMT.
+                dtNow = VOL_SharedCode.dtGmtFromDtTimeZone(dtNow, tz);
+
+                // map dtLast to GMT based on the Site User, to include
+                // days that are from the last day of this month locally,
+                // but are in the next month GMT.
+                DateTime dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);
                 
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
