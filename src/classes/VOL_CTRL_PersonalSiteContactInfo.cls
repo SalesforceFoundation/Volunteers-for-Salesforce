@@ -202,7 +202,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 		        	strComma = ', ';
 		        }
 		        strSoql += ' from Volunteer_Hours__c where Contact__c = :contactId ';
-		        strSoql += ' and Status__c <> \'Canceled\' ';
+		        strSoql += ' and Status__c <> \'Canceled\' and Status__c <>  \'Completed\' ';
 		        Date dtToday = system.today();
 		        strSoql += ' and Shift_Start_Date_Time__c >= :dtToday ';
 		        strSoql += ' order by Shift_Start_Date_Time__c ASC ';        
