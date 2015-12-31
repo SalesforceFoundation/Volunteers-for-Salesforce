@@ -481,6 +481,10 @@
         <name>labelReturnToCalendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelShiftClosed --></label>
+        <name>labelShiftClosed</name>
+    </customLabels>
+    <customLabels>
         <label><!-- labelShiftNumbers --></label>
         <name>labelShiftNumbers</name>
     </customLabels>

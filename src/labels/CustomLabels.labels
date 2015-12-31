@@ -960,6 +960,14 @@ day:      &apos;day&apos;</value>
         <value>return to Calendar</value>
     </labels>
     <labels>
+        <fullName>labelShiftClosed</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelShiftClosed</shortDescription>
+        <value>closed</value>
+    </labels>
+    <labels>
         <fullName>labelShiftNumbers</fullName>
         <categories>VolunteersJobListingFS</categories>
         <language>en_US</language>
