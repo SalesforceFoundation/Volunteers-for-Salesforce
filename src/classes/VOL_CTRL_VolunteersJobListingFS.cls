@@ -216,9 +216,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, 
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            Description__c, System_Note__c, Location_Street__c, Location_City__c, Location_State__c, Location_Zip_Postal_Code__c, Destination_Street__c, Destination_City__c, Destination_State__c, Destination_Zip_Postal_Code__c, Display_Map_on_Website__c From Volunteer_Job_Slots__r 
                             where Id = :shiftIdFilter) 
                         from Volunteer_Job__c where Id = :jobIdFilter  
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
@@ -227,7 +227,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            Description__c, System_Note__c, Location_Street__c, Location_City__c, Location_State__c, Location_Zip_Postal_Code__c, Destination_Street__c, Destination_City__c, Destination_State__c, Destination_Zip_Postal_Code__c, Display_Map_on_Website__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
                         from Volunteer_Job__c where Id = :jobIdFilter  
@@ -241,7 +241,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            Description__c, System_Note__c, Location_Street__c, Location_City__c, Location_State__c, Location_Zip_Postal_Code__c, Destination_Street__c, Destination_City__c, Destination_State__c, Destination_Zip_Postal_Code__c, Display_Map_on_Website__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
                         from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
@@ -251,7 +251,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                            Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                            Description__c, System_Note__c, Location_Street__c, Location_City__c, Location_State__c, Location_Zip_Postal_Code__c, Destination_Street__c, Destination_City__c, Destination_State__c, Destination_Zip_Postal_Code__c, Display_Map_on_Website__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c LIMIT 100) 
                         from Volunteer_Job__c where Campaign__r.IsActive = true and Display_on_Website__c = true 
