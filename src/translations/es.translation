@@ -488,6 +488,10 @@ day: &apos;día&apos;</label>
         <name>labelReturnToCalendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelShiftNumbers --></label>
+        <name>labelShiftNumbers</name>
+    </customLabels>
+    <customLabels>
         <label>Mostrar Ayuda</label>
         <name>labelShowHelp</name>
     </customLabels>

@@ -321,6 +321,7 @@
         <members>labelPersonalSiteReportHoursTitle</members>
         <members>labelPersonalSiteTitle</members>
         <members>labelReturnToCalendar</members>
+        <members>labelShiftNumbers</members>
         <members>labelShowHelp</members>
         <members>labelShowMore</members>
         <members>labelSubject</members>

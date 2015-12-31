@@ -481,6 +481,10 @@
         <name>labelReturnToCalendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelShiftNumbers --></label>
+        <name>labelShiftNumbers</name>
+    </customLabels>
+    <customLabels>
         <label><!-- labelShowHelp --></label>
         <name>labelShowHelp</name>
     </customLabels>
