@@ -27,6 +27,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global Attachment attachment { get; set; }   
     global string strParams { get; set; }
     global integer nMonthsToShow { get; set; }
+    global integer nDaysToShow { get; set; }
     global date dtMonthFilter { get; set; }
     
     
@@ -113,7 +114,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         strLanguage = 'en-us'; 
         strDateFormat = 'EEEE M/d/yyyy';
         strTimeFormat = 'h:mm tt';
-        nMonthsToShow = 3;  
+        nMonthsToShow = 3;
+        nDaysToShow = 0;  
         dtMonthFilter = system.today(); // default to current month.
                 
         // handle optional parameters (must use string, not ID, to handle null)
@@ -152,6 +154,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         if (p != null && p != '') strTimeFormat = p;
         p = params.get('nMonthsToShow');
         if (p != null && p != '') nMonthsToShow = integer.valueOf(p);
+        p = params.get('nDaysToShow');
+        if (p != null && p != '') nDaysToShow = integer.valueOf(p);
         p = params.get('dtMonthFilter');
         if (p != null && p != '') dtMonthFilter = date.valueOf(p);
         p = params.get('FileUploadLabel');
@@ -195,8 +199,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (listVolunteerJobs == null) {
                         
                 listVolunteerJobs = new list<Volunteer_Job__c>();
-                Date dateNow = dtMonthFilter.toStartOfMonth();
-                if (dateNow < system.Today()) dateNow = system.Today();
+                Date dateNow = dtMonthFilter;
+                if (nDaysToShow == 0) {
+                	dateNow = dateNow.toStartOfMonth();
+                	if (dateNow < system.Today()) dateNow = system.Today();
+                }
                 DateTime dtNow = dateNow;
                 
                 // NOTE: the following GMT date mappings are to help improve
@@ -215,7 +222,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // map dtLast to GMT based on the Site User, to include
                 // days that are from the last day of this month locally,
                 // but are in the next month GMT.
-                DateTime dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);
+                DateTime dtLast;
+                if (nDaysToShow > 0) 
+                	dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addDays(nDaysToShow), tz);
+                else
+                	dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);                
                 
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
