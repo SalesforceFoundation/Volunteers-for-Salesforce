@@ -85,6 +85,10 @@ global with sharing class VOL_CTRL_JobCalendar {
         p = params.get('ShowCampaignHierarchy');
         if (p == '1') fShowCampaignHierarchy = true;
 
+		fShowNumberAvailable = false;
+        p = params.get('ShowNumberAvailable');
+        if (p == '1') fShowNumberAvailable = true;
+
 		// finally, keep all parameters for passing to VolunteersJobListingFS
 		// (but remove the params that the page will explicitly add to the url)
 		params.remove('Calendar');
@@ -129,6 +133,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     global string strParams { get; set; }
     global boolean fPersonalSite { get; set; }
     global boolean fShowCampaignHierarchy { get; set; }
+    global boolean fShowNumberAvailable { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
     global ID campaignId { get; set; }
