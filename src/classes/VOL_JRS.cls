@@ -87,6 +87,9 @@ public with sharing class VOL_JRS {
 		for (Volunteer_Shift__c shift : listShiftNew) {
 			setJobId.add(shift.Volunteer_Job__c);
 		}
+		for (Volunteer_Shift__c shift : listShiftUpdate) {
+			setJobId.add(shift.Volunteer_Job__c);
+		}
 		
 		// process the VRS's to create hours as needed.
 		// we use a future call to avoid hitting statement limits.
