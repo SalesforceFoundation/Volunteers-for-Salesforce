@@ -960,6 +960,14 @@ day:      &apos;day&apos;</value>
         <value>return to Calendar</value>
     </labels>
     <labels>
+        <fullName>labelShiftNumbers</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelShiftNumbers</shortDescription>
+        <value>confirmed: {0}&amp;nbsp;&amp;nbsp;available: {1}</value>
+    </labels>
+    <labels>
         <fullName>labelShowHelp</fullName>
         <categories>Mass Email Volunteers</categories>
         <language>en_US</language>

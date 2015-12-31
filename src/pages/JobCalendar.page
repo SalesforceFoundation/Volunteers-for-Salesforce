@@ -101,6 +101,10 @@
                                 var intTotalVolunteers = result[i].GW_Volunteers__Total_Volunteers__c;
                                 if (intTotalVolunteers == null) intTotalVolunteers = 0;
                                 var intStillNeeded = result[i].GW_Volunteers__Number_of_Volunteers_Still_Needed__c;
+                                if (intStillNeeded == null) intStillNeeded = 0;
+                                var strShiftNumbers = '{!$Label.labelShiftNumbers}';
+                                strShiftNumbers = strShiftNumbers.replace('{0}', intTotalVolunteers);
+                                strShiftNumbers = strShiftNumbers.replace('{1}', intStillNeeded);
                                 
                                 var strCampaignId = new String(result[i].GW_Volunteers__Volunteer_Job__r.GW_Volunteers__Campaign__c);
                                 var strJobId = new String(jobId);
@@ -121,8 +125,7 @@
                                     title: result[i].GW_Volunteers__Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
                                         '{!$Label.labelCalendarShiftFull}' : ''),
                                     description: result[i].GW_Volunteers__Description__c,                           
-                                    strNumbers: '{!$Label.labelCalendarConfirmed}' +  intTotalVolunteers  + 
-                                                '{!$Label.labelCalendarStillNeeded}' + (intStillNeeded == null ? '' : intStillNeeded),
+                                    strNumbers: strShiftNumbers,
                                     urlRoster:  '/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster' + 
                                                 '&pv0=' + strCampaignId.substr(0, 15) +
                                                 '&pv1=' + strJobId.substr(0, 15) +     
@@ -147,15 +150,18 @@
                 // display additional info.
                 var newinfo = j$('<span />');
                 if ({!fWeb}) {
-                    newinfo.html((event.description != null ? '<br/> ' + event.description  : '') + 
-                    	({!NOT(fShowNumberAvailable)} ? '' : '<br/>' + event.strNumbers));
+                    newinfo.html(
+                    	({!fShowNumberAvailable} ? '<br/>' + event.strNumbers : '') +
+                    	(event.description != null ? '<br/> ' + event.description  : '') 
+                    	);
                 } else {
-                    newinfo.html('&nbsp;&nbsp;&nbsp;&nbsp;<i>' + event.strNumbers + '</i>' +
+                    newinfo.html('<i>' + event.strNumbers + '</i>' +
                                 ({!NOT(fPrint)} ? 
-                                    '<br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="' + event.urlRoster + 
+                                    '<br/><a href="' + event.urlRoster + 
                                     '" target="_blank"><b>{!$Label.labelCalendarRoster}</b></a>' : '') +                            
-                                    (event.description != null ? '<br/>&nbsp;&nbsp;&nbsp;&nbsp;' + event.description  : '') );
+                                    (event.description != null ? '<br/>' + event.description  : '') );
                 }
+                element.find('.fc-event-content').css('padding',2);
                 element.find('.fc-event-content').append(newinfo);
                 
                 // also add info to a tooltip
