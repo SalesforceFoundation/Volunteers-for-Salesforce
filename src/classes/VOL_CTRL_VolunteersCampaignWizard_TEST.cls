@@ -51,7 +51,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
         	Volunteer_Job__c = listShift[0].Volunteer_Job__c,
         	Volunteer_Shift__c = listShift[0].Id,
         	Start_Date__c = listShift[0].Start_Date_Time__c.Date(),
-        	Planned_Start_Date_Time__c = System.DateTime.newInstance(listShift[0].Start_Date_Time__c.Date(), system.now().Time()),
+        	Planned_Start_Date_Time__c = listShift[0].Start_Date_Time__c,
         	Status__c = 'Confirmed'        	
         	);
         insert hours;

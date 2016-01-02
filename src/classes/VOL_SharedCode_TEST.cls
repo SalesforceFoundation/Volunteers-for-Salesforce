@@ -148,7 +148,7 @@ public with sharing class VOL_SharedCode_TEST {
     	
     	list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
     	for (Volunteer_Job__c job : listJob) {
-    		listShift.add(new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.Today().addDays(1)));
+    		listShift.add(new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.Now().addDays(1)));
     	}
     	insert listShift;
     	
