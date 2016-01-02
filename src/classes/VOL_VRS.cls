@@ -39,12 +39,14 @@ public with sharing class VOL_VRS {
 					Volunteer_Recurrence_Schedule__c in : setVRSId)];			
 		}
 				
-		delete listHours;
-		
-		// if PreserveCanceled, then we know we are updating the VRS, and so there is no need
-		// to keep the deleted Hours in the recycle bin, since we are going to recreate the hours.
-		if (fPreserveCanceled)
-			Database.emptyRecycleBin(listHours);
+		if (listHours.size() > 0) {
+			delete listHours;
+			
+			// if PreserveCanceled, then we know we are updating the VRS, and so there is no need
+			// to keep the deleted Hours in the recycle bin, since we are going to recreate the hours.
+			if (fPreserveCanceled)
+				Database.emptyRecycleBin(listHours);
+		}
 	}
 
    	//******************************************************************************************************
