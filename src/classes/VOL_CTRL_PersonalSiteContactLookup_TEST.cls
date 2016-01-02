@@ -52,6 +52,11 @@ public with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
 				    
 		// test error email handling
 		con.Email = null;
+		if (VOL_SharedCode.IsNPSPInstalled) {
+			con.put('npe01__AlternateEmail__c', null);
+			con.put('npe01__HomeEmail__c', null);
+			con.put('npe01__WorkEmail__c', null);
+		}
 		update con;
 		ctrl.SendEmailToContact(con);
     	system.assertNotEquals(System.Label.labelContactLookupSuccess, ctrl.strResult);
