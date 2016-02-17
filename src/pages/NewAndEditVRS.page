@@ -14,9 +14,9 @@
             <apex:pageBlockSection title="{!$Label.labelInformation}" columns="1" >                        
 				<!--  now add fields the user can specify -->
 				<apex:repeat value="{!$ObjectType.Volunteer_Recurrence_Schedule__c.FieldSets.NewAndEditVRSFS}" var="f" >
-					<apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
 						<apex:outputLabel value="{!f.Label}" />
-						<apex:actionRegion>
+						<apex:actionRegion >
 							<apex:inputField value="{!vrs[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" >
 		               	        <apex:actionSupport immediate="false" event="onchange" 
 		               	        	rerender="pbsJRS" status="retrieveStatus" rendered="{!IF(f == 'GW_Volunteers__Volunteer_Job__c', 'true', 'false')}" 
