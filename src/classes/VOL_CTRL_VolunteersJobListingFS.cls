@@ -447,6 +447,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // force recreate new hours record to use for next submit.
                 vhours = null;
             }
+        } catch (DMLException ex){
+            //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
+            StrSaveResult = ex.getMessage(); 
+            if(StrSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')){
+                StrSaveResult = StrSaveResult.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+            }
+            ApexPages.addmessage(new ApexPages.message(ApexPages.Severity.FATAL,StrSaveResult));
         } catch (exception ex) {
             StrSaveResult = ex.getMessage(); 
             //StrSaveResult += ' stack: ' + ex.getStackTraceString();
