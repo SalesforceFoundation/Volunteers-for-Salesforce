@@ -56,7 +56,7 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     // global properties
     global string strLanguage { get; set; }
     global string strFileUploadLabel { get; set; }
-    global String StrSaveResult { get; set; }    
+    global String strSaveResult { get; set; }    
     global list<string> listStrFields { get; set; } 
     global Attachment attachment { get; set; }   
         
@@ -74,8 +74,15 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
 			}
 	        StrSaveResult = system.label.labelVolunteerSignupThankYou;
 	        contact = null; // so fields get reset to null.
+        } catch (DMLException ex) {
+            //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
+            StrSaveResult = ex.getMessage(); 
+            if (StrSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
+                StrSaveResult = StrSaveResult.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+            }
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
     	} catch (exception ex) {
-    		StrSaveResult = ex.getMessage(); 
+    		strSaveResult = ex.getMessage(); 
     		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult)); 
     	}
         return null;

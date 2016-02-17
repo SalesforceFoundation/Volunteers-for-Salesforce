@@ -447,17 +447,17 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // force recreate new hours record to use for next submit.
                 vhours = null;
             }
-        } catch (DMLException ex){
+        } catch (DMLException ex) {
             //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
-            StrSaveResult = ex.getMessage(); 
-            if(StrSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')){
-                StrSaveResult = StrSaveResult.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+            strSaveResult = ex.getMessage(); 
+            if (strSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
+                strSaveResult = strSaveResult.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
             }
-            ApexPages.addmessage(new ApexPages.message(ApexPages.Severity.FATAL,StrSaveResult));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
         } catch (exception ex) {
-            StrSaveResult = ex.getMessage(); 
+            strSaveResult = ex.getMessage(); 
             //StrSaveResult += ' stack: ' + ex.getStackTraceString();
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage()));         
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));         
         }
         return null; 
     }

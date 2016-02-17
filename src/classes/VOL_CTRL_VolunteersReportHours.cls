@@ -254,6 +254,14 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         	vhours = null;
 			
 	        strSaveResult = system.label.labelVolunteerReportHoursThankYou;
+        } catch (DMLException ex) {
+            //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
+            strSaveResult = ex.getMessage(); 
+            if (strSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
+                strSaveResult = strSaveResult.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+            }
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
+            strSaveResult = null;
     	} catch (exception ex) {
     		strSaveResult = null;
     		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage())); 		    		
