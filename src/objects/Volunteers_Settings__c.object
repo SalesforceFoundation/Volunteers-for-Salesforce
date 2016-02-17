@@ -69,6 +69,7 @@
     <fields>
         <fullName>Personal_Site_Requires_URL_Email_Match__c</fullName>
         <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
         <description>If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact.</description>
         <externalId>false</externalId>
         <inlineHelpText>If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact.</inlineHelpText>
