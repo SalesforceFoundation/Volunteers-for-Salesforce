@@ -225,12 +225,12 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             shiftNew.Volunteer_Job__c = mapJobId.get(shift.Volunteer_Job__c);
             
             // just use the time, not the date, from the existing shift.
-            Time tm = shift.Start_Date_Time__c.timeGmt();
+            Time tm = shift.Start_Date_Time__c.time();
             
             if (cDays > -1) {
-            	dt = shift.Start_Date_Time__c.addDays(cDays).dateGmt();	
+            	dt = shift.Start_Date_Time__c.addDays(cDays).date();	
             }
-            shiftNew.Start_Date_Time__c = DateTime.newInstanceGmt(dt, tm);
+            shiftNew.Start_Date_Time__c = DateTime.newInstance(dt, tm);
             
             // clear the volunteer count
             shiftNew.Total_Volunteers__c = 0;
@@ -299,8 +299,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 					hoursNew.End_Date__c = dtNew;	            	
 		            // fixup Planned_Start_Date_Time__c
 		            if (hours.Planned_Start_Date_Time__c != null) {
-		            	Time tm = hours.Planned_Start_Date_Time__c.timeGmt();
-		            	hoursNew.Planned_Start_Date_Time__c = DateTime.newInstanceGmt(dtNew, tm);
+		            	Time tm = hours.Planned_Start_Date_Time__c.time();
+		            	hoursNew.Planned_Start_Date_Time__c = DateTime.newInstance(dtNew, tm);
 		            }
 	            } else {
 	            	hoursNew.Start_Date__c = cmpVols.StartDate;
