@@ -14,14 +14,20 @@
             <apex:pageBlockSection title="{!$Label.labelInformation}" columns="1" >                        
 				<!--  now add fields the user can specify -->
 				<apex:repeat value="{!$ObjectType.Volunteer_Recurrence_Schedule__c.FieldSets.NewAndEditVRSFS}" var="f" >
-					<apex:inputField value="{!vrs[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" >
-               	        <apex:actionSupport immediate="false" event="onchange" 
-               	        	rerender="pbsJRS" status="retrieveStatus" rendered="{!IF(f == 'GW_Volunteers__Volunteer_Job__c', 'true', 'false')}" 
-               	        	action="{!refreshListSOJRS}" />                        
-					</apex:inputField> 
+					<apex:pageBlockSectionItem>
+						<apex:outputLabel value="{!f.Label}" />
+						<apex:actionRegion>
+							<apex:inputField value="{!vrs[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" >
+		               	        <apex:actionSupport immediate="false" event="onchange" 
+		               	        	rerender="pbsJRS" status="retrieveStatus" rendered="{!IF(f == 'GW_Volunteers__Volunteer_Job__c', 'true', 'false')}" 
+		               	        	action="{!refreshListSOJRS}" />                        
+							</apex:inputField> 
+						</apex:actionRegion>
+					</apex:pageBlockSectionItem>
 	  			</apex:repeat>                    
             </apex:pageBlockSection>
             <apex:pageBlockSection title="{!$Label.labelCopySchedule}" columns="1" id="pbsJRS" >
+              <apex:actionRegion >
 				<apex:pageBlockSectionItem >
                     <apex:outputLabel value="{!$ObjectType.Job_Recurrence_Schedule__c.Label}" />
 			    	<apex:selectList value="{!jrsId}" size="1" required="false">
@@ -29,7 +35,8 @@
                	        <apex:actionSupport immediate="false" event="onchange" rerender="pbMain" status="retrieveStatus" action="{!copyScheduleFromJRS}" />                        
 			    	</apex:selectList>									    	
 			    </apex:pageBlockSectionItem>
-			    <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />			    
+			    <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />
+			  </apex:actionRegion>			    
 			</apex:pageBlockSection>
         </apex:pageBlock>	
 	</apex:form> 
