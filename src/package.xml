@@ -410,12 +410,6 @@
         <name>CustomTab</name>
     </types>
     <types>
-        <members>Volunteer_Dashboards</members>
-        <members>Volunteer_Dashboards/Panel_de_Voluntarios</members>
-        <members>Volunteer_Dashboards/Volunteers_Dashboard2</members>
-        <name>Dashboard</name>
-    </types>
-    <types>
         <members>Volunteers_Documents</members>
         <members>Volunteers_Documents/JobCalendarCSS_css.css</members>
         <members>Volunteers_Documents/VolunteersJobListingCSS_css.css</members>
@@ -506,40 +500,6 @@
         <name>RecordType</name>
     </types>
     <types>
-        <members>Volunteer_Reports</members>
-        <members>Volunteer_Reports/Active_Volunteers</members>
-        <members>Volunteer_Reports/Available_Volunteer_Jobs</members>
-        <members>Volunteer_Reports/Inactive_Volunteers</members>
-        <members>Volunteer_Reports/New_Sign_Ups_Contacts</members>
-        <members>Volunteer_Reports/New_Sign_Ups_Leads</members>
-        <members>Volunteer_Reports/Prospective_Volunteers</members>
-        <members>Volunteer_Reports/Recent_Volunteers</members>
-        <members>Volunteer_Reports/Top_Volunteers_by_Lifetime_Hours</members>
-        <members>Volunteer_Reports/Top_Volunteers_by_Recent_Hours</members>
-        <members>Volunteer_Reports/Unassigned_Volunteers2</members>
-        <members>Volunteer_Reports/Unique_Volunteers2</members>
-        <members>Volunteer_Reports/Upcoming_Shifts_Needing_Volunteers</members>
-        <members>Volunteer_Reports/Upcoming_Shifts_with_Volunteers</members>
-        <members>Volunteer_Reports/Upcoming_Volunteers</members>
-        <members>Volunteer_Reports/Volunteer_Hours_By_Month_Matrix</members>
-        <members>Volunteer_Reports/Volunteer_Hours_This_Year2</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Account</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Campaign</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Job</members>
-        <members>Volunteer_Reports/Volunteer_Hours_by_Month2</members>
-        <members>Volunteer_Reports/Volunteer_Hours_for_Dashboard2</members>
-        <members>Volunteer_Reports/Volunteer_Jobs_With_Shift_Summary</members>
-        <members>Volunteer_Reports/Volunteer_Roster</members>
-        <members>Volunteer_Reports/Volunteers_Daily_Roster</members>
-        <members>Volunteer_Reports/Volunteers_Last_Month</members>
-        <members>Volunteer_Reports/Volunteers_This_Year</members>
-        <members>Volunteer_Reports/Volunteers_by_Account</members>
-        <members>Volunteer_Reports/Volunteers_by_Availability</members>
-        <members>Volunteer_Reports/Volunteers_by_Skill</members>
-        <members>Volunteer_Reports/Volunteers_with_any_Volunteer_Status</members>
-        <name>Report</name>
-    </types>
-    <types>
         <members>Accounts</members>
         <members>Volunteer_Campaigns</members>
         <members>Volunteer_Jobs_and_Hours</members>
@@ -553,12 +513,6 @@
         <members>jQueryFiles</members>
         <members>wtooltip</members>
         <name>StaticResource</name>
-    </types>
-    <types>
-        <members>en_US</members>
-        <members>es</members>
-        <members>fr</members>
-        <name>Translations</name>
     </types>
     <types>
         <members>Job_Recurrence_Schedule__c.JRS_Days_Of_Week_Required</members>
