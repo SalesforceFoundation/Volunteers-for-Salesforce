@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AdvancedSetup</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
     <fieldSets>
         <fullName>VolunteersWizardFS</fullName>
         <availableFields>
@@ -71,49 +121,187 @@
         <label>VolunteersWizardFS</label>
     </fieldSets>
     <fields>
-        <fullName>Number_of_Volunteers__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <inlineHelpText>The total number of volunteers whose Hours Status = Completed or Confirmed.</inlineHelpText>
-        <label>Number of Volunteers</label>
-        <summarizedField>Volunteer_Job__c.Number_of_Volunteers__c</summarizedField>
-        <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
-        <summaryOperation>sum</summaryOperation>
-        <type>Summary</type>
+        <fullName>ActualCost</fullName>
     </fields>
     <fields>
-        <fullName>Volunteer_Completed_Hours__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <inlineHelpText>Total number of hours that are completed.  Hours with other status values are not included.</inlineHelpText>
-        <label>Volunteer Completed Hours</label>
-        <summarizedField>Volunteer_Job__c.Number_of_Completed_Hours__c</summarizedField>
-        <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
-        <summaryOperation>sum</summaryOperation>
-        <type>Summary</type>
+        <fullName>AmountAllOpportunities</fullName>
     </fields>
     <fields>
-        <fullName>Volunteer_Jobs__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Volunteer Jobs</label>
-        <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
-        <summaryOperation>count</summaryOperation>
-        <type>Summary</type>
+        <fullName>AmountWonOpportunities</fullName>
     </fields>
     <fields>
-        <fullName>Volunteer_Shifts__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Volunteer Shifts</label>
-        <summarizedField>Volunteer_Job__c.Number_of_Shifts__c</summarizedField>
-        <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
-        <summaryOperation>sum</summaryOperation>
-        <type>Summary</type>
+        <fullName>BudgetedCost</fullName>
+    </fields>
+    <fields>
+        <fullName>CampaignMemberRecordTypeId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+    </fields>
+    <fields>
+        <fullName>ExpectedResponse</fullName>
+    </fields>
+    <fields>
+        <fullName>ExpectedRevenue</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyActualCost</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyAmountAllOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyAmountWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyBudgetedCost</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyExpectedRevenue</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfContacts</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfConvertedLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfResponses</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberSent</fullName>
+    </fields>
+    <fields>
+        <fullName>IsActive</fullName>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfContacts</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfConvertedLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfResponses</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberSent</fullName>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ParentId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>StartDate</fullName>
+    </fields>
+    <fields>
+        <fullName>Status</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Planned</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Conference</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Webinar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trade Show</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Relations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partners</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Referral Program</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Advertisement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Banner Ads</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Direct Mail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Telemarketing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.  You only need to set this if you want to override the Time Zone set on the Site Guest User profile.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
@@ -474,16 +662,26 @@
         </picklist>
         <type>Picklist</type>
     </fields>
-    <fields>
-        <fullName>Volunteers_Still_Needed__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Volunteers Still Needed</label>
-        <summarizedField>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</summarizedField>
-        <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
-        <summaryOperation>sum</summaryOperation>
-        <type>Summary</type>
-    </fields>
+    <listViews>
+        <fullName>AllActiveCampaigns</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CAMPAIGN.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Campaigns</label>
+    </listViews>
+    <listViews>
+        <fullName>MyActiveCampaigns</fullName>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>CAMPAIGN.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Active Campaigns</label>
+    </listViews>
     <listViews>
         <fullName>Volunteer_Campaigns</fullName>
         <columns>CAMPAIGN.NAME</columns>
@@ -491,10 +689,6 @@
         <columns>CAMPAIGN.END_DATE</columns>
         <columns>CAMPAIGN.ACTIVE</columns>
         <columns>CAMPAIGN.STATUS</columns>
-        <columns>Number_of_Volunteers__c</columns>
-        <columns>Volunteer_Completed_Hours__c</columns>
-        <columns>Volunteer_Jobs__c</columns>
-        <columns>Volunteers_Still_Needed__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>CAMPAIGN.RECORDTYPE</field>
@@ -934,6 +1128,22 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>CAMPAIGN.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.STATUS</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.START_DATE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>CAMPAIGN.NAME</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CAMPAIGN.NAME</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PARENT_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.CAMPAIGN_TYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.STATUS</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.START_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.END_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NUM_RESPONSES</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
     <webLinks>
         <fullName>CampaignRoster</fullName>
         <availability>online</availability>
@@ -993,5 +1203,25 @@ URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
         <url>/apex/GW_Volunteers__VolunteersCampaignWizard</url>
+    </webLinks>
+    <webLinks>
+        <fullName>ViewCampaignInfluenceReport</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>500</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>View Campaign Influence Report</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00O?rt=117&amp;break0=CAN&amp;scope=1&amp;scopeid_lkid={!Campaign.Id}&amp;scopeid={!Campaign_Name}&amp;c=CAN&amp;c=MR&amp;c=PCS&amp;c=CFN&amp;c=RN&amp;c=ON&amp;c=OA&amp;c=OS&amp;c=OCD&amp;c=AN&amp;s=OA&amp;duel0=CAN%2CMR%2CCFN%2CRN%2CAN%2CON%2CPCS%2COS%2COCD%2COA&amp;details=yes&amp;format=t</url>
+        <width>500</width>
     </webLinks>
 </CustomObject>

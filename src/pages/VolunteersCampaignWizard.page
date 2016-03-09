@@ -42,10 +42,10 @@
             </apex:pageBlockButtons>
 
             <apex:pageBlockSection title="{!$Label.labelVolunteersWizardCampaignInformation}" columns="1" >            
-				<!--  now add fields the user can specify -->
-				<apex:repeat value="{!$ObjectType.Campaign.FieldSets.VolunteersWizardFS}" var="f" >
-					<apex:inputField value="{!cmpVols[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" /> 
-	  			</apex:repeat>        
+                <!--  now add fields the user can specify -->
+                <apex:repeat value="{!$ObjectType.CustomCampaign__c.FieldSets.VolunteersWizardFS}" var="f" >
+                    <apex:inputField value="{!cmpVols[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" /> 
+                </apex:repeat>        
             </apex:pageBlockSection>
 
             <apex:pageBlockSection title="{!$Label.labelVolunteersWizardJobsAndShifts}" columns="1">
@@ -57,14 +57,14 @@
             <apex:pageBlockSection columns="2" id="panelJobsAndShifts" >
                 <apex:pageBlockSectionItem >
                     <apex:outputText value="{!$Label.labelVolunteersWizardClone}" />
-	            	<apex:pageBlockSectionItem > 
-	                    <apex:selectList value="{!campaignIdClone}" size="1" >
-	                        <apex:selectOptions value="{!listSOVolunteersCampaigns}" /> 
-	               	        <apex:actionSupport immediate="false" event="onchange" rerender="panelJobsAndShifts" 
-	               	        	status="retrieveStatus" action="{!ChangeCampaign}" />                        
-	                    </apex:selectList>  
-			            <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />
-	   				</apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem > 
+                        <apex:selectList value="{!campaignIdClone}" size="1" >
+                            <apex:selectOptions value="{!listSOVolunteersCampaigns}" /> 
+                            <apex:actionSupport immediate="false" event="onchange" rerender="panelJobsAndShifts" 
+                                status="retrieveStatus" action="{!ChangeCampaign}" />                        
+                        </apex:selectList>  
+                        <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />
+                    </apex:pageBlockSectionItem>
                 </apex:pageBlockSectionItem>
                 
                 <apex:pageBlockSectionItem >
@@ -81,7 +81,7 @@
                                 
                 <apex:pageBlockSectionItem >
                     <apex:outputText value="{!$Label.labelVolunteersWizardFirstShiftDate}"  rendered="{!campaignIdClone != null}"/>
-	                <apex:outputField value="{!cmpShiftDates.StartDate}" rendered="{!campaignIdClone != null}" />
+                    <apex:outputField value="{!cmpShiftDates.Start_Date__c}" rendered="{!campaignIdClone != null}" />
                 </apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem >
@@ -98,22 +98,22 @@
                 
                 <apex:pageBlockSectionItem rendered="{!campaignIdClone != null}" >
                     <apex:outputText value="{!$Label.labelVolunteersWizardNewShiftDate}"  />
-                    <apex:inputField value="{!cmpShiftDates.EndDate}" />                	
+                    <apex:inputField value="{!cmpShiftDates.End_Date__c}" />                    
                 </apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
-				
+                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                
                 <apex:pageBlockSectionItem rendered="{!campaignIdClone != null}" >
                     <apex:outputText value="{!$Label.labelVolunteersWizardCopyVolunteers}"  />
-                    <apex:inputCheckbox value="{!fCopyVolunteers}" />                	
-				</apex:pageBlockSectionItem>
+                    <apex:inputCheckbox value="{!fCopyVolunteers}" />                   
+                </apex:pageBlockSectionItem>
 
-				<apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem rendered="{!campaignIdClone != null}" >
                     <apex:outputText value="{!$Label.labelVolunteersWizardOverrideHoursStatus}" />
-                    <apex:inputField value="{!hoursStatus.Status__c}" />                	
-				</apex:pageBlockSectionItem>
+                    <apex:inputField value="{!hoursStatus.Status__c}" />                    
+                </apex:pageBlockSectionItem>
 
             </apex:pageBlockSection>
         </apex:pageBlock>

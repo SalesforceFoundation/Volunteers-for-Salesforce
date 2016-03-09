@@ -9,8 +9,8 @@
         <value>Volunteer Jobs</value>
     </caseValues>
     <fields>
-        <label><!-- Campaign --></label>
-        <name>Campaign__c</name>
+        <label><!-- CustomCampaign --></label>
+        <name>CustomCampaign__c</name>
         <relationshipLabel><!-- Volunteer Jobs --></relationshipLabel>
     </fields>
     <fields>

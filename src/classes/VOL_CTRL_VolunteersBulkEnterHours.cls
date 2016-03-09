@@ -45,8 +45,8 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         listSOCampaigns = volSharedCode.listSOCampaignsWithJobs;
         
         // handle optional parameters (must use string, not ID, to handle null)
-        string id = ApexPages.currentPage().getParameters().get('campaignId');
-        if (id != null && id != '') campaignId = id;
+        string id = ApexPages.currentPage().getParameters().get('customcampaignId');
+        if (id != null && id != '') customcampaignId = id;
         
         id = ApexPages.currentPage().getParameters().get('volunteerJobId');
         if (id != null && id != '') volunteerJobId = id;
@@ -55,30 +55,30 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         if (id != null && id != '') volunteerShiftId = id;
         
         
-		// initialize the list of all fields on Volunteer Hours.
-		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
-		listStrFields = new list<string>();
-		listStrFields.addAll(mapS.keySet());  
-		
-		/* here is code that would use metadata api for fieldsets.
-		unfortunately, the user then won't get an error if they include a field from a related object,
-		but we won't update it either.  Thus I think it is better to just get the fields on the Hours
-		object so if they add a related field to contacts (for example), they will get a runtime error
-		trying to display the page.
-		
+        // initialize the list of all fields on Volunteer Hours.
+        Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
+        listStrFields = new list<string>();
+        listStrFields.addAll(mapS.keySet());  
+        
+        /* here is code that would use metadata api for fieldsets.
+        unfortunately, the user then won't get an error if they include a field from a related object,
+        but we won't update it either.  Thus I think it is better to just get the fields on the Hours
+        object so if they add a related field to contacts (for example), they will get a runtime error
+        trying to display the page.
+        
         for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours.getFields()) {
             listStrFields.add(f.getFieldPath());
         }
         // add fields we hardcode on the page
         listStrFields.add('Volunteer_Shift__c');
         listStrFields.add('Contact__c');
-		*/
-		 
+        */
+         
     }   
 
     
     // holds the currently selected Campaign in the Campaign dropdown
-    global ID campaignId { get; set; }
+    global ID customcampaignId { get; set; }
 
     // the list of Campaigns to put in the Campaign dropdown
     global list<SelectOption> listSOCampaigns { get; set; }
@@ -98,8 +98,8 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     // the list of Volunteer Jobs to put in the dropdown
     global list<SelectOption> listSOVolunteerJobs {
         get {
-            if (listSOVolunteerJobs == null && campaignId != null) {
-                listSOVolunteerJobs = volSharedCode.listSOVolunteerJobsOfCampaignId(campaignId);
+            if (listSOVolunteerJobs == null && customcampaignId != null) {
+                listSOVolunteerJobs = volSharedCode.listSOVolunteerJobsOfCampaignId(customcampaignId);
             }
             return listSOVolunteerJobs;
         }
@@ -107,29 +107,29 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         set;
     }
     
-	// dates to filter the list of shifts and hours we are displaying
+    // dates to filter the list of shifts and hours we are displaying
     global date startDate { get; set; }
     global date endDate { get; set; }
     
     global Volunteer_Hours__c vhDateFilter {
-    	get {
-    		if (vhDateFilter == null) {
-    			vhDateFilter = new Volunteer_Hours__c();
-				
-				// initial date range +- 1 month around passed in Shift or today (if no shift)
-				Date dt;
-				if (volunteerShiftId != null) {
-					Volunteer_Shift__c shift = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
-					dt = shift.Start_Date_Time__c.date();
-				} else {
-					dt = system.today();
-				}
-				vhDateFilter.Start_Date__c = dt.addMonths(-1).toStartOfMonth();
-				vhDateFilter.End_Date__c = dt.addMonths(2).toStartOfMonth().addDays(-1);      			
-    		}
-    		return vhDateFilter;
-    	}
-    	set;
+        get {
+            if (vhDateFilter == null) {
+                vhDateFilter = new Volunteer_Hours__c();
+                
+                // initial date range +- 1 month around passed in Shift or today (if no shift)
+                Date dt;
+                if (volunteerShiftId != null) {
+                    Volunteer_Shift__c shift = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
+                    dt = shift.Start_Date_Time__c.date();
+                } else {
+                    dt = system.today();
+                }
+                vhDateFilter.Start_Date__c = dt.addMonths(-1).toStartOfMonth();
+                vhDateFilter.End_Date__c = dt.addMonths(2).toStartOfMonth().addDays(-1);                
+            }
+            return vhDateFilter;
+        }
+        set;
     }
 
     // the user has changed the Volunteer Job dropdown
@@ -150,7 +150,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         get {
             if (listSOVolunteerShifts == null && volunteerJobId != null) {
                 listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId, 
-                	vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c, true, false); 
+                    vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c, true, false); 
             }
             return listSOVolunteerShifts;
         }
@@ -184,26 +184,26 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     global virtual void FillListVolunteerHours() {
         // if they haven't yet picked a job, there are no hours to show or add.
         if (volunteerJobId == null) return;           
-		
-		// find the existing jobs
-		// we need to use dynamic soql to pick up all custom fields we don't know about
+        
+        // find the existing jobs
+        // we need to use dynamic soql to pick up all custom fields we don't know about
         string strSoql = 'select ';
         string strComma = '';
         for (string strF : listStrFields) {
-        	strSoql += strComma + strF;
-        	strComma = ', ';
+            strSoql += strComma + strF;
+            strComma = ', ';
         }
         strSoql += ' from Volunteer_Hours__c where Volunteer_Job__c = :volunteerJobId ';
         if (volunteerShiftId != null) {
-        	strSoql += ' and Volunteer_Shift__c = :volunteerShiftId ';
+            strSoql += ' and Volunteer_Shift__c = :volunteerShiftId ';
         }
         if (vhDateFilter.Start_Date__c != null) {
-        	Date dtStart = vhDateFilter.Start_Date__c;
-        	strSoql += ' and Start_Date__c >= :dtStart ';
+            Date dtStart = vhDateFilter.Start_Date__c;
+            strSoql += ' and Start_Date__c >= :dtStart ';
         }
         if (vhDateFilter.End_Date__c != null) {
-        	Date dtEnd = vhDateFilter.End_Date__c;
-        	strSoql += ' and Start_Date__c <= :dtEnd ';
+            Date dtEnd = vhDateFilter.End_Date__c;
+            strSoql += ' and Start_Date__c <= :dtEnd ';
         }
         strSoql += ' order by Full_Name__c, Start_Date__c ';
         
@@ -290,7 +290,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                     // we couldn't reliably mark dirty records in all scenarios,
                     // so we've decided it is better to always update all records.
                     //if (setVolunteerHoursIdDirty.contains(vh.Id)) 
-                    	listVolunteerHoursUpdate.add(vh);
+                        listVolunteerHoursUpdate.add(vh);
                 } else if (vh.Contact__c != null) {
                     listVolunteerHoursCreate.add(vh);
                 }
@@ -330,7 +330,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         return null;
     }
     
-	// this was a testmethod which can't be compiled in this class under api 31.  
-	// but because it was marked global, it could not be completely removed.
+    // this was a testmethod which can't be compiled in this class under api 31.  
+    // but because it was marked global, it could not be completely removed.
     global static void CodeCoverageTests() {}
 }

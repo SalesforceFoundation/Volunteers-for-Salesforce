@@ -105,7 +105,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
         
         // handle optional parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
-        string p = params.get('campaignId');
+        string p = params.get('customcampaignId');
         if (p != null && p != '') campaignIdFilter = p;
         p = params.get('ShowJobName');
         if (p != null && p == '0') ShowJobName = false;
@@ -140,34 +140,34 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                     if (ShowCampaignHierarchy) {
                         listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);    
                     }
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
+                    listVolunteerJobs = [select Id, Name, CustomCampaign__c, CustomCampaign__r.IsActive__c, CustomCampaign__r.Name, CustomCampaign__r.Start_Date__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
                             Description__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow 
                             order by Start_Date_Time__c) 
-                        from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                        from Volunteer_Job__c where CustomCampaign__c IN :listCampaignIds and Display_on_Website__c = true 
+                        order by First_Shift__c, CustomCampaign__r.Start_Date__c, CustomCampaign__r.Name, Name];
                 } else {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, 
+                    listVolunteerJobs = [select Id, Name, CustomCampaign__c, CustomCampaign__r.IsActive__c, CustomCampaign__r.Name, CustomCampaign__r.Start_Date__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
                             Description__c From Volunteer_Job_Slots__r 
-                        	where Start_Date_Time__c >= :dtNow                        
+                            where Start_Date_Time__c >= :dtNow                        
                             order by Start_Date_Time__c LIMIT 100) 
-                        from Volunteer_Job__c where Campaign__r.IsActive = true and Display_on_Website__c = true 
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name LIMIT 999];
+                        from Volunteer_Job__c where CustomCampaign__r.IsActive__c = true and Display_on_Website__c = true 
+                        order by First_Shift__c, CustomCampaign__r.Start_Date__c, CustomCampaign__r.Name, Name LIMIT 999];
                 }
                 
-            	// now remove any jobs whose shifts are all past date.
-            	for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
-            		Volunteer_Job__c job = listVolunteerJobs[i];
-            		if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
-            			listVolunteerJobs.remove(i);            		
-            		}
-            	}
+                // now remove any jobs whose shifts are all past date.
+                for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
+                    Volunteer_Job__c job = listVolunteerJobs[i];
+                    if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
+                        listVolunteerJobs.remove(i);                    
+                    }
+                }
                 
             }
             return sortVolunteerJobs(listVolunteerJobs);
@@ -177,42 +177,42 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
     }
     
     global virtual list<Volunteer_Job__c> sortVolunteerJobs (list<Volunteer_Job__c> jobsList) {
-    	list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
-    	DateTime faroutFuture = System.Now().addYears(100);
-    	
-    	//create a map of earliest shift datetime to job list
-    	map<DateTime, list<Volunteer_Job__c>> jobMap = new map<DateTime, list<Volunteer_Job__c>>();
-    	
-    	for (Volunteer_Job__c vj : jobsList) {
-    		DateTime nextShift = faroutFuture;
-    		
-    		//if the job has no shifts, set it in the past so it appears first on the page, otherwise get the first shift
-    		if (vj.Volunteer_Job_Slots__r.size() == 0) {
-    			nextShift = faroutFuture.addYears(-200);
-    		} else if (vj.Volunteer_Job_Slots__r.size() > 0) {
-    			for (Volunteer_Shift__c vs : vj.Volunteer_Job_Slots__r) {
-    				if (vs.Start_Date_Time__c < nextshift) {
-    					nextShift = vs.Start_Date_Time__c;
-    				}
-    			}
-    		}
-    		
-    		//if our map doesn't contain this shift, create a new list, otherwise add to the list
-    		if (jobMap.get(nextShift) == null) {
-    			jobMap.put(nextShift, new List<Volunteer_Job__c>());
-    		}
-    		jobMap.get(nextShift).add(vj);
-    	}
-    	
-    	//use SF's standard sort method on the datetimes
-    	list<DateTime> keys = new list<DateTime>(jobMap.keySet());
-    	keys.sort();
-    	
-    	//rebuild list in order
-    	for (DateTime key:keys) {
-    		resultList.addAll(jobMap.get(key));
-    	}
-    	return resultlist;
+        list<Volunteer_Job__c> resultList = new list<Volunteer_Job__c>();
+        DateTime faroutFuture = System.Now().addYears(100);
+        
+        //create a map of earliest shift datetime to job list
+        map<DateTime, list<Volunteer_Job__c>> jobMap = new map<DateTime, list<Volunteer_Job__c>>();
+        
+        for (Volunteer_Job__c vj : jobsList) {
+            DateTime nextShift = faroutFuture;
+            
+            //if the job has no shifts, set it in the past so it appears first on the page, otherwise get the first shift
+            if (vj.Volunteer_Job_Slots__r.size() == 0) {
+                nextShift = faroutFuture.addYears(-200);
+            } else if (vj.Volunteer_Job_Slots__r.size() > 0) {
+                for (Volunteer_Shift__c vs : vj.Volunteer_Job_Slots__r) {
+                    if (vs.Start_Date_Time__c < nextshift) {
+                        nextShift = vs.Start_Date_Time__c;
+                    }
+                }
+            }
+            
+            //if our map doesn't contain this shift, create a new list, otherwise add to the list
+            if (jobMap.get(nextShift) == null) {
+                jobMap.put(nextShift, new List<Volunteer_Job__c>());
+            }
+            jobMap.get(nextShift).add(vj);
+        }
+        
+        //use SF's standard sort method on the datetimes
+        list<DateTime> keys = new list<DateTime>(jobMap.keySet());
+        keys.sort();
+        
+        //rebuild list in order
+        for (DateTime key:keys) {
+            resultList.addAll(jobMap.get(key));
+        }
+        return resultlist;
     }
     
     global virtual boolean getVolunteersHasJobs() {
@@ -265,7 +265,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
         return null;
     }
 
-	// this was a testmethod which can't be compiled in this class under api 31.  
-	// but because it was marked global, it could not be completely removed.
+    // this was a testmethod which can't be compiled in this class under api 31.  
+    // but because it was marked global, it could not be completely removed.
     global static void UnitTest1() {}
 }

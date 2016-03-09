@@ -127,29 +127,8 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Volunteers</label>
+        <layoutColumns/>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Number_of_Volunteers__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Volunteer_Completed_Hours__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Volunteers_Still_Needed__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Volunteer_Jobs__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Volunteer_Shifts__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Volunteer_Website_Time_Zone__c</field>
@@ -185,15 +164,6 @@
         <relatedList>RelatedCampaignMemberList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Number_of_Shifts__c</fields>
-        <fields>Number_of_Volunteers__c</fields>
-        <fields>Number_of_Volunteers_Still_Needed__c</fields>
-        <fields>Number_of_Completed_Hours__c</fields>
-        <fields>Ongoing__c</fields>
-        <relatedList>Volunteer_Job__c.Campaign__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -224,16 +194,6 @@
         <masterLabel>00h50000001SnBC</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>2</sizeY>
-        <summaryLayoutItems>
-            <field>Number_of_Volunteers__c</field>
-            <posX>0</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Volunteers_Still_Needed__c</field>
-            <posX>0</posX>
-            <posY>1</posY>
-        </summaryLayoutItems>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
     </summaryLayout>
 </Layout>

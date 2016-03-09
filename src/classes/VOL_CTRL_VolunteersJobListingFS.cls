@@ -116,9 +116,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     }
     
     global string strGoogleMapAPIKey {
-    	get {
-    		return VOL_SharedCode.VolunteersSettings.Google_Maps_API_Key__c;
-    	}
+        get {
+            return VOL_SharedCode.VolunteersSettings.Google_Maps_API_Key__c;
+        }
     }  
     
     // constructor
@@ -137,7 +137,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowSkills = false;
         ShowShifts = true;
         ShowCampaignHierarchy = false;
-		ShowNumberAvailable = false;
+        ShowNumberAvailable = false;
         strLanguage = 'en-us'; 
         strDateFormat = 'EEEE M/d/yyyy';
         strTimeFormat = 'h:mm tt';
@@ -147,7 +147,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 
         // handle optional parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
-        string p = params.get('campaignId');
+        string p = params.get('customcampaignId');
         if (p != null && p != '') campaignIdFilter = p;
         p = params.get('jobId');
         if (p != null && p != '') jobIdFilter = p;
@@ -209,12 +209,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
         VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c'), 
-        	new list<string>{'Name','Description__c','Campaign__c','Location_Information__c','Number_of_Shifts__c','Skills_Needed__c',
-        					'Volunteer_Website_Time_Zone__c','Location_Street__c','First_Shift__c'});
+            new list<string>{'Name','Description__c','CustomCampaign__c','Location_Information__c','Number_of_Shifts__c','Skills_Needed__c',
+                            'Volunteer_Website_Time_Zone__c','Location_Street__c','First_Shift__c'});
         VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c'), 
-        	new list<string>{'Start_Date_Time__c','Duration__c','Number_of_Volunteers_Still_Needed__c','Description__c','System_Note__c'});
-       	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
-       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS));
+            new list<string>{'Start_Date_Time__c','Duration__c','Number_of_Volunteers_Still_Needed__c','Description__c','System_Note__c'});
+        VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
+            VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS));
         
         contactIdSignUp = null;
         volunteerHoursIdSignUp = null;        
@@ -228,8 +228,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 listVolunteerJobs = new list<Volunteer_Job__c>();
                 Date dateNow = dtMonthFilter;
                 if (nDaysToShow == 0) {
-                	dateNow = dateNow.toStartOfMonth();
-                	if (dateNow < system.Today()) dateNow = system.Today();
+                    dateNow = dateNow.toStartOfMonth();
+                    if (dateNow < system.Today()) dateNow = system.Today();
                 }
                 DateTime dtNow = dateNow;
                 
@@ -251,21 +251,21 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // but are in the next month GMT.
                 DateTime dtLast;
                 if (nDaysToShow > 0) 
-                	dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addDays(nDaysToShow), tz);
+                    dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addDays(nDaysToShow), tz);
                 else
-                	dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);                
+                    dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);                
                 
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
+                    listVolunteerJobs = [select Id, Name, CustomCampaign__c, CustomCampaign__r.IsActive__c, CustomCampaign__r.Name, CustomCampaign__r.Start_Date__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Id = :shiftIdFilter) 
                         from Volunteer_Job__c where Id = :jobIdFilter  
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                        order by First_Shift__c, CustomCampaign__r.Start_Date__c, CustomCampaign__r.Name, Name];
                 } else if (jobIdFilter != null) {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
+                    listVolunteerJobs = [select Id, Name, CustomCampaign__c, CustomCampaign__r.IsActive__c, CustomCampaign__r.Name, CustomCampaign__r.Start_Date__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
@@ -273,31 +273,31 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
                         from Volunteer_Job__c where Id = :jobIdFilter  
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                        order by First_Shift__c, CustomCampaign__r.Start_Date__c, CustomCampaign__r.Name, Name];
                 } else if (campaignIdFilter != null) {
                     List<Id> listCampaignIds = new List<Id> {campaignIdFilter};
                     if (ShowCampaignHierarchy) {
                         listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);    
                     }
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
+                    listVolunteerJobs = [select Id, Name, CustomCampaign__c, CustomCampaign__r.IsActive__c, CustomCampaign__r.Name, CustomCampaign__r.Start_Date__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c) 
-                        from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
+                        from Volunteer_Job__c where CustomCampaign__c IN :listCampaignIds and Display_on_Website__c = true 
+                        order by First_Shift__c, CustomCampaign__r.Start_Date__c, CustomCampaign__r.Name, Name];
                 } else {
-                    listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
+                    listVolunteerJobs = [select Id, Name, CustomCampaign__c, CustomCampaign__r.IsActive__c, CustomCampaign__r.Name, CustomCampaign__r.Start_Date__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
                             order by Start_Date_Time__c LIMIT 100) 
-                        from Volunteer_Job__c where Campaign__r.IsActive = true and Display_on_Website__c = true 
-                        order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name LIMIT 999];
+                        from Volunteer_Job__c where CustomCampaign__r.IsActive__c = true and Display_on_Website__c = true 
+                        order by First_Shift__c, CustomCampaign__r.Start_Date__c, CustomCampaign__r.Name, Name LIMIT 999];
                 }
                 
                 // now remove any jobs whose shifts are all past date.
@@ -454,8 +454,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     }
                     // update the  status if not already Confirmed or Completed
                     if (listVHours[0].Status__c != 'Confirmed' && listVHours[0].Status__c != 'Completed')
-                    	listVHours[0].Status__c = 'Web Sign Up';
-                    	
+                        listVHours[0].Status__c = 'Web Sign Up';
+                        
                     VolunteerHoursBeforeInsert(listVHours[0]);
                     update listVHours[0];
                     volunteerHoursIdSignUp = listVHours[0].Id;
@@ -502,8 +502,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         set;
     }
 
-	// this was a testmethod which can't be compiled in this class under api 31.  
-	// but because it was marked global, it could not be completely removed.
+    // this was a testmethod which can't be compiled in this class under api 31.  
+    // but because it was marked global, it could not be completely removed.
     global static void UnitTest1() {}
     
 }

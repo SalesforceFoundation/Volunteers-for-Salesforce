@@ -17,11 +17,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Campaign__c</field>
-            <table>Volunteer_Job__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CreatedBy</field>
             <table>Volunteer_Job__c</table>
         </columns>
@@ -118,21 +113,6 @@
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Name</field>
-            <table>Volunteer_Job__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Campaign__c.EndDate</field>
-            <table>Volunteer_Job__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Campaign__c.StartDate</field>
-            <table>Volunteer_Job__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Campaign__c.Status</field>
             <table>Volunteer_Job__c</table>
         </columns>
         <masterLabel>Volunteer Jobs</masterLabel>

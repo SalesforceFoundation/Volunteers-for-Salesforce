@@ -16,10 +16,6 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Campaign__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Ongoing__c</field>
             </layoutItems>
@@ -38,6 +34,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Skills_Needed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>CustomCampaign__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -130,7 +130,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 		        listSOVolunteerJobs = new list<SelectOption>();
 		        listSOVolunteerJobs.add(new SelectOption('', ''));
 		        for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where 
-		        	Campaign__r.IsActive = true and Inactive__c = false order by name limit 999]) {
+		        	CustomCampaign__r.IsActive__c = true and Inactive__c = false order by name limit 999]) {
 		            listSOVolunteerJobs.add(new SelectOption(vj.id, vj.name));
 		        }       
             }

@@ -38,9 +38,9 @@ public with sharing class VOL_CTRL_VolunteersReportHours_TEST {
         Account acc = new Account(Name='Test Individual Bucket Account');
         insert acc;
 
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Job Campaign', IsActive=true);
+        CustomCampaign__c cmp = new CustomCampaign__c(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Job Campaign', IsActive__c=true);
         insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id, Display_on_Website__c=true);
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', customcampaign__c=cmp.Id, Display_on_Website__c=true);
         insert job;
         Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
         insert shift;        
@@ -102,7 +102,7 @@ public with sharing class VOL_CTRL_VolunteersReportHours_TEST {
         ctrl.volunteerJobId = job.Id;
         ctrl.volunteerShiftId = shift.Id;
         ctrl.ChangeVolunteerShift();
-		ctrl.vhours.Hours_Worked__c = 2;
+        ctrl.vhours.Hours_Worked__c = 2;
         ctrl.Save();
         System.AssertEquals(system.label.labelVolunteerReportHoursThankYou, ctrl.strSaveResult);
         vh2 = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Volunteer_Shift__c = :shift.Id];

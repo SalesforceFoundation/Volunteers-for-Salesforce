@@ -21,11 +21,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Campaign__c</field>
-            <table>Volunteer_Job__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>CreatedBy</field>
             <table>Volunteer_Job__c</table>
         </columns>

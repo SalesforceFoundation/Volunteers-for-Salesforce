@@ -36,9 +36,9 @@ private class VOL_TEST_VolunteerHours_Trigger {
         insert acc;
         Contact con = new Contact(Lastname='Testy', AccountId=acc.Id, Volunteer_Status__c='inactive');
         insert con;
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign', IsActive=true);
+        CustomCampaign__c cmp = new CustomCampaign__c(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Campaign', IsActive__c=true);
         insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', customcampaign__c=cmp.Id);
         insert job;
         Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
         insert shift;
@@ -108,35 +108,35 @@ private class VOL_TEST_VolunteerHours_Trigger {
         system.AssertEquals(30, shift.Total_Volunteers__c );
         Volunteer_Shift__c shift2 = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
         insert shift2;
-		listHours[0].Volunteer_Shift__c = shift2.Id;
-		listHours[1].Volunteer_Shift__c = shift2.Id;
-		listHours[2].Volunteer_Shift__c = shift2.Id;
-		update listHours;
+        listHours[0].Volunteer_Shift__c = shift2.Id;
+        listHours[1].Volunteer_Shift__c = shift2.Id;
+        listHours[2].Volunteer_Shift__c = shift2.Id;
+        update listHours;
         shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
         system.AssertEquals(21, shift.Total_Volunteers__c );
         shift2 = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift2.Id limit 1];
         system.AssertEquals(9, shift2.Total_Volunteers__c );
-		
+        
         // test reparenting of Hours from one Job to another Job.
-        Volunteer_Job__c job2 = new Volunteer_Job__c(name='Job2', campaign__c=cmp.Id);
+        Volunteer_Job__c job2 = new Volunteer_Job__c(name='Job2', customcampaign__c=cmp.Id);
         insert job2;
         listHours[0].Volunteer_Job__c = job2.Id;
-		listHours[0].Volunteer_Shift__c = null;
+        listHours[0].Volunteer_Shift__c = null;
         listHours[1].Volunteer_Job__c = job2.Id;
-		listHours[1].Volunteer_Shift__c = null;
+        listHours[1].Volunteer_Shift__c = null;
         listHours[2].Volunteer_Job__c = job2.Id;
-		listHours[2].Volunteer_Shift__c = null;
-		update listHours;
+        listHours[2].Volunteer_Shift__c = null;
+        update listHours;
         shift2 = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift2.Id limit 1];
         system.AssertEquals(0, shift2.Total_Volunteers__c );
-		job2 = [select Id, Number_of_Volunteers__c from Volunteer_Job__c where Id = : job2.Id limit 1];
-		system.AssertEquals(9, job2.Number_of_Volunteers__c);
+        job2 = [select Id, Number_of_Volunteers__c from Volunteer_Job__c where Id = : job2.Id limit 1];
+        system.AssertEquals(9, job2.Number_of_Volunteers__c);
 
-		// test merging of contacts.
+        // test merging of contacts.
         Contact con2 = new Contact(Lastname='Testy2', AccountId=acc.Id, Volunteer_Status__c='inactive');
         insert con2;
         shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
-        system.AssertEquals(21, shift.Total_Volunteers__c );		
+        system.AssertEquals(21, shift.Total_Volunteers__c );        
         Volunteer_Hours__c hours2 = new Volunteer_Hours__c(
             Volunteer_Job__c=job.id, 
             Volunteer_Shift__c=shift.Id,
@@ -146,18 +146,18 @@ private class VOL_TEST_VolunteerHours_Trigger {
             Status__c='Confirmed'
             );
         insert hours2;
-		listHours = [select Id from Volunteer_Hours__c where contact__c = :con.Id];
-		system.AssertEquals(12, listHours.size());
-		listHours = [select Id from Volunteer_Hours__c where contact__c = :con2.Id];
-		system.AssertEquals(1, listHours.size());
+        listHours = [select Id from Volunteer_Hours__c where contact__c = :con.Id];
+        system.AssertEquals(12, listHours.size());
+        listHours = [select Id from Volunteer_Hours__c where contact__c = :con2.Id];
+        system.AssertEquals(1, listHours.size());
         shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
-        system.AssertEquals(25, shift.Total_Volunteers__c );		
-		merge con con2;
-		listHours = [select Id from Volunteer_Hours__c where contact__c = :con.Id];
-		system.AssertEquals(13, listHours.size());
+        system.AssertEquals(25, shift.Total_Volunteers__c );        
+        merge con con2;
+        listHours = [select Id from Volunteer_Hours__c where contact__c = :con.Id];
+        system.AssertEquals(13, listHours.size());
         shift = [select Id, Total_Volunteers__c  from Volunteer_Shift__c where Id = :shift.Id limit 1];
-        system.AssertEquals(25, shift.Total_Volunteers__c );		
-						    
+        system.AssertEquals(25, shift.Total_Volunteers__c );        
+                            
     }
     
 }

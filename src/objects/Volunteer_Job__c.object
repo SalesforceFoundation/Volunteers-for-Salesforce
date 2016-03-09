@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -44,33 +44,33 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
-        <fullName>Campaign__c</fullName>
-        <deprecated>false</deprecated>
+        <fullName>CustomCampaign__c</fullName>
         <externalId>false</externalId>
-        <label>Campaign</label>
-        <referenceTo>Campaign</referenceTo>
+        <label>CustomCampaign</label>
+        <referenceTo>CustomCampaign__c</referenceTo>
         <relationshipLabel>Volunteer Jobs</relationshipLabel>
         <relationshipName>Volunteer_Jobs</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Description__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Description</label>
         <length>32000</length>
@@ -81,7 +81,6 @@
     <fields>
         <fullName>Display_on_Website__c</fullName>
         <defaultValue>false</defaultValue>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page.</inlineHelpText>
         <label>Display on Website</label>
@@ -90,7 +89,6 @@
     </fields>
     <fields>
         <fullName>First_Shift__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>First Shift</label>
         <summarizedField>Volunteer_Shift__c.Start_Date_Time__c</summarizedField>
@@ -102,7 +100,6 @@
     <fields>
         <fullName>Inactive__c</fullName>
         <defaultValue>false</defaultValue>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page.</inlineHelpText>
         <label>Inactive</label>
@@ -111,7 +108,6 @@
     </fields>
     <fields>
         <fullName>Location_City__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location City</label>
         <length>255</length>
@@ -122,7 +118,6 @@
     </fields>
     <fields>
         <fullName>Location_Information__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders.</inlineHelpText>
         <label>Location Information</label>
@@ -133,7 +128,6 @@
     </fields>
     <fields>
         <fullName>Location_Street__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location Street</label>
         <length>255</length>
@@ -144,7 +138,6 @@
     </fields>
     <fields>
         <fullName>Location_Zip_Postal_Code__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location Zip/Postal Code</label>
         <length>100</length>
@@ -155,7 +148,6 @@
     </fields>
     <fields>
         <fullName>Location__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location State/Province</label>
         <length>100</length>
@@ -166,7 +158,6 @@
     </fields>
     <fields>
         <fullName>Number_of_Completed_Hours__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Total number of Hours that are Completed.  Hours with other status values are not included.</inlineHelpText>
         <label>Number of Completed Hours</label>
@@ -183,7 +174,6 @@
     </fields>
     <fields>
         <fullName>Number_of_Shifts__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Number of Shifts</label>
         <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
@@ -193,7 +183,6 @@
     </fields>
     <fields>
         <fullName>Number_of_Volunteers_Still_Needed__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label># of Volunteers Still Needed</label>
         <summarizedField>Volunteer_Shift__c.Number_of_Volunteers_Still_Needed__c</summarizedField>
@@ -204,7 +193,6 @@
     </fields>
     <fields>
         <fullName>Number_of_Volunteers__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The total number of volunteers whose Hours Status = Completed or Confirmed.</inlineHelpText>
         <label>Number of Volunteers</label>
@@ -222,7 +210,6 @@
     <fields>
         <fullName>Ongoing__c</fullName>
         <defaultValue>false</defaultValue>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Ongoing</label>
         <trackTrending>false</trackTrending>
@@ -230,7 +217,6 @@
     </fields>
     <fields>
         <fullName>Skills_Needed__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>the skills the volunteer should have to do this job</inlineHelpText>
         <label>Skills Needed</label>
@@ -271,7 +257,6 @@
     </fields>
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
@@ -637,7 +622,6 @@
     <listViews>
         <fullName>All_Jobs</fullName>
         <columns>NAME</columns>
-        <columns>Campaign__c</columns>
         <columns>Number_of_Volunteers_Still_Needed__c</columns>
         <columns>Number_of_Completed_Hours__c</columns>
         <columns>Ongoing__c</columns>
@@ -649,7 +633,6 @@
     <listViews>
         <fullName>Available_Jobs</fullName>
         <columns>NAME</columns>
-        <columns>Campaign__c</columns>
         <columns>Number_of_Volunteers_Still_Needed__c</columns>
         <columns>Number_of_Completed_Hours__c</columns>
         <columns>Ongoing__c</columns>
@@ -665,7 +648,6 @@
     <listViews>
         <fullName>Ongoing_Jobs</fullName>
         <columns>NAME</columns>
-        <columns>Campaign__c</columns>
         <columns>Number_of_Volunteers_Still_Needed__c</columns>
         <columns>Number_of_Completed_Hours__c</columns>
         <columns>Ongoing__c</columns>
@@ -689,19 +671,19 @@
     </nameField>
     <pluralLabel>Volunteer Jobs</pluralLabel>
     <searchLayouts>
-        <customTabListAdditionalFields>Campaign__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields xsi:nil="true"/>
         <customTabListAdditionalFields>Ongoing__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Description__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>Campaign__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields xsi:nil="true"/>
         <lookupDialogsAdditionalFields>Ongoing__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Description__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Campaign__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields xsi:nil="true"/>
         <lookupPhoneDialogsAdditionalFields>Ongoing__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>Description__c</lookupPhoneDialogsAdditionalFields>
         <searchFilterFields>NAME</searchFilterFields>
-        <searchFilterFields>Campaign__c</searchFilterFields>
+        <searchFilterFields xsi:nil="true"/>
         <searchFilterFields>Ongoing__c</searchFilterFields>
-        <searchResultsAdditionalFields>Campaign__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields xsi:nil="true"/>
         <searchResultsAdditionalFields>Ongoing__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
     </searchLayouts>
@@ -716,7 +698,7 @@
         <masterLabel>Find Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__VolunteersFind?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
+        <url>/apex/GW_Volunteers__VolunteersFind?customcampaignId={!Volunteer_Job__c.CustomCampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>JobRoster</fullName>
@@ -727,7 +709,7 @@
         <masterLabel>Volunteer Roster</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Volunteer_Job__c.CampaignId__c}&amp;pv1={!Volunteer_Job__c.Id}</url>
+        <url>/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Volunteer_Job__c.CustomCampaignId__c}&amp;pv1={!Volunteer_Job__c.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Job_Shift_Calendar</fullName>
@@ -738,7 +720,7 @@
         <masterLabel>Shift Calendar</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__JobCalendar?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
+        <url>/apex/GW_Volunteers__JobCalendar?customcampaignId={!Volunteer_Job__c.CustomCampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Mass_Edit_Volunteer_Hours</fullName>
