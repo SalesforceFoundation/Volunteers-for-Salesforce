@@ -39,10 +39,10 @@ public with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
         insert acc;
         Contact con = new Contact(Lastname='Testy', AccountId=acc.Id);
         insert con;
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-        	name='Test Campaign', IsActive=true);
+        CustomCampaign__c cmp = new CustomCampaign__c(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+            name='Test Campaign', IsActive__c=true);
         insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', customcampaign__c=cmp.Id);
         insert job;
         Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
         insert shift;
@@ -63,14 +63,14 @@ public with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
         
         //point to our VF page
         PageReference p = new PageReference('Page.VolunteersBulkEnterHours');
-        p.getParameters().put('campaignId', cmp.id);
+        p.getParameters().put('customcampaignId', cmp.id);
         p.getParameters().put('volunteerJobId', job.id);
         p.getParameters().put('volunteerShiftId', shift.id);
         Test.setCurrentPageReference(p);
         
         //instantiate the controller for this opp
         VOL_CTRL_VolunteersBulkEnterHours ctrl = new VOL_CTRL_VolunteersBulkEnterHours();
-        System.AssertEquals(cmp.Id, ctrl.campaignId);
+        System.AssertEquals(cmp.Id, ctrl.customcampaignId);
         System.AssertEquals(job.Id, ctrl.volunteerJobId);
         System.AssertEquals(shift.Id, ctrl.volunteerShiftId);
         System.Assert(ctrl.listSOCampaigns.size() > 1);
@@ -85,13 +85,13 @@ public with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
         System.AssertEquals(0, ctrl.numberOfRecordsDirty);
         System.AssertEquals(null, ctrl.strSaveResults); 
 
-        ctrl.campaignId = null;
+        ctrl.customcampaignId = null;
         ctrl.ChangeCampaign();
         System.AssertEquals(null, ctrl.volunteerJobId);
         System.AssertEquals(null, ctrl.volunteerShiftId);
         System.AssertEquals(null, ctrl.listVolunteerHours);
         
-        ctrl.campaignId = cmp.Id;
+        ctrl.customcampaignId = cmp.Id;
         ctrl.ChangeCampaign();
         ctrl.volunteerJobId = job.Id;
         ctrl.ChangeVolunteerJob();

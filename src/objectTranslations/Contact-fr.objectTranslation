@@ -6,9 +6,52 @@
         <name>First_Volunteer_Date__c</name>
     </fields>
     <fields>
+        <label><!-- Languages --></label>
+        <name>Languages__c</name>
+    </fields>
+    <fields>
         <help>Date de fin des dernières heures de bénévoles</help>
         <label>Dernière date de bénévolat</label>
         <name>Last_Volunteer_Date__c</name>
+    </fields>
+    <fields>
+        <name>LeadSource</name>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partner Referral</masterLabel>
+            <translation><!-- Partner Referral --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Phone Inquiry</masterLabel>
+            <translation><!-- Phone Inquiry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Purchased List</masterLabel>
+            <translation><!-- Purchased List --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Level --></label>
+        <name>Level__c</name>
+        <picklistValues>
+            <masterLabel>Primary</masterLabel>
+            <translation><!-- Primary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secondary</masterLabel>
+            <translation><!-- Secondary --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tertiary</masterLabel>
+            <translation><!-- Tertiary --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label>Comte de Bénévoles Uniques</label>
@@ -117,6 +160,13 @@
             <translation>Prospectives</translation>
         </picklistValues>
     </fields>
+    <layouts>
+        <layout>Contact Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <workflowTasks>
         <description>Un email automatique a été envoyé au contact en leur remerciant de l&apos;inscription pour devenir bénévole.</description>
         <name>Volunteer_Signup_Thank_You_Sent_Contact</name>

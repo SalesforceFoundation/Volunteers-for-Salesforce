@@ -39,9 +39,9 @@ public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
         insert acc;
         Contact con = new Contact(Lastname='Testy', Firstname='Test', Email='test@testy.com', AccountId=acc.Id);
         insert con;
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Job Campaign', IsActive=true);
+        CustomCampaign__c cmp = new CustomCampaign__c(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, name='Test Job Campaign', IsActive__c=true);
         insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id, Display_on_Website__c=true);
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', customcampaign__c=cmp.Id, Display_on_Website__c=true);
         insert job;
         Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
         insert shift;        
@@ -84,7 +84,7 @@ public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
         System.Assert(ctrl.listVolunteerJobs.size() > 0);
         
         integer cJobs = ctrl.listVolunteerJobs.size();
-        Volunteer_Job__c job2 = new Volunteer_Job__c(name='Job2', campaign__c=cmp.Id, Display_on_Website__c=true);
+        Volunteer_Job__c job2 = new Volunteer_Job__c(name='Job2', customcampaign__c=cmp.Id, Display_on_Website__c=true);
         insert job2;
         ctrl.listVolunteerJobs = null;
         System.AssertEquals(cJobs + 1, ctrl.listVolunteerJobs.size());
@@ -112,7 +112,7 @@ public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
         pageRef.getParameters().put('ShowLocationInfo', '0');
         pageRef.getParameters().put('ShowShifts', '0');
         pageRef.getParameters().put('ShowSkills', '0');
-        pageRef.getParameters().put('campaignId', cmp.Id);
+        pageRef.getParameters().put('customcampaignId', cmp.Id);
         Test.setCurrentPage(pageRef); 
 
         //instantiate the controller 
@@ -133,25 +133,25 @@ public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
         
     public static testmethod void testCampaignHierarchies() {
 
-		//create our test data
-		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();
-		ID cmpIdGrandparent = mapCmp.get('Grandparent').Id;
-		system.assertNotEquals(null, cmpIdGrandparent);
+        //create our test data
+        map<string, CustomCampaign__c> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();
+        ID cmpIdGrandparent = mapCmp.get('Grandparent').Id;
+        system.assertNotEquals(null, cmpIdGrandparent);
     
-		// verify w/ no hierarchy
+        // verify w/ no hierarchy
         PageReference pageRef = Page.VolunteersJobListing;
-        pageRef.getParameters().put('campaignId', cmpIdGrandparent);
+        pageRef.getParameters().put('customcampaignId', cmpIdGrandparent);
         Test.setCurrentPage(pageRef); 
         VOL_CTRL_VolunteersJobListing ctrl = new VOL_CTRL_VolunteersJobListing();
-		system.assertEquals(1, ctrl.listVolunteerJobs.size()); 
+        system.assertEquals(1, ctrl.listVolunteerJobs.size()); 
 
-		// verify w/ hierarchy
+        // verify w/ hierarchy
         PageReference pageRef2 = Page.VolunteersJobListing;
-        pageRef2.getParameters().put('campaignId', cmpIdGrandparent);
+        pageRef2.getParameters().put('customcampaignId', cmpIdGrandparent);
         pageRef2.getParameters().put('ShowCampaignHierarchy', '1');
         Test.setCurrentPage(pageRef2); 
         VOL_CTRL_VolunteersJobListing ctrl2 = new VOL_CTRL_VolunteersJobListing();
-		system.assertEquals(mapCmp.size(), ctrl2.listVolunteerJobs.size()); 
+        system.assertEquals(mapCmp.size(), ctrl2.listVolunteerJobs.size()); 
     }
     
 }

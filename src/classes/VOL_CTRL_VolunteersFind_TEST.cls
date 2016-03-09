@@ -31,36 +31,36 @@
 @isTest
 public with sharing class VOL_CTRL_VolunteersFind_TEST {
 
-	//------------------------------------------------------------------------------------------
-	// Test Code
-	//------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
+    // Test Code
+    //------------------------------------------------------------------------------------------
     public static testmethod void TestVolunteersFind() {
 
-		// create test data	
-		list<Contact> listCon = new list<Contact>();	
-		for (integer i = 0; i < 10; i++) {
-			listCon.add(new Contact(firstname='test'+i, lastname='test'+i));
-			if (i == 1 || i == 3 || i == 5) {
-				listCon[i].Volunteer_Status__c = 'Active';
-			}
-			if (i == 3) {
-				listCon[i].Volunteer_Availability__c = 'Morning';
-			}			
-		}
-		insert listCon;
-		
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-        	name='Job Test Campaign', IsActive=true);
+        // create test data 
+        list<Contact> listCon = new list<Contact>();    
+        for (integer i = 0; i < 10; i++) {
+            listCon.add(new Contact(firstname='test'+i, lastname='test'+i));
+            if (i == 1 || i == 3 || i == 5) {
+                listCon[i].Volunteer_Status__c = 'Active';
+            }
+            if (i == 3) {
+                listCon[i].Volunteer_Availability__c = 'Morning';
+            }           
+        }
+        insert listCon;
+        
+        CustomCampaign__c cmp = new CustomCampaign__c(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+            name='Job Test Campaign', IsActive__c=true);
         insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', customcampaign__c=cmp.Id);
         insert job;
         Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.today().adddays(1));
         insert shift;        
 
         //instantiate the controller 
         VOL_CTRL_VolunteersFind ctrl = new VOL_CTRL_VolunteersFind();
-		SoqlListView slv = new SoqlListView();
-		slv.pageController = ctrl;        
+        SoqlListView slv = new SoqlListView();
+        slv.pageController = ctrl;        
         
         system.assertNotEquals(null, ctrl);
         system.assertNotEquals(null, ctrl.GetStrSoql());
@@ -73,7 +73,7 @@ public with sharing class VOL_CTRL_VolunteersFind_TEST {
         system.assertNotEquals(null, ctrl.listStrFields);
         system.assertEquals(false, ctrl.hasFilterCriteria);
         
-        ctrl.campaignId = cmp.Id;
+        ctrl.customcampaignId = cmp.Id;
         ctrl.ChangeCampaign();
         system.assertEquals(2, ctrl.listSOCampaigns.size());
         ctrl.volunteerJobId = job.Id;
@@ -109,21 +109,21 @@ public with sharing class VOL_CTRL_VolunteersFind_TEST {
         // assign 1 volunteer to the job shift
         ctrl.vhAssign.Status__c = 'Confirmed';
         ctrl.vhAssign.Hours_Worked__c = 1;
-       	ctrl.ctrlSoqlListView.listSLVObjCurrent[0].checked = true;
-       	ctrl.volunteerJobId = job.Id;
+        ctrl.ctrlSoqlListView.listSLVObjCurrent[0].checked = true;
+        ctrl.volunteerJobId = job.Id;
         ctrl.volunteerShiftId = shift.Id;
-       	ctrl.Assign();
-       	list<Volunteer_Hours__c> listVH = [select Id, Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :job.Id];
-       	system.assertEquals(1, listVH.size());
-       	system.assertEquals(listCon[3].Id, listVH[0].Contact__c); 
+        ctrl.Assign();
+        list<Volunteer_Hours__c> listVH = [select Id, Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :job.Id];
+        system.assertEquals(1, listVH.size());
+        system.assertEquals(listCon[3].Id, listVH[0].Contact__c); 
         
-		// reassign the same volunteer and make sure another volunteer hours record does NOT get created.
-       	ctrl.ctrlSoqlListView.listSLVObjCurrent[0].checked = true;
-       	ctrl.Assign();
-       	listVH = [select Id, Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :job.Id];
-       	system.assertEquals(1, listVH.size());
-       	system.assertEquals(listCon[3].Id, listVH[0].Contact__c); 
-		
+        // reassign the same volunteer and make sure another volunteer hours record does NOT get created.
+        ctrl.ctrlSoqlListView.listSLVObjCurrent[0].checked = true;
+        ctrl.Assign();
+        listVH = [select Id, Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :job.Id];
+        system.assertEquals(1, listVH.size());
+        system.assertEquals(listCon[3].Id, listVH[0].Contact__c); 
+        
 
     }
 }

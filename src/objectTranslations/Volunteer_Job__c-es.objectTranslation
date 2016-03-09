@@ -9,9 +9,9 @@
         <value>Trabajos Voluntarios</value>
     </caseValues>
     <fields>
-        <label>Campaña</label>
-        <name>Campaign__c</name>
-        <relationshipLabel>Trabajos Voluntarios</relationshipLabel>
+        <label><!-- CustomCampaign --></label>
+        <name>CustomCampaign__c</name>
+        <relationshipLabel><!-- Volunteer Jobs --></relationshipLabel>
     </fields>
     <fields>
         <label>Descripción</label>

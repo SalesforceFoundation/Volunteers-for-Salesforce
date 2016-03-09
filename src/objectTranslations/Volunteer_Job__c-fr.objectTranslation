@@ -9,9 +9,9 @@
         <value>Postes de Bénévoles</value>
     </caseValues>
     <fields>
-        <label>Campagne</label>
-        <name>Campaign__c</name>
-        <relationshipLabel>Postes Bénévoles</relationshipLabel>
+        <label><!-- CustomCampaign --></label>
+        <name>CustomCampaign__c</name>
+        <relationshipLabel><!-- Volunteer Jobs --></relationshipLabel>
     </fields>
     <fields>
         <label>Descriptif</label>

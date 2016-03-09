@@ -85,7 +85,7 @@
                 var campaignId;
                 // handle web page scenario where there is no campaign dropdown.
                 if (j$('select[name$=ddlCampaignId]').length == 0) {
-                    campaignId = '{!campaignId}';
+                    campaignId = '{!customcampaignid}';
                 } else {
                     campaignId = j$('select[name$=ddlCampaignId]').val();
                 }
@@ -131,13 +131,13 @@
                                 strShiftNumbers = strShiftNumbers.replace('{0}', intTotalVolunteers);
                                 strShiftNumbers = strShiftNumbers.replace('{1}', intStillNeeded);
                                 
-                                var strCampaignId = new String(result[i].GW_Volunteers__Volunteer_Job__r.GW_Volunteers__Campaign__c);
+                                var strCampaignId = new String(result[i].Volunteer_Job__r.CustomCampaign__c);
                                 var strJobId = new String(jobId);
                                 var strShiftId = new String(result[i].Id);                              
                                 var strUrl;
                                 
                                 if ({!fWeb}) {
-									strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobListing', 'GW_Volunteers__VolunteersJobListingFS')}' +                                     
+                                    strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobListing', 'GW_Volunteers__VolunteersJobListingFS')}' +                                     
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
                                         '&dtMonthFilter=' + strApexDateLocale(dtStart, true) +
                                         '{!IF(strParams != null, '&' + strParams, '')}';
@@ -145,7 +145,7 @@
                                     strUrl = '/' + strShiftId;
                                 }                                
                                                 
-								// note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.                                                
+                                // note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.                                                
                                 shifts.push({
                                     title: result[i].GW_Volunteers__Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
                                         '{!$Label.labelCalendarShiftFull}' : ''),
@@ -176,9 +176,9 @@
                 var newinfo = j$('<span />');
                 if ({!fWeb}) {
                     newinfo.html(
-                    	({!fShowNumberAvailable} ? '<br/>' + event.strNumbers : '') +
-                    	(event.description != null ? '<br/> ' + event.description  : '') 
-                    	);
+                        ({!fShowNumberAvailable} ? '<br/>' + event.strNumbers : '') +
+                        (event.description != null ? '<br/> ' + event.description  : '') 
+                        );
                 } else {
                     newinfo.html('<i>' + event.strNumbers + '</i>' +
                                 ({!NOT(fPrint)} ? 
@@ -264,7 +264,7 @@
 
     <apex:outputPanel id="panelPrint" layout="block" style="float:right" rendered="{!AND(NOT(fPrint),NOT(fWeb))}">
         <a href="javascript:printWin('/apex/GW_Volunteers__JobCalendar?Print=1' + 
-            '&campaignId={!campaignId}' + 
+            '&campaignId={!customcampaignid}' + 
             '&volunteerJobId={!volunteerJobId}' +
             '&initialDate=' + strApexDateLocale(j$('#calendar').fullCalendar('getDate'), true) +
             '&CalendarView=' + j$('#calendar').fullCalendar('getView').name
@@ -285,7 +285,7 @@
             <apex:pageBlockSection columns="1" >
                 <apex:pageBlockSectionItem >
                     <apex:outputLabel value="{!$ObjectType.Campaign.Label}" />
-                    <apex:selectList id="ddlCampaignId" value="{!campaignId}" size="1" >
+                    <apex:selectList id="ddlCampaignId" value="{!customcampaignid}" size="1" >
                         <apex:actionSupport immediate="false" event="onchange" rerender="ddlJobId,panelPrint" 
                             status="retrieveStatus" action="{!ChangeCampaign}" />
                         <apex:selectOptions value="{!listSOCampaigns}" /> 
