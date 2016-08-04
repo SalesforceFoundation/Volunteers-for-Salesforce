@@ -152,7 +152,7 @@
             </p>
         </apex:outputPanel>
         
-        <apex:outputPanel id="panelJobOnly" rendered="{(!job.Number_of_Shifts__c == 0 || ShowShifts == false) && job.External_Signup_Url__c == null}" >
+        <apex:outputPanel id="panelJobOnly" rendered="{!(job.Number_of_Shifts__c == 0 || ShowShifts == false) && job.External_Signup_Url__c == null}" >
             <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
         </apex:outputPanel>
         
