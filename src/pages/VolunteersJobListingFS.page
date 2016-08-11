@@ -27,6 +27,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
     POSSIBILITY OF SUCH DAMAGE.
 -->
+
  
 <apex:page controller="VOL_CTRL_VolunteersJobListingFS" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false" cache="false">
 
@@ -121,6 +122,8 @@
     </apex:outputPanel>
 
     <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
+    	<div id="jobContainer" class="{!IF(job.External_Signup_Url__c == null, '', 'externalJob')}">
+    	
         <apex:outputPanel rendered="{!ShowJobName}" ><p><apex:outputText value="{!job.Name}" styleClass="cssJobName" /></p></apex:outputPanel>
         <apex:outputPanel rendered="{!ShowDescription}" ><p><apex:outputField value="{!job.Description__c}" /></p></apex:outputPanel>
         <apex:outputPanel rendered="{!ShowSkills && job.Skills_Needed__c <> null}" >
@@ -148,12 +151,19 @@
             <apex:outputField value="{!job.Location_Information__c}" />
             </p>
         </apex:outputPanel>
-        <apex:outputPanel id="panelJobOnly" rendered="{!job.Number_of_Shifts__c == 0 || ShowShifts == false}" >
+        
+        <apex:outputPanel id="panelJobOnly" rendered="{!(job.Number_of_Shifts__c == 0 || ShowShifts == false) && job.External_Signup_Url__c == null}" >
             <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
-        </apex:outputPanel>         
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null}" >
+        	<apex:outputLink target="_blank" styleClass="externalJobLink" value="{!job.External_Signup_Url__c}" >{!$Label.labelExternalSignupUrl}</apex:outputLink>
+        	<br /><br />
+        </apex:outputPanel>
+            
         <apex:dataTable value="{!job.Volunteer_Job_Slots__r}" var="shift" id="rptShifts" columnClasses="cssJobShiftSignup" rendered="{!ShowShifts}" >
             <apex:column style="text-align:center;" >
-                <apex:outputPanel rendered="{!shift.Number_of_Volunteers_Still_Needed__c != 0 && DATEVALUE(shift.Start_Date_Time__c) >= TODAY()}" >
+                <apex:outputPanel rendered="{!shift.Number_of_Volunteers_Still_Needed__c != 0 && DATEVALUE(shift.Start_Date_Time__c) >= TODAY() && job.External_Signup_Url__c == null}" >
                     <a href="SignUp" onclick="
                     	var x = '{!shift.System_Note__c}';   
                     	if (x == '') x = JobShiftDateTimeString('{!shift.Start_Date_Time__c}', '{!shift.Duration__c}');
@@ -187,6 +197,7 @@
         <br/>
         <br/> 
         <apex:outputPanel rendered="{!NOT(fCalendar)}" ><hr/></apex:outputPanel>
+        </div>
     </apex:repeat>
     <apex:outputText value="{!$Label.labelMessageNoJobs}" rendered="{!NOT(VolunteersHasJobs)}" />
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
