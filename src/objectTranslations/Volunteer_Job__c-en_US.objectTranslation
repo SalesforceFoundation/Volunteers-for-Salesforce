@@ -23,6 +23,10 @@
         <name>Display_on_Website__c</name>
     </fields>
     <fields>
+        <label><!-- External Signup Url --></label>
+        <name>External_Signup_Url__c</name>
+    </fields>
+    <fields>
         <label><!-- First Shift --></label>
         <name>First_Shift__c</name>
     </fields>

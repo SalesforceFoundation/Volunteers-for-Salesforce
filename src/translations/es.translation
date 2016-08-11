@@ -224,6 +224,10 @@ day: &apos;día&apos;</label>
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelExternalSignupUrl --></label>
+        <name>labelExternalSignupUrl</name>
+    </customLabels>
+    <customLabels>
         <label>(Subida desde la página web de Voluntarios).</label>
         <name>labelFileUploadDescription</name>
     </customLabels>

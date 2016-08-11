@@ -158,7 +158,7 @@
         
         <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null}" >
         	<apex:outputLink target="_blank" styleClass="externalJobLink" value="{!job.External_Signup_Url__c}" >{!$Label.labelExternalSignupUrl}</apex:outputLink>
-        	<br /><br />
+        	<br/><br/>
         </apex:outputPanel>
             
         <apex:dataTable value="{!job.Volunteer_Job_Slots__r}" var="shift" id="rptShifts" columnClasses="cssJobShiftSignup" rendered="{!ShowShifts}" >

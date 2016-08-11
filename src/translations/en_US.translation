@@ -217,6 +217,10 @@
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelExternalSignupUrl --></label>
+        <name>labelExternalSignupUrl</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Volunteers Signup File Upload description --></label>
         <name>labelFileUploadDescription</name>
     </customLabels>
