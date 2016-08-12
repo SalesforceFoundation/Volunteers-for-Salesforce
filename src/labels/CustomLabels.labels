@@ -432,6 +432,14 @@ day:      &apos;day&apos;</value>
         <value>Copy Schedule From</value>
     </labels>
     <labels>
+        <fullName>labelEventInThePast</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelEventInThePast</shortDescription>
+        <value>This event occurs in the past. You can no longer signup.</value>
+    </labels>
+    <labels>
         <fullName>labelExternalSignupUrl</fullName>
         <categories>VolunteersJobListingFS</categories>
         <language>en_US</language>
