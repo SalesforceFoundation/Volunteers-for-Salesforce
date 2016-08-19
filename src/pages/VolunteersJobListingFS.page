@@ -122,7 +122,7 @@
     </apex:outputPanel>
 
     <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
-    	<apex:variable var="containerClass" value="{!IF(job.External_Signup_Url__c != null, 'externalJob', IF(eventInThePast, 'pastEvent', ''))}" />
+    	<apex:variable var="containerClass" value="{!IF(job.External_Signup_Url__c != null, 'externalJob', IF(eventAllShiftsInThePast, 'pastEvent', ''))}" />
     	<div id="jobContainer" class="{!containerClass}">
     	<!-- <div id="jobContainer" class="{!IF(job.External_Signup_Url__c == null, '', 'externalJob')}">  -->
     	
@@ -158,13 +158,15 @@
             <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
         </apex:outputPanel>
         
-        <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null && NOT(eventInThePast)}" >
+        <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null && NOT(eventAllShiftsInThePast)}" >
         	<apex:outputLink target="_blank" styleClass="externalJobLink" value="{!job.External_Signup_Url__c}" >{!$Label.labelExternalSignupUrl}</apex:outputLink>
         	<br /><br />
         </apex:outputPanel>
 
-        <apex:outputPanel id="panelEventInThePast" rendered="{!eventInThePast}" >
+        <apex:outputPanel id="panelEventInThePast" rendered="{!eventAllShiftsInThePast}" >
         	<apex:outputText value="{!$Label.labelEventInThePast}" />
+        	<apex:outputText rendered="{!job.First_Shift__c != null}" value=" First Shift: " />
+        	<apex:outputText rendered="{!job.First_Shift__c != null}" value="{0,date,MM/dd/yyyy}"><apex:param value="{!job.First_Shift__c}" /></apex:outputText>
         </apex:outputPanel>
 		
         <apex:dataTable value="{!job.Volunteer_Job_Slots__r}" var="shift" id="rptShifts" columnClasses="cssJobShiftSignup" rendered="{!ShowShifts}" >
