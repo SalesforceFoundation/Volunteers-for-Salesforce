@@ -437,7 +437,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelEventInThePast</shortDescription>
-        <value>This event occurs in the past. You can no longer signup.</value>
+        <value>This job has no upcoming shifts.</value>
     </labels>
     <labels>
         <fullName>labelExternalSignupUrl</fullName>
@@ -526,6 +526,14 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>Number newly assigned in Find Volunteers page.</shortDescription>
         <value>{0} selected volunteer(s) have been assigned to this job or shift.</value>
+    </labels>
+    <labels>
+        <fullName>labelFirstShift</fullName>
+        <categories>VolunteersJobListingFS</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelFirstShift</shortDescription>
+        <value>First Shift:</value>
     </labels>
     <labels>
         <fullName>labelFrom</fullName>

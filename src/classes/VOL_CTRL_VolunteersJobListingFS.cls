@@ -56,7 +56,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global integer nMonthsToShow { get; set; }
     global integer nDaysToShow { get; set; }
     global date dtMonthFilter { get; set; }
-    global boolean eventAllShiftsInThePast { get; set; }
+    global boolean jobAllShiftsInThePast { get; set; }
     
     
     // contact record to bind the Contact SignUp form to.
@@ -313,13 +313,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 }
                 
                 // if one event was selected; check if the event was in the past
-                eventAllShiftsInThePast = false;
+                jobAllShiftsInThePast = false;
                 if (listVolunteerJobs.size() == 1) {
                 	Volunteer_Job__c job = listVolunteerJobs[0];
-                	eventAllShiftsInThePast = 0 < job.Number_of_Shifts__c;
+                	jobAllShiftsInThePast = 0 < job.Number_of_Shifts__c;
                 	for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
                 		if (date.today() <= shift.Start_Date_Time__c) {
-                			eventAllShiftsInThePast = false;
+                			jobAllShiftsInThePast = false;
                 			break;
                 		}
                 	}

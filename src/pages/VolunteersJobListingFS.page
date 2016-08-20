@@ -122,9 +122,8 @@
     </apex:outputPanel>
 
     <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
-    	<apex:variable var="containerClass" value="{!IF(job.External_Signup_Url__c != null, 'externalJob', IF(eventAllShiftsInThePast, 'pastEvent', ''))}" />
+    	<apex:variable var="containerClass" value="{!IF(job.External_Signup_Url__c != null, 'externalJob', IF(jobAllShiftsInThePast, 'pastEvent', ''))}" />
     	<div id="jobContainer" class="{!containerClass}">
-    	<!-- <div id="jobContainer" class="{!IF(job.External_Signup_Url__c == null, '', 'externalJob')}">  -->
     	
         <apex:outputPanel rendered="{!ShowJobName}" ><p><apex:outputText value="{!job.Name}" styleClass="cssJobName" /></p></apex:outputPanel>
         <apex:outputPanel rendered="{!ShowDescription}" ><p><apex:outputField value="{!job.Description__c}" /></p></apex:outputPanel>
@@ -158,15 +157,21 @@
             <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg(event.clientX, event.clientY, '{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
         </apex:outputPanel>
         
-        <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null && NOT(eventAllShiftsInThePast)}" >
+        <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null && NOT(jobAllShiftsInThePast)}" >
         	<apex:outputLink target="_blank" styleClass="externalJobLink" value="{!job.External_Signup_Url__c}" >{!$Label.labelExternalSignupUrl}</apex:outputLink>
         	<br /><br />
         </apex:outputPanel>
 
-        <apex:outputPanel id="panelEventInThePast" rendered="{!eventAllShiftsInThePast}" >
+        <apex:outputPanel id="panelEventInThePast" rendered="{!jobAllShiftsInThePast}" >
         	<apex:outputText value="{!$Label.labelEventInThePast}" />
-        	<apex:outputText rendered="{!job.First_Shift__c != null}" value=" First Shift: " />
-        	<apex:outputText rendered="{!job.First_Shift__c != null}" value="{0,date,MM/dd/yyyy}"><apex:param value="{!job.First_Shift__c}" /></apex:outputText>
+        	&nbsp;<apex:outputText rendered="{!job.First_Shift__c != null}" value="{!$Label.labelFirstShift}" />
+        	<apex:outputPanel rendered="{!job.First_Shift__c != null}" id="txtFirstShiftDate">
+           		<script>
+	            	var dt = new Date('{!job.First_Shift__c}');
+	            	var strFirstShift = MyDateFormat(dt, '{!JSENCODE(strDateFormat)}');
+	            	document.write(strFirstShift);
+	            </script>
+	        </apex:outputPanel>
         </apex:outputPanel>
 		
         <apex:dataTable value="{!job.Volunteer_Job_Slots__r}" var="shift" id="rptShifts" columnClasses="cssJobShiftSignup" rendered="{!ShowShifts}" >
