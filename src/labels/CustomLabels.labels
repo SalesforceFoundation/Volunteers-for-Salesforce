@@ -437,7 +437,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelEventInThePast</shortDescription>
-        <value>This event is not accepting signups at this time.</value>
+        <value>This job has no upcoming shifts.</value>
     </labels>
     <labels>
         <fullName>labelExternalSignupUrl</fullName>
