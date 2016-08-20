@@ -56,6 +56,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     global integer nMonthsToShow { get; set; }
     global integer nDaysToShow { get; set; }
     global date dtMonthFilter { get; set; }
+    global boolean jobAllShiftsInThePast { get; set; }
     
     
     // contact record to bind the Contact SignUp form to.
@@ -258,7 +259,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Id = :shiftIdFilter) 
@@ -267,7 +268,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 } else if (jobIdFilter != null) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
@@ -281,7 +282,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     }
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
@@ -291,7 +292,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 } else {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
@@ -301,13 +302,31 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 }
                 
                 // now remove any jobs whose shifts are all past date.
-                for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
-                    Volunteer_Job__c job = listVolunteerJobs[i];
-                    if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
-                        listVolunteerJobs.remove(i);                    
-                    }
+                // unless the user links directly to the job
+                if (shiftIdFilter == null && jobIdFilter == null) {
+                	for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
+	                    Volunteer_Job__c job = listVolunteerJobs[i];
+	                    if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
+	                        listVolunteerJobs.remove(i);                    
+	                    }
+	                }
                 }
+                
+                // if one event was selected; check if the event was in the past
+                jobAllShiftsInThePast = false;
+                if (listVolunteerJobs.size() == 1) {
+                	Volunteer_Job__c job = listVolunteerJobs[0];
+                	jobAllShiftsInThePast = 0 < job.Number_of_Shifts__c;
+                	for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
+                		if (date.today() <= shift.Start_Date_Time__c) {
+                			jobAllShiftsInThePast = false;
+                			break;
+                		}
+                	}
+                }
+              
             }
+            
             VOL_SharedCode.dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
             return sortVolunteerJobs(listVolunteerJobs);
         }
