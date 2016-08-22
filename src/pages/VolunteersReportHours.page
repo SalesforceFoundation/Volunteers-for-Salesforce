@@ -94,6 +94,20 @@
 	            	value="{!vhours.Hours_Worked__c}" required="false" styleClass="cssInputFields" /></td>
        		</tr>
 
+			<!-- additional fields stored on the fieldset VolunteersReportHoursFS on the vol hours -->
+			<apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS}" var="f" >
+				<tr>
+					<td class="cssLabelsColumn" >
+						<apex:outputLabel rendered="{!volunteerJobId != null && (NOT(hasShifts) || volunteerShiftId != null)}" 
+								value="{!f.Label + IF(OR(f.DBRequired, f.Required), '*', '')}" />
+					</td>
+   					<td class="cssInputFieldsColumn" >
+   						<apex:inputField value="{!vhours[f]}" required="false" rendered="{!volunteerJobId != null && (NOT(hasShifts) || volunteerShiftId != null)}"
+   						styleClass="{!IF(f.Type == 'Long Text Area', 'cssInputFields cssTextArea', 'cssInputFields')}" />
+   					</td>
+   				</tr>
+  			</apex:repeat>
+
             <tr>
             	<td></td>        
            		<td class="cssInputFieldsColumn" ><apex:commandButton value="{!$Label.labelSubmitButton}" action="{!Save}" 

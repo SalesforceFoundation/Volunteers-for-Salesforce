@@ -278,7 +278,9 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         		// update the additional fields, if any
         		for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
         			String fieldName = f.getFieldPath();
-		        	listHours[0].put(fieldName, vhours.get(fieldName));		
+        			if (vhours.get(fieldName) != null) {
+        				listHours[0].put(fieldName, vhours.get(fieldName));	
+        			}	
 		        }	
         		   		
         		update listHours[0];
