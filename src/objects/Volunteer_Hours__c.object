@@ -757,15 +757,6 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    <fields>
-        <fullName>ask_to_volunteer__c</fullName>
-        <defaultValue>true</defaultValue>
-        <description>Chackbox to be used in fieldset for personal site volunteer hours reporting</description>
-        <externalId>false</externalId>
-        <label>Please ask me to volunteer again</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
     <label>Volunteer Hours</label>
     <nameField>
         <displayFormat>{00000}</displayFormat>
