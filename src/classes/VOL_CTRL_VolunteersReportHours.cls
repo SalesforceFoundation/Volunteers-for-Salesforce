@@ -235,6 +235,16 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 	    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { Schema.sObjectType.Volunteer_Hours__c.fields.Hours_Worked__c.getLabel() }))); 	
 	    		hasErrors = true;	    		
     		}
+    		
+    		// check additional fields on the vol hours
+    		for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
+	        	if (vhours.get(f.getFieldPath()) == null && (f.getDBRequired() || f.getRequired())) {
+		    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 
+		    			String.Format(system.label.labelVolunteerReportHoursErrorRequiredField, new string[] { f.getLabel() }))); 	
+		    		hasErrors = true;	
+	        	}    		
+	        }
+	        
 			// now bail out if any required fields are missing.    					
 			if (hasErrors) {
 	    		strSaveResult = null;
@@ -264,6 +274,13 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         		listHours[0].Start_Date__c = vhours.Start_Date__c;
         		listHours[0].End_Date__c = vhours.End_Date__c;
         		listHours[0].Hours_Worked__c = vhours.Hours_Worked__c;
+        	
+        		// update the additional fields, if any
+        		for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
+        			String fieldName = f.getFieldPath();
+		        	listHours[0].put(fieldName, vhours.get(fieldName));		
+		        }	
+        		   		
         		update listHours[0];
         	} else {        
 		        // create new hours if needed
