@@ -256,6 +256,7 @@
         <members>labelContactLookupNotFound</members>
         <members>labelContactLookupSuccess</members>
         <members>labelCopySchedule</members>
+        <members>labelEventInThePast</members>
         <members>labelExternalSignupUrl</members>
         <members>labelFileUploadDescription</members>
         <members>labelFindVolunteers</members>
@@ -267,6 +268,7 @@
         <members>labelFindVolunteersHelpCriteria</members>
         <members>labelFindVolunteersHelpFindResults</members>
         <members>labelFindVolunteersNewlyAssigned</members>
+        <members>labelFirstShift</members>
         <members>labelFrom</members>
         <members>labelHide</members>
         <members>labelInformation</members>

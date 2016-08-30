@@ -224,6 +224,10 @@ day: &apos;jour&apos;</label>
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelEventInThePast --></label>
+        <name>labelEventInThePast</name>
+    </customLabels>
+    <customLabels>
         <label><!-- labelExternalSignupUrl --></label>
         <name>labelExternalSignupUrl</name>
     </customLabels>
@@ -266,6 +270,10 @@ day: &apos;jour&apos;</label>
     <customLabels>
         <label>{0} bénévoles sélectionnés ont été affectés à ce travail ou décalent.</label>
         <name>labelFindVolunteersNewlyAssigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelFirstShift --></label>
+        <name>labelFirstShift</name>
     </customLabels>
     <customLabels>
         <label>De</label>

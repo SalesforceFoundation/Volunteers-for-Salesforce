@@ -217,6 +217,10 @@
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelEventInThePast --></label>
+        <name>labelEventInThePast</name>
+    </customLabels>
+    <customLabels>
         <label><!-- labelExternalSignupUrl --></label>
         <name>labelExternalSignupUrl</name>
     </customLabels>
@@ -259,6 +263,10 @@
     <customLabels>
         <label><!-- Number newly assigned in Find Volunteers page. --></label>
         <name>labelFindVolunteersNewlyAssigned</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelFirstShift --></label>
+        <name>labelFirstShift</name>
     </customLabels>
     <customLabels>
         <label><!-- label for the From dropdown on Mass Email --></label>
