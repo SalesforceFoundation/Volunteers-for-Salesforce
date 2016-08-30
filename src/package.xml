@@ -481,6 +481,7 @@
         <members>Volunteer_Hours__c.PersonalSiteContactInfoHistory</members>
         <members>Volunteer_Hours__c.PersonalSiteContactInfoUpcomingShifts</members>
         <members>Volunteer_Hours__c.VolunteersJobListingFS</members>
+        <members>Volunteer_Hours__c.VolunteersReportHoursFS</members>
         <members>Volunteer_Recurrence_Schedule__c.NewAndEditVRSFS</members>
         <name>FieldSet</name>
     </types>
