@@ -167,6 +167,7 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Contact_Match_First_Name_Fields__c = null;
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
+                    VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
                     upsert VolunteersSettings;
                 } else if (VolunteersSettings.Contact_Matching_Rule__c == null) {
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
@@ -210,7 +211,8 @@ global with sharing class VOL_SharedCode {
             Contact_Match_Email_Fields__c = mySettings.Contact_Match_Email_Fields__c,
             Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c,
             Contact_Matching_Rule__c = mySettings.Contact_Matching_Rule__c,
-            Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c
+            Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c,
+            Personal_Site_Report_Hours_Filtered__c = mySettings.Personal_Site_Report_Hours_Filtered__c
             );
         insert VolunteersSettings;                      
         return VolunteersSettings;

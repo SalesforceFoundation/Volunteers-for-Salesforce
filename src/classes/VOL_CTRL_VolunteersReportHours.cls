@@ -123,16 +123,48 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     // holds the currently select Job in the Job dropdown
     global ID volunteerJobId { get; set; }
     
+    // returns true when jobs are available for contact
+    // we check the size against 1 (not 0) becasue of the first empty select option
+    global Boolean hasVolunteerJobs {
+    	get { 
+    		return 1 < listSOVolunteerJobs.size();
+    	}
+    	set;
+    }
+    
     // the list of Volunteer Jobs to put in the dropdown
     global list<SelectOption> listSOVolunteerJobs {
         get {
             if (listSOVolunteerJobs == null) {            	
 		        listSOVolunteerJobs = new list<SelectOption>();
 		        listSOVolunteerJobs.add(new SelectOption('', ''));
-		        for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where 
-		        	Campaign__r.IsActive = true and Inactive__c = false order by name limit 999]) {
-		            listSOVolunteerJobs.add(new SelectOption(vj.id, vj.name));
-		        }       
+		        
+		        Boolean filterByContact = VOL_SharedCode.VolunteersSettings.Personal_Site_Report_Hours_Filtered__c;
+				List<Volunteer_Job__c> volunteerJobs = new List<Volunteer_Job__c>();
+				if (filterByContact && contactIdPersonalSite != null) {
+					volunteerJobs =  [select Name, Id, 
+											(select Id, Contact__c from Volunteer_Hours__r 
+											where Contact__c = :contactIdPersonalSite LIMIT 1)
+					        			from Volunteer_Job__c
+					        		 	where Campaign__r.IsActive = true and Inactive__c = false 
+					        		 	order by name limit 999];
+					        		 	
+				} else {
+					volunteerJobs = [select Name, Id
+				        			from Volunteer_Job__c
+				        		 	where Campaign__r.IsActive = true and Inactive__c = false 
+				        		 	order by name limit 999];
+				}
+				
+				for (Volunteer_Job__c vj : volunteerJobs) {
+					if(filterByContact && contactIdPersonalSite != null) {
+						for (Volunteer_Hours__c volHour : vj.Volunteer_Hours__r) {
+							listSOVolunteerJobs.add(new SelectOption(vj.id, vj.name));
+						}				
+					} else {
+						listSOVolunteerJobs.add(new SelectOption(vj.id, vj.name));
+					}
+				}
             }
             return listSOVolunteerJobs;
         }
