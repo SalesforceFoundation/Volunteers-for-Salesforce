@@ -488,6 +488,10 @@ day: &apos;día&apos;</label>
         <name>labelPersonalSiteLastnameRequired</name>
     </customLabels>
     <customLabels>
+        <label><!-- displays when the contact hasn&apos;t signed up for any jobs --></label>
+        <name>labelPersonalSiteNoJobsForContact</name>
+    </customLabels>
+    <customLabels>
         <label>Reporte de Horas</label>
         <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>

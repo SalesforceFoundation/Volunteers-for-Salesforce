@@ -34,6 +34,11 @@
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
+        <help><!-- Personal Site Report Hours Filter By Contact --></help>
+        <label><!-- Personal Site Report Hours Filtered --></label>
+        <name>Personal_Site_Report_Hours_Filtered__c</name>
+    </fields>
+    <fields>
         <help><!-- If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact. --></help>
         <label><!-- Personal Site Requires URL Email Match --></label>
         <name>Personal_Site_Requires_URL_Email_Match__c</name>

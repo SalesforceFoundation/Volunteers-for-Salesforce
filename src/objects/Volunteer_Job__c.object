@@ -90,6 +90,7 @@
     </fields>
     <fields>
         <fullName>External_Signup_Url__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>External Signup Url</label>
         <length>255</length>
