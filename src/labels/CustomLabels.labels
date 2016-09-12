@@ -960,6 +960,14 @@ day:      &apos;day&apos;</value>
         <value>Last name is required.</value>
     </labels>
     <labels>
+        <fullName>labelPersonalSiteNoJobsForContact</fullName>
+        <categories>PersonalSiteReportHours</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>displays when the contact hasn&apos;t signed up for any jobs</shortDescription>
+        <value>There are no jobs available for you to report hours against.</value>
+    </labels>
+    <labels>
         <fullName>labelPersonalSiteReportHoursTitle</fullName>
         <categories>PersonalSiteReportHours</categories>
         <language>en_US</language>

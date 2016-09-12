@@ -48,9 +48,10 @@
   			</apex:repeat>        
 
            	<tr>
-                <td class="cssLabelsColumn" ><apex:outputLabel value="{!$ObjectType.Volunteer_Hours__c.Fields.Volunteer_Job__c.Label + '*'}" /></td>
+                <td class="cssLabelsColumn"><apex:outputLabel rendered="{!hasVolunteerJobs}" value="{!$ObjectType.Volunteer_Hours__c.Fields.Volunteer_Job__c.Label + '*'}" /></td>
                 <td class="cssInputFieldsColumn" >
-	                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
+                	<apex:outputText rendered="{!NOT(hasVolunteerJobs)}" value="{!$Label.labelPersonalSiteNoJobsForContact}" />
+	                <apex:selectList rendered="{!hasVolunteerJobs}" value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
 	                    <apex:actionSupport immediate="false" event="onchange" rerender="formReportHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
 	                    <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
 	                </apex:selectList>&nbsp;&nbsp;  
@@ -118,6 +119,6 @@
 				<td class="cssInputFieldsColumn" ><apex:outputLabel value="{!strSaveResult}" /></td>
 			</tr>	
 		</table>
-		<apex:Messages style="color:red;" />		   	
+		<apex:Messages style="color:red;" />	   	
 	</apex:form>
 </apex:page>
