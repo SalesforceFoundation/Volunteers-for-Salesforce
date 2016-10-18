@@ -184,7 +184,7 @@ public with sharing class VOL_JRS {
 		if (fReviewAllShifts) {
 			dtLast = jrs.Schedule_Start_Date_Time__c.date().addDays(-1);  // -1, so we'll create on start date if appropriate.
 		} else if (listJRSShift.size() > 0) {
-			dtLast = date.valueOf(listJRSShift[listJRSShift.size() - 1].Start_Date_Time__c);
+			dtLast = listJRSShift[listJRSShift.size() - 1].Start_Date_Time__c.date().addDays(-1);
 		} else {
 			dtLast = system.Today();			
 		}
