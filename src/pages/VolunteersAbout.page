@@ -35,44 +35,45 @@
         line-height: 20px;
     }
 </style>
-	<div align="center">
-    	<p><img class="aligncenter size-full wp-image-290" alt="Volunteers Logo 14" src="http://djhconsulting.files.wordpress.com/2013/01/volunteers-logo-14.gif?w=960"   /></p>
-	</div>
-	<div margin="100px" class="mydiv" >
-	<p>Welcome to <b>Volunteers for Salesforce</b>, the AppExchange application that lets you manage your organization's volunteer program all within Salesforce!</p>
-	<p>Volunteers for Salesforce is developed by David Habib, and offered free to the non profit community.&nbsp;&nbsp; 
-	While direct technical support is not available, a large investment in time has been made to fully document and provide online help for the application at the 
-	<a target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/">Volunteers for Salesforce website</a>.</p>
-	<p>All installation and configuration issues are fully covered in the 
-	<a target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-documentation/" >Volunteers for Salesforce Installation and Configuration Guide</a> 
-	and frequently asked questions are in the <a title="Volunteers for Salesforce FAQ" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-faq/">FAQ</a>.
-	</p>
-	<p>Please review the many resources on the website to find	answers to your questions.&nbsp;&nbsp;If you still you have a question not addressed there, you should visit 
-	the <a target="_new" href="http://powerofus.force.com/_ui/core/chatter/groups/GroupProfilePage?g=0F980000000Cjjx" >Volunteers for Salesforce App Group</a> on the 
-	Salesforce Foundation’s Power of Us Hub.
-	</p>
-	<ul>
-		<li><a title="Volunteers for Salesforce Features" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-features/">Features</a></li>
-		<li><a title="Volunteers for Salesforce Documentation" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-documentation/">Documentation</a></li>
-		<li><a title="Volunteers for Salesforce Release Notes" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-release-notes/">Release Notes</a></li>
-		<li><a title="Volunteers for Salesforce FAQ" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-faq/">FAQ</a></li>
-		<li><a title="Volunteers for Salesforce Videos" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-videos/">Videos</a></li>
-		<li><a title="Volunteers for Salesforce Support" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-support/">Support</a></li>
-		<li><a title="Volunteers for Salesforce Website Integration" target="_new" href="http://davidhabibnpsp-developer-edition.na11.force.com/djhconsulting">Website Integration</a></li>
-		<li><a title="Volunteers for Salesforce Website Examples" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-website-examples/">Website Examples</a></li>
-	</ul>
-	<p/>
-	
-	<p>
-		Volunteers for Salesforce includes translations for English, French, and Spanish.	
-		<br/><br/>
-		Thank you to Wingu of Argentina for providing the Spanish translation.  
-	 	<br/>
-	 	Gracias a Wingu de la Argentina para ofrecer la traducción al español.
-	 	<br/>
-	 	<a href="http://www.winguweb.org/" target="_new">www.winguweb.org</a>
-	 	<br/>
-		<img alt="wingu logo" style="margin:15px;" src="http://www.winguweb.org/sitio2012/wp-content/themes/wingu2010/images/logo_wingu_ch.gif" />
-	</p>
-	</div>
+    <div align="center">
+        <p><img class="aligncenter size-full wp-image-290" alt="Volunteers Logo 14" src="http://djhconsulting.files.wordpress.com/2013/01/volunteers-logo-14.gif?w=960"   /></p>
+    </div>
+    <div margin="100px" class="mydiv" >
+    <p>Welcome to <b>Volunteers for Salesforce</b>, the AppExchange application that lets you manage your organization's volunteer program all within Salesforce!</p>
+    <p>Volunteers for Salesforce is developed by David Habib, and offered free to the non profit community.&nbsp;&nbsp; 
+    While direct technical support is not available, a large investment in time has been made to fully document and provide online help for the application at the 
+    <a target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/">Volunteers for Salesforce website</a>.</p>
+    <p>All installation and configuration issues are fully covered in the 
+    <a target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-documentation/" >Volunteers for Salesforce Installation and Configuration Guide</a> 
+    and frequently asked questions are in the <a title="Volunteers for Salesforce FAQ" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-faq/">FAQ</a>.
+    </p>
+    <p>Please review the many resources on the website to find  answers to your questions.&nbsp;&nbsp;If you still you have a question not addressed there, you should visit 
+    the <a target="_new" href="http://powerofus.force.com/_ui/core/chatter/groups/GroupProfilePage?g=0F980000000Cjjx" >Volunteers for Salesforce App Group</a> on 
+    Salesforce.org’s Power of Us Hub.
+    </p>
+    <ul>
+        <li><a title="Volunteers for Salesforce Trail on Trailhead" target="_new" href="https://trailhead.salesforce.com/trail/nonprofit_volunteer/">Manage Volunteers Trail on Trailhead</a></li>
+        <li><a title="Volunteers for Salesforce Features" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-features/">Features</a></li>
+        <li><a title="Volunteers for Salesforce Documentation" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-documentation/">Documentation</a></li>
+        <li><a title="Volunteers for Salesforce Release Notes" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-release-notes/">Release Notes</a></li>
+        <li><a title="Volunteers for Salesforce FAQ" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-faq/">FAQ</a></li>
+        <li><a title="Volunteers for Salesforce Videos" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-videos/">Videos</a></li>
+        <li><a title="Volunteers for Salesforce Support" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-support/">Support</a></li>
+        <li><a title="Volunteers for Salesforce Website Integration" target="_new" href="http://davidhabibnpsp-developer-edition.na11.force.com/djhconsulting">Website Integration</a></li>
+        <li><a title="Volunteers for Salesforce Website Examples" target="_new" href="http://djhconsulting.com/volunteers-for-salesforce/volunteers-for-salesforce-website-examples/">Website Examples</a></li>
+    </ul>
+    <p/>
+    
+    <p>
+        Volunteers for Salesforce includes translations for English, French, German, Japanese, and Spanish.   
+        <br/><br/>
+        Thank you to Wingu of Argentina for providing the Spanish translation.  
+        <br/>
+        Gracias a Wingu de la Argentina para ofrecer la traducción al español.
+        <br/>
+        <a href="http://www.winguweb.org/" target="_new">www.winguweb.org</a>
+        <br/>
+        <img alt="wingu logo" style="margin:15px;" src="http://www.winguweb.org/sitio2012/wp-content/themes/wingu2010/images/logo_wingu_ch.gif" />
+    </p>
+    </div>
 </apex:page>
