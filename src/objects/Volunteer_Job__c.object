@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -91,7 +87,9 @@
     <fields>
         <fullName>External_Signup_Url__c</fullName>
         <deprecated>false</deprecated>
+        <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</description>
         <externalId>false</externalId>
+        <inlineHelpText>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</inlineHelpText>
         <label>External Signup Url</label>
         <length>255</length>
         <required>false</required>
@@ -276,6 +274,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>10</visibleLines>
@@ -641,6 +640,7 @@
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
