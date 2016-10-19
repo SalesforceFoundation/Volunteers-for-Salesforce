@@ -139,7 +139,7 @@
                                 if ({!fWeb}) {
 									strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobListing', 'GW_Volunteers__VolunteersJobListingFS')}' +                                     
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
-                                        '&dtMonthFilter=' + strApexDateLocale(dtStart, true) +
+                                        '&dtMonthFilter=' + strApexDateUTC(dtStart) +
                                         '{!IF(strParams != null, '&' + strParams, '')}';
                                 } else if ({!NOT(fPrint)}) {
                                     strUrl = '/' + strShiftId;
