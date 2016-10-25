@@ -72,10 +72,17 @@ public with sharing class VOL_JRS {
 		
 		// get all shifts associated with these JRS's
 		list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-		listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
-				Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, System_Note__c
-			from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId 
-			order by Start_Date_Time__c];
+		if (fReviewAllShifts) {
+			listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
+					Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, System_Note__c
+				from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId 
+				order by Start_Date_Time__c];
+		} else {
+			listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
+					Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, System_Note__c
+				from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId and Start_Date_Time__c >= TODAY
+				order by Start_Date_Time__c];
+		}
 			
 		// construct a map of JRS to its associated shifts
 		map<ID, list<Volunteer_Shift__c>> mapJRSIdShift = new map<ID, list<Volunteer_Shift__c>>();
@@ -184,7 +191,7 @@ public with sharing class VOL_JRS {
 		if (fReviewAllShifts) {
 			dtLast = jrs.Schedule_Start_Date_Time__c.date().addDays(-1);  // -1, so we'll create on start date if appropriate.
 		} else if (listJRSShift.size() > 0) {
-			dtLast = listJRSShift[listJRSShift.size() - 1].Start_Date_Time__c.date().addDays(-1);
+			dtLast = listJRSShift[listJRSShift.size() - 1].Start_Date_Time__c.date();
 		} else {
 			dtLast = system.Today();			
 		}
