@@ -72,6 +72,9 @@
         <members>PersonalSiteTemplate</members>
         <members>PersonalSiteTemplateEspanol</members>
         <members>SendBulkEmail</members>
+        <members>SendBulkEmail_Campaign</members>
+        <members>SendBulkEmail_Job</members>
+        <members>SendBulkEmail_Shift</members>
         <members>VolunteersAbout</members>
         <members>VolunteersBatchJobsProgress</members>
         <members>VolunteersBulkEnterHours</members>
