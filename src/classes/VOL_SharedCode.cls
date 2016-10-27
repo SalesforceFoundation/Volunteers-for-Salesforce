@@ -788,5 +788,54 @@ global with sharing class VOL_SharedCode {
         return new List<Id>(campaignsInHierarchy.keySet());
     }
 
+    // throw custom exceptions when a bogus object or field is provided.
+    public class SchemaDescribeException extends Exception {}
+
+    //maps to cache the describe info
+    private static Map<String, Schema.SObjectType> gd;
+    private static Map<String, Schema.DescribeSObjectResult> objectDescribes = new Map<String, Schema.DescribeSObjectResult>();
+
+    /*******************************************************************************************************
+    * @description fills describe map for a new object
+    * @param objectName
+    * @return void
+    */
+    private static void fillMapsForObject(string objectName) {
+        // get the object map the first time
+        if (gd == null) {
+            gd = Schema.getGlobalDescribe();
+        }
+
+        // get the object description
+        if (gd.containsKey(objectName)) {
+
+            if (!objectDescribes.containsKey(objectName))
+                objectDescribes.put(objectName, gd.get(objectName).getDescribe());
+        } else {
+            throw new SchemaDescribeException('Invalid object name \'' + objectName + '\'');
+        }
+    }
+
+    /*******************************************************************************************************
+    * @description Compares Id to verify object type
+    * @param salesforceId of the object
+    * @param objectName
+    * @return true if the Id is for the given object type, false otherwise.
+    */
+    public static boolean isObjectIdThisType(Id salesforceId, String objectName) {
+
+        // make sure we have this object's schema mapped
+        if (!objectDescribes.containsKey(objectName))
+            fillMapsForObject(objectName);
+
+        // now grab the requested id prefix
+        boolean ret = false;
+        if (salesforceId != null) {
+            string prefix = objectDescribes.get(objectName).getKeyPrefix();
+            if (prefix != null)
+                ret = ((string)(salesforceId)).startsWith(prefix);
+        }
+        return ret;
+    }
      
 }

@@ -973,14 +973,12 @@
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
-        <linkType>url</linkType>
+        <linkType>page</linkType>
         <masterLabel>Mass Email Volunteers</masterLabel>
         <openType>sidebar</openType>
+        <page>SendBulkEmail_Campaign</page>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__SendBulkEmail?campaignId={!Campaign.Id}&amp;retURL={! 
-URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
     </webLinks>
     <webLinks>
         <fullName>New_Volunteer_Campaign</fullName>

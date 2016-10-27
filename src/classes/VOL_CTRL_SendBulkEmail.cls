@@ -47,11 +47,26 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 	
 	// constructor
 	public VOL_CTRL_SendBulkEmail() { 
+
+		// backward compatibility. when not called from a StandardController,
+		// assume object id passed in appropriate URL parameter
+        Map<String, String> mapParams = ApexPages.currentPage().getParameters();
+		campaignId = mapParams.get('campaignId');
+		jobId = mapParams.get('jobId');
+		shiftId = mapParams.get('shiftId');
+
+        if (campaignId == null && jobId == null && shiftId == null) {		
+			// When called from StandardController, figure out what object type it is.
+			ID id = mapParams.get('id');
+			if (VOL_SharedCode.isObjectIdThisType(id, 'Campaign')) {
+			    campaignId = id;
+			} else if (VOL_SharedCode.isObjectIdThisType(id, VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c'))) {
+                jobId = id;
+			} else if (VOL_SharedCode.isObjectIdThisType(id, VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c'))) {
+                shiftId = id;
+            }
+		}
 		
-		// figure out what object we were invoked from
-		campaignId = ApexPages.currentPage().getParameters().get('campaignId');
-		jobId = ApexPages.currentPage().getParameters().get('jobId');
-		shiftId = ApexPages.currentPage().getParameters().get('shiftId');
 		fEmailContactsOnlyOnce = false;
 		
 		if (shiftId != null) {
@@ -282,10 +297,19 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     // action method that user wants to close this page
     public PageReference Cancel() {
         string strURL = ApexPages.currentPage().getParameters().get('retURL');
-        if (strURL == null || strURL == '') strURL = '\\';
+        if (strURL == null || strURL == '') {
+            strURL = '/' + strCleanNull(campaignId) + strCleanNull(jobId) + strCleanNull(shiftId);
+        }
         PageReference p = new PageReference(strURL);
         p.setRedirect(true);
         return p;
     }
     
+    // string helper for dealing with nulls
+    private static string strCleanNull(string str) {
+        if (str == null)
+            return '';
+       	else
+            return str;
+    }
 }

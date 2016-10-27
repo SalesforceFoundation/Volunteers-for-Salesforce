@@ -247,14 +247,12 @@
         <fullName>Mass_Email_Volunteers</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
         <height>600</height>
-        <linkType>url</linkType>
+        <linkType>page</linkType>
         <masterLabel>Mass Email Volunteers</masterLabel>
         <openType>sidebar</openType>
+        <page>SendBulkEmail_Shift</page>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__SendBulkEmail?jobId={!Volunteer_Job__c.Id}&amp;shiftId={!Volunteer_Shift__c.Id}&amp;retURL={! 
-URLFOR( $Action.Volunteer_Shift__c.View , Volunteer_Shift__c.Id ) }</url>
     </webLinks>
     <webLinks>
         <fullName>Roster</fullName>
