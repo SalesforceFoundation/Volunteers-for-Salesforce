@@ -72,11 +72,17 @@
         <members>PersonalSiteTemplate</members>
         <members>PersonalSiteTemplateEspanol</members>
         <members>SendBulkEmail</members>
+        <members>SendBulkEmail_Campaign</members>
+        <members>SendBulkEmail_Job</members>
+        <members>SendBulkEmail_Shift</members>
         <members>VolunteersAbout</members>
         <members>VolunteersBatchJobsProgress</members>
         <members>VolunteersBulkEnterHours</members>
         <members>VolunteersCampaignWizard</members>
         <members>VolunteersFind</members>
+        <members>VolunteersFind_Campaign</members>
+        <members>VolunteersFind_Job</members>
+        <members>VolunteersFind_Shift</members>
         <members>VolunteersJobListing</members>
         <members>VolunteersJobListingFS</members>
         <members>VolunteersReportHours</members>
