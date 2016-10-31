@@ -80,6 +80,9 @@
         <members>VolunteersBulkEnterHours</members>
         <members>VolunteersCampaignWizard</members>
         <members>VolunteersFind</members>
+        <members>VolunteersFind_Campaign</members>
+        <members>VolunteersFind_Job</members>
+        <members>VolunteersFind_Shift</members>
         <members>VolunteersJobListing</members>
         <members>VolunteersJobListingFS</members>
         <members>VolunteersReportHours</members>

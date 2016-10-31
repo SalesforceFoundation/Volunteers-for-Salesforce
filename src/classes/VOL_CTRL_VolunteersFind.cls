@@ -44,15 +44,34 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
         listSOCampaigns = volSharedCode.listSOCampaignsWithJobs;  
         
         // handle optional parameters (must use string, not ID, to handle null)
-        string id = ApexPages.currentPage().getParameters().get('campaignId');
+        // backward compatibility. when not called from a StandardController,
+        // assume object id passed in appropriate URL parameter
+        Map<String, String> mapParams = ApexPages.currentPage().getParameters();
+        string id = mapParams.get('campaignId');
         if (id != null && id != '') campaignId = id;
         
-        id = ApexPages.currentPage().getParameters().get('volunteerJobId');
+        id = mapParams.get('volunteerJobId');
         if (id != null && id != '') volunteerJobId = id;
 
-        id = ApexPages.currentPage().getParameters().get('volunteerShiftId');
+        id = mapParams.get('volunteerShiftId');
         if (id != null && id != '') volunteerShiftId = id;
-            			
+        
+        if (campaignId == null && volunteerJobId == null && volunteerShiftId == null) {       
+            // When called from StandardController, figure out what object type it is.
+            id = mapParams.get('id');
+            if (VOL_SharedCode.isObjectIdThisType(id, 'Campaign')) {
+                campaignId = id;
+            } else if (VOL_SharedCode.isObjectIdThisType(id, VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c'))) {
+                Volunteer_Job__c job = [select Campaign__c from Volunteer_Job__c where Id = :id];
+                campaignId = job.Campaign__c;
+                volunteerJobId = id;
+            } else if (VOL_SharedCode.isObjectIdThisType(id, VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c'))) {
+                Volunteer_Shift__c shift = [select Volunteer_Job__c, Volunteer_Job__r.Campaign__c from Volunteer_Shift__c where Id = :id];
+                campaignId = shift.Volunteer_Job__r.Campaign__c;
+                volunteerJobId = shift.Volunteer_Job__c;
+                volunteerShiftId = id;
+            }
+        }
 	}
 	
 	// the SoqlListView component calls this method to get the query string.
