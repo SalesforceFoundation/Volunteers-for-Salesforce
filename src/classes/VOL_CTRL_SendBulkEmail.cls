@@ -281,9 +281,14 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 	
     // action method that user wants to close this page
     public PageReference Cancel() {
-        string strURL = ApexPages.currentPage().getParameters().get('retURL');
-        if (strURL == null || strURL == '') strURL = '\\';
-        PageReference p = new PageReference(strURL);
+        ID id;
+        if (shiftId != null)
+            id = shiftId;
+        else if (jobId != null)
+            id = jobId;
+        else
+            id = campaignId;
+        PageReference p = new PageReference('/' + id);
         p.setRedirect(true);
         return p;
     }

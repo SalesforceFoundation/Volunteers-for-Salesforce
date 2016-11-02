@@ -775,7 +775,6 @@
         <masterLabel>Mass Email Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__SendBulkEmail?jobId={!Volunteer_Job__c.Id}&amp;retURL={! 
-URLFOR( $Action.Volunteer_Job__c.View , Volunteer_Job__c.Id ) }</url>
+        <url>/apex/GW_Volunteers__SendBulkEmail?jobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
 </CustomObject>
