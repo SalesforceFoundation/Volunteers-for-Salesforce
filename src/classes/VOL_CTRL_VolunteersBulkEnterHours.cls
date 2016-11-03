@@ -298,6 +298,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             update listVolunteerHoursUpdate;
             insert listVolunteerHoursCreate;
             strSaveResults = String.valueOf(listVolunteerHoursCreate.size() + listVolunteerHoursUpdate.size()) + ' ' + Label.labelMassEditSaveSuccess;
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, strSaveResults));
             // successful save, so clear out dirty list
             setVolunteerHoursIdDirty = null;
             return null;            
