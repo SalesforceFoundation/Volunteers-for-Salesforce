@@ -979,8 +979,7 @@
         <masterLabel>Mass Email Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__SendBulkEmail?campaignId={!Campaign.Id}&amp;retURL={! 
-URLFOR( $Action.Campaign.View ,  Campaign.Id ) }</url>
+        <url>/apex/GW_Volunteers__SendBulkEmail?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>New_Volunteer_Campaign</fullName>
