@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>PageMessagesConfirm</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesConfirm</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>PageMessagesError</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesError</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>PageMessagesFatal</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesFatal</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>PageMessagesWarning</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesWarning</shortDescription>
+        <value>Warning</value>
+    </labels>
+    <labels>
         <fullName>labelButtonAssign</fullName>
         <categories>FindVolunteers</categories>
         <language>en_US</language>
