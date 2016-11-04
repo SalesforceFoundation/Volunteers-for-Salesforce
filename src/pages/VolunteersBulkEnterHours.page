@@ -50,10 +50,12 @@
     <script type="text/javascript">
         // hack that prevents Salesforce from always putting focus
         // on the first date field, which pops up the ugly calendar control!
-        window.onload = function() { }
+        window.onload = function() {}
 	</script>
 
-    <apex:form >
+
+    <apex:form id="vfform">
+		<c:UTIL_NavigateBack recordId="{!idRedirect}" redirect="{!redirect}"/>
       	<div class="sfdo213">
     
             <!-- PAGE HEADER -->
@@ -65,9 +67,9 @@
     
                     <div class="slds-col slds-no-flex slds-align-middle">
                         <div class="slds-button-group" role="group">
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}"  immediate="true"/> 
-                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" />
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" />
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}" immediate="true" reRender="vfform"/> 
+                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" reRender="vfform"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" reRender="vfform"/>
                         </div>
                     </div>
                 </div>
@@ -76,9 +78,7 @@
 
             <c:UTIL_PageMessages />
             
-            <br/> 
-            <apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" />             
-            <br/>
+            <p class="slds-p-around--medium"><apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" /></p>
 
             <div class="slds-grid slds-grid--align-spread slds-m-top--medium slds-m-left--medium slds-m-right--medium">
             

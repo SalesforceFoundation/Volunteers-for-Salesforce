@@ -58,6 +58,7 @@
     </types>
     <types>
         <members>SoqlListView</members>
+        <members>UTIL_NavigateBack</members>
         <members>UTIL_PageMessages</members>
         <members>batchJobs</members>
         <name>ApexComponent</name>
