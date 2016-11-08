@@ -1096,6 +1096,44 @@ day:      &apos;day&apos;</value>
         <value>Volunteer Sign Up</value>
     </labels>
     <labels>
+        <fullName>labelVRSBatchDescription</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchDescription</shortDescription>
+        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future shifts and assign volunteers to them. You can run this process manually, by clicking the Begin button, or you can schedule it to automatically run nightly.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;To view currently scheduled jobs, go to the &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Scheduled Jobs page.&lt;/a&gt;&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;To schedule the Recurrence Schedules process to run automatically, go to the &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Schedule Apex Jobs page.&lt;/a&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>labelVRSBatchProcess</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchProcess</shortDescription>
+        <value>Process Recurrence Schedules</value>
+    </labels>
+    <labels>
+        <fullName>labelVRSBatchProcessProgress</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchProcessProgress</shortDescription>
+        <value>Process Recurrence Schedules Progress</value>
+    </labels>
+    <labels>
+        <fullName>labelVRSBatchRun</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchRun</shortDescription>
+        <value>Run Batch</value>
+    </labels>
+    <labels>
         <fullName>labelVRSHoursCreatedSystemNote</fullName>
         <categories>VRS</categories>
         <language>en_US</language>
