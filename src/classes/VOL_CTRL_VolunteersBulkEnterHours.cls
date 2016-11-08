@@ -39,8 +39,12 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     private VOL_SharedCode volSharedCode;
     private list<string> listStrFields;
     
+    global boolean redirect { get; private set; }
+    global ID idRedirect { get; private set; }
+    
     // constructor
     global VOL_CTRL_VolunteersBulkEnterHours() {
+        redirect = false;
         volSharedCode = new VOL_SharedCode();
         listSOCampaigns = volSharedCode.listSOCampaignsWithJobs;
         
@@ -53,8 +57,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
 
         id = ApexPages.currentPage().getParameters().get('volunteerShiftId');
         if (id != null && id != '') volunteerShiftId = id;
-        
-        
+                
 		// initialize the list of all fields on Volunteer Hours.
 		Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
 		listStrFields = new list<string>();
@@ -298,6 +301,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             update listVolunteerHoursUpdate;
             insert listVolunteerHoursCreate;
             strSaveResults = String.valueOf(listVolunteerHoursCreate.size() + listVolunteerHoursUpdate.size()) + ' ' + Label.labelMassEditSaveSuccess;
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, strSaveResults));
             // successful save, so clear out dirty list
             setVolunteerHoursIdDirty = null;
             return null;            
@@ -311,17 +315,27 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     //save the Volunteer Hours created or modified, and then close the page.
     global virtual PageReference SaveAndCloseVolunteerHours() {
         SaveVolunteerHours();
-        if (ApexPages.hasMessages()) return null; // don't close window.
+        if (ApexPages.hasMessages(ApexPages.Severity.ERROR) ||
+           ApexPages.hasMessages(ApexPages.Severity.FATAL) ||
+            ApexPages.hasMessages(ApexPages.Severity.WARNING)) {
+                return null; // don't close window.
+        }
         return Cancel();    
     }
     
     // user wants to close this page
     global virtual PageReference Cancel() {
-        string strURL = ApexPages.currentPage().getParameters().get('retURL');
-        if (strURL == null || strURL == '') strURL = '\\';
-        PageReference p = new PageReference(strURL);
-        p.setRedirect(true);
-        return p;
+        // figure out which object to return to.
+        if (volunteerShiftId != null)
+            idRedirect = volunteerShiftId;
+        else if (volunteerJobId != null)
+            idRedirect = volunteerJobId;
+        else
+            idRedirect = campaignId;
+        
+        // trigger our redirect component to redirect using javascript.
+        redirect = true;
+        return null;
     }
     
     // user wants to add more empty rows to the Volunteer Hours table

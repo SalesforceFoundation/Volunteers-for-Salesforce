@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Volunteers for Salesforce</fullName>
+    <fullName>Volunteers+for+Salesforce</fullName>
     <types>
         <members>ComponentControllerBase</members>
         <members>GW_CTRL_BatchJobsProgress</members>
         <members>PageControllerBase</members>
         <members>SoqlListView</members>
+        <members>UTIL_PageMessages_CTRL</members>
         <members>VOL_BATCH_Recurrence</members>
         <members>VOL_CTRL_BatchProgress</members>
         <members>VOL_CTRL_BatchProgress_TEST</members>
@@ -57,6 +58,8 @@
     </types>
     <types>
         <members>SoqlListView</members>
+        <members>UTIL_NavigateBack</members>
+        <members>UTIL_PageMessages</members>
         <members>batchJobs</members>
         <name>ApexComponent</name>
     </types>
@@ -201,6 +204,10 @@
         <name>CustomField</name>
     </types>
     <types>
+        <members>PageMessagesConfirm</members>
+        <members>PageMessagesError</members>
+        <members>PageMessagesFatal</members>
+        <members>PageMessagesWarning</members>
         <members>labelButtonAssign</members>
         <members>labelButtonCancel</members>
         <members>labelButtonClose</members>
@@ -574,6 +581,8 @@
         <members>Bootstrap4Force</members>
         <members>FullCalendar</members>
         <members>jQueryFiles</members>
+        <members>sfdo213</members>
+        <members>v4s_slds</members>
         <members>wtooltip</members>
         <name>StaticResource</name>
     </types>

@@ -28,99 +28,167 @@
     POSSIBILITY OF SUCH DAMAGE.
 -->
  
-<apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" >
+<apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" standardStylesheets="false" >
+    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.v4s_slds)}" />
 
-<script type="text/javascript">
-	// hack that prevents Salesforce from always putting focus
-	// on the first date field, which pops up the ugly calendar control!
-    window.onload = function() { }
-</script>
+    <style>
+        .sfdo213 .slds-input.dateInTD {
+        	width: 120px;
+        }
+        .myTD.date {
+        	min-width: 200px;
+        }
+        .myTD.picklist {
+        	min-width: 170px;
+        }        
+        .myTD.reference {
+        	min-width: 170px;
+        }        
+    </style>
 
-    <apex:sectionHeader title="{!$Label.labelMassEditTitle}" />      
-    <apex:form > 
-        
-        <apex:pageBlock title="{!$ObjectType.Volunteer_Hours__c.Label}" rendered="true"  mode="edit">
-            <apex:pageBlockButtons >
-                <apex:commandButton action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" status="retrieveSaveStatus" id="btnSave" immediate="false" />
-                <apex:commandButton action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" status="retrieveSaveStatus" id="btnSaveClose" immediate="false" />
-                <apex:commandButton action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}"  immediate="true"/> 
-            </apex:pageBlockButtons>                                        
-            <apex:actionStatus layout="block" startText="{!$Label.labelMessageSaving}" stopText="" id="retrieveSaveStatus" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
-            <apex:pageMessage summary="{!strSaveResults}" severity="info" strength="2" rendered="{!strSaveResults!=null}" />  
-            <apex:pageMessages showDetail="false" />
-            <br/> 
-            <apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" /><br/>             
-            <br/>
+    <script type="text/javascript">
+        // hack that prevents Salesforce from always putting focus
+        // on the first date field, which pops up the ugly calendar control!
+        window.onload = function() {}
+	</script>
 
-            <apex:pageBlockSection columns="2" >
-            	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="{!$ObjectType.Campaign.Label}" />
-	                <apex:selectList value="{!campaignId}" size="1" >
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeCampaign}" />
-	                    <apex:selectOptions value="{!listSOCampaigns}" /> 
-	                </apex:selectList>  
-        		</apex:pageBlockSectionItem>
-        		            
-            	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="{!$Label.labelMassEditDateFilterFrom}" />
-	                <apex:inputField value="{!vhDateFilter.Start_Date__c}" required="false" >
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
-					</apex:inputField>	                    
-        		</apex:pageBlockSectionItem>
 
-            	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" />
-	                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
-	                    <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
-	                </apex:selectList>
-        		</apex:pageBlockSectionItem>
+    <apex:form id="vfform">
+		<c:UTIL_NavigateBack recordId="{!idRedirect}" redirect="{!redirect}"/>
+      	<div class="sfdo213">
     
-            	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="{!$Label.labelMassEditDateFilterTo}"  />
-	                <apex:inputField value="{!vhDateFilter.End_Date__c}" >
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
-					</apex:inputField>
-        		</apex:pageBlockSectionItem>
+            <!-- PAGE HEADER -->
+            <div class="slds-page-header" role="banner">
+                <div class="slds-grid">
+                    <div class="slds-col">
+                        <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle">{!$Label.labelMassEditTitle}</h1>
+                    </div>        
+    
+                    <div class="slds-col slds-no-flex slds-align-middle">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}" immediate="true" reRender="vfform"/> 
+                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" reRender="vfform"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" reRender="vfform"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /PAGE HEADER -->
 
-            	<apex:pageBlockSectionItem >
-	                <apex:outputLabel value="{!$ObjectType.Volunteer_Shift__c.Label + '  ' + $Label.labelMassEditOptional }" />
-	                <apex:selectList value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts">
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,panelVolunteerHours,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" />
-	                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
-	                </apex:selectList>
-        		</apex:pageBlockSectionItem>
-    
-            	<apex:pageBlockSectionItem >
-		            <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" /><br/>
-        		</apex:pageBlockSectionItem>
-            </apex:pageBlockSection>
-    
-            <apex:dataTable value="{!listVolunteerHours}" var="vh" rules="rows"  cellpadding="3" id="tblVolunteerHours" style="border-color:gray" >                 
-                <apex:column >
+            <c:UTIL_PageMessages />
+            
+            <p class="slds-p-around--medium"><apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" /></p>
+
+            <div class="slds-grid slds-grid--align-spread slds-m-top--medium slds-m-left--medium slds-m-right--medium">
+            
+                <fieldset class="slds-form--compound ">
+                    <div class="form-element__group">
+
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <apex:outputLabel for="ddlCampaign" styleClass="slds-form-element__label uiLabel-left form-element__label uiLabel" >
+                                    {!$ObjectType.Volunteer_Job__c.Fields.Campaign__c.Label}
+                                </apex:outputLabel>
+                                <apex:selectList id="ddlCampaign" value="{!campaignId}" required="false" size="1" styleClass="slds-select">
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeCampaign}" />
+                                    <apex:selectOptions value="{!listSOCampaigns}" /> 
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <apex:outputLabel for="fldDateFrom" styleClass="slds-form-element__label uiLabel-left form-element__label uiLabel" >
+                                    {!$Label.labelMassEditDateFilterFrom}
+                                </apex:outputLabel>
+                                <apex:inputField id="fldDateFrom" required="false" value="{!vhDateFilter.Start_Date__c}" label="" styleClass="slds-input" >
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+                                </apex:inputField>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <apex:outputLabel for="ddlVolunteerJobs" styleClass="slds-form-element__label uiLabel-left form-element__label uiLabel" >
+                                    {!$ObjectType.Volunteer_Job__c.Label}
+                                </apex:outputLabel>
+                                <apex:selectList id="ddlVolunteerJobs" value="{!volunteerJobId}" required="false" size="1" styleClass="slds-select">
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+                                    <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <apex:outputLabel for="fldDateTo" styleClass="slds-form-element__label uiLabel-left form-element__label uiLabel" >
+                                    {!$Label.labelMassEditDateFilterTo}
+                                </apex:outputLabel>
+                                <apex:inputField id="fldDateTo" required="false" value="{!vhDateFilter.End_Date__c}" label="" styleClass="slds-input" >
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+                                </apex:inputField>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <apex:outputLabel for="ddlVolunteerShifts" styleClass="slds-form-element__label uiLabel-left form-element__label uiLabel" >
+                                    {!$ObjectType.Volunteer_Shift__c.Label + '  ' + $Label.labelMassEditOptional }
+                                </apex:outputLabel>
+                                <apex:selectList id="ddlVolunteerShifts" value="{!volunteerShiftId}" required="false" size="1" styleClass="slds-select">
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" />
+                                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-form-element slds-size--1-of-2">
+		            			<apex:actionStatus id="retrieveStatus" 
+                                	onstart="document.getElementById('divLoading').style.display='block';"
+                                    onstop="document.getElementById('divLoading').style.display='none';"/>
+                                <div class="slds-spinner--medium mySpinner" id="divLoading" style="display:none">
+                                    <br/>
+                                    <img src="{!URLFOR($Resource.sfdo213, '/assets/images/spinners/slds_spinner_brand.gif')}" alt="{!$Label.labelMessageLoading}" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>            
+            </div> 
+          	<br/>
+
+
+            <apex:dataTable value="{!listVolunteerHours}" var="vh" id="tblVolunteerHours" 
+                            styleClass="slds-table slds-table--bordered"
+                            headerClass="slds-text-heading--label myHeader" style="width:auto" >                 
+                <apex:column styleClass="myTD reference" >
                     <apex:facet name="header">{!$ObjectType.Contact.Label} *</apex:facet>
-                    <apex:inputField value="{!vh.Contact__c}" style="width: 100px;" required="false" >
+                    <apex:inputField value="{!vh.Contact__c}" styleClass="lookupInput" required="false" >
                     </apex:inputField>
                 </apex:column> 
                 
-                <apex:column rendered="{!volunteerShiftId == null}" >
+                <apex:column rendered="{!volunteerShiftId == null}" styleClass="myTD picklist" >
 					<apex:facet name="header">{!$ObjectType.Volunteer_Shift__c.Label}</apex:facet>
-	                <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts" >
+	                <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts" styleClass="slds-select">
 	                    <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
 	                </apex:selectList>				
 				</apex:column>	
 				
-				<!--  now add optional fields the user can specify -->
+				<!-- now add optional fields the user can specify -->
 				<apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours}" var="f" >
-	                <apex:column >
+	                <apex:column styleClass="myTD {!f.Type}" >
 	                    <apex:facet name="header">{!f.Label + IF(f.DBRequired, ' *', '')}</apex:facet>
-	                    <apex:inputField value="{!vh[f]}" style="{!IF(f.Type=='Number','width:50px;','') + IF(f.Type=='Long Text Area','Height:1.5em;','')}" required="false" /> <!-- force not required, or you can't submit empty rows! -->
+	                    <apex:inputField value="{!vh[f]}" 
+                                    styleClass="{!CASE(f.Type, 
+                                                    'reference', 'lookupInput ' + f.FieldPath, 
+                                                    'picklist', 'slds-select',
+                                                    'multipicklist', 'slds-select', 
+                                                    'boolean', 'slds-checkbox',
+                                                    'textarea', 'slds-textarea',
+                                                	'date', 'slds-input dateInTD',
+                                                    'slds-input')}"                               
+                                         required="false" />  <!-- not required, or you can't submit empty rows! -->
+                                                        
 	                </apex:column>
 	  			</apex:repeat>        
 				
             </apex:dataTable>
-            &nbsp;&nbsp;&nbsp;&nbsp;<apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" />
-        </apex:pageBlock>
-            
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" />
+      	</div> <!-- slds -->    
     </apex:form>    
 </apex:page>

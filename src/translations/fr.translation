@@ -5,6 +5,22 @@
         <name>Groundwire_Volunteers</name>
     </customApplications>
     <customLabels>
+        <label><!-- PageMessagesConfirm --></label>
+        <name>PageMessagesConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PageMessagesError --></label>
+        <name>PageMessagesError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PageMessagesFatal --></label>
+        <name>PageMessagesFatal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PageMessagesWarning --></label>
+        <name>PageMessagesWarning</name>
+    </customLabels>
+    <customLabels>
         <label>Assignez</label>
         <name>labelButtonAssign</name>
     </customLabels>
