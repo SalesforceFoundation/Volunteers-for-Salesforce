@@ -37,7 +37,7 @@ global with sharing class VOL_CTRL_JobCalendar {
 
     // constructor
     global VOL_CTRL_JobCalendar() {
-    	
+        namespacePrefix = VOL_SharedCode.getNamespace();
         // handle optional parameters (must use string, not ID, to handle null)
         
         // if Campaign passed in, set current state
@@ -160,6 +160,8 @@ global with sharing class VOL_CTRL_JobCalendar {
     global boolean fPersonalSite { get; set; }
     global boolean fShowCampaignHierarchy { get; set; }
     global boolean fShowNumberAvailable { get; set; }
+    /** @description what is the namespace (null if unmanaged, or GW_Volunteers if managed) */
+    global string namespacePrefix { get; set; }
    	 
     // holds the currently selected Campaign in the Campaign dropdown
     global ID campaignId { get; set; }

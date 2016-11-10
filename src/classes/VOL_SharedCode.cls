@@ -697,6 +697,28 @@ global with sharing class VOL_SharedCode {
         set;
     }   
 
+    /******************************************************************************************************
+    * @description String helper property for getNamespace() method.
+    *******************************************************************************************************/
+    private static string plainNamespace;
+
+    /*******************************************************************************************************
+    * @description Finds the namespace for the current context.
+    * @return string The current namespace as a string, or a blank string if we're not in a namespaced context.
+    ********************************************************************************************************/
+    public static string getNamespace() {
+        if (plainNamespace == null) {
+            string withDotNotation = VOL_SharedCode.class.getName();
+
+            if (withDotNotation.contains('.')) {
+                plainNamespace = withDotNotation.substringBefore('.');
+            } else {
+                plainNamespace = '';
+            }
+        }
+        return plainNamespace;
+    }
+
     /*******************************************************************************************************
     * @description Static method that takes a string
     * If we are in a managed package, tokens in dynamic SOQL must include the package namespace prefix.
@@ -706,7 +728,7 @@ global with sharing class VOL_SharedCode {
     ********************************************************************************************************/
     global static string StrTokenNSPrefix(string str) {
         if (!IsManagedCode) return str;
-        str = 'GW_Volunteers__' + str;
+        str = getNamespace() + '__' + str;
         return str;
     }
   
