@@ -46,7 +46,7 @@
             </div>
 			<!-- PAGE ERRORS -->
 			<apex:outputPanel id="panelErrors">
-                <c:UTIL_PageMessages html-class="slds-grid slds-grid-*-align-center slds-m-bottom-*-small"/>
+                <c:UTIL_PageMessages html-class="slds-grid slds-grid--align-center slds-m-bottom--small"/>
             </apex:outputPanel>
             <!-- PAGE BUTTONS -->
             <apex:outputPanel rendered="{!batching}">
