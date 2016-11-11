@@ -588,7 +588,6 @@
         <members>jQueryFiles</members>
         <members>sfdo213</members>
         <members>v4sStaticResources</members>
-        <members>v4s_slds</members>
         <members>wtooltip</members>
         <name>StaticResource</name>
     </types>

@@ -30,7 +30,7 @@
  
 <apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" standardStylesheets="false" >
     <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
-    <apex:stylesheet value="{!URLFOR($Resource.v4s_slds)}" />
+    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
 
     <style>
         .sfdo213 .slds-input.dateInTD {
