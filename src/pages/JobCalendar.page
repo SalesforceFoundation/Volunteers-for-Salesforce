@@ -313,9 +313,7 @@
                 <div class="slds-container--small slds-p-top--large slds-p-bottom--small">
                     <div class="slds-form--horizontal">
                         <div class="slds-form-element">
-                            <label class="slds-form-element__label" for="ddlCampaignId">
-                                <apex:outputText value="{!$ObjectType.Campaign.Label}"/>
-                            </label>
+                            <apex:outputLabel value="{!$ObjectType.Campaign.Label}" for="ddlCampaignId" styleClass="slds-form-element__label"/>
                             <div class="slds-form-element__control">
                                 <div class="slds-select_container">
                                     <apex:selectList id="ddlCampaignId" value="{!campaignId}" size="1" styleClass="slds-select" >
@@ -327,9 +325,7 @@
                             </div>
                         </div>
                         <div class="slds-form-element">
-                            <label class="slds-form-element__label" for="ddlJobId">
-                                <apex:outputText value="{!$ObjectType.Volunteer_Job__c.Label}"/>
-                            </label>
+                            <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" for="ddlJobId" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
                                 <div class="slds-select_container">
                                     <apex:selectList id="ddlJobId" value="{!volunteerJobId}" size="1" styleClass="slds-select" >
