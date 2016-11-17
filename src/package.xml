@@ -159,8 +159,8 @@
         <members>Volunteer_Job__c.Location_City__c</members>
         <members>Volunteer_Job__c.Location_Information__c</members>
         <members>Volunteer_Job__c.Location_Street__c</members>
-        <members>Volunteer_Job__c.Location__c</members>
         <members>Volunteer_Job__c.Location_Zip_Postal_Code__c</members>
+        <members>Volunteer_Job__c.Location__c</members>
         <members>Volunteer_Job__c.Number_of_Completed_Hours__c</members>
         <members>Volunteer_Job__c.Number_of_Shifts__c</members>
         <members>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</members>
@@ -351,6 +351,14 @@
         <members>labelVolunteerReportHoursNotesShifts</members>
         <members>labelVolunteerReportHoursThankYou</members>
         <members>labelVolunteerSignupThankYou</members>
+        <members>labelVolunteersHelp</members>
+        <members>labelVolunteersHelpDescription</members>
+        <members>labelVolunteersHelpStep1</members>
+        <members>labelVolunteersHelpStep1Text</members>
+        <members>labelVolunteersHelpStep2</members>
+        <members>labelVolunteersHelpStep2Text</members>
+        <members>labelVolunteersHelpStep3</members>
+        <members>labelVolunteersHelpStep3Text</members>
         <members>labelVolunteersJobListingErrorTooManyVols</members>
         <members>labelVolunteersWizardCampaignInformation</members>
         <members>labelVolunteersWizardClone</members>
@@ -372,11 +380,15 @@
         <name>CustomLabel</name>
     </types>
     <types>
-        <members>CustomLabels</members>
-        <name>CustomLabels</name>
+        <name>CustomLabel</name>
     </types>
     <types>
+        <members>Campaign</members>
+        <members>Contact</members>
         <members>Job_Recurrence_Schedule__c</members>
+        <members>Lead</members>
+        <members>OpportunityCompetitor</members>
+        <members>Site</members>
         <members>Volunteer_Hours__c</members>
         <members>Volunteer_Job__c</members>
         <members>Volunteer_Recurrence_Schedule__c</members>
@@ -515,6 +527,9 @@
         <name>FieldSet</name>
     </types>
     <types>
+        <name>HomePageLayout</name>
+    </types>
+    <types>
         <members>Campaign-Volunteers Campaign Layout</members>
         <members>Job_Recurrence_Schedule__c-Volunteer Job Recurrence Schedule Layout</members>
         <members>Volunteer_Hours__c-Volunteer Hours Layout</members>
@@ -539,6 +554,9 @@
     <types>
         <members>Campaign.Volunteers_Campaign</members>
         <name>RecordType</name>
+    </types>
+    <types>
+        <name>RemoteSiteSetting</name>
     </types>
     <types>
         <members>Volunteer_Reports</members>
@@ -627,6 +645,17 @@
         <name>WebLink</name>
     </types>
     <types>
+        <members>Contact</members>
+        <members>Job_Recurrence_Schedule__c</members>
+        <members>Lead</members>
+        <members>Volunteer_Hours__c</members>
+        <members>Volunteer_Job__c</members>
+        <members>Volunteer_Recurrence_Schedule__c</members>
+        <members>Volunteer_Shift__c</members>
+        <members>Volunteers_Settings__c</members>
+        <name>Workflow</name>
+    </types>
+    <types>
         <members>Contact.Volunteer_Signup_Notification_Email_Alert_Contact</members>
         <members>Contact.Volunteer_Signup_Thank_You_Email_Alert_Contact</members>
         <members>Lead.Volunteer_Signup_Notification_Email_Alert_Lead</members>
@@ -644,16 +673,11 @@
     <types>
         <members>Contact.Volunteer Signup - Contact</members>
         <members>Lead.Volunteer Signup - Lead</members>
-        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
         <members>Volunteer_Hours__c.Volunteer Hours - Set End Date</members>
         <members>Volunteer_Hours__c.Volunteer Hours - Set Planned Start Date %26 Time</members>
+        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
         <members>Volunteer_Hours__c.Volunteer Job Signup</members>
         <name>WorkflowRule</name>
-    </types>
-    <types>
-        <members>Contact.Volunteer_Signup_Thank_You_Sent_Contact</members>
-        <members>Lead.Volunteer_Signup_Thank_You_Sent_Lead</members>
-        <name>WorkflowTask</name>
     </types>
     <version>38.0</version>
 </Package>
