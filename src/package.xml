@@ -3,11 +3,12 @@
     <fullName>Volunteers+for+Salesforce</fullName>
     <types>
         <members>ComponentControllerBase</members>
-        <members>GW_CTRL_BatchJobsProgress</members>
         <members>PageControllerBase</members>
         <members>SoqlListView</members>
+        <members>UTIL_JobProgress_CTRL</members>
         <members>UTIL_PageMessages_CTRL</members>
         <members>VOL_BATCH_Recurrence</members>
+        <members>VOL_BATCH_Recurrence_TEST</members>
         <members>VOL_CTRL_BatchProgress</members>
         <members>VOL_CTRL_BatchProgress_TEST</members>
         <members>VOL_CTRL_JobCalendar</members>
@@ -58,9 +59,9 @@
     </types>
     <types>
         <members>SoqlListView</members>
+        <members>UTIL_JobProgressLightning</members>
         <members>UTIL_NavigateBack</members>
         <members>UTIL_PageMessages</members>
-        <members>batchJobs</members>
         <name>ApexComponent</name>
     </types>
     <types>
@@ -158,8 +159,8 @@
         <members>Volunteer_Job__c.Location_City__c</members>
         <members>Volunteer_Job__c.Location_Information__c</members>
         <members>Volunteer_Job__c.Location_Street__c</members>
-        <members>Volunteer_Job__c.Location__c</members>
         <members>Volunteer_Job__c.Location_Zip_Postal_Code__c</members>
+        <members>Volunteer_Job__c.Location__c</members>
         <members>Volunteer_Job__c.Number_of_Completed_Hours__c</members>
         <members>Volunteer_Job__c.Number_of_Shifts__c</members>
         <members>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</members>
@@ -340,12 +341,24 @@
         <members>labelTemplateObject</members>
         <members>labelTemplateObjectHelpText</members>
         <members>labelTitleJobSignup</members>
+        <members>labelVRSBatchDescription</members>
+        <members>labelVRSBatchProcess</members>
+        <members>labelVRSBatchProcessProgress</members>
+        <members>labelVRSBatchRun</members>
         <members>labelVRSHoursCreatedSystemNote</members>
         <members>labelVolunteerReportHoursErrorRequiredField</members>
         <members>labelVolunteerReportHoursNotesNoShifts</members>
         <members>labelVolunteerReportHoursNotesShifts</members>
         <members>labelVolunteerReportHoursThankYou</members>
         <members>labelVolunteerSignupThankYou</members>
+        <members>labelVolunteersHelp</members>
+        <members>labelVolunteersHelpDescription</members>
+        <members>labelVolunteersHelpStep1</members>
+        <members>labelVolunteersHelpStep1Text</members>
+        <members>labelVolunteersHelpStep2</members>
+        <members>labelVolunteersHelpStep2Text</members>
+        <members>labelVolunteersHelpStep3</members>
+        <members>labelVolunteersHelpStep3Text</members>
         <members>labelVolunteersJobListingErrorTooManyVols</members>
         <members>labelVolunteersWizardCampaignInformation</members>
         <members>labelVolunteersWizardClone</members>
@@ -582,7 +595,7 @@
         <members>FullCalendar</members>
         <members>jQueryFiles</members>
         <members>sfdo213</members>
-        <members>v4s_slds</members>
+        <members>v4sStaticResources</members>
         <members>wtooltip</members>
         <name>StaticResource</name>
     </types>

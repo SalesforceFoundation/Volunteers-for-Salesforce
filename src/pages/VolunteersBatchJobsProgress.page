@@ -28,42 +28,50 @@
     POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<apex:page controller="VOL_CTRL_BatchProgress" tabStyle="Process_Recurrence_Schedules__tab" >
-	
-	<style>
-	ul.err li {
-		list-style-type: none;
-		color: #cc0000;
-		font-weight: bold;
-	}
-	
-	</style>
-
-	<apex:sectionHeader title="Process Recurrence Schedules" />
-	<apex:form >
-		<apex:pageBlock >
-			<apex:pageBlockButtons rendered="{!batching}">
-				<apex:commandButton action="{!rollup}" value="Begin" disabled="{!batchRunning}" />
-				<apex:commandButton action="{!cancel}" value="Close" />
-			</apex:pageBlockButtons>
-			<apex:messages styleClass="err" />
-			<apex:outputText rendered="{!batching}">
-				<p>Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to
-				create future shifts and assign volunteers to them.  You can run this process manually, by clicking the Begin button, or you can schedule it
-				to automatically run nightly.</p>
-				<p>You will see a progress bar below for the most recent batch process.
-				 The process may take some time; it will take longer the more data you have in your database.  You can close this page 
-				and the process will continue in the background.</p>
-			</apex:outputText>
-					
-			<p>To view currently scheduled jobs, go to the 
-		       				<a  href='/08e?setupid=ScheduledJobs'>Scheduled Jobs page.</a></p>
-			
-			<p>To schedule the Recurrence Schedules process to run automatically, go to the 
-		       				<a  href='/ui/setup/apex/batch/ScheduleBatchApexPage'>Schedule Apex Jobs page.</a></p>
-		</apex:pageBlock>
-		<apex:outputPanel >
-			<c:batchJobs strBatchComponentLabel="Process Recurrence Schedules Progress" cNumberOfJobs="1" />
-		</apex:outputPanel>
+<apex:page controller="VOL_CTRL_BatchProgress"
+	tabStyle="Process_Recurrence_Schedules__tab"
+	standardStylesheets="false"
+	title="{!$Label.labelVRSBatchProcess}"
+	docType="html-5.0">
+	<apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+	<apex:form id="vfForm">
+		<div class="sfdo213">
+            <!-- PAGE HEADER -->
+            <div class="slds-page-header" role="banner">
+				<div class="slds-grid">
+			        <div class="slds-col slds-size--1-of-1">
+			            <h1 class="slds-text-heading--medium">{!$Label.labelVRSBatchProcess}</h1>
+			        </div>
+			    </div>
+            </div>
+			<!-- PAGE ERRORS -->
+			<apex:outputPanel id="panelErrors">
+                <c:UTIL_PageMessages html-class="slds-grid slds-grid--align-center slds-m-bottom--small"/>
+            </apex:outputPanel>
+            <!-- PAGE BUTTONS -->
+            <apex:outputPanel rendered="{!batching}">
+				<div class="slds-text-body--small slds-m-around--medium">
+					<apex:outputText value="{!$Label.labelVRSBatchDescription}" escape="false" />
+				</div>
+				<div class="slds-grid slds-grid--align-center slds-grid--vertical-align-center slds-m-around--large">
+					<div class="slds-col slds-no-flex slds-align-middle">
+						<div class="slds-grid slds-grid--align-center slds-grid--vertical-align-center slds-p-around--large">
+			                <apex:commandButton value="{!$Label.labelVRSBatchRun}" id="runBatchBTN" status="statusLoad"
+			                action="{!rollup}" disabled="{!batchRunning}"
+			                immediate="true" rerender="vfForm" styleClass="slds-button slds-button--small slds-button--neutral" />
+			            </div>
+					</div>
+				</div>
+			</apex:outputPanel>
+			<apex:outputPanel rendered="{!batchRunning}">
+	            <c:UTIL_JobProgressLightning id="jobProgress"
+	                eventTargetId="{!$Component.jobProgress}"
+	                strBatchComponentLabel="{!$Label.labelVRSBatchProcessProgress}"
+	                cNumberOfJobs="1"
+	                startPolling="True"
+	                stopPollingOnComplete="True"
+	                pollingDelay="1000"/>
+	        </apex:outputPanel>
+		</div>
 	</apex:form>
 </apex:page>

@@ -33,21 +33,50 @@ public with sharing class VOL_CTRL_BatchProgress_TEST {
 
     //--------------------TEST METHOD------------------------
     public static testMethod void batchStatusBarTest(){
-        GW_CTRL_BatchJobsProgress controller = new GW_CTRL_BatchJobsProgress();
+        UTIL_JobProgress_CTRL controller = new UTIL_JobProgress_CTRL();
         controller.getBatchJobs();
         controller.numberOfJobs = 10;
         system.assertEquals(10, controller.numberOfJobs);
         controller.batchComponentLabel = 'my label';
         system.assertEquals('my label', controller.batchComponentLabel);
-        
+        // Verify defaults
+        system.assertEquals(0, controller.getBatchJobs().size());
+        system.assertEquals(null, controller.bj);
+        system.assertEquals(false, controller.rerenderoncomplete);
+        system.assertEquals(false, controller.hasExtendedStatus);
+        system.assertEquals(true, controller.allCompleted);
     }
     
     public static testMethod void testRollup() {
         VOL_CTRL_BatchProgress controller = new VOL_CTRL_BatchProgress();
         system.assertEquals(true, controller.batching);
         system.assertEquals(false, controller.batchRunning);
-        system.assertNotEquals(null, controller.cancel());
         system.assertEquals(null, controller.rollup());
-   }
+    }
 
+    private static testMethod void testJobProgressController() {
+        VOL_BATCH_Recurrence_TEST.createRecurringJob();
+        PageReference bPage = Page.VolunteersBatchJobsProgress;
+        Test.setCurrentPage(bPage);
+        VOL_CTRL_BatchProgress bController = new VOL_CTRL_BatchProgress();
+        UTIL_JobProgress_CTRL jpController = new UTIL_JobProgress_CTRL();
+
+        Test.startTest();
+        PageReference rollup = bController.rollup();
+        Test.stopTest();
+
+        System.assertEquals(1, jpController.getBatchJobs().size(), 'There should be 1 batch job ran.');
+        System.assertEquals('Completed', UTIL_JobProgress_CTRL.getBatchJobsStatus(1)[0].status);
+        System.assertEquals(null, rollup, 'The rollup button should always return null.');
+    }
+
+    private static testMethod void testPageMessagesController() {
+        ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,'summary'));
+        UTIL_PageMessages_CTRL controller = new UTIL_PageMessages_CTRL();
+        List<UTIL_PageMessages_CTRL.Message> messages = controller.getPageMessages();
+
+        System.assertEquals(1, messages.size(), 'There should be one error on the page.');
+        System.assertEquals(Label.PageMessagesWarning, messages[0].getSeverityLabel(), 'The label should be WARNING.');
+        System.assertEquals('warning', messages[0].getSeverityTheme(), 'The theme should be warning.');
+    }
 }
