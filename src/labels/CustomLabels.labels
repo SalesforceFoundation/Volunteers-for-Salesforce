@@ -1101,7 +1101,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVRSBatchDescription</shortDescription>
-        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future shifts and assign volunteers to them. You can run this process manually, by clicking the Begin button, or you can schedule it to automatically run nightly.&lt;/p&gt;
+        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future shifts and assign volunteers to them. You can run this process manually, by clicking the Run Batch button, or you can schedule it to automatically run nightly.&lt;/p&gt;
 &lt;br/&gt;
 &lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;
 &lt;br/&gt;

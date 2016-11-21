@@ -32,7 +32,7 @@
     <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
 
     <div class="sfdo213">
-        <h1><apex:outputText value="{!$Label.labelVolunteersHelpDescription}" escape="false"/></h1>
+        <h1 class="slds-text-align--center slds-p-top--large slds-p-bottom--large"><apex:outputText value="{!$Label.labelVolunteersHelpDescription}" escape="false"/></h1>
         <div class="slds-grid slds-grid--align-space slds-p-top--large" id="grid">
             <div class="slds-col slds-size--1-of-6" id="colStep1">
                 <div class="slds-text-align--center slds-p-bottom--small">{!$Label.labelVolunteersHelpStep1}</div>

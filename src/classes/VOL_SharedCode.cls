@@ -686,9 +686,7 @@ global with sharing class VOL_SharedCode {
                 //Schema.SObjectType token = Schema.getGlobalDescribe().get('GW_Volunteers__Volunteer_Job__c');
                 //IsManagedCode = (token != null);
 
-    			Map<String, Schema.SObjectField> M = Schema.SObjectType.Contact.fields.getMap();
-    			Schema.SObjectField fld = M.get(StrTokenNSPrefix('volunteer_status__c'));
-				IsManagedCode = (fld != null);
+				IsManagedCode = (getNamespace() != '');
                 
                 fCheckedForVolunteersNamespace = true;
             }
