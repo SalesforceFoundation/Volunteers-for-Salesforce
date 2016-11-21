@@ -148,7 +148,7 @@
                                 var strUrl;
                                 
                                 if ({!fWeb}) {
-                                    strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'PersonalSiteJobListing', 'VolunteersJobListingFS')}' +
+                                    strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, ns+'PersonalSiteJobListing', ns+'VolunteersJobListingFS')}' +
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
                                         '&dtMonthFilter=' + strApexDateUTC(dtStart) +
                                         '{!IF(strParams != null, '&' + strParams, '')}';

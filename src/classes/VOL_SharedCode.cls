@@ -687,7 +687,7 @@ global with sharing class VOL_SharedCode {
                 //IsManagedCode = (token != null);
 
     			Map<String, Schema.SObjectField> M = Schema.SObjectType.Contact.fields.getMap();
-    			Schema.SObjectField fld = M.get('gw_volunteers__volunteer_status__c');
+    			Schema.SObjectField fld = M.get(StrTokenNSPrefix('volunteer_status__c'));
 				IsManagedCode = (fld != null);
                 
                 fCheckedForVolunteersNamespace = true;
@@ -727,7 +727,7 @@ global with sharing class VOL_SharedCode {
     * @return token name, with namespace prefix, if required.
     ********************************************************************************************************/
     global static string StrTokenNSPrefix(string str) {
-        if (!IsManagedCode) return str;
+        if (getNamespace() == '') return str;
         str = getNamespace() + '__' + str;
         return str;
     }
@@ -778,7 +778,7 @@ global with sharing class VOL_SharedCode {
 		    for (String strField : listStrField) {
 				// Check if the user has access on the each field
 		        // note that fields in our own package must not have their prefix for the Describe Field Map  
-		        Schema.SObjectField fld = mapFieldDesc.get(strField.replace('GW_Volunteers__', ''));     
+		        Schema.SObjectField fld = mapFieldDesc.get(strField.replace(StrTokenNSPrefix(''), ''));     
 		        if (fld != null && !fld.getDescribe().isAccessible()) {
 		        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Field ' + strObj + '.' + strField +
 		          		' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Installation & Configuration Guide.'));
