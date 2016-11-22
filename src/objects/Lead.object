@@ -2,7 +2,6 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
         <fullName>Volunteer_Availability__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Availability</label>
         <picklist>
@@ -35,7 +34,6 @@
     </fields>
     <fields>
         <fullName>Volunteer_Notes__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Notes</label>
         <length>32000</length>
@@ -45,7 +43,6 @@
     </fields>
     <fields>
         <fullName>Volunteer_Skills__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Select the skill(s) this person has that should be used to find volunteer jobs.</inlineHelpText>
         <label>Volunteer Skills</label>
@@ -83,7 +80,6 @@
     </fields>
     <fields>
         <fullName>Volunteer_Status__c</fullName>
-        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Status</label>
         <picklist>

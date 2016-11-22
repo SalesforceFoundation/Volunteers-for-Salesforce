@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>PageMessagesConfirm</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesConfirm</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>PageMessagesError</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesError</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>PageMessagesFatal</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesFatal</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>PageMessagesWarning</fullName>
+        <categories>PageMessages</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PageMessagesWarning</shortDescription>
+        <value>Warning</value>
+    </labels>
+    <labels>
         <fullName>labelButtonAssign</fullName>
         <categories>FindVolunteers</categories>
         <language>en_US</language>
@@ -1064,6 +1096,44 @@ day:      &apos;day&apos;</value>
         <value>Volunteer Sign Up</value>
     </labels>
     <labels>
+        <fullName>labelVRSBatchDescription</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchDescription</shortDescription>
+        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future shifts and assign volunteers to them. You can run this process manually, by clicking the Run Batch button, or you can schedule it to automatically run nightly.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;To view currently scheduled jobs, go to the &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Scheduled Jobs page.&lt;/a&gt;&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;To schedule the Recurrence Schedules process to run automatically, go to the &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Schedule Apex Jobs page.&lt;/a&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>labelVRSBatchProcess</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchProcess</shortDescription>
+        <value>Process Recurrence Schedules</value>
+    </labels>
+    <labels>
+        <fullName>labelVRSBatchProcessProgress</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchProcessProgress</shortDescription>
+        <value>Process Recurrence Schedules Progress</value>
+    </labels>
+    <labels>
+        <fullName>labelVRSBatchRun</fullName>
+        <categories>VolunteerBatchProgress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVRSBatchRun</shortDescription>
+        <value>Run Batch</value>
+    </labels>
+    <labels>
         <fullName>labelVRSHoursCreatedSystemNote</fullName>
         <categories>VRS</categories>
         <language>en_US</language>
@@ -1110,6 +1180,70 @@ day:      &apos;day&apos;</value>
         <protected>false</protected>
         <shortDescription>Thank you message displayed after a successful Volunteer Signup on the web</shortDescription>
         <value>Thank you for signing up to volunteer.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelp</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelp</shortDescription>
+        <value>Volunteers Help</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpDescription</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpDescription</shortDescription>
+        <value>Getting started with Volunteers for Salesforce (V4S) is easy. For more resources, go to the &lt;a href=&quot;https://powerofus.force.com&quot; target=&quot;_blank&quot;&gt;Power of Us HUB&lt;/a&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpStep1</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpStep1</shortDescription>
+        <value>Step 1</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpStep1Text</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpStep1Text</shortDescription>
+        <value>Use Trailhead to learn more about V4S and how to configure it.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpStep2</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpStep2</shortDescription>
+        <value>Step 2</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpStep2Text</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpStep2Text</shortDescription>
+        <value>Explore more V4S Resources.</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpStep3</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpStep3</shortDescription>
+        <value>Step 3</value>
+    </labels>
+    <labels>
+        <fullName>labelVolunteersHelpStep3Text</fullName>
+        <categories>VolunteersHelp</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>labelVolunteersHelpStep3Text</shortDescription>
+        <value>Get involved with the community.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersJobListingErrorTooManyVols</fullName>

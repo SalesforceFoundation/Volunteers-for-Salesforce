@@ -81,7 +81,7 @@ public with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
         ctrl.AddMoreEmptyRows();
         System.AssertEquals(cHours + (2 * ctrl.cEmptyVolunteerHourRecords), ctrl.listVolunteerHours.size());
         System.AssertEquals(true, ctrl.fHasListVolunteerHours);
-        System.Assert(ctrl.Cancel() != null);
+        System.Assert(ctrl.Cancel() == null);
         System.AssertEquals(0, ctrl.numberOfRecordsDirty);
         System.AssertEquals(null, ctrl.strSaveResults); 
 
