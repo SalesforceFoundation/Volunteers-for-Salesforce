@@ -556,6 +556,22 @@ day: &apos;día&apos;</label>
         <name>labelTitleJobSignup</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelVRSBatchDescription --></label>
+        <name>labelVRSBatchDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVRSBatchProcess --></label>
+        <name>labelVRSBatchProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVRSBatchProcessProgress --></label>
+        <name>labelVRSBatchProcessProgress</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVRSBatchRun --></label>
+        <name>labelVRSBatchRun</name>
+    </customLabels>
+    <customLabels>
         <label>Auto-Creado para Horario de Recurrencia de trabajo:</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
@@ -578,6 +594,38 @@ day: &apos;día&apos;</label>
     <customLabels>
         <label>Gracias por registrarse para el voluntariado.</label>
         <name>labelVolunteerSignupThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelp --></label>
+        <name>labelVolunteersHelp</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpDescription --></label>
+        <name>labelVolunteersHelpDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpStep1 --></label>
+        <name>labelVolunteersHelpStep1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpStep1Text --></label>
+        <name>labelVolunteersHelpStep1Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpStep2 --></label>
+        <name>labelVolunteersHelpStep2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpStep2Text --></label>
+        <name>labelVolunteersHelpStep2Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpStep3 --></label>
+        <name>labelVolunteersHelpStep3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelVolunteersHelpStep3Text --></label>
+        <name>labelVolunteersHelpStep3Text</name>
     </customLabels>
     <customLabels>
         <label>Se necesitan {0} voluntarios más para esta jornada.</label>
