@@ -807,6 +807,25 @@ global with sharing class VOL_SharedCode {
         );
         return new List<Id>(campaignsInHierarchy.keySet());
     }
+    
+    /*******************************************************************************************************
+    * @description keeps references to old labels that have been packaged, that we no longer use.
+    * @return void
+    ********************************************************************************************************/
+    private static void keepUnusedLabelsInPackage() {
+        string str;
+        str = Label.labelCalendarConfirmed;
+        str = Label.labelContactInfoRankText;
+        str = Label.labelHide;
+        str = Label.labelMassEmailHelp1;
+        str = Label.labelMassEmailHelp2;
+        str = Label.labelMassEmailHelp3;
+        str = Label.labelMassEmailHelp4;
+        str = Label.labelMassEmailHelp5;
+        str = Label.labelMassEmailHelp6;
+        str = Label.labelMassEmailHelp7;
+        str = Label.labelShowHelp;
+    }
 
      
 }

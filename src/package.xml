@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Volunteers+for+Salesforce</fullName>
+    <fullName>Volunteers for Salesforce</fullName>
     <types>
         <members>ComponentControllerBase</members>
         <members>PageControllerBase</members>
@@ -652,9 +652,9 @@
     <types>
         <members>Contact.Volunteer Signup - Contact</members>
         <members>Lead.Volunteer Signup - Lead</members>
-        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
         <members>Volunteer_Hours__c.Volunteer Hours - Set End Date</members>
         <members>Volunteer_Hours__c.Volunteer Hours - Set Planned Start Date %26 Time</members>
+        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
         <members>Volunteer_Hours__c.Volunteer Job Signup</members>
         <name>WorkflowRule</name>
     </types>
@@ -663,5 +663,5 @@
         <members>Lead.Volunteer_Signup_Thank_You_Sent_Lead</members>
         <name>WorkflowTask</name>
     </types>
-    <version>38.0</version>
+    <version>36.0</version>
 </Package>
