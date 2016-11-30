@@ -80,10 +80,15 @@ public with sharing class VOL_VRS {
 	// no longer match, and creates new hours into the future.
 	// called from both the VRS trigger (when the user modifies a specific VRS),
 	// as well as from the JRS processing, so new shifts get their hours assigned.
-    // fReviewAllShifts parameter specifies whether called from the trigger on JRS's, in
+	// @param listVRS the list of VRS's to process
+	// @param listVRSOld If called from the AfterUpdate trigger, the trigger.old list
+	// @param fReviewAllShifts Specifies whether called from the trigger on JRS's, in
     // which case we should review all shifts under the Jobs, or from the scheduled batch,
     // in which case we only need to be looking to add additional shifts in the future.
-	public static void ProcessListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS, boolean fReviewAllShifts) {
+	public static void ProcessListVRS(
+	   list<Volunteer_Recurrence_Schedule__c> listVRS, 
+	   list<Volunteer_Recurrence_Schedule__c> listVRSOld, 
+	   boolean fReviewAllShifts) {
 		
 		// get a set of the VRS ID's for querying
 		// also the Job ID's they are associated with
@@ -95,6 +100,15 @@ public with sharing class VOL_VRS {
 			setVRSId.add(vrs.Id);
 			setJobId.add(vrs.Volunteer_Job__c);
 			setContactId.add(vrs.Contact__c);
+		}
+		
+		// if the VRS was updated, then deal with potent changes to the VRS's job or contact 
+		if (listVRSOld != null) {
+	        for (Volunteer_Recurrence_Schedule__c vrs : listVRSOld) {
+	            setVRSId.add(vrs.Id);
+	            setJobId.add(vrs.Volunteer_Job__c);
+	            setContactId.add(vrs.Contact__c);
+	        }
 		}
 							
 		// get all shifts of the jobs these vrs's are associated with

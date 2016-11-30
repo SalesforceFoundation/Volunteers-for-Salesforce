@@ -132,7 +132,7 @@ public with sharing class VOL_JRS {
 			listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
 				Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c, Number_of_Volunteers__c, Comments__c
 				from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
-			VOL_VRS.ProcessListVRS(listVRS, fReviewAllShifts);
+			VOL_VRS.ProcessListVRS(listVRS, null, fReviewAllShifts);
 		} else {
 			ProcessListVRSFuture(setJobId, fReviewAllShifts);			
 		}			
@@ -153,7 +153,7 @@ public with sharing class VOL_JRS {
 			from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
 
 		// process the VRS's to create hours as needed.
-		VOL_VRS.ProcessListVRS(listVRS, fReviewAllShifts);
+		VOL_VRS.ProcessListVRS(listVRS, null, fReviewAllShifts);
 	}	
 	
 
