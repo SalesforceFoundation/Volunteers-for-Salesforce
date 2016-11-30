@@ -132,17 +132,20 @@ public with sharing class VOL_JRS {
 			listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
 				Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c, Number_of_Volunteers__c, Comments__c
 				from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
-			VOL_VRS.ProcessListVRS(listVRS);
+			VOL_VRS.ProcessListVRS(listVRS, fReviewAllShifts);
 		} else {
-			ProcessListVRSFuture(setJobId);			
+			ProcessListVRSFuture(setJobId, fReviewAllShifts);			
 		}			
 	}
 	
     //******************************************************************************************************
 	// Process all the VRS's for the set of Job's.  This Future cover was created to avoid
 	// hitting apex system statement limits that we would hit if there were many VRS's for a given job.
+    // fReviewAllShifts parameter specifies whether called from the trigger on JRS's, in
+    // which case we should review all shifts under the Jobs, or from the scheduled batch,
+    // in which case we only need to be looking to add additional shifts in the future.
 	@future (callout=false)	
-	private static void ProcessListVRSFuture(set<ID> setJobId) {
+	private static void ProcessListVRSFuture(set<ID> setJobId, boolean fReviewAllShifts) {
 		
 		list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
 		listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
@@ -150,7 +153,7 @@ public with sharing class VOL_JRS {
 			from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
 
 		// process the VRS's to create hours as needed.
-		VOL_VRS.ProcessListVRS(listVRS);
+		VOL_VRS.ProcessListVRS(listVRS, fReviewAllShifts);
 	}	
 	
 
