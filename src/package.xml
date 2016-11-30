@@ -81,7 +81,6 @@
         <members>VolunteersBulkEnterHours</members>
         <members>VolunteersCampaignWizard</members>
         <members>VolunteersFind</members>
-        <members>VolunteersFind2</members>
         <members>VolunteersJobListing</members>
         <members>VolunteersJobListingFS</members>
         <members>VolunteersReportHours</members>
