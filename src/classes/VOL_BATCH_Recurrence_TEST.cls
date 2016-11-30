@@ -58,16 +58,23 @@ public class VOL_BATCH_Recurrence_TEST {
 	}
 
 	@isTest private static void testSingleBatch() {
+	    
+	    // set future recurrence to low value for initial JRS insert
+	    VOL_SharedCode.VolunteersSettings.Recurring_Job_Future_Months__c = 1;
 		createRecurringJob();
+        List<Volunteer_Shift__c> shifts = [SELECT Id FROM Volunteer_Shift__c];
+        integer cShifts = shifts.size();
+        system.assert(cShifts >= 0 && cShifts <= 5);
+		
+        // now increase our future recurrence limit to a larger size and run the batch
+        VOL_SharedCode.VolunteersSettings.Recurring_Job_Future_Months__c = 2;
 		VOL_BATCH_Recurrence batchRecSched = new VOL_BATCH_Recurrence();
-
 		Test.startTest();
 		database.executeBatch(batchRecSched);
 		Test.stopTest();
-		Job_Recurrence_Schedule__c recurSched = [SELECT Id FROM Job_Recurrence_Schedule__c LIMIT 1];
-		List<Volunteer_Shift__c> shifts = [SELECT Id, Job_Recurrence_Schedule__c FROM Volunteer_Shift__c WHERE Job_Recurrence_Schedule__c = :recurSched.Id];
-
-		System.assertNotEquals(0, shifts.size(), 'Multiple shifts should have been created by the batch.');
+		shifts = [SELECT Id FROM Volunteer_Shift__c];
+		integer cShiftsNew = shifts.size() - cShifts;
+		system.assert(cShiftsNew >=3 && cShiftsNew <= 5);
 	}
 
 }
