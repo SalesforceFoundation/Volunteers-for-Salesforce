@@ -28,184 +28,142 @@
     POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" >
+<apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" docType="html-5.0" standardStylesheets="false">
+    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
 
-<!-- 
-	the common styles below used by various visualforce pages should be a separate resource
-	but we are pushing this out with a push upgrade that won't allow us to add any new component.
-	redo this for the next major release.
--->
-
-<style>
-	.cssLabelColumn {
-		min-width: 200px;
-		vertical-align: middle;
-	}
-	
-	.cssTabHelpLink {
-		cursor: pointer;
-		border-style: solid;
-		border-radius: 4px;
-		border-width: 1px;
-		border-color: #DEEFF5;
-		width: 110px;
-		height: 20px; 
-		color: black;
-		vertical-align: middle;
-		text-align: center;
-		background-color: #FCFFFE;
-		margin-top: 10px;
-		margin-left: 10px;
-		margin-bottom: 10px;
-		padding-top: 4px;	
-	}
-		
-	.cssTabHelpLink .helpLink {
-		text-decoration: none;
-		color: black;
-		font-size: 105%;
-		vertical-align: bottom;
-	}
-
-	.hideHelpLink {
-		cursor: pointer;
-		color: black;
-	}
-		
-	.hideHelpLink .helpLink {
-		color: grey;
-		text-decoration: none;
-	}
-		
-	.cssHelpText {
-		background-color: mintcream;
-		border-style: solid;
-		border-width: 1px;
-		border-color: lightBlue;
-		border-radius: 10px;
-		padding-top: 5px;	
-		padding-bottom: 10px;
-		padding-left: 10px;
-		padding-right: 10px;	
-		margin-top: 10px;
-		margin-bottom: 10px;
-		margin-right: 10px;
-		margin-left: 10px;
-	}
-
-	.Error { 
-    		color: red; 
-	}
-	
-</style> 
-
-    <apex:sectionHeader title="{!$Label.labelMassEmailVolunteersTitle}" />      
-	<apex:form >  
-        <apex:pageBlock title="{!$Label.labelMassEmailTitle} {!strJobName}" rendered="true"  mode="edit">
-            <apex:pageBlockButtons >
-                <apex:commandButton action="{!SendMail}" value="{!$Label.labelButtonSend}" immediate="false" />
-                <apex:commandButton action="{!Cancel}" value="{!$Label.labelButtonClose}" immediate="true" />
-            </apex:pageBlockButtons>                                        
-
-            <apex:pageMessages showDetail="false" />
-            
- 			<div class="cssTabHelpLink" id="linkHelp">
-	  			<a class="helpLink" onclick="document.getElementById('linkHelp').style.display='none'; document.getElementById('divHelp').style.display='block';">
-					<img src="/img/arrowRight.gif" />{!$Label.labelShowHelp}&nbsp;<img src="/s.gif" alt="" class="helpIcon" title=""/>
-				</a>
-			</div>
-	   		<div id="divHelp" class="cssHelpText" style="display:none" >
-	       		<div class="hideHelpLink">	       			
-					<a class="helpLink" onclick="document.getElementById('divHelp').style.display='none';document.getElementById('linkHelp').style.display='block';">
-						<img src="/img/arrowDown.gif" />{!$Label.labelHide}
-					</a>
-				</div>
-				<ul>
-					<li>{!$Label.labelMassEmailHelp1} {!strJobName}.</li>
-					<li>{!$Label.labelMassEmailHelp2}</li>
-					<li>{!$Label.labelMassEmailHelp3}</li>
-					<li>{!$Label.labelMassEmailHelp4}</li>
-					<li>{!$Label.labelMassEmailHelp5}</li>
-					<li>{!$Label.labelMassEmailHelp6}</li>
-					<li>{!$Label.labelMassEmailHelp7}</li>
-				</ul>
-	  		</div> 
-            
-			<apex:pageBlockSection columns="1">
-				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="{!$Label.labelFrom}" />
-	                <apex:selectList value="{!fromEmailId}" size="1" >
-	                    <apex:selectOptions value="{!listSOFromEmails}" /> 
-	                </apex:selectList>  
-				</apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" />
-					<apex:inputField value="{!hourStatus.Status__c}" >
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="statusLoadContacts"/>
-					</apex:inputField>		
-				</apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem helptext="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}"  labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersUniqueContacts}" />
-					<apex:inputCheckbox value="{!fEmailContactsOnlyOnce}" >	
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="statusLoadContacts"/>
-	                </apex:inputCheckbox>
-				</apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem helptext="{!$Label.labelNumberOfContactsHelpText}"  labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="{!$Label.labelNumberOfContacts}"  />
-					<apex:pageBlockSectionItem >
-    	               	<apex:actionStatus layout="inline" startText="{!$Label.labelMessageLoading}" stopText="" id="statusLoadContacts" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
-    	               	<apex:outputLabel id="lblNumberOfContacts" value="{!numberOfContacts}" style="font-weight:bold;" />                    					
-					</apex:pageBlockSectionItem>
-				</apex:pageBlockSectionItem>
-				
-				<apex:pageBlockSectionItem helptext="{!$Label.labelMassEmailVolunteersLogActivityHelpText}"  labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="{!$Label.labelMassEmailVolunteersLogActivity}" />
-					<apex:inputCheckbox value="{!fLogActivity}" />	
-				</apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem helptext="{!$Label.labelTemplateObjectHelpText}"  labelStyleClass="cssLabelColumn" >
-					<apex:outputLabel value="{!$Label.labelTemplateObject}" />
-	                <apex:selectList value="{!templateObject}" size="1" >
-						<apex:selectOption itemValue="Campaign" itemLabel="{!$ObjectType.Campaign.Label}" />
-						<apex:selectOption itemValue="Job" itemLabel="{!$ObjectType.Volunteer_Job__c.Label}" />
-						<apex:selectOption itemValue="Shift" itemLabel="{!$ObjectType.Volunteer_Shift__c.Label}" />
-						<apex:selectOption itemValue="Hours" itemLabel="{!$ObjectType.Volunteer_Hours__c.Label}" />
-	                </apex:selectList>  
-				</apex:pageBlockSectionItem>
-
-            	<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" >
-	                <apex:outputLabel value="{!$ObjectType.EmailTemplate.Label}" />
-					<apex:pageBlockSectionItem >
-						<apex:pageBlockSectionItem >
-			                <apex:selectList value="{!templateId}" size="1" >
-			                    <apex:actionSupport immediate="false" event="onchange" status="statusLoadTemplate" rerender="txtSubject,txtMessage,panelEditTemplate" action="{!LoadEmailTemplate}" />
-			                    <apex:selectOptions value="{!listSOTemplates}" /> 
-			                </apex:selectList>
-							<apex:pageBlockSectionItem >
-				                <apex:commandLink action="{!OpenEmailTemplateFolder}" immediate="true" target="_blank" value="{!$Label.labelMassEmailViewTemplates}" />  
-				                <apex:outputPanel id="panelEditTemplate">	
-				                	&nbsp;&nbsp;		                
-				                	<apex:commandLink action="{!EditEmailTemplate}" immediate="true" target="_blank" value="{!$Label.labelMassEmailEditTemplate}" rendered="{!templateId != null}" />
-				                </apex:outputPanel>  
-							</apex:pageBlockSectionItem>
-						</apex:pageBlockSectionItem>
-    	               	<apex:actionStatus layout="inline" startText="{!'    ' + $Label.labelMessageLoading}" stopText="" id="statusLoadTemplate" startStyle="color:green; font-style:italic" stopStyle="color:black;"/>
-					</apex:pageBlockSectionItem>
-        		</apex:pageBlockSectionItem> 
-				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" > 
-					<apex:outputLabel value="{!$Label.labelSubject}" />
-					<apex:outputText id="txtSubject" value="{!strSubject}"  />
-				</apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem labelStyleClass="cssLabelColumn" > 
-					<apex:outputLabel value="{!$Label.labelMessageBody}" />
-					<apex:outputText id="txtMessage"  value="{!strMessage}" escape="false" />		
-				</apex:pageBlockSectionItem>
-				
-			</apex:pageBlockSection>	
-		</apex:pageBlock>
-	</apex:form>	
+    <apex:form id="vfForm">
+        <div class="sfdo213">
+            <!-- PAGE SPINNER -->
+            <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
+                <div class="slds-spinner--brand slds-spinner slds-spinner--medium" style="position:fixed;top:30%;" aria-hidden="false" role="alert">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            <!-- PAGE HEADER -->
+            <div class="slds-page-header" role="banner">
+                <div class="slds-grid">
+                    <div class="slds-col">
+                        <h1 class="slds-text-heading--medium">{!$Label.labelMassEmailVolunteersTitle}</h1>
+                        <p>{!$Label.labelMassEmailTitle} {!strJobName}</p>
+                    </div>
+                <div class="slds-col slds-no-flex slds-align-middle">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton id="sendBTN" styleClass="slds-button slds-button--brand" action="{!SendMail}" value="{!$Label.labelButtonSend}" immediate="false"/>
+                            <apex:commandButton id="cancelBTN" styleClass="slds-button slds-button--neutral" action="{!cancel}" value="{!$Label.labelButtonClose}"  immediate="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PAGE ERRORS -->
+            <c:UTIL_PageMessages />
+            <form class="slds-form slds-form--stacked">
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$Label.labelFrom}" for="idFrom" styleClass="slds-form-element__label" />
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList id="idFrom" value="{!fromEmailId}" size="1" styleClass="slds-select" >
+                                <apex:selectOptions value="{!listSOFromEmails}" />
+                            </apex:selectList>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" for="idStatus" styleClass="slds-form-element__label" />
+                    <div class="slds-form-element__control">
+                        <apex:inputField id="idStatus" styleClass="slds-select slds-input" value="{!hourStatus.Status__c}">
+                            <apex:actionSupport immediate="false" event="onchange" rerender="lblNumberOfContacts" action="{!StatusChanged}" status="loading"/>
+                        </apex:inputField>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                            <apex:inputCheckbox id="idUniqueContacts" value="{!fEmailContactsOnlyOnce}" html-aria-describedby="{!$Component.vfForm.uniqueContactsHelpText}">
+                                <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts" action="{!StatusChanged}" status="loading"/>
+                            </apex:inputCheckbox>
+                            <span class="slds-checkbox--faux"></span>
+                            <apex:outputLabel for="idUniqueContacts" styleClass="slds-form-element__label" value="{!$Label.labelMassEmailVolunteersUniqueContacts}"/>
+                        </label>
+                    </div>
+                    <apex:outputText styleClass="slds-form-element__help" id="uniqueContactsHelpText" value="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}" />
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$Label.labelNumberOfContacts}" for="idNumContacts" styleClass="slds-form-element__label" />
+                    <div class="slds-form-element__control">
+                        <apex:outputText value="{!numberOfContacts}" style="font-weight:bold;"/>
+                        <apex:inputText id="idNumContacts" value="{!numberOfContacts}" html-readonly="true" styleClass="slds-assistive-text" html-aria-describedby="{!$Component.vfForm.numContactsHelpText}"/>
+                    </div>
+                    <apex:outputText styleClass="slds-form-element__help" id="numContactsHelpText" value="{!$Label.labelNumberOfContactsHelpText}" />
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                            <apex:inputCheckbox id="idLogActivity" value="{!fLogActivity}" html-aria-describedby="{!$Component.vfForm.logActivityHelpText}"/>
+                            <span class="slds-checkbox--faux"></span>
+                            <apex:outputLabel styleClass="slds-form-element__label" for="idLogActivity" value="{!$Label.labelMassEmailVolunteersLogActivity}"/>
+                        </label>
+                    </div>
+                    <apex:outputText styleClass="slds-form-element__help" id="logActivityHelpText" value="{!$Label.labelMassEmailVolunteersLogActivityHelpText}" />
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$Label.labelTemplateObject}" for="idTemplateObject" styleClass="slds-form-element__label" />
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList id="idTemplateObject" value="{!templateObject}" size="1" styleClass="slds-select" html-aria-describedby="{!$Component.vfForm.templateObjectHelpText}" >
+                                <apex:selectOption itemValue="Campaign" itemLabel="{!$ObjectType.Campaign.Label}" />
+                                <apex:selectOption itemValue="Job" itemLabel="{!$ObjectType.Volunteer_Job__c.Label}" />
+                                <apex:selectOption itemValue="Shift" itemLabel="{!$ObjectType.Volunteer_Shift__c.Label}" />
+                                <apex:selectOption itemValue="Hours" itemLabel="{!$ObjectType.Volunteer_Hours__c.Label}" />
+                            </apex:selectList>
+                        </div>
+                    </div>
+                    <apex:outputText styleClass="slds-form-element__help" id="templateObjectHelpText" value="{!$Label.labelTemplateObjectHelpText}" />
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$ObjectType.EmailTemplate.Label}" styleClass="slds-form-element__label" for="idTemplate"/>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList id="idTemplate" value="{!templateId}" size="1" styleClass="slds-select" >
+                                <apex:actionSupport immediate="false" event="onchange" status="loading" rerender="txtSubject,txtMessage,readSubject,readMessage,panelEditTemplate" action="{!LoadEmailTemplate}" />
+                                <apex:selectOptions value="{!listSOTemplates}" /> 
+                            </apex:selectList>
+                        </div>
+                        <ul class="slds-list--horizontal slds-has-inline-block-links--space">
+                            <li class="slds-item">
+                                <apex:commandLink action="{!OpenEmailTemplateFolder}" immediate="true" target="_blank" value="{!$Label.labelMassEmailViewTemplates}" />
+                            </li>
+                            <li class="slds-item">
+                                <apex:outputPanel id="panelEditTemplate">
+                                    &nbsp;&nbsp;
+                                    <apex:commandLink action="{!EditEmailTemplate}" immediate="true" target="_blank" value="{!$Label.labelMassEmailEditTemplate}" rendered="{!templateId != null}" />
+                                </apex:outputPanel>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$Label.labelSubject}" styleClass="slds-form-element__label" for="readSubject"/>
+                    <div class="slds-form-element__control">
+                        <div class="slds-text-body--regular">
+                            <apex:outputText id="txtSubject" value="{!strSubject}" />
+                            <apex:inputText id="readSubject" value="{!strSubject}" html-readonly="true" styleClass="slds-assistive-text" />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                    <apex:outputLabel value="{!$Label.labelMessageBody}" styleClass="slds-form-element__label" for="readMessage"/>
+                    <div class="slds-form-element__control">
+                        <div class="slds-text-body--regular">
+                            <apex:outputText id="txtMessage" value="{!strMessage}" escape="false" />
+                            <apex:inputText id="readMessage" value="{!strMessage}" html-readonly="true" styleClass="slds-assistive-text" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <apex:actionStatus id="loading"
+                    onstart="document.getElementById('divLoading').style.display = 'block';"
+                    onstop="document.getElementById('divLoading').style.display = 'none';" />
+        </div>
+    </apex:form>
 </apex:page>

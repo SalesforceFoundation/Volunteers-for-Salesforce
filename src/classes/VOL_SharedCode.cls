@@ -686,9 +686,7 @@ global with sharing class VOL_SharedCode {
                 //Schema.SObjectType token = Schema.getGlobalDescribe().get('GW_Volunteers__Volunteer_Job__c');
                 //IsManagedCode = (token != null);
 
-    			Map<String, Schema.SObjectField> M = Schema.SObjectType.Contact.fields.getMap();
-    			Schema.SObjectField fld = M.get('gw_volunteers__volunteer_status__c');
-				IsManagedCode = (fld != null);
+				IsManagedCode = (getNamespace() != '');
                 
                 fCheckedForVolunteersNamespace = true;
             }
@@ -696,6 +694,28 @@ global with sharing class VOL_SharedCode {
         }
         set;
     }   
+
+    /******************************************************************************************************
+    * @description String helper property for getNamespace() method.
+    *******************************************************************************************************/
+    private static string plainNamespace;
+
+    /*******************************************************************************************************
+    * @description Finds the namespace for the current context.
+    * @return string The current namespace as a string, or a blank string if we're not in a namespaced context.
+    ********************************************************************************************************/
+    public static string getNamespace() {
+        if (plainNamespace == null) {
+            string withDotNotation = VOL_SharedCode.class.getName();
+
+            if (withDotNotation.contains('.')) {
+                plainNamespace = withDotNotation.substringBefore('.');
+            } else {
+                plainNamespace = '';
+            }
+        }
+        return plainNamespace;
+    }
 
     /*******************************************************************************************************
     * @description Static method that takes a string
@@ -705,8 +725,8 @@ global with sharing class VOL_SharedCode {
     * @return token name, with namespace prefix, if required.
     ********************************************************************************************************/
     global static string StrTokenNSPrefix(string str) {
-        if (!IsManagedCode) return str;
-        str = 'GW_Volunteers__' + str;
+        if (getNamespace() == '') return str;
+        str = getNamespace() + '__' + str;
         return str;
     }
   
@@ -756,7 +776,7 @@ global with sharing class VOL_SharedCode {
 		    for (String strField : listStrField) {
 				// Check if the user has access on the each field
 		        // note that fields in our own package must not have their prefix for the Describe Field Map  
-		        Schema.SObjectField fld = mapFieldDesc.get(strField.replace('GW_Volunteers__', ''));     
+		        Schema.SObjectField fld = mapFieldDesc.get(strField.replace(StrTokenNSPrefix(''), ''));     
 		        if (fld != null && !fld.getDescribe().isAccessible()) {
 		        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Field ' + strObj + '.' + strField +
 		          		' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Installation & Configuration Guide.'));
@@ -786,6 +806,25 @@ global with sharing class VOL_SharedCode {
              OR Parent.Parent.Parent.Parent.ParentId =: campaignId)]
         );
         return new List<Id>(campaignsInHierarchy.keySet());
+    }
+    
+    /*******************************************************************************************************
+    * @description keeps references to old labels that have been packaged, that we no longer use.
+    * @return void
+    ********************************************************************************************************/
+    private static void keepUnusedLabelsInPackage() {
+        string str;
+        str = Label.labelCalendarConfirmed;
+        str = Label.labelContactInfoRankText;
+        str = Label.labelHide;
+        str = Label.labelMassEmailHelp1;
+        str = Label.labelMassEmailHelp2;
+        str = Label.labelMassEmailHelp3;
+        str = Label.labelMassEmailHelp4;
+        str = Label.labelMassEmailHelp5;
+        str = Label.labelMassEmailHelp6;
+        str = Label.labelMassEmailHelp7;
+        str = Label.labelShowHelp;
     }
 
      
