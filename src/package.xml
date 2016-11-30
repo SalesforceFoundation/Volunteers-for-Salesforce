@@ -77,6 +77,7 @@
         <members>VolunteersBulkEnterHours</members>
         <members>VolunteersCampaignWizard</members>
         <members>VolunteersFind</members>
+        <members>VolunteersFind2</members>
         <members>VolunteersJobListing</members>
         <members>VolunteersJobListingFS</members>
         <members>VolunteersReportHours</members>
@@ -574,6 +575,7 @@
         <members>Bootstrap4Force</members>
         <members>FullCalendar</members>
         <members>jQueryFiles</members>
+        <members>sfdo213</members>
         <members>wtooltip</members>
         <name>StaticResource</name>
     </types>
