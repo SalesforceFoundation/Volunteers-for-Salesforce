@@ -80,7 +80,10 @@ public with sharing class VOL_VRS {
 	// no longer match, and creates new hours into the future.
 	// called from both the VRS trigger (when the user modifies a specific VRS),
 	// as well as from the JRS processing, so new shifts get their hours assigned.
-	public static void ProcessListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS) {
+    // fReviewAllShifts parameter specifies whether called from the trigger on JRS's, in
+    // which case we should review all shifts under the Jobs, or from the scheduled batch,
+    // in which case we only need to be looking to add additional shifts in the future.
+	public static void ProcessListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS, boolean fReviewAllShifts) {
 		
 		// get a set of the VRS ID's for querying
 		// also the Job ID's they are associated with
@@ -96,10 +99,16 @@ public with sharing class VOL_VRS {
 							
 		// get all shifts of the jobs these vrs's are associated with
 		list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-		listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
-			Volunteer_Job__c from Volunteer_Shift__c
-			where Volunteer_Job__c in :setJobId];
-			
+		if (fReviewAllShifts) {
+			listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
+				Volunteer_Job__c from Volunteer_Shift__c
+				where Volunteer_Job__c in :setJobId];
+		} else {
+            listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
+                Volunteer_Job__c from Volunteer_Shift__c
+                where Volunteer_Job__c in :setJobId and Start_Date_Time__c >= TODAY];
+		}
+		
 		// construct a map of Job to its associated list of VRS's
 		map<ID, list<Volunteer_Recurrence_Schedule__c>> mapJobIdListVRS = new map<ID, list<Volunteer_Recurrence_Schedule__c>>();
 		
@@ -114,9 +123,16 @@ public with sharing class VOL_VRS {
 		// in order to avoid creating hours that already exist (completed or canceled),
 		// create a set of shiftId|contactId tuples, which allows us to quickly see if we
 		// already have an hours record for the given shift and contact.
-		list<Volunteer_Hours__c> listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
-			Volunteer_Shift__c, Status__c, Contact__c from
-			Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId];
+		list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
+		if (fReviewAllShifts) { 
+			listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
+				Volunteer_Shift__c, Status__c, Contact__c from
+				Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId];
+		} else {
+            listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
+                Volunteer_Shift__c, Status__c, Contact__c from
+                Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId and Shift_Start_Date_Time__c >= TODAY];
+		}
 		map<string, Volunteer_Hours__c> mapShiftIdContactIdToHours = new map<string, Volunteer_Hours__c>();
 		for (Volunteer_Hours__c hr : listHoursExisting) {
 			mapShiftIdContactIdToHours.put(hr.Volunteer_Shift__c + '|' + hr.Contact__c, hr);
@@ -124,13 +140,19 @@ public with sharing class VOL_VRS {
 
 		// create hours for these vrs's for each shift 				
 		list<Volunteer_Hours__c> listHoursNew = new list<Volunteer_Hours__c>();
+        list<Volunteer_Hours__c> listHoursUpdate = new list<Volunteer_Hours__c>();
 		for (Volunteer_Shift__c shift : listShift) {
 			list<Volunteer_Recurrence_Schedule__c> listVRSforJob = mapJobIdListVRS.get(shift.Volunteer_Job__c);
-			AssignVRSHours(shift, listVRSforJob, mapShiftIdContactIdToHours, listHoursNew);
+			AssignVRSHours(shift, listVRSforJob, mapShiftIdContactIdToHours, listHoursNew, listHoursUpdate);
 		}
-		if (listHoursNew.size() > 0)
+		if (listHoursNew.size() > 0) {
 			insert listHoursNew;
+		}
 			
+        if (listHoursUpdate.size() > 0) {
+            update listHoursUpdate;
+        }
+
 		// mapShiftIdContactIdToHours now contains only the Hours that did not match the VRS's, 
 		// so we can delete them if they aren't marked Completed or Canceled.
 		list<Volunteer_Hours__c> listHRDelete = new list<Volunteer_Hours__c>();
@@ -139,8 +161,10 @@ public with sharing class VOL_VRS {
 		        listHRDelete.add(hr);
 		    }
 		}
-        if (listHRDelete.size() > 0)
+        if (listHRDelete.size() > 0) {
+            system.debug('****DJH: deleting listHRDelete: ' + listHRDelete);
             delete listHRDelete;
+        }
 	}
 	
     //******************************************************************************************************
@@ -152,11 +176,13 @@ public with sharing class VOL_VRS {
 	// matched, they are removed from this map.  So upon return, this map contains those Hours that no longer
 	// match their VRS (so they can be considered for deletion).
 	// @param listHoursNew The returned set of Hours to create (leaving creation to the caller)
+    // @param listHoursUpdate The returned set of Hours to update (leaving update to the caller)
 	private static void AssignVRSHours(
 		Volunteer_Shift__c shift, 
 		list<Volunteer_Recurrence_Schedule__c> listVRS, 
 		map<string, Volunteer_Hours__c> mapShiftIdContactIdToHours,
-		list<Volunteer_Hours__c> listHoursNew
+		list<Volunteer_Hours__c> listHoursNew,
+        list<Volunteer_Hours__c> listHoursUpdate
 		) {
 			
 		if (listVRS == null) return; 
@@ -187,7 +213,7 @@ public with sharing class VOL_VRS {
 			
 			if (vrs.Weekly_Occurrence__c == null)
 				continue;
-			
+				
 			if ((listWhichWeeks[nweek] || 
 					vrs.Weekly_Occurrence__c.contains('Every') ||
 					(vrs.Weekly_Occurrence__c.contains('Alternate') && alternateWeekVRS(vrs, dtShift))) && 
@@ -195,13 +221,27 @@ public with sharing class VOL_VRS {
 				vrs.Schedule_Start_Date_Time__c != null &&
 				dtShift >= vrs.Schedule_Start_Date_Time__c.Date() &&
 				(vrs.Schedule_End_Date__c == null || vrs.Schedule_End_Date__c >= dtShift)) {
-					
+				    
 				// we need to deal with the person already having hours on this shift
 				// that might be completed, or canceled, or web signup.  
 				// avoid creating another confirmed record.
 				// note that if we match, we remove the key from the map, so we know it was matched.
-				if (mapShiftIdContactIdToHours.containsKey(shift.Id + '|' + vrs.Contact__c)) {
-					mapShiftIdContactIdToHours.remove(shift.Id + '|' + vrs.Contact__c);
+				Volunteer_Hours__c hrExisting = mapShiftIdContactIdToHours.get(shift.Id + '|' + vrs.Contact__c);
+				if (hrExisting != null) {
+					// if shift/hour in the future, we update a subset of fields
+					if (dtShift >= System.today()) {
+                        hrExisting.Hours_Worked__c = vrs.Duration__c;
+                        if (vrs.Number_of_Volunteers__c != null && vrs.Number_of_Volunteers__c >= 1)
+                            hrExisting.Number_of_Volunteers__c = vrs.Number_of_Volunteers__c;
+                        if (vrs.Volunteer_Hours_Status__c != null) 
+                            hrExisting.Status__c = vrs.Volunteer_Hours_Status__c;
+                        hrExisting.Planned_Start_Date_Time__c = datetime.newInstance(shift.Start_Date_Time__c.date(), vrs.Schedule_Start_Date_Time__c.time());
+                        if (vrs.Comments__c != null)
+                            hrExisting.Comments__c = vrs.Comments__c;
+                        listHoursUpdate.add(hrExisting);
+					}
+                    // remove it from the map so we know it was matched
+                    mapShiftIdContactIdToHours.remove(shift.Id + '|' + vrs.Contact__c);                    
 					continue;
 				}
 									
@@ -229,7 +269,7 @@ public with sharing class VOL_VRS {
 				hr.Comments__c = vrs.Comments__c;
 				listHoursNew.add(hr);
 				//cDesiredVols--;
-			}			 		
+			} 			 		
 		}
 		
 		// we let the caller commit the new hours to the db.		
