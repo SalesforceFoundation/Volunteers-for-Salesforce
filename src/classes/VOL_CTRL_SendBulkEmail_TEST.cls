@@ -92,10 +92,6 @@ public with sharing class VOL_CTRL_SendBulkEmail_TEST {
 		ctrl.fLogActivity = false; // upgraders might not have Activities on for Jobs and Shifts
 		PageReference p2 = ctrl.SendMail();
 		system.assertEquals(null, p2);
-		
-		// misc 
-		system.assert(ctrl.OpenEmailTemplateFolder() != null);
-		system.assert(ctrl.EditEmailTemplate() != null);
 
 		// test no template
 		ctrl.templateId = null;

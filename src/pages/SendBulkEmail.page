@@ -131,12 +131,16 @@
                         </div>
                         <ul class="slds-list--horizontal slds-has-inline-block-links--space">
                             <li class="slds-item">
-                                <apex:commandLink action="{!OpenEmailTemplateFolder}" immediate="true" target="_blank" value="{!$Label.labelMassEmailViewTemplates}" />
+                                <a href="/{!folderId}" target="_blank" name="">
+                                    {!$Label.labelMassEmailViewTemplates}
+                                </a>
                             </li>
                             <li class="slds-item">
                                 <apex:outputPanel id="panelEditTemplate">
                                     &nbsp;&nbsp;
-                                    <apex:commandLink action="{!EditEmailTemplate}" immediate="true" target="_blank" value="{!$Label.labelMassEmailEditTemplate}" rendered="{!templateId != null}" />
+                                    <a href="/{!templateId}" target="_blank">
+                                        <apex:outputText value="{!$Label.labelMassEmailEditTemplate}" rendered="{!templateId != null}" />
+                                    </a>
                                 </apex:outputPanel>
                             </li>
                         </ul>
