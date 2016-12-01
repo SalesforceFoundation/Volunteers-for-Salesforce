@@ -199,7 +199,6 @@
         }
 
         function startPolling(pollingDelay) {
-            refreshJobsList();
             refreshInterval = window.setInterval(refreshJobsList, pollingDelay);
         }
 
