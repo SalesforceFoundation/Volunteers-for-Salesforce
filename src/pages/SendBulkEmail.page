@@ -72,7 +72,7 @@
                     <apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" for="idStatus" styleClass="slds-form-element__label" />
                     <div class="slds-form-element__control">
                         <apex:inputField id="idStatus" styleClass="slds-select slds-input" value="{!hourStatus.Status__c}">
-                            <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts" action="{!StatusChanged}" status="loading"/>
+                            <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts,idNumContactsRead" action="{!StatusChanged}" status="loading"/>
                         </apex:inputField>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                     <div class="slds-form-element__control">
                         <label class="slds-checkbox">
                             <apex:inputCheckbox id="idUniqueContacts" value="{!fEmailContactsOnlyOnce}" html-aria-describedby="{!$Component.vfForm.uniqueContactsHelpText}">
-                                <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts" action="{!StatusChanged}" status="loading"/>
+                                <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts,idNumContactsRead" action="{!StatusChanged}" status="loading"/>
                             </apex:inputCheckbox>
                             <span class="slds-checkbox--faux"></span>
                             <apex:outputLabel for="idUniqueContacts" styleClass="slds-form-element__label" value="{!$Label.labelMassEmailVolunteersUniqueContacts}"/>
