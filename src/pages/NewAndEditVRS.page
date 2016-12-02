@@ -69,8 +69,8 @@
                     </div>
                 <div class="slds-col slds-no-flex slds-align-middle">
                         <div class="slds-button-group" role="group">
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!$Label.labelButtonCancel}" immediate="true"/>
-                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!Save}" value="{!$Label.labelButtonSave}"/>
+                            <apex:commandButton id="cancelBTN" styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!$Label.labelButtonCancel}" immediate="true"/>
+                            <apex:commandButton id="saveBTN" styleClass="slds-button slds-button--brand" action="{!Save}" value="{!$Label.labelButtonSave}"/>
                         </div>
                     </div>
                 </div>
