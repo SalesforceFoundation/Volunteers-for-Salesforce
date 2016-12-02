@@ -114,7 +114,7 @@
                                                         'textarea', 'slds-textarea',
                                                         IF(f == 'Name', '', 'slds-input'))}" >
                                         <apex:actionSupport immediate="false" event="onchange"
-                                            rerender="jrs" status="loading" rendered="{!IF(f == 'Volunteer_Job__c', 'true', 'false')}"
+                                            rerender="jrs" status="loading" rendered="{!IF(f == VJFieldName, 'true', 'false')}"
                                             action="{!refreshListSOJRS}" />
                                     </apex:inputField>
                                 </apex:actionRegion>
