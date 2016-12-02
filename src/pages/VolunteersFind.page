@@ -206,7 +206,7 @@
                             </div>
                         </div>
                         <div class="slds-form-element slds-p-top--small">
-                            <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" styleClass="slds-form-element__label" /> }
+                            <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
                                 <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs" styleClass="slds-select">
                                     <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts" status="statusLoad" action="{!ChangeVolunteerJob}" />
