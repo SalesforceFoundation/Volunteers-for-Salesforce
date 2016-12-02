@@ -153,7 +153,7 @@
                     </div>
                     <apex:outputPanel styleClass="slds-grid">
                         <div class="slds-col slds-col--padded slds-p-around--large slds-no-flex slds-align-middle">
-                            <button onclick="findJS();openSection('chooseVolunteersSection');openSection('assignVolunteersSection');return false;" class="slds-button slds-button--brand">{!$Label.labelButtonFind}</button>
+                            <button id="findbtn" onclick="findJS();openSection('chooseVolunteersSection');openSection('assignVolunteersSection');return false;" class="slds-button slds-button--brand">{!$Label.labelButtonFind}</button>
                         </div>
                     </apex:outputPanel>
                 </form>
@@ -240,7 +240,7 @@
                 </div>
                 <div class="slds-grid">
                     <div class="slds-col slds-col--padded slds-p-around--large slds-no-flex slds-align-middle">
-                        <button onclick="assignJS();return false;" class="slds-button slds-button--brand">{!$Label.labelButtonAssign}</button>
+                        <button id="assignbtn" onclick="assignJS();return false;" class="slds-button slds-button--brand">{!$Label.labelButtonAssign}</button>
                     </div>
                 </div>
             </div>
