@@ -34,25 +34,13 @@
     <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
     <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.8.7.custom.min.js')}"/>
 
-<style> 
-.header {
-    cursor: pointer;
-}
-</style>
+    <style> 
+        .header {
+            cursor: pointer;
+        }
+    </style>
     <script type="text/javascript">
     (function($) {
-        function isLightningExperienceOrSalesforce1() {
-            return((typeof sforce != 'undefined') && sforce && (!!sforce.one));
-        }
-
-        function urlHome() {
-            if (isLightningExperienceOrSalesforce1()) {
-                sforce.one.navigateToURL('one.app#/sObject/contact/home');
-            } else {
-                window.location.assign('/keyPrefix/o');
-            }
-        }
-
         //impossible to SLDS style visualforce multiselect picklists, instead we'll use a standard select
         function fixMultiPicklists() {
             $('.multiSelectPicklistTable').hide();
@@ -103,13 +91,11 @@
             });
         });
         window.openSection = openSection;
-        window.init = init;
     })(jQuery);
 </script>
 <apex:variable var="pathChevronRight" value="M8.3 2l9.5 9.5c.3.3.3.7 0 1L8.3 22c-.3.2-.8.2-1.1 0l-1-1c-.2-.3-.2-.8 0-1.1l7.6-7.4c.2-.3.2-.7 0-1L6.3 4.1C6 3.8 6 3.3 6.3 3l1-1c.3-.2.7-.2 1 0z"/>
 <apex:variable var="pathChevronDown" value="M22 8.2l-9.5 9.6c-.3.2-.7.2-1 0L2 8.2c-.2-.3-.2-.7 0-1l1-1c.3-.3.8-.3 1.1 0l7.4 7.5c.3.3.7.3 1 0l7.4-7.5c.3-.2.8-.2 1.1 0l1 1c.2.3.2.7 0 1z"/>
-
-    <apex:form> 
+    <apex:form>
         <div class="sfdo213">
             <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
                 <div class="slds-spinner--brand slds-spinner slds-spinner--medium" style="position:fixed;top:30%;" aria-hidden="false" role="alert">
@@ -144,23 +130,27 @@
                 </div>
             </div>
             <div>
-                <apex:outputText value="{!$Label.labelFindVolunteersHelpCriteria}" style="font-style:italic" />             
-                <form class="slds-form slds-form--inline">
-                    <apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="field">
-                        <div class="slds-form-element slds-p-top--small">
-                            <apex:outputLabel value="{!field.Label}" for="idtest" styleClass="slds-form-element__label" />
-                            <div class="slds-form-element__control">
-                                <apex:inputField value="{!conFilter[field]}" 
-                                    styleClass="{!CASE(field.Type, 
-                                            'reference', 'lookupInput203 ' + field.FieldPath, 
-                                            'picklist', 'slds-select',
-                                            'multipicklist', 'slds-select multipicklistSLDSFixup', 
-                                            'boolean', 'slds-checkbox',
-                                            'textarea', 'slds-textarea',
-                                            'slds-input')}" />
+                <apex:outputPanel layout="block" style="font-style:italic;" styleClass="slds-m-around--small">{!$Label.labelFindVolunteersHelpCriteria}</apex:outputPanel> 
+                <form class="slds-form--stacked">
+                    <div class="slds-grid">
+                        <apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="field">
+                            <div class="slds-size--1-of-{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS.size}">
+                                <div class="slds-form-element slds-p-around--x-small">
+                                    <apex:outputLabel value="{!field.Label}" for="idInputField" styleClass="slds-form-element__label" />
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField value="{!conFilter[field]}" id="idInputField"
+                                            styleClass="{!CASE(field.Type, 
+                                                    'reference', 'lookupInput203 ' + field.FieldPath, 
+                                                    'picklist', 'slds-select',
+                                                    'multipicklist', 'slds-select multipicklistSLDSFixup', 
+                                                    'boolean', 'slds-checkbox',
+                                                    'textarea', 'slds-textarea',
+                                                    'slds-input')}" />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </apex:repeat>
+                        </apex:repeat>
+                    </div>
                     <apex:outputPanel styleClass="slds-grid">
                         <div class="slds-col slds-col--padded slds-p-around--large slds-no-flex slds-align-middle">
                             <button onclick="findJS();openSection('chooseVolunteersSection');openSection('assignVolunteersSection');return false;" class="slds-button slds-button--brand">{!$Label.labelButtonFind}</button>
@@ -184,7 +174,7 @@
             </div>
             <div>
                 <apex:outputPanel layout="block" rendered="{!NOT(hasFilterCriteria)}" style="font-style:italic;" styleClass="slds-m-around--small">{!$Label.labelFindVolunteersHelpFindResults}</apex:outputPanel> 
-                <c:SoqlListView id="soqlListView" pcPageController="{!this}"/>
+                <c:SoqlListView id="SoqlListView" pcPageController="{!this}"/>
             </div>
             <!-- END choose Volunteers section, begin assign section -->
             <div id="assignVolunteersSection" class="sectionheader slds-media slds-theme--shade slds-p-around--small slds-m-top--small">
@@ -209,16 +199,16 @@
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Campaign.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:selectList value="{!campaignId}" size="1" >
+                                <apex:selectList value="{!campaignId}" size="1" styleClass="slds-select">
                                     <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts" status="statusLoad" action="{!ChangeCampaign}" />
                                     <apex:selectOptions value="{!listSOCampaigns}" /> 
                                 </apex:selectList>
                             </div>
                         </div>
                         <div class="slds-form-element slds-p-top--small">
-                            <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" styleClass="slds-form-element__label" />
+                            <apex:outputLabel value="{!$ObjectType.Volunteer_Job__c.Label}" styleClass="slds-form-element__label" /> }
                             <div class="slds-form-element__control">
-                                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs" >
+                                <apex:selectList value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs" styleClass="slds-select">
                                     <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts" status="statusLoad" action="{!ChangeVolunteerJob}" />
                                     <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
                                 </apex:selectList>
@@ -227,7 +217,7 @@
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Volunteer_Shift__c.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:selectList value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts">
+                                <apex:selectList value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts" styleClass="slds-select">
                                     <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
                                 </apex:selectList>
                             </div>
@@ -237,7 +227,7 @@
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Volunteer_Hours__c.Fields.Status__c.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:inputField styleClass="slds-input" value="{!vhAssign.Status__c}"/>
+                                <apex:inputField styleClass="slds-select" value="{!vhAssign.Status__c}"/>
                             </div>
                         </div>
                         <div class="slds-form-element slds-p-top--small">
