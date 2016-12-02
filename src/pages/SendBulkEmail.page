@@ -91,8 +91,8 @@
                 <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
                     <apex:outputLabel value="{!$Label.labelNumberOfContacts}" for="idNumContactsRead" styleClass="slds-form-element__label" />
                     <div class="slds-form-element__control">
-                        <apex:outputText  id="idNumContacts" value="{!numberOfContacts}" style="font-weight:bold;"/>
-                        <apex:inputText  id="idNumContactsRead" value="{!numberOfContacts}" html-readonly="true" styleClass="slds-assistive-text" html-aria-describedby="{!$Component.vfForm.numContactsHelpText}"/>
+                        <apex:outputText id="idNumContacts" value="{!numberOfContacts}" style="font-weight:bold;"/>
+                        <apex:inputText id="idNumContactsRead" value="{!numberOfContacts}" html-readonly="true" styleClass="slds-assistive-text" html-aria-describedby="{!$Component.vfForm.numContactsHelpText}"/>
                     </div>
                     <apex:outputText styleClass="slds-form-element__help" id="numContactsHelpText" value="{!$Label.labelNumberOfContactsHelpText}" />
                 </div>
@@ -138,9 +138,11 @@
                             <li class="slds-item">
                                 <apex:outputPanel id="panelEditTemplate">
                                     &nbsp;&nbsp;
-                                    <a href="/{!templateId}" target="_blank">
-                                        <apex:outputText value="{!$Label.labelMassEmailEditTemplate}" rendered="{!templateId != null}" />
-                                    </a>
+                                    <apex:outputText rendered="{!templateId!=null}">
+                                        <a href="{!IF(templateId!=null, '/'+templateId, '')}" target="_blank">
+                                            {!$Label.labelMassEmailEditTemplate}
+                                        </a>
+                                    </apex:outputText>
                                 </apex:outputPanel>
                             </li>
                         </ul>
