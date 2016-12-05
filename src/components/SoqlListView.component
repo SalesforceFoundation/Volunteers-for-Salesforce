@@ -47,6 +47,10 @@
 			background: lightyellow;
 			width: 400px;
 			height: 40px;		
+		}
+		
+		.sfdo213 td {
+		    padding-left: 5px;
 		}   
     </style>
     
