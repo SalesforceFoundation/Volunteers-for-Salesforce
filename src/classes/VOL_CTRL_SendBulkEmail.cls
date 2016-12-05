@@ -114,26 +114,6 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 		}
 		return null;
 	}
-	
-	// action method to view the templates folder
-	public PageReference OpenEmailTemplateFolder() {
-		if (folderId != null) {
-			PageReference p = new PageReference('/' + folderId);
-	        p.setRedirect(true);
-	        return p;
-		}
-		return null;
-	}
-
-	// action method to view the templates folder
-	public PageReference EditEmailTemplate() {
-		if (templateId != null) {
-			PageReference p = new PageReference('/' + templateId);
-	        p.setRedirect(true);
-	        return p;
-		}
-		return null;
-	}
 
     // action method called when status picklist has changed.  requery for number of contacts to email.
     public PageReference StatusChanged() {

@@ -65,7 +65,11 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
 	        return listSOJRS;
     	}
     	set;
-    }	
+    }
+
+    public String getVJFieldName() {
+        return VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c');
+    }
     
     // action method called by the page when the Job has changed.
     // this allows us to refresh the lsit of JRS's for the new job.
