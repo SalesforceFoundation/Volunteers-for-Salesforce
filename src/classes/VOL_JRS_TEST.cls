@@ -153,4 +153,99 @@ public with sharing class VOL_JRS_TEST {
 		
     }   
 
+    //******************************************************************************************************
+    // test that modifying a JRS reuses already existing Shifts    
+    public static testmethod void testJRSShiftReuse() {
+
+		// create test data
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+        	name='Job Calendar Test Campaign', IsActive=true);
+        insert cmp;
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        insert job;
+        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
+		jrs.Days_of_Week__c = 'Monday';
+		jrs.Duration__c = 1;
+		jrs.Schedule_Start_Date_Time__c = system.now();
+		jrs.Weekly_Occurrence__c = 'Every';
+		jrs.Desired_Number_of_Volunteers__c = 5;
+        jrs.Description__c = 'initial description';
+		insert jrs;      
+        
+        list<Volunteer_Shift__c> listShift = [select Id from Volunteer_Shift__c];
+        set<ID> setShiftId = new set<ID>();
+        for (Volunteer_Shift__c shift : listShift)
+            setShiftId.add(shift.Id);
+        integer cShifts = setShiftId.size();
+        system.assert(cShifts > 0);
+        
+        // now modify the JRS
+        jrs.Days_of_Week__c = 'Monday;Tuesday';
+        jrs.Description__c = 'new description';
+        Test.startTest();
+        update jrs;
+        Test.stopTest();
+        
+        listShift = [select Id, CreatedDate, LastModifiedDate, Description__c from Volunteer_Shift__c];
+        integer cShiftsInitial = 0;
+        integer cShiftsNew = 0;
+        for (Volunteer_Shift__c shift : listShift) {
+            if (setShiftId.contains(shift.Id)) {
+                cShiftsInitial++;
+            } else {
+                cShiftsNew++;
+            }
+            system.assertEquals('new description', shift.Description__c);
+        }
+        system.assertEquals(cShifts, cShiftsInitial);
+        system.assert(cShifts == cShiftsNew || cShifts == cShiftsNew-1 || cShifts == cShiftsNew+1); 
+    }
+        
+    //******************************************************************************************************
+    // test that modifying a JRS deletes already existing Shifts that no longer match the JRS
+    public static testmethod void testJRSShiftDelete() {
+
+		// create test data
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+        	name='Job Calendar Test Campaign', IsActive=true);
+        insert cmp;
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        insert job;
+        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
+		jrs.Days_of_Week__c = 'Monday';
+		jrs.Duration__c = 1;
+		jrs.Schedule_Start_Date_Time__c = system.now();
+		jrs.Weekly_Occurrence__c = 'Every';
+		jrs.Desired_Number_of_Volunteers__c = 5;
+        jrs.Description__c = 'initial description';
+		insert jrs;
+        
+        list<Volunteer_Shift__c> listShift = [select Id from Volunteer_Shift__c];
+        set<ID> setShiftId = new set<ID>();
+        for (Volunteer_Shift__c shift : listShift)
+            setShiftId.add(shift.Id);
+        integer cShifts = setShiftId.size();
+        system.assert(cShifts > 0);
+        
+        // now modify the JRS
+        jrs.Days_of_Week__c = 'Tuesday';
+        jrs.Description__c = 'new description';
+        Test.startTest();
+        update jrs;
+        Test.stopTest();
+        
+        listShift = [select Id, CreatedDate, LastModifiedDate, Description__c from Volunteer_Shift__c];
+        integer cShiftsInitial = 0;
+        integer cShiftsNew = 0;
+        for (Volunteer_Shift__c shift : listShift) {
+            if (setShiftId.contains(shift.Id)) {
+                cShiftsInitial++;
+            } else {
+                cShiftsNew++;
+            }
+            system.assertEquals('new description', shift.Description__c);
+        }
+        system.assertEquals(0, cShiftsInitial);
+        system.assert(cShifts == cShiftsNew || cShifts == cShiftsNew-1 || cShifts == cShiftsNew+1); 
+    }
 }
