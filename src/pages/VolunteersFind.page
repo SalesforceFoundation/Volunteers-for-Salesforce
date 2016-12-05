@@ -44,6 +44,7 @@
         //impossible to SLDS style visualforce multiselect picklists, instead we'll use a standard select
         function fixMultiPicklists() {
             $('.multiSelectPicklistTable').hide();
+            $('.multipicklistSLDSFixup').attr("size", 4);
             $('.multipicklistSLDSFixup').show();
         }
 
