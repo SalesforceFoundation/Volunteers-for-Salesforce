@@ -80,7 +80,9 @@ public with sharing class VOL_StateCountryPicklists {
 
 			// try to deal gracefully with State            
         	string strState = (string)sobjSrc.get(strFieldPrefixSrc + 'State');        	
-            if (strState != null) {             
+            if (strState != null) {
+                // best to make sure first letter is capitalized.
+                strState = strState.capitalize();
                 if (validStatesByLabel.containsKey(strState)) {
                     sobjDst.put(strFieldPrefixDst + 'State', strState);
                     sobjDst.put(strFieldPrefixDst + 'StateCode', validStatesByLabel.get(strState));

@@ -825,6 +825,8 @@ global with sharing class VOL_SharedCode {
         str = Label.labelMassEmailHelp6;
         str = Label.labelMassEmailHelp7;
         str = Label.labelShowHelp;
+        str = Label.labelFindVolunteersCriteria;
+        str = Label.labelFindVolunteersHelpAssign;
     }
 
      

@@ -114,5 +114,28 @@ public with sharing class VOL_StateCountryPicklists_TEST {
 		}
 	}
 
-
+    /*******************************************************************************************************
+    * @description test method to verify the handling of "State and Country Picklist" feature when enabled 
+    * in Salesforce, when creating a new in memory contact for our Sites pages.  makes sure any state/country
+    * code default values get copied to state & country fields
+    * @return void
+    */ 
+    static testmethod void testStateCountryPicklistCodeCopy() {
+        if (VOL_StateCountryPicklists.isStateCountryPicklistsEnabled) {
+            
+            Contact con = new Contact();
+        
+            // fake country code has default value
+            con.put('MailingCountryCode', 'US');        
+            con.put('OtherCountryCode', 'US');
+            
+            Test.startTest();        
+            VOL_StateCountryPicklists.copyAddressStdSObj(con, 'Mailing', con, 'Mailing');
+            VOL_StateCountryPicklists.copyAddressStdSObj(con, 'Other', con, 'Other');
+            Test.stopTest();
+            
+            system.assertEquals('United States', con.MailingCountry);
+            system.assertEquals('United States', con.OtherCountry);
+        }
+    }
 }
