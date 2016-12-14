@@ -57,7 +57,15 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
             
     global Contact contact { 
         get {
-            if (contact == null) contact = new Contact();
+            if (contact == null) {
+                contact = new Contact();
+                // if state & country picklists enabled, we want to copy in any defaults from state/country Code to 
+                // the state & country fields, since the picklists cannot be included in the field set.
+                if (VOL_StateCountryPicklists.isStateCountryPicklistsEnabled) {
+                    VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', contact, 'Mailing');
+                    VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', contact, 'Other');
+                }
+            }
             return contact;
         }       
         set; 
