@@ -323,7 +323,7 @@ public with sharing class VOL_VRS_TEST {
         system.assertEquals(4, listHours.size());
         
         for (Volunteer_Hours__c hr : listHours) {
-            if (hr.Planned_Start_Date_Time__c >= system.Today()) {
+            if (hr.Planned_Start_Date_Time__c.date() >= system.Today()) {
                 system.assertEquals(vrs.Volunteer_Hours_Status__c, hr.Status__c);
                 system.assertEquals(vrs.Duration__c, hr.Hours_Worked__c);
                 system.assertEquals(vrs.Number_of_Volunteers__c, hr.Number_of_Volunteers__c);
@@ -335,7 +335,7 @@ public with sharing class VOL_VRS_TEST {
                 system.assertEquals(vrsOriginal.Number_of_Volunteers__c, hr.Number_of_Volunteers__c);
                 system.assertEquals(vrsOriginal.Comments__c, hr.Comments__c);
                 system.assertEquals(vrsOriginal.Schedule_Start_Date_Time__c.Time(), hr.Planned_Start_Date_Time__c.Time());
-            }
+            } 
         }
         
     }
