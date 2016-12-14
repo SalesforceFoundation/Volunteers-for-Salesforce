@@ -28,94 +28,67 @@
     POSSIBILITY OF SUCH DAMAGE.
 -->
  
-<apex:page controller="VOL_CTRL_VolunteersCampaignWizard" title="{!$Label.labelVolunteersWizardTitle}" >
+<apex:page controller="VOL_CTRL_VolunteersCampaignWizard" title="{!$Label.labelVolunteersWizardTitle}"  standardStylesheets="false" docType="html-5.0">
+    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
+    <apex:form>
+        <div class="sfdo213">
+            <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
+                <div class="slds-spinner--brand slds-spinner slds-spinner--medium" style="position:fixed;top:30%;" aria-hidden="false" role="alert">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            <apex:actionStatus id="statusLoad"
+                onstart="document.getElementById('divLoading').style.display = 'block';"
+                onstop="document.getElementById('divLoading').style.display = 'none';" />
 
-    <apex:sectionHeader title="{!$Label.labelVolunteersWizardTitle}" />      
-        <p><em>{!$Label.labelVolunteersWizardHelp}</em></p>          
-    <apex:form > 
-        
-        <apex:pageBlock title="{!$Label.labelVolunteersWizardNewCampaignTitle}" mode="edit">
-            <apex:pageMessages />
-            <apex:pageBlockButtons >
-                <apex:commandButton value="{!$Label.labelButtonSave}" action="{!Save}" />
-                <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" action="{!URLFOR($Action.Volunteer_Job__c.Tab,$ObjectType.Volunteer_Job__c)}" />
-            </apex:pageBlockButtons>
+            <div class="slds-page-header" role="banner">
+              <h1 class="slds-text-heading--large">{!$Label.labelVolunteersWizardTitle}</h1>
+              <p class="slds-text-body--small" style="font-style:italic;">{!$Label.labelVolunteersWizardHelp}</p>
+            </div>
+            <apex:outputPanel id="panelErrors">
+                <c:UTIL_PageMessages html-class="slds-grid slds-grid--align-center slds-m-bottom--small"/>
+            </apex:outputPanel>
 
-            <apex:pageBlockSection title="{!$Label.labelVolunteersWizardCampaignInformation}" columns="1" >            
-				<!--  now add fields the user can specify -->
-				<apex:repeat value="{!$ObjectType.Campaign.FieldSets.VolunteersWizardFS}" var="f" >
-					<apex:inputField value="{!cmpVols[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}" /> 
-	  			</apex:repeat>        
-            </apex:pageBlockSection>
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid slds-col-rule--bottom">
+                    <div class="slds-col slds-text-heading--medium">
+                        {!$Label.labelVolunteersWizardNewCampaignTitle}
+                    </div>
+                    <div class="slds-col slds-no-flex slds-align-middle">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button--brand" value="{!$Label.labelButtonSave}" action="{!Save}" />
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="{!$Label.labelButtonCancel}" immediate="true" action="{!URLFOR($Action.Volunteer_Job__c.Tab,$ObjectType.Volunteer_Job__c)}" />
+                        </div>
+                    </div>
+                </div>
 
-            <apex:pageBlockSection title="{!$Label.labelVolunteersWizardJobsAndShifts}" columns="1">
-                <apex:pageBlockSectionItem >
-                    <apex:outputText style="font-style:italic" value="{!$Label.labelVolunteersWizardJobAndShiftHelp}" />
-                </apex:pageBlockSectionItem>
-            </apex:pageBlockSection>
-
-            <apex:pageBlockSection columns="2" id="panelJobsAndShifts" >
-                <apex:pageBlockSectionItem >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardClone}" />
-	            	<apex:pageBlockSectionItem > 
-	                    <apex:selectList value="{!campaignIdClone}" size="1" >
-	                        <apex:selectOptions value="{!listSOVolunteersCampaigns}" /> 
-	               	        <apex:actionSupport immediate="false" event="onchange" rerender="panelJobsAndShifts" 
-	               	        	status="retrieveStatus" action="{!ChangeCampaign}" />                        
-	                    </apex:selectList>  
-			            <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />
-	   				</apex:pageBlockSectionItem>
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockSectionItem >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardSampleJobs}" rendered="{!campaignIdClone == null}"/>
-                    <apex:selectList value="{!cSampleJobs}" size="1" rendered="{!campaignIdClone == null}">
-                        <apex:selectOption itemValue="0" itemLabel="" /> 
-                        <apex:selectOption itemValue="1" /> 
-                        <apex:selectOption itemValue="2" /> 
-                        <apex:selectOption itemValue="3" /> 
-                        <apex:selectOption itemValue="4" /> 
-                        <apex:selectOption itemValue="5" /> 
-                    </apex:selectList>  
-                </apex:pageBlockSectionItem>
-                                
-                <apex:pageBlockSectionItem >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardFirstShiftDate}"  rendered="{!campaignIdClone != null}"/>
-	                <apex:outputField value="{!cmpShiftDates.StartDate}" rendered="{!campaignIdClone != null}" />
-                </apex:pageBlockSectionItem>
-
-                <apex:pageBlockSectionItem >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardSampleShifts}" rendered="{!campaignIdClone == null}"/>
-                    <apex:selectList value="{!cSampleShifts}" size="1" rendered="{!campaignIdClone == null}">
-                        <apex:selectOption itemValue="0" itemLabel="" /> 
-                        <apex:selectOption itemValue="1" /> 
-                        <apex:selectOption itemValue="2" /> 
-                        <apex:selectOption itemValue="3" /> 
-                        <apex:selectOption itemValue="4" /> 
-                        <apex:selectOption itemValue="5" /> 
-                    </apex:selectList>  
-                </apex:pageBlockSectionItem>
-                
-                <apex:pageBlockSectionItem rendered="{!campaignIdClone != null}" >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardNewShiftDate}"  />
-                    <apex:inputField value="{!cmpShiftDates.EndDate}" />                	
-                </apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
-				
-                <apex:pageBlockSectionItem rendered="{!campaignIdClone != null}" >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardCopyVolunteers}"  />
-                    <apex:inputCheckbox value="{!fCopyVolunteers}" />                	
-				</apex:pageBlockSectionItem>
-
-				<apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
-
-                <apex:pageBlockSectionItem rendered="{!campaignIdClone != null}" >
-                    <apex:outputText value="{!$Label.labelVolunteersWizardOverrideHoursStatus}" />
-                    <apex:inputField value="{!hoursStatus.Status__c}" />                	
-				</apex:pageBlockSectionItem>
-
-            </apex:pageBlockSection>
-        </apex:pageBlock>
-    </apex:form>    
+                <div class="slds-card__body">
+                    <div class="slds-p-left--medium slds-p-bottom--medium">
+                        <div class="slds-text-title--caps">{!$Label.labelVolunteersWizardCampaignInformation}</div>
+                    </div>
+                    <div class="slds-p-left--medium slds-p-right--medium slds-theme--default">
+                        <form class="slds-form--horizontal">
+                            <apex:repeat value="{!$ObjectType.Campaign.FieldSets.VolunteersWizardFS}" var="f">
+                                <div class="slds-form-element">
+                                    <apex:outputLabel value="{!f.Label}" for="idInputField" styleClass="slds-form-element__label" />
+                                    <div class="slds-form-element__control">
+                                        <apex:inputField value="{!cmpVols[f]}" id="idInputField" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}"
+                                            styleClass="{!CASE(f.Type, 
+                                                    'reference', 'lookupInput', 
+                                                    'picklist', 'slds-select',
+                                                    'multipicklist', 'slds-select multipicklistSLDSFixup', 
+                                                    'boolean', 'slds-checkbox',
+                                                    'textarea', 'slds-textarea',
+                                                    'slds-input')}" />
+                                    </div>
+                                </div>
+                            </apex:repeat>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </apex:form>
 </apex:page>
