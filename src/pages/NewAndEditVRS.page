@@ -52,7 +52,7 @@
         }
     </script>
 
-    <apex:form id="vfForm">
+    <apex:form id="vfForm" html-novalidate="novalidate">
         <div class="sfdo213">
             <!-- PAGE SPINNER -->
             <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
