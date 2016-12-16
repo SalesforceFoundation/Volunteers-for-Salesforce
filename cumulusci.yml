@@ -1,0 +1,7 @@
+project:
+    name: Volunteers-for-Salesforce
+    package:
+        name: Volunteers for Salesforce
+        namespace: GW_Volunteers
+    git:
+        prefix_release: rel/
