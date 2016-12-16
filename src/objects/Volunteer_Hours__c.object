@@ -645,6 +645,16 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>Do_Not_AutoComplete__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used by the Volunteers Auto Completer to indicate that this record should never be completed by the scheduled job. It can be useful to set this flag on historical data.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Should this record be excluded from being automatically marked as complete after the shift has passed?</inlineHelpText>
+        <label>Do Not AutoComplete</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Volunteer Hours</label>
     <nameField>
         <displayFormat>{00000}</displayFormat>

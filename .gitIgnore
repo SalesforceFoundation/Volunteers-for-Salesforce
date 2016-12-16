@@ -8,3 +8,6 @@ src/profiles/Customer Community User.profile
 src/profiles/Partner Community Login User.profile
 src/profiles/Partner Community User.profile
 src/workflows/User.workflow
+config/*
+config/
+*.sublime-*

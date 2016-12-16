@@ -55,6 +55,8 @@
         <members>VOL_TEST_VolunteerHours_Trigger</members>
         <members>VOL_VRS</members>
         <members>VOL_VRS_TEST</members>
+        <members>VOL_AutoCompleter</members>
+        <members>VOL_TEST_AutoCompleter</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -150,6 +152,7 @@
         <members>Volunteer_Hours__c.Volunteer_Job__c</members>
         <members>Volunteer_Hours__c.Volunteer_Recurrence_Schedule__c</members>
         <members>Volunteer_Hours__c.Volunteer_Shift__c</members>
+        <members>Volunteer_Hours__c.Do_Not_AutoComplete__c</members>
         <members>Volunteer_Job__c.Campaign__c</members>
         <members>Volunteer_Job__c.Description__c</members>
         <members>Volunteer_Job__c.Display_on_Website__c</members>
