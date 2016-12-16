@@ -1,5 +1,14 @@
 project:
-    name: Volunteers for Salesforce
+    name: Volunteers-for-Salesforce
     package:
         name: Volunteers for Salesforce
         namespace: GW_Volunteers
+    git:
+        prefix_release: rel/
+
+flows:
+    ci_feature:
+        description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
+        tasks:
+            5:
+              task: None
