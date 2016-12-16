@@ -1,10 +1,10 @@
-<!-- 
+<!--
     Copyright (c) 2010, 2016, David Habib, DJH Consulting, djhconsulting.com
     All rights reserved.
-    
+
     Redistribution and use in source and binary forms, with or without
     modification, are permitted provided that the following conditions are met:
-    
+
     1. Redistributions of source code must retain the above copyright
        notice, this list of conditions and the following disclaimer.
     2. Redistributions in binary form must reproduce the above copyright
@@ -15,23 +15,23 @@
        from this software without specific prior written permission.
 
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
-    FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
-    COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
-    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; 
-    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
-    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
-    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+    FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+    COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 -->
- 
+
 <apex:page controller="VOL_CTRL_VolunteersCampaignWizard" title="{!$Label.labelVolunteersWizardTitle}"  standardStylesheets="false" docType="html-5.0">
-    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
-    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
-    <apex:form>
+    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}"/>
+    <apex:form >
         <div class="sfdo213">
             <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
                 <div class="slds-spinner--brand slds-spinner slds-spinner--medium" style="position:fixed;top:30%;" aria-hidden="false" role="alert">
@@ -41,7 +41,7 @@
             </div>
             <apex:actionStatus id="statusLoad"
                 onstart="document.getElementById('divLoading').style.display = 'block';"
-                onstop="document.getElementById('divLoading').style.display = 'none';" />
+                onstop="document.getElementById('divLoading').style.display = 'none';"/>
 
             <div class="slds-page-header" role="banner">
               <h1 class="slds-text-heading--large">{!$Label.labelVolunteersWizardTitle}</h1>
@@ -52,18 +52,17 @@
             </apex:outputPanel>
 
             <article class="slds-card">
-                <div class="slds-card__header slds-grid slds-col-rule--bottom">
+                <div class="slds-card__header slds-grid">
                     <div class="slds-col slds-text-heading--medium">
                         {!$Label.labelVolunteersWizardNewCampaignTitle}
                     </div>
-                    <div class="slds-col slds-no-flex slds-align-middle">
+                    <div class="slds-col slds-align-middle">
                         <div class="slds-button-group" role="group">
-                            <apex:commandButton styleClass="slds-button slds-button--brand" value="{!$Label.labelButtonSave}" action="{!Save}" />
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="{!$Label.labelButtonCancel}" immediate="true" action="{!URLFOR($Action.Volunteer_Job__c.Tab,$ObjectType.Volunteer_Job__c)}" />
+                            <apex:commandButton styleClass="slds-button slds-button--brand" value="{!$Label.labelButtonSave}" action="{!Save}"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="{!$Label.labelButtonCancel}" immediate="true" action="{!URLFOR($Action.Volunteer_Job__c.Tab,$ObjectType.Volunteer_Job__c)}"/>
                         </div>
                     </div>
                 </div>
-
                 <div class="slds-card__body">
                     <div class="slds-p-left--medium slds-p-bottom--medium">
                         <div class="slds-text-title--caps">{!$Label.labelVolunteersWizardCampaignInformation}</div>
@@ -72,20 +71,85 @@
                         <form class="slds-form--horizontal">
                             <apex:repeat value="{!$ObjectType.Campaign.FieldSets.VolunteersWizardFS}" var="f">
                                 <div class="slds-form-element">
-                                    <apex:outputLabel value="{!f.Label}" for="idInputField" styleClass="slds-form-element__label" />
+                                    <apex:outputLabel value="{!f.Label}" for="idInputField" styleClass="slds-form-element__label"/>
                                     <div class="slds-form-element__control">
                                         <apex:inputField value="{!cmpVols[f]}" id="idInputField" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}"
-                                            styleClass="{!CASE(f.Type, 
-                                                    'reference', 'lookupInput', 
+                                            styleClass="{!CASE(f.Type,
+                                                    'reference', 'lookupInput',
                                                     'picklist', 'slds-select',
-                                                    'multipicklist', 'slds-select multipicklistSLDSFixup', 
+                                                    'multipicklist', 'slds-select multipicklistSLDSFixup',
                                                     'boolean', 'slds-checkbox',
                                                     'textarea', 'slds-textarea',
-                                                    'slds-input')}" />
+                                                    'date', 'slds-input dateOnlyInput',
+                                                    'slds-input')}"/>
                                     </div>
                                 </div>
                             </apex:repeat>
                         </form>
+                    </div>
+                    <div class="slds-p-around--medium">
+                        <div class="slds-text-title--caps">{!$Label.labelVolunteersWizardJobsAndShifts}</div>
+                        <p class="slds-text-body--small slds-p-above--medium" style="font-style:italic;">{!$Label.labelVolunteersWizardJobAndShiftHelp}</p>
+                    </div>
+                    <div class="slds-p-around--medium slds-theme--default">
+                        <apex:outputPanel id="panelJobsAndShifts" styleClass="slds-form--horizontal slds-grid">
+                            <div class="slds-col slds-size--1-of-2">
+                                <div class="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardClone}" for="clonePicklist" styleClass="slds-form-element__label"/>
+                                    <apex:selectList value="{!campaignIdClone}" size="1" id="clonePicklist" styleClass="slds-form-element__control slds-select">
+                                        <apex:selectOptions value="{!listSOVolunteersCampaigns}"/>
+                                        <apex:actionSupport immediate="false" event="onchange" rerender="panelJobsAndShifts" status="statusLoad" action="{!ChangeCampaign}"/>
+                                    </apex:selectList>
+                                </div>
+                                <apex:outputPanel layout="block" rendered="{!campaignIdClone != null}" styleClass="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardFirstShiftDate}" for="shiftStartDate" styleClass="slds-form-element__label"/>
+                                    <apex:outputField value="{!cmpShiftDates.StartDate}" id="shiftStartDate" styleClass="slds-form-element__control slds-form-element__static"/>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="block" rendered="{!campaignIdClone != null}" styleClass="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardNewShiftDate}" for="shiftEndDate" styleClass="slds-form-element__label"/>
+                                    <apex:inputField value="{!cmpShiftDates.EndDate}" id="shiftEndDate" styleClass="slds-form-element__control slds-input dateOnlyInput"/>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="block" rendered="{!campaignIdClone != null}" styleClass="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardCopyVolunteers}" for="copyVolunteers" styleClass="slds-form-element__label"/>
+                                    <apex:inputCheckbox value="{!fCopyVolunteers}" id="copyVolunteers" styleClass="slds-form-element__control"/>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="block" rendered="{!campaignIdClone != null}" styleClass="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardOverrideHoursStatus}" styleClass="slds-form-element__label" for="hoursStatus"/>
+                                    <apex:inputField value="{!hoursStatus.Status__c}" id="hoursStatus" styleClass="slds-form-element__control slds-select"/>
+                                </apex:outputPanel>
+                            </div>
+                            <div class="slds-col slds-size--1-of-2">
+                                <div class="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardSampleJobs}" rendered="{!campaignIdClone == null}" for="wizSampleJobs" styleClass="slds-form-element__label"/>
+                                    <apex:selectList value="{!cSampleJobs}" size="1" id="wizSampleJobs" rendered="{!campaignIdClone == null}" styleClass="slds-form-element__control slds-select">
+                                        <apex:selectOption itemValue="0" itemLabel=""/>
+                                        <apex:selectOption itemValue="1"/>
+                                        <apex:selectOption itemValue="2"/>
+                                        <apex:selectOption itemValue="3"/>
+                                        <apex:selectOption itemValue="4"/>
+                                        <apex:selectOption itemValue="5"/>
+                                    </apex:selectList>
+                                </div>
+                                <div class="slds-form-element">
+                                    <apex:outputLabel value="{!$Label.labelVolunteersWizardSampleShifts}" rendered="{!campaignIdClone == null}" for="wizSampleShifts" styleClass="slds-form-element__label"/>
+                                    <apex:selectList value="{!cSampleShifts}" size="1" id="wizSampleShifts" rendered="{!campaignIdClone == null}" styleClass="slds-form-element__control slds-select">
+                                        <apex:selectOption itemValue="0" itemLabel=""/>
+                                        <apex:selectOption itemValue="1"/>
+                                        <apex:selectOption itemValue="2"/>
+                                        <apex:selectOption itemValue="3"/>
+                                        <apex:selectOption itemValue="4"/>
+                                        <apex:selectOption itemValue="5"/>
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                    <div class="slds-card__footer slds-grid">
+                        <div class="slds-col"/>
+                        <div class="slds-col slds-align-middle slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button--brand" value="{!$Label.labelButtonSave}" action="{!Save}"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="{!$Label.labelButtonCancel}" immediate="true" action="{!URLFOR($Action.Volunteer_Job__c.Tab,$ObjectType.Volunteer_Job__c)}"/>
+                        </div>
                     </div>
                 </div>
             </article>
