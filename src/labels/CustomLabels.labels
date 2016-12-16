@@ -280,6 +280,14 @@ day:      &apos;day&apos;</value>
         <value>(all jobs)</value>
     </labels>
     <labels>
+        <fullName>labelChooseCriteria</fullName>
+        <categories>FindVolunteers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>labelChooseCriteria</shortDescription>
+        <value>Choose Criteria</value>
+    </labels>
+    <labels>
         <fullName>labelColorValues</fullName>
         <categories>JobCalendar</categories>
         <language>en_US</language>

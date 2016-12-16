@@ -239,6 +239,7 @@
         <members>labelCalendarTitleFormat</members>
         <members>labelChoiceAllActiveCampaigns</members>
         <members>labelChoiceAllJobs</members>
+        <members>labelChooseCriteria</members>
         <members>labelColorValues</members>
         <members>labelContactInfoCancelMessage</members>
         <members>labelContactInfoChart</members>

@@ -41,16 +41,8 @@
     </style>
     <script type="text/javascript">
     (function($) {
-        //impossible to SLDS style visualforce multiselect picklists, instead we'll use a standard select
-        function fixMultiPicklists() {
-            $('.multiSelectPicklistTable').hide();
-            $('.multipicklistSLDSFixup').attr("size", 4);
-            $('.multipicklistSLDSFixup').show();
-        }
-
         //fixes multi select picklists and initializes shown/hidden sections
         function init() {
-            fixMultiPicklists();
             $('.sectionheader').each(function() {
                 $header = $(this);
                 $content = $header.next();
@@ -127,7 +119,7 @@
                     </div>
                 </div>
                 <div class="slds-media__body">
-                    <div class="slds-text-title--caps">Choose Criteria</div>
+                    <div class="slds-text-title--caps">{!$Label.labelChooseCriteria}</div>
                 </div>
             </div>
             <div>
@@ -141,7 +133,7 @@
                                     <div class="slds-form-element__control">
                                         <apex:inputField value="{!conFilter[field]}" id="idInputField"
                                             styleClass="{!CASE(field.Type, 
-                                                    'reference', 'lookupInput203 ' + field.FieldPath, 
+                                                    'reference', 'lookupInput ' + field.FieldPath, 
                                                     'picklist', 'slds-select',
                                                     'multipicklist', 'slds-select multipicklistSLDSFixup', 
                                                     'boolean', 'slds-checkbox',
