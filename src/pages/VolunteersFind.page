@@ -130,9 +130,6 @@
                         <apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="f">
                             <div class="slds-size--1-of-{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS.size}">
                                 <div class="slds-form-element slds-p-around--x-small">
-                                    <apex:outputLabel for="idInputField" styleClass="slds-form-element__label">
-                                        <span class="required slds-required">{!IF(f.DBRequired || f.Required, '*', '')}</span>{!f.Label}
-                                    </apex:outputLabel>
                                     <apex:outputLabel value="{!f.Label}" for="idInputField" styleClass="slds-form-element__label" />
                                     <div class="slds-form-element__control">
                                         <apex:inputField value="{!conFilter[f]}" id="idInputField"
