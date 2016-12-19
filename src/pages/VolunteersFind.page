@@ -136,7 +136,7 @@
                                     <apex:outputLabel value="{!f.Label}" for="idInputField" styleClass="slds-form-element__label" />
                                     <div class="slds-form-element__control">
                                         <apex:inputField value="{!conFilter[f]}" id="idInputField"
-                                            styleClass="{!CASE(field.Type, 
+                                            styleClass="{!CASE(f.Type, 
                                                     'reference', 'lookupInput', 
                                                     'picklist', 'slds-select',
                                                     'multipicklist', 'slds-select multipicklistSLDSFixup', 
