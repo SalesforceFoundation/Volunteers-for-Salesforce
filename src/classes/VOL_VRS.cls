@@ -168,15 +168,14 @@ public with sharing class VOL_VRS {
         }
 
 		// mapShiftIdContactIdToHours now contains only the Hours that did not match the VRS's, 
-		// so we can delete them if they aren't marked Completed or Canceled.
+		// so we can delete them if they aren't marked Completed or Canceled, and they used to be associated with these VRS's.
 		list<Volunteer_Hours__c> listHRDelete = new list<Volunteer_Hours__c>();
 		for (Volunteer_Hours__c hr : mapShiftIdContactIdToHours.values()) {
-		    if (hr.Status__c != 'Completed' && hr.Status__c != 'Canceled') {
+		    if (hr.Status__c != 'Completed' && hr.Status__c != 'Canceled' && setVRSId.contains(hr.Volunteer_Recurrence_Schedule__c)) {
 		        listHRDelete.add(hr);
 		    }
 		}
         if (listHRDelete.size() > 0) {
-            system.debug('****DJH: deleting listHRDelete: ' + listHRDelete);
             delete listHRDelete;
         }
 	}
@@ -212,6 +211,8 @@ public with sharing class VOL_VRS {
 		Date dtShift = shift.Start_Date_Time__c.Date();
 		DateTime dtShiftEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
 		integer nday = VOL_JRS.nDayOfWeek(dtShift);
+		Set<Volunteer_Hours__c> setHoursOld = new set<Volunteer_Hours__c>();
+        Set<Volunteer_Hours__c> setHoursUpdate = new set<Volunteer_Hours__c>();
 		
 		for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
 		
@@ -252,10 +253,12 @@ public with sharing class VOL_VRS {
                         hrExisting.Planned_Start_Date_Time__c = datetime.newInstance(shift.Start_Date_Time__c.date(), vrs.Schedule_Start_Date_Time__c.time());
                         if (vrs.Comments__c != null)
                             hrExisting.Comments__c = vrs.Comments__c;
-                        listHoursUpdate.add(hrExisting);
+                        hrExisting.Volunteer_Recurrence_Schedule__c = vrs.Id; // in case it wasn't already claimed by this VRS   
+                        setHoursUpdate.add(hrExisting);
+					} else {
+					    // shift is in the past.  we won't update it, but track it so before we return we can remove it.
+					    setHoursOld.add(hrExisting);
 					}
-                    // remove it from the map so we know it was matched
-                    mapShiftIdContactIdToHours.remove(shift.Id + '|' + vrs.Contact__c);                    
 					continue;
 				}
 									
@@ -282,11 +285,24 @@ public with sharing class VOL_VRS {
 				hr.Planned_Start_Date_Time__c = datetime.newInstance(shift.Start_Date_Time__c.date(), vrs.Schedule_Start_Date_Time__c.time());
 				hr.Comments__c = vrs.Comments__c;
 				listHoursNew.add(hr);
+				
+                // add the new hours to our map, so it won't get duplicated by two VRS's
+                mapShiftIdContactIdToHours.put(hr.Volunteer_Shift__c + '|' + hr.Contact__c, hr);                    
+				
 				//cDesiredVols--;
 			} 			 		
 		}
 		
-		// we let the caller commit the new hours to the db.		
+        // we remove any matched or new hours from the map, so the caller knows who wasn't matched.
+        listHoursUpdate.addAll(setHoursUpdate);
+        for (Volunteer_Hours__c hr : setHoursUpdate)		
+            mapShiftIdContactIdToHours.remove(hr.Volunteer_Shift__c + '|' + hr.Contact__c);                    
+        for (Volunteer_Hours__c hr : listHoursNew)       
+            mapShiftIdContactIdToHours.remove(hr.Volunteer_Shift__c + '|' + hr.Contact__c);                    
+        for (Volunteer_Hours__c hr : setHoursOld)       
+            mapShiftIdContactIdToHours.remove(hr.Volunteer_Shift__c + '|' + hr.Contact__c);                    
+
+        // we let the caller commit the new/updated hours to the db.
 	}
 
     //******************************************************************************************************
