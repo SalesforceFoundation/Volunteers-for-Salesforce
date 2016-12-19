@@ -37,17 +37,7 @@
             text-decoration:none;
             padding: 0 5px; 
         }
-        
-        .clsLoading {
-            z-index: 99;
-            position: fixed;
-            top: 50%;
-            left: 30%;
-            background: lightyellow;
-            width: 400px;
-            height: 40px;       
-        }
-            </style>
+    </style>
     
     <script type="text/javascript">
         function CheckAllSLVObj(isChecked) {
@@ -63,14 +53,6 @@
         description="the controller of the page" />
 
     <apex:outputPanel id="panelData" >
-        <apex:actionStatus id="statusLoad" onstart="document.getElementById('divLoading').style.display='inline';" onstop="document.getElementById('divLoading').style.display='none';" />
-        <div class="loading clsLoading" id="divLoading" style="display:none" >
-          <p style="vertical-align: middle;" >
-            <img src="/img/loading.gif" alt="{!$Label.labelMessageLoading}" width="16" height="16" title="{!$Label.labelMessageLoading}" style="vertical-align: middle;"/>
-            <span class="loadingText" style="vertical-align: middle;" >{!$Label.labelMessageLoading}</span>
-          </p>
-        </div>                                                                          
-        
         <div class="PagerUI">
             <table width="100%" >
                 <tr>
@@ -104,46 +86,7 @@
                     </td>
                 </tr>
             </table>            
-        </div> 
-
-        <!--apex:pageBlockTable value="{!listSLVObj}" var="item" rows="{!cRecordsPerPage}" >  
-
-            <apex:column >
-                <apex:facet name="header"> 
-                    <input type="checkbox" name="cbxContactAll" id="cbxAll" onchange="CheckAllSLVObj(this.checked);" />
-                </apex:facet>
-                <apex:inputCheckbox value="{!item.checked}" styleClass="cbxSLVObj" />
-            </apex:column>
-
-            <apex:column >
-                <apex:outputLink value="/{!item.sobj['id']}" >{!item.sobj[pageController.strNameField]}</apex:outputLink>
-                <apex:facet name="header"> 
-                    <apex:commandLink action="{!SortItem}" rerender="panelData" status="statusLoad" value="{!$ObjectType.Contact.Fields[pageController.strNameField].Label}" >
-                        <apex:param assignTo="{!SortItemField}" name="SortItemField" value="{!pageController.strNameField}" />
-                        <apex:outputText style="font-size:1.0em;font-weight:bold;font-family:symbol" 
-                            value="{!IF(SortItemField=pageController.strNameField, IF(SortItemAsc, ' ↑' , ' ↓'), '')}" escape="false" />
-                    </apex:commandLink>
-                </apex:facet>
-            </apex:column>
-
-            <apex:repeat value="{!pageController.strFields}" var="f" > 
-                <apex:column value="{!item.sobj[f]}" rendered="{!f != pageController.strNameField}" >
-                    <apex:facet name="header"> 
-                        <apex:outputPanel > 
-                            <apex:outputText value="{!$ObjectType.Contact.Fields[f].Label}" rendered="{!$ObjectType.Contact.Fields[f].Type == 'multipicklist'}" />
-                            <apex:commandLink action="{!SortItem}" rerender="panelData" status="statusLoad" value="{!$ObjectType.Contact.Fields[f].Label}" 
-                                rendered="{!$ObjectType.Contact.Fields[f].Type != 'multipicklist'}" >
-                                <apex:param assignTo="{!SortItemField}" name="SortItemField" value="{!f}" />
-                                <apex:outputText style="font-size:1.0em;font-weight:bold;font-family:symbol" 
-                                    value="{!IF(SortItemField=f, IF(SortItemAsc, ' ↑' , ' ↓'), '')}" escape="false" />
-                            </apex:commandLink>
-                        </apex:outputPanel>
-                    </apex:facet>
-                </apex:column>
-            </apex:repeat>
-                            
-        </apex:pageBlockTable--> 
-
+        </div>
         <table style="max-width:100%" class="slds-table slds-table--compact slds-table--bordered slds-no-row-hover" >
             <thead>
                 <tr class="slds-text-body--small slds-cell-shrink" style="text-transform: uppercase;">
@@ -190,7 +133,7 @@
                         <apex:repeat value="{!pageController.strFields}" var="f2" > 
                             <apex:outputText rendered="{!f2 != pageController.strNameField}" >
                                 <td class="slds-text-body--small slds-cell-wrap">
-                                    <apex:outputText value="{!item.sobj[f2]}" />
+                                    <apex:outputField value="{!item.sobj[f2]}" />
                                 </td>
                             </apex:outputText>
                         </apex:repeat>
@@ -198,9 +141,8 @@
                 </apex:repeat>
            </tbody>
         </table>
-
         <div class="PagerUI">
-            <apex:panelGrid columns="12" > 
+            <apex:panelGrid columns="12" style="width:40%;"> 
                 <apex:outputText value="" />
                 <apex:commandLink action="{!setCon.first}" rerender="panelData" status="statusLoad" >{!$Label.labelListViewFirst}</apex:commandlink>
                 <apex:outputText value=" | " />
