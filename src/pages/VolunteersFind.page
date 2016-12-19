@@ -41,16 +41,9 @@
     </style>
     <script type="text/javascript">
     (function($) {
-        //impossible to SLDS style visualforce multiselect picklists, instead we'll use a standard select
-        function fixMultiPicklists() {
-            $('.multiSelectPicklistTable').hide();
-            $('.multipicklistSLDSFixup').attr("size", 4);
-            $('.multipicklistSLDSFixup').show();
-        }
-
         //fixes multi select picklists and initializes shown/hidden sections
         function init() {
-            fixMultiPicklists();
+            $('.multipicklistSLDSFixup').attr("size", 4);
             $('.sectionheader').each(function() {
                 $header = $(this);
                 $content = $header.next();
@@ -127,25 +120,26 @@
                     </div>
                 </div>
                 <div class="slds-media__body">
-                    <div class="slds-text-title--caps">Choose Criteria</div>
+                    <div class="slds-text-title--caps">{!$Label.labelChooseCriteria}</div>
                 </div>
             </div>
             <div>
                 <apex:outputPanel layout="block" style="font-style:italic;" styleClass="slds-m-around--small">{!$Label.labelFindVolunteersHelpCriteria}</apex:outputPanel> 
                 <form class="slds-form--stacked">
                     <div class="slds-grid">
-                        <apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="field">
+                        <apex:repeat value="{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS}" var="f">
                             <div class="slds-size--1-of-{!$ObjectType.Contact.FieldSets.VolunteersFindCriteriaFS.size}">
                                 <div class="slds-form-element slds-p-around--x-small">
-                                    <apex:outputLabel value="{!field.Label}" for="idInputField" styleClass="slds-form-element__label" />
+                                    <apex:outputLabel value="{!f.Label}" for="idInputField" styleClass="slds-form-element__label" />
                                     <div class="slds-form-element__control">
-                                        <apex:inputField value="{!conFilter[field]}" id="idInputField"
-                                            styleClass="{!CASE(field.Type, 
-                                                    'reference', 'lookupInput203 ' + field.FieldPath, 
+                                        <apex:inputField value="{!conFilter[f]}" id="idInputField"
+                                            styleClass="{!CASE(f.Type, 
+                                                    'reference', 'lookupInput', 
                                                     'picklist', 'slds-select',
                                                     'multipicklist', 'slds-select multipicklistSLDSFixup', 
                                                     'boolean', 'slds-checkbox',
                                                     'textarea', 'slds-textarea',
+                                                    'date', 'slds-input dateOnlyInput',
                                                     'slds-input')}" />
                                     </div>
                                 </div>
