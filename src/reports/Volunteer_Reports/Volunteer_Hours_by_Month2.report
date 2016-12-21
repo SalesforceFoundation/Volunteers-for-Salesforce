@@ -39,6 +39,7 @@
     <filter>
         <criteriaItems>
             <column>Volunteer_Hours__c.Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Completed</value>
         </criteriaItems>

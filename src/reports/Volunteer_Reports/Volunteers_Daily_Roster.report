@@ -25,6 +25,7 @@
     <filter>
         <criteriaItems>
             <column>Volunteer_Job__c.Volunteer_Job_Slots__r.Volunteer_Hours__r$Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>No-Show,Canceled</value>
         </criteriaItems>

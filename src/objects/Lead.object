@@ -4,32 +4,34 @@
         <fullName>Volunteer_Availability__c</fullName>
         <externalId>false</externalId>
         <label>Volunteer Availability</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Weekdays</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekends</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Morning</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Afternoon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Weekdays</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Weekends</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Morning</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Afternoon</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Weekly</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>8</visibleLines>
     </fields>
     <fields>
@@ -46,51 +48,55 @@
         <externalId>false</externalId>
         <inlineHelpText>Select the skill(s) this person has that should be used to find volunteer jobs.</inlineHelpText>
         <label>Volunteer Skills</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Computer usage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Manual labor</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fundraising</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Event Planning</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Landscaping</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Computer usage</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Manual labor</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Fundraising</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Event Planning</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Landscaping</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>8</visibleLines>
     </fields>
     <fields>
         <fullName>Volunteer_Status__c</fullName>
         <externalId>false</externalId>
         <label>Volunteer Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>New Sign Up</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New Sign Up</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
 </CustomObject>
