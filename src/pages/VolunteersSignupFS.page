@@ -65,7 +65,11 @@
 
             <tr>
             	<td></td>        
-           		<td class="cssInputFieldsColumn" ><apex:commandButton value="{!$Label.labelSubmitButton}" action="{!Save}" /></td>
+           		<td class="cssInputFieldsColumn" >
+                    <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
+                        onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();"/>
+                    <apex:actionFunction name="DoSave" action="{!Save}" />         
+           		</td>
 			</tr>	
 			<tr>
 				<td></td>
