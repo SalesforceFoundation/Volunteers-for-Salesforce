@@ -41,16 +41,19 @@
         <booleanFilter>1 and (2 or 3)</booleanFilter>
         <criteriaItems>
             <column>Contact.Volunteer_Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Active,New Sign Up,Prospective</value>
         </criteriaItems>
         <criteriaItems>
             <column>Contact.Last_Volunteer_Date__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>lessThan</operator>
             <value>TODAY</value>
         </criteriaItems>
         <criteriaItems>
             <column>Contact.Last_Volunteer_Date__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>

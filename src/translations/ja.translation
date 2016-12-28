@@ -148,6 +148,10 @@
         <name>labelChoiceAllJobs</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelChooseCriteria --></label>
+        <name>labelChooseCriteria</name>
+    </customLabels>
+    <customLabels>
         <label>ミディアムブルー,&quot;グリーン&quot;,&quot;ダークレッド&quot;, &quot;パープル&quot;, &quot;ダークスレートグレー&quot;, &quot;ミッドナイトブルー&quot;</label>
         <name>labelColorValues</name>
     </customLabels>

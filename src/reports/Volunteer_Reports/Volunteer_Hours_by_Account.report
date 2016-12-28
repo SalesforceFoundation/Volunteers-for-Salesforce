@@ -46,6 +46,7 @@
     <filter>
         <criteriaItems>
             <column>Account.Contacts.Volunteer_Hours__r$Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Completed</value>
         </criteriaItems>

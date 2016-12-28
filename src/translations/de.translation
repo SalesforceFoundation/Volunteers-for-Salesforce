@@ -148,6 +148,10 @@ Tag:      &apos;Tag&apos;</label>
         <name>labelChoiceAllJobs</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelChooseCriteria --></label>
+        <name>labelChooseCriteria</name>
+    </customLabels>
+    <customLabels>
         <label>Mittelblau,&quot;Grün&quot;,&quot;Dunkelrot&quot;, &quot;Violett&quot;, &quot;Schiefergrau&quot;, &quot;Mitternachtsblau&quot;</label>
         <name>labelColorValues</name>
     </customLabels>

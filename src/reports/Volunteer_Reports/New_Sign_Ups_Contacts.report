@@ -55,6 +55,7 @@
     <filter>
         <criteriaItems>
             <column>Contact.Volunteer_Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>New Sign Up</value>
         </criteriaItems>

@@ -23,10 +23,6 @@
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -51,6 +47,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableEnhancedLookup>false</enableEnhancedLookup>
@@ -142,6 +139,7 @@
     </fieldSets>
     <fields>
         <fullName>Comments__c</fullName>
+        <deprecated>false</deprecated>
         <description>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</description>
         <externalId>false</externalId>
         <inlineHelpText>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</inlineHelpText>
@@ -153,6 +151,7 @@
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
@@ -166,46 +165,50 @@
     </fields>
     <fields>
         <fullName>Days_of_Week__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Days of Week</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Sunday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Tuesday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Wednesday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Thursday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Friday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saturday</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sunday</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Monday</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Tuesday</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Wednesday</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Thursday</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Friday</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Saturday</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>8</visibleLines>
     </fields>
     <fields>
         <fullName>Duration__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Duration</label>
         <precision>4</precision>
@@ -218,6 +221,7 @@
     <fields>
         <fullName>Number_of_Volunteers__c</fullName>
         <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
         <description>Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours.</description>
         <externalId>false</externalId>
         <inlineHelpText>Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours.</inlineHelpText>
@@ -231,6 +235,7 @@
     </fields>
     <fields>
         <fullName>Schedule_End_Date__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Schedule End Date</label>
         <required>false</required>
@@ -239,6 +244,7 @@
     </fields>
     <fields>
         <fullName>Schedule_Start_Date_Time__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Schedule Start Date &amp; Time</label>
         <required>true</required>
@@ -247,35 +253,39 @@
     </fields>
     <fields>
         <fullName>Volunteer_Hours_Status__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Volunteer Hours Status value to specify on newly created Hours records.</inlineHelpText>
         <label>Volunteer Hours Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Confirmed</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Canceled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prospect</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Confirmed</fullName>
+                    <default>true</default>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Canceled</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Volunteer_Job__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Job</label>
         <referenceTo>Volunteer_Job__c</referenceTo>
@@ -287,42 +297,45 @@
     </fields>
     <fields>
         <fullName>Weekly_Occurrence__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Weekly Occurrence</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Every</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1st</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2nd</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3rd</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4th</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5th</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Every</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Alternate</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>1st</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>2nd</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>3rd</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>4th</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>5th</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>8</visibleLines>
     </fields>
     <label>Volunteer Recurrence Schedule</label>

@@ -37,11 +37,13 @@
     <filter>
         <criteriaItems>
             <column>Lead.Volunteer_Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>New Sign Up</value>
         </criteriaItems>
         <criteriaItems>
             <column>STATUS</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>Open - Not Contacted,Working - Contacted</value>
         </criteriaItems>

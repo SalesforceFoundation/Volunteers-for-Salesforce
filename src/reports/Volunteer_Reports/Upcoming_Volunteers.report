@@ -64,11 +64,13 @@
     <filter>
         <criteriaItems>
             <column>Volunteer_Hours__c.Start_Date__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterOrEqual</operator>
             <value>TODAY</value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Hours__c.Start_Date__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>lessOrEqual</operator>
             <value>NEXT_N_DAYS:30</value>
         </criteriaItems>
