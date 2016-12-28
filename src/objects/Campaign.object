@@ -72,6 +72,7 @@
     </fieldSets>
     <fields>
         <fullName>Number_of_Volunteers__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The total number of volunteers whose Hours Status = Completed or Confirmed.</inlineHelpText>
         <label>Number of Volunteers</label>
@@ -82,6 +83,7 @@
     </fields>
     <fields>
         <fullName>Volunteer_Completed_Hours__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Total number of hours that are completed.  Hours with other status values are not included.</inlineHelpText>
         <label>Volunteer Completed Hours</label>
@@ -92,6 +94,7 @@
     </fields>
     <fields>
         <fullName>Volunteer_Jobs__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Jobs</label>
         <summaryForeignKey>Volunteer_Job__c.Campaign__c</summaryForeignKey>
@@ -100,6 +103,7 @@
     </fields>
     <fields>
         <fullName>Volunteer_Shifts__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteer Shifts</label>
         <summarizedField>Volunteer_Job__c.Number_of_Shifts__c</summarizedField>
@@ -109,6 +113,7 @@
     </fields>
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.  You only need to set this if you want to override the Time Zone set on the Site Guest User profile.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
@@ -474,6 +479,7 @@
     </fields>
     <fields>
         <fullName>Volunteers_Still_Needed__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Volunteers Still Needed</label>
         <summarizedField>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</summarizedField>

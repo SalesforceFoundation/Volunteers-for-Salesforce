@@ -19,6 +19,7 @@
             <indicatorMiddleColor>#C2C254</indicatorMiddleColor>
             <maxValuesDisplayed>50</maxValuesDisplayed>
             <report>Volunteer_Reports/Top_Volunteers_by_Lifetime_Hours</report>
+            <showPicturesOnTables>true</showPicturesOnTables>
             <sortBy>RowValueDescending</sortBy>
             <title>Top Voluntarios por Horas Trabajadas</title>
         </components>
@@ -34,6 +35,7 @@
             <indicatorMiddleColor>#C2C254</indicatorMiddleColor>
             <maxValuesDisplayed>20</maxValuesDisplayed>
             <report>Volunteer_Reports/Top_Volunteers_by_Recent_Hours</report>
+            <showPicturesOnTables>true</showPicturesOnTables>
             <sortBy>RowValueDescending</sortBy>
             <title>Top Voluntarios por Horas Trabajadas Rec</title>
         </components>
@@ -47,6 +49,7 @@
             <indicatorLowColor>#C25454</indicatorLowColor>
             <indicatorMiddleColor>#C2C254</indicatorMiddleColor>
             <report>Volunteer_Reports/Volunteers_Last_Month</report>
+            <showPicturesOnTables>true</showPicturesOnTables>
             <sortBy>RowLabelAscending</sortBy>
             <title>Voluntarios con Horas trabajadas el Mes</title>
         </components>
@@ -143,7 +146,7 @@
             <useReportChart>false</useReportChart>
         </components>
     </rightSection>
-    <runningUser>dhabib@v4s.dev</runningUser>
+    <runningUser>davidhabibvol@groundwire.org</runningUser>
     <textColor>#000000</textColor>
     <title>Panel de Voluntarios</title>
     <titleColor>#000000</titleColor>
