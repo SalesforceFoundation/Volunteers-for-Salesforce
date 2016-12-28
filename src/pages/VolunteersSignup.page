@@ -62,9 +62,10 @@
             <apex:inputField value="{!contact.Volunteer_Notes__c}" id="txtNotes" required="false" style="width:300px;height:100px;" styleClass="cssInputFields" />
             
             <apex:outputLabel value="" ></apex:outputLabel>
-            <apex:commandButton value="Submit" action="{!Save}" ></apex:commandButton>
+            <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
+                onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();"/>
+            <apex:actionFunction name="DoSave" action="{!Save}" />         
             
-            <apex:outputLabel value="" ></apex:outputLabel>
             <apex:outputLabel value="{!StrSaveResult}" />                        
         </apex:panelGrid>    
     </apex:form>
