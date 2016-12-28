@@ -30,16 +30,19 @@
         <booleanFilter>(1 or 2) and 3</booleanFilter>
         <criteriaItems>
             <column>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterThan</operator>
             <value>0</value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Job__c.Ongoing__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Job__c.Inactive__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value>1</value>
         </criteriaItems>

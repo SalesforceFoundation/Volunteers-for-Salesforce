@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -47,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -57,6 +54,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Campaign__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Campaign</label>
         <referenceTo>Campaign</referenceTo>
@@ -70,6 +68,7 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Description</label>
         <length>32000</length>
@@ -80,6 +79,7 @@
     <fields>
         <fullName>Display_on_Website__c</fullName>
         <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page.</inlineHelpText>
         <label>Display on Website</label>
@@ -88,6 +88,7 @@
     </fields>
     <fields>
         <fullName>External_Signup_Url__c</fullName>
+        <deprecated>false</deprecated>
         <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</description>
         <externalId>false</externalId>
         <inlineHelpText>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</inlineHelpText>
@@ -100,6 +101,7 @@
     </fields>
     <fields>
         <fullName>First_Shift__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>First Shift</label>
         <summarizedField>Volunteer_Shift__c.Start_Date_Time__c</summarizedField>
@@ -111,6 +113,7 @@
     <fields>
         <fullName>Inactive__c</fullName>
         <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page.</inlineHelpText>
         <label>Inactive</label>
@@ -119,6 +122,7 @@
     </fields>
     <fields>
         <fullName>Location_City__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location City</label>
         <length>255</length>
@@ -129,6 +133,7 @@
     </fields>
     <fields>
         <fullName>Location_Information__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders.</inlineHelpText>
         <label>Location Information</label>
@@ -139,6 +144,7 @@
     </fields>
     <fields>
         <fullName>Location_Street__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location Street</label>
         <length>255</length>
@@ -149,6 +155,7 @@
     </fields>
     <fields>
         <fullName>Location_Zip_Postal_Code__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location Zip/Postal Code</label>
         <length>100</length>
@@ -159,6 +166,7 @@
     </fields>
     <fields>
         <fullName>Location__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Location State/Province</label>
         <length>100</length>
@@ -169,6 +177,7 @@
     </fields>
     <fields>
         <fullName>Number_of_Completed_Hours__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>Total number of Hours that are Completed.  Hours with other status values are not included.</inlineHelpText>
         <label>Number of Completed Hours</label>
@@ -185,6 +194,7 @@
     </fields>
     <fields>
         <fullName>Number_of_Shifts__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Number of Shifts</label>
         <summaryForeignKey>Volunteer_Shift__c.Volunteer_Job__c</summaryForeignKey>
@@ -194,6 +204,7 @@
     </fields>
     <fields>
         <fullName>Number_of_Volunteers_Still_Needed__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label># of Volunteers Still Needed</label>
         <summarizedField>Volunteer_Shift__c.Number_of_Volunteers_Still_Needed__c</summarizedField>
@@ -204,6 +215,7 @@
     </fields>
     <fields>
         <fullName>Number_of_Volunteers__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The total number of volunteers whose Hours Status = Completed or Confirmed.</inlineHelpText>
         <label>Number of Volunteers</label>
@@ -221,6 +233,7 @@
     <fields>
         <fullName>Ongoing__c</fullName>
         <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>Ongoing</label>
         <trackTrending>false</trackTrending>
@@ -228,408 +241,414 @@
     </fields>
     <fields>
         <fullName>Skills_Needed__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>the skills the volunteer should have to do this job</inlineHelpText>
         <label>Skills Needed</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Computer usage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Manual Labor</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fundraising</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Event Planning</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Landscaping</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>basic accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Computer usage</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Manual Labor</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Fundraising</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Event Planning</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Landscaping</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>basic accounting</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Pacific/Kiritimat</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Chatham</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Auckland</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Enderbury</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Tongatapu</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Kamchatka</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Fiji</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Norfolk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia/Lord_Howe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia/Sydney</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Guadalcanal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia/Adelaide</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia/Brisbane</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia/Darwin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Seoul</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Tokyo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Hong_Kong</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Kuala_Lumpur</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Manila</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Shanghai</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Singapore</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Taipei</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Australia/Perth</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Bangkok</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Jakarta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Saigon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Rangoon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Dacca</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Yekaterinburg</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Katmandu</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Calcutta</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Colombo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Karachi</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Tashkent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Kabul</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Dubai</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Tbilisi</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Moscow</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Tehran</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Africa/Nairobi</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Baghdad</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Kuwait</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Riyadh</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Minsk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Africa/Cairo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Africa/Johannesburg</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia/Jerusalem</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Athens</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Bucharest</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Helsinki</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Istanbul</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Africa/Algiers</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Amsterdam</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Berlin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Brussels</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Paris</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Prague</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Rome</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Dublin</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/Lisbon</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe/London</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GMT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Atlantic/Cape_Verde</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Sao_Paulo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Atlantic/South_Georgia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Buenos_Aires</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Santiago</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/St_Johns</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Halifax</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Puerto_Rico</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Atlantic/Bermuda</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Caracas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Bogota</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Indianapolis</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Lima</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/New_York</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Panama</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Chicago</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/El_Salvador</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Mexico_City</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Denver</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Phoenix</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Los_Angeles</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Tijuana</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>America/Anchorage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Honolulu</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Niue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pacific/Pago_Pago</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pacific/Kiritimat</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Chatham</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Auckland</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Enderbury</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Tongatapu</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Kamchatka</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Fiji</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Norfolk</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Australia/Lord_Howe</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Australia/Sydney</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Guadalcanal</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Australia/Adelaide</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Australia/Brisbane</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Australia/Darwin</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Seoul</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Tokyo</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Hong_Kong</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Kuala_Lumpur</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Manila</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Shanghai</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Singapore</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Taipei</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Australia/Perth</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Bangkok</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Jakarta</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Saigon</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Rangoon</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Dacca</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Yekaterinburg</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Katmandu</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Calcutta</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Colombo</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Karachi</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Tashkent</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Kabul</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Dubai</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Tbilisi</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Moscow</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Tehran</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Africa/Nairobi</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Baghdad</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Kuwait</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Riyadh</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Minsk</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Africa/Cairo</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Africa/Johannesburg</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Asia/Jerusalem</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Athens</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Bucharest</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Helsinki</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Istanbul</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Africa/Algiers</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Amsterdam</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Berlin</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Brussels</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Paris</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Prague</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Rome</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Dublin</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/Lisbon</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Europe/London</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>GMT</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Atlantic/Cape_Verde</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Sao_Paulo</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Atlantic/South_Georgia</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Buenos_Aires</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Santiago</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/St_Johns</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Halifax</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Puerto_Rico</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Atlantic/Bermuda</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Caracas</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Bogota</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Indianapolis</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Lima</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/New_York</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Panama</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Chicago</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/El_Salvador</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Mexico_City</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Denver</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Phoenix</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Los_Angeles</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Tijuana</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>America/Anchorage</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Honolulu</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Niue</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Pacific/Pago_Pago</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Volunteer Job</label>
     <listViews>

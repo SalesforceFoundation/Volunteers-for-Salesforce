@@ -62,11 +62,13 @@
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <column>Contact.Last_Volunteer_Date__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterOrEqual</operator>
             <value>LAST_N_DAYS:120</value>
         </criteriaItems>
         <criteriaItems>
             <column>Contact.Volunteer_Last_Web_Signup_Date__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>greaterOrEqual</operator>
             <value>LAST_N_DAYS:120</value>
         </criteriaItems>

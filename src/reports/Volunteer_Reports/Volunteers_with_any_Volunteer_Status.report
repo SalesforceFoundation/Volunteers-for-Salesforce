@@ -49,6 +49,7 @@
     <filter>
         <criteriaItems>
             <column>Contact.Volunteer_Status__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>

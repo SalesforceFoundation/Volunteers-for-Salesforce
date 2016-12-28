@@ -141,6 +141,10 @@
         <name>labelChoiceAllJobs</name>
     </customLabels>
     <customLabels>
+        <label><!-- labelChooseCriteria --></label>
+        <name>labelChooseCriteria</name>
+    </customLabels>
+    <customLabels>
         <label><!-- list of browser color values for JobCalendar --></label>
         <name>labelColorValues</name>
     </customLabels>
