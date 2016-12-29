@@ -267,7 +267,8 @@
             </p>
             
             <!-- before calling the action method, clear the return value fields so we can detect validation failures. -->                          
-            <apex:commandButton value="{!$Label.labelButtonSignUp}" onclick="
+            <apex:commandButton value="{!$Label.labelButtonSignUp}" id="btnSignUp" onclick="
+                    j$('input[name$=btnSignUp]').attr('disabled','disabled'); 
                     j$('input[name$=txtContactIdSignUp]').val(''); 
                     j$('input[name$=txtVHIdSignUp]').val('');
                		VolunteerShiftSignUp();
