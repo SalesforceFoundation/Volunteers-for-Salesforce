@@ -57,7 +57,7 @@
     <apex:form id="vfform">
         <c:UTIL_NavigateBack recordId="{!idRedirect}" redirect="{!redirect}"/>
         <div class="sfdo213">
-            <!-- PAGE SPINNER
+            <!-- PAGE SPINNER -->
             <apex:actionStatus id="retrieveStatus" 
                 onstart="document.getElementById('divLoading').style.display='block';"
                 onstop="document.getElementById('divLoading').style.display='none';"/>
@@ -84,45 +84,42 @@
                 </div>
             </div>
             <!-- /PAGE HEADER -->
-
             <c:UTIL_PageMessages />
-            
             <p class="slds-p-around--medium"><apex:outputText value="{!$Label.labelMassEditHelp}" style="font-style:italic" /></p>
-
             <fieldset class="slds-form">
                 <div class="slds-grid">
-                    <div class="slds-col--padded slds-form-element">
+                    <div class="slds-col--padded slds-form-element slds-size--1-of-3">
                         <apex:outputLabel for="ddlCampaign" styleClass="slds-form-element__label" >
                             {!$ObjectType.Volunteer_Job__c.Fields.Campaign__c.Label}
                         </apex:outputLabel>
-                        <apex:selectList id="ddlCampaign" value="{!campaignId}" required="false" size="1" styleClass="slds-select">
+                        <apex:selectList id="ddlCampaign" value="{!campaignId}" required="false" size="1" styleClass="slds-select" disabled="{!listSOCampaigns.size=1}">
                             <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeCampaign}" />
                             <apex:selectOptions value="{!listSOCampaigns}" /> 
                         </apex:selectList>
                     </div>
-                    <div class="slds-col--padded slds-form-element">
+                    <div class="slds-col--padded slds-form-element slds-size--1-of-3">
                         <apex:outputLabel for="ddlVolunteerJobs" styleClass="slds-form-element__label" >
                             {!$ObjectType.Volunteer_Job__c.Label}
                         </apex:outputLabel>
-                        <apex:selectList id="ddlVolunteerJobs" value="{!volunteerJobId}" required="false" size="1" styleClass="slds-select">
+                        <apex:selectList id="ddlVolunteerJobs" value="{!volunteerJobId}" required="false" size="1" styleClass="slds-select" disabled="{!listSOVolunteerJobs.size=1}">
                             <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
                             <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
                         </apex:selectList>
                     </div>
-                    <div class="slds-col--padded slds-form-element">
+                    <div class="slds-col--padded slds-form-element slds-size--1-of-3">
                         <apex:outputLabel for="ddlVolunteerShifts" styleClass="slds-form-element__label" >
                             {!$ObjectType.Volunteer_Shift__c.Label + '  ' + $Label.labelMassEditOptional }
                         </apex:outputLabel>
-                        <apex:selectList id="ddlVolunteerShifts" value="{!volunteerShiftId}" required="false" size="1" styleClass="slds-select">
+                        <apex:selectList id="ddlVolunteerShifts" value="{!volunteerShiftId}" required="false" size="1" styleClass="slds-select" disabled="{!listSOVolunteerShifts.size=1}">
                             <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" />
                             <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
                         </apex:selectList>
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="slds-form slds-m-top--small slds-m-bottom--small">
+            <fieldset class="slds-form slds-m-top--small slds-m-bottom--large">
                 <div class="slds-grid">
-                    <div class="slds-col--padded slds-size--1-of-2 slds-form-element">
+                    <div class="slds-col--padded slds-size--1-of-3 slds-form-element">
                         <apex:outputLabel for="fldDateFrom" styleClass="slds-form-element__label" >
                             {!$Label.labelMassEditDateFilterFrom}
                         </apex:outputLabel>
@@ -130,7 +127,7 @@
                             <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
                         </apex:inputField>
                     </div>
-                    <div class="slds-col--padded slds-size--1-of-2 slds-form-element">
+                    <div class="slds-col--padded slds-size--1-of-3 slds-form-element">
                         <apex:outputLabel for="fldDateTo" styleClass="slds-form-element__label" >
                             {!$Label.labelMassEditDateFilterTo}
                         </apex:outputLabel>
@@ -138,6 +135,7 @@
                             <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerShifts,tblVolunteerHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
                         </apex:inputField>
                     </div>
+                    <div class="slds-col--padded slds-size--1-of-3"/>
                 </div> 
             </fieldset>   
             <apex:dataTable value="{!listVolunteerHours}" var="vh" id="tblVolunteerHours" 
@@ -148,14 +146,12 @@
                     <apex:inputField value="{!vh.Contact__c}" styleClass="lookupInput" required="false" >
                     </apex:inputField>
                 </apex:column> 
-                
                 <apex:column rendered="{!volunteerShiftId == null}" styleClass="myTD picklist" >
                     <apex:facet name="header">{!$ObjectType.Volunteer_Shift__c.Label}</apex:facet>
                     <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts" styleClass="slds-select">
                         <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
                     </apex:selectList>              
                 </apex:column>  
-                
                 <!-- now add optional fields the user can specify -->
                 <apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours}" var="f" >
                     <apex:column styleClass="myTD {!f.Type}" >
@@ -170,10 +166,8 @@
                                                     'date', 'slds-input dateOnlyInput dateInTD',
                                                     'slds-input')}"                               
                                          required="false" />  <!-- not required, or you can't submit empty rows! -->
-                                                        
                     </apex:column>
                 </apex:repeat>        
-                
             </apex:dataTable>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" />
