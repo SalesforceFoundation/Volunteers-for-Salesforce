@@ -784,12 +784,15 @@ global with sharing class VOL_SharedCode {
             }
     }
 
+    /** Description: DML options to allow overriding duplicate rules to create contacts, while throwing
+    * exceptions for validation rules, required fields, etc.
+    */
     private static Database.DMLOptions dmlDuplicateOptions {
         get {
             if (dmlDuplicateOptions == null) {
                 dmlDuplicateOptions = new Database.DMLOptions();
+                dmlDuplicateOptions.optAllOrNone = true;
                 dmlDuplicateOptions.DuplicateRuleHeader.allowSave = true;
-                dmlDuplicateOptions.DuplicateRuleHeader.runAsCurrentUser = false;
             }
             return dmlDuplicateOptions;
         }
@@ -805,7 +808,6 @@ global with sharing class VOL_SharedCode {
     * @param Id for any campaign 
     * @return List<Id> of child campaigns
     ********************************************************************************************************/
-
     global static List<Id> listIdsCampaignsInHierarchy(Id campaignId) {
         Map<Id,Campaign> campaignsInHierarchy = new Map<Id,Campaign>(
             [SELECT Id,Name FROM Campaign WHERE IsActive =:true  
