@@ -183,7 +183,7 @@ public with sharing class VOL_VRS_TEST {
         system.assertEquals(6, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status' and Volunteer_Recurrence_Schedule__c = :vrs.Id];
-        system.assert(listHours.size() >= 1 && listHours.size() <= 3);  
+        system.assert(listHours.size() >= 0 && listHours.size() <= 3);  
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'No-Show' and Volunteer_Recurrence_Schedule__c = :vrs.Id];
         system.assertEquals(1, listHours.size());  
