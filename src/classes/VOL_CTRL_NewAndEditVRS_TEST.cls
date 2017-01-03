@@ -51,7 +51,6 @@ public with sharing class VOL_CTRL_NewAndEditVRS_TEST {
 		jrs.Schedule_End_Date__c = date.newInstance(year, 12, 31);
 		jrs.Weekly_Occurrence__c = 'Every';
 		jrs.Desired_Number_of_Volunteers__c = 5;
-		system.debug('****DJH: inserting jrs: ' + jrs);
 		insert jrs;
 		
 		// scenario 1: creating a new VRS
@@ -65,7 +64,6 @@ public with sharing class VOL_CTRL_NewAndEditVRS_TEST {
 		ctrl.vrs.Schedule_Start_Date_Time__c = datetime.newInstance(year, 2, 1, 3, 30, 0);
 		ctrl.vrs.Schedule_End_Date__c = date.newInstance(year, 6, 3);
 		ctrl.vrs.Weekly_Occurrence__c = '1st';
-        system.debug('****DJH: saving vrs: ' + ctrl.vrs);
 		stdCtrl.Save();
 		
 		// verify it got saved
@@ -78,7 +76,6 @@ public with sharing class VOL_CTRL_NewAndEditVRS_TEST {
 		VOL_CTRL_NewAndEditVRS ctrl2 = new VOL_CTRL_NewAndEditVRS(stdCtrl2);
 		system.assertEquals('Monday;Friday', ctrl2.vrs.Days_of_Week__c);
 		ctrl2.vrs.Days_of_Week__c = 'Saturday';
-        system.debug('****DJH: saving vrs2: ' + ctrl2.vrs);
 		stdCtrl2.Save();
 		vrs = [select Id, Days_of_Week__c from Volunteer_Recurrence_Schedule__c where Id = :listVRS[0].Id];
 		system.assertEquals('Saturday', ctrl2.vrs.Days_of_Week__c);
