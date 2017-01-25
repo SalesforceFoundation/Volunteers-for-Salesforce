@@ -76,7 +76,7 @@ public with sharing class VOL_CTRL_NewAndEditVRS_TEST {
 		VOL_CTRL_NewAndEditVRS ctrl2 = new VOL_CTRL_NewAndEditVRS(stdCtrl2);
 		system.assertEquals('Monday;Friday', ctrl2.vrs.Days_of_Week__c);
 		ctrl2.vrs.Days_of_Week__c = 'Saturday';
-		stdCtrl.Save();
+		stdCtrl2.Save();
 		vrs = [select Id, Days_of_Week__c from Volunteer_Recurrence_Schedule__c where Id = :listVRS[0].Id];
 		system.assertEquals('Saturday', ctrl2.vrs.Days_of_Week__c);
 		
