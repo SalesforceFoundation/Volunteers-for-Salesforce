@@ -28,23 +28,24 @@
     POSSIBILITY OF SUCH DAMAGE.
 -->  
  
-<apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" standardStylesheets="false" sidebar="false">
+<apex:page controller="VOL_CTRL_VolunteersBulkEnterHours" title="{!$Label.labelMassEditTitle}" tabStyle="Volunteer_Job__c" standardStylesheets="true" sidebar="false">
     <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
     <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
 
     <style>
-        .sfdo213 .slds-input.dateInTD {
-            min-width: 230px;
+        .myTD span.dateFormat {
+            display: none !important;
         }
-        .myTD.date {
+        .myTD.datetime,
+        .myTD.textarea {
             min-width: 200px;
         }
-        .myTD.picklist {
+        .myTD.picklist,
+        .myTD.multipicklist,
+        .myTD.reference,
+        .myTD.date {
             min-width: 170px;
-        }        
-        .myTD.reference {
-            min-width: 170px;
-        }        
+        }
     </style>
 
     <script type="text/javascript">
@@ -52,7 +53,6 @@
         // on the first date field, which pops up the ugly calendar control!
         window.onload = function() {}
     </script>
-
 
     <apex:form id="vfform">
         <c:UTIL_NavigateBack recordId="{!idRedirect}" redirect="{!redirect}"/>
@@ -154,23 +154,41 @@
                 </apex:column>  
                 <!-- now add optional fields the user can specify -->
                 <apex:repeat value="{!$ObjectType.Volunteer_Hours__c.FieldSets.MassEditVolunteerHours}" var="f" >
-                    <apex:column styleClass="myTD {!f.Type}" >
+                    <apex:column styleClass="myTD {!f.Type} {!IF($ObjectType['Volunteer_Hours__c'].fields[f].dependentPicklist,
+                                                IF(f.Type == 'picklist', 'dependentPicklistFixup', 'dependentMultiPicklistFixup'),'')}" >
                         <apex:facet name="header">{!f.Label + IF(f.DBRequired, ' *', '')}</apex:facet>
                         <apex:inputField value="{!vh[f]}" 
                                     styleClass="{!CASE(f.Type, 
                                                     'reference', 'lookupInput', 
                                                     'picklist', 'slds-select',
-                                                    'multipicklist', 'slds-select', 
+                                                    'multipicklist', 'slds-select multipicklistSLDSFixup',
                                                     'boolean', 'slds-checkbox',
                                                     'textarea', 'slds-textarea',
-                                                    'date', 'slds-input dateOnlyInput dateInTD',
-                                                    'slds-input')}"                               
-                                         required="false" />  <!-- not required, or you can't submit empty rows! -->
+                                                    'slds-input')}"
+                                         required="false" id="inputX"/>  <!-- not required, or you can't submit empty rows! -->
                     </apex:column>
-                </apex:repeat>        
+                </apex:repeat>
             </apex:dataTable>
+
+            <script type="text/javascript">
+                function fixSearchIMG() {
+                    var input = document.getElementsByClassName("lookupInput");
+                    var inputLen = input.length;
+                    for (i = 0; i < inputLen; i++) {
+                        if (typeof(input[i]) !== 'undefined' && input[i].tagName === "INPUT") {
+                            input[i].style.visibility = "";
+                            var lkSpan = input[i].parentElement;
+                            var lkLink = lkSpan.querySelector("a");
+                            lkLink.style.visibility = "";
+                            lkLink.className = "";
+                            lkLink.innerHTML = "<svg aria-hidden=\"true\" class=\"slds-icon slds-input__icon slds-icon--x-small slds-icon-text-default\" viewBox=\"0 0 24 24\"><path  d=\"M22.9 20.9l-6.2-6.1c1.3-1.8 1.9-4 1.6-6.4-.6-3.9-3.8-7.1-7.8-7.4C5 .4.4 5 1 10.5c.3 4 3.5 7.3 7.4 7.8 2.4.3 4.6-.3 6.4-1.5l6.1 6.1c.3.3.7.3 1 0l.9-1c.3-.3.3-.7.1-1zM3.7 9.6c0-3.2 2.7-5.9 5.9-5.9s6 2.7 6 5.9-2.7 6-6 6-5.9-2.6-5.9-6z\"></path></svg>";
+                        }
+                    }
+                }
+                fixSearchIMG();
+            </script>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" />
+            <apex:commandLink action="{!AddMoreEmptyRows}" value="{!$Label.labelLinkAddMoreRows}" id="linkAdd" immediate="true" reRender="tblVolunteerHours" oncomplete="javascript:fixSearchIMG()"/>
         </div> <!-- slds -->    
-    </apex:form>    
+    </apex:form>
 </apex:page>
