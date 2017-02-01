@@ -33,11 +33,10 @@
     title="{!$ObjectType.Volunteer_Recurrence_Schedule__c.Label}"
     tabStyle="Volunteer_Recurrence_Schedule__c"
     docType="html-5.0"
-    standardStylesheets="false">
+    standardStylesheets="true">
 
     <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
     <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
-    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
     <script>
         var previousOnload = window.onload;
         window.onload = function() {
@@ -82,9 +81,10 @@
                                 <apex:outputLabel value="{!$ObjectType.Job_Recurrence_Schedule__c.Label}" for="slJRS"/>
                             </span>
                             <div class="slds-form-element__control">
-                                <apex:selectList id="slJRS" value="{!jrsId}" size="1" required="false" styleClass="slds-select" style="height:calc(1.875rem + (1px * 2));">
+                                <apex:selectList id="slJRS" value="{!jrsId}" size="1" required="false"
+                                    styleClass="slds-select" style="height:calc(1.875rem + (1px * 2));">
                                     <apex:selectOptions value="{!listSOJRS}" />
-                                    <apex:actionSupport immediate="false" event="onchange" rerender="main" status="loading" action="{!copyScheduleFromJRS}" oncomplete="javascript:fixMultiPicklists()"/>
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="main" status="loading" action="{!copyScheduleFromJRS}"/>
                                 </apex:selectList>
                             </div>
                         </apex:actionRegion>
@@ -93,36 +93,22 @@
                 <h3 class="slds-section-title slds-text-align--left">{!$Label.labelInformation}</h3>
                 <apex:outputPanel id="main">
                     <apex:repeat value="{!$ObjectType.Volunteer_Recurrence_Schedule__c.FieldSets.NewAndEditVRSFS}" var="f">
-                        <div class="slds-form-element slds-p-top--small slds-size--1-of-2">
-                            <span class="slds-form-element__label">
-                                <apex:outputLabel for="inputField">
-                                    <span class="required slds-required">{!IF(f.DBRequired || f.Required, '*', '')}</span>{!f.Label}
-                                </apex:outputLabel>
-                            </span>
-                            <div class="slds-form-element__control">
-                                <apex:actionRegion >
-                                    <apex:inputField id="inputField" value="{!vrs[f]}" required="{!IF(OR(f.DBRequired, f.Required), 'true', 'false')}"
-                                        styleClass="{!CASE(f.Type,
-                                                        'reference', 'lookupInput',
-                                                        'picklist', 'slds-select',
-                                                        'multipicklist', 'slds-select multipicklistSLDSFixup',
-                                                        'boolean', 'slds-checkbox',
-                                                        'textarea', 'slds-textarea',
-                                                        'date', 'slds-input dateOnlyInput',
-                                                        IF(f == 'Name', '', 'slds-input'))}" >
-                                        <apex:actionSupport immediate="false" event="onchange"
-                                            rerender="jrs" status="loading" rendered="{!IF(f == VJFieldName, 'true', 'false')}"
-                                            action="{!refreshListSOJRS}" />
-                                    </apex:inputField>
-                                </apex:actionRegion>
-                            </div>
-                        </div>
+                        <apex:actionRegion >
+                            <c:UTIL_FormField field="{!f.fieldPath}"
+                                sObj="{!vrs}"
+                                sObjType="Volunteer_Recurrence_Schedule__c"
+                                styleClass="slds-p-top--small slds-size--1-of-2"
+                                required="{!f.DBRequired || f.Required}"
+                                actSup="{!f == VJFieldName}"
+                                actSupAction="{!refreshListSOJRS}"
+                                actSupReRender="jrs"/>
+                        </apex:actionRegion>
                     </apex:repeat>
                 </apex:outputPanel>
             </div>
             <apex:actionStatus id="loading"
-                    onstart="document.getElementById('divLoading').style.display = 'block';"
-                    onstop="document.getElementById('divLoading').style.display = 'none';" />
+                onstart="document.getElementById('divLoading').style.display = 'block';"
+                onstop="document.getElementById('divLoading').style.display = 'none';" />
         </div>
 	</apex:form>
 </apex:page>

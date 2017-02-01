@@ -1397,4 +1397,12 @@ day:      &apos;day&apos;</value>
         <shortDescription>the title of the Volunteers Wizard page.</shortDescription>
         <value>Volunteers Wizard</value>
     </labels>
+    <labels>
+        <fullName>lblRequired</fullName>
+        <categories>UTIL_FormField</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>lblRequired</shortDescription>
+        <value>Required</value>
+    </labels>
 </CustomLabels>
