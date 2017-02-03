@@ -581,7 +581,7 @@ public with sharing class VOL_VRS_TEST {
         Date dtEnd1 = system.today().addmonths(2).toStartOfMonth().addDays(-1);
         Date dtStart2 = system.today().addmonths(2).toStartOfMonth();
         Date dtEnd2 = system.today().addmonths(3).toStartOfMonth().addDays(-1);
-        system.debug('****DJH: dtStart1: ' + dtStart1 + ' dtEnd1: ' + dtEnd1 + ' dtStart2: ' + dtStart2 + ' dtEnd2: ' + dtEnd2);
+        //system.debug('****DJH: dtStart1: ' + dtStart1 + ' dtEnd1: ' + dtEnd1 + ' dtStart2: ' + dtStart2 + ' dtEnd2: ' + dtEnd2);
         
         Volunteer_Recurrence_Schedule__c vrs1 = new Volunteer_Recurrence_Schedule__c(
             Contact__c = contact.Id, 
@@ -621,12 +621,12 @@ public with sharing class VOL_VRS_TEST {
         Test.stopTest();  
 
         list<Volunteer_Shift__c> listShift = [select Id, Name, Start_Date_Time__c, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
-        system.debug('****DJH listShift: ' + listShift);
+        //system.debug('****DJH listShift: ' + listShift);
         system.assertEquals(6, listShift.size());
         
         list<Volunteer_Hours__c> listHours = [select Id, Status__c, Planned_Start_Date_Time__c, Number_of_Volunteers__c, Comments__c 
             from Volunteer_Hours__c order by Planned_Start_Date_Time__c];
-        system.debug('****DJH listHours: ' + listHours);
+        //system.debug('****DJH listHours: ' + listHours);
         system.assertEquals(4, listHours.size());
         
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs1.Id order by Planned_Start_Date_Time__c];
