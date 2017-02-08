@@ -29,9 +29,9 @@
 -->  
 
 <apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" docType="html-5.0" standardStylesheets="false">
-    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
-
-    <apex:form id="vfForm">
+    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}"/>
+    <apex:form id="vfForm" html-novalidate="novalidate">
         <div class="sfdo213">
             <!-- PAGE SPINNER -->
             <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
