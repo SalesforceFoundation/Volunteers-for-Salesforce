@@ -43,9 +43,9 @@
     <script src="{!URLFOR($Resource.wtooltip, 'wtooltip.min.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.css')}"/>
     <apex:stylesheet value="{!strURLtoCSSFile}"/>
-    <apex:variable var="slds" value="slds" 
-        rendered="{!!fWeb}">
+    <apex:variable var="slds" value="slds" rendered="{!!fWeb}">
         <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}" />
     </apex:variable>
     <apex:variable var="ns" value="{!IF(namespacePrefix != '', namespacePrefix+'__', '')}" />
 
@@ -273,7 +273,7 @@
     
 </script>
 
-    <apex:outputPanel id="panelPrint" layout="block" style="float:right;margin-right:10px;" rendered="{!AND(NOT(fPrint),NOT(fWeb))}">
+    <apex:outputPanel id="panelPrint" layout="block" style="float:right;margin-right:10px;margin-top:10px;" rendered="{!AND(NOT(fPrint),NOT(fWeb))}">
         <a href="javascript:printWin('/apex/{!ns}JobCalendar?Print=1' +
             '&campaignId={!campaignId}' +
             '&volunteerJobId={!volunteerJobId}' +
@@ -348,7 +348,7 @@
     <!-- CALENDAR -->
     <table width="{!IF(fPrint, '1024px', '100%')}">
         <tr><td>
-            <div id='calendar'></div>
+            <div id='calendar' style="{!IF(AND(NOT(fPrint),NOT(fWeb)), 'padding:10px;', null)}}"></div>
         </td></tr>
     </table>
 </apex:page>
