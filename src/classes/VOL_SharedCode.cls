@@ -234,7 +234,7 @@ global with sharing class VOL_SharedCode {
         set;
     }
     
-    // shared routine to get all Fields names form the specified Field Set on Contact
+    // shared routine to get all Fields names from the specified Field Set on Contact
     // also explicitly adds additional Contact fields that we will always use in our Sites pages.
     global static list<string> listStrFieldsFromContactFieldSet(Schema.FieldSet fs) {
         set<string> setStrFields = new set<string>();
@@ -597,7 +597,7 @@ global with sharing class VOL_SharedCode {
         // behavior, which is that the Sites Guest User Profile can still edit
         // this new contact object we created.  Under api 31, the contact object is readonly.
         // we needed to update the rest of this class to api 31 to handle state & country picklists.
-        VOL_SharedCodeAPI25.LoadAndCopyObject(id, sobj);
+        VOL_SharedCodeAPI25.LoadAndCopyObject(id, sobj, null);
     }
     
     public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {

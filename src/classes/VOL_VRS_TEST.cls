@@ -64,7 +64,7 @@ public with sharing class VOL_VRS_TEST {
             
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = date.newInstance(2012,1,1);
         jrs.Schedule_End_Date__c = date.newInstance(2012,12,31);
         jrs.Weekly_Occurrence__c = 'Every';
@@ -154,7 +154,7 @@ public with sharing class VOL_VRS_TEST {
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -210,7 +210,7 @@ public with sharing class VOL_VRS_TEST {
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -280,7 +280,7 @@ public with sharing class VOL_VRS_TEST {
 
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -361,7 +361,7 @@ public with sharing class VOL_VRS_TEST {
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -370,7 +370,7 @@ public with sharing class VOL_VRS_TEST {
 
         Job_Recurrence_Schedule__c jrs2 = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job2.Id);
         jrs2.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs2.Duration__c = 1;
+        jrs2.Duration__c = 4;
         jrs2.Schedule_Start_Date_Time__c = dtStart;
         jrs2.Schedule_End_Date__c = dtEnd;
         jrs2.Weekly_Occurrence__c = '2nd';
@@ -460,7 +460,7 @@ public with sharing class VOL_VRS_TEST {
 
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -521,7 +521,7 @@ public with sharing class VOL_VRS_TEST {
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -581,6 +581,7 @@ public with sharing class VOL_VRS_TEST {
         Date dtEnd1 = system.today().addmonths(2).toStartOfMonth().addDays(-1);
         Date dtStart2 = system.today().addmonths(2).toStartOfMonth();
         Date dtEnd2 = system.today().addmonths(3).toStartOfMonth().addDays(-1);
+        //system.debug('****DJH: dtStart1: ' + dtStart1 + ' dtEnd1: ' + dtEnd1 + ' dtStart2: ' + dtStart2 + ' dtEnd2: ' + dtEnd2);
         
         Volunteer_Recurrence_Schedule__c vrs1 = new Volunteer_Recurrence_Schedule__c(
             Contact__c = contact.Id, 
@@ -589,7 +590,7 @@ public with sharing class VOL_VRS_TEST {
             Days_of_Week__c = 'Monday;Wednesday',
             Duration__c = 1.5,
             Number_of_Volunteers__c = 2,
-            Comments__c = 'my comments!',
+            Comments__c = 'my comments vrs1!',
             Schedule_Start_Date_Time__c = dtStart1,
             Schedule_End_Date__c = dtEnd1,
             Weekly_Occurrence__c = '2nd');
@@ -602,7 +603,7 @@ public with sharing class VOL_VRS_TEST {
             Days_of_Week__c = 'Monday;Friday',
             Duration__c = 1.5,
             Number_of_Volunteers__c = 2,
-            Comments__c = 'my comments!',
+            Comments__c = 'my comments vrs2!',
             Schedule_Start_Date_Time__c = dtStart2,
             Schedule_End_Date__c = dtEnd2,
             Weekly_Occurrence__c = '2nd');
@@ -610,7 +611,7 @@ public with sharing class VOL_VRS_TEST {
 
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart1;
         jrs.Schedule_End_Date__c = dtEnd2;
         jrs.Weekly_Occurrence__c = '2nd';
@@ -619,11 +620,13 @@ public with sharing class VOL_VRS_TEST {
         insert jrs;      
         Test.stopTest();  
 
-        list<Volunteer_Shift__c> listShift = [select Id, Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
+        list<Volunteer_Shift__c> listShift = [select Id, Name, Start_Date_Time__c, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
+        //system.debug('****DJH listShift: ' + listShift);
         system.assertEquals(6, listShift.size());
         
-        list<Volunteer_Hours__c> listHours = [select Id, Status__c, Number_of_Volunteers__c, Comments__c 
+        list<Volunteer_Hours__c> listHours = [select Id, Status__c, Planned_Start_Date_Time__c, Number_of_Volunteers__c, Comments__c 
             from Volunteer_Hours__c order by Planned_Start_Date_Time__c];
+        //system.debug('****DJH listHours: ' + listHours);
         system.assertEquals(4, listHours.size());
         
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs1.Id order by Planned_Start_Date_Time__c];
@@ -673,7 +676,7 @@ public with sharing class VOL_VRS_TEST {
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
         jrs.Days_of_Week__c = 'Monday;';
-        jrs.Duration__c = 1;
+        jrs.Duration__c = 4;
         jrs.Schedule_Start_Date_Time__c = dtStart;
         jrs.Schedule_End_Date__c = dtEnd;
         jrs.Weekly_Occurrence__c = '2nd';
