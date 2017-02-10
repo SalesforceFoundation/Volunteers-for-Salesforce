@@ -110,16 +110,21 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             contactReadOnly = con;
         }
         ********/
-        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit);                 
+        list<String> listStrFieldsPanel1FS = VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel1FS);
+        list<String> listStrFieldsPanel2FS = VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel2FS);
+        list<String> listStrFieldsExtraFS = VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoExtraFS);
+
+        Set<String> setStrFields = new Set<String>();
+        setStrFields.addAll(listStrFieldsPanel1FS);
+        setStrFields.addAll(listStrFieldsPanel2FS);
+        setStrFields.addAll(listStrFieldsExtraFS);
+        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));                 
         
         
         // output error page messages for any field that doesn't have visibility correctly set.
-       	VOL_SharedCode.testObjectFieldVisibility('Contact', 
-       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel1FS));
-       	VOL_SharedCode.testObjectFieldVisibility('Contact', 
-       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel2FS));
-       	VOL_SharedCode.testObjectFieldVisibility('Contact', 
-       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoExtraFS));
+       	VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsPanel1FS); 
+       	VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsPanel2FS);
+       	VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsExtraFS);
        	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
        		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.PersonalSiteContactInfoUpcomingShifts));
        	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 

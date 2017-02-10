@@ -208,11 +208,19 @@ public with sharing class VOL_VRS {
 		//integer cDesiredVols = 1000;
 		//if (shift.Desired_Number_of_Volunteers__c != null) 
 		//	cDesiredVols = integer.valueOf(shift.Desired_Number_of_Volunteers__c);
+		
 		Date dtShift = shift.Start_Date_Time__c.Date();
 		DateTime dtShiftEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
 		integer nday = VOL_JRS.nDayOfWeek(dtShift);
 		Set<Volunteer_Hours__c> setHoursOld = new set<Volunteer_Hours__c>();
         Set<Volunteer_Hours__c> setHoursUpdate = new set<Volunteer_Hours__c>();
+        
+        /*
+        system.debug('****DJH: shift: ' + shift);
+        system.debug('****DJH: dtShift: ' + dtShift);
+        system.debug('****DJH: dtShiftEnd: ' + dtShiftEnd);
+        system.debug('****DJH: nday: ' + nday);
+		*/
 		
 		for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
 		
@@ -222,9 +230,12 @@ public with sharing class VOL_VRS {
 	
 			// for this jrs, what week should we treat this shift as
 			integer nweek = VOL_JRS.nWeekOfDate(dtFirstOccurrenceInWeek(vrs, dtShift));
+            //system.debug('****DJH: nweek: ' + nweek);
 		
 			list<boolean> listWhichDays = WhichDaysVRS(vrs);
 			list<boolean> listWhichWeeks = WhichWeeksVRS(vrs);
+            //system.debug('****DJH: listWhichDays: ' + listWhichDays);
+            //system.debug('****DJH: listWhichWeeks: ' + listWhichWeeks);
 			
 			if (vrs.Weekly_Occurrence__c == null)
 				continue;
@@ -237,6 +248,8 @@ public with sharing class VOL_VRS {
 				dtShift >= vrs.Schedule_Start_Date_Time__c.Date() &&
 				(vrs.Schedule_End_Date__c == null || vrs.Schedule_End_Date__c >= dtShift)) {
 				    
+                //system.debug('****DJH: vrs candidate for shift: vrs '+ vrs + ' shift ' + shift);
+
 				// we need to deal with the person already having hours on this shift
 				// that might be completed, or canceled, or web signup.  
 				// avoid creating another confirmed record.
@@ -266,6 +279,13 @@ public with sharing class VOL_VRS {
 				Time tmVRS = vrs.Schedule_Start_Date_Time__c.Time();				
 				DateTime dtVRSStart =  datetime.newInstance(dtShift, tmVRS);
 				if (dtVRSStart < shift.Start_Date_Time__c  || dtVRSStart >= dtShiftEnd) {
+				    /*
+					system.debug('****DJH: vrs startdatetime no fit!');
+					system.debug('****DJH: tmVRS: ' + tmVRS);
+					system.debug('****DJH: dtVRSStart: ' + dtVRSStart);
+                    system.debug('****DJH: shift.Start_Date_Time__c: ' + shift.Start_Date_Time__c);
+                    system.debug('****DJH: dtShiftEnd: ' + dtShiftEnd);
+					*/
 					continue;					
 				}	
 					
@@ -290,7 +310,9 @@ public with sharing class VOL_VRS {
                 mapShiftIdContactIdToHours.put(hr.Volunteer_Shift__c + '|' + hr.Contact__c, hr);                    
 				
 				//cDesiredVols--;
-			} 			 		
+			} else {
+			    //system.debug('****DJH: vrs no match shift: vrs '+ vrs + ' shift ' + shift);
+			}			 		
 		}
 		
         // we remove any matched or new hours from the map, so the caller knows who wasn't matched.
