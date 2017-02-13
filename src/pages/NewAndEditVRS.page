@@ -72,7 +72,7 @@
             </div>
             <!-- PAGE ERRORS -->
             <c:UTIL_PageMessages />
-            <div class="slds-form--horizontal slds-m-top--large">
+            <div class="slds-form--horizontal slds-m-around--large">
                 <h3 class="slds-section-title slds-text-align--left">{!$Label.labelCopySchedule}</h3>
                 <apex:outputPanel id="jrs">
                     <div class="slds-form-element slds-p-bottom--large slds-p-top--small slds-size--1-of-2">
