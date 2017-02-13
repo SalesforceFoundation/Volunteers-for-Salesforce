@@ -53,8 +53,11 @@ public with sharing class VOL_JRS {
             (select Id from Volunteer_Hours__r) 
             from Volunteer_Shift__c  
             where Job_Recurrence_Schedule__c in : setJRSId]) {
+            
             for (Volunteer_Shift__c shift : listShift) {
                 Integer count = 0;
+	            // note that to avoid query limits, we avoid looking at Volunteer_Hours__r.size(), and 
+	            // must leverage soql for loops that internally use queryMore. 
                 for (Volunteer_Hours__c hr : shift.Volunteer_Hours__r) {
                     count++;
                     break;
