@@ -29,9 +29,9 @@
 -->  
 
 <apex:page controller="VOL_CTRL_SendBulkEmail"  title="{!$Label.labelMassEmailVolunteersTitle}" tabStyle="Task" docType="html-5.0" standardStylesheets="false">
-    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
-
-    <apex:form id="vfForm">
+    <apex:stylesheet value="{!URLFOR($Resource.sfdo213, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.v4sStaticResources, '/v4s_slds/v4s-common.css')}"/>
+    <apex:form id="vfForm" html-novalidate="novalidate">
         <div class="sfdo213">
             <!-- PAGE SPINNER -->
             <div class="slds-spinner_container" style="z-index:999;position:fixed;display:none;" id="divLoading">
@@ -58,94 +58,96 @@
             <!-- PAGE ERRORS -->
             <c:UTIL_PageMessages />
             <form class="slds-form slds-form--stacked">
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <apex:outputLabel value="{!$Label.labelFrom}" for="idFrom" styleClass="slds-form-element__label" />
-                    <div class="slds-form-element__control">
-                        <div class="slds-select_container">
-                            <apex:selectList id="idFrom" value="{!fromEmailId}" size="1" styleClass="slds-select" >
-                                <apex:selectOptions value="{!listSOFromEmails}" />
-                            </apex:selectList>
+                <div class=" slds-container--medium">
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <apex:outputLabel value="{!$Label.labelFrom}" for="idFrom" styleClass="slds-form-element__label" />
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:selectList id="idFrom" value="{!fromEmailId}" size="1" styleClass="slds-select" >
+                                    <apex:selectOptions value="{!listSOFromEmails}" />
+                                </apex:selectList>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" for="idStatus" styleClass="slds-form-element__label" />
-                    <div class="slds-form-element__control">
-                        <apex:inputField id="idStatus" styleClass="slds-select slds-input" value="{!hourStatus.Status__c}">
-                            <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts,idNumContactsRead" action="{!StatusChanged}" status="loading"/>
-                        </apex:inputField>
-                    </div>
-                </div>
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <div class="slds-form-element__control">
-                        <label class="slds-checkbox">
-                            <apex:inputCheckbox id="idUniqueContacts" value="{!fEmailContactsOnlyOnce}" html-aria-describedby="{!$Component.vfForm.uniqueContactsHelpText}">
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <apex:outputLabel value="{!$Label.labelMassEditVolunteersStatus}" for="idStatus" styleClass="slds-form-element__label" />
+                        <div class="slds-form-element__control">
+                            <apex:inputField id="idStatus" styleClass="slds-select slds-input" value="{!hourStatus.Status__c}">
                                 <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts,idNumContactsRead" action="{!StatusChanged}" status="loading"/>
-                            </apex:inputCheckbox>
-                            <span class="slds-checkbox--faux"></span>
-                            <apex:outputLabel for="idUniqueContacts" styleClass="slds-form-element__label" value="{!$Label.labelMassEmailVolunteersUniqueContacts}"/>
-                        </label>
-                    </div>
-                    <apex:outputText styleClass="slds-form-element__help" id="uniqueContactsHelpText" value="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}" />
-                </div>
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <apex:outputLabel value="{!$Label.labelNumberOfContacts}" for="idNumContactsRead" styleClass="slds-form-element__label" />
-                    <div class="slds-form-element__control">
-                        <apex:outputText id="idNumContacts" value="{!numberOfContacts}" style="font-weight:bold;"/>
-                        <apex:inputText id="idNumContactsRead" value="{!numberOfContacts}" html-readonly="true" styleClass="slds-assistive-text" html-aria-describedby="{!$Component.vfForm.numContactsHelpText}"/>
-                    </div>
-                    <apex:outputText styleClass="slds-form-element__help" id="numContactsHelpText" value="{!$Label.labelNumberOfContactsHelpText}" />
-                </div>
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <div class="slds-form-element__control">
-                        <label class="slds-checkbox">
-                            <apex:inputCheckbox id="idLogActivity" value="{!fLogActivity}" html-aria-describedby="{!$Component.vfForm.logActivityHelpText}"/>
-                            <span class="slds-checkbox--faux"></span>
-                            <apex:outputLabel styleClass="slds-form-element__label" for="idLogActivity" value="{!$Label.labelMassEmailVolunteersLogActivity}"/>
-                        </label>
-                    </div>
-                    <apex:outputText styleClass="slds-form-element__help" id="logActivityHelpText" value="{!$Label.labelMassEmailVolunteersLogActivityHelpText}" />
-                </div>
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <apex:outputLabel value="{!$Label.labelTemplateObject}" for="idTemplateObject" styleClass="slds-form-element__label" />
-                    <div class="slds-form-element__control">
-                        <div class="slds-select_container">
-                            <apex:selectList id="idTemplateObject" value="{!templateObject}" size="1" styleClass="slds-select" html-aria-describedby="{!$Component.vfForm.templateObjectHelpText}" >
-                                <apex:selectOption itemValue="Campaign" itemLabel="{!$ObjectType.Campaign.Label}" />
-                                <apex:selectOption itemValue="Job" itemLabel="{!$ObjectType.Volunteer_Job__c.Label}" />
-                                <apex:selectOption itemValue="Shift" itemLabel="{!$ObjectType.Volunteer_Shift__c.Label}" />
-                                <apex:selectOption itemValue="Hours" itemLabel="{!$ObjectType.Volunteer_Hours__c.Label}" />
-                            </apex:selectList>
+                            </apex:inputField>
                         </div>
                     </div>
-                    <apex:outputText styleClass="slds-form-element__help" id="templateObjectHelpText" value="{!$Label.labelTemplateObjectHelpText}" />
-                </div>
-                <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
-                    <apex:outputLabel value="{!$ObjectType.EmailTemplate.Label}" styleClass="slds-form-element__label" for="idTemplate"/>
-                    <div class="slds-form-element__control">
-                        <div class="slds-select_container">
-                            <apex:selectList id="idTemplate" value="{!templateId}" size="1" styleClass="slds-select" >
-                                <apex:actionSupport immediate="false" event="onchange" status="loading" rerender="txtSubject,txtMessage,readSubject,readMessage,panelEditTemplate" action="{!LoadEmailTemplate}" />
-                                <apex:selectOptions value="{!listSOTemplates}" /> 
-                            </apex:selectList>
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <div class="slds-form-element__control">
+                            <label class="slds-checkbox">
+                                <apex:inputCheckbox id="idUniqueContacts" value="{!fEmailContactsOnlyOnce}" html-aria-describedby="{!$Component.vfForm.uniqueContactsHelpText}">
+                                    <apex:actionSupport immediate="false" event="onchange" rerender="idNumContacts,idNumContactsRead" action="{!StatusChanged}" status="loading"/>
+                                </apex:inputCheckbox>
+                                <span class="slds-checkbox--faux"></span>
+                                <apex:outputLabel for="idUniqueContacts" styleClass="slds-form-element__label" value="{!$Label.labelMassEmailVolunteersUniqueContacts}"/>
+                            </label>
                         </div>
-                        <ul class="slds-list--horizontal slds-has-inline-block-links--space">
-                            <li class="slds-item">
-                                <a href="/{!folderId}" target="_blank" name="">
-                                    {!$Label.labelMassEmailViewTemplates}
-                                </a>
-                            </li>
-                            <li class="slds-item">
-                                <apex:outputPanel id="panelEditTemplate">
-                                    &nbsp;&nbsp;
-                                    <apex:outputText rendered="{!templateId!=null}">
-                                        <a href="{!IF(templateId!=null, '/'+templateId, '')}" target="_blank">
-                                            {!$Label.labelMassEmailEditTemplate}
-                                        </a>
-                                    </apex:outputText>
-                                </apex:outputPanel>
-                            </li>
-                        </ul>
+                        <apex:outputText styleClass="slds-form-element__help" id="uniqueContactsHelpText" value="{!$Label.labelMassEmailVolunteersUniqueContactsHelpText}" />
+                    </div>
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <apex:outputLabel value="{!$Label.labelNumberOfContacts}" for="idNumContactsRead" styleClass="slds-form-element__label" />
+                        <div class="slds-form-element__control">
+                            <apex:outputText id="idNumContacts" value="{!numberOfContacts}" style="font-weight:bold;"/>
+                            <apex:inputText id="idNumContactsRead" value="{!numberOfContacts}" html-readonly="true" styleClass="slds-assistive-text" html-aria-describedby="{!$Component.vfForm.numContactsHelpText}"/>
+                        </div>
+                        <apex:outputText styleClass="slds-form-element__help" id="numContactsHelpText" value="{!$Label.labelNumberOfContactsHelpText}" />
+                    </div>
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <div class="slds-form-element__control">
+                            <label class="slds-checkbox">
+                                <apex:inputCheckbox id="idLogActivity" value="{!fLogActivity}" html-aria-describedby="{!$Component.vfForm.logActivityHelpText}"/>
+                                <span class="slds-checkbox--faux"></span>
+                                <apex:outputLabel styleClass="slds-form-element__label" for="idLogActivity" value="{!$Label.labelMassEmailVolunteersLogActivity}"/>
+                            </label>
+                        </div>
+                        <apex:outputText styleClass="slds-form-element__help" id="logActivityHelpText" value="{!$Label.labelMassEmailVolunteersLogActivityHelpText}" />
+                    </div>
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <apex:outputLabel value="{!$Label.labelTemplateObject}" for="idTemplateObject" styleClass="slds-form-element__label" />
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:selectList id="idTemplateObject" value="{!templateObject}" size="1" styleClass="slds-select" html-aria-describedby="{!$Component.vfForm.templateObjectHelpText}" >
+                                    <apex:selectOption itemValue="Campaign" itemLabel="{!$ObjectType.Campaign.Label}" />
+                                    <apex:selectOption itemValue="Job" itemLabel="{!$ObjectType.Volunteer_Job__c.Label}" />
+                                    <apex:selectOption itemValue="Shift" itemLabel="{!$ObjectType.Volunteer_Shift__c.Label}" />
+                                    <apex:selectOption itemValue="Hours" itemLabel="{!$ObjectType.Volunteer_Hours__c.Label}" />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                        <apex:outputText styleClass="slds-form-element__help" id="templateObjectHelpText" value="{!$Label.labelTemplateObjectHelpText}" />
+                    </div>
+                    <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
+                        <apex:outputLabel value="{!$ObjectType.EmailTemplate.Label}" styleClass="slds-form-element__label" for="idTemplate"/>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:selectList id="idTemplate" value="{!templateId}" size="1" styleClass="slds-select" >
+                                    <apex:actionSupport immediate="false" event="onchange" status="loading" rerender="txtSubject,txtMessage,readSubject,readMessage,panelEditTemplate" action="{!LoadEmailTemplate}" />
+                                    <apex:selectOptions value="{!listSOTemplates}" /> 
+                                </apex:selectList>
+                            </div>
+                            <ul class="slds-list--horizontal slds-has-inline-block-links--space">
+                                <li class="slds-item">
+                                    <a href="/{!folderId}" target="_blank" name="">
+                                        {!$Label.labelMassEmailViewTemplates}
+                                    </a>
+                                </li>
+                                <li class="slds-item">
+                                    <apex:outputPanel id="panelEditTemplate">
+                                        &nbsp;&nbsp;
+                                        <apex:outputText rendered="{!templateId!=null}">
+                                            <a href="{!IF(templateId!=null, '/'+templateId, '')}" target="_blank">
+                                                {!$Label.labelMassEmailEditTemplate}
+                                            </a>
+                                        </apex:outputText>
+                                    </apex:outputPanel>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
