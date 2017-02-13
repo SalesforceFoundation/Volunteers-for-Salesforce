@@ -47,7 +47,7 @@
                 <div class="slds-grid">
                     <div class="slds-col">
                         <h1 class="slds-text-heading--medium">{!$Label.labelVolunteersWizardTitle}</h1>
-                        <p class="slds-text-body--small" style="font-style: italic;">{!$Label.labelVolunteersWizardHelp}</p>
+                        <p class="slds-text-body--small slds-p-right--medium" style="font-style: italic;">{!$Label.labelVolunteersWizardHelp}</p>
                     </div>
                     <div class="slds-col slds-no-flex slds-align-middle">
                         <div class="slds-button-group" role="group">
@@ -69,17 +69,16 @@
                     html-class="slds-grid slds-grid--align-center slds-m-bottom--small" />
             </apex:outputPanel>
 
-            <form class="slds-form slds-form--stacked">
-                <div class="slds-p-horizontal--medium">
+            <form class="slds-form slds-form--stacked ">
+                <div class="slds-p-horizontal--medium slds-p-bottom--medium slds-container--small">
                     <div>
                         <div class="slds-text-title--caps">{!$Label.labelVolunteersWizardCampaignInformation}</div>
                     </div>
                     <apex:repeat value="{!$ObjectType.Campaign.FieldSets.VolunteersWizardFS}" var="f">
-                        <div class="slds-form-element slds-p-top--small">
                             <c:UTIL_FormField field="{!f.fieldPath}"
                                 sObj="{!cmpVols}" sObjType="Campaign"
+                                styleClass="slds-p-top--small"
                                 required="{!f.DBRequired || f.Required}" />
-                        </div>
                     </apex:repeat>
 
                     <div class="slds-p-top--medium">
