@@ -35,24 +35,46 @@
 public with sharing class VOL_JRS {
 
     //******************************************************************************************************
-	// for the specified JRS's, delete all shifts that have no committed & completed hours.
-	// called from the Before Delete JRS trigger.
-	public static void DeleteListJRS(list<Job_Recurrence_Schedule__c> listJRS) {
-		
-		// get a set of the JRS ID's for querying
-		set<ID> setJRSId = new set<ID>();
-		for (Job_Recurrence_Schedule__c jrs : listJRS) {
-			setJRSId.add(jrs.Id);
-		}
-		
-		// get all shifts associated with these JRS's that we should delete
-		list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-		listShift = [select Id, Total_Volunteers__c from Volunteer_Shift__c  
-			where ((Total_Volunteers__c = null or Total_Volunteers__c = 0) and 
-				Job_Recurrence_Schedule__c in : setJRSId)];
-		
-		delete listShift;
-	}
+    // for the specified JRS's, delete all shifts that have no hours, and detach Shifts that have hours.
+    // called from the Before Delete JRS trigger.
+    public static void DeleteListJRS(list<Job_Recurrence_Schedule__c> listJRS) {
+
+        // get a set of the JRS ID's for querying
+        set<ID> setJRSId = new set<ID>();
+        for (Job_Recurrence_Schedule__c jrs : listJRS) {
+            setJRSId.add(jrs.Id);
+        }
+
+        list<Volunteer_Shift__c> listShiftUpdate = new list<Volunteer_Shift__c>();
+        list<Volunteer_Shift__c> listShiftDelete = new list<Volunteer_Shift__c>();
+        
+        // get all shifts associated with these JRS's
+        for (list<Volunteer_Shift__c> listShift : [select Id, Job_Recurrence_Schedule__r.Name, System_Note__c, 
+            (select Id from Volunteer_Hours__r) 
+            from Volunteer_Shift__c  
+            where Job_Recurrence_Schedule__c in : setJRSId]) {
+            for (Volunteer_Shift__c shift : listShift) {
+                Integer count = 0;
+                for (Volunteer_Hours__c hr : shift.Volunteer_Hours__r) {
+                    count++;
+                    break;
+                }
+                // Shifts without any hours get deleted
+                if (count == 0) {
+                    listShiftDelete.add(shift);
+                } else { // Shifts with hours get detached and updated
+                    shift.System_Note__c += ' ' + label.labelJRSShiftRemovedSystemNote + ' ' + shift.Job_Recurrence_Schedule__r.Name + '.';                  
+                    shift.Job_Recurrence_Schedule__c = null;
+                    listShiftUpdate.add(shift);
+                }
+            }
+        }
+        
+        if (listShiftUpdate.size() > 0)
+            update listShiftUpdate;
+        if (listShiftDelete.size() > 0)
+            delete listShiftDelete;
+    }
 
     //******************************************************************************************************
 	// given a list of recurring schedules, does all the work to delete any shifts that
