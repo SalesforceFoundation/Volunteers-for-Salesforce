@@ -861,26 +861,17 @@ public with sharing class VOL_VRS_TEST {
         listHours[6].Status__c = 'Canceled';
         update listHours[6];
         
-        integer cPastHrs = 0;
-        integer cFutureHrs = 0;
-        for (Volunteer_Hours__c hr : listHours) {
-            if (hr.Shift_Start_Date_Time__c <= system.Today())
-                cPastHrs++;
-            else
-                cFutureHrs++;
-        }
-        system.assertEquals(8, cPastHrs + cFutureHrs);
-        
         Test.startTest();
-        vrs.Schedule_End_Date__c = system.Today();
+        vrs.Schedule_End_Date__c = system.Today().addMonths(1).toStartOfMonth().addDays(-1);
         update vrs;
         Test.stopTest(); 
 
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c];
-        system.assertEquals(cPastHrs + 2, listHours.size());
+        // last month, this month, and the two futures we marked canceled/completed
+        system.assertEquals(2 + 2 + 2, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status'];
-        system.assertEquals(cPastHrs, listHours.size());  
+        system.assertEquals(4, listHours.size());  
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Completed'];
         system.assertEquals(1, listHours.size());
