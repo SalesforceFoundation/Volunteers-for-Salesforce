@@ -1150,6 +1150,14 @@ day:      &apos;day&apos;</value>
         <value>Auto-created for Volunteer Recurrence Schedule:</value>
     </labels>
     <labels>
+        <fullName>labelVRSHoursRemovedSystemNote</fullName>
+        <categories>Volunteer Recurrence Schedules</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>system annotation when  an Hours record is detached from a VRS</shortDescription>
+        <value>Removed from Volunteer Recurrence Schedule:</value>
+    </labels>
+    <labels>
         <fullName>labelVolunteerReportHoursErrorRequiredField</fullName>
         <categories>VolunteersReportHours</categories>
         <language>en_US</language>

@@ -580,6 +580,10 @@ day: &apos;día&apos;</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
+        <label><!-- system annotation when  an Hours record is detached from a VRS --></label>
+        <name>labelVRSHoursRemovedSystemNote</name>
+    </customLabels>
+    <customLabels>
         <label>{0} es necesario.</label>
         <name>labelVolunteerReportHoursErrorRequiredField</name>
     </customLabels>
@@ -702,6 +706,10 @@ day: &apos;día&apos;</label>
     <customLabels>
         <label>Asistente para Campañas Voluntarias</label>
         <name>labelVolunteersWizardTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lblRequired --></label>
+        <name>lblRequired</name>
     </customLabels>
     <customTabs>
         <label>Ayuda para Volunteers</label>
