@@ -841,6 +841,7 @@ global with sharing class VOL_SharedCode {
         str = Label.labelShowHelp;
         str = Label.labelFindVolunteersCriteria;
         str = Label.labelFindVolunteersHelpAssign;
+        str = Label.labelVolunteersWizardNewCampaignTitle;
     }
 
      

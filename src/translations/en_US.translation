@@ -573,6 +573,10 @@
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
+        <label><!-- system annotation when  an Hours record is detached from a VRS --></label>
+        <name>labelVRSHoursRemovedSystemNote</name>
+    </customLabels>
+    <customLabels>
         <label><!-- error string for required fields --></label>
         <name>labelVolunteerReportHoursErrorRequiredField</name>
     </customLabels>
@@ -695,6 +699,10 @@
     <customLabels>
         <label><!-- the title of the Volunteers Wizard page. --></label>
         <name>labelVolunteersWizardTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lblRequired --></label>
+        <name>lblRequired</name>
     </customLabels>
     <customTabs>
         <label><!-- Volunteers Help --></label>

@@ -64,7 +64,7 @@ public class VOL_BATCH_Recurrence_TEST {
 		createRecurringJob();
         List<Volunteer_Shift__c> shifts = [SELECT Id FROM Volunteer_Shift__c];
         integer cShifts = shifts.size();
-        system.assert(cShifts >= 0 && cShifts <= 5);
+        system.assert(cShifts >= 0 && cShifts <= 10);
 		
         // now increase our future recurrence limit to a larger size and run the batch
         VOL_SharedCode.VolunteersSettings.Recurring_Job_Future_Months__c = 2;
@@ -74,7 +74,7 @@ public class VOL_BATCH_Recurrence_TEST {
 		Test.stopTest();
 		shifts = [SELECT Id FROM Volunteer_Shift__c];
 		integer cShiftsNew = shifts.size() - cShifts;
-		system.assert(cShiftsNew >=3 && cShiftsNew <= 5);
+		system.assert(cShiftsNew >=4 && cShiftsNew <= 5);
 	}
 
 }

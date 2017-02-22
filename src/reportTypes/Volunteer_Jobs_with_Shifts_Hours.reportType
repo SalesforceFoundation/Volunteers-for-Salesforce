@@ -6,7 +6,7 @@
     <description>Volunteer Jobs with Shift and Hour records</description>
     <join>
         <join>
-            <outerJoin>false</outerJoin>
+            <outerJoin>true</outerJoin>
             <relationship>Volunteer_Hours__r</relationship>
         </join>
         <outerJoin>false</outerJoin>
@@ -132,6 +132,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Volunteer_Website_Time_Zone__c</field>
+            <table>Volunteer_Job__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>External_Signup_Url__c</field>
             <table>Volunteer_Job__c</table>
         </columns>
         <masterLabel>Volunteer Jobs</masterLabel>

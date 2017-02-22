@@ -35,25 +35,63 @@
 public with sharing class VOL_JRS {
 
     //******************************************************************************************************
-	// for the specified JRS's, delete all shifts that have no committed & completed hours.
-	// called from the Before Delete JRS trigger.
-	public static void DeleteListJRS(list<Job_Recurrence_Schedule__c> listJRS) {
-		
-		// get a set of the JRS ID's for querying
-		set<ID> setJRSId = new set<ID>();
-		for (Job_Recurrence_Schedule__c jrs : listJRS) {
-			setJRSId.add(jrs.Id);
-		}
-		
-		// get all shifts associated with these JRS's that we should delete
-		list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-		listShift = [select Id, Total_Volunteers__c from Volunteer_Shift__c  
-			where ((Total_Volunteers__c = null or Total_Volunteers__c = 0) and 
-				Job_Recurrence_Schedule__c in : setJRSId)];
-		
-		delete listShift;
-	}
+    // for the specified JRS's, delete all shifts that have no hours, and detach Shifts that have hours.
+    // called from the Before Delete JRS trigger.
+    public static void DeleteListJRS(list<Job_Recurrence_Schedule__c> listJRS) {
 
+        // get a set of the JRS ID's for querying
+        set<ID> setJRSId = new set<ID>();
+        for (Job_Recurrence_Schedule__c jrs : listJRS) {
+            setJRSId.add(jrs.Id);
+        }
+
+        list<Volunteer_Shift__c> listShiftUpdate = new list<Volunteer_Shift__c>();
+        list<Volunteer_Shift__c> listShiftDelete = new list<Volunteer_Shift__c>();
+        
+        // get all shifts associated with these JRS's
+        for (list<Volunteer_Shift__c> listShift : [select Id, Job_Recurrence_Schedule__r.Name, System_Note__c, 
+            (select Id from Volunteer_Hours__r) 
+            from Volunteer_Shift__c  
+            where Job_Recurrence_Schedule__c in : setJRSId]) {
+            
+            calcDeleteOrDetachJRSShifts(listShift, listShiftDelete, listShiftUpdate);
+        }
+        
+        if (listShiftUpdate.size() > 0)
+            update listShiftUpdate;
+        if (listShiftDelete.size() > 0)
+            delete listShiftDelete;
+    }
+
+    //******************************************************************************************************
+    // Given a list of Shifts, add those who have no Hours to the supplied delete list, and those that have
+    // Hours are detached from their JRS (updating their System Note), and put on the update list.
+    // The caller is responsible for committing to the database.
+    private static void calcDeleteOrDetachJRSShifts(
+        list<Volunteer_Shift__c> listShift, 
+        list<Volunteer_Shift__c> listShiftDelete, 
+        list<Volunteer_Shift__c> listShiftUpdate) {
+
+        for (Volunteer_Shift__c shift : listShift) {
+            Integer count = 0;
+            // note that to avoid query limits, we avoid looking at Volunteer_Hours__r.size(), and 
+            // must leverage soql for loops that internally use queryMore. 
+            for (Volunteer_Hours__c hr : shift.Volunteer_Hours__r) {
+                count++;
+                break;
+            }
+            // Shifts without any hours get deleted
+            if (count == 0) {
+                listShiftDelete.add(shift);
+            } else { // Shifts with hours get detached and updated
+                shift.System_Note__c += ' ' + label.labelJRSShiftRemovedSystemNote + ' ' + shift.Job_Recurrence_Schedule__r.Name + '.';
+                shift.Job_Recurrence_Schedule__c = null;
+                listShiftUpdate.add(shift);
+            }
+        }
+        // we don't commit the shifts, leaving the caller to do it.     
+    }
+    
     //******************************************************************************************************
 	// given a list of recurring schedules, does all the work to delete any shifts that
 	// no longer match, and creates new shifts into the future.
@@ -70,16 +108,20 @@ public with sharing class VOL_JRS {
 			setJRSId.add(jrs.Id);
 		}
 		
-		// get all shifts associated with these JRS's
+		// get appropriate shifts associated with these JRS's
 		list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
 		if (fReviewAllShifts) {
 			listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
-					Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, System_Note__c
+					Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, 
+					System_Note__c, Job_Recurrence_Schedule__r.Name, 
+					(select Id from Volunteer_Hours__r)
 				from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId 
 				order by Start_Date_Time__c];
 		} else {
 			listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
-					Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, System_Note__c
+					Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, 
+					System_Note__c, Job_Recurrence_Schedule__r.Name, 
+					(select Id from Volunteer_Hours__r)
 				from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId and Start_Date_Time__c >= TODAY
 				order by Start_Date_Time__c];
 		}
@@ -177,7 +219,8 @@ public with sharing class VOL_JRS {
 		if (VOL_SharedCode.VolunteersSettings.Recurring_Job_Future_Months__c != null) {
 			nMonths = integer.valueOf(VOL_SharedCode.VolunteersSettings.Recurring_Job_Future_Months__c); 
 		}
-		dtStop = dtStop.addMonths(nMonths);
+		// stop on the last day of the future month
+		dtStop = dtStop.addMonths(nMonths+1).toStartOfMonth().addDays(-1);
 		
 		if (jrs.Schedule_End_Date__c != null)
 			dtStop = jrs.Schedule_End_Date__c;
@@ -208,7 +251,7 @@ public with sharing class VOL_JRS {
 			// see if we already have a shift for that date
 			Volunteer_Shift__c shiftExisting = mapDtShift.get(dtLast);
 			
-			// if we have the shift, update its Job, time and duration
+			// if we have the shift, update its Duration, Start Time, Desired Number of Volunteers, and Description
 			if (shiftExisting != null) {
 				shiftExisting.Duration__c = jrs.Duration__c;
 				shiftExisting.Start_Date_Time__c = datetime.newInstance(dtLast, jrs.Schedule_Start_Date_Time__c.time());
@@ -235,16 +278,8 @@ public with sharing class VOL_JRS {
 		// we've finished identifying shifts to update and those to create.
 		// now figure out if there are any to delete or remove from the jrs.
 		if (fReviewAllShifts) {
-			for (Volunteer_Shift__c shift: mapDtShift.values()) {
-				if (shift.Total_Volunteers__c > 0) {
-					shift.Job_Recurrence_Schedule__c = null;
-					shift.System_Note__c += ' ' + label.labelJRSShiftRemovedSystemNote + ' ' + jrs.Name + '.';					
-					listShiftUpdate.add(shift);	
-				} else {
-					listShiftDelete.add(shift);
-				}
-			}			
-		}		
+            calcDeleteOrDetachJRSShifts(mapDtShift.values(), listShiftDelete, listShiftUpdate);
+		}
 		
 		// we don't commit the shifts, leaving the caller to do it.		
 	}
