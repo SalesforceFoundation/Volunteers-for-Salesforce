@@ -580,6 +580,10 @@ Tag:      &apos;Tag&apos;</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
+        <label><!-- system annotation when  an Hours record is detached from a VRS --></label>
+        <name>labelVRSHoursRemovedSystemNote</name>
+    </customLabels>
+    <customLabels>
         <label>{0} ist erforderlich.</label>
         <name>labelVolunteerReportHoursErrorRequiredField</name>
     </customLabels>
@@ -702,6 +706,10 @@ Tag:      &apos;Tag&apos;</label>
     <customLabels>
         <label>Freiwilligenassistent</label>
         <name>labelVolunteersWizardTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lblRequired --></label>
+        <name>lblRequired</name>
     </customLabels>
     <customTabs>
         <label>Freiwilligen-Hilfe</label>

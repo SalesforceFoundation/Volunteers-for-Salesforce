@@ -90,19 +90,16 @@ public with sharing class VOL_VRS_TEST {
         vrs.Weekly_Occurrence__c = 'Alternate';
         update vrs;
         
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = null];
+        system.assertEquals(10, listHours.size());  // 10 old ones
+
         listHours = [select Id, Status__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id];
-        system.assertEquals(12, listHours.size());  // 11 new ones, plus the completed one saved.
-        
-        // remember those hours
-        set<ID> setHoursId = new set<ID>();
-        for (Volunteer_Hours__c hour : listHours) {
-            setHoursId.add(hour.Id);
-        }
-        
-        // test deleting the vrs to cleanup non committed hours
+        system.assertEquals(11, listHours.size());  // 11 new ones
+
+        // test deleting the vrs to ensure we now keep old hours
         delete vrs;     
-        listHours = [select Id, Status__c from Volunteer_Hours__c where Id in :setHoursId];
-        system.assertEquals(1, listHours.size());
+        listHours = [select Id, Status__c from Volunteer_Hours__c];
+        system.assertEquals(21, listHours.size());
         
         // test deleting a Job will also delete the vrs's
         vrs = new Volunteer_Recurrence_Schedule__c(
@@ -193,7 +190,7 @@ public with sharing class VOL_VRS_TEST {
     }
     
     //******************************************************************************************************
-    // Test updating existing Volunteer Recurrence Schedules deletes Hours that no longer match VRS
+    // Test updating existing Volunteer Recurrence Schedules deletes future Hours that no longer match VRS
     public static testmethod void TestVRSHoursDelete() {
 
         // create test data
@@ -239,7 +236,7 @@ public with sharing class VOL_VRS_TEST {
         system.assertEquals(vrs.Number_of_Volunteers__c, listHours[0].Number_of_Volunteers__c);
         system.assertEquals(vrs.Comments__c, listHours[0].Comments__c);
         
-        // update Wednesday
+        // update first Wednesday
         listHours[1].Status__c = 'Completed';
         update listHours[1];
         
@@ -253,13 +250,13 @@ public with sharing class VOL_VRS_TEST {
         system.assertEquals(5, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status'];
-        system.assertEquals(0, listHours.size());  
+        system.assertEquals(2, listHours.size());  
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Completed'];
         system.assertEquals(1, listHours.size());  
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Confirmed'];
-        system.assertEquals(4, listHours.size());  
+        system.assertEquals(2, listHours.size());  
     }
 
     //******************************************************************************************************
@@ -325,7 +322,7 @@ public with sharing class VOL_VRS_TEST {
         
         for (Volunteer_Hours__c hr : listHours) {
             if (hr.Planned_Start_Date_Time__c.date() >= system.Today()) {
-                system.assertEquals(vrs.Volunteer_Hours_Status__c, hr.Status__c);
+                system.assertEquals(vrsOriginal.Volunteer_Hours_Status__c, hr.Status__c); // no longer update Status!
                 system.assertEquals(vrs.Duration__c, hr.Hours_Worked__c);
                 system.assertEquals(vrs.Number_of_Volunteers__c, hr.Number_of_Volunteers__c);
                 system.assertEquals(vrs.Comments__c, hr.Comments__c);
@@ -483,10 +480,10 @@ public with sharing class VOL_VRS_TEST {
         system.assertEquals(4, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status1' ];
-        system.assertEquals(0, listHours.size());
+        system.assertEquals(2, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status2' ];
-        system.assertEquals(4, listHours.size());
+        system.assertEquals(2, listHours.size());
     }
 
     //******************************************************************************************************
@@ -557,10 +554,10 @@ public with sharing class VOL_VRS_TEST {
         system.assertEquals(4, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status1' ];
-        system.assertEquals(0, listHours.size());
+        system.assertEquals(2, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status2' ];
-        system.assertEquals(4, listHours.size());
+        system.assertEquals(2, listHours.size());
     }
 
     //******************************************************************************************************
@@ -728,4 +725,159 @@ public with sharing class VOL_VRS_TEST {
             system.assertEquals(vrs2.Comments__c, listHours[i].Comments__c);
         }
     }
+
+    //******************************************************************************************************
+    // Test deleting existing Volunteer Recurrence Schedules deletes future Hours, detaches past Hours
+    public static testmethod void TestVRSDelete() {
+
+        // create test data
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+            name='Job Calendar Test Campaign', IsActive=true);
+        insert cmp;
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        insert job;
+        Contact contact = new Contact(firstname='test', lastname='test');
+        insert contact;
+        
+        Date dtStart = system.today().addmonths(-1).toStartOfMonth();
+        Date dtEnd = system.today().addmonths(2).toStartOfMonth().addDays(-1);
+        
+        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
+        jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
+        jrs.Duration__c = 4;
+        jrs.Schedule_Start_Date_Time__c = dtStart;
+        jrs.Schedule_End_Date__c = dtEnd;
+        jrs.Weekly_Occurrence__c = '2nd';
+        jrs.Desired_Number_of_Volunteers__c = 5;
+        insert jrs;
+        
+        list<Volunteer_Shift__c> listShift = [select Id, Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
+        system.assertEquals(9, listShift.size());
+        
+        Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
+            Contact__c = contact.Id, 
+            Volunteer_Job__c = job.Id,
+            Volunteer_Hours_Status__c = 'My Custom Status',
+            Days_of_Week__c = 'Monday;Wednesday',
+            Duration__c = 1.5,
+            Number_of_Volunteers__c = 2,
+            Comments__c = 'my comments!',
+            Schedule_Start_Date_Time__c = dtStart,
+            Schedule_End_Date__c = dtEnd,
+            Weekly_Occurrence__c = '2nd');
+        insert vrs;
+        
+        list<Volunteer_Hours__c> listHours = [select Id, Status__c, Number_of_Volunteers__c, Comments__c, Shift_Start_Date_Time__c 
+            from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id order by Shift_Start_Date_Time__c];
+        system.assertEquals(6, listHours.size());
+        system.assertEquals(vrs.Number_of_Volunteers__c, listHours[0].Number_of_Volunteers__c);
+        system.assertEquals(vrs.Comments__c, listHours[0].Comments__c);
+        
+        // update last Wednesday
+        listHours[5].Status__c = 'Completed';
+        update listHours[5];
+        // update last Monday
+        listHours[4].Status__c = 'Canceled';
+        update listHours[4];
+        
+        integer cPastHrs = 0;
+        integer cFutureHrs = 0;
+        for (Volunteer_Hours__c hr : listHours) {
+            if (hr.Shift_Start_Date_Time__c < system.Today())
+                cPastHrs++;
+            else
+                cFutureHrs++;
+        }
+        system.assertEquals(6, cPastHrs + cFutureHrs);
+        
+        Test.startTest();
+        delete vrs;
+        Test.stopTest(); 
+
+        listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c];
+        system.assertEquals(cPastHrs + 2, listHours.size());
+        
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status'];
+        system.assertEquals(cPastHrs, listHours.size());  
+        
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Completed'];
+        system.assertEquals(1, listHours.size());
+
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Canceled'];
+        system.assertEquals(1, listHours.size());
+    }
+
+    //******************************************************************************************************
+    // Test shortening existing Volunteer Recurrence Schedules deletes future Hours, detaches past Hours
+    public static testmethod void TestVRSShorten() {
+
+        // create test data
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+            name='Job Calendar Test Campaign', IsActive=true);
+        insert cmp;
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        insert job;
+        Contact contact = new Contact(firstname='test', lastname='test');
+        insert contact;
+        
+        Date dtStart = system.today().addmonths(-1).toStartOfMonth();
+        Date dtEnd = system.today().addmonths(3).toStartOfMonth().addDays(-1);
+        
+        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
+        jrs.Days_of_Week__c = 'Monday;Wednesday;Friday';
+        jrs.Duration__c = 4;
+        jrs.Schedule_Start_Date_Time__c = dtStart;
+        jrs.Schedule_End_Date__c = dtEnd;
+        jrs.Weekly_Occurrence__c = '2nd';
+        jrs.Desired_Number_of_Volunteers__c = 5;
+        insert jrs;
+        
+        list<Volunteer_Shift__c> listShift = [select Id, Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Job_Recurrence_Schedule__c = :jrs.Id];
+        system.assertEquals(12, listShift.size());
+        
+        Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
+            Contact__c = contact.Id, 
+            Volunteer_Job__c = job.Id,
+            Volunteer_Hours_Status__c = 'My Custom Status',
+            Days_of_Week__c = 'Monday;Wednesday',
+            Duration__c = 1.5,
+            Number_of_Volunteers__c = 2,
+            Comments__c = 'my comments!',
+            Schedule_Start_Date_Time__c = dtStart,
+            Schedule_End_Date__c = dtEnd,
+            Weekly_Occurrence__c = '2nd');
+        insert vrs;
+        
+        list<Volunteer_Hours__c> listHours = [select Id, Status__c, Number_of_Volunteers__c, Comments__c, Shift_Start_Date_Time__c 
+            from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs.Id order by Shift_Start_Date_Time__c];
+        system.assertEquals(8, listHours.size());
+        system.assertEquals(vrs.Number_of_Volunteers__c, listHours[0].Number_of_Volunteers__c);
+        system.assertEquals(vrs.Comments__c, listHours[0].Comments__c);
+        
+        // update last Wednesday
+        listHours[7].Status__c = 'Completed';
+        update listHours[7];
+        // update last Monday
+        listHours[6].Status__c = 'Canceled';
+        update listHours[6];
+        
+        Test.startTest();
+        vrs.Schedule_End_Date__c = system.Today().addMonths(1).toStartOfMonth().addDays(-1);
+        update vrs;
+        Test.stopTest(); 
+
+        listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c];
+        // last month, this month, and the two futures we marked canceled/completed
+        system.assertEquals(2 + 2 + 2, listHours.size());
+        
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status'];
+        system.assertEquals(4, listHours.size());  
+        
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Completed'];
+        system.assertEquals(1, listHours.size());
+
+        listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'Canceled'];
+        system.assertEquals(1, listHours.size());
+    }
+
 }

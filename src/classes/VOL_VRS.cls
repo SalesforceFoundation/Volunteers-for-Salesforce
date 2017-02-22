@@ -36,44 +36,51 @@ public with sharing class VOL_VRS {
 
 
     //******************************************************************************************************
-	// for the specified VRS's, delete all hours that are not completed hours.
-	// called from the After Delete VRS trigger.
-	public static void DeleteListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS) {
-		DeleteListVRS(listVRS, false);
-	}
-		
-    //******************************************************************************************************
-	// for the specified VRS's, delete all hours that are not completed hours.
-	// called from the After Delete VRS trigger and when we are processing a modified VRS.
-	private static void DeleteListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS, boolean fPreserveCanceled) {
+    // for the specified VRS's, delete all future hours that are not completed or canceled hours.  
+    // Past Hours and future completed/canceled Hours are detached from the VRS.
+    // called from the After Delete VRS trigger.
+    public static void DeleteListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS) {
 
-		// get a set of the VRS ID's for querying
-		set<ID> setVRSId = new set<ID>();
-		for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
-			setVRSId.add(vrs.Id);
-		}
-		
-		// get all hours associated with these VRS's that we should delete
-		list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();
-		if (fPreserveCanceled) {
-			listHours = [select Id from Volunteer_Hours__c  
-				where (Status__c <> 'Completed' and Status__c <> 'Canceled' and
-					Volunteer_Recurrence_Schedule__c in : setVRSId)];
-		} else {
-			listHours = [select Id from Volunteer_Hours__c  
-				where (Status__c <> 'Completed' and
-					Volunteer_Recurrence_Schedule__c in : setVRSId)];			
-		}
-				
-		if (listHours.size() > 0) {
-			delete listHours;
-			
-			// if PreserveCanceled, then we know we are updating the VRS, and so there is no need
-			// to keep the deleted Hours in the recycle bin, since we are going to recreate the hours.
-			if (fPreserveCanceled)
-				Database.emptyRecycleBin(listHours);
-		}
-	}
+        // get a set of the VRS ID's for querying
+        set<ID> setVRSId = new set<ID>();
+        for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
+            setVRSId.add(vrs.Id);
+        }
+
+        // get all hours associated with these VRS's
+        list<Volunteer_Hours__c> listHours =  [select Id, Status__c, Shift_Start_Date_Time__c, 
+            Volunteer_Recurrence_Schedule__r.Name, Volunteer_Recurrence_Schedule__c, System_Note__c 
+            from Volunteer_Hours__c  
+            where Volunteer_Recurrence_Schedule__c in : setVRSId];
+            
+        deleteOrDetachVRSHours(listHours);
+    }
+
+    //******************************************************************************************************
+    // Given a list of Hours, delete those that should be deleted (Future and status <> Completed or Canceled), 
+    // and just detach the other Hours (Past or Completed/Canceled) from their VRS.
+    private static void deleteOrDetachVRSHours(list<Volunteer_Hours__c> listHours) {
+        list<Volunteer_Hours__c> listHoursDelete = new list<Volunteer_Hours__c>();
+        list<Volunteer_Hours__c> listHoursUpdate = new list<Volunteer_Hours__c>();
+        
+        for (Volunteer_Hours__c hr : listHours) {
+            if (hr.Status__c == 'Completed' || hr.Status__c == 'Canceled' || hr.Shift_Start_Date_Time__c < system.Today()) {
+                hr.System_Note__c += ' ' + label.labelVRSHoursRemovedSystemNote + ' ' + hr.Volunteer_Recurrence_Schedule__r.Name + '.';
+                hr.Volunteer_Recurrence_Schedule__c = null;
+                listHoursUpdate.add(hr);
+            } else {
+                listHoursDelete.add(hr);
+            }
+        }
+        
+        if (listHoursUpdate.size() > 0) {
+            update listHoursUpdate;
+        }
+            
+        if (listHoursDelete.size() > 0) {
+            delete listHoursDelete;
+        }
+    }
 
    	//******************************************************************************************************
 	// given a list of Volunteer recurring schedules, does all the work to delete any hours that
@@ -102,7 +109,7 @@ public with sharing class VOL_VRS {
 			setContactId.add(vrs.Contact__c);
 		}
 		
-		// if the VRS was updated, then deal with potent changes to the VRS's job or contact 
+		// if the VRS was updated, then deal with potential changes to the VRS's job or contact 
 		if (listVRSOld != null) {
 	        for (Volunteer_Recurrence_Schedule__c vrs : listVRSOld) {
 	            setVRSId.add(vrs.Id);
@@ -111,7 +118,7 @@ public with sharing class VOL_VRS {
 	        }
 		}
 							
-		// get all shifts of the jobs these vrs's are associated with
+		// get appropriate shifts of the jobs these vrs's are associated with
 		list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
 		if (fReviewAllShifts) {
 			listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
@@ -140,10 +147,12 @@ public with sharing class VOL_VRS {
 		list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
 		if (fReviewAllShifts) { 
 			listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
+                Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
 				Volunteer_Shift__c, Status__c, Contact__c from
 				Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId];
 		} else {
             listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
+                Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
                 Volunteer_Shift__c, Status__c, Contact__c from
                 Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId and Shift_Start_Date_Time__c >= TODAY];
 		}
@@ -167,17 +176,15 @@ public with sharing class VOL_VRS {
             update listHoursUpdate;
         }
 
-		// mapShiftIdContactIdToHours now contains only the Hours that did not match the VRS's, 
-		// so we can delete them if they aren't marked Completed or Canceled, and they used to be associated with these VRS's.
+		// mapShiftIdContactIdToHours now contains only the Future Hours that did not match the VRS's, 
+		// so we can delete or detach them if they used to be associated with these VRS's.
 		list<Volunteer_Hours__c> listHRDelete = new list<Volunteer_Hours__c>();
 		for (Volunteer_Hours__c hr : mapShiftIdContactIdToHours.values()) {
-		    if (hr.Status__c != 'Completed' && hr.Status__c != 'Canceled' && setVRSId.contains(hr.Volunteer_Recurrence_Schedule__c)) {
+		    if (setVRSId.contains(hr.Volunteer_Recurrence_Schedule__c)) {
 		        listHRDelete.add(hr);
 		    }
 		}
-        if (listHRDelete.size() > 0) {
-            delete listHRDelete;
-        }
+        deleteOrDetachVRSHours(listHRDelete);
 	}
 	
     //******************************************************************************************************
@@ -256,13 +263,11 @@ public with sharing class VOL_VRS {
 				// note that if we match, we remove the key from the map, so we know it was matched.
 				Volunteer_Hours__c hrExisting = mapShiftIdContactIdToHours.get(shift.Id + '|' + vrs.Contact__c);
 				if (hrExisting != null) {
-					// if shift/hour in the future, we update a subset of fields
+					// if shift/hour in the future, we update a subset of fields (Not Status though!)
 					if (dtShift >= System.today()) {
                         hrExisting.Hours_Worked__c = vrs.Duration__c;
                         if (vrs.Number_of_Volunteers__c != null && vrs.Number_of_Volunteers__c >= 1)
                             hrExisting.Number_of_Volunteers__c = vrs.Number_of_Volunteers__c;
-                        if (vrs.Volunteer_Hours_Status__c != null) 
-                            hrExisting.Status__c = vrs.Volunteer_Hours_Status__c;
                         hrExisting.Planned_Start_Date_Time__c = datetime.newInstance(shift.Start_Date_Time__c.date(), vrs.Schedule_Start_Date_Time__c.time());
                         if (vrs.Comments__c != null)
                             hrExisting.Comments__c = vrs.Comments__c;
