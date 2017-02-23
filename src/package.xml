@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Volunteers for Salesforce</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
     <types>
         <members>ComponentControllerBase</members>
         <members>PageControllerBase</members>
@@ -397,6 +398,54 @@
         <name>CustomObject</name>
     </types>
     <types>
+        <members>Campaign-de</members>
+        <members>Campaign-en_US</members>
+        <members>Campaign-es</members>
+        <members>Campaign-fr</members>
+        <members>Campaign-ja</members>
+        <members>Contact-de</members>
+        <members>Contact-en_US</members>
+        <members>Contact-es</members>
+        <members>Contact-fr</members>
+        <members>Contact-ja</members>
+        <members>Job_Recurrence_Schedule__c-de</members>
+        <members>Job_Recurrence_Schedule__c-en_US</members>
+        <members>Job_Recurrence_Schedule__c-es</members>
+        <members>Job_Recurrence_Schedule__c-fr</members>
+        <members>Job_Recurrence_Schedule__c-ja</members>
+        <members>Lead-de</members>
+        <members>Lead-en_US</members>
+        <members>Lead-es</members>
+        <members>Lead-fr</members>
+        <members>Lead-ja</members>
+        <members>Volunteer_Hours__c-de</members>
+        <members>Volunteer_Hours__c-en_US</members>
+        <members>Volunteer_Hours__c-es</members>
+        <members>Volunteer_Hours__c-fr</members>
+        <members>Volunteer_Hours__c-ja</members>
+        <members>Volunteer_Job__c-de</members>
+        <members>Volunteer_Job__c-en_US</members>
+        <members>Volunteer_Job__c-es</members>
+        <members>Volunteer_Job__c-fr</members>
+        <members>Volunteer_Job__c-ja</members>
+        <members>Volunteer_Recurrence_Schedule__c-de</members>
+        <members>Volunteer_Recurrence_Schedule__c-en_US</members>
+        <members>Volunteer_Recurrence_Schedule__c-es</members>
+        <members>Volunteer_Recurrence_Schedule__c-fr</members>
+        <members>Volunteer_Recurrence_Schedule__c-ja</members>
+        <members>Volunteer_Shift__c-de</members>
+        <members>Volunteer_Shift__c-en_US</members>
+        <members>Volunteer_Shift__c-es</members>
+        <members>Volunteer_Shift__c-fr</members>
+        <members>Volunteer_Shift__c-ja</members>
+        <members>Volunteers_Settings__c-de</members>
+        <members>Volunteers_Settings__c-en_US</members>
+        <members>Volunteers_Settings__c-es</members>
+        <members>Volunteers_Settings__c-fr</members>
+        <members>Volunteers_Settings__c-ja</members>
+        <name>CustomObjectTranslation</name>
+    </types>
+    <types>
         <members>About_Volunteers</members>
         <members>Find_Volunteers</members>
         <members>Job_Recurrence_Schedule__c</members>
@@ -556,6 +605,14 @@
         <members>v4sStaticResources</members>
         <members>wtooltip</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members>de</members>
+        <members>en_US</members>
+        <members>es</members>
+        <members>fr</members>
+        <members>ja</members>
+        <name>Translations</name>
     </types>
     <types>
         <members>Job_Recurrence_Schedule__c.JRS_Days_Of_Week_Required</members>
