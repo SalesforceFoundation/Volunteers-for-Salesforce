@@ -65,14 +65,14 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label>הקודם:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
-הבא:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
-שנה קודמת: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
-שנה הבאה: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
-היום:    &apos;היום&apos;,
-חודש:    &apos;חודש&apos;,
-שבוע:     &apos;שבוע&apos;,
-יום:      &apos;יום&apos;</label>
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today: &apos;היום&apos;,
+month: &apos;חודש&apos;,
+week: &apos;שבוע&apos;,
+day: &apos;ום&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
@@ -80,7 +80,7 @@
         <name>labelCalendarCloseWindow</name>
     </customLabels>
     <customLabels>
-        <label>חודש: &apos;ddd&apos;, שבוע: &apos;ddd M/d&apos;, יום: &apos;dddd M/d&apos;</label>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</label>
         <name>labelCalendarColumnFormat</name>
     </customLabels>
     <customLabels>
