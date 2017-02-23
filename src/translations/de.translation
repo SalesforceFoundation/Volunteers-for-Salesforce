@@ -80,7 +80,7 @@ day:      &apos;Tag&apos;</label>
         <name>labelCalendarCloseWindow</name>
     </customLabels>
     <customLabels>
-        <label>Monat: &apos;ttt&apos;, Woche: &apos;ttt M/t&apos;, Tag: &apos;tttt M/t&apos;</label>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</label>
         <name>labelCalendarColumnFormat</name>
     </customLabels>
     <customLabels>

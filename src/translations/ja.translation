@@ -69,10 +69,10 @@
 next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
 prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
 nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
-today:    &apos;today&apos;,
-month:    &apos;month&apos;,
-week:     &apos;week&apos;,
-day:      &apos;day&apos;</label>
+today:    &apos;今日&apos;,
+month:    &apos;月&apos;,
+week:     &apos;週&apos;,
+day:      &apos;日&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
@@ -80,7 +80,7 @@ day:      &apos;day&apos;</label>
         <name>labelCalendarCloseWindow</name>
     </customLabels>
     <customLabels>
-        <label>月: &apos;ddd&apos;, 週: &apos;ddd M/d&apos;, 日: &apos;dddd M/d&apos;</label>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</label>
         <name>labelCalendarColumnFormat</name>
     </customLabels>
     <customLabels>
