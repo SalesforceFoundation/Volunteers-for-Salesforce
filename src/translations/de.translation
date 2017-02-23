@@ -65,14 +65,14 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label>Vorige:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
-nächstes:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
-Vorjahr: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
-nächstesJahr: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
-heute:    &apos;Heute&apos;,
-Monat:    &apos;Monat&apos;,
-Woche:     &apos;Woche&apos;,
-Tag:      &apos;Tag&apos;</label>
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today:    &apos;Heute&apos;,
+month:    &apos;Monat&apos;,
+week:     &apos;Woche&apos;,
+day:      &apos;Tag&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
@@ -152,7 +152,7 @@ Tag:      &apos;Tag&apos;</label>
         <name>labelChooseCriteria</name>
     </customLabels>
     <customLabels>
-        <label>Mittelblau,&quot;Grün&quot;,&quot;Dunkelrot&quot;, &quot;Violett&quot;, &quot;Schiefergrau&quot;, &quot;Mitternachtsblau&quot;</label>
+        <label><!-- list of browser color values for JobCalendar --></label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>

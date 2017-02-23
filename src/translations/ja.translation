@@ -65,14 +65,14 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label>前へ:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
-次へ:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
-前年: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
-来年: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
-今日:    &apos;today&apos;,
-月:    &apos;month&apos;,
-週:     &apos;week&apos;,
-日:      &apos;day&apos;</label>
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today:    &apos;today&apos;,
+month:    &apos;month&apos;,
+week:     &apos;week&apos;,
+day:      &apos;day&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
@@ -152,7 +152,7 @@
         <name>labelChooseCriteria</name>
     </customLabels>
     <customLabels>
-        <label>ミディアムブルー,&quot;グリーン&quot;,&quot;ダークレッド&quot;, &quot;パープル&quot;, &quot;ダークスレートグレー&quot;, &quot;ミッドナイトブルー&quot;</label>
+        <label><!-- list of browser color values for JobCalendar --></label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
