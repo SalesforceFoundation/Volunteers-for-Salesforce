@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
-        <label><!-- Volunteer Availability --></label>
+        <label>זמינות מתנדב</label>
         <name>Volunteer_Availability__c</name>
         <picklistValues>
             <masterLabel>Afternoon</masterLabel>
-            <translation><!-- Afternoon --></translation>
+            <translation>אחה&quot;צ</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Morning</masterLabel>
-            <translation><!-- Morning --></translation>
+            <translation>בוקר</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekdays</masterLabel>
-            <translation><!-- Weekdays --></translation>
+            <translation>ימי חול</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekends</masterLabel>
-            <translation><!-- Weekends --></translation>
+            <translation>סופי שבוע</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <translation>שבועית</translation>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Notes --></label>
+        <label>הערות מתנדב</label>
         <name>Volunteer_Notes__c</name>
     </fields>
     <fields>
-        <help><!-- Select the skill(s) this person has that should be used to find volunteer jobs. --></help>
-        <label><!-- Volunteer Skills --></label>
+        <help>בחר את הכישורים של אדם זה שצריכים לשמש לחיפוש משימות התנדבות.</help>
+        <label>כישורי מתנדב</label>
         <name>Volunteer_Skills__c</name>
         <picklistValues>
             <masterLabel>Computer usage</masterLabel>
-            <translation><!-- Computer usage --></translation>
+            <translation>שימוש במחשב</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Event Planning</masterLabel>
-            <translation><!-- Event Planning --></translation>
+            <translation>תכנון אירועים</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Fundraising</masterLabel>
-            <translation><!-- Fundraising --></translation>
+            <translation>גיוס תרומות</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Landscaping</masterLabel>
-            <translation><!-- Landscaping --></translation>
+            <translation>גינון</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manual labor</masterLabel>
-            <translation><!-- Manual labor --></translation>
+            <translation>עבודה פיזית</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Marketing</masterLabel>
-            <translation><!-- Marketing --></translation>
+            <translation>שיווק</translation>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Status --></label>
+        <label>מצב מתנדב</label>
         <name>Volunteer_Status__c</name>
         <picklistValues>
             <masterLabel>New Sign Up</masterLabel>
-            <translation><!-- New Sign Up --></translation>
+            <translation>הרשמה חדשה</translation>
         </picklistValues>
     </fields>
     <workflowTasks>

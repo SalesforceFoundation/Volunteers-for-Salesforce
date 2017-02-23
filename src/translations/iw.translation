@@ -5,59 +5,59 @@
         <name>Groundwire_Volunteers</name>
     </customApplications>
     <customLabels>
-        <label><!-- PageMessagesConfirm --></label>
+        <label>הצלחה</label>
         <name>PageMessagesConfirm</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesError --></label>
+        <label>שגיאה</label>
         <name>PageMessagesError</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesFatal --></label>
+        <label>שגיאה</label>
         <name>PageMessagesFatal</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesWarning --></label>
+        <label>אזהרה</label>
         <name>PageMessagesWarning</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Assign button --></label>
+        <label>הקצאה</label>
         <name>labelButtonAssign</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Cancel button used on several pages. --></label>
+        <label>ביטול</label>
         <name>labelButtonCancel</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Close button on various pages --></label>
+        <label>סגור</label>
         <name>labelButtonClose</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Update button --></label>
+        <label>עדכון</label>
         <name>labelButtonEdit</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Find button --></label>
+        <label>איתור</label>
         <name>labelButtonFind</name>
     </customLabels>
     <customLabels>
-        <label><!-- The label for the Save button used on several pages. --></label>
+        <label>שמור</label>
         <name>labelButtonSave</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Save and Close button used on several pages --></label>
+        <label>שמור וסגור</label>
         <name>labelButtonSaveAndClose</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Send button --></label>
+        <label>שלח</label>
         <name>labelButtonSend</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for VolunteersJobListingFS page&apos;s Sign Up button --></label>
+        <label>הרשמה</label>
         <name>labelButtonSignUp</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar label for all-day slot --></label>
+        <label>כל היום</label>
         <name>labelCalendarAllDay</name>
     </customLabels>
     <customLabels>
@@ -65,27 +65,34 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar label for button text --></label>
+        <label>הקודם:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+הבא:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+שנה קודמת: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+שנה הבאה: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+היום:    &apos;היום&apos;,
+חודש:    &apos;חודש&apos;,
+שבוע:     &apos;שבוע&apos;,
+יום:      &apos;יום&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Close Window link in Calendar --></label>
+        <label>סגור חלון</label>
         <name>labelCalendarCloseWindow</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar label for Column Format --></label>
+        <label>חודש: &apos;ddd&apos;, שבוע: &apos;ddd M/d&apos;, יום: &apos;dddd M/d&apos;</label>
         <name>labelCalendarColumnFormat</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for confirmed count on Calendar --></label>
+        <label>אושר:&amp;nbsp;</label>
         <name>labelCalendarConfirmed</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar list of Day Names --></label>
+        <label>&apos;ראשון&apos;, &apos;שני&apos;, &apos;שלישי&apos;, &apos;רביעי&apos;, &apos;חמישי&apos;, &apos;שישי&apos;, &apos;שבת&apos;</label>
         <name>labelCalendarDayNames</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar list of Short Day Names --></label>
+        <label>&apos;א&apos;, &apos;ב&apos;, &apos;ג&apos;, &apos;ד&apos;, &apos;ה&apos;, &apos;ו&apos;, &apos;ש&apos;</label>
         <name>labelCalendarDayNamesShort</name>
     </customLabels>
     <customLabels>
@@ -93,51 +100,51 @@
         <name>labelCalendarFirstDay</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar list of Month Names --></label>
+        <label>&apos;ינואר&apos;, &apos;פברואר&apos;, &apos;מרץ&apos;, &apos;אפריל&apos;, &apos;מאי&apos;, &apos;יוני&apos;, &apos;יולי&apos;, &apos;אוגוסט&apos;, &apos;ספטמבר&apos;, &apos;אוקטובר&apos;, &apos;נובמבר&apos;, &apos;דצמבר&apos;</label>
         <name>labelCalendarMonthNames</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar list of Short Month Names --></label>
+        <label>&apos;ינו&apos;, &apos;פבר&apos;, &apos;מרץ&apos;, &apos;אפר&apos;, &apos;מאי&apos;, &apos;יונ&apos;, &apos;יול&apos;, &apos;אוג&apos;, &apos;ספט&apos;, &apos;אוק&apos;, &apos;נוב&apos;, &apos;דצמ&apos;</label>
         <name>labelCalendarMonthNamesShort</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Shift Calendar page --></label>
+        <label>יומן משמרות מתנדבים</label>
         <name>labelCalendarPageTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Print This Page link in calendar --></label>
+        <label>הדפס דף זה</label>
         <name>labelCalendarPrintThisPage</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Printable View link in calendar --></label>
+        <label>תצוגה ניתנת להדפסה</label>
         <name>labelCalendarPrintableView</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Roster link on Calendar --></label>
+        <label>לוח משמרות</label>
         <name>labelCalendarRoster</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for marking calendar shifts as full --></label>
+        <label>(מלא)</label>
         <name>labelCalendarShiftFull</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for still needed count on calendar --></label>
+        <label>&amp;nbsp;&amp;nbsp;עדיין דרושים:&amp;nbsp;</label>
         <name>labelCalendarStillNeeded</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar label for  Time Format --></label>
+        <label>סדר יום: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
         <name>labelCalendarTimeFormat</name>
     </customLabels>
     <customLabels>
-        <label><!-- calendar label for Title Format --></label>
+        <label>חודש: &apos;MMMM yyyy&apos;, שבוע: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, יום: &apos;dddd, MMM d, yyyy&apos;</label>
         <name>labelCalendarTitleFormat</name>
     </customLabels>
     <customLabels>
-        <label><!-- all campaigns entry in the Campaign filter on the JobCalendar page --></label>
+        <label>(כל מבצעי גיוס המתנדבים הפעילים)</label>
         <name>labelChoiceAllActiveCampaigns</name>
     </customLabels>
     <customLabels>
-        <label><!-- all jobs entry in the Campaign filter on the JobCalendar page --></label>
+        <label>(כל המשימות)</label>
         <name>labelChoiceAllJobs</name>
     </customLabels>
     <customLabels>
@@ -149,427 +156,433 @@
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the cancel messagbox on the PersonalSiteContactInfo page --></label>
+        <label>האם אתה בטוח שברצונך לבטל משמרת זו?</label>
         <name>labelContactInfoCancelMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- title of contact info chart --></label>
+        <label>כיצד אתה מבצע מעקב?</label>
         <name>labelContactInfoChart</name>
     </customLabels>
     <customLabels>
-        <label><!-- label of chart x axis on Contact Info page --></label>
+        <label>חודש</label>
         <name>labelContactInfoChartXAxis</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for chart y axis on Contact Info page --></label>
+        <label>שעות התנדבות</label>
         <name>labelContactInfoChartYAxis</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Date table column on PersonalSiteContactInfo --></label>
+        <label>תאריך</label>
         <name>labelContactInfoDateTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Details link on PersonalSiteContactInfo --></label>
+        <label>פרטים</label>
         <name>labelContactInfoDetails</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Volunteer History on PersonalSiteContactInfo page --></label>
+        <label>היסטוריית ההתנדבות האחרונה שלך</label>
         <name>labelContactInfoHistory</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Hours table column on PersonalSiteContactInfo --></label>
+        <label>שעות</label>
         <name>labelContactInfoHoursTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Job table column on PersonalSiteContactInfo --></label>
+        <label>משימה</label>
         <name>labelContactInfoJobTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for the Contact Lookup widget page --></label>
+        <label>פרטי ההתנדבות שלך</label>
         <name>labelContactInfoLookupTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- sub message on PersonalSiteContactInfo if the volunteer has no completed hours. --></label>
+        <label>ראה את הנתונים הסטטיסטיים והיסטוריית ההתנדבות שלך לאחר השתתפותך בפעם הראשונה.</label>
         <name>labelContactInfoNewVolunteerText</name>
     </customLabels>
     <customLabels>
-        <label><!-- label on PersonalSiteContactInfo if the volunteer has no completed hours. --></label>
+        <label>קבלת פנים למתנדב חדש</label>
         <name>labelContactInfoNewVolunteerTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Top % on Contact Info page --></label>
+        <label>קצה עליון</label>
         <name>labelContactInfoRankText</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelContactInfoRankText12Months --></label>
+        <label>{0} מובילים ב-12 החודשים האחרונים</label>
         <name>labelContactInfoRankText12Months</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelContactInfoRankTextLifetime --></label>
+        <label>{0} מובילים במחזור החיים</label>
         <name>labelContactInfoRankTextLifetime</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Rank field on Contact Info page --></label>
+        <label>הדירוג שלך</label>
         <name>labelContactInfoRankTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Time table column on PersonalSiteContactInfo page --></label>
+        <label>מועד</label>
         <name>labelContactInfoTimeTableColumn</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Upcoming Shifts on PersonalSiteContactInfo page --></label>
+        <label>משמרות התנדבות מתוכננות</label>
         <name>labelContactInfoUpcomingShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for instructions on the PersonalSiteContactLookup Sites page --></label>
+        <label>מלא את השם וכתובת הדואר האלקטרוני שלך, ויישלח אליך קישור אל פרטי ההתנדבות שלך.</label>
         <name>labelContactLookupInstructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- the message displayed if the name &amp; email lookup to a contact fails --></label>
+        <label>המידע שלך לא נמצא.  נסה שם או דואר אלקטרוני אחר.</label>
         <name>labelContactLookupNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- label displayed on PersonalSiteContactInfo if the lookup and email succeed --></label>
+        <label>ההודעה נשלחה.  בדוק אם קיבלת הודעת הדואר האלקטרוני עם קישור אל פרטי ההתנדבות שלך.  תודה.</label>
         <name>labelContactLookupSuccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- section title for the Copy Schedule From section on the New and Edit VRS page --></label>
+        <label>העתק לוח זמנים מ-</label>
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelEventInThePast --></label>
+        <label>למשימה זו אין משמרות קרובות.</label>
         <name>labelEventInThePast</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelExternalSignupUrl --></label>
+        <label>הירשם (אתר חיצוני)</label>
         <name>labelExternalSignupUrl</name>
     </customLabels>
     <customLabels>
-        <label><!-- Volunteers Signup File Upload description --></label>
+        <label>(נטען מדף האינטרנט לרישום מתנדבים).</label>
         <name>labelFileUploadDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Find Volunteers page and sections --></label>
+        <label>מצא מתנדבים</label>
         <name>labelFindVolunteers</name>
     </customLabels>
     <customLabels>
-        <label><!-- Number already assigned in Find Volunteers page. --></label>
+        <label>{0} מתנדבים שנבחרו כבר הוקצו למשימה או משמרת זו.</label>
         <name>labelFindVolunteersAlreadyAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Assign section --></label>
+        <label>הקצה למשימה או משמרת</label>
         <name>labelFindVolunteersAssign</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Criteria section --></label>
+        <label>קריטריונים</label>
         <name>labelFindVolunteersCriteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Find Results section --></label>
+        <label>מתנדבים</label>
         <name>labelFindVolunteersFindResults</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for help text in the Assign section. --></label>
+        <label>סמן את המתנדבים שברצונך להוסיף למשימה או משמרת ההתנדבות שצוינה, ולחץ על &apos;הקצאה&apos;.</label>
         <name>labelFindVolunteersHelpAssign</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for help text in the Criteria section. --></label>
+        <label>בחר קריטריונים ולחץ על &apos;חיפוש&apos;.  המתנדבים תואמים אם נמצאת התאמה לאחד או יותר מהערכים שנבחרו בשדה.  השאר קריטריון ריק כדי לא לסנן לפיו.</label>
         <name>labelFindVolunteersHelpCriteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for help text in the Find Results section. --></label>
+        <label>ציין קריטריוני סינון כדי להציג תוצאות.</label>
         <name>labelFindVolunteersHelpFindResults</name>
     </customLabels>
     <customLabels>
-        <label><!-- Number newly assigned in Find Volunteers page. --></label>
+        <label>{0} מתנדבים שנבחרו הוקצו למשימה או משמרת זו.</label>
         <name>labelFindVolunteersNewlyAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelFirstShift --></label>
+        <label>משמרת ראשונה:</label>
         <name>labelFirstShift</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the From dropdown on Mass Email --></label>
+        <label>מ-</label>
         <name>labelFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelHide --></label>
+        <label>הסתר</label>
         <name>labelHide</name>
     </customLabels>
     <customLabels>
-        <label><!-- title of Information section on NewAndEditVRS page --></label>
+        <label>פרטים</label>
         <name>labelInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- System Note added to Shift when created by a JRS. --></label>
+        <label>נוצר באופן אוטומטי עבור לוח זמנים של משימה חוזרת:</label>
         <name>labelJRSShiftCreatedSystemNote</name>
     </customLabels>
     <customLabels>
-        <label><!-- System Note added to Shift when removed from a JRS. --></label>
+        <label>הוסר מלוח זמנים של משימה חוזרת:</label>
         <name>labelJRSShiftRemovedSystemNote</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Add More Rows link in Mass Edit page. --></label>
+        <label>הוסף שורות נוספות</label>
         <name>labelLinkAddMoreRows</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for VolunteersJobListingFS page&apos;s full link --></label>
+        <label>מלא</label>
         <name>labelLinkFull</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for VolunteersJobListingFS page&apos;s Sign Up link --></label>
+        <label>הרשמה</label>
         <name>labelLinkSignUp</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for First link in list view --></label>
+        <label>ראשון</label>
         <name>labelListViewFirst</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Last link in list view --></label>
+        <label>אחרון</label>
         <name>labelListViewLast</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Next link in list view --></label>
+        <label>הבא</label>
         <name>labelListViewNext</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for page info in list view --></label>
+        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;דף {0} מתוך {1} &amp;nbsp;&amp;nbsp;({2} רשומות)</label>
         <name>labelListViewPageInfo</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Previous link in list view --></label>
+        <label>הקודם</label>
         <name>labelListViewPrevious</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the date filter From field. --></label>
+        <label>הצג משמרות ושעות מ-</label>
         <name>labelMassEditDateFilterFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the date filter section To field. --></label>
+        <label>עד</label>
         <name>labelMassEditDateFilterTo</name>
     </customLabels>
     <customLabels>
-        <label><!-- error message when Mass Edit Volunteer Hours save fails. --></label>
+        <label>אירעו שגיאות בעת ניסיון לשמור את שעות ההתנדבות.</label>
         <name>labelMassEditErrorOnSave</name>
     </customLabels>
     <customLabels>
-        <label><!-- help text for the Mass Edit Volunteer Hours page --></label>
+        <label>בחר את המבצע ומשימת ההתנדבות, וכן משמרת התנדבות אופציונלית, והדף יציג את כל הרשומות של שעות ההתנדבות שכבר נשמרו עבור המשימה, וכן רשומות חדשות שבאפשרותך להוסיף. עדכן את כל השורות לפי הצורך ולאחר מכן לחץ על &apos;שמור&apos;.</label>
         <name>labelMassEditHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the optional comment on the Volunteer Shift label. --></label>
+        <label>(אופציונלי)</label>
         <name>labelMassEditOptional</name>
     </customLabels>
     <customLabels>
-        <label><!-- message displayed when Mass Edit Volunteer Hours saves successfully. --></label>
+        <label>רשומות שעות ההתנדבות נשמרו.</label>
         <name>labelMassEditSaveSuccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for the Mass Edit Volunteers Hours page --></label>
+        <label>עריכת פריטים מרובים של שעות התנדבות</label>
         <name>labelMassEditTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for status field on Mass Email Volunteers page --></label>
+        <label>שלח דואר אלקטרוני למתנדבים עם המצב</label>
         <name>labelMassEditVolunteersStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Edit Template button --></label>
+        <label>עריכת תבנית</label>
         <name>labelMassEmailEditTemplate</name>
     </customLabels>
     <customLabels>
-        <label><!-- error message for no contacts to email --></label>
+        <label>אין אנשי קשר למשלוח דואר אלקטרוני.  נסה לבחור מצב אחר לסינון.</label>
         <name>labelMassEmailErrorNoContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- error message for no template specified in MassEmail --></label>
+        <label>ציין תבנית דואר אלקטרוני למשלוח.</label>
         <name>labelMassEmailErrorNoTemplate</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp1 --></label>
+        <label>דואר אלקטרוני המוני למתנדבים יכיל את כל רשומות שעות ההתנדבות של משימות חוזרות.</label>
         <name>labelMassEmailHelp1</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp2 --></label>
+        <label>בחר את המצב כדי לציין אילו רשומות ברצונך לכלול.</label>
         <name>labelMassEmailHelp2</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp3 --></label>
+        <label>אם האפשרות &apos;כלול אנשי קשר פעם אחת בלבד&apos; אינה מסומנת, תישלח הודעת דואר אלקטרוני עבור כל רשומה של שעות התנדבות.</label>
         <name>labelMassEmailHelp3</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp4 --></label>
+        <label>אם האפשרות &apos;כלול אנשי קשר פעם אחת בלבד&apos; מסומנת, תישלח הודעת דואר אלקטרוני אחת בלבד עבור רשומת שעות ההתנדבות הראשונה של איש הקשר.</label>
         <name>labelMassEmailHelp4</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp5 --></label>
+        <label>סמן את האפשרות &apos;רשום פעילות עבור כל הודעת דואר אלקטרוני&apos; כדי לשמור פעילות עם איש הקשר.</label>
         <name>labelMassEmailHelp5</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp6 --></label>
+        <label>בחר את התבנית לפי האובייקט כדי לציין באיזה אובייקט להשתמש עם תבנית הדואר האלקטרוני.</label>
         <name>labelMassEmailHelp6</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailHelp7 --></label>
+        <label>Salesforce מגבילה את מספר הודעות הדואר האלקטרוני שניתן לשלוח ביום, לכן מומלץ לא להשתמש ב&apos;דואר אלקטרוני המוני למתנדבים&apos; עבור כמויות גדולות של הודעות.</label>
         <name>labelMassEmailHelp7</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailTitle --></label>
+        <label>דואר אלקטרוני המוני למתנדבים מאת</label>
         <name>labelMassEmailTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for View Templates button --></label>
+        <label>הצג תבניות</label>
         <name>labelMassEmailViewTemplates</name>
     </customLabels>
     <customLabels>
-        <label><!-- Activity logging error on the MassEmailVolunteers page --></label>
+        <label>יש להפעיל רישום פעילויות עבור משימות ומשמרות התנדבות. עיין ב מדריך ההתקנה והגדרת התצורה של &apos;מתנדבים ל-Salesforce&apos;.</label>
         <name>labelMassEmailVolunteersActivityLoggingError</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Log Activity checkbox on Mass Email Volunteers page --></label>
+        <label>רשום פעילות עבור כל הודעת דואר אלקטרוני</label>
         <name>labelMassEmailVolunteersLogActivity</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelMassEmailVolunteersLogActivityHelpText --></label>
+        <label>הפעילות תתועד ברשומה של איש הקשר.</label>
         <name>labelMassEmailVolunteersLogActivityHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- success message on the Mass Email Volunteers page --></label>
+        <label>הודעות דואר אלקטרוני נשלחו בהצלחה:</label>
         <name>labelMassEmailVolunteersSuccessCount</name>
     </customLabels>
     <customLabels>
-        <label><!-- Mass Email Volunteers title --></label>
+        <label>דואר אלקטרוני המוני למתנדבים</label>
         <name>labelMassEmailVolunteersTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Include Contacts Only Once checkbox on Mass Email Volunteers page --></label>
+        <label>כלול אנשי קשר פעם אחת בלבד</label>
         <name>labelMassEmailVolunteersUniqueContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- help text for Include Contacts Only Once checkbox --></label>
+        <label>אם אפשרות זו אינה מסומנת, תישלח הודעת דואר אלקטרוני לאיש הקשר המתנדב עבור כל רשומת שעות במשימה או משמרת. סימון תיבה זו יגביל את השליחה להודעה אחת לכל איש קשר ייחודי.</label>
         <name>labelMassEmailVolunteersUniqueContactsHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the message body in MassEmailVolunteers --></label>
+        <label>הודעה</label>
         <name>labelMessageBody</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the loading... message used in some pages --></label>
+        <label>טוען...</label>
         <name>labelMessageLoading</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for VolunteersJobListingFS page&apos;s No Jobs message --></label>
+        <label>מצטערים, בשלב זה אין משימות התנדבות זמינות.</label>
         <name>labelMessageNoJobs</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Saving... message on several pages --></label>
+        <label>שומר...</label>
         <name>labelMessageSaving</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Number Of Contacts field on MassEmailVolunteers --></label>
+        <label>מספר הודעות דואר אלקטרוני לאיש קשר</label>
         <name>labelNumberOfContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- help text for Number of Contacts --></label>
+        <label>מספר הודעות הדואר האלקטרוני שיישלחו. שינוי המצב של תיבת הסימון &apos;כלול אנשי קשר פעם אחת בלבד&apos; עשוי לשנות מספר זה.</label>
         <name>labelNumberOfContactsHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteContactInfoTitle --></label>
+        <label>הצג את המידע שלך</label>
         <name>labelPersonalSiteContactInfoTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteEmailError --></label>
+        <label>הזן כתובת דואר אלקטרוני חוקית.</label>
         <name>labelPersonalSiteEmailError</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteEmailRequired --></label>
+        <label>דרושה כתובת דואר אלקטרוני.</label>
         <name>labelPersonalSiteEmailRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteFirstnameRequired --></label>
+        <label>דרוש שם פרטי.</label>
         <name>labelPersonalSiteFirstnameRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for the Job Calendar under Personal Site --></label>
+        <label>יומן משימות</label>
         <name>labelPersonalSiteJobCalendarTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- title for JobListing page in Personal Site --></label>
+        <label>משימות התנדבות</label>
         <name>labelPersonalSiteJobListingTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteLastnameRequired --></label>
+        <label>דרוש שם משפחה.</label>
         <name>labelPersonalSiteLastnameRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- displays when the contact hasn&apos;t signed up for any jobs --></label>
+        <label>אין משימות שעבורן תוכל לדווח על שעות.</label>
         <name>labelPersonalSiteNoJobsForContact</name>
     </customLabels>
     <customLabels>
-        <label><!-- title of the Report Hours page under Personal Site --></label>
+        <label>דיווח על שעות</label>
         <name>labelPersonalSiteReportHoursTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelPersonalSiteTitle --></label>
+        <label>אתר מתנדבים אישי</label>
         <name>labelPersonalSiteTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the return to Calendar link on VolunteersJobListingFS --></label>
+        <label>חזור ליומן</label>
         <name>labelReturnToCalendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelShiftClosed --></label>
+        <label>סגור</label>
         <name>labelShiftClosed</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelShiftNumbers --></label>
+        <label>מאושר: {0}&amp;nbsp;&amp;nbsp;זמין: {1}</label>
         <name>labelShiftNumbers</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelShowHelp --></label>
+        <label>הצג עזרה</label>
         <name>labelShowHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Show More on list views --></label>
+        <label>הצג עוד</label>
         <name>labelShowMore</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for the Subject field in MassEmailVolunteers --></label>
+        <label>נושא</label>
         <name>labelSubject</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for VolunteersSignupFS page&apos;s submit button --></label>
+        <label>שלח</label>
         <name>labelSubmitButton</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelTemplateObject --></label>
+        <label>תבנית מבוססת על אובייקט</label>
         <name>labelTemplateObject</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelTemplateObjectHelpText --></label>
+        <label>ודא שהתבנית והאובייקט תואמים זה לזה. אם האפשרות &apos;כלול אנשי קשר פעם אחת בלבד&apos; מסומנת, רק רשומת שעות ההתנדבות הראשונה תישלח, כך שייתכן שתרצה להשתמש באובייקט תבנית ספציפי פחות.</label>
         <name>labelTemplateObjectHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for VolunteersJobListingFS page&apos;s Signup Dialog Title --></label>
+        <label>רישום מתנדבים</label>
         <name>labelTitleJobSignup</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchDescription --></label>
+        <label>&lt;p&gt;&apos;מתנדבים ל-Salesforce&apos; תומכת בלוחות זמנים של התנדבות ומשימות חוזרות בעזרת תהליך אצווה, כדי ליצור משימות עתידיות ולהקצות להן מתנדבים. כדי להפעיל תהליך זה באופן ידני, לחץ על &apos;הפעל אצווה&apos;. לחלופין, ניתן לתזמן אותו לפעול באופן אוטומטי בשעות הלילה.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;יוצג סרגל התקדמות מתחת לתהליך האצווה האחרון. התהליך עשוי להימשך זמן מה; הוא יארך יותר ככל שמסד הנתונים שלך מכיל נתונים רבים יותר. תוכל לסגור דף זה והתהליך ימשיך לפעול ברקע.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;כדי להציג את המשימות המתוזמנות כעת, עבור אל &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;דף המשימות המתוזמנות.&lt;/a&gt;&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;כדי לתזמן הפעלה אוטומטית של תהליך החזרה, עבור אל &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;דף תזמון משימות Apex.‏&lt;/a&gt;&lt;/p&gt;</label>
         <name>labelVRSBatchDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchProcess --></label>
+        <label>לוחות זמנים של תהליכים חוזרים</label>
         <name>labelVRSBatchProcess</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchProcessProgress --></label>
+        <label>התקדמות לוחות זמנים של תהליכים חוזרים</label>
         <name>labelVRSBatchProcessProgress</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchRun --></label>
+        <label>הפעל אצווה</label>
         <name>labelVRSBatchRun</name>
     </customLabels>
     <customLabels>
-        <label><!-- System Note added to Hour when created by a VRS. --></label>
+        <label>נוצר באופן אוטומטי עבור לוח זמנים של התנדבות חוזרת:</label>
         <name>labelVRSHoursCreatedSystemNote</name>
     </customLabels>
     <customLabels>
@@ -577,127 +590,127 @@
         <name>labelVRSHoursRemovedSystemNote</name>
     </customLabels>
     <customLabels>
-        <label><!-- error string for required fields --></label>
+        <label>{0} נדרש.</label>
         <name>labelVolunteerReportHoursErrorRequiredField</name>
     </customLabels>
     <customLabels>
-        <label><!-- The help text displayed on the VolunteersReportHours Sites page with No Shifts --></label>
+        <label>ציין את מסגרת הזמן שעליה אתה מדווח ואת מספר השעות הכולל שביצעת.</label>
         <name>labelVolunteerReportHoursNotesNoShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- The help text displayed on the VolunteersReportHours Sites page with Shifts --></label>
+        <label>בחר את המשמרת בה עבדת ועדכן את מספר השעות שביצעת לפי הצורך.</label>
         <name>labelVolunteerReportHoursNotesShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- The message displayed when a volunteer successfully records their hours. --></label>
+        <label>תודה שדיווחת את שעות ההתנדבות שלך.</label>
         <name>labelVolunteerReportHoursThankYou</name>
     </customLabels>
     <customLabels>
-        <label><!-- Thank you message displayed after a successful Volunteer Signup on the web --></label>
+        <label>תודה שנרשמת להתנדבות.</label>
         <name>labelVolunteerSignupThankYou</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelp --></label>
+        <label>עזרה למתנדבים</label>
         <name>labelVolunteersHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpDescription --></label>
+        <label>קל להתחיל לעבוד עם &apos;מתנדבים ל-Salesforce&apos; ‏(V4S). למשאבים נוספים, עבור אל &lt;a href=&quot;https://powerofus.force.com&quot; target=&quot;_blank&quot;&gt;Power of Us HUB&lt;/a&gt;.</label>
         <name>labelVolunteersHelpDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep1 --></label>
+        <label>שלב 1</label>
         <name>labelVolunteersHelpStep1</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep1Text --></label>
+        <label>השתמש ב-Trailhead לקבלת מידע נוסף על V4S וכיצד להגדיר גרסה זו.</label>
         <name>labelVolunteersHelpStep1Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep2 --></label>
+        <label>שלב 2</label>
         <name>labelVolunteersHelpStep2</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep2Text --></label>
+        <label>גלה משאבים נוספים ב-V4S.</label>
         <name>labelVolunteersHelpStep2Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep3 --></label>
+        <label>שלב 3</label>
         <name>labelVolunteersHelpStep3</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep3Text --></label>
+        <label>היה מעורב בקהילה.</label>
         <name>labelVolunteersHelpStep3Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- error string for signup of too many volunteers --></label>
+        <label>רק {0} מתנדבים עדיין חסרים למשמרת זו.</label>
         <name>labelVolunteersJobListingErrorTooManyVols</name>
     </customLabels>
     <customLabels>
-        <label><!-- title of the Volunteers Wizard Campaign Information section. --></label>
+        <label>פרטי מבצע</label>
         <name>labelVolunteersWizardCampaignInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Close Existing Campaign --></label>
+        <label>שכפל מבצע קיים</label>
         <name>labelVolunteersWizardClone</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Copy Volunteers checkbox on Volunteers Wizard --></label>
+        <label>העתק מתנדבים למשימה ומשמרת</label>
         <name>labelVolunteersWizardCopyVolunteers</name>
     </customLabels>
     <customLabels>
-        <label><!-- error message for not choosing an existing campaign or sample jobs --></label>
+        <label>בחר מבצע קיים להעתקה, או את מספר המשימות והמשמרות לדוגמה שברצונך ליצור, אך לא את שניהם.</label>
         <name>labelVolunteersWizardErrorExistingOrSample</name>
     </customLabels>
     <customLabels>
-        <label><!-- error message for not choosing Sample Jobs along with Sample Shifts --></label>
+        <label>ציין את מספר המשימות לדוגמה ביחד עם מספר המשמרות לדוגמה.</label>
         <name>labelVolunteersWizardErrorNoJobsWithShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for first shift date on Volunteers Wizard --></label>
+        <label>תאריך משמרת ראשונה</label>
         <name>labelVolunteersWizardFirstShiftDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- The help text displayed at the top of the Volunteers Wizard page. --></label>
+        <label>אשף המתנדבים יוצר מבצע גיוס מתנדבים חדש ומאפשר לך להעתיק את כל המשימות, המשמרות ושעות ההתנדבות ממבצע קיים, או ליצור משימות ומשמרות לדוגמה.</label>
         <name>labelVolunteersWizardHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- help text for the Volunteers Wizard Jobs &amp; Shifts section. --></label>
+        <label>בחר מבצע קיים כדי להעתיק ממנו משימות, משמרות ושעות, או ציין כמה משימות ומשמרות לדוגמה ברצונך ליצור.  שים לב שניתן גם להשתמש בלוחות זמנים של משימות חוזרות כדי לחזור על משימות ומשמרות בעתיד.</label>
         <name>labelVolunteersWizardJobAndShiftHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- Label for the Volunteers Wizard Volunteer Jobs &amp; Shifts section --></label>
+        <label>משימות, משמרות ושעות התנדבות</label>
         <name>labelVolunteersWizardJobsAndShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- The title for the main section of the Volunteers Wizard. --></label>
+        <label>מבצע חדש לגיוס מתנדבים</label>
         <name>labelVolunteersWizardNewCampaignTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for new shift date on Volunteers Wizard --></label>
+        <label>תאריך חדש למשמרת ראשונה</label>
         <name>labelVolunteersWizardNewShiftDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for Volunteer Hours Status picklist on Volunteers Wizard --></label>
+        <label>עקוף מצב שעות התנדבות</label>
         <name>labelVolunteersWizardOverrideHoursStatus</name>
     </customLabels>
     <customLabels>
-        <label><!-- name of sample jobs --></label>
+        <label>משימה לדוגמה</label>
         <name>labelVolunteersWizardSampleJobName</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for number of sample jobs --></label>
+        <label>מספר עבודות לדוגמה</label>
         <name>labelVolunteersWizardSampleJobs</name>
     </customLabels>
     <customLabels>
-        <label><!-- name of sample shifts --></label>
+        <label>משמרת לדוגמה</label>
         <name>labelVolunteersWizardSampleShiftName</name>
     </customLabels>
     <customLabels>
-        <label><!-- label for number of sample shifts --></label>
+        <label>מספר משמרות לדוגמה לכל עבודה</label>
         <name>labelVolunteersWizardSampleShifts</name>
     </customLabels>
     <customLabels>
-        <label><!-- the title of the Volunteers Wizard page. --></label>
+        <label>אשף המתנדבים</label>
         <name>labelVolunteersWizardTitle</name>
     </customLabels>
     <customLabels>
@@ -705,82 +718,82 @@
         <name>lblRequired</name>
     </customLabels>
     <customTabs>
-        <label><!-- Volunteers Help --></label>
+        <label>עזרה למתנדבים</label>
         <name>About_Volunteers</name>
     </customTabs>
     <customTabs>
-        <label><!-- Find Volunteers --></label>
+        <label>מצא מתנדבים</label>
         <name>Find_Volunteers</name>
     </customTabs>
     <customTabs>
-        <label><!-- Process Recurrence Schedules --></label>
+        <label>לוחות זמנים של תהליכים חוזרים</label>
         <name>Process_Recurrence_Schedules</name>
     </customTabs>
     <customTabs>
-        <label><!-- Shift Calendar --></label>
+        <label>יומן משמרות</label>
         <name>Shift_Calendar</name>
     </customTabs>
     <customTabs>
-        <label><!-- Volunteers Wizard --></label>
+        <label>אשף המתנדבים</label>
         <name>Volunteers_Wizard</name>
     </customTabs>
     <reportTypes>
-        <description><!-- Accounts with Volunteer Hours --></description>
-        <label><!-- Accounts with Volunteer Hours --></label>
+        <description>חשבונות עם שעות התנדבות המשויכות באמצעות אנשי קשר.</description>
+        <label>חשבונות עם שעות התנדבות</label>
         <name>Accounts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>חשבונות</label>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>אנשי קשר</label>
             <name>Contacts</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Hours --></label>
+            <label>שעות התנדבות</label>
             <name>Volunteer Hours</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Volunteer Campaigns --></description>
-        <label><!-- Volunteer Campaigns --></label>
+        <description>מבצעים עם רשומות של משימות התנדבות.</description>
+        <label>מבצעים לגיוס מתנדבים</label>
         <name>Volunteer_Campaigns</name>
         <sections>
-            <label><!-- Campaigns --></label>
+            <label>מבצעים</label>
             <name>Campaigns</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Jobs --></label>
+            <label>משימות התנדבות</label>
             <name>Volunteer Jobs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Volunteer Jobs and Hours --></description>
-        <label><!-- Volunteer Jobs and Hours --></label>
+        <description>כל משימות ההתנדבות והשעות הקשורות אליהן.</description>
+        <label>משימות ושעות התנדבות</label>
         <name>Volunteer_Jobs_and_Hours</name>
         <sections>
-            <label><!-- Volunteer Hours --></label>
+            <label>שעות התנדבות</label>
             <name>Volunteer Hours</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Jobs --></label>
+            <label>משימות התנדבות</label>
             <name>Volunteer Jobs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Volunteer Jobs with Shifts &amp; Hours --></description>
-        <label><!-- Volunteer Jobs with Shifts &amp; Hours --></label>
+        <description>משימות התנדבות עם רשומות של משמרות ושעות</description>
+        <label>משימות התנדבות עם משמרות ושעות</label>
         <name>Volunteer_Jobs_with_Shifts_Hours</name>
         <sections>
-            <label><!-- Volunteer Hours --></label>
+            <label>שעות התנדבות</label>
             <name>Volunteer Hours</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Jobs --></label>
+            <label>משימות התנדבות</label>
             <name>Volunteer Jobs</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Shifts --></label>
+            <label>משמרות התנדבות</label>
             <name>Volunteer Shifts</name>
         </sections>
     </reportTypes>

@@ -1,120 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
-        <help><!-- The first Volunteer Hours Start Date --></help>
-        <label><!-- First Volunteer Date --></label>
+        <help>תאריך ההתחלה של שעות ההתנדבות הראשונות</help>
+        <label>תאריך התנדבות ראשון</label>
         <name>First_Volunteer_Date__c</name>
     </fields>
     <fields>
-        <help><!-- The latest Volunteer Hours End Date --></help>
-        <label><!-- Last Volunteer Date --></label>
+        <help>תאריך הסיום של שעות ההתנדבות האחרונות</help>
+        <label>תאריך התנדבות אחרון</label>
         <name>Last_Volunteer_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Unique Count --></label>
+        <label>ספירת מתנדבים ייחודיים</label>
         <name>Unique_Volunteer_Count__c</name>
     </fields>
     <fields>
-        <help><!-- Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule. --></help>
-        <label><!-- Volunteer Auto-Reminder Email Opt Out --></label>
+        <help>סמן אפשרות זו אם איש הקשר אינו מעוניין לקבל תזכורות אוטומטיות בדואר אלקטרוני על המשמרות הקרובות שלו.  משמש בכלל זרימת העבודה &apos;תזכורת על שעות התנדבות בדואר אלקטרוני&apos;.</help>
+        <label>ביטול תזכורת אוטומטית למתנדבים בדוא&quot;ל</label>
         <name>Volunteer_Auto_Reminder_Email_Opt_Out__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Availability --></label>
+        <label>זמינות מתנדב</label>
         <name>Volunteer_Availability__c</name>
         <picklistValues>
             <masterLabel>Afternoon</masterLabel>
-            <translation><!-- Afternoon --></translation>
+            <translation>אחה&quot;צ</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Morning</masterLabel>
-            <translation><!-- Morning --></translation>
+            <translation>בוקר</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekdays</masterLabel>
-            <translation><!-- Weekdays --></translation>
+            <translation>ימי חול</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekends</masterLabel>
-            <translation><!-- Weekends --></translation>
+            <translation>סופי שבוע</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <translation>שבועית</translation>
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- Total number of Hours that are Completed. Hours with other status values are not included. --></help>
-        <label><!-- Volunteer Hours --></label>
+        <help>המספר הכולל של השעות שהושלמו. שעות עם ערכי מצב אחרים לא ייכללו.</help>
+        <label>שעות התנדבות</label>
         <name>Volunteer_Hours__c</name>
     </fields>
     <fields>
-        <help><!-- The date of the most recent volunteer signup from the web.  Used to trigger workflow for notifications and thank you emails. --></help>
-        <label><!-- Volunteer Last Web Signup Date --></label>
+        <help>תאריך רישום המתנדב האחרון באינטרנט.   משמש להפעלת זרימת עבודה עבור הודעות מידע ותודה בדואר אלקטרוני.</help>
+        <label>תאריך רישום מתנדב אחרון באינטרנט</label>
         <name>Volunteer_Last_Web_Signup_Date__c</name>
     </fields>
     <fields>
-        <help><!-- Notes about the volunteer that the volunteer manager or organization staff want to record. --></help>
-        <label><!-- Volunteer Manager Notes --></label>
+        <help>הערות על המתנדב שמנהל המתנדב או עובדי הארגון מעוניינים לרשום.</help>
+        <label>הערות מנהל מתנדב</label>
         <name>Volunteer_Manager_Notes__c</name>
     </fields>
     <fields>
-        <help><!-- Notes from the volunteer.  Note that the web signup form appends the volunteers comments to this field. --></help>
-        <label><!-- Volunteer Notes --></label>
+        <help>הערות של המתנדב.  שים לב שהרישום באינטרנט מוסיף את הערות המתנדב לשדה זה.</help>
+        <label>הערות מתנדב</label>
         <name>Volunteer_Notes__c</name>
     </fields>
     <fields>
-        <help><!-- The organization, company, or group the contact is volunteering on behalf of. --></help>
-        <label><!-- Volunteer Organization --></label>
+        <help>הארגון, החברה או הקבוצה שאיש הקשר מתנדב מטעמם.</help>
+        <label>ארגון המתנדב</label>
         <name>Volunteer_Organization__c</name>
     </fields>
     <fields>
-        <help><!-- Select the skill(s) this contact has that should be used to find volunteer jobs. --></help>
-        <label><!-- Volunteer Skills --></label>
+        <help>בחר את הכישורים של מתנדב זה שצריכים לשמש לחיפוש משימות התנדבות.</help>
+        <label>כישורי מתנדב</label>
         <name>Volunteer_Skills__c</name>
         <picklistValues>
             <masterLabel>Computer usage</masterLabel>
-            <translation><!-- Computer usage --></translation>
+            <translation>שימוש במחשב</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Event Planning</masterLabel>
-            <translation><!-- Event Planning --></translation>
+            <translation>תכנון אירועים</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Fundraising</masterLabel>
-            <translation><!-- Fundraising --></translation>
+            <translation>גיוס תרומות</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Landscaping</masterLabel>
-            <translation><!-- Landscaping --></translation>
+            <translation>גינון</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manual labor</masterLabel>
-            <translation><!-- Manual labor --></translation>
+            <translation>עבודה פיזית</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Marketing</masterLabel>
-            <translation><!-- Marketing --></translation>
+            <translation>שיווק</translation>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Status --></label>
+        <label>מצב מתנדב</label>
         <name>Volunteer_Status__c</name>
         <picklistValues>
             <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <translation>פעיל</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <translation>לא פעיל</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>New Sign Up</masterLabel>
-            <translation><!-- New Sign Up --></translation>
+            <translation>הרשמה חדשה</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Prospective</masterLabel>
-            <translation><!-- Prospective --></translation>
+            <translation>פוטנציאלי</translation>
         </picklistValues>
     </fields>
     <workflowTasks>

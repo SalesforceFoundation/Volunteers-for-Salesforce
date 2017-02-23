@@ -21,112 +21,112 @@
         <value><!-- הVolunteer Job --></value>
     </caseValues>
     <fields>
-        <label><!-- Campaign --></label>
+        <label>מבצע</label>
         <name>Campaign__c</name>
-        <relationshipLabel><!-- Volunteer Jobs --></relationshipLabel>
+        <relationshipLabel>משימות התנדבות</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Description --></label>
+        <label>תיאור</label>
         <name>Description__c</name>
     </fields>
     <fields>
-        <help><!-- Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page. --></help>
-        <label><!-- Display on Website --></label>
+        <help>סמן שדה זה אם משימת ההתנדבות צריכה להופיע בדף של משימות התנדבות זמינות ב&apos;אתרים&apos;.</help>
+        <label>הצג באתר</label>
         <name>Display_on_Website__c</name>
     </fields>
     <fields>
-        <help><!-- If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site. --></help>
-        <label><!-- External Signup Url --></label>
+        <help>אם צוינה כתובת, הדף VolunteersJobListingFS יפנה אל אתר זה כאשר המשתמש ילחץ על קישור ההרשמה בדף.  כך תוכל לפרסם משימות שניתן להירשם אליהן בדף אינטרנט אחר.</help>
+        <label>כתובת URL חיצונית להרשמה</label>
         <name>External_Signup_Url__c</name>
     </fields>
     <fields>
-        <label><!-- First Shift --></label>
+        <label>משמרת ראשונה</label>
         <name>First_Shift__c</name>
     </fields>
     <fields>
-        <help><!-- Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page. --></help>
-        <label><!-- Inactive --></label>
+        <help>סמן אם משימת התנדבות זו אינה פעילה עוד, והיא לא תיכלל בדף של דוח שעות ההתנדבות ב&apos;אתרים&apos;.</help>
+        <label>לא פעיל</label>
         <name>Inactive__c</name>
     </fields>
     <fields>
-        <label><!-- Location City --></label>
+        <label>עיר המיקום</label>
         <name>Location_City__c</name>
     </fields>
     <fields>
-        <help><!-- Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders. --></help>
-        <label><!-- Location Information --></label>
+        <help>ציין בשדה זה פרטים נוספים, כגון הוראות הגעה או כתובת URL של מפה, והם ייכללו בתזכורות אוטומטיות שיישלחו בדואר אלקטרוני.</help>
+        <label>פרטי מיקום</label>
         <name>Location_Information__c</name>
     </fields>
     <fields>
-        <label><!-- Location Street --></label>
+        <label>רחוב המיקום</label>
         <name>Location_Street__c</name>
     </fields>
     <fields>
-        <label><!-- Location Zip/Postal Code --></label>
+        <label>מיקוד המיקום</label>
         <name>Location_Zip_Postal_Code__c</name>
     </fields>
     <fields>
-        <label><!-- Location State/Province --></label>
+        <label>מדינה/מחוז המיקום</label>
         <name>Location__c</name>
     </fields>
     <fields>
-        <help><!-- Total number of Hours that are Completed.  Hours with other status values are not included. --></help>
-        <label><!-- Number of Completed Hours --></label>
+        <help>המספר הכולל של השעות שהושלמו.  שעות עם ערכי מצב אחרים לא ייכללו.</help>
+        <label>מספר שעות שהושלמו</label>
         <name>Number_of_Completed_Hours__c</name>
     </fields>
     <fields>
-        <label><!-- Number of Shifts --></label>
+        <label>מספר משמרות</label>
         <name>Number_of_Shifts__c</name>
     </fields>
     <fields>
-        <label><!-- # of Volunteers Still Needed --></label>
+        <label>מספר המתנדבים שעדיין נחוצים</label>
         <name>Number_of_Volunteers_Still_Needed__c</name>
     </fields>
     <fields>
-        <help><!-- The total number of volunteers whose Hours Status = Completed or Confirmed. --></help>
-        <label><!-- Number of Volunteers --></label>
+        <help>המספר הכולל של מתנדבים שמצב השעות שלהם הוא &apos;הושלם&apos; או &apos;אושר&apos;.</help>
+        <label>מספר מתנדבים</label>
         <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>
-        <label><!-- Ongoing --></label>
+        <label>מתמשך</label>
         <name>Ongoing__c</name>
     </fields>
     <fields>
-        <help><!-- the skills the volunteer should have to do this job --></help>
-        <label><!-- Skills Needed --></label>
+        <help>הכישורים שיידרשו למתנדבים כדי לבצע משימה זו</help>
+        <label>כישורים נחוצים</label>
         <name>Skills_Needed__c</name>
         <picklistValues>
             <masterLabel>Computer usage</masterLabel>
-            <translation><!-- Computer usage --></translation>
+            <translation>שימוש במחשב</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Event Planning</masterLabel>
-            <translation><!-- Event Planning --></translation>
+            <translation>תכנון אירועים</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Fundraising</masterLabel>
-            <translation><!-- Fundraising --></translation>
+            <translation>גיוס תרומות</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Landscaping</masterLabel>
-            <translation><!-- Landscaping --></translation>
+            <translation>גינון</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manual Labor</masterLabel>
-            <translation><!-- Manual Labor --></translation>
+            <translation>עבודה פיזית</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Marketing</masterLabel>
-            <translation><!-- Marketing --></translation>
+            <translation>שיווק</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>basic accounting</masterLabel>
-            <translation><!-- basic accounting --></translation>
+            <translation>הנהלת חשבונות בסיסית</translation>
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign. --></help>
-        <label><!-- Volunteer Website Time Zone --></label>
+        <help>אזור הזמן שישמש להצגת זמני המשמרות בדפים של &apos;אתרים&apos;.   עליך להגדיר אפשרות זו רק אם ברצונך לעקוף את אזור הזמן שהוגדר בפרופיל המשתמש האורח באתר, ואת אזור הזמן שהוגדר במבצע לגיוס מתנדבים.</help>
+        <label>אזור זמן של אתר המתנדבים</label>
         <name>Volunteer_Website_Time_Zone__c</name>
         <picklistValues>
             <masterLabel>Africa/Algiers</masterLabel>
@@ -493,7 +493,7 @@
             <section>Description</section>
         </sections>
         <sections>
-            <label><!-- Location --></label>
+            <label>מיקום</label>
             <section>Location</section>
         </sections>
         <sections>
@@ -503,23 +503,23 @@
     </layouts>
     <nameFieldLabel><!-- Volunteer Job Name --></nameFieldLabel>
     <webLinks>
-        <label><!-- Find_Volunteers --></label>
+        <label>מצא מתנדבים</label>
         <name>Find_Volunteers</name>
     </webLinks>
     <webLinks>
-        <label><!-- JobRoster --></label>
+        <label>רשימת מתנדבים</label>
         <name>JobRoster</name>
     </webLinks>
     <webLinks>
-        <label><!-- Job_Shift_Calendar --></label>
+        <label>יומן משמרות</label>
         <name>Job_Shift_Calendar</name>
     </webLinks>
     <webLinks>
-        <label><!-- Mass_Edit_Volunteer_Hours --></label>
+        <label>(לא בשימוש)</label>
         <name>Mass_Edit_Volunteer_Hours</name>
     </webLinks>
     <webLinks>
-        <label><!-- Mass_Email_Volunteers --></label>
+        <label>דואר אלקטרוני המוני למתנדבים</label>
         <name>Mass_Email_Volunteers</name>
     </webLinks>
 </CustomObjectTranslation>
