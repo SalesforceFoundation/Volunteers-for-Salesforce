@@ -132,7 +132,7 @@ day: &apos;ום&apos;</label>
         <name>labelCalendarStillNeeded</name>
     </customLabels>
     <customLabels>
-        <label>סדר יום: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
+        <label>agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
         <name>labelCalendarTimeFormat</name>
     </customLabels>
     <customLabels>
