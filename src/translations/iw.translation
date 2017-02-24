@@ -136,7 +136,7 @@ day: &apos;ום&apos;</label>
         <name>labelCalendarTimeFormat</name>
     </customLabels>
     <customLabels>
-        <label>חודש: &apos;MMMM yyyy&apos;, שבוע: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, יום: &apos;dddd, MMM d, yyyy&apos;</label>
+        <label>month: &apos;MMMM yyyy&apos;, week: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, day: &apos;dddd, MMM d, yyyy&apos;</label>
         <name>labelCalendarTitleFormat</name>
     </customLabels>
     <customLabels>
