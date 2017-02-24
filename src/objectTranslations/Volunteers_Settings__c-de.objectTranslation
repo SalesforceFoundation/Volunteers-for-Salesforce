@@ -62,12 +62,12 @@
     </fields>
     <fields>
         <help>Der Anzeigename der organisationsweiten E-Mail-Adresse, die in E-Mails von der Seite der &quot;Sites zum Nachschlagen von Kontakten auf der persönlichen Site&quot; verwendet wird</help>
-        <label><!-- Personal Site Org-Wide Email Name --></label>
+        <label>Name d. org.weiten E-Mail f. pers. Site</label>
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
-        <help><!-- Personal Site Report Hours Filter By Contact --></help>
-        <label><!-- Personal Site Report Hours Filtered --></label>
+        <help>Nach Kontakt gefilterte Berichtsstunden f. pers. Site</help>
+        <label>Gefilterte Berichtsstunden f. pers. Site</label>
         <name>Personal_Site_Report_Hours_Filtered__c</name>
     </fields>
     <fields>
