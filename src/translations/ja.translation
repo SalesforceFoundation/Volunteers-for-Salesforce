@@ -5,19 +5,19 @@
         <name>Groundwire_Volunteers</name>
     </customApplications>
     <customLabels>
-        <label><!-- PageMessagesConfirm --></label>
+        <label>成功</label>
         <name>PageMessagesConfirm</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesError --></label>
+        <label>エラー</label>
         <name>PageMessagesError</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesFatal --></label>
+        <label>エラー</label>
         <name>PageMessagesFatal</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesWarning --></label>
+        <label>警告</label>
         <name>PageMessagesWarning</name>
     </customLabels>
     <customLabels>
@@ -65,14 +65,14 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label>前へ:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
-次へ:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
-前年: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
-来年: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
-今日:    &apos;today&apos;,
-月:    &apos;month&apos;,
-週:     &apos;week&apos;,
-日:      &apos;day&apos;</label>
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today:    &apos;今日&apos;,
+month:    &apos;月&apos;,
+week:     &apos;週&apos;,
+day:      &apos;日&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
@@ -80,7 +80,7 @@
         <name>labelCalendarCloseWindow</name>
     </customLabels>
     <customLabels>
-        <label>月: &apos;ddd&apos;, 週: &apos;ddd M/d&apos;, 日: &apos;dddd M/d&apos;</label>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</label>
         <name>labelCalendarColumnFormat</name>
     </customLabels>
     <customLabels>
@@ -132,11 +132,11 @@
         <name>labelCalendarStillNeeded</name>
     </customLabels>
     <customLabels>
-        <label>予定: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
+        <label>agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
         <name>labelCalendarTimeFormat</name>
     </customLabels>
     <customLabels>
-        <label>月: &apos;MMMM yyyy&apos;, 週: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, 日: &apos;dddd, MMM d, yyyy&apos;</label>
+        <label>month: &apos;MMMM yyyy&apos;, week: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, day: &apos;dddd, MMM d, yyyy&apos;</label>
         <name>labelCalendarTitleFormat</name>
     </customLabels>
     <customLabels>
@@ -152,7 +152,7 @@
         <name>labelChooseCriteria</name>
     </customLabels>
     <customLabels>
-        <label>ミディアムブルー,&quot;グリーン&quot;,&quot;ダークレッド&quot;, &quot;パープル&quot;, &quot;ダークスレートグレー&quot;, &quot;ミッドナイトブルー&quot;</label>
+        <label><!-- list of browser color values for JobCalendar --></label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
@@ -244,11 +244,11 @@
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelEventInThePast --></label>
+        <label>このジョブに今後のシフトがありません。</label>
         <name>labelEventInThePast</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelExternalSignupUrl --></label>
+        <label>サインアップ (外部サイト)</label>
         <name>labelExternalSignupUrl</name>
     </customLabels>
     <customLabels>
@@ -292,7 +292,7 @@
         <name>labelFindVolunteersNewlyAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelFirstShift --></label>
+        <label>最初のシフト:</label>
         <name>labelFirstShift</name>
     </customLabels>
     <customLabels>
@@ -508,7 +508,7 @@
         <name>labelPersonalSiteLastnameRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- displays when the contact hasn&apos;t signed up for any jobs --></label>
+        <label>時間を報告できるジョブがありません。</label>
         <name>labelPersonalSiteNoJobsForContact</name>
     </customLabels>
     <customLabels>
@@ -560,19 +560,25 @@
         <name>labelTitleJobSignup</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchDescription --></label>
+        <label>&lt;p&gt;Volunteers for Salesforce では、[ボランティアの定期的なスケジュール] と [仕事の定期的なスケジュール] がサポートされています。また、今後のシフトを作成してボランティアをシフトに割り当てるためのバッチプロセスのヘルプも用意されています。このプロセスは、[バッチを実行] ボタンをクリックして手動で実行することも、夜間に自動的に実行されるようにスケジュールすることもできます。&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;最新のバッチプロセスの進行状況バーが下に表示されます。処理に時間がかかる場合があります。処理時間は、データベースのデータが多いほど長くなります。このページは閉じることができます。このページを閉じても処理はバックグラウンドで続行されます。&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;現在スケジュールされているジョブを表示するには、&lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;[スケジュール済みジョブ] ページ&lt;/a&gt;に移動します。&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;定期的なスケジュールの処理が自動的に実行されるようにスケジュールするには、&lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;[スケジュール済み Apex ジョブ] ページ&lt;/a&gt;に移動します。&lt;/p&gt;</label>
         <name>labelVRSBatchDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchProcess --></label>
+        <label>プロセスの定期的なスケジュール</label>
         <name>labelVRSBatchProcess</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchProcessProgress --></label>
+        <label>プロセスの定期的なスケジュールの進行状況</label>
         <name>labelVRSBatchProcessProgress</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchRun --></label>
+        <label>バッチを実行</label>
         <name>labelVRSBatchRun</name>
     </customLabels>
     <customLabels>
@@ -604,35 +610,35 @@
         <name>labelVolunteerSignupThankYou</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelp --></label>
+        <label>ボランティアヘルプ</label>
         <name>labelVolunteersHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpDescription --></label>
+        <label>Volunteers for Salesforce (V4S) は簡単に開始できます。その他の資料については、&lt;a href=&quot;https://powerofus.force.com&quot; target=&quot;_blank&quot;&gt;「Power of Us HUB」&lt;/a&gt;にアクセスしてください。</label>
         <name>labelVolunteersHelpDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep1 --></label>
+        <label>ステップ 1</label>
         <name>labelVolunteersHelpStep1</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep1Text --></label>
+        <label>Trailhead を使用して、V4S とその設定方法についてさらに学習する。</label>
         <name>labelVolunteersHelpStep1Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep2 --></label>
+        <label>ステップ 2</label>
         <name>labelVolunteersHelpStep2</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep2Text --></label>
+        <label>その他の V4S リソースを確認する。</label>
         <name>labelVolunteersHelpStep2Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep3 --></label>
+        <label>ステップ 3</label>
         <name>labelVolunteersHelpStep3</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep3Text --></label>
+        <label>コミュニティに参加する。</label>
         <name>labelVolunteersHelpStep3Text</name>
     </customLabels>
     <customLabels>
