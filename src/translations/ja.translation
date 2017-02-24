@@ -132,11 +132,11 @@ day:      &apos;日&apos;</label>
         <name>labelCalendarStillNeeded</name>
     </customLabels>
     <customLabels>
-        <label>予定: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
+        <label>agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
         <name>labelCalendarTimeFormat</name>
     </customLabels>
     <customLabels>
-        <label>月: &apos;MMMM yyyy&apos;, 週: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, 日: &apos;dddd, MMM d, yyyy&apos;</label>
+        <label>month: &apos;MMMM yyyy&apos;, week: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, day: &apos;dddd, MMM d, yyyy&apos;</label>
         <name>labelCalendarTitleFormat</name>
     </customLabels>
     <customLabels>
