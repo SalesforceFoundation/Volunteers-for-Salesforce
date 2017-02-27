@@ -173,6 +173,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 		        setStrFields.addAll(listStrFields1);
 		        setStrFields.addAll(listStrFields2);
 		        setStrFields.addAll(listStrFields3);
+		        setStrFields.add('Firstname');
+		        setStrFields.add('Lastname');
 		        listStrContactFields = new list<string>();
 	        	listStrContactFields.addAll(setStrFields);
     		}
