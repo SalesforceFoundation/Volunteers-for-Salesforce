@@ -51,12 +51,10 @@
                     </div>
                     <div class="slds-col slds-no-flex slds-align-middle">
                         <div class="slds-button-group" role="group">
-                            <apex:commandButton
-                                styleClass="slds-button slds-button--brand"
+                            <apex:commandButton styleClass="slds-button slds-button--brand"
                                 value="{!$Label.labelButtonSave}"
                                 action="{!Save}" />
-                            <apex:commandButton
-                                styleClass="slds-button slds-button--neutral"
+                            <apex:commandButton styleClass="slds-button slds-button--neutral"
                                 value="{!$Label.labelButtonCancel}"
                                 immediate="true"
                                 action="{!URLFOR($Action.Volunteer_Job__c.Tab,$ObjectType.Volunteer_Job__c)}" />
@@ -65,8 +63,7 @@
                 </div>
             </div>
             <apex:outputPanel id="panelErrors">
-                <c:UTIL_PageMessages
-                    html-class="slds-grid slds-grid--align-center slds-m-bottom--small" />
+                <c:UTIL_PageMessages html-class="slds-grid slds-grid--align-center slds-m-bottom--small" />
             </apex:outputPanel>
 
             <form class="slds-form slds-form--stacked ">
@@ -87,15 +84,13 @@
                     </div>
                     <div>
                         <div class="slds-form-element slds-p-top--small">
-                            <apex:outputLabel
-                                value="{!$Label.labelVolunteersWizardClone}"
+                            <apex:outputLabel value="{!$Label.labelVolunteersWizardClone}"
                                 for="clonePicklist"
                                 styleClass="slds-form-element__label" />
                             <apex:selectList value="{!campaignIdClone}"
                                 size="1" id="clonePicklist"
                                 styleClass="slds-form-element__control slds-select">
-                                <apex:selectOptions
-                                    value="{!listSOVolunteersCampaigns}" />
+                                <apex:selectOptions value="{!listSOVolunteersCampaigns}" />
                                 <apex:actionSupport immediate="false"
                                     event="onchange"
                                     rerender="panelJobsAndShifts,panelErrors"
@@ -107,38 +102,32 @@
                             <apex:outputPanel layout="block"
                                 rendered="{!campaignIdClone != null}"
                                 styleClass="slds-form-element slds-p-top--small">
-                                <apex:outputLabel
-                                    value="{!$Label.labelVolunteersWizardFirstShiftDate}"
+                                <apex:outputLabel value="{!$Label.labelVolunteersWizardFirstShiftDate}"
                                     for="shiftStartDate"
                                     styleClass="slds-form-element__label" />
                                 <div
                                     class="slds-text-align--left slds-form-element__control slds-form-element__static">
-                                    <apex:outputField
-                                        value="{!cmpShiftDates.StartDate}"
+                                    <apex:outputField value="{!cmpShiftDates.StartDate}"
                                         id="shiftStartDate" />
                                 </div>
                             </apex:outputPanel>
                             <apex:outputPanel layout="block"
                                 rendered="{!campaignIdClone != null}"
                                 styleClass="slds-form-element slds-p-top--small slds-m-right--x-small">
-                                <apex:outputLabel
-                                    value="{!$Label.labelVolunteersWizardNewShiftDate}"
+                                <apex:outputLabel value="{!$Label.labelVolunteersWizardNewShiftDate}"
                                     for="shiftEndDate"
                                     styleClass="slds-form-element__label" />
-                                <apex:inputField
-                                    value="{!cmpShiftDates.EndDate}"
+                                <apex:inputField value="{!cmpShiftDates.EndDate}"
                                     id="shiftEndDate"
                                     styleClass="slds-form-element__control slds-input dateOnlyInput" />
                             </apex:outputPanel>
                             <apex:outputPanel layout="block"
                                 rendered="{!campaignIdClone != null}"
                                 styleClass="slds-form-element slds-p-top--small">
-                                <apex:outputLabel
-                                    value="{!$Label.labelVolunteersWizardOverrideHoursStatus}"
+                                <apex:outputLabel value="{!$Label.labelVolunteersWizardOverrideHoursStatus}"
                                     styleClass="slds-form-element__label"
                                     for="hoursStatus" />
-                                <apex:inputField
-                                    value="{!hoursStatus.Status__c}"
+                                <apex:inputField value="{!hoursStatus.Status__c}"
                                     id="hoursStatus"
                                     styleClass="slds-form-element__control slds-select" />
                             </apex:outputPanel>

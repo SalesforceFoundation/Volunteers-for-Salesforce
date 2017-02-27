@@ -31,11 +31,13 @@
     <filter>
         <criteriaItems>
             <column>Volunteer_Job__c.Volunteer_Job_Slots__r$Job_Recurrence_Schedule__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Job__c.Volunteer_Job_Slots__r$System_Note__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>Recurrence</value>
         </criteriaItems>
