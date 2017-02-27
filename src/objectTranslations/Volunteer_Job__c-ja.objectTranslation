@@ -19,8 +19,8 @@
         <name>Display_on_Website__c</name>
     </fields>
     <fields>
-        <help><!-- If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site. --></help>
-        <label><!-- External Signup Url --></label>
+        <help>指定されている場合、ユーザがページのサインアップリンクをクリックしたときに VolunteersJobListingFS ページがこの Web サイトにリダイレクトされます。これにより、別の Web サイトで登録する必要のある仕事を公募できます。</help>
+        <label>外部サインアップ URL</label>
         <name>External_Signup_Url__c</name>
     </fields>
     <fields>
@@ -498,7 +498,7 @@
         <name>Job_Shift_Calendar</name>
     </webLinks>
     <webLinks>
-        <label><!-- Mass_Edit_Volunteer_Hours --></label>
+        <label>(未使用)</label>
         <name>Mass_Edit_Volunteer_Hours</name>
     </webLinks>
     <webLinks>

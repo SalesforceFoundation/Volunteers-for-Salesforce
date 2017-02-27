@@ -30,8 +30,8 @@
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
-        <help><!-- Personal Site Report Hours Filter By Contact --></help>
-        <label><!-- Personal Site Report Hours Filtered --></label>
+        <help>個人で絞り込まれた個人サイトレポート時間</help>
+        <label>絞り込まれた個人サイトレポート時間</label>
         <name>Personal_Site_Report_Hours_Filtered__c</name>
     </fields>
     <fields>
