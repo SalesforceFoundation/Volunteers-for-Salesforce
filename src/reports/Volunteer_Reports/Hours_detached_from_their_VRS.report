@@ -34,11 +34,13 @@
     <filter>
         <criteriaItems>
             <column>Volunteer_Hours__c.Volunteer_Recurrence_Schedule__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Hours__c.System_Note__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>contains</operator>
             <value>recurrence</value>
         </criteriaItems>
