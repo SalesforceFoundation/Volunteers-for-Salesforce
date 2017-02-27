@@ -152,7 +152,7 @@ day: &apos;jour&apos;</label>
         <name>labelChooseCriteria</name>
     </customLabels>
     <customLabels>
-        <label>&quot;MediumBlue&quot;,&quot;Green&quot;,&quot;DarkRed&quot;, &quot;Purple&quot;, &quot;DarkSlateGray&quot;, &quot;MidnightBlue&quot;</label>
+        <label><!-- list of browser color values for JobCalendar --></label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
