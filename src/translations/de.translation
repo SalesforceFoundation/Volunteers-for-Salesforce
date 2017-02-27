@@ -65,14 +65,14 @@
         <name>labelCalendarAxisFormat</name>
     </customLabels>
     <customLabels>
-        <label>Vorige:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
-nächstes:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
-Vorjahr: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
-nächstesJahr: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
-heute:    &apos;Heute&apos;,
-Monat:    &apos;Monat&apos;,
-Woche:     &apos;Woche&apos;,
-Tag:      &apos;Tag&apos;</label>
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today:    &apos;Heute&apos;,
+month:    &apos;Monat&apos;,
+week:     &apos;Woche&apos;,
+day:      &apos;Tag&apos;</label>
         <name>labelCalendarButtonText</name>
     </customLabels>
     <customLabels>
@@ -80,7 +80,7 @@ Tag:      &apos;Tag&apos;</label>
         <name>labelCalendarCloseWindow</name>
     </customLabels>
     <customLabels>
-        <label>Monat: &apos;ttt&apos;, Woche: &apos;ttt M/t&apos;, Tag: &apos;tttt M/t&apos;</label>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</label>
         <name>labelCalendarColumnFormat</name>
     </customLabels>
     <customLabels>
@@ -132,11 +132,11 @@ Tag:      &apos;Tag&apos;</label>
         <name>labelCalendarStillNeeded</name>
     </customLabels>
     <customLabels>
-        <label>Agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
+        <label>agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
         <name>labelCalendarTimeFormat</name>
     </customLabels>
     <customLabels>
-        <label>Monat: &apos;MMMM jjjj&apos;, Woche: &quot;MMM t[ jjjj]{ &apos;&amp;#8212;&apos;[ MMM] t jjjj}&quot;, Tag: &apos;tttt, MMM t, jjjj&apos;</label>
+        <label>month: &apos;MMMM yyyy&apos;, week: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, day: &apos;dddd, MMM d, yyyy&apos;</label>
         <name>labelCalendarTitleFormat</name>
     </customLabels>
     <customLabels>
@@ -152,7 +152,7 @@ Tag:      &apos;Tag&apos;</label>
         <name>labelChooseCriteria</name>
     </customLabels>
     <customLabels>
-        <label>Mittelblau,&quot;Grün&quot;,&quot;Dunkelrot&quot;, &quot;Violett&quot;, &quot;Schiefergrau&quot;, &quot;Mitternachtsblau&quot;</label>
+        <label><!-- list of browser color values for JobCalendar --></label>
         <name>labelColorValues</name>
     </customLabels>
     <customLabels>
