@@ -5,19 +5,19 @@
         <name>Groundwire_Volunteers</name>
     </customApplications>
     <customLabels>
-        <label><!-- PageMessagesConfirm --></label>
+        <label>Erfolg</label>
         <name>PageMessagesConfirm</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesError --></label>
+        <label>Fehler</label>
         <name>PageMessagesError</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesFatal --></label>
+        <label>Fehler</label>
         <name>PageMessagesFatal</name>
     </customLabels>
     <customLabels>
-        <label><!-- PageMessagesWarning --></label>
+        <label>Warnung</label>
         <name>PageMessagesWarning</name>
     </customLabels>
     <customLabels>
@@ -244,11 +244,11 @@ day:      &apos;Tag&apos;</label>
         <name>labelCopySchedule</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelEventInThePast --></label>
+        <label>Dieser Auftrag enthält keine bevorstehenden Schichten.</label>
         <name>labelEventInThePast</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelExternalSignupUrl --></label>
+        <label>Anmelden (externe Site)</label>
         <name>labelExternalSignupUrl</name>
     </customLabels>
     <customLabels>
@@ -292,7 +292,7 @@ day:      &apos;Tag&apos;</label>
         <name>labelFindVolunteersNewlyAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelFirstShift --></label>
+        <label>Erste Schicht:</label>
         <name>labelFirstShift</name>
     </customLabels>
     <customLabels>
@@ -508,7 +508,7 @@ day:      &apos;Tag&apos;</label>
         <name>labelPersonalSiteLastnameRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- displays when the contact hasn&apos;t signed up for any jobs --></label>
+        <label>Es sind keine Aufträge vorhanden, für die Sie Stunden angeben können.</label>
         <name>labelPersonalSiteNoJobsForContact</name>
     </customLabels>
     <customLabels>
@@ -560,19 +560,25 @@ day:      &apos;Tag&apos;</label>
         <name>labelTitleJobSignup</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchDescription --></label>
+        <label>&lt;p&gt;Volunteers for Salesforce unterstützt Zeitpläne für wiederkehrende Freiwillige und Aufträge mithilfe eines Batchvorgangs, um zukünftige Schichten zu erstellen und ihnen Freiwillige zuzuweisen. Sie können diesen Vorgang manuell ausführen, indem Sie auf die Schaltfläche &quot;Batch ausführen&quot; klicken, oder Sie können festlegen, dass er nachts automatisch ausgeführt wird.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;Sie sehen eine Statusanzeige für den neuesten Batchvorgang. Der Vorgang kann etwas Zeit in Anspruch nehmen. Je mehr Daten Ihre Datenbank enthält, umso länger dauert er. Sie können diese Seite schließen, um den Vorgang im Hintergrund fortzusetzen.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;Um die aktuell geplanten Aufträge anzuzeigen, rufen Sie die &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Seite für geplante Aufträge&lt;/a&gt; auf.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;Um festzulegen, dass wiederkehrende Zeitpläne automatisch ausgeführt werden, rufen Sie die &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Seite für geplante Apex-Aufträge&lt;/a&gt; auf.&lt;/p&gt;</label>
         <name>labelVRSBatchDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchProcess --></label>
+        <label>Wiederkehrende Zeitpläne verarbeiten</label>
         <name>labelVRSBatchProcess</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchProcessProgress --></label>
+        <label>Status der Verarbeitung wiederkehrender Zeitpläne</label>
         <name>labelVRSBatchProcessProgress</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVRSBatchRun --></label>
+        <label>Batch ausführen</label>
         <name>labelVRSBatchRun</name>
     </customLabels>
     <customLabels>
@@ -604,35 +610,35 @@ day:      &apos;Tag&apos;</label>
         <name>labelVolunteerSignupThankYou</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelp --></label>
+        <label>Freiwilligen-Hilfe</label>
         <name>labelVolunteersHelp</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpDescription --></label>
+        <label>Die ersten Schritte mit Volunteers for Salesforce (V4S) sind einfach. Weitere Ressourcen finden Sie im &lt;a href=&quot;https://powerofus.force.com&quot; target=&quot;_blank&quot;&gt;&quot;Power of Us&quot;-HUB&lt;/a&gt;.</label>
         <name>labelVolunteersHelpDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep1 --></label>
+        <label>Schritt 1</label>
         <name>labelVolunteersHelpStep1</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep1Text --></label>
+        <label>Informieren Sie sich in Trailhead über V4S und die Konfiguration dieser Anwendung.</label>
         <name>labelVolunteersHelpStep1Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep2 --></label>
+        <label>Schritt 2</label>
         <name>labelVolunteersHelpStep2</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep2Text --></label>
+        <label>Erkunden Sie weitere V4S-Ressourcen.</label>
         <name>labelVolunteersHelpStep2Text</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep3 --></label>
+        <label>Schritt 3</label>
         <name>labelVolunteersHelpStep3</name>
     </customLabels>
     <customLabels>
-        <label><!-- labelVolunteersHelpStep3Text --></label>
+        <label>Treten Sie der Community bei.</label>
         <name>labelVolunteersHelpStep3Text</name>
     </customLabels>
     <customLabels>

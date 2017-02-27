@@ -24,8 +24,8 @@
         <name>Contact_Matching_Rule__c</name>
     </fields>
     <fields>
-        <help><!-- If you include a Google Maps API Key, the JobListing pages will display a map on your volunteers site for the Job Location. --></help>
-        <label><!-- Google Maps API Key --></label>
+        <help>Si vous incluez une clé d’API Google Maps, les pages JobListing afficheront une carte sur le site de vos bénévoles pour la localisation de la tâche.</help>
+        <label>Clé d’API Google Maps</label>
         <name>Google_Maps_API_Key__c</name>
     </fields>
     <fields>
@@ -34,13 +34,13 @@
         <name>Personal_Site_Org_Wide_Email_Name__c</name>
     </fields>
     <fields>
-        <help><!-- Personal Site Report Hours Filter By Contact --></help>
-        <label><!-- Personal Site Report Hours Filtered --></label>
+        <help>Rapport d’heures filtré par contact sur le site du personnel</help>
+        <label>Rap. d’heures filtré sur site personnel</label>
         <name>Personal_Site_Report_Hours_Filtered__c</name>
     </fields>
     <fields>
-        <help><!-- If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact. --></help>
-        <label><!-- Personal Site Requires URL Email Match --></label>
+        <help>Si coché, le site du personnel impose d’inclure un paramètre d’URL « E-mail » qui doit correspondre au champ d’e-mail du contact spécifié.</help>
+        <label>Site pers. requiert vérif. email par URL</label>
         <name>Personal_Site_Requires_URL_Email_Match__c</name>
     </fields>
     <fields>
