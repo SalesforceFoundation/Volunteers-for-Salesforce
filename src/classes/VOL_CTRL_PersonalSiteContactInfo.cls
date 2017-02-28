@@ -118,6 +118,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         setStrFields.addAll(listStrFieldsPanel1FS);
         setStrFields.addAll(listStrFieldsPanel2FS);
         setStrFields.addAll(listStrFieldsExtraFS);
+        setStrFields.add('Firstname');
+        setStrFields.add('Lastname');
         contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));                 
         
         
@@ -171,6 +173,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 		        setStrFields.addAll(listStrFields1);
 		        setStrFields.addAll(listStrFields2);
 		        setStrFields.addAll(listStrFields3);
+		        setStrFields.add('Firstname');
+		        setStrFields.add('Lastname');
 		        listStrContactFields = new list<string>();
 	        	listStrContactFields.addAll(setStrFields);
     		}
