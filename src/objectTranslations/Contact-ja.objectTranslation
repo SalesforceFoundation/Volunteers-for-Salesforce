@@ -118,8 +118,8 @@
         </picklistValues>
     </fields>
     <workflowTasks>
-        <description><!-- An automatic thank you email has been sent to the contact for signing up to be a volunteer. --></description>
+        <description>ボランティアにサインアップした個人に自動お礼メールが送信されました。</description>
         <name>Volunteer_Signup_Thank_You_Sent_Contact</name>
-        <subject><!-- Volunteer Signup Thank You Sent - Contact --></subject>
+        <subject>ボランティアサインアップへのお礼状送信済み - 個人</subject>
     </workflowTasks>
 </CustomObjectTranslation>
