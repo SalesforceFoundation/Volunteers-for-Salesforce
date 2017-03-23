@@ -44,7 +44,7 @@ public with sharing class VOL_CTRL_OpenReport {
 		if (strDevName == null || strDevName == '') {
 			return null;
 		}
-				
+
 		//redirect to newly created opp in edit mode
 		ID reportId = reportIdFromDevName(strDevName);
 		if (reportId != null) {
@@ -55,8 +55,15 @@ public with sharing class VOL_CTRL_OpenReport {
 			} else {
 				strParams = '';
 			}
-			PageReference page = new PageReference('/' + reportId + strParams);
-        	page.setRedirect(true);
+			PageReference page;
+            // see if we are in Lightning Experience vs Aloha/Salesforce Classic
+			if (UserInfo.getUiThemeDisplayed() != 'Theme4d') {
+			    page = new PageReference('/' + reportId + strParams);
+			} else {
+			    strParams = strParams.replace('pv', 'fv');
+                page = new PageReference('/one/one.app#/sObject/' + reportId + '/view' + strParams );
+			}
+            page.setRedirect(true);
         	return page;
 		} 
 		
