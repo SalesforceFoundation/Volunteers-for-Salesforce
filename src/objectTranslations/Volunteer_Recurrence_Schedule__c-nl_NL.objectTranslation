@@ -9,79 +9,79 @@
         <value><!-- Volunteer Recurrence Schedule --></value>
     </caseValues>
     <fields>
-        <help><!-- Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule. --></help>
-        <label><!-- Comments --></label>
+        <help>Tekst die wordt gekopieerd naar het Vrijwilligers Uren Opmerkingen Veld voor alle uren die gemaakt zijn door dit Vrijwilligers Herhalingsschema.</help>
+        <label>Opmerkingen</label>
         <name>Comments__c</name>
     </fields>
     <fields>
-        <label><!-- Contact --></label>
+        <label>Contactpersoon</label>
         <name>Contact__c</name>
-        <relationshipLabel><!-- Volunteer Recurrence Schedules --></relationshipLabel>
+        <relationshipLabel>Vrijwilligers Herhalingsschema</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Days of Week --></label>
+        <label>Dagen van de Wee</label>
         <name>Days_of_Week__c</name>
         <picklistValues>
             <masterLabel>Friday</masterLabel>
-            <translation><!-- Friday --></translation>
+            <translation>Vrijdag</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Monday</masterLabel>
-            <translation><!-- Monday --></translation>
+            <translation>Maandag</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Saturday</masterLabel>
-            <translation><!-- Saturday --></translation>
+            <translation>Zaterdag</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Sunday</masterLabel>
-            <translation><!-- Sunday --></translation>
+            <translation>Zondag</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Thursday</masterLabel>
-            <translation><!-- Thursday --></translation>
+            <translation>Donderdag</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Tuesday</masterLabel>
-            <translation><!-- Tuesday --></translation>
+            <translation>Dinsdag</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Wednesday</masterLabel>
-            <translation><!-- Wednesday --></translation>
+            <translation>Woensdag</translation>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Duration --></label>
+        <label>Duur</label>
         <name>Duration__c</name>
     </fields>
     <fields>
-        <help><!-- Set to 1 for an individual.  Set to a larger number if the Contact represents a group, and you will not be tracking each individual&apos;s hours. --></help>
-        <label><!-- Number of Volunteers --></label>
+        <help>Stel in op 1 voor een individu. Stel een hoger nummer in als de contactpersoon een groep representeert, en je niet elk individu zijn uren vastlegt.</help>
+        <label>Aantal Vrijwilligers</label>
         <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>
-        <label><!-- Schedule End Date --></label>
+        <label>Gepande Eind Datum</label>
         <name>Schedule_End_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Schedule Start Date &amp; Time --></label>
+        <label>Geplande Start Datum &amp; Tijd</label>
         <name>Schedule_Start_Date_Time__c</name>
     </fields>
     <fields>
-        <help><!-- The Volunteer Hours Status value to specify on newly created Hours records. --></help>
-        <label><!-- Volunteer Hours Status --></label>
+        <help>De Vrijwilligers Uren Status waarde die nieuw gemaakte Uren records specificeert.</help>
+        <label>Vrijwilligers Uren Status</label>
         <name>Volunteer_Hours_Status__c</name>
         <picklistValues>
             <masterLabel>Canceled</masterLabel>
-            <translation><!-- Canceled --></translation>
+            <translation>Geannuleerd</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Completed</masterLabel>
-            <translation><!-- Completed --></translation>
+            <translation>Voltooid</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Confirmed</masterLabel>
-            <translation><!-- Confirmed --></translation>
+            <translation>Bevestigd</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Prospect</masterLabel>
@@ -89,40 +89,40 @@
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Job --></label>
+        <label>Vrijwilligersbaan</label>
         <name>Volunteer_Job__c</name>
-        <relationshipLabel><!-- Volunteer Recurrence Schedules --></relationshipLabel>
+        <relationshipLabel>Vrijwilligers Herhalingsschema</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Weekly Occurrence --></label>
+        <label>Wekelijkse Gebeurtenis</label>
         <name>Weekly_Occurrence__c</name>
         <picklistValues>
             <masterLabel>1st</masterLabel>
-            <translation><!-- 1st --></translation>
+            <translation>Eerste</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>2nd</masterLabel>
-            <translation><!-- 2nd --></translation>
+            <translation>Tweede</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>3rd</masterLabel>
-            <translation><!-- 3rd --></translation>
+            <translation>Derde</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>4th</masterLabel>
-            <translation><!-- 4th --></translation>
+            <translation>Vierde</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>5th</masterLabel>
-            <translation><!-- 5th --></translation>
+            <translation>Vijfde</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Alternate</masterLabel>
-            <translation><!-- Alternate --></translation>
+            <translation>Afwisselend</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Every</masterLabel>
-            <translation><!-- Every --></translation>
+            <translation>Alles</translation>
         </picklistValues>
     </fields>
     <gender><!-- Neuter --></gender>
@@ -135,11 +135,11 @@
     </layouts>
     <nameFieldLabel><!-- VRS ID --></nameFieldLabel>
     <validationRules>
-        <errorMessage><!-- You must specify at least one value for Days of Week --></errorMessage>
+        <errorMessage>U moet ten minste één waarde opgeven voor Dagen van de Week</errorMessage>
         <name>VRS_Days_of_Week_Required</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- You must specify at least one value for Weekly Occurrence --></errorMessage>
+        <errorMessage>U moet ten minste één waarde opgeven voor Wekelijks Gebeurtenis</errorMessage>
         <name>VRS_Weekly_Occurrence_Required</name>
     </validationRules>
 </CustomObjectTranslation>

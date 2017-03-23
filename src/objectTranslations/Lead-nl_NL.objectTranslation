@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
-        <label><!-- Volunteer Availability --></label>
+        <label>Vrijwilliger Beschikbaarheid</label>
         <name>Volunteer_Availability__c</name>
         <picklistValues>
             <masterLabel>Afternoon</masterLabel>
-            <translation><!-- Afternoon --></translation>
+            <translation>&apos;s Middags</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Morning</masterLabel>
-            <translation><!-- Morning --></translation>
+            <translation>&apos;s Ochtends</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekdays</masterLabel>
-            <translation><!-- Weekdays --></translation>
+            <translation>Doordeweeks</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekends</masterLabel>
@@ -21,20 +21,20 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <translation>Wekelijks</translation>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Notes --></label>
+        <label>Vrijwilliger notities</label>
         <name>Volunteer_Notes__c</name>
     </fields>
     <fields>
-        <help><!-- Select the skill(s) this person has that should be used to find volunteer jobs. --></help>
-        <label><!-- Volunteer Skills --></label>
+        <help>Selecteer de vaardigheden van deze persoon die gebruikt zouden moeten worden met het zoeken naar vrijwilligersbanen</help>
+        <label>Vrijwilliger Vaardigheden</label>
         <name>Volunteer_Skills__c</name>
         <picklistValues>
             <masterLabel>Computer usage</masterLabel>
-            <translation><!-- Computer usage --></translation>
+            <translation>Computer gebruik</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Event Planning</masterLabel>
@@ -42,15 +42,15 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>Fundraising</masterLabel>
-            <translation><!-- Fundraising --></translation>
+            <translation>Fondsenwerving</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Landscaping</masterLabel>
-            <translation><!-- Landscaping --></translation>
+            <translation>Tuinieren</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manual labor</masterLabel>
-            <translation><!-- Manual labor --></translation>
+            <translation>Handenarbeid</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Marketing</masterLabel>
@@ -58,16 +58,16 @@
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Status --></label>
+        <label>Vrijwilliger Status</label>
         <name>Volunteer_Status__c</name>
         <picklistValues>
             <masterLabel>New Sign Up</masterLabel>
-            <translation><!-- New Sign Up --></translation>
+            <translation>Nieuwe Aanmelding</translation>
         </picklistValues>
     </fields>
     <workflowTasks>
-        <description><!-- An automatic email has been sent to the lead thanking them for signing up to be a volunteer. --></description>
+        <description>Een automatische e-mail is verzonden naar de lead om hem of haar te bedanken voor het inschrijven als vrijwilliger.</description>
         <name>Volunteer_Signup_Thank_You_Sent_Lead</name>
-        <subject><!-- Volunteer Signup Thank You Sent - Lead --></subject>
+        <subject>Vrijwilliger Inschrijving Bedankt Verzonden - Lead</subject>
     </workflowTasks>
 </CustomObjectTranslation>

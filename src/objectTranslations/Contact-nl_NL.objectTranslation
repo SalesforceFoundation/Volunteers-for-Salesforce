@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
-        <help><!-- The first Volunteer Hours Start Date --></help>
-        <label><!-- First Volunteer Date --></label>
+        <help>De eerste Vrijwilligersuren Startdatum</help>
+        <label>Eerste Vrijwilligersdatum</label>
         <name>First_Volunteer_Date__c</name>
     </fields>
     <fields>
-        <help><!-- The latest Volunteer Hours End Date --></help>
-        <label><!-- Last Volunteer Date --></label>
+        <help>De laatste Vrijwilligersuren Einddatum</help>
+        <label>Laatste Vrijwilliger Datum</label>
         <name>Last_Volunteer_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Unique Count --></label>
+        <label>Vrijwilliger Unieke Telling</label>
         <name>Unique_Volunteer_Count__c</name>
     </fields>
     <fields>
-        <help><!-- Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule. --></help>
-        <label><!-- Volunteer Auto-Reminder Email Opt Out --></label>
+        <help>Vink aan als deze Contactpersoon geen automatische e-mail herinneringen wilt ontvangen over zijn of haar volgende dienst. Wordt gebruikt in de &quot;Vrijwilligersuren Herinnering E-mail&quot; workflow regel.</help>
+        <label>Vrijwilliger auto-reminder Email Opt Out</label>
         <name>Volunteer_Auto_Reminder_Email_Opt_Out__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Availability --></label>
+        <label>Vrijwilliger Beschikbaarheid</label>
         <name>Volunteer_Availability__c</name>
         <picklistValues>
             <masterLabel>Afternoon</masterLabel>
-            <translation><!-- Afternoon --></translation>
+            <translation>&apos;s Middags</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Morning</masterLabel>
-            <translation><!-- Morning --></translation>
+            <translation>&apos;s Ochtends</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekdays</masterLabel>
-            <translation><!-- Weekdays --></translation>
+            <translation>Doordeweeks</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekends</masterLabel>
@@ -40,57 +40,57 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <translation>Wekelijks</translation>
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- Total number of Hours that are Completed. Hours with other status values are not included. --></help>
-        <label><!-- Volunteer Hours --></label>
+        <help>Totaal aantal uren die voltooid zijn. Uren met &quot;anders&quot; als status zijn niet inbegrepen.</help>
+        <label>Vrijwilligersuren</label>
         <name>Volunteer_Hours__c</name>
     </fields>
     <fields>
-        <help><!-- The date of the most recent volunteer signup from the web.  Used to trigger workflow for notifications and thank you emails. --></help>
-        <label><!-- Volunteer Last Web Signup Date --></label>
+        <help>De datum van de meest recente aanmelding als Vrijwilliger via het internet. Gebruikt om een workflow te activeren voor notificaties en bedank e-mails.</help>
+        <label>Vrijwilliger Laatste Web Aanmeld Datum</label>
         <name>Volunteer_Last_Web_Signup_Date__c</name>
     </fields>
     <fields>
-        <help><!-- Notes about the volunteer that the volunteer manager or organization staff want to record. --></help>
-        <label><!-- Volunteer Manager Notes --></label>
+        <help>Notities over de vrijwilliger die de vrijwilligersmanager of organisatiepersoneel wil maken.</help>
+        <label>Vrijwilligersmanager Notities</label>
         <name>Volunteer_Manager_Notes__c</name>
     </fields>
     <fields>
-        <help><!-- Notes from the volunteer.  Note that the web signup form appends the volunteers comments to this field. --></help>
-        <label><!-- Volunteer Notes --></label>
+        <help>Notities van de vrijwilliger. Let op dat het web aanmeldingsformulier wordt toegevoegd aan de opmerkingen van de vrijwilliger op dit veld.</help>
+        <label>Vrijwilligers Notities</label>
         <name>Volunteer_Notes__c</name>
     </fields>
     <fields>
-        <help><!-- The organization, company, or group the contact is volunteering on behalf of. --></help>
-        <label><!-- Volunteer Organization --></label>
+        <help>De organisatie, bedrijf, of groep contactpersonen doet vrijwilligerswerk namens.</help>
+        <label>Vrijwilligersorganisatie</label>
         <name>Volunteer_Organization__c</name>
     </fields>
     <fields>
-        <help><!-- Select the skill(s) this contact has that should be used to find volunteer jobs. --></help>
-        <label><!-- Volunteer Skills --></label>
+        <help>Selecteer de vaardigheden die dit contactpersoon heeft die zou gebruikt moeten worden om Vrijwilligersbanen te vinden.</help>
+        <label>Vrijwilligers Vaardigheden</label>
         <name>Volunteer_Skills__c</name>
         <picklistValues>
             <masterLabel>Computer usage</masterLabel>
-            <translation><!-- Computer usage --></translation>
+            <translation>Computer gebruik</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Event Planning</masterLabel>
-            <translation><!-- Event Planning --></translation>
+            <translation>Eventenementen Plannen</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Fundraising</masterLabel>
-            <translation><!-- Fundraising --></translation>
+            <translation>Fondsenwerving</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Landscaping</masterLabel>
-            <translation><!-- Landscaping --></translation>
+            <translation>Tuinieren</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manual labor</masterLabel>
-            <translation><!-- Manual labor --></translation>
+            <translation>Handenarbeid</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Marketing</masterLabel>
@@ -98,28 +98,28 @@
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Volunteer Status --></label>
+        <label>Vrijwilligers Status</label>
         <name>Volunteer_Status__c</name>
         <picklistValues>
             <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <translation>Actief</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <translation>Inactief</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>New Sign Up</masterLabel>
-            <translation><!-- New Sign Up --></translation>
+            <translation>Nieuwe Aanmelding</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Prospective</masterLabel>
-            <translation><!-- Prospective --></translation>
+            <translation>Toekomstig</translation>
         </picklistValues>
     </fields>
     <workflowTasks>
-        <description><!-- An automatic thank you email has been sent to the contact for signing up to be a volunteer. --></description>
+        <description>Een automatische bedank e-mail is verzonden naar de contact voor het inschrijven als vrijwilliger.</description>
         <name>Volunteer_Signup_Thank_You_Sent_Contact</name>
-        <subject><!-- Volunteer Signup Thank You Sent - Contact --></subject>
+        <subject>Inschrijving Vrijwilliger Bedankt Verzonden - Contact</subject>
     </workflowTasks>
 </CustomObjectTranslation>

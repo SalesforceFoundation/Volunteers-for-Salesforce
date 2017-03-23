@@ -9,42 +9,42 @@
         <value><!-- Volunteer Hours --></value>
     </caseValues>
     <fields>
-        <label><!-- Comments --></label>
+        <label>Opmerkingen</label>
         <name>Comments__c</name>
     </fields>
     <fields>
-        <label><!-- Contact --></label>
+        <label>Contactpersoon</label>
         <name>Contact__c</name>
-        <relationshipLabel><!-- Volunteer Hours --></relationshipLabel>
+        <relationshipLabel>Vrijwilligers Uren</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- End Date --></label>
+        <label>Eind Datum</label>
         <name>End_Date__c</name>
     </fields>
     <fields>
-        <label><!-- Full Name --></label>
+        <label>Volledige Naam</label>
         <name>Full_Name__c</name>
     </fields>
     <fields>
-        <label><!-- Hours Worked --></label>
+        <label>Uren Gewerkt</label>
         <name>Hours_Worked__c</name>
     </fields>
     <fields>
-        <help><!-- Defaults to 1. Increase if this person is bringing additional people whom you are not directly tracking as contacts, and won&apos;t be logging individual volunteer hours against. --></help>
-        <label><!-- Number of Volunteers --></label>
+        <help>Standaard 1. Verhoog als deze persoon extra mensen meebrengt die niet direct te volgen zijn als contactpersonen, en geen individuele vrijwilligers uren doorgeeft.</help>
+        <label>Aantal Vrijwilligers</label>
         <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>
-        <help><!-- The actual date &amp; time the volunteer is planning on starting. --></help>
-        <label><!-- Planned Start Date &amp; Time --></label>
+        <help>De precieze datum &amp; tijd wanneer deze vrijwilliger gepland heeft om te beginnen.</help>
+        <label>Geplande Start Datum &amp; Tijd</label>
         <name>Planned_Start_Date_Time__c</name>
     </fields>
     <fields>
-        <label><!-- Shift Start Date &amp; Time --></label>
+        <label>Dienst Start Datum &amp; Tijd</label>
         <name>Shift_Start_Date_Time__c</name>
     </fields>
     <fields>
-        <label><!-- Start Date --></label>
+        <label>Start Datum</label>
         <name>Start_Date__c</name>
     </fields>
     <fields>
@@ -52,15 +52,15 @@
         <name>Status__c</name>
         <picklistValues>
             <masterLabel>Canceled</masterLabel>
-            <translation><!-- Canceled --></translation>
+            <translation>Geannuleerd</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Completed</masterLabel>
-            <translation><!-- Completed --></translation>
+            <translation>Voltooid</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Confirmed</masterLabel>
-            <translation><!-- Confirmed --></translation>
+            <translation>Bevestigd</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>No-Show</masterLabel>
@@ -72,40 +72,43 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>Web Sign Up</masterLabel>
-            <translation><!-- Web Sign Up --></translation>
+            <translation>Web Aanmelden</translation>
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- Text information from the system scheduler. --></help>
-        <label><!-- System Note --></label>
+        <help>Tekst informatie van de systeem planner.</help>
+        <label>Systeem Notitie</label>
         <name>System_Note__c</name>
     </fields>
     <fields>
-        <label><!-- Total Hours Worked --></label>
+        <label>Totaal Aantal Uur Gewerkt</label>
         <name>Total_Hours_Worked__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Campaign Name --></label>
+        <label>Vrijwilligerscampagne Naam</label>
         <name>Volunteer_Campaign_Name__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Campaign --></label>
+        <label>Vrijwilligerscampagne</label>
         <name>Volunteer_Campaign__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Job --></label>
+        <label>Vrijwilligersbaan</label>
         <name>Volunteer_Job__c</name>
-        <relationshipLabel><!-- Volunteer Hours --></relationshipLabel>
+        <relationshipLabel>Vrijwilligers Uren</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Volunteer Recurrence Schedule --></label>
+        <label>Vrijwilligers Herhalingsschema</label>
         <name>Volunteer_Recurrence_Schedule__c</name>
-        <relationshipLabel><!-- Volunteer Hours --></relationshipLabel>
+        <relationshipLabel>Vrijwilligers Uren</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Volunteer Shift --></label>
+        <label>Vrijwilligersdienst</label>
+        <lookupFilter>
+            <informationalMessage>Je kunt alleen een Dienst kiezen die bij de huidige Baan hoort.</informationalMessage>
+        </lookupFilter>
         <name>Volunteer_Shift__c</name>
-        <relationshipLabel><!-- Volunteer Hours --></relationshipLabel>
+        <relationshipLabel>Vrijwilligers Uren</relationshipLabel>
     </fields>
     <gender><!-- Neuter --></gender>
     <layouts>
@@ -117,15 +120,15 @@
     </layouts>
     <nameFieldLabel><!-- HoursID --></nameFieldLabel>
     <validationRules>
-        <errorMessage><!-- Please specify the Hours Worked when setting Status to Completed. --></errorMessage>
+        <errorMessage>Specificeer de Uren Gewerkt wanneer de Status is veranderd naar Compleet.</errorMessage>
         <name>HoursRequiredOnCompletion</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- Please specify a Status value. --></errorMessage>
+        <errorMessage>Specificeer een Status waarde.</errorMessage>
         <name>StatusMustBeSet</name>
     </validationRules>
     <webLinks>
-        <label><!-- Mass_Edit_Volunteer_Hours --></label>
+        <label>Meerdere Aanpassen Vrijwilligersuren</label>
         <name>Mass_Edit_Volunteer_Hours</name>
     </webLinks>
 </CustomObjectTranslation>

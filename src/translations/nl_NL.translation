@@ -705,82 +705,82 @@
         <name>lblRequired</name>
     </customLabels>
     <customTabs>
-        <label><!-- Volunteers Help --></label>
+        <label>Vrijwilligers Help</label>
         <name>About_Volunteers</name>
     </customTabs>
     <customTabs>
-        <label><!-- Find Volunteers --></label>
+        <label>Vind Vrijwilligers</label>
         <name>Find_Volunteers</name>
     </customTabs>
     <customTabs>
-        <label><!-- Process Recurrence Schedules --></label>
+        <label>Verwerken Herhaling Schema&apos;s</label>
         <name>Process_Recurrence_Schedules</name>
     </customTabs>
     <customTabs>
-        <label><!-- Shift Calendar --></label>
+        <label>Dienst Kalender</label>
         <name>Shift_Calendar</name>
     </customTabs>
     <customTabs>
-        <label><!-- Volunteers Wizard --></label>
+        <label>Vrijwilligers Wizard</label>
         <name>Volunteers_Wizard</name>
     </customTabs>
     <reportTypes>
-        <description><!-- Accounts with Volunteer Hours --></description>
-        <label><!-- Accounts with Volunteer Hours --></label>
+        <description>Accounts met vrijwilligersuren verbonden door middel van contactpersonen.</description>
+        <label>Accounts met Vrijwilligersuren</label>
         <name>Accounts</name>
         <sections>
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Contactpersonen</label>
             <name>Contacts</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Hours --></label>
+            <label>Vrijwilligersuren</label>
             <name>Volunteer Hours</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Volunteer Campaigns --></description>
-        <label><!-- Volunteer Campaigns --></label>
+        <description>Campagnes met Vrijwilligersbanen records.</description>
+        <label>Vrijwilligerscampagnes</label>
         <name>Volunteer_Campaigns</name>
         <sections>
-            <label><!-- Campaigns --></label>
+            <label>Campagnes</label>
             <name>Campaigns</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Jobs --></label>
+            <label>Vrijwilligersbanen</label>
             <name>Volunteer Jobs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Volunteer Jobs and Hours --></description>
-        <label><!-- Volunteer Jobs and Hours --></label>
+        <description>Alle vrijwilligersbanen en de daarmee verbonden uren.</description>
+        <label>Vrijwilligersbanen en Uren</label>
         <name>Volunteer_Jobs_and_Hours</name>
         <sections>
-            <label><!-- Volunteer Hours --></label>
+            <label>Vrijwilligersuren</label>
             <name>Volunteer Hours</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Jobs --></label>
+            <label>Vrijwilligersbanen</label>
             <name>Volunteer Jobs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Volunteer Jobs with Shifts &amp; Hours --></description>
-        <label><!-- Volunteer Jobs with Shifts &amp; Hours --></label>
+        <description>Vrijwilligersbanen met Dienst en Uur records</description>
+        <label>Vrijwilligersbanen met Diensten &amp; Uren</label>
         <name>Volunteer_Jobs_with_Shifts_Hours</name>
         <sections>
-            <label><!-- Volunteer Hours --></label>
+            <label>Vrijwilligersuren</label>
             <name>Volunteer Hours</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Jobs --></label>
+            <label>Vrijwilligersbanen</label>
             <name>Volunteer Jobs</name>
         </sections>
         <sections>
-            <label><!-- Volunteer Shifts --></label>
+            <label>Vrijwilligersdiensten</label>
             <name>Volunteer Shifts</name>
         </sections>
     </reportTypes>

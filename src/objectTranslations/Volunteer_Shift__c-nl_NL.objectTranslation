@@ -9,62 +9,62 @@
         <value><!-- Volunteer Shift --></value>
     </caseValues>
     <fields>
-        <label><!-- Description --></label>
+        <label>Beschrijving</label>
         <name>Description__c</name>
     </fields>
     <fields>
-        <label><!-- Desired # of Volunteers --></label>
+        <label>Verlangt # Vrijwilligers</label>
         <name>Desired_Number_of_Volunteers__c</name>
     </fields>
     <fields>
-        <help><!-- How many hours long is the shift? --></help>
-        <label><!-- Duration (Hours) --></label>
+        <help>Hoe lang duurt de shift in uren?</help>
+        <label>Duur (Uren)</label>
         <name>Duration__c</name>
     </fields>
     <fields>
-        <label><!-- Job Location City --></label>
+        <label>Baan Locatie Stad</label>
         <name>Job_Location_City__c</name>
     </fields>
     <fields>
-        <label><!-- Job Location State/Province --></label>
+        <label>Baan Locatie Staat/Provincie</label>
         <name>Job_Location_State_Province__c</name>
     </fields>
     <fields>
-        <label><!-- Job Location Street --></label>
+        <label>Baan Locatie Straat</label>
         <name>Job_Location_Street__c</name>
     </fields>
     <fields>
-        <label><!-- Job Location Zip/Postal Code --></label>
+        <label>Baan Locatie Zip/Postcode</label>
         <name>Job_Location_Zip_Postal_Code__c</name>
     </fields>
     <fields>
-        <help><!-- Automatically set by the system scheduler to show the Job Recurrence Schedule this shift is associated with. --></help>
-        <label><!-- Job Recurrence Schedule --></label>
+        <help>Automatisch ingesteld door de systeem planner om het Herhalingsschema te zien waarmee deze shift is geassocieerd.</help>
+        <label>Baan Herhalingsschema</label>
         <name>Job_Recurrence_Schedule__c</name>
-        <relationshipLabel><!-- Volunteer Shifts --></relationshipLabel>
+        <relationshipLabel>Vrijwilligersdiensten</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- # of Volunteers Still Needed --></label>
+        <label># Vrijwilligers Nog Nodig</label>
         <name>Number_of_Volunteers_Still_Needed__c</name>
     </fields>
     <fields>
-        <label><!-- Start Date &amp; Time --></label>
+        <label>Start Datum &amp; Tijd</label>
         <name>Start_Date_Time__c</name>
     </fields>
     <fields>
-        <help><!-- Text information from the system scheduler. --></help>
-        <label><!-- System Note --></label>
+        <help>Tekst informatie van de systeem planner.</help>
+        <label>Systeem Notitie</label>
         <name>System_Note__c</name>
     </fields>
     <fields>
-        <help><!-- SYSTEM FIELD.  DO NOT EDIT.  The total number of volunteers whose Hours Status = Completed or Confirmed. --></help>
-        <label><!-- Total Volunteers --></label>
+        <help>SYSTEEM VELD. PAS NIET AAN. Het totaal aantal vrijwilligers waarvan de Uren Status = Voltooid of Bevestigd</help>
+        <label>Totaal aantal Vrijwilligers</label>
         <name>Total_Volunteers__c</name>
     </fields>
     <fields>
-        <label><!-- Volunteer Job --></label>
+        <label>Vrijwilligersbaan</label>
         <name>Volunteer_Job__c</name>
-        <relationshipLabel><!-- Volunteer Shifts --></relationshipLabel>
+        <relationshipLabel>Vrijwilligersdiensten</relationshipLabel>
     </fields>
     <gender><!-- Neuter --></gender>
     <layouts>
@@ -74,25 +74,25 @@
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- System Fields - DO NOT EDIT --></label>
+            <label>Systeem Velden - NIET AANPASSEN</label>
             <section>System Fields - DO NOT EDIT</section>
         </sections>
     </layouts>
     <nameFieldLabel><!-- ShiftID --></nameFieldLabel>
     <webLinks>
-        <label><!-- Find_Volunteers --></label>
+        <label>Vind Vrijwilligers</label>
         <name>Find_Volunteers</name>
     </webLinks>
     <webLinks>
-        <label><!-- Mass_Email_Volunteers --></label>
+        <label>Meerdere E-mail Vrijwilligers</label>
         <name>Mass_Email_Volunteers</name>
     </webLinks>
     <webLinks>
-        <label><!-- Roster --></label>
+        <label>Vrijwilligersrooster</label>
         <name>Roster</name>
     </webLinks>
     <webLinks>
-        <label><!-- Shift_Calendar --></label>
+        <label>Dienst Kalender</label>
         <name>Shift_Calendar</name>
     </webLinks>
 </CustomObjectTranslation>

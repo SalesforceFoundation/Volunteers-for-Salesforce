@@ -9,17 +9,17 @@
         <value><!-- Volunteer Job --></value>
     </caseValues>
     <fields>
-        <label><!-- Campaign --></label>
+        <label>Campagne</label>
         <name>Campaign__c</name>
-        <relationshipLabel><!-- Volunteer Jobs --></relationshipLabel>
+        <relationshipLabel>Vrijwilligersbanen</relationshipLabel>
     </fields>
     <fields>
-        <label><!-- Description --></label>
+        <label>Beschrijving</label>
         <name>Description__c</name>
     </fields>
     <fields>
-        <help><!-- Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page. --></help>
-        <label><!-- Display on Website --></label>
+        <help>Vink dit veld aan als de Vrijwilligersbaan toegevoegd moet worden op de Beschikbare Vrijwilligersbanen Site pagina’s.</help>
+        <label>Laat zien op Website</label>
         <name>Display_on_Website__c</name>
     </fields>
     <fields>
@@ -28,80 +28,80 @@
         <name>External_Signup_Url__c</name>
     </fields>
     <fields>
-        <label><!-- First Shift --></label>
+        <label>Eerste Dienst</label>
         <name>First_Shift__c</name>
     </fields>
     <fields>
-        <help><!-- Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page. --></help>
-        <label><!-- Inactive --></label>
+        <help>Vink aan als deze Vrijwilligersbaan niet actief meer is, en dan zal deze niet langer ingebrepen zijn in het Vrijwilligersuren Rapport Site pagina’s.</help>
+        <label>Inactief</label>
         <name>Inactive__c</name>
     </fields>
     <fields>
-        <label><!-- Location City --></label>
+        <label>Locatie Stad</label>
         <name>Location_City__c</name>
     </fields>
     <fields>
-        <help><!-- Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders. --></help>
-        <label><!-- Location Information --></label>
+        <help>Voor extra informatie in, zoals routebeschrijvingen of een URL naar een kaart, in dit veld, en het wordt toegevoegd in automatische e-mail herinneringen.</help>
+        <label>Locatie Informatie</label>
         <name>Location_Information__c</name>
     </fields>
     <fields>
-        <label><!-- Location Street --></label>
+        <label>Locatie Straat</label>
         <name>Location_Street__c</name>
     </fields>
     <fields>
-        <label><!-- Location Zip/Postal Code --></label>
+        <label>Locatie Zip/Postcode</label>
         <name>Location_Zip_Postal_Code__c</name>
     </fields>
     <fields>
-        <label><!-- Location State/Province --></label>
+        <label>Locatie Staat/Provincie</label>
         <name>Location__c</name>
     </fields>
     <fields>
-        <help><!-- Total number of Hours that are Completed.  Hours with other status values are not included. --></help>
-        <label><!-- Number of Completed Hours --></label>
+        <help>Totaal aantal Voltooide Uren. Uren met een ander status zijn niet opgenomen.</help>
+        <label>Aantal Voltooide Uren</label>
         <name>Number_of_Completed_Hours__c</name>
     </fields>
     <fields>
-        <label><!-- Number of Shifts --></label>
+        <label>Aantal Diensten</label>
         <name>Number_of_Shifts__c</name>
     </fields>
     <fields>
-        <label><!-- # of Volunteers Still Needed --></label>
+        <label># Vrijwilligers Nog Nodig</label>
         <name>Number_of_Volunteers_Still_Needed__c</name>
     </fields>
     <fields>
-        <help><!-- The total number of volunteers whose Hours Status = Completed or Confirmed. --></help>
-        <label><!-- Number of Volunteers --></label>
+        <help>Het totaal aantal vrijwilligers wiens Uur Status = Voltooid of Bevestigd.</help>
+        <label>Aantal Vrijwilligers</label>
         <name>Number_of_Volunteers__c</name>
     </fields>
     <fields>
-        <label><!-- Ongoing --></label>
+        <label>Voortdurend</label>
         <name>Ongoing__c</name>
     </fields>
     <fields>
-        <help><!-- the skills the volunteer should have to do this job --></help>
-        <label><!-- Skills Needed --></label>
+        <help>De vaardigheden die een vrijwilliger moet hebben om deze baan uit te voeren.</help>
+        <label>Vaardigheden Benodigd</label>
         <name>Skills_Needed__c</name>
         <picklistValues>
             <masterLabel>Computer usage</masterLabel>
-            <translation><!-- Computer usage --></translation>
+            <translation>Computer gebruik</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Event Planning</masterLabel>
-            <translation><!-- Event Planning --></translation>
+            <translation>Evenement plannen</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Fundraising</masterLabel>
-            <translation><!-- Fundraising --></translation>
+            <translation>Fondsenwerving</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Landscaping</masterLabel>
-            <translation><!-- Landscaping --></translation>
+            <translation>Tuinieren</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manual Labor</masterLabel>
-            <translation><!-- Manual Labor --></translation>
+            <translation>Handenarbeid</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Marketing</masterLabel>
@@ -109,12 +109,12 @@
         </picklistValues>
         <picklistValues>
             <masterLabel>basic accounting</masterLabel>
-            <translation><!-- basic accounting --></translation>
+            <translation>basis accounting</translation>
         </picklistValues>
     </fields>
     <fields>
-        <help><!-- The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign. --></help>
-        <label><!-- Volunteer Website Time Zone --></label>
+        <help>De Tijdzone die gebruikt wordt met het weergeven van Diensttijden op Site pagina’s. Je hoeft dit alleen in te stellen wanneer je de Tijdzone instellingen op de Site Gast Gebruiker profiel en de tijdzone ingesteld op de Vrijwilligerscampagne wilt negeren.</help>
+        <label>Vrijwilliger Website Tijd Zone</label>
         <name>Volunteer_Website_Time_Zone__c</name>
         <picklistValues>
             <masterLabel>Africa/Algiers</masterLabel>
@@ -481,33 +481,33 @@
             <section>Description</section>
         </sections>
         <sections>
-            <label><!-- Location --></label>
+            <label>Locatie</label>
             <section>Location</section>
         </sections>
         <sections>
-            <label><!-- Location Information --></label>
+            <label>Locatie Informatie</label>
             <section>Location Information</section>
         </sections>
     </layouts>
     <nameFieldLabel><!-- Volunteer Job Name --></nameFieldLabel>
     <webLinks>
-        <label><!-- Find_Volunteers --></label>
+        <label>Vind Vrijwilligers</label>
         <name>Find_Volunteers</name>
     </webLinks>
     <webLinks>
-        <label><!-- JobRoster --></label>
+        <label>Vrijwilligersrooster</label>
         <name>JobRoster</name>
     </webLinks>
     <webLinks>
-        <label><!-- Job_Shift_Calendar --></label>
+        <label>Dienst Kalender</label>
         <name>Job_Shift_Calendar</name>
     </webLinks>
     <webLinks>
-        <label><!-- Mass_Edit_Volunteer_Hours --></label>
+        <label>(niet gebruikt)</label>
         <name>Mass_Edit_Volunteer_Hours</name>
     </webLinks>
     <webLinks>
-        <label><!-- Mass_Email_Volunteers --></label>
+        <label>Meerdere E-mail Vrijwilligers</label>
         <name>Mass_Email_Volunteers</name>
     </webLinks>
 </CustomObjectTranslation>
