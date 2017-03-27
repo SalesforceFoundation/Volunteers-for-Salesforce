@@ -503,7 +503,7 @@
         <name>Job_Shift_Calendar</name>
     </webLinks>
     <webLinks>
-        <label>(niet gebruikt)</label>
+        <label><!-- Mass_Edit_Volunteer_Hours --></label>
         <name>Mass_Edit_Volunteer_Hours</name>
     </webLinks>
     <webLinks>
