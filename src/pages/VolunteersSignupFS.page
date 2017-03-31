@@ -32,7 +32,7 @@
 
     <apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
-  	<apex:form styleClass="cssForm" >	
+  	<apex:form id="frm" styleClass="cssForm" >	
 		<table columns="2" >
 			<!-- first we specify the fields we require for Contact matching -->
 			<tr>
@@ -67,7 +67,7 @@
             	<td></td>        
            		<td class="cssInputFieldsColumn" >
                     <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
-                        onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();"/>
+                        onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();" rerender="frm"/>
                     <apex:actionFunction name="DoSave" action="{!Save}" />         
            		</td>
 			</tr>	
