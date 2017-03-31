@@ -32,7 +32,7 @@
 
     <apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
-    <apex:form styleClass="cssForm" > 
+    <apex:form id="frm" styleClass="cssForm" > 
         <apex:panelGrid columns="2" columnClasses="cssLabelsColumn, cssInputFieldsColumn" >
             <apex:outputLabel value="First Name *" for="txtFirstName" ></apex:outputLabel>
             <apex:inputField value="{!contact.FirstName}" id="txtFirstName" required="true" styleClass="cssInputFields" />
@@ -63,7 +63,7 @@
             
             <apex:outputLabel value="" ></apex:outputLabel>
             <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
-                onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();"/>
+                onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();" rerender="frm"/>
             <apex:actionFunction name="DoSave" action="{!Save}" />         
             
             <apex:outputLabel value="{!StrSaveResult}" />                        

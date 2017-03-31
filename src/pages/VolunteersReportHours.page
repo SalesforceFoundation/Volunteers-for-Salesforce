@@ -114,7 +114,7 @@
            		<td class="cssInputFieldsColumn" >
                     <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
                         disabled="{!volunteerJobId == null || (hasShifts && volunteerShiftId == null)}"
-                        onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();"/>
+                        onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();" rerender="formReportHours"/>
                     <apex:actionFunction name="DoSave" action="{!Save}" />         
            	    </td>
 			</tr>	
