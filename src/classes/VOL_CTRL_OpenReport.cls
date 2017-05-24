@@ -33,55 +33,64 @@
 * @description Page Controller class for the Open Report visualforce page. 
 ********************************************************************************************************/
 public with sharing class VOL_CTRL_OpenReport {
-	
-	//---------------------------------------------------------------------------------------------
-	// Main routine that gets invoked as a page action to redirect to open the specified report.
-	// note that it expects a DeveloperName, and it will append any Url parameters to the report,
-	// so that you can filter the report.
-	//---------------------------------------------------------------------------------------------
-	public PageReference OpenReportDevName() {
-		string strDevName = ApexPages.currentPage().getParameters().get('ReportDevName');
-		if (strDevName == null || strDevName == '') {
-			return null;
-		}
+    
+    //---------------------------------------------------------------------------------------------
+    // Main routine that gets invoked as a page action to redirect to open the specified report.
+    // note that it expects a DeveloperName, and it will append any Url parameters to the report,
+    // so that you can filter the report.
+    //---------------------------------------------------------------------------------------------
+    public PageReference OpenReportDevName() {
+        string strDevName = ApexPages.currentPage().getParameters().get('ReportDevName');
+        if (strDevName == null || strDevName == '') {
+            return null;
+        }
 
-		//redirect to newly created opp in edit mode
-		ID reportId = reportIdFromDevName(strDevName);
-		if (reportId != null) {
-			string strParams = ApexPages.currentPage().getUrl();
-			integer iparams = strParams.indexOf('?');
-			if (iparams >= 0){
-				strParams = strParams.substring(iparams);
-			} else {
-				strParams = '';
-			}
-			PageReference page;
+        //redirect to newly created opp in edit mode
+        ID reportId = reportIdFromDevName(strDevName.escapeHtml4());
+        if (reportId != null) {
+            string strParams = ApexPages.currentPage().getUrl();
+            integer iparams = strParams.indexOf('?');
+            if (iparams >= 0){
+                strParams = strParams.substring(iparams);
+            } else {
+                strParams = '';
+            }
+            PageReference page;
             // see if we are in Lightning Experience vs Aloha/Salesforce Classic
-			if (UserInfo.getUiThemeDisplayed() != 'Theme4d') {
-			    page = new PageReference('/' + reportId + strParams);
-			} else {
-			    strParams = strParams.replace('pv', 'fv');
+            if (UserInfo.getUiThemeDisplayed() != 'Theme4d') {
+                page = new PageReference('/' + reportId + strParams);
+            } else {
+                strParams = strParams.replace('pv', 'fv');
                 page = new PageReference('/one/one.app#/sObject/' + reportId + '/view' + strParams );
-			}
+            }
             page.setRedirect(true);
-        	return page;
-		} 
-		
-		return null;		
-	}
+            return page;
+        } 
+        
+        return null;        
+    }
  
-	/*******************************************************************************************************
-	* @description Static method to lookup a reportId given its Developer Name.  This is useful when creating
-	* custom links and buttons in Salesforce, that want to load a report, without having to know its specific
-	* id in the given Salesforce instance.
-	* @param strDevName DeveloperName of the report 
-	* @return reportId
-	********************************************************************************************************/
-	public static ID reportIdFromDevName(string strDevName) { 
-		Id reportId = null;
-		Report[] rpts = [select Id from Report where DeveloperName = :strDevName];
-		if (!rpts.isEmpty()) reportId = rpts[0].Id;
-		return reportId;
-	}
-	
+    /*******************************************************************************************************
+    * @description Static method to lookup a reportId given its Developer Name.  This is useful when creating
+    * custom links and buttons in Salesforce, that want to load a report, without having to know its specific
+    * id in the given Salesforce instance.
+    * @param strDevName DeveloperName of the report 
+    * @return reportId
+    ********************************************************************************************************/
+    public static ID reportIdFromDevName(string strDevName) { 
+        try {
+            Id reportId = null;
+
+            // Ensure the user has access to the object and fields before querying
+            UTIL_Describe.checkReadAccess('Report', new Set<String>{'Id'});    
+                
+            Report[] rpts = [select Id from Report where DeveloperName = :strDevName];
+            if (!rpts.isEmpty()) reportId = rpts[0].Id;
+            return reportId;
+        } catch (Exception e) {
+            ApexPages.addMessages(e);            
+            return null;
+        }
+    }
+    
 }

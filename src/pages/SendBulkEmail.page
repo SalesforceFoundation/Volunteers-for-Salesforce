@@ -140,7 +140,7 @@
                                     <apex:outputPanel id="panelEditTemplate">
                                         &nbsp;&nbsp;
                                         <apex:outputText rendered="{!templateId!=null}">
-                                            <a href="{!IF(templateId!=null, '/'+templateId, '')}" target="_blank">
+                                            <a href="{!IF(HTMLENCODE(templateId)!=null, '/'+HTMLENCODE(templateId), '')}" target="_blank">
                                                 {!$Label.labelMassEmailEditTemplate}
                                             </a>
                                         </apex:outputText>
@@ -163,7 +163,7 @@
                     <apex:outputLabel value="{!$Label.labelMessageBody}" styleClass="slds-form-element__label" for="readMessage"/>
                     <div class="slds-form-element__control">
                         <div class="slds-text-body--regular">
-                            <apex:outputText id="txtMessage" value="{!strMessage}" escape="false" />
+                            <apex:outputText id="txtMessage" value="{!HTMLENCODE(strMessage)}" escape="false" />
                             <apex:inputText id="readMessage" value="{!strMessage}" html-readonly="true" styleClass="slds-assistive-text" />
                         </div>
                     </div>

@@ -33,10 +33,10 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     // constructor
     global VOL_CTRL_VolunteersSignupFS() {
 
-		// initial values for potential parameters
-    	strLanguage = 'en-us'; 
-    	strFileUploadLabel = null;
-    	attachment = null;
+        // initial values for potential parameters
+        strLanguage = 'en-us'; 
+        strFileUploadLabel = null;
+        attachment = null;
 
         // handle optional page parameters (must use string, not ID, to handle null)
         map<string, string> params = ApexPages.currentPage().getParameters();
@@ -44,8 +44,8 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
         if (p != null && p != '') strLanguage = p;
         p = params.get('FileUploadLabel');
         if (p != null && p != '') {
-        	strFileUploadLabel = p;
-        	attachment = new Attachment();
+            strFileUploadLabel = p;
+            attachment = new Attachment();
         }
 
         // we now get the fields from the fieldset
@@ -96,19 +96,24 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     global Attachment attachment { get; set; }   
         
     global virtual PageReference Save() {  
-    	try { 
-    		// save or update the contact              
-	        ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(null, contact, contact.Volunteer_Organization__c, listStrFields, true);
-			
-			// upload any attachment
-			if (contactId != null && attachment != null && attachment.body != null) {
-				attachment.ParentId = contactId;
-				attachment.Description = strFileUploadLabel + ' ' + system.label.labelFileUploadDescription;
-				insert attachment;
-				attachment = new Attachment();
-			}
-	        StrSaveResult = system.label.labelVolunteerSignupThankYou;
-	        contact = null; // so fields get reset to null.
+        try { 
+            // save or update the contact              
+            ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(null, contact, contact.Volunteer_Organization__c, listStrFields, true);
+            
+            // upload any attachment
+            if (contactId != null && attachment != null && attachment.body != null) {
+                attachment.ParentId = contactId;
+                attachment.Description = strFileUploadLabel + ' ' + system.label.labelFileUploadDescription;
+                
+                // Ensure the user has access to the object and fields before querying
+                UTIL_Describe.checkCreateAccess('Attachment', 
+                                                new Set<String>{'ParentId', 'Description'});    
+            
+                insert attachment;
+                attachment = new Attachment();
+            }
+            StrSaveResult = system.label.labelVolunteerSignupThankYou;
+            contact = null; // so fields get reset to null.
         } catch (DMLException ex) {
             //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
             StrSaveResult = ex.getMessage(); 
@@ -116,15 +121,15 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
                 StrSaveResult = StrSaveResult.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
             }
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
-    	} catch (exception ex) {
-    		strSaveResult = ex.getMessage(); 
-    		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult)); 
-    	}
+        } catch (exception ex) {
+            strSaveResult = ex.getMessage(); 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult)); 
+        }
         return null;
     }
 
-	// this was a testmethod which can't be compiled in this class under api 31.  
-	// but because it was marked global, it could not be completely removed.
+    // this was a testmethod which can't be compiled in this class under api 31.  
+    // but because it was marked global, it could not be completely removed.
     global static void CodeCoverageTests() {}
 
 }

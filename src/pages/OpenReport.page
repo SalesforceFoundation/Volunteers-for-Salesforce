@@ -29,5 +29,5 @@
 -->  
 
 <apex:page controller="VOL_CTRL_OpenReport" action="{!OpenReportDevName}" showheader="false" sidebar="false"> 
-	<p>This page is used to redirect to a Salesforce report, given the report's DeveloperName passed in as a parameter 'ReportDevName'.</p>
+    <p>This page is used to redirect to a Salesforce report, given the report's DeveloperName passed in as a parameter 'ReportDevName'.</p>
 </apex:page>
