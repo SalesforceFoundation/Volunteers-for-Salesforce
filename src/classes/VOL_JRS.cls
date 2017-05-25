@@ -38,37 +38,29 @@ public with sharing class VOL_JRS {
     // for the specified JRS's, delete all shifts that have no hours, and detach Shifts that have hours.
     // called from the Before Delete JRS trigger.
     public static void DeleteListJRS(list<Job_Recurrence_Schedule__c> listJRS) {
-        try {
-            // get a set of the JRS ID's for querying
-            set<ID> setJRSId = new set<ID>();
-            for (Job_Recurrence_Schedule__c jrs : listJRS) {
-                setJRSId.add(jrs.Id);
-            }
+        // get a set of the JRS ID's for querying
+        set<ID> setJRSId = new set<ID>();
+        for (Job_Recurrence_Schedule__c jrs : listJRS) {
+            setJRSId.add(jrs.Id);
+        }
 
-            list<Volunteer_Shift__c> listShiftUpdate = new list<Volunteer_Shift__c>();
-            list<Volunteer_Shift__c> listShiftDelete = new list<Volunteer_Shift__c>();
+        list<Volunteer_Shift__c> listShiftUpdate = new list<Volunteer_Shift__c>();
+        list<Volunteer_Shift__c> listShiftDelete = new list<Volunteer_Shift__c>();
+        
+        // get all shifts associated with these JRS's
+        for (list<Volunteer_Shift__c> listShift : [select Id, Job_Recurrence_Schedule__r.Name, System_Note__c, 
+            (select Id from Volunteer_Hours__r) 
+            from Volunteer_Shift__c  
+            where Job_Recurrence_Schedule__c in : setJRSId]) {
             
-            // get all shifts associated with these JRS's
-            for (list<Volunteer_Shift__c> listShift : [select Id, Job_Recurrence_Schedule__r.Name, System_Note__c, 
-                (select Id from Volunteer_Hours__r) 
-                from Volunteer_Shift__c  
-                where Job_Recurrence_Schedule__c in : setJRSId]) {
-                
-                calcDeleteOrDetachJRSShifts(listShift, listShiftDelete, listShiftUpdate);
-            }
-            
-            if (listShiftUpdate.size() > 0) {
-                // Ensure the user can update the object's fields 
-                UTIL_Describe.checkUpdateAccess('Volunteer_Shift__c', new Set<String>{'Id'});
-                update listShiftUpdate;
-            }
-            if (listShiftDelete.size() > 0) {
-                // Ensure the user can delete the object 
-                UTIL_Describe.checkObjectDeleteAccess('Volunteer_Shift__c');
-                delete listShiftDelete;
-            }
-        } catch (Exception e) {
-            listJRS[0].addError(e.getMessage());
+            calcDeleteOrDetachJRSShifts(listShift, listShiftDelete, listShiftUpdate);
+        }
+        
+        if (listShiftUpdate.size() > 0) {
+            update listShiftUpdate;
+        }
+        if (listShiftDelete.size() > 0) {
+            delete listShiftDelete;
         }
     }
 
@@ -110,112 +102,85 @@ public with sharing class VOL_JRS {
     // which case we should review all shifts under the JRS, or from the scheduled batch,
     // in which case we only need to be looking to add additional shifts in the future.
     public static void ProcessListJRS(list<Job_Recurrence_Schedule__c> listJRS, boolean fReviewAllShifts) {
-        try {
-            // get a set of the JRS ID's for querying
-            set<ID> setJRSId = new set<ID>();
-            for (Job_Recurrence_Schedule__c jrs : listJRS) {
-                setJRSId.add(jrs.Id);
-            }
+        // get a set of the JRS ID's for querying
+        set<ID> setJRSId = new set<ID>();
+        for (Job_Recurrence_Schedule__c jrs : listJRS) {
+            setJRSId.add(jrs.Id);
+        }
+        
+        // get appropriate shifts associated with these JRS's
+        list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
+        if (fReviewAllShifts) {
+            listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
+                    Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, 
+                    System_Note__c, Job_Recurrence_Schedule__r.Name, 
+                    (select Id from Volunteer_Hours__r)
+                from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId 
+                order by Start_Date_Time__c];
+        } else {
+            listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
+                    Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, 
+                    System_Note__c, Job_Recurrence_Schedule__r.Name, 
+                    (select Id from Volunteer_Hours__r)
+                from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId and Start_Date_Time__c >= TODAY
+                order by Start_Date_Time__c];
+        }
             
-            // get appropriate shifts associated with these JRS's
-            list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-            if (fReviewAllShifts) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Start_Date_Time__c', 'Job_Recurrence_Schedule__c', 
-                                                                'Total_Volunteers__c', 'Desired_Number_of_Volunteers__c', 'Volunteer_Job__c', 'Description__c', 
-                                                                'System_Note__c', 'Job_Recurrence_Schedule__r.Name'}); 
+        // construct a map of JRS to its associated shifts
+        map<ID, list<Volunteer_Shift__c>> mapJRSIdShift = new map<ID, list<Volunteer_Shift__c>>();
+        
+        // put the Shifts on each JRS's list
+        for (Volunteer_Shift__c shift : listShift) {            
+            list<Volunteer_Shift__c> listJRSShift = mapJRSIdShift.get(shift.Job_Recurrence_Schedule__c);
+            if (listJRSShift == null) listJRSShift = new list<Volunteer_Shift__c>();
+            listJRSShift.add(shift);
+            mapJRSIdShift.put(shift.Job_Recurrence_Schedule__c, listJRSShift);              
+        }
 
-                
-                listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
-                        Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, 
-                        System_Note__c, Job_Recurrence_Schedule__r.Name, 
-                        (select Id from Volunteer_Hours__r)
-                    from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId 
-                    order by Start_Date_Time__c];
-            } else {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Start_Date_Time__c', 'Job_Recurrence_Schedule__c', 
-                                                                'Total_Volunteers__c', 'Desired_Number_of_Volunteers__c', 'Volunteer_Job__c', 'Description__c', 
-                                                                'System_Note__c', 'Job_Recurrence_Schedule__r.Name'}); 
+        // lists to hold all the shifts we need to create, delete, and update
+        list<Volunteer_Shift__c> listShiftNew = new list<Volunteer_Shift__c>();
+        list<Volunteer_Shift__c> listShiftDelete = new list<Volunteer_Shift__c>();
+        list<Volunteer_Shift__c> listShiftUpdate = new list<Volunteer_Shift__c>();
+        
+        // now look at each JRS's shifts, and decide what to do, potentially adding more shifts
+        for (Job_Recurrence_Schedule__c jrs : listJRS) {
+            list<Volunteer_Shift__c> listJRSShift = mapJRSIdShift.get(jrs.Id);
+            if (listJRSShift == null) listJRSShift = new list<Volunteer_Shift__c>(); 
+            ProcessJRS(jrs, listJRSShift, listShiftNew, listShiftDelete, listShiftUpdate, fReviewAllShifts);
+        }
+        
+        // commit the work
+        if (listShiftNew.size() > 0) {
+            insert listShiftNew;
+        }
+        if (listShiftDelete.size() > 0) {
+            delete listShiftDelete; 
+        }   
+        if (listShiftUpdate.size() > 0) {
+            update listShiftUpdate;
+        }
 
-                
-                listShift = [select Id, Start_Date_Time__c, Job_Recurrence_Schedule__c, 
-                        Total_Volunteers__c, Desired_Number_of_Volunteers__c, Volunteer_Job__c, Description__c, 
-                        System_Note__c, Job_Recurrence_Schedule__r.Name, 
-                        (select Id from Volunteer_Hours__r)
-                    from Volunteer_Shift__c where Job_Recurrence_Schedule__c in : setJRSId and Start_Date_Time__c >= TODAY
-                    order by Start_Date_Time__c];
-            }
-                
-            // construct a map of JRS to its associated shifts
-            map<ID, list<Volunteer_Shift__c>> mapJRSIdShift = new map<ID, list<Volunteer_Shift__c>>();
+        // get all Volunteer Recurring Schedules associated with these shift's jobs.
+        set<ID> setJobId = new set<ID>();
+        for (Volunteer_Shift__c shift : listShiftNew) {
+            setJobId.add(shift.Volunteer_Job__c);
+        }
+        for (Volunteer_Shift__c shift : listShiftUpdate) {
+            setJobId.add(shift.Volunteer_Job__c);
+        }
+        
+        // process the VRS's to create hours as needed.
+        // we use a future call to avoid hitting statement limits.
+        // unfortunately, if we are in our batch job, we aren't allowed to use future!
+        if (system.isBatch()) {
+            list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
             
-            // put the Shifts on each JRS's list
-            for (Volunteer_Shift__c shift : listShift) {            
-                list<Volunteer_Shift__c> listJRSShift = mapJRSIdShift.get(shift.Job_Recurrence_Schedule__c);
-                if (listJRSShift == null) listJRSShift = new list<Volunteer_Shift__c>();
-                listJRSShift.add(shift);
-                mapJRSIdShift.put(shift.Job_Recurrence_Schedule__c, listJRSShift);              
-            }
-
-            // lists to hold all the shifts we need to create, delete, and update
-            list<Volunteer_Shift__c> listShiftNew = new list<Volunteer_Shift__c>();
-            list<Volunteer_Shift__c> listShiftDelete = new list<Volunteer_Shift__c>();
-            list<Volunteer_Shift__c> listShiftUpdate = new list<Volunteer_Shift__c>();
-            
-            // now look at each JRS's shifts, and decide what to do, potentially adding more shifts
-            for (Job_Recurrence_Schedule__c jrs : listJRS) {
-                list<Volunteer_Shift__c> listJRSShift = mapJRSIdShift.get(jrs.Id);
-                if (listJRSShift == null) listJRSShift = new list<Volunteer_Shift__c>(); 
-                ProcessJRS(jrs, listJRSShift, listShiftNew, listShiftDelete, listShiftUpdate, fReviewAllShifts);
-            }
-            
-            // commit the work
-            if (listShiftNew.size() > 0) {
-                UTIL_Describe.checkObjectCreateAccess('Volunteer_Shift__c');
-                insert listShiftNew;
-            }
-            if (listShiftDelete.size() > 0) {
-                UTIL_Describe.checkObjectDeleteAccess('Volunteer_Shift__c');
-                delete listShiftDelete; 
-            }   
-            if (listShiftUpdate.size() > 0) {
-                UTIL_Describe.checkUpdateAccess('Volunteer_Shift__c', new Set<String>{'Id'});
-                update listShiftUpdate;
-            }
-
-            // get all Volunteer Recurring Schedules associated with these shift's jobs.
-            set<ID> setJobId = new set<ID>();
-            for (Volunteer_Shift__c shift : listShiftNew) {
-                setJobId.add(shift.Volunteer_Job__c);
-            }
-            for (Volunteer_Shift__c shift : listShiftUpdate) {
-                setJobId.add(shift.Volunteer_Job__c);
-            }
-            
-            // process the VRS's to create hours as needed.
-            // we use a future call to avoid hitting statement limits.
-            // unfortunately, if we are in our batch job, we aren't allowed to use future!
-            if (system.isBatch()) {
-                list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
-                
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Recurrence_Schedule__c', 
-                                                new Set<String>{'Id', 'Name', 'Contact__c', 'Schedule_Start_Date_Time__c', 'Schedule_End_Date__c', 
-                                                                'Duration__c', 'Weekly_Occurrence__c', 'Days_Of_Week__c', 'Volunteer_Job__c', 
-                                                                'Volunteer_Hours_Status__c', 'Number_of_Volunteers__c', 'Comments__c'}); 
-
-                listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
-                    Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c, Number_of_Volunteers__c, Comments__c
-                    from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
-                VOL_VRS.ProcessListVRS(listVRS, null, fReviewAllShifts);
-            } else {
-                ProcessListVRSFuture(setJobId, fReviewAllShifts);           
-            }
-        } catch (Exception e) {
-            listJRS[0].addError(e.getMessage());
+            listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
+                Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c, Number_of_Volunteers__c, Comments__c
+                from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
+            VOL_VRS.ProcessListVRS(listVRS, null, fReviewAllShifts);
+        } else {
+            ProcessListVRSFuture(setJobId, fReviewAllShifts);           
         }           
     }
     
@@ -228,23 +193,13 @@ public with sharing class VOL_JRS {
     @future (callout=false) 
     private static void ProcessListVRSFuture(set<ID> setJobId, boolean fReviewAllShifts) {
         list<Volunteer_Recurrence_Schedule__c> listVRS = new list<Volunteer_Recurrence_Schedule__c>();
-        try {
-            
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Recurrence_Schedule__c', 
-                                            new Set<String>{'Id', 'Name', 'Contact__c', 'Schedule_Start_Date_Time__c', 'Schedule_End_Date__c', 
-                                                            'Duration__c', 'Weekly_Occurrence__c', 'Days_Of_Week__c', 'Volunteer_Job__c', 
-                                                            'Volunteer_Hours_Status__c', 'Number_of_Volunteers__c', 'Comments__c'});    
-                
-            listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
-                Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c, Number_of_Volunteers__c, Comments__c
-                from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
+          
+        listVRS = [select Id, Name, Contact__c, Schedule_Start_Date_Time__c, Schedule_End_Date__c, Duration__c,
+            Weekly_Occurrence__c, Days_Of_Week__c, Volunteer_Job__c, Volunteer_Hours_Status__c, Number_of_Volunteers__c, Comments__c
+            from Volunteer_Recurrence_Schedule__c where Volunteer_Job__c in : setJobId];
 
-            // process the VRS's to create hours as needed.
-            VOL_VRS.ProcessListVRS(listVRS, null, fReviewAllShifts);
-        } catch (Exception e) {
-            listVRS[0].addError(e.getMessage());
-        }   
+        // process the VRS's to create hours as needed.
+        VOL_VRS.ProcessListVRS(listVRS, null, fReviewAllShifts);   
     }   
     
 

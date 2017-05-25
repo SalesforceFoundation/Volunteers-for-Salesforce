@@ -40,59 +40,44 @@ public with sharing class VOL_VRS {
     // Past Hours and future completed/canceled Hours are detached from the VRS.
     // called from the After Delete VRS trigger.
     public static void DeleteListVRS(list<Volunteer_Recurrence_Schedule__c> listVRS) {
-        try {
-            // get a set of the VRS ID's for querying
-            set<ID> setVRSId = new set<ID>();
-            for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
-                setVRSId.add(vrs.Id);
-            }
+        // get a set of the VRS ID's for querying
+        set<ID> setVRSId = new set<ID>();
+        for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
+            setVRSId.add(vrs.Id);
+        }
 
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Hours__c', 
-                                            new Set<String>{'Id', 'Status__c', 'Shift_Start_Date_Time__c', 
-                                                            'Volunteer_Recurrence_Schedule__r.Name', 'Volunteer_Recurrence_Schedule__c', 'System_Note__c'});    
-                
-            // get all hours associated with these VRS's
-            list<Volunteer_Hours__c> listHours =  [select Id, Status__c, Shift_Start_Date_Time__c, 
-                Volunteer_Recurrence_Schedule__r.Name, Volunteer_Recurrence_Schedule__c, System_Note__c 
-                from Volunteer_Hours__c  
-                where Volunteer_Recurrence_Schedule__c in : setVRSId];
-                
-            deleteOrDetachVRSHours(listHours);
-        } catch (Exception e) {
-            listVRS[0].addError(e.getMessage());
-        }       
+        // get all hours associated with these VRS's
+        list<Volunteer_Hours__c> listHours =  [select Id, Status__c, Shift_Start_Date_Time__c, 
+            Volunteer_Recurrence_Schedule__r.Name, Volunteer_Recurrence_Schedule__c, System_Note__c 
+            from Volunteer_Hours__c  
+            where Volunteer_Recurrence_Schedule__c in : setVRSId];
+            
+        deleteOrDetachVRSHours(listHours);       
     }
 
     //******************************************************************************************************
     // Given a list of Hours, delete those that should be deleted (Future and status <> Completed or Canceled), 
     // and just detach the other Hours (Past or Completed/Canceled) from their VRS.
     private static void deleteOrDetachVRSHours(list<Volunteer_Hours__c> listHours) {
-        try {
-            list<Volunteer_Hours__c> listHoursDelete = new list<Volunteer_Hours__c>();
-            list<Volunteer_Hours__c> listHoursUpdate = new list<Volunteer_Hours__c>();
+        list<Volunteer_Hours__c> listHoursDelete = new list<Volunteer_Hours__c>();
+        list<Volunteer_Hours__c> listHoursUpdate = new list<Volunteer_Hours__c>();
+        
+        for (Volunteer_Hours__c hr : listHours) {
+            if (hr.Status__c == 'Completed' || hr.Status__c == 'Canceled' || hr.Shift_Start_Date_Time__c < system.Today()) {
+                hr.System_Note__c += ' ' + label.labelVRSHoursRemovedSystemNote + ' ' + hr.Volunteer_Recurrence_Schedule__r.Name + '.';
+                hr.Volunteer_Recurrence_Schedule__c = null;
+                listHoursUpdate.add(hr);
+            } else {
+                listHoursDelete.add(hr);
+            }
+        }
+        
+        if (listHoursUpdate.size() > 0) {
+            update listHoursUpdate;
+        }
             
-            for (Volunteer_Hours__c hr : listHours) {
-                if (hr.Status__c == 'Completed' || hr.Status__c == 'Canceled' || hr.Shift_Start_Date_Time__c < system.Today()) {
-                    hr.System_Note__c += ' ' + label.labelVRSHoursRemovedSystemNote + ' ' + hr.Volunteer_Recurrence_Schedule__r.Name + '.';
-                    hr.Volunteer_Recurrence_Schedule__c = null;
-                    listHoursUpdate.add(hr);
-                } else {
-                    listHoursDelete.add(hr);
-                }
-            }
-            
-            if (listHoursUpdate.size() > 0) {
-                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Id'});
-                update listHoursUpdate;
-            }
-                
-            if (listHoursDelete.size() > 0) {
-                UTIL_Describe.checkObjectDeleteAccess('Volunteer_Hours__c');
-                delete listHoursDelete;
-            }
-        } catch (Exception e) {
-            listHours[0].addError(e.getMessage());
+        if (listHoursDelete.size() > 0) {
+            delete listHoursDelete;
         }       
     }
 
@@ -111,120 +96,94 @@ public with sharing class VOL_VRS {
        list<Volunteer_Recurrence_Schedule__c> listVRSOld, 
        boolean fReviewAllShifts) {
         
-        try {
-            // get a set of the VRS ID's for querying
-            // also the Job ID's they are associated with
-            // also the contact ID's they are associated with
-            set<ID> setVRSId = new set<ID>();
-            set<ID> setJobId = new set<ID>();
-            set<ID> setContactId = new set<ID>();
-            for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
+        // get a set of the VRS ID's for querying
+        // also the Job ID's they are associated with
+        // also the contact ID's they are associated with
+        set<ID> setVRSId = new set<ID>();
+        set<ID> setJobId = new set<ID>();
+        set<ID> setContactId = new set<ID>();
+        for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {
+            setVRSId.add(vrs.Id);
+            setJobId.add(vrs.Volunteer_Job__c);
+            setContactId.add(vrs.Contact__c);
+        }
+        
+        // if the VRS was updated, then deal with potential changes to the VRS's job or contact 
+        if (listVRSOld != null) {
+            for (Volunteer_Recurrence_Schedule__c vrs : listVRSOld) {
                 setVRSId.add(vrs.Id);
                 setJobId.add(vrs.Volunteer_Job__c);
                 setContactId.add(vrs.Contact__c);
             }
-            
-            // if the VRS was updated, then deal with potential changes to the VRS's job or contact 
-            if (listVRSOld != null) {
-                for (Volunteer_Recurrence_Schedule__c vrs : listVRSOld) {
-                    setVRSId.add(vrs.Id);
-                    setJobId.add(vrs.Volunteer_Job__c);
-                    setContactId.add(vrs.Contact__c);
-                }
-            }
-                                
-            // get appropriate shifts of the jobs these vrs's are associated with
-            list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
-            if (fReviewAllShifts) {
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Duration__c', 'Start_Date_Time__c', 
-                                                                'Desired_Number_of_Volunteers__c', 'Volunteer_Job__c'});
-                
-                listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
-                    Volunteer_Job__c from Volunteer_Shift__c
-                    where Volunteer_Job__c in :setJobId];
-            } else {
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Duration__c', 'Start_Date_Time__c', 
-                                                                'Desired_Number_of_Volunteers__c', 'Volunteer_Job__c'}); 
-                
-                listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
-                    Volunteer_Job__c from Volunteer_Shift__c
-                    where Volunteer_Job__c in :setJobId and Start_Date_Time__c >= TODAY];
-            }
-            
-            // construct a map of Job to its associated list of VRS's
-            map<ID, list<Volunteer_Recurrence_Schedule__c>> mapJobIdListVRS = new map<ID, list<Volunteer_Recurrence_Schedule__c>>();
-            
-            // put the VRS's on each job's list
-            for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {          
-                list<Volunteer_Recurrence_Schedule__c> listVRSforJob = mapJobIdListVRS.get(vrs.Volunteer_Job__c);
-                if (listVRSforJob == null) listVRSforJob = new list<Volunteer_Recurrence_Schedule__c>();
-                listVRSforJob.add(vrs);
-                mapJobIdListVRS.put(vrs.Volunteer_Job__c, listVRSforJob);               
-            }
+        }
+                            
+        // get appropriate shifts of the jobs these vrs's are associated with
+        list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
+        if (fReviewAllShifts) {
+            listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
+                Volunteer_Job__c from Volunteer_Shift__c
+                where Volunteer_Job__c in :setJobId];
+        } else {
+            listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
+                Volunteer_Job__c from Volunteer_Shift__c
+                where Volunteer_Job__c in :setJobId and Start_Date_Time__c >= TODAY];
+        }
         
-            // in order to avoid creating hours that already exist (completed or canceled),
-            // create a set of shiftId|contactId tuples, which allows us to quickly see if we
-            // already have an hours record for the given shift and contact.
-            list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
-            if (fReviewAllShifts) { 
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', 
-                                                new Set<String>{'Id', 'Volunteer_Job__c', 'Volunteer_Recurrence_Schedule__c',
-                                                                'Shift_Start_Date_Time__c', 'Volunteer_Recurrence_Schedule__r.Name', 'System_Note__c',
-                                                                'Volunteer_Shift__c', 'Status__c', 'Contact__c'});    
-                
-                listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
-                    Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
-                    Volunteer_Shift__c, Status__c, Contact__c from
-                    Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId];
-            } else {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', 
-                                                new Set<String>{'Id', 'Volunteer_Job__c', 'Volunteer_Recurrence_Schedule__c',
-                                                                'Shift_Start_Date_Time__c', 'Volunteer_Recurrence_Schedule__r.Name', 'System_Note__c',
-                                                                'Volunteer_Shift__c', 'Status__c', 'Contact__c'});    
-                
-                listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
-                    Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
-                    Volunteer_Shift__c, Status__c, Contact__c from
-                    Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId and Shift_Start_Date_Time__c >= TODAY];
-            }
-            map<string, Volunteer_Hours__c> mapShiftIdContactIdToHours = new map<string, Volunteer_Hours__c>();
-            for (Volunteer_Hours__c hr : listHoursExisting) {
-                mapShiftIdContactIdToHours.put(hr.Volunteer_Shift__c + '|' + hr.Contact__c, hr);
-            }
+        // construct a map of Job to its associated list of VRS's
+        map<ID, list<Volunteer_Recurrence_Schedule__c>> mapJobIdListVRS = new map<ID, list<Volunteer_Recurrence_Schedule__c>>();
+        
+        // put the VRS's on each job's list
+        for (Volunteer_Recurrence_Schedule__c vrs : listVRS) {          
+            list<Volunteer_Recurrence_Schedule__c> listVRSforJob = mapJobIdListVRS.get(vrs.Volunteer_Job__c);
+            if (listVRSforJob == null) listVRSforJob = new list<Volunteer_Recurrence_Schedule__c>();
+            listVRSforJob.add(vrs);
+            mapJobIdListVRS.put(vrs.Volunteer_Job__c, listVRSforJob);               
+        }
+    
+        // in order to avoid creating hours that already exist (completed or canceled),
+        // create a set of shiftId|contactId tuples, which allows us to quickly see if we
+        // already have an hours record for the given shift and contact.
+        list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
+        if (fReviewAllShifts) { 
+            listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
+                Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
+                Volunteer_Shift__c, Status__c, Contact__c from
+                Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId];
+        } else {
+            listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
+                Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
+                Volunteer_Shift__c, Status__c, Contact__c from
+                Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId and Shift_Start_Date_Time__c >= TODAY];
+        }
+        map<string, Volunteer_Hours__c> mapShiftIdContactIdToHours = new map<string, Volunteer_Hours__c>();
+        for (Volunteer_Hours__c hr : listHoursExisting) {
+            mapShiftIdContactIdToHours.put(hr.Volunteer_Shift__c + '|' + hr.Contact__c, hr);
+        }
 
-            // create hours for these vrs's for each shift              
-            list<Volunteer_Hours__c> listHoursNew = new list<Volunteer_Hours__c>();
-            list<Volunteer_Hours__c> listHoursUpdate = new list<Volunteer_Hours__c>();
-            for (Volunteer_Shift__c shift : listShift) {
-                list<Volunteer_Recurrence_Schedule__c> listVRSforJob = mapJobIdListVRS.get(shift.Volunteer_Job__c);
-                AssignVRSHours(shift, listVRSforJob, mapShiftIdContactIdToHours, listHoursNew, listHoursUpdate);
-            }
-            if (listHoursNew.size() > 0) {
-                UTIL_Describe.checkObjectCreateAccess('Volunteer_Hours__c');
-                insert listHoursNew;
-            }
-                
-            if (listHoursUpdate.size() > 0) {
-                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Id'});
-                update listHoursUpdate;
-            }
+        // create hours for these vrs's for each shift              
+        list<Volunteer_Hours__c> listHoursNew = new list<Volunteer_Hours__c>();
+        list<Volunteer_Hours__c> listHoursUpdate = new list<Volunteer_Hours__c>();
+        for (Volunteer_Shift__c shift : listShift) {
+            list<Volunteer_Recurrence_Schedule__c> listVRSforJob = mapJobIdListVRS.get(shift.Volunteer_Job__c);
+            AssignVRSHours(shift, listVRSforJob, mapShiftIdContactIdToHours, listHoursNew, listHoursUpdate);
+        }
+        if (listHoursNew.size() > 0) {
+            insert listHoursNew;
+        }
+            
+        if (listHoursUpdate.size() > 0) {
+            update listHoursUpdate;
+        }
 
-            // mapShiftIdContactIdToHours now contains only the Future Hours that did not match the VRS's, 
-            // so we can delete or detach them if they used to be associated with these VRS's.
-            list<Volunteer_Hours__c> listHRDelete = new list<Volunteer_Hours__c>();
-            for (Volunteer_Hours__c hr : mapShiftIdContactIdToHours.values()) {
-                if (setVRSId.contains(hr.Volunteer_Recurrence_Schedule__c)) {
-                    listHRDelete.add(hr);
-                }
+        // mapShiftIdContactIdToHours now contains only the Future Hours that did not match the VRS's, 
+        // so we can delete or detach them if they used to be associated with these VRS's.
+        list<Volunteer_Hours__c> listHRDelete = new list<Volunteer_Hours__c>();
+        for (Volunteer_Hours__c hr : mapShiftIdContactIdToHours.values()) {
+            if (setVRSId.contains(hr.Volunteer_Recurrence_Schedule__c)) {
+                listHRDelete.add(hr);
             }
-            deleteOrDetachVRSHours(listHRDelete);
-        } catch (Exception e) {
-            listVRS[0].addError(e.getMessage());
-        }       
+        }
+        deleteOrDetachVRSHours(listHRDelete);       
     }
     
     //******************************************************************************************************

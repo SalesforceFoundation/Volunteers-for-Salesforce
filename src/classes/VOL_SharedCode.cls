@@ -63,59 +63,49 @@ global with sharing class VOL_SharedCode {
             boolean fIncludeShiftName, boolean fIncludeNumberNeeded, string strDateFormat, string strTimeFormat) {
         
         list<Volunteer_Job__c> listVolunteerJobs = new List<Volunteer_Job__c>();
-        try {
-         
-            list<SelectOption> listSO = new list<SelectOption>();
-            listSO.add(new SelectOption('', ''));
-            
-            // ensure valid date ranges
-            if (dtStart == null)
-                dtStart = system.today();
-            if (dtEnd == null)
-                dtEnd = system.today().addMonths(12);
-            dtEnd = dtEnd.addDays(1);
-            
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Job__c', 
-                                            new Set<String>{'Id', 'Campaign__r.IsActive', 'Campaign__r.Volunteer_Website_Time_Zone__c',
-                                                            'Volunteer_Website_Time_Zone__c'});    
+        
+        list<SelectOption> listSO = new list<SelectOption>();
+        listSO.add(new SelectOption('', ''));
+        
+        // ensure valid date ranges
+        if (dtStart == null)
+            dtStart = system.today();
+        if (dtEnd == null)
+            dtEnd = system.today().addMonths(12);
+        dtEnd = dtEnd.addDays(1);
+           
+        // get our shifts in a Job query, so we can use our common date/time formatting routine.
+        listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
+            Volunteer_Website_Time_Zone__c,
+            (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
+                Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
+                order by Start_Date_Time__c LIMIT 999) 
+            from Volunteer_Job__c where Id = :volunteerJobId];
                 
-            // get our shifts in a Job query, so we can use our common date/time formatting routine.
-            listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
-                Volunteer_Website_Time_Zone__c,
-                (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                    Description__c, System_Note__c From Volunteer_Job_Slots__r 
-                    where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
-                    order by Start_Date_Time__c LIMIT 999) 
-                from Volunteer_Job__c where Id = :volunteerJobId];
-                    
-            // bail out if no jobs found
-            if (listVolunteerJobs.size() == 0)
-                return listSO;
-            
-            // whether to use our datetime formatting, or salesforce default for the current user
-            boolean useDateTimeFixup = (strDateFormat != null && strTimeFormat != null);        
-            
-            // put correct date/time format with appropriate timezone in system note field (in memory only)
-            if (useDateTimeFixup)
-                dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
-            
-            for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
-                SelectOption so = new SelectOption(vs.id, 
-                    (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) + 
-                    (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
-                    (fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
-                        (vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
-                            system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
-                        ' ' : '' ));
-                so.setEscapeItem(false); 
-                listSO.add(so);
-            }       
+        // bail out if no jobs found
+        if (listVolunteerJobs.size() == 0)
             return listSO;
-        } catch (Exception e) {
-            listVolunteerJobs[0].addError(e.getMessage());
-            return null;
+        
+        // whether to use our datetime formatting, or salesforce default for the current user
+        boolean useDateTimeFixup = (strDateFormat != null && strTimeFormat != null);        
+        
+        // put correct date/time format with appropriate timezone in system note field (in memory only)
+        if (useDateTimeFixup)
+            dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
+        
+        for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
+            SelectOption so = new SelectOption(vs.id, 
+                (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) + 
+                (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
+                (fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
+                    (vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
+                        system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
+                    ' ' : '' ));
+            so.setEscapeItem(false); 
+            listSO.add(so);
         }       
+        return listSO;       
     }
     
     // routine to go through all the shifts, and create the display string
@@ -123,37 +113,30 @@ global with sharing class VOL_SharedCode {
     // time zone that might be specified on the Job, Campaign, or Site Guest User.
     // Note that it stores this string in the Shift's System_Note__c field (in memory only).
     public static void dateTimeFixup(list<Volunteer_Job__c> listJob, string strDateFormat, string strTimeFormat) {
-        try {
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('User', new Set<String>{'TimeZoneSidKey'});    
-                
-            // get default time zone for site guest user
-            User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
-            
-            // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
-            string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
-            string strFormatEndTime = strTimeFormat.replace('tt','a');
-            
-            for (Volunteer_Job__c job : listJob) {
-                string strTimeZone = job.Volunteer_Website_Time_Zone__c;
-                if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
-                if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
+        // get default time zone for site guest user
+        User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+        
+        // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
+        string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
+        string strFormatEndTime = strTimeFormat.replace('tt','a');
+        
+        for (Volunteer_Job__c job : listJob) {
+            string strTimeZone = job.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = job.Campaign__r.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
 
-                for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
-                    
-                    DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
-                    string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
-                    
-                    // see if start and end are on the same day
-                    if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
-                        shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone); 
-                    } else {
-                        shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);                        
-                    }               
-                }
+            for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
+                
+                DateTime dtEnd = shift.Start_Date_Time__c.addMinutes(integer.valueOf(shift.Duration__c * 60));
+                string strStart = shift.Start_Date_Time__c.format(strFormat, strTimeZone);
+                
+                // see if start and end are on the same day
+                if (shift.Start_Date_Time__c.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
+                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone); 
+                } else {
+                    shift.System_Note__c =  strStart + ' - ' + dtEnd.format(strFormat, strTimeZone);                        
+                }               
             }
-        } catch (Exception e) {
-            listJob[0].addError(e.getMessage());
         }
     }
     
@@ -215,34 +198,25 @@ global with sharing class VOL_SharedCode {
 
     // test helper that allows one to override the users's Custom Settings with the settings we want to test with.
     global static Volunteers_Settings__c getVolunteersSettingsForTests(Volunteers_Settings__c mySettings) {
-        try {
-            //clear out whatever settings exist
-            delete [select id from Volunteers_Settings__c];
-            SettingsBucketAccountId = null;
-            
-            //create our own based on what's passed in from the test
-            VolunteersSettings = new Volunteers_Settings__c (
-                Signup_Matches_Existing_Contacts__c = mySettings.Signup_Matches_Existing_Contacts__c,
-                Signup_Creates_Contacts_If_No_Match__c = mySettings.Signup_Creates_Contacts_If_No_Match__c,
-                Signup_Bucket_Account_On_Create__c = mySettings.Signup_Bucket_Account_On_Create__c,
-                Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c,
-                Contact_Match_Email_Fields__c = mySettings.Contact_Match_Email_Fields__c,
-                Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c,
-                Contact_Matching_Rule__c = mySettings.Contact_Matching_Rule__c,
-                Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c,
-                Personal_Site_Report_Hours_Filtered__c = mySettings.Personal_Site_Report_Hours_Filtered__c
-                );
+        //clear out whatever settings exist
+        delete [select id from Volunteers_Settings__c];
+        SettingsBucketAccountId = null;
+        
+        //create our own based on what's passed in from the test
+        VolunteersSettings = new Volunteers_Settings__c (
+            Signup_Matches_Existing_Contacts__c = mySettings.Signup_Matches_Existing_Contacts__c,
+            Signup_Creates_Contacts_If_No_Match__c = mySettings.Signup_Creates_Contacts_If_No_Match__c,
+            Signup_Bucket_Account_On_Create__c = mySettings.Signup_Bucket_Account_On_Create__c,
+            Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c,
+            Contact_Match_Email_Fields__c = mySettings.Contact_Match_Email_Fields__c,
+            Contact_Match_First_Name_Fields__c = mySettings.Contact_Match_First_Name_Fields__c,
+            Contact_Matching_Rule__c = mySettings.Contact_Matching_Rule__c,
+            Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c,
+            Personal_Site_Report_Hours_Filtered__c = mySettings.Personal_Site_Report_Hours_Filtered__c
+            );
 
-            UTIL_Describe.checkCreateAccess('Volunteers_Settings__c', 
-                                                new Set<String>{'Signup_Matches_Existing_Contacts__c', 'Signup_Creates_Contacts_If_No_Match__c', 
-                                                                'Signup_Bucket_Account_On_Create__c', 'Recurring_Job_Future_Months__c', 'Contact_Match_Email_Fields__c',
-                                                                'Contact_Matching_Rule__c', 'Personal_Site_Org_Wide_Email_Name__c', 'Personal_Site_Report_Hours_Filtered__c'});
-            insert VolunteersSettings;                      
-            return VolunteersSettings;
-        } catch (Exception e) {
-            mySettings.addError(e.getMessage());
-            return null;
-        }       
+        insert VolunteersSettings;                      
+        return VolunteersSettings;       
     }
 
     // global helper to get the Volunteers Campaign recordtype.
@@ -296,86 +270,72 @@ global with sharing class VOL_SharedCode {
     // it also assumes that the contact that is passed in is the dummy record from the web page, and thus isn't real, and
     // uses the Department field to track the user's company name.
     global static ID CreateContactOrLead(Contact contact, boolean fMatchExistingContacts, boolean fCreateContacts) {
-        try {
-            // update the date before we start
-            contact.Volunteer_Last_Web_Signup_Date__c = system.today();
+        // update the date before we start
+        contact.Volunteer_Last_Web_Signup_Date__c = system.today();
+        
+        // let's see if we can find any matching Contacts.
+        list<Contact> listCon = [select Id, Lastname, Firstname, Email, Phone, HomePhone,
+                Volunteer_Availability__c, Volunteer_Notes__c, Volunteer_Last_Web_Signup_Date__c, 
+                Volunteer_Status__c, Volunteer_Skills__c, Volunteer_Organization__c from Contact 
+                where Lastname=:contact.Lastname and Firstname=:contact.Firstname and Email=:contact.Email];
 
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Contact', 
-                                            new Set<String>{'Id', 'Lastname', 'Firstname', 'Email', 'Phone', 'HomePhone',
-                                                            'Volunteer_Availability__c', 'Volunteer_Notes__c', 'Volunteer_Last_Web_Signup_Date__c', 
-                                                            'Volunteer_Status__c', 'Volunteer_Skills__c', 'Volunteer_Organization__c'});    
-                
-            // let's see if we can find any matching Contacts.
-            list<Contact> listCon = [select Id, Lastname, Firstname, Email, Phone, HomePhone,
-                    Volunteer_Availability__c, Volunteer_Notes__c, Volunteer_Last_Web_Signup_Date__c, 
-                    Volunteer_Status__c, Volunteer_Skills__c, Volunteer_Organization__c from Contact 
-                    where Lastname=:contact.Lastname and Firstname=:contact.Firstname and Email=:contact.Email];
-
-            // if we can match existing contacts, and we found a match, update them.                        
-            if (fMatchExistingContacts && listCon.size() > 0) {                   
-                for (Contact con : listCon) {
-                    con.Volunteer_Last_Web_Signup_Date__c = contact.Volunteer_Last_Web_Signup_Date__c;
-                    con.Volunteer_Availability__c = contact.Volunteer_Availability__c;
-                    string strNotes = con.Volunteer_Notes__c;
-                    if (strNotes != '') strNotes += '  '; 
-                    if (contact.Volunteer_Notes__c != null) {
-                        con.Volunteer_Notes__c = strNotes + '[' + string.valueof(System.today()) + ']: ' + contact.Volunteer_Notes__c;
-                    }                   
-                    con.Volunteer_Skills__c = contact.Volunteer_Skills__c;
-                    if (con.Volunteer_Status__c == null) con.Volunteer_Status__c = 'New Sign Up';
-                    if (contact.Phone != null) con.Phone = contact.Phone;
-                    if (contact.HomePhone != null) con.HomePhone = contact.HomePhone; 
-                    // NOTE: if we find existing contact(s), we don't worry about doing anything with Company.
-                    // but we can at least put it in the new Volunteer_Organization__c field.
-                    if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
-                }
-                Database.update(listCon, dmlDuplicateOptions);
-                return listCon[0].Id;
-            } else if (fCreateContacts) {  // No Match found, create a Contact
-                contact.LeadSource = 'Web Volunteer Signup';
-                contact.Volunteer_Status__c = 'New Sign Up';
-                
-                Account accToUse = null;
-                
-                // see if we can find their company (which we assume the form used Department to record.)
-                if (contact.Department != null) {
-                    // Ensure the user has access to the object and fields before querying
-                    UTIL_Describe.checkReadAccess('Account', new Set<String>{'Id', 'Name'});    
-                
-                    list<Account> listAccount = [select Id, Name from Account where Name = :contact.Department limit 1];
-                    if (listAccount.size() > 0) accToUse = listAccount.get(0);
-                    contact.Volunteer_Organization__c = contact.Department;
-                }
-                
-                // if company found, use it
-                if (accToUse != null) {
-                    contact.AccountId = accToUse.Id;
-                } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
-                    contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
-                }
-                
-                Database.insert(contact, dmlDuplicateOptions);
-                return contact.Id;
-            } else { // No Match found, create a Lead
-                Lead lead = new lead();
-                lead.FirstName = contact.FirstName;
-                lead.LastName = contact.LastName;
-                lead.Company = (contact.Department == null ? '[not provided]' : contact.Department);
-                lead.Email = contact.Email;
-                lead.Phone = contact.Phone;
-                lead.MobilePhone = contact.HomePhone; // leads don't have a home phone!
-                lead.Volunteer_Availability__c = contact.Volunteer_Availability__c;
-                lead.Volunteer_Notes__c = contact.Volunteer_Notes__c;
-                lead.Volunteer_Skills__c = contact.Volunteer_Skills__c;
-                lead.Volunteer_Status__c = 'New Sign Up';
-                lead.LeadSource = 'Web Volunteer Signup';
-                Database.insert(lead, dmlDuplicateOptions);
-                return lead.Id;
+        // if we can match existing contacts, and we found a match, update them.                        
+        if (fMatchExistingContacts && listCon.size() > 0) {                   
+            for (Contact con : listCon) {
+                con.Volunteer_Last_Web_Signup_Date__c = contact.Volunteer_Last_Web_Signup_Date__c;
+                con.Volunteer_Availability__c = contact.Volunteer_Availability__c;
+                string strNotes = con.Volunteer_Notes__c;
+                if (strNotes != '') strNotes += '  '; 
+                if (contact.Volunteer_Notes__c != null) {
+                    con.Volunteer_Notes__c = strNotes + '[' + string.valueof(System.today()) + ']: ' + contact.Volunteer_Notes__c;
+                }                   
+                con.Volunteer_Skills__c = contact.Volunteer_Skills__c;
+                if (con.Volunteer_Status__c == null) con.Volunteer_Status__c = 'New Sign Up';
+                if (contact.Phone != null) con.Phone = contact.Phone;
+                if (contact.HomePhone != null) con.HomePhone = contact.HomePhone; 
+                // NOTE: if we find existing contact(s), we don't worry about doing anything with Company.
+                // but we can at least put it in the new Volunteer_Organization__c field.
+                if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
-        } catch (Exception e) {
-            contact.addError(e.getMessage());
-            return null;
+            Database.update(listCon, dmlDuplicateOptions);
+            return listCon[0].Id;
+        } else if (fCreateContacts) {  // No Match found, create a Contact
+            contact.LeadSource = 'Web Volunteer Signup';
+            contact.Volunteer_Status__c = 'New Sign Up';
+            
+            Account accToUse = null;
+            
+            // see if we can find their company (which we assume the form used Department to record.)
+            if (contact.Department != null) {
+                list<Account> listAccount = [select Id, Name from Account where Name = :contact.Department limit 1];
+                if (listAccount.size() > 0) accToUse = listAccount.get(0);
+                contact.Volunteer_Organization__c = contact.Department;
+            }
+            
+            // if company found, use it
+            if (accToUse != null) {
+                contact.AccountId = accToUse.Id;
+            } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
+                contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
+            }
+            
+            Database.insert(contact, dmlDuplicateOptions);
+            return contact.Id;
+        } else { // No Match found, create a Lead
+            Lead lead = new lead();
+            lead.FirstName = contact.FirstName;
+            lead.LastName = contact.LastName;
+            lead.Company = (contact.Department == null ? '[not provided]' : contact.Department);
+            lead.Email = contact.Email;
+            lead.Phone = contact.Phone;
+            lead.MobilePhone = contact.HomePhone; // leads don't have a home phone!
+            lead.Volunteer_Availability__c = contact.Volunteer_Availability__c;
+            lead.Volunteer_Notes__c = contact.Volunteer_Notes__c;
+            lead.Volunteer_Skills__c = contact.Volunteer_Skills__c;
+            lead.Volunteer_Status__c = 'New Sign Up';
+            lead.LeadSource = 'Web Volunteer Signup';
+            Database.insert(lead, dmlDuplicateOptions);
+            return lead.Id;
         }       
     }   
     
@@ -410,9 +370,6 @@ global with sharing class VOL_SharedCode {
     // global code to lookup an existing contact
     // listStrFields are optional fields to include in the soql call
     global static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
-        // Ensure the user has access to the object and fields before querying
-        UTIL_Describe.checkReadAccess('Contact', new Set<String>{'Id', 'Firstname', 'Lastname', 'Email'});    
-        
         // let's see if we can find any matching Contacts.
         // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
         string strSoql = 'select ';
@@ -471,7 +428,7 @@ global with sharing class VOL_SharedCode {
             strSoql += ') ';
         }        
         strSoql += ' limit 999 ';      
-        list<Contact> listCon = Database.Query(String.escapeSingleQuotes(strSoql)); 
+        list<Contact> listCon = Database.Query(strSoql); 
         return listCon;
     }
 
@@ -604,9 +561,6 @@ global with sharing class VOL_SharedCode {
                 // see if we can find their company 
                 Account accToUse = null;            
                 if (strAccountName != null) {
-                    // Ensure the user has access to the object and fields before querying
-                    UTIL_Describe.checkReadAccess('Account', new Set<String>{'Id', 'Name'});    
-                
                     list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
                     if (listAccount.size() > 0) accToUse = listAccount.get(0);
                 }
@@ -707,7 +661,6 @@ global with sharing class VOL_SharedCode {
                     if (numVols == null || resetTotals) numVols = 0;
                     shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
                 }
-                UTIL_Describe.checkUpdateAccess('Volunteer_Shift__c', new Set<String>{'Id'});
                 update listShifts;
             }
         } catch (Exception e) {
