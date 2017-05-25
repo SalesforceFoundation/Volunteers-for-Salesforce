@@ -104,7 +104,7 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
             return null;
 
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e); 
             return null;
         }
     }

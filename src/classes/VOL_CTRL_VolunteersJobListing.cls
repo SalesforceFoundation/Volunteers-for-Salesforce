@@ -270,7 +270,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
             
             return null;
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);  
             return null;
         }
     }

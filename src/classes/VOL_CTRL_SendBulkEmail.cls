@@ -56,7 +56,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             
             if (shiftId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Name','Volunteer_Job__r.Name'});    
+                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Name'});    
                     
                 Volunteer_Shift__c shift = [select Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Id = :shiftId];
                 strJobName = shift.Volunteer_Job__r.Name + ' - ' + shift.Name;  
@@ -89,7 +89,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             list<Folder> listf = [select Id from Folder where DeveloperName='Volunteers_Email_Templates'];
             if (listf.size() > 0) folderId = listf[0].Id;   
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);  
         }   
     }
         
@@ -133,7 +133,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             }
             return null;
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);  
             return null;
         }
     }
@@ -155,7 +155,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__c = :jobId];
             } else if (campaignId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c', 'Volunteer_Job__r.Campaign__c'});    
+                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c'});    
                 
                 // Salesforce failed to match our campaignId against the formula field which is text, so use full reference.
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__r.Campaign__c = :campaignId ];
@@ -172,7 +172,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             }           
             return null;
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e); 
             return null;
         }
     }
@@ -294,7 +294,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             return Cancel(); // this will take us back to our calling page.
                         
         } catch (exception ex) {
-            ApexPages.addMessages(ex);   
+            ApexPages.addMessages(ex); 
             return null;            
         } 
     }

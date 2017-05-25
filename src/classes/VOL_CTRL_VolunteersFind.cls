@@ -333,7 +333,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
             }
         } catch (exception ex) {
             string str = ex.getMessage();
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, str));                     
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, str)); 
         }
         return null;
     }

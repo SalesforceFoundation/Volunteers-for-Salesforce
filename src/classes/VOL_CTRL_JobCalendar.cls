@@ -82,7 +82,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             p = params.get('volunteerShiftId');
             if (p != null && p != '') {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Start_Date_Time__c', 'Volunteer_Job__c', 'Volunteer_Job__r.Campaign__c'});
+                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Start_Date_Time__c', 'Volunteer_Job__c'});
                 
                 list<Volunteer_Shift__c> listShift = [select Id, Start_Date_Time__c, 
                     Volunteer_Job__c, Volunteer_Job__r.Campaign__c 
@@ -138,7 +138,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                 strAmp = '&';
             }
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);                
         }
     }
     
@@ -283,10 +283,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             if (!fAllJob) {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Volunteer_Job__r.Name', 
-                                                                'Volunteer_Job__r.Volunteer_Website_Time_Zone__c', 
-                                                                'Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c',
-                                                                'Volunteer_Job__r.Campaign__c', 'Start_Date_Time__c', 'Duration__c', 
+                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c', 
                                                                 'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
                 
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
@@ -300,10 +297,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             } else if (fAllCampaign && fAllJob) {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Volunteer_Job__r.Name', 
-                                                                'Volunteer_Job__r.Volunteer_Website_Time_Zone__c', 
-                                                                'Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c',
-                                                                'Volunteer_Job__r.Campaign__c', 'Start_Date_Time__c', 'Duration__c',
+                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c',
                                                                 'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
                 
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
@@ -321,10 +315,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                 }
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Volunteer_Job__r.Name', 
-                                                                'Volunteer_Job__r.Volunteer_Website_Time_Zone__c', 
-                                                                'Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c',
-                                                                'Volunteer_Job__r.Campaign__c', 'Start_Date_Time__c', 'Duration__c',
+                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c',
                                                                 'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
                 
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
@@ -356,7 +347,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             return listShifts;
 
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);
             return null;
         }       
     }       

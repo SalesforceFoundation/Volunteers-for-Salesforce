@@ -307,7 +307,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             }
             
             // Ensure the user can update the object's fields 
-            UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Id'});            
+            UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Contact__c'});            
             update listVolunteerHoursUpdate;
             
             // Ensure the user can create the object 
@@ -321,7 +321,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             return null;            
         } catch (Exception e) {
             strSaveResults = Label.labelMassEditErrorOnSave;
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e); 
             return null;
         }
     }

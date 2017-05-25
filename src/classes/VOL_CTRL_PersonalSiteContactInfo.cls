@@ -198,35 +198,23 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     // The list of Completed Volunteer Hours.
     global list<Volunteer_Hours__c> listCompletedVolunteerHours {
         get {
-             // TODO - Get field for listStrHoursFields
-            try {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', 
-                                            new Set<String>{'Volunteer_Job__r.Name', 'Volunteer_Job__r.Volunteer_Website_Time_Zone__c',
-                                                            'Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c', 'Volunteer_Shift__r.Duration__c'});
-
-                if (listCompletedVolunteerHours == null) {
-                    string strSoql = 'select Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, ' +
-                        ' Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c, Volunteer_Shift__r.Duration__c, ';
-                    string strComma = '';
-                    for (string strF : listStrHoursFields) {
-                        strSoql += strComma + strF;
-                        strComma = ', ';
-                    }
-                    strSoql += ' from Volunteer_Hours__c where Contact__c = :contactId ';
-                    strSoql += ' and Status__c = \'Completed\' ';
-                    strSoql += ' order by Start_Date__c DESC ';
-                    strSoql += ' limit ' + cRowsCompleted;
-                    listCompletedVolunteerHours = Database.Query(String.escapeSingleQuotes(strSoql)); 
-                    // store friendly datetime string in system field for display only
-                    dateTimeFixup(listCompletedVolunteerHours);
+            if (listCompletedVolunteerHours == null) {
+                string strSoql = 'select Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, ' +
+                    ' Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c, Volunteer_Shift__r.Duration__c, ';
+                string strComma = '';
+                for (string strF : listStrHoursFields) {
+                    strSoql += strComma + strF;
+                    strComma = ', ';
                 }
-                return listCompletedVolunteerHours;
-
-            } catch (Exception e) {
-                ApexPages.addMessages(e);            
-                return null;
+                strSoql += ' from Volunteer_Hours__c where Contact__c = :contactId ';
+                strSoql += ' and Status__c = \'Completed\' ';
+                strSoql += ' order by Start_Date__c DESC ';
+                strSoql += ' limit ' + cRowsCompleted;
+                listCompletedVolunteerHours = Database.Query(strSoql); 
+                // store friendly datetime string in system field for display only
+                dateTimeFixup(listCompletedVolunteerHours);
             }
+            return listCompletedVolunteerHours;            
         }        
         set;
     }
@@ -242,13 +230,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global list<Volunteer_Hours__c> listUpcomingVolunteerHours {
             
         get {
-            // JD TODO - Get field for listStrHoursFields
             try {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Volunteer_Hours__c', 
-                                            new Set<String>{'Volunteer_Job__r.Name', 'Volunteer_Job__r.Volunteer_Website_Time_Zone__c', 
-                                                            'Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c', 'Volunteer_Shift__r.Duration__c',
-                                                            'Status__c', 'Shift_Start_Date_Time__c'});    
+                                            new Set<String>{'Status__c', 'Shift_Start_Date_Time__c'});    
            
                 if (listUpcomingVolunteerHours == null) {
                     string strSoql = 'select Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, ' +
@@ -264,14 +249,14 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                     strSoql += ' and Shift_Start_Date_Time__c >= :dtToday ';
                     strSoql += ' order by Shift_Start_Date_Time__c ASC ';        
                     strSoql += ' limit ' + cRowsUpcoming;
-                    listUpcomingVolunteerHours = Database.Query(String.escapeSingleQuotes(strSoql));                
+                    listUpcomingVolunteerHours = Database.Query(strSoql);                
                     // store friendly datetime string in system field for display only
                     dateTimeFixup(listUpcomingVolunteerHours);
                 }
                 return listUpcomingVolunteerHours;
 
             } catch (Exception e) {
-                ApexPages.addMessages(e);            
+                ApexPages.addMessages(e);
                 return null;
             }
         }        
@@ -322,7 +307,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 }           
             }
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);                 
         }
     }
         
@@ -345,16 +330,15 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                         }
                     }
                 }
-                // JD - TODO GET ALL FIELDS FROM FIELD SET
                 // Ensure the user can update the object's fields 
-                UTIL_Describe.checkUpdateAccess('Contact', new Set<String>{'Status__c', 'Hours_Worked__c'});            
+                UTIL_Describe.checkUpdateAccess('Contact', new Set<String>{'Volunteer_Status__c'});            
                 // save the changes
                 update contactReadOnly;
             }
             isEditing = false;
             return null;
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);                
             return null;
         }
     }
@@ -383,7 +367,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             }
             return null;
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);
             return null;
         }
     }
