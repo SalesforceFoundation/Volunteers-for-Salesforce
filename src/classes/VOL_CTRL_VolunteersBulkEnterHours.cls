@@ -50,13 +50,13 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         
         // handle optional parameters (must use string, not ID, to handle null)
         string id = ApexPages.currentPage().getParameters().get('campaignId');
-        if (id != null && id != '') campaignId = id.escapeHtml4();
+        if (id != null && id != '') campaignId = id;
         
         id = ApexPages.currentPage().getParameters().get('volunteerJobId');
-        if (id != null && id != '') volunteerJobId = id.escapeHtml4();
+        if (id != null && id != '') volunteerJobId = id;
 
         id = ApexPages.currentPage().getParameters().get('volunteerShiftId');
-        if (id != null && id != '') volunteerShiftId = id.escapeHtml4();
+        if (id != null && id != '') volunteerShiftId = id;
                 
         // initialize the list of all fields on Volunteer Hours.
         Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
@@ -210,7 +210,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         }
         strSoql += ' order by Full_Name__c, Start_Date__c ';
         
-        listVolunteerHours = Database.Query(String.escapeSingleQuotes(strSoql)); 
+        listVolunteerHours = Database.Query(strSoql); 
                 
         AddMoreEmptyRowsToVolunteerHours();
     }
@@ -279,7 +279,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     // use this to remember which existing VolunteerHours records have been modified.
     global virtual PageReference VolunteerHoursRecordModified() {
         String strId = ApexPages.currentPage().getParameters().get('volunteerHoursIdDirtied');
-        if (strId != null && strId != '') setVolunteerHoursIdDirty.add(strId.escapeHtml4());
+        if (strId != null && strId != '') setVolunteerHoursIdDirty.add(strId);
         return null;
     }
     
@@ -306,8 +306,6 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                 }
             }
             
-            // Ensure the user can update the object's fields 
-            UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Contact__c'});            
             update listVolunteerHoursUpdate;
             
             // Ensure the user can create the object 

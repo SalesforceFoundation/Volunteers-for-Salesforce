@@ -181,7 +181,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             listStrFieldsJob.addAll(mapS.keySet());       
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Job__c', new Set<String>{'Id', 'Campaign__c', 'CreatedDate'});    
+            UTIL_Describe.checkReadAccess('Volunteer_Job__c', new Set<String>(listStrFieldsJob));    
             
             // find the existing jobs
             // we need to use dynamic soql to pick up all custom fields we don't know about
@@ -192,7 +192,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 strComma = ', ';
             }
             strSoql += ' from Volunteer_Job__c where Campaign__c = :campaignIdClone order by CreatedDate';    
-            listJobsExisting = Database.Query(String.escapeSingleQuotes(strSoql)); 
+            listJobsExisting = Database.Query(strSoql); 
 
             // initialize the list of all fields on Shift.
             mapS = Schema.SObjectType.Volunteer_Shift__c.fields.getMap();
@@ -200,7 +200,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             listStrFieldsShift.addAll(mapS.keySet());         
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Volunteer_Job__c', 'Start_Date_Time__c'});    
+            UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>(listStrFieldsShift));    
                 
             // find the existing shifts for those jobs
             // we need to use dynamic soql to pick up all custom fields we don't know about
@@ -211,7 +211,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 strComma = ', ';
             }
             strSoql += ' from Volunteer_Shift__c where Volunteer_Job__c in :listJobsExisting order by Start_Date_Time__c';  
-            listShiftsExisting = Database.Query(String.escapeSingleQuotes(strSoql)); 
+            listShiftsExisting = Database.Query(strSoql); 
             
             // clone the jobs               
             for (Volunteer_Job__c job : listJobsExisting) {
@@ -296,7 +296,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 listStrFieldsHours.addAll(mapS.keySet());       
 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'Id'});    
+                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>(listStrFieldsHours));    
                 
                 // find the existing hours for those jobs and shifts
                 // we need to use dynamic soql to pick up all custom fields we don't know about
@@ -308,7 +308,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 }
                 strSoql += ' from Volunteer_Hours__c where Volunteer_Job__c in :listJobsExisting ';
                 strSoql += ' or Volunteer_Shift__c in :listShiftsExisting ';
-                listHoursExisting = Database.Query(String.escapeSingleQuotes(strSoql)); 
+                listHoursExisting = Database.Query(strSoql); 
 
                 // create a map of existing ShiftId to new ShiftId
                 map<ID, ID> mapShiftId = new map<ID, ID>();
@@ -368,7 +368,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 insert listHours;
             }
         } catch (Exception e) {
-            ApexPages.addMessages(e);            
+            ApexPages.addMessages(e);
         }
     }
     

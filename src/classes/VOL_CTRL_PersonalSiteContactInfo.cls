@@ -269,45 +269,38 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     // Note that it stores the formatted Time in the Hours' System_Note__c field (in memory only).
     // Note that it stores the formatted Date in the Hours' Comment field (in memory only).
     private void dateTimeFixup(list<Volunteer_Hours__c> listHours) {
-        try {
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('User', new Set<String>{'TimeZoneSidKey'});    
+        // get default time zone for site guest user
+        User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
+        
+        // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
+        string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
+        string strFormatEndTime = strTimeFormat.replace('tt','a');
+        
+        for (Volunteer_Hours__c hr : listHours) {
+            string strTimeZone = hr.Volunteer_Job__r.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = hr.Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c;
+            if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
             
-            // get default time zone for site guest user
-            User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
-            
-            // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
-            string strFormat = strDateFormat + ' ' + strTimeFormat.replace('tt','a');
-            string strFormatEndTime = strTimeFormat.replace('tt','a');
-            
-            for (Volunteer_Hours__c hr : listHours) {
-                string strTimeZone = hr.Volunteer_Job__r.Volunteer_Website_Time_Zone__c;
-                if (strTimeZone == null) strTimeZone = hr.Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c;
-                if (strTimeZone == null) strTimeZone = u.TimeZoneSidKey;
+            DateTime dtStart = hr.Planned_Start_Date_Time__c == null ? hr.Shift_Start_Date_Time__c : hr.Planned_Start_Date_Time__c;
+            if (dtStart == null) {
+                // if we don't have a start time, then format by GMT, to avoid timezones moving the date!
+                dtStart = hr.Start_Date__c;
+                hr.Comments__c = dtStart.formatGmt(strDateFormat);
+            } else {
+                double duration = hr.Hours_Worked__c == null ? hr.Volunteer_Shift__r.Duration__c : hr.Hours_Worked__c;
+                DateTime dtEnd = dtStart.addMinutes(integer.valueOf(duration * 60));
+                string strStart = dtStart.format(strFormat, strTimeZone);
                 
-                DateTime dtStart = hr.Planned_Start_Date_Time__c == null ? hr.Shift_Start_Date_Time__c : hr.Planned_Start_Date_Time__c;
-                if (dtStart == null) {
-                    // if we don't have a start time, then format by GMT, to avoid timezones moving the date!
-                    dtStart = hr.Start_Date__c;
-                    hr.Comments__c = dtStart.formatGmt(strDateFormat);
+                // see if start and end are on the same day
+                if (dtStart.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
+                    hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);   
                 } else {
-                    double duration = hr.Hours_Worked__c == null ? hr.Volunteer_Shift__r.Duration__c : hr.Hours_Worked__c;
-                    DateTime dtEnd = dtStart.addMinutes(integer.valueOf(duration * 60));
-                    string strStart = dtStart.format(strFormat, strTimeZone);
-                    
-                    // see if start and end are on the same day
-                    if (dtStart.format('d', strTimeZone) == dtEnd.format('d', strTimeZone)) {
-                        hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormatEndTime, strTimeZone);   
-                    } else {
-                        hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormat, strTimeZone);                      
-                    } 
-                    
-                    // also save user formated Start Date in Comments field
-                    hr.Comments__c = dtStart.format(strDateFormat, strTimeZone);
-                }           
-            }
-        } catch (Exception e) {
-            ApexPages.addMessages(e);                 
+                    hr.System_Note__c =  dtStart.format(strFormatEndTime, strTimeZone) + ' - ' + dtEnd.format(strFormat, strTimeZone);                      
+                } 
+                
+                // also save user formated Start Date in Comments field
+                hr.Comments__c = dtStart.format(strDateFormat, strTimeZone);
+            }           
         }
     }
         
@@ -317,30 +310,23 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     }
 
     global PageReference save() { 
-        try { 
-            if (contactReadOnly != null) {          
-                //Contact con = listCon[0];         
-                //  now copy over all the non-null fields from the form's contact to the existing contact.
-                for (string strF : listStrContactFields) {
-                    if (contactEdit.get(strF) != null) {
-                        try {
-                            contactReadOnly.put(strF, contactEdit.get(strF));
-                        } catch(exception ex) {
-                            
-                        }
+        if (contactReadOnly != null) {          
+            //Contact con = listCon[0];         
+            //  now copy over all the non-null fields from the form's contact to the existing contact.
+            for (string strF : listStrContactFields) {
+                if (contactEdit.get(strF) != null) {
+                    try {
+                        contactReadOnly.put(strF, contactEdit.get(strF));
+                    } catch(exception ex) {
+                        
                     }
                 }
-                // Ensure the user can update the object's fields 
-                UTIL_Describe.checkUpdateAccess('Contact', new Set<String>{'Volunteer_Status__c'});            
-                // save the changes
-                update contactReadOnly;
             }
-            isEditing = false;
-            return null;
-        } catch (Exception e) {
-            ApexPages.addMessages(e);                
-            return null;
+            // save the changes
+            update contactReadOnly;
         }
+        isEditing = false;
+        return null;
     }
     
     global PageReference cancel() {
@@ -351,9 +337,6 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global PageReference cancelShift() {
         try {
             if (hoursId != null) {           
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'Id', 'Status__c', 'Hours_Worked__c'});    
-                
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
                 hr.Hours_Worked__c = 0;

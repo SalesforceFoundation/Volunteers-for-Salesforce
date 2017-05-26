@@ -279,13 +279,12 @@ global with sharing class VOL_CTRL_JobCalendar {
             boolean fAllJob = (strJobId == '*');
             list<Volunteer_Shift__c> listShifts;
                     
-            
-            if (!fAllJob) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
+            // Ensure the user has access to the object and fields before querying
+            UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
                                                 new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c', 
                                                                 'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
                 
+            if (!fAllJob) {    
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c, 
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
@@ -295,11 +294,6 @@ global with sharing class VOL_CTRL_JobCalendar {
                         and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
                     order by Start_Date_Time__c asc];           
             } else if (fAllCampaign && fAllJob) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c',
-                                                                'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
-                
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
@@ -313,10 +307,6 @@ global with sharing class VOL_CTRL_JobCalendar {
                 if (fShowCampaignHierarchy) {
                     listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(strCampaignId);    
                 }
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c',
-                                                                'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
                 
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
@@ -331,11 +321,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             // to avoid FullCalendar from displaying shifts based on the user's machine time zone,
             // we translate it to the desired time zone, then say it is GMT.
             // get default time zone for site guest user
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('User', new Set<String>{'TimeZoneSidKey'});
             User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
-                    
-
                     
             for (Volunteer_Shift__c shift : listShifts) {
                 string strTimeZone = shift.Volunteer_Job__r.Volunteer_Website_Time_Zone__c;

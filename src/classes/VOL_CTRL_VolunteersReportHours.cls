@@ -299,16 +299,10 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             list<Volunteer_Hours__c> listHours = null;
 
             if (volunteerShiftId != null) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'Id', 'Volunteer_Shift__c', 'Contact__c'});    
-            
                 // search for an existing Hours record to update, if they specified a Shift
                 listHours = [select Id from Volunteer_Hours__c where 
                     Volunteer_Shift__c = :volunteerShiftId and Contact__c = :contactId];
             } else {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'Id', 'Volunteer_Job__c', 'Contact__c', 'Status__c', 'Start_Date__c'});    
-            
                 // search for an existing Hours record to update for this job 
                 // match non-committed hours, or committed where the start date is the same.
                 listHours = [select Id from Volunteer_Hours__c where 
@@ -323,14 +317,20 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 listHours[0].End_Date__c = vhours.End_Date__c;
                 listHours[0].Hours_Worked__c = vhours.Hours_Worked__c;
             
+                Set<String> flsCheckFields = new Set<String> {'End_Date__c', 'Hours_Worked__c','Start_Date__c', 'Status__c'};
+                
                 // update the additional fields, if any
                 for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
                     String fieldName = f.getFieldPath();
                     if (vhours.get(fieldName) != null) {
                         listHours[0].put(fieldName, vhours.get(fieldName)); 
+                        flsCheckFields.add(fieldName);
                     }   
                 }   
-                        
+
+                // Ensure the user has access to the object and fields before querying
+                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', flsCheckFields);
+                
                 update listHours[0];
             } else {        
                 // create new hours if needed

@@ -151,9 +151,6 @@ public with sharing class UTIL_JobProgress_CTRL {
         List<AsyncApexJob> jobs = new List<AsyncApexJob>();
         List<BatchJobStatus> jobsStatus = new List<BatchJobStatus>();
 
-        // Ensure the user has access to the object before querying
-        UTIL_Describe.checkObjectReadAccess('AsyncApexJob');
-
         jobs = [
             SELECT
             ApexClass.Name,

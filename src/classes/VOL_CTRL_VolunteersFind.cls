@@ -45,13 +45,13 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
         
         // handle optional parameters (must use string, not ID, to handle null)
         string id = ApexPages.currentPage().getParameters().get('campaignId');
-        if (id != null && id != '') campaignId = id.escapeHtml4();
+        if (id != null && id != '') campaignId = id;
         
         id = ApexPages.currentPage().getParameters().get('volunteerJobId');
-        if (id != null && id != '') volunteerJobId = id.escapeHtml4();
+        if (id != null && id != '') volunteerJobId = id;
 
         id = ApexPages.currentPage().getParameters().get('volunteerShiftId');
-        if (id != null && id != '') volunteerShiftId = id.escapeHtml4();
+        if (id != null && id != '') volunteerShiftId = id;
                         
     }
     

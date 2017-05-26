@@ -288,7 +288,7 @@
                 });
 
                 eventTarget.addEventListener('complete', function () {
-                   if ({!JSENCODE(IF(stopPollingOnComplete, 'true', 'false'))}) {
+                   if ({!IF(stopPollingOnComplete, 'true', 'false')}) {
                        stopPolling();
                    }
                 });

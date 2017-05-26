@@ -60,7 +60,7 @@ public with sharing class VOL_SharedCodeAPI25 {
         }
         strSoql += ' from ' + des.getName() + ' where Id = :id ';
         strSoql += ' limit 1';      
-        list<SObject> listSObj = Database.Query(String.escapeSingleQuotes(strSoql)); 
+        list<SObject> listSObj = Database.Query(strSoql); 
         
         if (listSObj.size() > 0) {          
             SObject sobjT = listSObj[0];

@@ -363,7 +363,7 @@ global with sharing class VOL_SharedCode {
             }
             strSoql += ') ';
         }        
-        list<Contact> listCon = Database.Query(String.escapeSingleQuotes(strSoql)); 
+        list<Contact> listCon = Database.Query(strSoql); 
         return listCon.size() > 0;
     }
     
@@ -445,146 +445,141 @@ global with sharing class VOL_SharedCode {
         // listStrFields is the specific list of fields on the form's fieldset, which we should assume we want to save.
         // we also need to special case several fields we will potentially set, but we also need to know,
         // if they are in the fieldset or not.
-        try {
-            set<string> setStrFields = new set<string>();
+        set<string> setStrFields = new set<string>();
 
-            // store all fields in lower case
-            for (string strField : listStrFields)
-                setStrFields.add(strField.toLowerCase());
-                
-            boolean isStatusInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
-            boolean isNotesInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());    
+        // store all fields in lower case
+        for (string strField : listStrFields)
+            setStrFields.add(strField.toLowerCase());
             
-            // create a new list with all the fields
-            list<string> listStrFieldsAll = new list<string>(setStrFields);
-            
-            list<Contact> listCon = LookupContact(contact, listStrFieldsAll);
+        boolean isStatusInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
+        boolean isNotesInFS = !setStrFields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());    
+        
+        // create a new list with all the fields
+        list<string> listStrFieldsAll = new list<string>(setStrFields);
+        
+        list<Contact> listCon = LookupContact(contact, listStrFieldsAll);
 
-            // if we found a match                      
-            if (listCon.size() > 0) {
-                Contact conExisting = null;
-                
-                // match the one that has the same Id
-                if (contactIdExisting != null && contactIdExisting != '') {
-                    for (integer i = 0; i < listCon.size(); i++) { 
-                        if (listCon[i].Id == contactIdExisting) 
-                            conExisting = listCon[i];
-                    }
+        // if we found a match                      
+        if (listCon.size() > 0) {
+            Contact conExisting = null;
+            
+            // match the one that has the same Id
+            if (contactIdExisting != null && contactIdExisting != '') {
+                for (integer i = 0; i < listCon.size(); i++) { 
+                    if (listCon[i].Id == contactIdExisting) 
+                        conExisting = listCon[i];
                 }
-                // use first one if no match found.
-                if (conExisting == null) {
-                    conExisting = listCon[0];
-                }                  
-                
-                // special case appending Volunteer Notes, rather than overwriting.
-                if (isNotesInFS) {
-                    if (contact.Volunteer_Notes__c != null && contact.Volunteer_Notes__c != conExisting.Volunteer_Notes__c) {
-                        contact.Volunteer_Notes__c = (conExisting.Volunteer_Notes__c != null ? (conExisting.Volunteer_Notes__c + '  ') : '') + 
-                            '[' + string.valueof(System.today()) + ']: ' + contact.Volunteer_Notes__c;
-                    } else {
-                        contact.Volunteer_Notes__c = conExisting.Volunteer_Notes__c;
-                    }
-                }
-                            
-                // special case setting Volunteer Status, only if not currently set.
-                if (conExisting.Volunteer_Status__c != null) {
-                    contact.Volunteer_Status__c = null;
+            }
+            // use first one if no match found.
+            if (conExisting == null) {
+                conExisting = listCon[0];
+            }                  
+            
+            // special case appending Volunteer Notes, rather than overwriting.
+            if (isNotesInFS) {
+                if (contact.Volunteer_Notes__c != null && contact.Volunteer_Notes__c != conExisting.Volunteer_Notes__c) {
+                    contact.Volunteer_Notes__c = (conExisting.Volunteer_Notes__c != null ? (conExisting.Volunteer_Notes__c + '  ') : '') + 
+                        '[' + string.valueof(System.today()) + ']: ' + contact.Volunteer_Notes__c;
                 } else {
-                    conExisting.Volunteer_Status__c = 'New Sign Up';
+                    contact.Volunteer_Notes__c = conExisting.Volunteer_Notes__c;
                 }
-                
-                // now copy over all the non-null fields from the form's contact to the existing contact.
-                // avoid overwriting existing first name or existing email, since we might match it from in a different field.
-                // special case address fields
-                boolean hasMailingAddress = false;
-                boolean hasOtherAddress = false;
-                for (string strF : listStrFields) {
-                    strF = strF.toLowerCase();
-                    // we actually still want to copy email if it is currently empty
-                    if (strF == 'email' && conExisting.Email == null) {
-                        conExisting.Email = contact.Email;
+            }
+                        
+            // special case setting Volunteer Status, only if not currently set.
+            if (conExisting.Volunteer_Status__c != null) {
+                contact.Volunteer_Status__c = null;
+            } else {
+                conExisting.Volunteer_Status__c = 'New Sign Up';
+            }
+            
+            // now copy over all the non-null fields from the form's contact to the existing contact.
+            // avoid overwriting existing first name or existing email, since we might match it from in a different field.
+            // special case address fields
+            boolean hasMailingAddress = false;
+            boolean hasOtherAddress = false;
+            for (string strF : listStrFields) {
+                strF = strF.toLowerCase();
+                // we actually still want to copy email if it is currently empty
+                if (strF == 'email' && conExisting.Email == null) {
+                    conExisting.Email = contact.Email;
+                    continue;
+                }
+                if (strF != 'id' && strF != 'firstname' && strF != 'email' && contact.get(strF) != null) {
+                    if (strF.contains('mailing') && !strF.contains('__c')) {
+                        hasMailingAddress = true;
                         continue;
                     }
-                    if (strF != 'id' && strF != 'firstname' && strF != 'email' && contact.get(strF) != null) {
-                        if (strF.contains('mailing') && !strF.contains('__c')) {
-                            hasMailingAddress = true;
-                            continue;
-                        }
-                        if (strF.contains('other') && !strF.contains('__c')) {
-                            hasOtherAddress = true;
-                            continue;
-                        }
-                        conExisting.put(strF, contact.get(strF));
+                    if (strF.contains('other') && !strF.contains('__c')) {
+                        hasOtherAddress = true;
+                        continue;
                     }
-                }            
-                if (hasMailingAddress)
-                    VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', conExisting, 'Mailing');
-                if (hasOtherAddress)
-                    VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', conExisting, 'Other');
-                    
-                if (setLastWebSignup)
-                    conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
-            
-                Database.update(conExisting, dmlDuplicateOptions);
-                // null out notes, so another update won't append them again!
-                contact.Volunteer_Notes__c = null;
-                return conExisting.Id;
-            } else  {  // No Match found, create a Contact
+                    conExisting.put(strF, contact.get(strF));
+                }
+            }            
+            if (hasMailingAddress)
+                VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', conExisting, 'Mailing');
+            if (hasOtherAddress)
+                VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', conExisting, 'Other');
+                
+            if (setLastWebSignup)
+                conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
+        
+            Database.update(conExisting, dmlDuplicateOptions);
+            // null out notes, so another update won't append them again!
+            contact.Volunteer_Notes__c = null;
+            return conExisting.Id;
+        } else  {  // No Match found, create a Contact
 
-                // don't assume the contact object wasn't already used.
-                // since we can't null out Id for the insert, copy all
-                // the fields to a new object and use it.
-                Contact conNew = new Contact();
-                //  now copy over all the non-null fields from the form's contact to the existing contact.
-                // special case address fields
-                boolean hasMailingAddress = false;
-                boolean hasOtherAddress = false;
-                for (string strF : listStrFields) {
-                    strF = strF.toLowerCase();
-                    if (strF != 'id' && contact.get(strF) != null) {
-                        if (strF.contains('mailing')) {
-                            hasMailingAddress = true;
-                            continue;
-                        }
-                        if (strF.contains('other')) {
-                            hasOtherAddress = true;
-                            continue;
-                        }
-                        conNew.put(strF, contact.get(strF));
+            // don't assume the contact object wasn't already used.
+            // since we can't null out Id for the insert, copy all
+            // the fields to a new object and use it.
+            Contact conNew = new Contact();
+            //  now copy over all the non-null fields from the form's contact to the existing contact.
+            // special case address fields
+            boolean hasMailingAddress = false;
+            boolean hasOtherAddress = false;
+            for (string strF : listStrFields) {
+                strF = strF.toLowerCase();
+                if (strF != 'id' && contact.get(strF) != null) {
+                    if (strF.contains('mailing')) {
+                        hasMailingAddress = true;
+                        continue;
                     }
+                    if (strF.contains('other')) {
+                        hasOtherAddress = true;
+                        continue;
+                    }
+                    conNew.put(strF, contact.get(strF));
                 }
-                if (hasMailingAddress)
-                    VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', conNew, 'Mailing');
-                if (hasOtherAddress)
-                    VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', conNew, 'Other');
-
-                // see if we can find their company 
-                Account accToUse = null;            
-                if (strAccountName != null) {
-                    list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
-                    if (listAccount.size() > 0) accToUse = listAccount.get(0);
-                }
-                
-                // if company found, use it
-                if (accToUse != null) {
-                    conNew.AccountId = accToUse.Id;
-                } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
-                    conNew.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
-                }
-                
-                if (setLastWebSignup)
-                    conNew.Volunteer_Last_Web_Signup_Date__c = system.today();
-                conNew.LeadSource = 'Web Volunteer Signup';
-                conNew.Volunteer_Status__c = 'New Sign Up';
-
-                Database.insert(conNew, dmlDuplicateOptions);
-                // null out notes, so another update won't append them again!
-                contact.Volunteer_Notes__c = null;
-                return conNew.Id;
             }
-        } catch (Exception e) {
-            contact.addError(e.getMessage());
-            return null;
+            if (hasMailingAddress)
+                VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Mailing', conNew, 'Mailing');
+            if (hasOtherAddress)
+                VOL_StateCountryPicklists.copyAddressStdSObj(contact, 'Other', conNew, 'Other');
+
+            // see if we can find their company 
+            Account accToUse = null;            
+            if (strAccountName != null) {
+                list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
+                if (listAccount.size() > 0) accToUse = listAccount.get(0);
+            }
+            
+            // if company found, use it
+            if (accToUse != null) {
+                conNew.AccountId = accToUse.Id;
+            } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
+                conNew.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
+            }
+            
+            if (setLastWebSignup)
+                conNew.Volunteer_Last_Web_Signup_Date__c = system.today();
+            conNew.LeadSource = 'Web Volunteer Signup';
+            conNew.Volunteer_Status__c = 'New Sign Up';
+
+            Database.insert(conNew, dmlDuplicateOptions);
+            // null out notes, so another update won't append them again!
+            contact.Volunteer_Notes__c = null;
+            return conNew.Id;
         }       
     }    
 
@@ -618,54 +613,49 @@ global with sharing class VOL_SharedCode {
     
         // WARNING: deleting, undeleting, or merging a Contact, does NOT call any trigger on the Hours!
         // thus I've manually called this from the before delete & after undelete trigger on Contacts (VOL_Contact_MaintainHours).
-        try {
-            map<Id, Double> mpShiftIdDelta = new map<Id, Double>();
+        map<Id, Double> mpShiftIdDelta = new map<Id, Double>();
+        
+        // first we go through the new hours, and add up the number of volunteers per shift
+        if (listHoursNew != null) {
+            for (Volunteer_Hours__c hr : listHoursNew) {
+                if ((hr.Status__c == 'Confirmed' || hr.Status__c == 'Completed') &&
+                    (hr.Volunteer_Shift__c <> null && hr.Number_Of_Volunteers__c != null)) {
+                        Double numVols = mpShiftIdDelta.get(hr.Volunteer_Shift__c);
+                        if (numVols == null) numVols = 0;
+                        numVols += hr.Number_of_Volunteers__c;
+                        mpShiftIdDelta.put(hr.Volunteer_Shift__c, numVols);
+                    }
+            } 
+        }
+        
+        // second we go through the old hours, and subtract the number of volunteers per shift      
+        if (listHoursOld != null) {
+            for (Volunteer_Hours__c hr : listHoursOld) {
+                if ((hr.Status__c == 'Confirmed' || hr.Status__c == 'Completed') &&
+                    (hr.Volunteer_Shift__c <> null && hr.Number_Of_Volunteers__c != null)) {
+                        Double numVols = mpShiftIdDelta.get(hr.Volunteer_Shift__c);
+                        if (numVols == null) numVols = 0;
+                        numVols -= hr.Number_of_Volunteers__c;
+                        mpShiftIdDelta.put(hr.Volunteer_Shift__c, numVols);
+                    }
+            } 
+        }
+        
+        // bail out if nothing found (to avoid runtime error!)
+        if (mpShiftIdDelta.size() == 0)
+            return;
             
-            // first we go through the new hours, and add up the number of volunteers per shift
-            if (listHoursNew != null) {
-                for (Volunteer_Hours__c hr : listHoursNew) {
-                    if ((hr.Status__c == 'Confirmed' || hr.Status__c == 'Completed') &&
-                        (hr.Volunteer_Shift__c <> null && hr.Number_Of_Volunteers__c != null)) {
-                            Double numVols = mpShiftIdDelta.get(hr.Volunteer_Shift__c);
-                            if (numVols == null) numVols = 0;
-                            numVols += hr.Number_of_Volunteers__c;
-                            mpShiftIdDelta.put(hr.Volunteer_Shift__c, numVols);
-                        }
-                } 
-            }
+        // now that we have the Id's of the shifts, let's get them from the database, update them by the number of volunteers, and then commit.
+        //list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
+        for (list<Volunteer_Shift__c> listShifts : [select Id, Total_Volunteers__c from Volunteer_Shift__c where Id in :mpShiftIdDelta.keySet()]) {
             
-            // second we go through the old hours, and subtract the number of volunteers per shift      
-            if (listHoursOld != null) {
-                for (Volunteer_Hours__c hr : listHoursOld) {
-                    if ((hr.Status__c == 'Confirmed' || hr.Status__c == 'Completed') &&
-                        (hr.Volunteer_Shift__c <> null && hr.Number_Of_Volunteers__c != null)) {
-                            Double numVols = mpShiftIdDelta.get(hr.Volunteer_Shift__c);
-                            if (numVols == null) numVols = 0;
-                            numVols -= hr.Number_of_Volunteers__c;
-                            mpShiftIdDelta.put(hr.Volunteer_Shift__c, numVols);
-                        }
-                } 
+            // loop through and update them
+            for (Volunteer_Shift__c shift : listShifts) {
+                Double numVols = shift.Total_Volunteers__c;
+                if (numVols == null || resetTotals) numVols = 0;
+                shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
             }
-            
-            // bail out if nothing found (to avoid runtime error!)
-            if (mpShiftIdDelta.size() == 0)
-                return;
-                
-            // now that we have the Id's of the shifts, let's get them from the database, update them by the number of volunteers, and then commit.
-            //list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
-            for (list<Volunteer_Shift__c> listShifts : [select Id, Total_Volunteers__c from Volunteer_Shift__c where Id in :mpShiftIdDelta.keySet()]) {
-                
-                // loop through and update them
-                for (Volunteer_Shift__c shift : listShifts) {
-                    Double numVols = shift.Total_Volunteers__c;
-                    if (numVols == null || resetTotals) numVols = 0;
-                    shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
-                }
-                update listShifts;
-            }
-        } catch (Exception e) {
-            if (listHoursNew != null) { listHoursNew[0].addError(e.getMessage()); }
-            if (listHoursOld != null) { listHoursOld[0].addError(e.getMessage()); }
+            update listShifts;
         }       
     }
     

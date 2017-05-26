@@ -143,20 +143,14 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         try {
             list<Volunteer_Hours__c> listHr;
             
-            if (shiftId != null) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c', 'Volunteer_Shift__c'});    
+            // Ensure the user has access to the object and fields before querying
+            UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c', 'Volunteer_Shift__c', 'Volunteer_Job__c'});    
                 
+            if (shiftId != null) {
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Shift__c = :shiftId];         
             } else if (jobId != null){
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c', 'Volunteer_Job__c'});    
-                
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__c = :jobId];
             } else if (campaignId != null) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c'});    
-                
                 // Salesforce failed to match our campaignId against the formula field which is text, so use full reference.
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__r.Campaign__c = :campaignId ];
             }
@@ -216,7 +210,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             // to keep track of unique contacts
             set<ID> setContactId = new set<ID>();
             
-            for (Volunteer_Hours__c hr : database.query(String.escapeSingleQuotes(strSoql))) {
+            for (Volunteer_Hours__c hr : database.query(strSoql)) {
                 if (!fEmailContactsOnlyOnce || setContactId.add(hr.Contact__c)) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setTargetObjectId(hr.Contact__c);

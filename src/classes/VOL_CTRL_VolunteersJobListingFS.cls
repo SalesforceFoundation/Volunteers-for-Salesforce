@@ -469,7 +469,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     strSoql += ' and ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c') + ' = :jobIdSignUp ';
                     strSoql += ' and ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c') + ' = :shiftIdSignUp ';             
                     strSoql += ' limit 1';  
-                    listVHours = Database.Query(String.escapeSingleQuotes(strSoql));               
+                    listVHours = Database.Query(strSoql);               
                 }
                 
                 // if existing Hours found, use the first one.
