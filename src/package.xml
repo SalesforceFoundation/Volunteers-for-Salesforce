@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	 <fullName>Volunteers for Salesforce</fullName>
+	 <apiAccessLevel>Unrestricted</apiAccessLevel>
 	<types>
 		<members>ComponentControllerBase</members>
 		<members>PageControllerBase</members>
@@ -56,8 +58,6 @@
 		<members>VOL_TEST_VolunteerHours_Trigger</members>
 		<members>VOL_VRS</members>
 		<members>VOL_VRS_TEST</members>
-		<members>UTIL_Describe</members>
-		<members>UTIL_Describe_TEST</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
