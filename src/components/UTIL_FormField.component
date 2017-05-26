@@ -70,9 +70,9 @@
         <!-- Javascript will add the onchange event when needed and swap out the icon for lookup fields -->
         <script type="text/javascript">
             (function() {
-                var oc = '{!onchange}';
-                var ftype = '{!ftype}';
-                var field = '{!field}';
+                var oc = '{!JSENCODE(onchange)}';
+                var ftype = '{!JSENCODE(ftype)}';
+                var field = '{!JSENCODE(field)}';
                 var input = document.getElementById("{!$Component.inputX}");
 
                 // Add onchange event only when needed
@@ -107,7 +107,7 @@
         </div>
         <script type="text/javascript">
             (function() {
-                var oc = '{!onchange}';
+                var oc = '{!JSENCODE(onchange)}';
                 var input = document.getElementById("{!$Component.inputCB}");
 
                 // Add onchange event only when needed

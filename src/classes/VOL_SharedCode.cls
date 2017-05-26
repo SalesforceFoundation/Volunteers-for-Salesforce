@@ -60,8 +60,10 @@ global with sharing class VOL_SharedCode {
      
     // list of select options of Shifts for the specified job, using the date & time format strings for the shifts
     public static list<SelectOption> listSOVolunteerShiftsOfVolunteerJobIdFormat(ID volunteerJobId, Date dtStart, Date dtEnd, 
-        boolean fIncludeShiftName, boolean fIncludeNumberNeeded, string strDateFormat, string strTimeFormat) {
-     
+            boolean fIncludeShiftName, boolean fIncludeNumberNeeded, string strDateFormat, string strTimeFormat) {
+        
+        list<Volunteer_Job__c> listVolunteerJobs = new List<Volunteer_Job__c>();
+        
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
         
@@ -71,9 +73,9 @@ global with sharing class VOL_SharedCode {
         if (dtEnd == null)
             dtEnd = system.today().addMonths(12);
         dtEnd = dtEnd.addDays(1);
-        
+           
         // get our shifts in a Job query, so we can use our common date/time formatting routine.
-        list<Volunteer_Job__c> listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
+        listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
             Volunteer_Website_Time_Zone__c,
             (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
                 Description__c, System_Note__c From Volunteer_Job_Slots__r 
@@ -103,7 +105,7 @@ global with sharing class VOL_SharedCode {
             so.setEscapeItem(false); 
             listSO.add(so);
         }       
-        return listSO;
+        return listSO;       
     }
     
     // routine to go through all the shifts, and create the display string
@@ -111,7 +113,6 @@ global with sharing class VOL_SharedCode {
     // time zone that might be specified on the Job, Campaign, or Site Guest User.
     // Note that it stores this string in the Shift's System_Note__c field (in memory only).
     public static void dateTimeFixup(list<Volunteer_Job__c> listJob, string strDateFormat, string strTimeFormat) {
-        
         // get default time zone for site guest user
         User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
         
@@ -197,7 +198,6 @@ global with sharing class VOL_SharedCode {
 
     // test helper that allows one to override the users's Custom Settings with the settings we want to test with.
     global static Volunteers_Settings__c getVolunteersSettingsForTests(Volunteers_Settings__c mySettings) {
-        
         //clear out whatever settings exist
         delete [select id from Volunteers_Settings__c];
         SettingsBucketAccountId = null;
@@ -214,8 +214,9 @@ global with sharing class VOL_SharedCode {
             Personal_Site_Org_Wide_Email_Name__c = mySettings.Personal_Site_Org_Wide_Email_Name__c,
             Personal_Site_Report_Hours_Filtered__c = mySettings.Personal_Site_Report_Hours_Filtered__c
             );
+
         insert VolunteersSettings;                      
-        return VolunteersSettings;
+        return VolunteersSettings;       
     }
 
     // global helper to get the Volunteers Campaign recordtype.
@@ -271,7 +272,7 @@ global with sharing class VOL_SharedCode {
     global static ID CreateContactOrLead(Contact contact, boolean fMatchExistingContacts, boolean fCreateContacts) {
         // update the date before we start
         contact.Volunteer_Last_Web_Signup_Date__c = system.today();
-
+        
         // let's see if we can find any matching Contacts.
         list<Contact> listCon = [select Id, Lastname, Firstname, Email, Phone, HomePhone,
                 Volunteer_Availability__c, Volunteer_Notes__c, Volunteer_Last_Web_Signup_Date__c, 
@@ -335,7 +336,7 @@ global with sharing class VOL_SharedCode {
             lead.LeadSource = 'Web Volunteer Signup';
             Database.insert(lead, dmlDuplicateOptions);
             return lead.Id;
-        }
+        }       
     }   
     
     // global code to verify the passed in ContactId is valid, as well as the email
@@ -369,7 +370,6 @@ global with sharing class VOL_SharedCode {
     // global code to lookup an existing contact
     // listStrFields are optional fields to include in the soql call
     global static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
-    
         // let's see if we can find any matching Contacts.
         // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
         string strSoql = 'select ';
@@ -442,7 +442,6 @@ global with sharing class VOL_SharedCode {
     }
     
     global static ID CreateOrUpdateContactFS(string contactIdExisting, Contact contact, string strAccountName, list<string> listStrFields, boolean setLastWebSignup) {
-        
         // listStrFields is the specific list of fields on the form's fieldset, which we should assume we want to save.
         // we also need to special case several fields we will potentially set, but we also need to know,
         // if they are in the fieldset or not.
@@ -581,7 +580,7 @@ global with sharing class VOL_SharedCode {
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
             return conNew.Id;
-        }
+        }       
     }    
 
     // global utility to escape a string.
@@ -614,7 +613,6 @@ global with sharing class VOL_SharedCode {
     
         // WARNING: deleting, undeleting, or merging a Contact, does NOT call any trigger on the Hours!
         // thus I've manually called this from the before delete & after undelete trigger on Contacts (VOL_Contact_MaintainHours).
-        
         map<Id, Double> mpShiftIdDelta = new map<Id, Double>();
         
         // first we go through the new hours, and add up the number of volunteers per shift
@@ -658,7 +656,7 @@ global with sharing class VOL_SharedCode {
                 shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
             }
             update listShifts;
-        }
+        }       
     }
     
     

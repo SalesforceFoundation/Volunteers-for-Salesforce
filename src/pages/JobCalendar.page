@@ -151,7 +151,7 @@
                                     strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, ns+'PersonalSiteJobListing', ns+'VolunteersJobListingFS')}' +
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
                                         '&dtMonthFilter=' + strApexDateUTC(dtStart) +
-                                        '{!IF(strParams != null, '&' + strParams, '')}';
+                                        '{!JSENCODE(IF(strParams != null, '&' + strParams, ''))}';
                                 } else if ({!NOT(fPrint)}) {
                                     strUrl = '/' + strShiftId;
                                 }                                
@@ -160,7 +160,7 @@
                                 shifts.push({
                                     title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
                                         '{!$Label.labelCalendarShiftFull}' : ''),
-                                    description: result[i].{!ns}Description__c,
+                                    description: result[i].JSENCODE({!ns}Description__c),
                                     strNumbers: strShiftNumbers,
                                     urlRoster:  '/apex/{!ns}OpenReport?ReportDevName=Volunteer_Roster' + 
                                                 '&pv0=' + strCampaignId.substr(0, 15) +

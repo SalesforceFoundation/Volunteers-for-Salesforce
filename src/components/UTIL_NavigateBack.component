@@ -48,7 +48,7 @@
                     sforce.one.back(true);
             }
             else {
-                var recordId = '{!recordId}';
+                var recordId = '{!JSENCODE(recordId)}';
                 // Manage navigation in Salesforce Classic
                 window.parent.location.href = '/' + recordId;
             }

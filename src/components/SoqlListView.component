@@ -95,7 +95,7 @@
                             <apex:commandLink action="{!SortItem}" rerender="panelData" status="statusLoad" value="{!$ObjectType.Contact.Fields[pageController.strNameField].Label}" >
                                 <apex:param assignTo="{!SortItemField}" name="SortItemField" value="{!pageController.strNameField}" />
                                 <apex:outputText style="font-size:1.0em;font-weight:bold;font-family:symbol" 
-                                    value="{!IF(SortItemField=pageController.strNameField, IF(SortItemAsc, ' ↑' , ' ↓'), '')}" escape="false" />
+                                    value="{!IF(SortItemField=pageController.strNameField, IF(SortItemAsc, ' ↑' , ' ↓'), '')}" />
                             </apex:commandLink>
                         </label>
                         <span class="slds-assistive-text">Sort</span>
@@ -108,7 +108,7 @@
                                     rendered="{!$ObjectType.Contact.Fields[f].Type != 'multipicklist'}" >
                                     <apex:param assignTo="{!SortItemField}" name="SortItemField" value="{!f}" />
                                     <apex:outputText style="font-size:1.0em;font-weight:bold;font-family:symbol" 
-                                        value="{!IF(SortItemField=f, IF(SortItemAsc, ' ↑' , ' ↓'), '')}" escape="false" />
+                                        value="{!IF(SortItemField=f, IF(SortItemAsc, ' ↑' , ' ↓'), '')}" />
                                 </apex:commandLink>
                             </th>
                         </apex:outputText> 
