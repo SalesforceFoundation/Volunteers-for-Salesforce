@@ -47,25 +47,25 @@ public with sharing class UTIL_JobProgress_CTRL {
     public Boolean rerenderoncomplete {get; set;}
     
     public Boolean hasExtendedStatus {
-    	get {
-    		//ensure bj loaded!
-    		if (bj != null)
-    		  return hasExtendedStatus;
-    		else 
-    		  return false;
-    	}
-    	set;
+        get {
+            //ensure bj loaded!
+            if (bj != null)
+              return hasExtendedStatus;
+            else 
+              return false;
+        }
+        set;
     }
-    	
+        
     public Boolean allCompleted { 
-    	get {
-    	   // ensure bj loaded!
-    	   if (bj != null)
-    	       return allCompleted;
-    	   else
-    	       return true;
-    	}
-    	set;
+        get {
+           // ensure bj loaded!
+           if (bj != null)
+               return allCompleted;
+           else
+               return true;
+        }
+        set;
     }
 
     public List<BatchJob> getBatchJobs() {
@@ -167,7 +167,7 @@ public with sharing class UTIL_JobProgress_CTRL {
             ORDER BY CreatedDate DESC
             LIMIT :numberOfJobs
         ];
-
+       
         for (AsyncApexJob job : jobs) {
             jobsStatus.add(new BatchJobStatus(job));
         }

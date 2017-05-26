@@ -146,7 +146,7 @@
     <script>
     (function () {
 
-        var jobProgressContainer = document.getElementById('{!$Component.jobProgressContainer}');
+        var jobProgressContainer = document.getElementById('{!JSENCODE($Component.jobProgressContainer)}');
         var pollingDelay = {!pollingDelay};
         var refreshInterval;
         var eventTarget;
@@ -276,7 +276,7 @@
         }
 
         function init() {
-            eventTarget = document.getElementById('{!eventTargetId}');
+            eventTarget = document.getElementById('{!JSENCODE(eventTargetId)}');
 
             if (eventTarget) {
                 eventTarget.addEventListener('start', function () {

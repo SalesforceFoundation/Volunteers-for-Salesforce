@@ -418,6 +418,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             // do any validation we weren't able to do directly on the client.
             // also find the shift's start date.
             if (shiftIdSignUp != null && shiftIdSignUp != '') {
+                // Ensure the user has access to the object and fields before querying
+                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Number_of_Volunteers_Still_Needed__c', 'Start_Date_Time__c', 'Duration__c'});    
+                
                 // make sure we don't go over the number of volunteers still needed on the shift.
                 list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
                 if (listShift != null) {
@@ -443,6 +446,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (contactIdSignUp != null && attachment != null && attachment.body != null) {
                 attachment.ParentId = contactIdSignUp;
                 attachment.Description = strFileUploadLabel + ' ' + system.label.labelFileUploadDescription;
+                
+                // Ensure the user has access to the object and fields before querying
+                UTIL_Describe.checkCreateAccess('Attachment', new Set<String>{'ParentId', 'Description'});
                 insert attachment;
                 attachment = new Attachment();
             }
@@ -493,6 +499,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     vhours.Start_Date__c = dtStart;
                     vhours.Hours_Worked__c = duration;
                     VolunteerHoursBeforeInsert(vhours);
+                    
+                    // Ensure the user has access to the object and fields before querying
+                    UTIL_Describe.checkCreateAccess('Volunteer_Hours__c', new Set<String>{'Contact__c', 'Volunteer_Job__c', 'Status__c', 'Start_Date__c', 'Hours_Worked__c'});
+                
                     insert vhours;
                     volunteerHoursIdSignUp = vhours.Id;
                 }
