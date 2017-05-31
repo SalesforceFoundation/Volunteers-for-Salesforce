@@ -6,23 +6,55 @@ project:
     git:
         prefix_release: rel/
 
+tasks:
+    browsertests_chrome:
+        description: Runs the Ruby/Watir browser tests in the browsertests folder using Chrome
+        class_path: cumulusci.tasks.command.SalesforceBrowserTest
+        options:
+            command: 'cd browser_tests; bundle install --quiet; bundle exec cucumber --format pretty --format junit --out ../junit -c features/ --tags ~@firefox --tags ~@flaky'
+            dir: '.'
+            env:
+                SELENIUM_BROWSER: chrome
+
+    download_browser_tests:
+        description: Downloads the browser tests from the HEDA-Browser-Tests Github repository.
+        class_path: cumulusci.tasks.util.DownloadZip
+        options:
+            url: 'https://github.com/SalesforceFoundation/V4S-Browser-Tests/archive/master.zip'
+            dir: browser_tests
+            subfolder: V4S-Browser-Tests-master
+
+
 flows:
+    browsertests_chrome:
+        description: Runs the browser tests locally against a managed package in Chrome
+        tasks:
+            1:
+                task: download_browser_tests
+            2:
+                task: browsertests_chrome
+
+    browsertests_chrome:
+        description: Runs the browser tests locally against a managed package in Chrome
+        tasks:
+            1:
+                task: download_browser_tests
+            2:
+                task: browsertests_chrome
+
+    ci_browsertests_chrome:
+        description: Runs the browser tests locally against a managed package in Chrome
+        tasks:
+            1:
+                task: download_browser_tests
+            2:
+                task: browsertests_chrome
+                options:
+                    use_saucelabs: True
+
     ci_feature:
         description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
         tasks:
             5:
               task: None
 
-    ci_browsertests:
-        description: Installs a beta version but does not run apex tests
-        tasks:
-            1:
-                task: uninstall_managed
-            2:
-                task: update_dependencies
-            3:
-                task: deploy_pre
-            4:
-                task: install_managed_beta
-            5:
-                task: deploy_post_managed
