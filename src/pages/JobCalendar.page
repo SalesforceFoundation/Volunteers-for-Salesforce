@@ -160,7 +160,7 @@
                                 shifts.push({
                                     title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
                                         '{!$Label.labelCalendarShiftFull}' : ''),
-                                    description: result[i].JSENCODE({!ns}Description__c),
+                                    description: result[i].{!ns}Description__c,
                                     strNumbers: strShiftNumbers,
                                     urlRoster:  '/apex/{!ns}OpenReport?ReportDevName=Volunteer_Roster' + 
                                                 '&pv0=' + strCampaignId.substr(0, 15) +
