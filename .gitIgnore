@@ -1,5 +1,7 @@
 .appcloud/.project
 .settings
+/browser_tests
+/test_results.xml
 build.properties
 salesforce.schema
 src/layouts/Global-Global Layout.layout
