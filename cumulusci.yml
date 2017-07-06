@@ -57,7 +57,3 @@ flows:
         tasks:
             5:
                 task: None
-            8:
-                options:
-                    managed: True
-
