@@ -34,7 +34,7 @@ public with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
     //==================== TEST METHOD(s) ======================================
     public static testmethod void CodeCoverageTests() {
     
-        // set up intial test data
+        // set up initial test data
         Account acc = new Account(name='Individual Test Account');
         insert acc;
         Contact con = new Contact(Lastname='Testy', AccountId=acc.Id);

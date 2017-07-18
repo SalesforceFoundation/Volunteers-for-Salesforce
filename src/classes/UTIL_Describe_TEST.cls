@@ -55,7 +55,7 @@
     public static void TestInvalidObjectDescribe() {
         try {
             UTIL_Describe.checkObjectCreateAccess('InvalidObjectName');
-            System.assert(false, 'An exception should have occured.');
+            System.assert(false, 'An exception should have occurred.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
         }
@@ -67,7 +67,7 @@
     public static void TestInvalidFieldDescribe() {
         try {
             UTIL_Describe.checkFieldCreateAccess('Volunteer_Job__c', 'InvalidFieldName');
-            System.assert(false, 'An exception should have occured.');
+            System.assert(false, 'An exception should have occurred.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
         }
@@ -81,7 +81,7 @@
         UTIL_Describe.throwException = true;
         try {
             UTIL_Describe.checkObjectCreateAccess('Volunteer_Job__c');
-            System.assert(false, 'An exception should have occured.');
+            System.assert(false, 'An exception should have occurred.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
         }
@@ -95,7 +95,7 @@
         UTIL_Describe.throwException = true;
         try {
             UTIL_Describe.checkObjectReadAccess('Volunteer_Job__c');
-            System.assert(false, 'An exception should have occured.');
+            System.assert(false, 'An exception should have occurred.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
         }
@@ -109,7 +109,7 @@
         UTIL_Describe.throwException = true;
         try {
             UTIL_Describe.checkFieldCreateAccess('Volunteer_Job__c', 'Name');
-            System.assert(false, 'An exception should have occured.');
+            System.assert(false, 'An exception should have occurred.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
         }
@@ -123,7 +123,7 @@
         UTIL_Describe.throwException = true;
         try {
             UTIL_Describe.checkObjectDeleteAccess('Volunteer_Job__c');
-            System.assert(false, 'An exception should have occured.');
+            System.assert(false, 'An exception should have occurred.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
         }
