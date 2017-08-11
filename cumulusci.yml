@@ -56,5 +56,4 @@ flows:
         description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
         tasks:
             5:
-              task: None
-
+                task: None
