@@ -195,7 +195,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             // specific campaign, with or without jobs, with or without shifts
             
             string strSoql = 'select Contact__c, Volunteer_Shift__c, Volunteer_Job__c, Volunteer_Job__r.Campaign__c from Volunteer_Hours__c ' + 
-                            ' where Status__c = \'' + hourStatus.Status__c + '\' and ' + 
+                            ' where Status__c = \'' + VOL_SharedCode.StrEscape(hourStatus.Status__c) + '\' and ' +
                                 ' Contact__r.Email != null ';           
             
             if (shiftId != null) {
