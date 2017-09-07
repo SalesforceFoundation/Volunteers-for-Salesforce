@@ -489,6 +489,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     	listVHours[0].Status__c = 'Web Sign Up';
                     	
                     VolunteerHoursBeforeInsert(listVHours[0]);
+
+                    // Ensure the user has access to the object and fields before updating
+                    UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>(listStrFieldsVHours));
+
                     update listVHours[0];
                     volunteerHoursIdSignUp = listVHours[0].Id;
                 } else {    

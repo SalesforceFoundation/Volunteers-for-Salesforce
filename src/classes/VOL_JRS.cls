@@ -57,9 +57,16 @@ public with sharing class VOL_JRS {
         }
         
         if (listShiftUpdate.size() > 0) {
+            // Ensure the user has access to the object and fields before updating
+            UTIL_Describe.checkUpdateAccess('Volunteer_Shift__c',
+                                                new Set<String>{'Id', 'Job_Recurrence_Schedule__r.Name', 'System_Note__c', 'Volunteer_Hours__r.Id'});
+
             update listShiftUpdate;
         }
         if (listShiftDelete.size() > 0) {
+            // Ensure the user has access to the object and fields before deleting
+            UTIL_Describe.checkObjectDeleteAccess('Volunteer_Shift__c');
+
             delete listShiftDelete;
         }
     }

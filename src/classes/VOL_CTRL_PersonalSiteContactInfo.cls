@@ -322,6 +322,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                     }
                 }
             }
+
+            // Ensure the user has access to the object and fields before updating
+            UTIL_Describe.checkUpdateAccess('Contact', new Set<String>(listStrContactFields));
+
             // save the changes
             update contactReadOnly;
         }
