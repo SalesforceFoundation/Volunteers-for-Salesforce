@@ -311,12 +311,15 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 
     global PageReference save() { 
         if (contactReadOnly != null) {          
+            Set<String> contactFieldsToUpdate = new Set<String>();
+
             //Contact con = listCon[0];         
             //  now copy over all the non-null fields from the form's contact to the existing contact.
             for (string strF : listStrContactFields) {
                 if (contactEdit.get(strF) != null) {
                     try {
                         contactReadOnly.put(strF, contactEdit.get(strF));
+                        contactFieldsToUpdate.add(strF);
                     } catch(exception ex) {
                         
                     }
@@ -324,7 +327,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             }
 
             // Ensure the user has access to the object and fields before updating
-            UTIL_Describe.checkUpdateAccess('Contact', new Set<String>(listStrContactFields));
+            UTIL_Describe.checkUpdateAccess('Contact', contactFieldsToUpdate);
 
             // save the changes
             update contactReadOnly;

@@ -328,7 +328,7 @@ global with sharing class VOL_SharedCode {
 
             // Ensure the user has access to the object and fields before creating
             UTIL_Describe.checkCreateAccess('Contact',
-                                                new Set<String>{'Id', 'Lastname', 'Firstname', 'Email', 'Phone', 'HomePhone',
+                                                new Set<String>{'Lastname', 'Firstname', 'Email', 'Phone', 'HomePhone',
                                                                 'Volunteer_Availability__c', 'Volunteer_Notes__c', 'Volunteer_Last_Web_Signup_Date__c',
                                                                 'Volunteer_Status__c', 'Volunteer_Skills__c', 'Volunteer_Organization__c'});
 

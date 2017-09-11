@@ -474,11 +474,14 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 
                 // if existing Hours found, use the first one.
                 if (listVHours.size() > 0) {      
+                    Set<String> vhFieldsToUpdate = new Set<String>();
+
                     //  now copy over all the non-null fields from the form's Hours to the existing Hours.
                     for (string strF : listStrFieldsVHours) {
                         if (vhours.get(strF) != null) {
                             try {
                                 listVHours[0].put(strF, vhours.get(strF));
+                                vhFieldsToUpdate.add(strF);
                             } catch(exception ex) { 
                                 // ignore and continue;
                             }
@@ -491,7 +494,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     VolunteerHoursBeforeInsert(listVHours[0]);
 
                     // Ensure the user has access to the object and fields before updating
-                    UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>(listStrFieldsVHours));
+                    UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', vhFieldsToUpdate);
 
                     update listVHours[0];
                     volunteerHoursIdSignUp = listVHours[0].Id;
