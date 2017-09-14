@@ -242,6 +242,15 @@
         }
     }
 
+    /*******************************************************************************************************
+    * @description Static method checks if running user has object create access
+    * @param objectName the name of the object to check create access
+    * @return boolean whether the user has create access
+    ********************************************************************************************************/
+     public static boolean hasObjectCreateAccess(String objectName) {
+         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
+         return getObjectDescribe(objectName).isCreateable();
+     }
 
     /*******************************************************************************************************
     * @description Static method checks if running user has field create access and throws error
@@ -254,11 +263,38 @@
         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isCreateable() || throwException) {
             throw new PermsException(String.format(
-                Label.PermissionUpdateException, 
+                Label.PermissionCreateException,
                 new String[]{objectName + '.' + fieldName}
             ));
         }
     }
+
+
+    /*******************************************************************************************************
+    * @description Static method checks if running user has object update access and throws error
+    * if the object is not updateable
+    * @param objectName the name of the object to check update access
+    ********************************************************************************************************/
+     public static void checkObjectUpdateAccess(String objectName) {
+         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
+         if (!getObjectDescribe(objectName).isUpdateable() || throwException) {
+             throw new PermsException(String.format(
+                 Label.PermissionUpdateException,
+                 new String[]{objectName}
+             ));
+         }
+     }
+
+
+    /*******************************************************************************************************
+    * @description Static method checks if running user has object update access
+    * @param objectName the name of the object to check update access
+    * @return boolean whether the user has update access
+    ********************************************************************************************************/
+     public static boolean hasObjectUpdateAccess(String objectName) {
+         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
+         return getObjectDescribe(objectName).isUpdateable();
+     }
 
 
     /*******************************************************************************************************

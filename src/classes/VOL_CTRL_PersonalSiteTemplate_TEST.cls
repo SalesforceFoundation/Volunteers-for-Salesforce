@@ -33,7 +33,7 @@ public with sharing class VOL_CTRL_PersonalSiteTemplate_TEST {
 
     //==================== TEST METHOD(s) ======================================
     
-    @isTest(SeeAllData=true)
+    @isTest(SeeAllData=true) // SeeAllData so the CSS file is viewable
     public static void TestPersonalSiteTemplate() {
 
         //point to our VF page
@@ -42,7 +42,7 @@ public with sharing class VOL_CTRL_PersonalSiteTemplate_TEST {
         
         //instantiate the controller for this page
         VOL_CTRL_PersonalSiteTemplate ctrl = new VOL_CTRL_PersonalSiteTemplate();
-		system.assertNotEquals(null, ctrl.strURLtoCSSFile);
-    }    	
+        system.assertNotEquals(null, ctrl.strURLtoCSSFile);
+    }
 
 }

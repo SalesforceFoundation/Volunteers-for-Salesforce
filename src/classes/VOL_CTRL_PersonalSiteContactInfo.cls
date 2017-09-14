@@ -80,36 +80,6 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             return;
         }
 
-        /**********
-        // let's see if we can find any matching Contacts.
-        // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
-        string strSoql = 'select ';
-        string strComma = '';
-        for (string strF : listStrContactFields) {
-            strSoql += strComma + strF;
-            strComma = ', ';
-        }
-        strSoql += ' from Contact where Id=:contactId';
-        strSoql += ' limit 1';      
-        listCon = Database.Query(strSoql); 
-        
-        if (listCon.size() > 0) {           
-            Contact con = listCon[0];
-            contactId = con.Id;
-            //  now copy over all the non-null fields from the form's contact to the existing contact.
-            for (string strF : listStrContactFields) {
-                if (con.get(strF) != null) {
-                    try {
-                        contactEdit.put(strF, con.get(strF));
-                    } catch(exception ex) {
-                        
-                    }
-                }
-            }
-            // also maintain a readonly version of the contact to display rollup summary fields.
-            contactReadOnly = con;
-        }
-        ********/
         list<String> listStrFieldsPanel1FS = VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel1FS);
         list<String> listStrFieldsPanel2FS = VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoPanel2FS);
         list<String> listStrFieldsExtraFS = VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Contact.FieldSets.PersonalSiteContactInfoExtraFS);
@@ -144,7 +114,6 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     
     global Contact contactReadOnly { 
         get {
-            //if (contactReadOnly == null) contactReadOnly = new Contact();
             return contactReadOnly;
         }       
         set; 
@@ -153,7 +122,6 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global ID contactId { get; set; }
     global boolean isEditing { get; set; }
     global ID hoursId { get; set; } // to hold the ID of the hours record an action is being performed on.
-    //public list<Contact> listCon { get; set; }    // to hold the loaded contact record
     global integer cRowsCompleted { get; set; }
     global integer cRowsUpcoming { get; set; }
     global string strDateFormat { get; set; }
@@ -313,7 +281,6 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         if (contactReadOnly != null) {          
             Set<String> contactFieldsToUpdate = new Set<String>();
 
-            //Contact con = listCon[0];         
             //  now copy over all the non-null fields from the form's contact to the existing contact.
             for (string strF : listStrContactFields) {
                 if (contactEdit.get(strF) != null) {
@@ -326,10 +293,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 }
             }
 
-            // Ensure the user has access to the object and fields before updating
-            UTIL_Describe.checkUpdateAccess('Contact', contactFieldsToUpdate);
-
-            // save the changes
+            VOL_SharedCode.checkUpdateAccessSites('Contact', contactFieldsToUpdate);
             update contactReadOnly;
         }
         isEditing = false;
@@ -347,10 +311,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
                 hr.Hours_Worked__c = 0;
-                
-                // Ensure the user can update the object's fields 
-                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Status__c', 'Hours_Worked__c'});    
-
+                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Status__c', 'Hours_Worked__c'});
                 update hr;
                 hoursId = null; 
                 listUpcomingVolunteerHours = null; // to force it to be refreshed.
