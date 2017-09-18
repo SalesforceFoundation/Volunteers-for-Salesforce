@@ -47,7 +47,7 @@
 
         // if there are errors, display the signup dialog.
         // we detect this by seeing if Salesforce inserted the error style on any item.        
-        if (j$(".error").size() > 0 || '{!JSENCODE(strSaveResult)}' != '') {
+        if (j$(".error").length > 0 || '{!JSENCODE(strSaveResult)}' != '') {
             j$('#dlgSignUp').dialog('open');
         } else if ('{!JSENCODE(volunteerHoursIdSignUp)}' != '') { // display thank you!
             j$('#dlgThankYou').dialog('open');      
