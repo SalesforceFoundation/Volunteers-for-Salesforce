@@ -37,10 +37,10 @@
     cache="false"
     title="{!$Label.labelCalendarPageTitle}">
 
-    <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
-    <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.8.7.custom.min.js')}"/>
-    <script src="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.js')}"/>
-    <script src="{!URLFOR($Resource.wtooltip, 'wtooltip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.wtooltip, 'wtooltip.min.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.css')}"/>
     <apex:stylesheet value="{!strURLtoCSSFile}"/>
     <apex:variable var="slds" value="slds" rendered="{!!fWeb}">
@@ -54,6 +54,11 @@
     var colors = new Array({!$Label.labelColorValues});
 
     j$(function() {
+
+        // define curCSS for fullCalendar, which newer version of jquery doesn't include
+        j$.curCSS = function(element, prop, val) {
+            return j$(element).css(prop, val);
+        };
     
         // initialize the Calendar
         j$('#calendar').fullCalendar({
