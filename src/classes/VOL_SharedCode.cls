@@ -804,6 +804,7 @@ global with sharing class VOL_SharedCode {
     * @description Static method checks if running user has field update access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check update access
+    * @return void
     ********************************************************************************************************/
     public static void checkUpdateAccessSites(String objectName, Set<String> fieldNames) {
         // for backward compatibility with 1000's of nonprofit customers, we can
