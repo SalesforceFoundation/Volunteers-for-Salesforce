@@ -86,6 +86,7 @@
     /*******************************************************************************************************
     * @description Fills the describe maps for the object
     * @param objectName the name of the object to describe
+    * @return void
     ********************************************************************************************************/
     private static void fillMapsForObject(String objectName) {
         // get the object map the first time
@@ -106,6 +107,7 @@
     * @description Fills the describe maps for the object's fields
     * @param objectName the name of the object to describe
     * @param fieldName the name of the field to describe
+    * @return void
     ********************************************************************************************************/
     private static void fillFieldMapsForObject(String objectName, String fieldName) {
         // get the object map the first time
@@ -173,6 +175,7 @@
     * @description Static method checks if running user field read access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check read access
+    * @return void
     ********************************************************************************************************/
     public static void checkReadAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
@@ -185,6 +188,7 @@
     * @description Static method checks if running user has object read access and throws error
     * if the object is not accessible
     * @param objectName the name of the object to check read access
+    * @return void
     ********************************************************************************************************/
     public static void checkObjectReadAccess(String objectName) {
         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
@@ -202,6 +206,7 @@
     * if the field is not accessible
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check read access
+    * @return void
     ********************************************************************************************************/
     public static void checkFieldReadAccess(String objectName, String fieldName) {
         fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
@@ -219,6 +224,7 @@
     * @description Static method checks if running user has field create access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check create access
+    * @return void
     ********************************************************************************************************/
     public static void checkCreateAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
@@ -231,6 +237,7 @@
     * @description Static method checks if running user has object create access and throws error
     * if the object is not createable
     * @param objectName the name of the object to check create access
+    * @return void
     ********************************************************************************************************/
     public static void checkObjectCreateAccess(String objectName) {
         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
@@ -257,6 +264,7 @@
     * if the field is not creatable
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check create access
+    * @return void
     ********************************************************************************************************/
     public static void checkFieldCreateAccess(String objectName, String fieldName) {
         fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
@@ -274,6 +282,7 @@
     * @description Static method checks if running user has object update access and throws error
     * if the object is not updateable
     * @param objectName the name of the object to check update access
+    * @return void
     ********************************************************************************************************/
      public static void checkObjectUpdateAccess(String objectName) {
          objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
@@ -301,6 +310,7 @@
     * @description Static method checks if running user has field update access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check update access
+    * @return void
     ********************************************************************************************************/
     public static void checkUpdateAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
@@ -314,6 +324,7 @@
     * if the field is not updateable
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check update access
+    * @return void
     ********************************************************************************************************/
     public static void checkFieldUpdateAccess(String objectName, String fieldName) {
         fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
@@ -331,6 +342,7 @@
     * @description Static method checks if running user has object delete access and throws error
     * if the object is not deleteable
     * @param fieldNames the set of field names to check delete access
+    * @return void
     ********************************************************************************************************/
     public static void checkObjectDeleteAccess(String objectName) {
         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
