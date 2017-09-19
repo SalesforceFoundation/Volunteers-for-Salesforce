@@ -31,15 +31,15 @@
 <apex:page showheader="false" sidebar="false" standardStylesheets="false" controller="VOL_CTRL_PersonalSiteContactLookup" language="{!strLanguage}" cache="false" >
 
 <!-- Load jQuery  -->
-    <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
-    <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
 
 <!--Load Bootstrap -->     
     <apex:stylesheet value="{!URLFOR($Resource.Bootstrap4Force)}"/>    
     <apex:stylesheet value="{!URLFOR($Resource.Bootstrap, 'bootstrap/css/bootstrap.min.css')}"/>
     <apex:includescript value="{!URLFOR($Resource.Bootstrap, 'bootstrap/js/bootstrap.min.js')}"/>
 
-	<script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery.validate-1.17.0.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery.validate-1.17.0.min.js')}"/>
 
 <apex:stylesheet value="{!strURLtoCSSFile}" />
 
