@@ -31,14 +31,12 @@
 <apex:page showHeader="false" id="SiteTemplate" standardStylesheets="false" controller="VOL_CTRL_PersonalSiteTemplate" cache="false">
 
 <!-- Load jQuery  -->
-    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
-    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
 
 <!--Load Bootstrap -->     
-    <apex:stylesheet value="{!URLFOR($Resource.Bootstrap, 'bootstrap/css/bootstrap.css')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.Bootstrap4Force)}"/>    
     <apex:stylesheet value="{!URLFOR($Resource.Bootstrap, 'bootstrap/css/bootstrap.min.css')}"/>
-    <apex:includescript value="{!URLFOR($Resource.Bootstrap, 'bootstrap/js/bootstrap.js')}"/>
     <apex:includescript value="{!URLFOR($Resource.Bootstrap, 'bootstrap/js/bootstrap.min.js')}"/>
 
 <!-- Load VolunteersPersonalSiteCSS.css -->
