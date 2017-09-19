@@ -37,10 +37,10 @@
     cache="false"
     title="{!$Label.labelCalendarPageTitle}">
 
-    <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-1.4.4.min.js')}"/>
-    <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.8.7.custom.min.js')}"/>
-    <script src="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.js')}"/>
-    <script src="{!URLFOR($Resource.wtooltip, 'wtooltip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.wtooltip, 'wtooltip.min.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.css')}"/>
     <apex:stylesheet value="{!strURLtoCSSFile}"/>
     <apex:variable var="slds" value="slds" rendered="{!!fWeb}">
@@ -54,6 +54,11 @@
     var colors = new Array({!$Label.labelColorValues});
 
     j$(function() {
+
+        // define curCSS for fullCalendar, which newer version of jquery doesn't include
+        j$.curCSS = function(element, prop, val) {
+            return j$(element).css(prop, val);
+        };
     
         // initialize the Calendar
         j$('#calendar').fullCalendar({
@@ -156,11 +161,20 @@
                                     strUrl = '/' + strShiftId;
                                 }                                
 
+                                // if we escape=true the remote call, the encoding of the
+                                // strings messes up the shift title.  thus we leave escape=false.
+                                // but since we put the description field directly into a node's
+                                // innerHtml, we need to encode it to avoid xss.  Unfortunately, those
+                                // encoded characters don't seem to render back as their expected text,
+                                // so we will at least convert the %20's back to spaces!
+                                var str = encodeURI(result[i].{!ns}Description__c);
+                                str = str.replace(/%20/g, ' ');
+
                                 // note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.
                                 shifts.push({
-                                    title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
+                                    title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' +
                                         '{!$Label.labelCalendarShiftFull}' : ''),
-                                    description: JSENCODE(result[i].{!ns}Description__c),
+                                    description: str,
                                     strNumbers: strShiftNumbers,
                                     urlRoster:  '/apex/{!ns}OpenReport?ReportDevName=Volunteer_Roster' + 
                                                 '&pv0=' + strCampaignId.substr(0, 15) +
@@ -188,7 +202,7 @@
                 if ({!fWeb}) {
                     newinfo.html(
                         ({!fShowNumberAvailable} ? '<br/>' + event.strNumbers : '') +
-                        (event.description != null ? '<br/> ' + event.description  : '') 
+                        (event.description != null ? '<br/> ' + event.description  : '')
                         );
                 } else {
                     newinfo.html('<i>' + event.strNumbers + '</i>' +
