@@ -33,8 +33,6 @@
 
 <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
 <script src="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
-
-<!-- had to put the http: to avoid the site label being added to the url -->
 <apex:stylesheet value="{!URLFOR($Resource.jQueryFiles, 'css/ui-lightness/jquery-ui-1.12.1.custom.min.css')}"/>
 <apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
@@ -60,8 +58,8 @@
         j$('input[name$=txtShiftId]').val(ShiftId);                         
         j$('span[id$="txtJobDisplayName"]').text(JobName); 
         j$('span[id$="txtShiftDisplayName"]').text(ShiftName); 
-        j$('#dlgSignUp').dialog("option", "position", [(document.documentElement.offsetWidth /2)-225, y + 20] );          
-        j$('#dlgSignUp').dialog('open'); 
+        j$('#dlgSignUp').dialog("option", "position", { my: "left+10 top+10", at: "left top", of: event, collision: "fit"});
+        j$('#dlgSignUp').dialog('open');
         return false;
     };
     
