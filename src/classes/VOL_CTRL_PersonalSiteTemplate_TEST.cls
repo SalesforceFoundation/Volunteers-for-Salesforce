@@ -29,12 +29,12 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_PersonalSiteTemplate_TEST {
+private with sharing class VOL_CTRL_PersonalSiteTemplate_TEST {
 
     //==================== TEST METHOD(s) ======================================
     
     @isTest(SeeAllData=true) // SeeAllData so the CSS file is viewable
-    public static void TestPersonalSiteTemplate() {
+    private static void TestPersonalSiteTemplate() {
 
         //point to our VF page
         PageReference p = new PageReference('Page.PersonalSiteTemplate');

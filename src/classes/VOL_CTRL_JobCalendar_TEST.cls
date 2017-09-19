@@ -29,10 +29,10 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_JobCalendar_TEST {
+private with sharing class VOL_CTRL_JobCalendar_TEST {
 
     //==================== TEST METHOD(s) ======================================
-    public static testmethod void TestJobCalendar() {
+    private static testmethod void TestJobCalendar() {
     	
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -74,7 +74,7 @@ public with sharing class VOL_CTRL_JobCalendar_TEST {
 
     }
     
-    public static testmethod void testCampaignHierarchies() {
+    private static testmethod void testCampaignHierarchies() {
 
 		//create our test data
 		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();

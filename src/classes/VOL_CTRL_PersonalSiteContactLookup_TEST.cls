@@ -29,7 +29,7 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
+private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
 
     //==================== TEST METHOD(s) ======================================
     
@@ -39,7 +39,7 @@ public with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    public static void testPageWithSitesGuestUser() {
+    private static void testPageWithSitesGuestUser() {
         list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {

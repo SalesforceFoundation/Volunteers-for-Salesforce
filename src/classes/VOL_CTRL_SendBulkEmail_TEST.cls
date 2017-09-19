@@ -29,10 +29,10 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_SendBulkEmail_TEST {
+private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     
     //==================== TEST METHOD(s) ======================================
-    public static testmethod void TestJobAndShift() {
+    private static testmethod void TestJobAndShift() {
     
         // set up intial test data
         Account acc = new Account(name='Individual Test Account');
@@ -107,8 +107,8 @@ public with sharing class VOL_CTRL_SendBulkEmail_TEST {
 		system.assertEquals(null, ctrl.SendMail()); 	
 		
     }
-        
-    public static testmethod void TestJobOnly() {
+
+    private static testmethod void TestJobOnly() {
     
         // set up intial test data
         Account acc = new Account(name='Individual Test Account');
@@ -172,8 +172,8 @@ public with sharing class VOL_CTRL_SendBulkEmail_TEST {
 		system.assertEquals(null, ctrl.SendMail());		
 		
     }
-    
-	public static testmethod void TestCampaign() {
+
+    private static testmethod void TestCampaign() {
     
         // set up intial test data
         Account acc = new Account(name='Individual Test Account');

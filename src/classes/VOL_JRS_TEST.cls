@@ -29,11 +29,11 @@
 */
 
 @isTest
-public with sharing class VOL_JRS_TEST {
+private with sharing class VOL_JRS_TEST {
 
     //******************************************************************************************************
     // Test Job Recurrence Schedules    
-    public static testmethod void TestJRS() {
+    private static testmethod void TestJRS() {
 
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -155,7 +155,7 @@ public with sharing class VOL_JRS_TEST {
 
     //******************************************************************************************************
     // test that modifying a JRS reuses already existing Shifts    
-    public static testmethod void testJRSShiftReuse() {
+    private static testmethod void testJRSShiftReuse() {
 
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -203,7 +203,7 @@ public with sharing class VOL_JRS_TEST {
         
     //******************************************************************************************************
     // test that modifying a JRS deletes already existing Shifts that no longer match the JRS
-    public static testmethod void testJRSShiftDelete() {
+    private static testmethod void testJRSShiftDelete() {
 
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -251,7 +251,7 @@ public with sharing class VOL_JRS_TEST {
 
     //******************************************************************************************************
     // test that deleting a JRS deletes Shifts with no Hours, and just detaches Shifts with Hours.
-    public static testmethod void testJRSDelete() {
+    private static testmethod void testJRSDelete() {
 
         // create test data
         Account acc = new Account(name='account1');
@@ -322,7 +322,7 @@ public with sharing class VOL_JRS_TEST {
     }
     //******************************************************************************************************
     // test that updating a JRS deletes Shifts with no Hours, and just detaches Shifts with Hours.
-    public static testmethod void testJRSUpdate() {
+    private static testmethod void testJRSUpdate() {
 
         // create test data
         Account acc = new Account(name='account1');

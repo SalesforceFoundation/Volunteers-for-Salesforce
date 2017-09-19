@@ -29,11 +29,11 @@
 */
 
 @isTest
-public with sharing class VOL_VRS_TEST {
+private with sharing class VOL_VRS_TEST {
 
     //******************************************************************************************************
     // Test Volunteer Recurrence Schedules
-    public static testmethod void TestVRS() {
+    private static testmethod void TestVRS() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -122,7 +122,7 @@ public with sharing class VOL_VRS_TEST {
     
     //******************************************************************************************************
     // Test updating existing Volunteer Recurrence Schedules
-    public static testmethod void TestVRSUpdate() {
+    private static testmethod void TestVRSUpdate() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -191,7 +191,7 @@ public with sharing class VOL_VRS_TEST {
     
     //******************************************************************************************************
     // Test updating existing Volunteer Recurrence Schedules deletes future Hours that no longer match VRS
-    public static testmethod void TestVRSHoursDelete() {
+    private static testmethod void TestVRSHoursDelete() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -261,7 +261,7 @@ public with sharing class VOL_VRS_TEST {
 
     //******************************************************************************************************
     // Test updating existing Volunteer Recurrence Schedules reuses, but updates, Hours
-    public static testmethod void TestVRSHoursHoursReuse() {
+    private static testmethod void TestVRSHoursHoursReuse() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -340,7 +340,7 @@ public with sharing class VOL_VRS_TEST {
 
     //******************************************************************************************************
     // Test updating existing Volunteer Recurrence Schedule's job, deletes old hours and creates new hours.
-    public static testmethod void TestVRSHoursChangeJob() {
+    private static testmethod void TestVRSHoursChangeJob() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -415,7 +415,7 @@ public with sharing class VOL_VRS_TEST {
     //******************************************************************************************************
     // Test have a Contact with multiple  Volunteer Recurrence Schedules to same Job, both VRS's exist
     // before the JRS is inserted
-    public static testmethod void TestVRSMultipleSameJobAndContact() {
+    private static testmethod void TestVRSMultipleSameJobAndContact() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -489,7 +489,7 @@ public with sharing class VOL_VRS_TEST {
     //******************************************************************************************************
     // Test have a Contact with multiple Volunteer Recurrence Schedules to same Job, One JRS inserted, then
     // VRS insert, and then second VRS inserted.  
-    public static testmethod void TestVRSMultipleSameJobAndContact2() {
+    private static testmethod void TestVRSMultipleSameJobAndContact2() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -563,7 +563,7 @@ public with sharing class VOL_VRS_TEST {
     //******************************************************************************************************
     // Test have a Contact with multiple Volunteer Recurrence Schedules to same Job, both VRS's exist
     // before the JRS is inserted.  These VRS's don't overlap on dates.
-    public static testmethod void TestVRSMultipleSameJobAndContact3() {
+    private static testmethod void TestVRSMultipleSameJobAndContact3() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -642,7 +642,7 @@ public with sharing class VOL_VRS_TEST {
     //******************************************************************************************************
     // Test have two Contacts with VRS's to same Job, One JRS inserted, then
     // VRS insert, and then second VRS inserted.  Hours from first VRS should not be affected.  
-    public static testmethod void TestVRSMultipleSameJobTwoContacts() {
+    private static testmethod void TestVRSMultipleSameJobTwoContacts() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -728,7 +728,7 @@ public with sharing class VOL_VRS_TEST {
 
     //******************************************************************************************************
     // Test deleting existing Volunteer Recurrence Schedules deletes future Hours, detaches past Hours
-    public static testmethod void TestVRSDelete() {
+    private static testmethod void TestVRSDelete() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -809,7 +809,7 @@ public with sharing class VOL_VRS_TEST {
 
     //******************************************************************************************************
     // Test shortening existing Volunteer Recurrence Schedules deletes future Hours, detaches past Hours
-    public static testmethod void TestVRSShorten() {
+    private static testmethod void TestVRSShorten() {
 
         // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 

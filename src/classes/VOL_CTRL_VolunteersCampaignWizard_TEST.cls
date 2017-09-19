@@ -29,7 +29,7 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
+private with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
 
 	/*******************************************************************************************************
 	* TEST METHODS
