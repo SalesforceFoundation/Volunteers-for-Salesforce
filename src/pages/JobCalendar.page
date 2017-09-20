@@ -161,20 +161,11 @@
                                     strUrl = '/' + strShiftId;
                                 }                                
 
-                                // if we escape=true the remote call, the encoding of the
-                                // strings messes up the shift title.  thus we leave escape=false.
-                                // but since we put the description field directly into a node's
-                                // innerHtml, we need to encode it to avoid xss.  Unfortunately, those
-                                // encoded characters don't seem to render back as their expected text,
-                                // so we will at least convert the %20's back to spaces!
-                                var str = encodeURI(result[i].{!ns}Description__c);
-                                str = str.replace(/%20/g, ' ');
-
                                 // note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.
                                 shifts.push({
                                     title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' +
                                         '{!$Label.labelCalendarShiftFull}' : ''),
-                                    description: str,
+                                    description: result[i].{!ns}Description__c,
                                     strNumbers: strShiftNumbers,
                                     urlRoster:  '/apex/{!ns}OpenReport?ReportDevName=Volunteer_Roster' + 
                                                 '&pv0=' + strCampaignId.substr(0, 15) +
@@ -191,7 +182,7 @@
                             callback(shifts);
                         }
                     }
-                }, {escape:false});
+                }, {escape:true});
             },             
             
             // the callback to handle any customization of the event's display 
@@ -213,6 +204,8 @@
                 }
                 element.find('.fc-event-content').css('padding',2);
                 element.find('.fc-event-content').append(newinfo);
+                // we override the title ourselves so its html encoding will get rendered correctly.
+                element.find('.fc-event-title').html(event.title);
                 
                 // also add info to a tooltip
                 if ({!NOT(fWeb) || fShowNumberAvailable}) {
