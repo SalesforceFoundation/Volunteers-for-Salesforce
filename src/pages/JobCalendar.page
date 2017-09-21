@@ -161,9 +161,9 @@
                                     strUrl = '/' + strShiftId;
                                 }                                
 
-                                // note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.                                                
+                                // note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.
                                 shifts.push({
-                                    title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' + 
+                                    title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' +
                                         '{!$Label.labelCalendarShiftFull}' : ''),
                                     description: result[i].{!ns}Description__c,
                                     strNumbers: strShiftNumbers,
@@ -182,7 +182,7 @@
                             callback(shifts);
                         }
                     }
-                }, {escape:false});
+                }, {escape:true});
             },             
             
             // the callback to handle any customization of the event's display 
@@ -193,7 +193,7 @@
                 if ({!fWeb}) {
                     newinfo.html(
                         ({!fShowNumberAvailable} ? '<br/>' + event.strNumbers : '') +
-                        (event.description != null ? '<br/> ' + event.description  : '') 
+                        (event.description != null ? '<br/> ' + event.description  : '')
                         );
                 } else {
                     newinfo.html('<i>' + event.strNumbers + '</i>' +
@@ -204,6 +204,8 @@
                 }
                 element.find('.fc-event-content').css('padding',2);
                 element.find('.fc-event-content').append(newinfo);
+                // we override the title ourselves so its html encoding will get rendered correctly.
+                element.find('.fc-event-title').html(event.title);
                 
                 // also add info to a tooltip
                 if ({!NOT(fWeb) || fShowNumberAvailable}) {
