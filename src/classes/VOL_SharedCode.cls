@@ -169,12 +169,12 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
                     VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
-                    if (UTIL_Describe.hasObjectCreateAccess('Volunteers_Settings__c')) {
+                    if (UTIL_Describe.hasObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
                         insert VolunteersSettings;
                     }
                 } else if (VolunteersSettings.Contact_Matching_Rule__c == null) {
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
-                    if (UTIL_Describe.hasObjectUpdateAccess('Volunteers_Settings__c')) {
+                    if (UTIL_Describe.hasObjectUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
                         update VolunteersSettings;
                     }
                 }
@@ -284,8 +284,12 @@ global with sharing class VOL_SharedCode {
                 where Lastname=:contact.Lastname and Firstname=:contact.Firstname and Email=:contact.Email];
 
         Set<String> setFlds = new Set<String>{'Lastname', 'Firstname', 'Email', 'Phone', 'HomePhone',
-            'Volunteer_Availability__c', 'Volunteer_Notes__c', 'Volunteer_Last_Web_Signup_Date__c',
-            'Volunteer_Status__c', 'Volunteer_Skills__c', 'Volunteer_Organization__c'};
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Availability__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Notes__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Last_Web_Signup_Date__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Status__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Skills__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Organization__c')};
 
         // if we can match existing contacts, and we found a match, update them.
         if (fMatchExistingContacts && listCon.size() > 0) {                   
@@ -344,9 +348,11 @@ global with sharing class VOL_SharedCode {
             lead.Volunteer_Status__c = 'New Sign Up';
             lead.LeadSource = 'Web Volunteer Signup';
             UTIL_Describe.checkCreateAccess('Lead',
-                new Set<String>{'FirstName','LastName','Company','Email','Phone','MobilePhone',
-                    'Volunteer_Availability__c','Volunteer_Notes__c','Volunteer_Skills__c',
-                    'Volunteer_Status__c','LeadSource'});
+                new Set<String>{'FirstName','LastName','Company','Email','Phone','MobilePhone','LeadSource',
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Availability__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Notes__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Skills__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Status__c')});
             Database.insert(lead, dmlDuplicateOptions);
             return lead.Id;
         }       

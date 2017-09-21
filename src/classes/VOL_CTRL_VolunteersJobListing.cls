@@ -250,8 +250,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                 VolunteerHoursBeforeInsert(vh); 
 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkCreateAccess('Volunteer_Hours__c', 
-                                                    new Set<String>{'Number_of_Volunteers__c', 'Status__c', 'Start_Date__c'});
+                UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Start_Date__c')});
                 
                 insert vh;
                 volunteerHoursIdSignUp = vh.Id;

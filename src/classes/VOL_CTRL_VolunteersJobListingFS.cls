@@ -419,7 +419,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             // also find the shift's start date.
             if (shiftIdSignUp != null && shiftIdSignUp != '') {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Number_of_Volunteers_Still_Needed__c', 'Start_Date_Time__c', 'Duration__c'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    new Set<String>{'Id',
+                        UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers_Still_Needed__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Duration__c')});
                 
                 // make sure we don't go over the number of volunteers still needed on the shift.
                 list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
@@ -494,7 +498,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     VolunteerHoursBeforeInsert(listVHours[0]);
 
                     // Ensure the user has access to the object and fields before updating
-                    UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', vhFieldsToUpdate);
+                    UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
 
                     update listVHours[0];
                     volunteerHoursIdSignUp = listVHours[0].Id;
@@ -508,7 +512,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     VolunteerHoursBeforeInsert(vhours);
                     
                     // Ensure the user has access to the object and fields before querying
-                    UTIL_Describe.checkCreateAccess('Volunteer_Hours__c', new Set<String>{'Contact__c', 'Volunteer_Job__c', 'Status__c', 'Start_Date__c', 'Hours_Worked__c'});
+                    UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                        new Set<String>{
+                            UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                            UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                            UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                            UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+                            UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
                 
                     insert vhours;
                     volunteerHoursIdSignUp = vhours.Id;
