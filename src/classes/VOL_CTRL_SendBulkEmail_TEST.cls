@@ -34,7 +34,7 @@ public with sharing class VOL_CTRL_SendBulkEmail_TEST {
     //==================== TEST METHOD(s) ======================================
     public static testmethod void TestJobAndShift() {
     
-        // set up intial test data
+        // set up initial test data
         Account acc = new Account(name='Individual Test Account');
         insert acc;
         Contact con = new Contact(Lastname='Testy', Email='testy@foo.com', AccountId=acc.Id);
@@ -110,7 +110,7 @@ public with sharing class VOL_CTRL_SendBulkEmail_TEST {
         
     public static testmethod void TestJobOnly() {
     
-        // set up intial test data
+        // set up initial test data
         Account acc = new Account(name='Individual Test Account');
         insert acc;
         Contact con = new Contact(Lastname='Testy', Email='testy@foo.com', AccountId=acc.Id);
@@ -175,7 +175,7 @@ public with sharing class VOL_CTRL_SendBulkEmail_TEST {
     
 	public static testmethod void TestCampaign() {
     
-        // set up intial test data
+        // set up initial test data
         Account acc = new Account(name='Individual Test Account');
         insert acc;
         Contact con = new Contact(Lastname='Testy', Email='testy@foo.com', AccountId=acc.Id);

@@ -36,7 +36,7 @@
 public class VOL_BATCH_Recurrence_TEST {
 	
 	public static void createRecurringJob() {
-		// set up intial test data
+		// set up initial test data
         Account acc = new Account(name='Individual Test Account');
         insert acc;
         Contact con = new Contact(Lastname='Testy', AccountId=acc.Id);

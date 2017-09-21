@@ -34,7 +34,7 @@ public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
     //==================== TEST METHOD(s) ======================================
     private static testmethod void UnitTest1() {
 
-        // set up intial test data
+        // set up initial test data
         Account acc = new Account(name='Test Individual Bucket Account');
         insert acc;
         Contact con = new Contact(Lastname='Testy', Firstname='Test', Email='test@testy.com', AccountId=acc.Id);
