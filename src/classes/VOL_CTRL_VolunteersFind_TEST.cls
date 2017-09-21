@@ -29,12 +29,12 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_VolunteersFind_TEST {
+private with sharing class VOL_CTRL_VolunteersFind_TEST {
 
 	//------------------------------------------------------------------------------------------
 	// Test Code
 	//------------------------------------------------------------------------------------------
-    public static testmethod void TestVolunteersFind() {
+    private static testmethod void TestVolunteersFind() {
 
 		// create test data	
 		list<Contact> listCon = new list<Contact>();	

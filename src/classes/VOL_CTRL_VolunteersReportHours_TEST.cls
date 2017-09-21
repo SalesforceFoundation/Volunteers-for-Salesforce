@@ -29,10 +29,30 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_VolunteersReportHours_TEST {
+private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     //==================== TEST METHOD(s) ======================================
-    public static testmethod void CodeCoverageTests() {
+
+    /*******************************************************************************************************
+    * @description test the visualforce page controller, running as the Sites Guest User, if such as user
+    * exists.  if not, will run under the current user.
+    * @return void
+    ********************************************************************************************************/
+    private static testmethod void testPageWithSitesGuestUser() {
+        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+        Name like '%Site Guest User%'];
+        if (listU.size() > 0) {
+            system.debug('Running test as Sites Guest User: ' + listU[0]);
+            system.runAs(listU[0]) {
+                CodeCoverageTests();
+            }
+        } else {
+            system.debug('Running test as system.');
+            CodeCoverageTests();
+        }
+    }
+
+    private static void CodeCoverageTests() {
 
         // create test bucket account
         Account acc = new Account(Name='Test Individual Bucket Account');

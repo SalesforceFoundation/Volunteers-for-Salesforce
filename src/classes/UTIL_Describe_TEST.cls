@@ -66,7 +66,8 @@
     @isTest
     public static void TestInvalidFieldDescribe() {
         try {
-            UTIL_Describe.checkFieldCreateAccess('Volunteer_Job__c', 'InvalidFieldName');
+            UTIL_Describe.checkFieldCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                'InvalidFieldName');
             System.assert(false, 'An exception should have occured.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
@@ -80,7 +81,7 @@
     public static void TestNoCreateAccess() {
         UTIL_Describe.throwException = true;
         try {
-            UTIL_Describe.checkObjectCreateAccess('Volunteer_Job__c');
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
             System.assert(false, 'An exception should have occured.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
@@ -94,7 +95,7 @@
     public static void TestNoReadAccess() {
         UTIL_Describe.throwException = true;
         try {
-            UTIL_Describe.checkObjectReadAccess('Volunteer_Job__c');
+            UTIL_Describe.checkObjectReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
             System.assert(false, 'An exception should have occured.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
@@ -108,7 +109,7 @@
     public static void TestNoFieldCreateAccess() {
         UTIL_Describe.throwException = true;
         try {
-            UTIL_Describe.checkFieldCreateAccess('Volunteer_Job__c', 'Name');
+            UTIL_Describe.checkFieldCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'), 'Name');
             System.assert(false, 'An exception should have occured.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');
@@ -122,7 +123,7 @@
     public static void TestNoDeleteAccess() {
         UTIL_Describe.throwException = true;
         try {
-            UTIL_Describe.checkObjectDeleteAccess('Volunteer_Job__c');
+            UTIL_Describe.checkObjectDeleteAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
             System.assert(false, 'An exception should have occured.');
         } catch(Exception ex) {
             System.assert(true, 'An exception should occur.');

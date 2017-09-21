@@ -139,7 +139,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             }   
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess('Volunteer_Job__c');    
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
             insert listJobs;
             
             // create the sample shifts
@@ -155,7 +155,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 }                   
             }           
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess('Volunteer_Shift__c');    
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
             insert listShifts;
         } catch (Exception e) {
             ApexPages.addMessages(e);            
@@ -181,7 +181,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             listStrFieldsJob.addAll(mapS.keySet());       
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Job__c', new Set<String>(listStrFieldsJob));    
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>(listStrFieldsJob));
             
             // find the existing jobs
             // we need to use dynamic soql to pick up all custom fields we don't know about
@@ -200,7 +201,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             listStrFieldsShift.addAll(mapS.keySet());         
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>(listStrFieldsShift));    
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                new Set<String>(listStrFieldsShift));
                 
             // find the existing shifts for those jobs
             // we need to use dynamic soql to pick up all custom fields we don't know about
@@ -232,7 +234,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             }
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess('Volunteer_Job__c');    
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
             insert listJobs;
             
             // create a map of existing JobId to new JobId
@@ -286,7 +288,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             }
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess('Volunteer_Shift__c');    
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
             insert listShifts;
 
             if (fCopyVolunteers) {
@@ -296,7 +298,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 listStrFieldsHours.addAll(mapS.keySet());       
 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>(listStrFieldsHours));    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>(listStrFieldsHours));
                 
                 // find the existing hours for those jobs and shifts
                 // we need to use dynamic soql to pick up all custom fields we don't know about
@@ -364,7 +367,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 }
                 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkObjectCreateAccess('Volunteer_Hours__c');    
+                UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
                 insert listHours;
             }
         } catch (Exception e) {
@@ -382,7 +385,10 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             cSampleShifts = 0;
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Job__c', new Set<String>{'Id', 'First_Shift__c', 'Campaign__c'});    
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>{'Id',
+                    UTIL_Describe.StrTokenNSPrefix('First_Shift__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
                 
             list<Volunteer_Job__c> listJobs = [select Id, First_Shift__c from Volunteer_Job__c 
                 where Campaign__c = :campaignIdClone

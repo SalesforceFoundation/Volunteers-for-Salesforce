@@ -270,7 +270,9 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
             Date dtStart = system.today();  
             if (volunteerShiftId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Start_Date_Time__c'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    new Set<String>{'Id',
+                        UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
                 
                 Volunteer_Shift__c vs = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                 dtStart = date.valueOf(vs.Start_Date_Time__c);
@@ -280,12 +282,18 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
             list<Volunteer_Hours__c> listVHExisting;
             if (volunteerShiftId == null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'Contact__c', 'Volunteer_Job__c'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
             
                 listVHExisting = [select Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :volunteerJobId];
             } else {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'Contact__c', 'Volunteer_Shift__c'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c')});
                 
                 listVHExisting = [select Contact__c from Volunteer_Hours__c where Volunteer_Shift__c = :volunteerShiftId];              
             }
@@ -317,9 +325,15 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
             }        
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkCreateAccess('Volunteer_Hours__c', 
-                                                new Set<String>{'Contact__c', 'Volunteer_Job__c', 'Volunteer_Shift__c',
-                                                'Start_Date__c', 'Status__c', 'Hours_Worked__c', 'Number_of_Volunteers__c'});    
+            UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                new Set<String>{
+                    UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c')});
             insert listHours;  
             
             // if shift was specified, force its picklist to update with new numbers

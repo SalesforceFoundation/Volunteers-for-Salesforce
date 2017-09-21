@@ -83,9 +83,13 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
         try {
             if (jrsId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Job_Recurrence_Schedule__c', 
-                                                new Set<String>{'Days_of_Week__c', 'Duration__c', 'Schedule_Start_Date_Time__c', 
-                                                                'Schedule_End_Date__c', 'Weekly_Occurrence__c'});
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Job_Recurrence_Schedule__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Days_of_Week__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Duration__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Schedule_Start_Date_Time__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Schedule_End_Date__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Weekly_Occurrence__c')});
                 
                 Job_Recurrence_Schedule__c jrs = [select Days_of_Week__c, Duration__c, 
                         Schedule_Start_Date_Time__c, Schedule_End_Date__c, Weekly_Occurrence__c from Job_Recurrence_Schedule__c 

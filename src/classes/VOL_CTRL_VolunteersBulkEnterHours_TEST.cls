@@ -29,10 +29,10 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
+private with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
     
     //==================== TEST METHOD(s) ======================================
-    public static testmethod void CodeCoverageTests() {
+    private static testmethod void CodeCoverageTests() {
     
         // set up intial test data
         Account acc = new Account(name='Individual Test Account');

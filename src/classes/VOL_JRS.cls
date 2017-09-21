@@ -57,9 +57,18 @@ public with sharing class VOL_JRS {
         }
         
         if (listShiftUpdate.size() > 0) {
+            // Ensure the user has access to the object and fields before updating
+            UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                new Set<String>{
+                    UTIL_Describe.StrTokenNSPrefix('Job_Recurrence_Schedule__c'),
+                    UTIL_Describe.StrTokenNSPrefix('System_Note__c')});
+
             update listShiftUpdate;
         }
         if (listShiftDelete.size() > 0) {
+            // Ensure the user has access to the object before deleting
+            UTIL_Describe.checkObjectDeleteAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
+
             delete listShiftDelete;
         }
     }

@@ -29,10 +29,29 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
+private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
 
     //==================== TEST METHOD(s) ======================================
-    private static testmethod void UnitTest1() {
+    /*******************************************************************************************************
+    * @description test the visualforce page controller, running as the Sites Guest User, if such as user
+    * exists.  if not, will run under the current user.
+    * @return void
+    ********************************************************************************************************/
+    private static testmethod void testPageWithSitesGuestUser() {
+        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+        Name like '%Site Guest User%'];
+        if (listU.size() > 0) {
+            system.debug('Running test as Sites Guest User: ' + listU[0]);
+            system.runAs(listU[0]) {
+                UnitTest1();
+            }
+        } else {
+            system.debug('Running test as system.');
+            UnitTest1();
+        }
+    }
+
+    private static void UnitTest1() {
 
         // set up intial test data
         Account acc = new Account(name='Test Individual Bucket Account');
@@ -130,8 +149,8 @@ public with sharing class VOL_CTRL_VolunteersJobListing_TEST {
         System.Assert(ctrl.contactIdSignUp != null);
         System.Assert(ctrl.volunteerHoursIdSignUp != null);
     }
-        
-    public static testmethod void testCampaignHierarchies() {
+
+    private static testmethod void testCampaignHierarchies() {
 
 		//create our test data
 		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();

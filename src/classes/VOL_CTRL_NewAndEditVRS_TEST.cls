@@ -29,11 +29,11 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_NewAndEditVRS_TEST {
+private with sharing class VOL_CTRL_NewAndEditVRS_TEST {
 
     //******************************************************************************************************
     // Test Methods
-    public static testmethod void TestNewAndEditVRS() {
+    private static testmethod void TestNewAndEditVRS() {
 
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
