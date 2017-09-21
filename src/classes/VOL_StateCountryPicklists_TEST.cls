@@ -29,7 +29,7 @@
 */
 
 @isTest
-public with sharing class VOL_StateCountryPicklists_TEST {
+private with sharing class VOL_StateCountryPicklists_TEST {
 
     /*******************************************************************************************************
     * @description test method to verify the handling of "State and Country Picklist" feature when enabled 

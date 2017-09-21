@@ -230,7 +230,10 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             date dateStart;
             if (volunteerShiftId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Duration__c', 'Start_Date_Time__c'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    new Set<String>{'Id',
+                        UTIL_Describe.StrTokenNSPrefix('Duration__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
                 
                 Volunteer_Shift__c vs = [select Id, Duration__c, Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                 hoursWorked = vs.Duration__c;
@@ -309,7 +312,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             update listVolunteerHoursUpdate;
             
             // Ensure the user can create the object 
-            UTIL_Describe.checkObjectCreateAccess('Volunteer_Hours__c');            
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
             insert listVolunteerHoursCreate;
             
             strSaveResults = String.valueOf(listVolunteerHoursCreate.size() + listVolunteerHoursUpdate.size()) + ' ' + Label.labelMassEditSaveSuccess;

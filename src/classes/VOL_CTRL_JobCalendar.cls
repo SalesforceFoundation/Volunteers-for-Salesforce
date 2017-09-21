@@ -56,7 +56,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                     // because this is a GMT time, we should add some padding, so we'll stick
                     // with the same day, even if the locale time zone is up to 12 hours before GMT.
                     if (initialDate != null) initialDate = initialDate.addHours(12);  
-                    campaignId = p;             
+                    campaignId = p;
                 }
             }
             
@@ -64,7 +64,10 @@ global with sharing class VOL_CTRL_JobCalendar {
             p = params.get('volunteerJobId');
             if (p != null && p != '') {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Job__c', new Set<String>{'Id', 'First_Shift__c', 'Campaign__c'});
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    new Set<String>{'Id',
+                        UTIL_Describe.StrTokenNSPrefix('First_Shift__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
                 
                 list<Volunteer_Job__c> listJob = [select Id, First_Shift__c, Campaign__c
                     from Volunteer_Job__c where Id = :p];
@@ -82,7 +85,10 @@ global with sharing class VOL_CTRL_JobCalendar {
             p = params.get('volunteerShiftId');
             if (p != null && p != '') {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Start_Date_Time__c', 'Volunteer_Job__c'});
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    new Set<String>{'Id',
+                        UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
                 
                 list<Volunteer_Shift__c> listShift = [select Id, Start_Date_Time__c, 
                     Volunteer_Job__c, Volunteer_Job__r.Campaign__c 
@@ -112,7 +118,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             
             p = params.get('initialDate');
             if (p != null && p != '') initialDate = Date.valueOf(p);
-            
+
             strCalendarView = 'month';
             p = params.get('CalendarView');
             if (p != null && p != '') strCalendarView = p;
@@ -280,9 +286,14 @@ global with sharing class VOL_CTRL_JobCalendar {
             list<Volunteer_Shift__c> listShifts;
                     
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Shift__c', 
-                                                new Set<String>{'Id', 'Name', 'Volunteer_Job__c', 'Start_Date_Time__c', 'Duration__c', 
-                                                                'Total_Volunteers__c', 'Number_of_Volunteers_Still_Needed__c', 'Description__c'});
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                new Set<String>{'Id', 'Name',
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Duration__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Total_Volunteers__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers_Still_Needed__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Description__c')});
                 
             if (!fAllJob) {    
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,

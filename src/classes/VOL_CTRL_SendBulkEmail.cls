@@ -56,14 +56,16 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             
             if (shiftId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Name'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    new Set<String>{'Id', 'Name'});
                     
                 Volunteer_Shift__c shift = [select Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Id = :shiftId];
                 strJobName = shift.Volunteer_Job__r.Name + ' - ' + shift.Name;  
                 templateObject = 'Shift';       
             } else if (jobId != null) {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Job__c', new Set<String>{'Id','Name'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    new Set<String>{'Id','Name'});
                 
                 Volunteer_Job__c job = [select Name from Volunteer_Job__c where Id = :jobId];
                 strJobName = job.Name;
@@ -144,7 +146,12 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             list<Volunteer_Hours__c> listHr;
             
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Hours__c', new Set<String>{'contact__c','Status__c', 'Volunteer_Shift__c', 'Volunteer_Job__c'});    
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                new Set<String>{
+                    UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
                 
             if (shiftId != null) {
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Shift__c = :shiftId];         

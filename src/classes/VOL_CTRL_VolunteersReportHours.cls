@@ -225,9 +225,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         
         // set date and hours from shift
         if (volunteerShiftId != null) {
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess('Volunteer_Shift__c', new Set<String>{'Id', 'Start_Date_Time__c', 'Duration__c'});    
-            
             Volunteer_Shift__c shift = [select Start_Date_Time__c, Duration__c from Volunteer_Shift__c
                 where Id = :volunteerShiftId];
             vhours.Start_Date__c = shift.Start_Date_Time__c.Date();
@@ -317,7 +314,11 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 listHours[0].End_Date__c = vhours.End_Date__c;
                 listHours[0].Hours_Worked__c = vhours.Hours_Worked__c;
             
-                Set<String> flsCheckFields = new Set<String> {'End_Date__c', 'Hours_Worked__c','Start_Date__c', 'Status__c'};
+                Set<String> flsCheckFields = new Set<String> {
+                    UTIL_Describe.StrTokenNSPrefix('End_Date__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Status__c')};
                 
                 // update the additional fields, if any
                 for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
@@ -329,7 +330,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 }   
 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', flsCheckFields);
+                UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), flsCheckFields);
                 
                 update listHours[0];
             } else {        
@@ -341,8 +342,13 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 vhours.Number_of_Volunteers__c = 1;
                 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkCreateAccess('Volunteer_Hours__c', 
-                                                    new Set<String>{'Volunteer_Job__c', 'Volunteer_Shift__c', 'Status__c', 'Contact__c', 'Number_of_Volunteers__c'});
+                UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c')});
                 
                 insert vhours;
             }

@@ -169,10 +169,14 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
                     VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
-                    upsert VolunteersSettings;
+                    if (UTIL_Describe.hasObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
+                        insert VolunteersSettings;
+                    }
                 } else if (VolunteersSettings.Contact_Matching_Rule__c == null) {
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
-                    upsert VolunteersSettings;                  
+                    if (UTIL_Describe.hasObjectUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
+                        update VolunteersSettings;
+                    }
                 }
             }
             return VolunteersSettings;
@@ -279,7 +283,15 @@ global with sharing class VOL_SharedCode {
                 Volunteer_Status__c, Volunteer_Skills__c, Volunteer_Organization__c from Contact 
                 where Lastname=:contact.Lastname and Firstname=:contact.Firstname and Email=:contact.Email];
 
-        // if we can match existing contacts, and we found a match, update them.                        
+        Set<String> setFlds = new Set<String>{'Lastname', 'Firstname', 'Email', 'Phone', 'HomePhone',
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Availability__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Notes__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Last_Web_Signup_Date__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Status__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Skills__c'),
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Organization__c')};
+
+        // if we can match existing contacts, and we found a match, update them.
         if (fMatchExistingContacts && listCon.size() > 0) {                   
             for (Contact con : listCon) {
                 con.Volunteer_Last_Web_Signup_Date__c = contact.Volunteer_Last_Web_Signup_Date__c;
@@ -297,6 +309,7 @@ global with sharing class VOL_SharedCode {
                 // but we can at least put it in the new Volunteer_Organization__c field.
                 if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
+            checkUpdateAccessSites('Contact', setFlds);
             Database.update(listCon, dmlDuplicateOptions);
             return listCon[0].Id;
         } else if (fCreateContacts) {  // No Match found, create a Contact
@@ -318,7 +331,7 @@ global with sharing class VOL_SharedCode {
             } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
                 contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;                             
             }
-            
+            UTIL_Describe.checkCreateAccess('Contact', setFlds);
             Database.insert(contact, dmlDuplicateOptions);
             return contact.Id;
         } else { // No Match found, create a Lead
@@ -334,6 +347,12 @@ global with sharing class VOL_SharedCode {
             lead.Volunteer_Skills__c = contact.Volunteer_Skills__c;
             lead.Volunteer_Status__c = 'New Sign Up';
             lead.LeadSource = 'Web Volunteer Signup';
+            UTIL_Describe.checkCreateAccess('Lead',
+                new Set<String>{'FirstName','LastName','Company','Email','Phone','MobilePhone','LeadSource',
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Availability__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Notes__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Skills__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Status__c')});
             Database.insert(lead, dmlDuplicateOptions);
             return lead.Id;
         }       
@@ -456,7 +475,10 @@ global with sharing class VOL_SharedCode {
         
         // create a new list with all the fields
         list<string> listStrFieldsAll = new list<string>(setStrFields);
-        
+
+        // we will check perms on the fields in this set, so remove Id
+        setStrFields.remove('id');
+
         list<Contact> listCon = LookupContact(contact, listStrFieldsAll);
 
         // if we found a match                      
@@ -523,7 +545,8 @@ global with sharing class VOL_SharedCode {
                 
             if (setLastWebSignup)
                 conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
-        
+
+            checkUpdateAccessSites('Contact', setStrFields);
             Database.update(conExisting, dmlDuplicateOptions);
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
@@ -576,6 +599,7 @@ global with sharing class VOL_SharedCode {
             conNew.LeadSource = 'Web Volunteer Signup';
             conNew.Volunteer_Status__c = 'New Sign Up';
 
+            UTIL_Describe.checkCreateAccess('Contact', setStrFields);
             Database.insert(conNew, dmlDuplicateOptions);
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
@@ -780,6 +804,22 @@ global with sharing class VOL_SharedCode {
                         ' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Installation & Configuration Guide.'));
                 } 
             }
+    }
+
+    /*******************************************************************************************************
+    * @description Static method checks if running user has field update access for a set of fields
+    * @param objectName the name of the object the field belongs to
+    * @param fieldNames the set of field names to check update access
+    * @return void
+    ********************************************************************************************************/
+    public static void checkUpdateAccessSites(String objectName, Set<String> fieldNames) {
+        // for backward compatibility with 1000's of nonprofit customers, we can
+        // only enforce create permissions on the Sites user for Contacts.
+        if (objectName == 'Contact') {
+            UTIL_Describe.checkCreateAccess(objectName, fieldNames);
+        } else {
+            UTIL_Describe.checkUpdateAccess(objectName, fieldNames);
+        }
     }
 
     /** Description: DML options to allow overriding duplicate rules to create contacts, while throwing

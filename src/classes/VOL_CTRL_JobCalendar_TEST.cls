@@ -29,10 +29,10 @@
 */
 
 @isTest
-public with sharing class VOL_CTRL_JobCalendar_TEST {
+private with sharing class VOL_CTRL_JobCalendar_TEST {
 
     //==================== TEST METHOD(s) ======================================
-    public static testmethod void TestJobCalendar() {
+    private static testmethod void TestJobCalendar() {
     	
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -40,7 +40,7 @@ public with sharing class VOL_CTRL_JobCalendar_TEST {
         insert cmp;
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
         insert job;
-        Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.now());
+        Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c=job.Id, Duration__c=1, Start_Date_Time__c=System.today());
         insert shift;
     	
         //point to our VF page
@@ -74,7 +74,7 @@ public with sharing class VOL_CTRL_JobCalendar_TEST {
 
     }
     
-    public static testmethod void testCampaignHierarchies() {
+    private static testmethod void testCampaignHierarchies() {
 
 		//create our test data
 		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();

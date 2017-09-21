@@ -33,24 +33,17 @@
  * @group Volunteers for Salesforce (V4S)
  * @description A utility class that checks the CRUD and FLS required for all SOQL
  * and DML operations. The checks are done immediately and will throw an error when
- * any permission is missing that is required to fully utilize Campaign Tools.
+ * any permission is missing that is required.
  */
 
  public with sharing class UTIL_Describe {
-	
-	public UTIL_Describe() {
-		
-	}
+    
+    public UTIL_Describe() {
+        
+    }
 
-	//===========================================
-	// Constants
-	//===========================================
-	private static final String EMPTY_STRING = '';
-	private static final String API_NAME_SUFFIX_STANDARD = '__c';
-	private static final String CHARACTER_DOT = '.';
-	
 
-	/** @description our exception object for Field Level & Object Security errors. */
+    /** @description our exception object for Field Level & Object Security errors. */
     public class PermsException extends Exception {}
     /** @description our exceptions when a bogus object or field is provided. */
     public class SchemaDescribeException extends Exception {}
@@ -64,12 +57,12 @@
     private static Map<String, Map<String, Schema.SObjectField>> fieldTokens = new Map<String,Map<String, Schema.SObjectField>>();
     /** @description Map to hold field describes */
     private static Map<String, Map<String, Schema.DescribeFieldResult>> fieldDescribes = new Map<String,Map<String, Schema.DescribeFieldResult>>();
-	
+    
 
- 	@TestVisible
+     @TestVisible
     private static Boolean throwException = false;
 
-	/*******************************************************************************************************
+    /*******************************************************************************************************
     * @description Finds the namespace for the current context.
     * @return String The current namespace as a string, or a blank string if we're not in a namespaced context.
     ********************************************************************************************************/
@@ -86,6 +79,7 @@
     /*******************************************************************************************************
     * @description Fills the describe maps for the object
     * @param objectName the name of the object to describe
+    * @return void
     ********************************************************************************************************/
     private static void fillMapsForObject(String objectName) {
         // get the object map the first time
@@ -106,6 +100,7 @@
     * @description Fills the describe maps for the object's fields
     * @param objectName the name of the object to describe
     * @param fieldName the name of the field to describe
+    * @return void
     ********************************************************************************************************/
     private static void fillFieldMapsForObject(String objectName, String fieldName) {
         // get the object map the first time
@@ -173,10 +168,11 @@
     * @description Static method checks if running user field read access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check read access
+    * @return void
     ********************************************************************************************************/
     public static void checkReadAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
-        	checkFieldReadAccess(objectName, fieldName);
+            checkFieldReadAccess(objectName, fieldName);
         }
     }
 
@@ -185,11 +181,11 @@
     * @description Static method checks if running user has object read access and throws error
     * if the object is not accessible
     * @param objectName the name of the object to check read access
+    * @return void
     ********************************************************************************************************/
     public static void checkObjectReadAccess(String objectName) {
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getObjectDescribe(objectName).isAccessible() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionReadException, 
                 new String[]{objectName}
             ));
@@ -202,12 +198,11 @@
     * if the field is not accessible
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check read access
+    * @return void
     ********************************************************************************************************/
     public static void checkFieldReadAccess(String objectName, String fieldName) {
-        fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isAccessible() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionReadException, 
                 new String[]{objectName + '.' + fieldName}
             ));
@@ -219,6 +214,7 @@
     * @description Static method checks if running user has field create access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check create access
+    * @return void
     ********************************************************************************************************/
     public static void checkCreateAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
@@ -231,30 +227,37 @@
     * @description Static method checks if running user has object create access and throws error
     * if the object is not createable
     * @param objectName the name of the object to check create access
+    * @return void
     ********************************************************************************************************/
     public static void checkObjectCreateAccess(String objectName) {
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getObjectDescribe(objectName).isCreateable() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionCreateException, 
                 new String[]{objectName}
-        	));
+            ));
         }
     }
 
+    /*******************************************************************************************************
+    * @description Static method checks if running user has object create access
+    * @param objectName the name of the object to check create access
+    * @return boolean whether the user has create access
+    ********************************************************************************************************/
+     public static boolean hasObjectCreateAccess(String objectName) {
+         return getObjectDescribe(objectName).isCreateable();
+     }
 
     /*******************************************************************************************************
     * @description Static method checks if running user has field create access and throws error
     * if the field is not creatable
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check create access
+    * @return void
     ********************************************************************************************************/
     public static void checkFieldCreateAccess(String objectName, String fieldName) {
-        fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isCreateable() || throwException) {
             throw new PermsException(String.format(
-                Label.PermissionUpdateException, 
+                Label.PermissionCreateException,
                 new String[]{objectName + '.' + fieldName}
             ));
         }
@@ -262,13 +265,40 @@
 
 
     /*******************************************************************************************************
+    * @description Static method checks if running user has object update access and throws error
+    * if the object is not updateable
+    * @param objectName the name of the object to check update access
+    * @return void
+    ********************************************************************************************************/
+     public static void checkObjectUpdateAccess(String objectName) {
+         if (!getObjectDescribe(objectName).isUpdateable() || throwException) {
+             throw new PermsException(String.format(
+                 Label.PermissionUpdateException,
+                 new String[]{objectName}
+             ));
+         }
+     }
+
+
+    /*******************************************************************************************************
+    * @description Static method checks if running user has object update access
+    * @param objectName the name of the object to check update access
+    * @return boolean whether the user has update access
+    ********************************************************************************************************/
+     public static boolean hasObjectUpdateAccess(String objectName) {
+         return getObjectDescribe(objectName).isUpdateable();
+     }
+
+
+    /*******************************************************************************************************
     * @description Static method checks if running user has field update access for a set of fields
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check update access
+    * @return void
     ********************************************************************************************************/
     public static void checkUpdateAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
-        	checkFieldUpdateAccess(objectName, fieldName);
+            checkFieldUpdateAccess(objectName, fieldName);
         }
     }
 
@@ -278,12 +308,11 @@
     * if the field is not updateable
     * @param objectName the name of the object the field belongs to
     * @param fieldNames the set of field names to check update access
+    * @return void
     ********************************************************************************************************/
     public static void checkFieldUpdateAccess(String objectName, String fieldName) {
-        fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isUpdateable() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionUpdateException, 
                 new String[]{objectName + '.' + fieldName}
             ));
@@ -295,14 +324,14 @@
     * @description Static method checks if running user has object delete access and throws error
     * if the object is not deleteable
     * @param fieldNames the set of field names to check delete access
+    * @return void
     ********************************************************************************************************/
     public static void checkObjectDeleteAccess(String objectName) {
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getObjectDescribe(objectName).isDeletable() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionDeleteException, 
                 new String[]{objectName}
-        	));
+            ));
         }
     }
 
