@@ -200,8 +200,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         get {
             try {
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('Volunteer_Hours__c', 
-                                            new Set<String>{'Status__c', 'Shift_Start_Date_Time__c'});    
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Shift_Start_Date_Time__c')});
            
                 if (listUpcomingVolunteerHours == null) {
                     string strSoql = 'select Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, ' +
@@ -311,7 +313,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
                 hr.Hours_Worked__c = 0;
-                UTIL_Describe.checkUpdateAccess('Volunteer_Hours__c', new Set<String>{'Status__c', 'Hours_Worked__c'});
+                UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
                 update hr;
                 hoursId = null; 
                 listUpcomingVolunteerHours = null; // to force it to be refreshed.

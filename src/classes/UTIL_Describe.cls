@@ -33,24 +33,17 @@
  * @group Volunteers for Salesforce (V4S)
  * @description A utility class that checks the CRUD and FLS required for all SOQL
  * and DML operations. The checks are done immediately and will throw an error when
- * any permission is missing that is required to fully utilize Campaign Tools.
+ * any permission is missing that is required.
  */
 
  public with sharing class UTIL_Describe {
-	
-	public UTIL_Describe() {
-		
-	}
+    
+    public UTIL_Describe() {
+        
+    }
 
-	//===========================================
-	// Constants
-	//===========================================
-	private static final String EMPTY_STRING = '';
-	private static final String API_NAME_SUFFIX_STANDARD = '__c';
-	private static final String CHARACTER_DOT = '.';
-	
 
-	/** @description our exception object for Field Level & Object Security errors. */
+    /** @description our exception object for Field Level & Object Security errors. */
     public class PermsException extends Exception {}
     /** @description our exceptions when a bogus object or field is provided. */
     public class SchemaDescribeException extends Exception {}
@@ -64,12 +57,12 @@
     private static Map<String, Map<String, Schema.SObjectField>> fieldTokens = new Map<String,Map<String, Schema.SObjectField>>();
     /** @description Map to hold field describes */
     private static Map<String, Map<String, Schema.DescribeFieldResult>> fieldDescribes = new Map<String,Map<String, Schema.DescribeFieldResult>>();
-	
+    
 
- 	@TestVisible
+     @TestVisible
     private static Boolean throwException = false;
 
-	/*******************************************************************************************************
+    /*******************************************************************************************************
     * @description Finds the namespace for the current context.
     * @return String The current namespace as a string, or a blank string if we're not in a namespaced context.
     ********************************************************************************************************/
@@ -179,7 +172,7 @@
     ********************************************************************************************************/
     public static void checkReadAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
-        	checkFieldReadAccess(objectName, fieldName);
+            checkFieldReadAccess(objectName, fieldName);
         }
     }
 
@@ -191,9 +184,8 @@
     * @return void
     ********************************************************************************************************/
     public static void checkObjectReadAccess(String objectName) {
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getObjectDescribe(objectName).isAccessible() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionReadException, 
                 new String[]{objectName}
             ));
@@ -209,10 +201,8 @@
     * @return void
     ********************************************************************************************************/
     public static void checkFieldReadAccess(String objectName, String fieldName) {
-        fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isAccessible() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionReadException, 
                 new String[]{objectName + '.' + fieldName}
             ));
@@ -240,12 +230,11 @@
     * @return void
     ********************************************************************************************************/
     public static void checkObjectCreateAccess(String objectName) {
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getObjectDescribe(objectName).isCreateable() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionCreateException, 
                 new String[]{objectName}
-        	));
+            ));
         }
     }
 
@@ -255,7 +244,6 @@
     * @return boolean whether the user has create access
     ********************************************************************************************************/
      public static boolean hasObjectCreateAccess(String objectName) {
-         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
          return getObjectDescribe(objectName).isCreateable();
      }
 
@@ -267,8 +255,6 @@
     * @return void
     ********************************************************************************************************/
     public static void checkFieldCreateAccess(String objectName, String fieldName) {
-        fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isCreateable() || throwException) {
             throw new PermsException(String.format(
                 Label.PermissionCreateException,
@@ -285,7 +271,6 @@
     * @return void
     ********************************************************************************************************/
      public static void checkObjectUpdateAccess(String objectName) {
-         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
          if (!getObjectDescribe(objectName).isUpdateable() || throwException) {
              throw new PermsException(String.format(
                  Label.PermissionUpdateException,
@@ -301,7 +286,6 @@
     * @return boolean whether the user has update access
     ********************************************************************************************************/
      public static boolean hasObjectUpdateAccess(String objectName) {
-         objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
          return getObjectDescribe(objectName).isUpdateable();
      }
 
@@ -314,7 +298,7 @@
     ********************************************************************************************************/
     public static void checkUpdateAccess(String objectName, Set<String> fieldNames) {
         for (String fieldName : fieldNames) {
-        	checkFieldUpdateAccess(objectName, fieldName);
+            checkFieldUpdateAccess(objectName, fieldName);
         }
     }
 
@@ -327,10 +311,8 @@
     * @return void
     ********************************************************************************************************/
     public static void checkFieldUpdateAccess(String objectName, String fieldName) {
-        fieldName = fieldName.contains('__c') ? StrTokenNSPrefix(fieldName) : fieldName;
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getFieldDescribe(objectName, fieldName).isUpdateable() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionUpdateException, 
                 new String[]{objectName + '.' + fieldName}
             ));
@@ -345,12 +327,11 @@
     * @return void
     ********************************************************************************************************/
     public static void checkObjectDeleteAccess(String objectName) {
-        objectName = objectName.contains('__c') ? StrTokenNSPrefix(objectName) : objectName;
         if (!getObjectDescribe(objectName).isDeletable() || throwException) {
-        	throw new PermsException(String.format(
+            throw new PermsException(String.format(
                 Label.PermissionDeleteException, 
                 new String[]{objectName}
-        	));
+            ));
         }
     }
 
