@@ -5,6 +5,6 @@
       "default": true
     }
   ],
-  "namespace": "",
-  "sourceApiVersion": "38.0"
+  "namespace": "GW_Volunteers",
+  "sourceApiVersion": "40.0"
 }

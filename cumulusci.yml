@@ -24,6 +24,25 @@ tasks:
             dir: browser_tests
             subfolder: V4S-Browser-Tests-master
 
+    deploy_dev_config:
+        description: Deploys the post install configuration for an unmanaged DE org
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: dev_config/src
+
+    deploy_dev_config_managed:
+        description: Deploys the post install configuration for a managed DE org
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: dev_config/src_managed
+
+    deploy_dev_config_delete:
+        description: Deploys the metadata deletions for the post install DE org config
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: dev_config/delete
+
+
 
 flows:
     browsertests_chrome:
@@ -57,3 +76,16 @@ flows:
         tasks:
             5:
                 task: None
+
+    dev_org:
+        tasks:
+            8:
+                task: deploy_dev_config_delete
+            9:
+                task: deploy_dev_config
+
+orgs:
+    scratch:
+        dev_namespaced:
+            config_file: orgs/dev.json
+            namespaced: True
