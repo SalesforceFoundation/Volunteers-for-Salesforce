@@ -83,3 +83,9 @@ flows:
                 task: deploy_dev_config_delete
             9:
                 task: deploy_dev_config
+
+orgs:
+    scratch:
+        dev_namespaced:
+            config_file: orgs/dev.json
+            namespaced: True
