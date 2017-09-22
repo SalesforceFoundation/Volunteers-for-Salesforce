@@ -1,5 +1,7 @@
+.appcloud
 .appcloud/.project
 .settings
+.sfdx
 /browser_tests
 /test_results.xml
 build.properties
