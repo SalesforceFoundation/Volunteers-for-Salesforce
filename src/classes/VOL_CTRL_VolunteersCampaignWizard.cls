@@ -84,7 +84,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
     * @description Action Method to Save changes in the Volunteers Wizard.  This will cause it to create
     * a new campaign, and either populate it with sample jobs and shifts, or clone jobs, shifts, and 
     * volunteers from an existing Volunteers campaign.
-    * @return PageReference null
+    * @return PageReference Campaign's page if success, null if errors
     ********************************************************************************************************/
     public PageReference Save() {
 
@@ -124,260 +124,255 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
     
     /*******************************************************************************************************
     * @description method to create sample jobs and shifts on the new Volunteers campaign.
+    * @return void
     ********************************************************************************************************/
     private void CreateSampleJobsAndShifts() {
-        try {
-            list<Volunteer_Job__c> listJobs = new list<Volunteer_Job__c>();
-            list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
-            
-            // create the sample jobs
-            for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
-                Volunteer_Job__c job = new Volunteer_Job__c();
-                job.Campaign__c = cmpVols.Id;
-                job.Name = Label.labelVolunteersWizardSampleJobName + (iJob + 1);
-                listJobs.add(job);
-            }   
-            
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
-            insert listJobs;
-            
-            // create the sample shifts
-            for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
-                for (Integer iShift = 0; iShift < cSampleShifts; iShift++) {
-                    Volunteer_Shift__c shift = new Volunteer_Shift__c();
-                    shift.Volunteer_Job__c = listJobs[iJob].Id;
-                    if (cmpVols.StartDate == null) cmpVols.StartDate = system.today();
-                    shift.Start_Date_Time__c = DateTime.newInstance(cmpVols.StartDate.year(), cmpVols.StartDate.month(), cmpVols.StartDate.day(), iShift+8, 0, 0); 
-                    shift.Duration__c = 1;
-                    shift.Description__c = Label.labelVolunteersWizardSampleShiftName + (iShift + 1);
-                    listShifts.add(shift);
-                }                   
-            }           
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
-            insert listShifts;
-        } catch (Exception e) {
-            ApexPages.addMessages(e);            
-        }  
+        list<Volunteer_Job__c> listJobs = new list<Volunteer_Job__c>();
+        list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
+
+        // create the sample jobs
+        for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
+            Volunteer_Job__c job = new Volunteer_Job__c();
+            job.Campaign__c = cmpVols.Id;
+            job.Name = Label.labelVolunteersWizardSampleJobName + (iJob + 1);
+            listJobs.add(job);
+        }
+
+        // Ensure the user has access to the object and fields before querying
+        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
+        insert listJobs;
+
+        // create the sample shifts
+        for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
+            for (Integer iShift = 0; iShift < cSampleShifts; iShift++) {
+                Volunteer_Shift__c shift = new Volunteer_Shift__c();
+                shift.Volunteer_Job__c = listJobs[iJob].Id;
+                if (cmpVols.StartDate == null) cmpVols.StartDate = system.today();
+                shift.Start_Date_Time__c = DateTime.newInstance(cmpVols.StartDate.year(), cmpVols.StartDate.month(), cmpVols.StartDate.day(), iShift+8, 0, 0);
+                shift.Duration__c = 1;
+                shift.Description__c = Label.labelVolunteersWizardSampleShiftName + (iShift + 1);
+                listShifts.add(shift);
+            }
+        }
+        // Ensure the user has access to the object and fields before querying
+        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
+        insert listShifts;
     }
     
     /*******************************************************************************************************
     * @description method to clone existing jobs, shifts, and optionally Volunteer Hours onto 
     * the new Volunteers campaign.
+    * @return void
     ********************************************************************************************************/
     private void CloneExistingJobsAndShifts() {
-        try {
-            list<Volunteer_Job__c> listJobs = new list<Volunteer_Job__c>();
-            list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
-            list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();
-            list<Volunteer_Job__c> listJobsExisting = new list<Volunteer_Job__c>();
-            list<Volunteer_Shift__c> listShiftsExisting = new list<Volunteer_Shift__c>();
-            list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
-            
-            // initialize the list of all fields on Job.
-            Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Job__c.fields.getMap();
-            list<string> listStrFieldsJob = new list<string>();
-            listStrFieldsJob.addAll(mapS.keySet());       
-            
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
-                new Set<String>(listStrFieldsJob));
-            
-            // find the existing jobs
-            // we need to use dynamic soql to pick up all custom fields we don't know about
-            string strSoql = 'select ';
-            string strComma = '';
-            for (string strF : listStrFieldsJob) {
-                strSoql += strComma + strF;
-                strComma = ', ';
-            }
-            strSoql += ' from Volunteer_Job__c where Campaign__c = :campaignIdClone order by CreatedDate';    
-            listJobsExisting = Database.Query(strSoql); 
+        list<Volunteer_Job__c> listJobs = new list<Volunteer_Job__c>();
+        list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
+        list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();
+        list<Volunteer_Job__c> listJobsExisting = new list<Volunteer_Job__c>();
+        list<Volunteer_Shift__c> listShiftsExisting = new list<Volunteer_Shift__c>();
+        list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
 
-            // initialize the list of all fields on Shift.
-            mapS = Schema.SObjectType.Volunteer_Shift__c.fields.getMap();
-            list<string> listStrFieldsShift = new list<string>();
-            listStrFieldsShift.addAll(mapS.keySet());         
-            
+        // initialize the list of all fields on Job.
+        Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Job__c.fields.getMap();
+        list<string> listStrFieldsJob = new list<string>();
+        listStrFieldsJob.addAll(mapS.keySet());
+
+        // Ensure the user has access to the object and fields before querying
+        UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+            new Set<String>(listStrFieldsJob));
+
+        // find the existing jobs
+        // we need to use dynamic soql to pick up all custom fields we don't know about
+        string strSoql = 'select ';
+        string strComma = '';
+        for (string strF : listStrFieldsJob) {
+            strSoql += strComma + strF;
+            strComma = ', ';
+        }
+        strSoql += ' from Volunteer_Job__c where Campaign__c = :campaignIdClone order by CreatedDate';
+        listJobsExisting = Database.Query(strSoql);
+
+        // initialize the list of all fields on Shift.
+        mapS = Schema.SObjectType.Volunteer_Shift__c.fields.getMap();
+        list<string> listStrFieldsShift = new list<string>();
+        listStrFieldsShift.addAll(mapS.keySet());
+
+        // Ensure the user has access to the object and fields before querying
+        UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+            new Set<String>(listStrFieldsShift));
+
+        // find the existing shifts for those jobs
+        // we need to use dynamic soql to pick up all custom fields we don't know about
+        strSoql = 'select ';
+        strComma = '';
+        for (string strF : listStrFieldsShift) {
+            strSoql += strComma + strF;
+            strComma = ', ';
+        }
+        strSoql += ' from Volunteer_Shift__c where Volunteer_Job__c in :listJobsExisting order by Start_Date_Time__c';
+        listShiftsExisting = Database.Query(strSoql);
+
+        // clone the jobs
+        for (Volunteer_Job__c job : listJobsExisting) {
+            Volunteer_Job__c jobNew = new Volunteer_Job__c();
+
+            //  now copy over all the non-null fields
+            for (string strF : listStrFieldsJob) {
+                if (strF != 'Id' && job.get(strF) != null) {
+                    try {
+                        jobNew.put(strF, job.get(strF));
+                    } catch (exception ex) {
+                        // catch errors from readonly fields, and continue.
+                    }
+                }
+            }
+            jobNew.Campaign__c = cmpVols.Id;
+            listJobs.add(jobNew);
+        }
+
+        // Ensure the user has access to the object and fields before querying
+        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
+        insert listJobs;
+
+        // create a map of existing JobId to new JobId
+        map<ID, ID> mapJobId = new map<ID, ID>();
+        for (Integer i = 0; i < listJobsExisting.size(); i++) {
+            mapJobId.put(listJobsExisting[i].Id, listJobs[i].Id);
+        }
+
+        // figure out our base date to use.
+        Date dt = cmpShiftDates.EndDate;
+        if (dt == null) dt = cmpVols.StartDate;
+        if (dt == null) dt = System.Now().date();
+
+        // figure out date offset
+        integer cDays;
+        if (cmpShiftDates.StartDate == null) {
+            cDays = -1; // don't offset, use fixed dt.
+        } else {
+            cDays = cmpShiftDates.StartDate.daysBetween(dt);
+        }
+
+        // clone the shifts
+        for (Volunteer_Shift__c shift : listShiftsExisting) {
+            Volunteer_Shift__c shiftNew = new Volunteer_Shift__c();
+
+            //  now copy over all the non-null fields
+            for (string strF : listStrFieldsShift) {
+                if (strF != 'Id' && shift.get(strF) != null) {
+                    try {
+                        shiftNew.put(strF, shift.get(strF));
+                    } catch (exception ex) {
+                        // catch errors from readonly fields, and continue.
+                    }
+                }
+            }
+
+            shiftNew.Volunteer_Job__c = mapJobId.get(shift.Volunteer_Job__c);
+
+            // just use the time, not the date, from the existing shift.
+            Time tm = shift.Start_Date_Time__c.time();
+
+            if (cDays > -1) {
+                dt = shift.Start_Date_Time__c.addDays(cDays).date();
+            }
+            shiftNew.Start_Date_Time__c = DateTime.newInstance(dt, tm);
+
+            // clear the volunteer count
+            shiftNew.Total_Volunteers__c = 0;
+
+            listShifts.add(shiftNew);
+        }
+
+        // Ensure the user has access to the object and fields before querying
+        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
+        insert listShifts;
+
+        if (fCopyVolunteers) {
+            // initialize the list of all fields on Hours.
+            mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
+            list<string> listStrFieldsHours = new list<string>();
+            listStrFieldsHours.addAll(mapS.keySet());
+
             // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
-                new Set<String>(listStrFieldsShift));
-                
-            // find the existing shifts for those jobs
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                new Set<String>(listStrFieldsHours));
+
+            // find the existing hours for those jobs and shifts
             // we need to use dynamic soql to pick up all custom fields we don't know about
             strSoql = 'select ';
             strComma = '';
-            for (string strF : listStrFieldsShift) {
+            for (string strF : listStrFieldsHours) {
                 strSoql += strComma + strF;
                 strComma = ', ';
             }
-            strSoql += ' from Volunteer_Shift__c where Volunteer_Job__c in :listJobsExisting order by Start_Date_Time__c';  
-            listShiftsExisting = Database.Query(strSoql); 
-            
-            // clone the jobs               
-            for (Volunteer_Job__c job : listJobsExisting) {
-                Volunteer_Job__c jobNew = new Volunteer_Job__c();
+            strSoql += ' from Volunteer_Hours__c where Volunteer_Job__c in :listJobsExisting ';
+            strSoql += ' or Volunteer_Shift__c in :listShiftsExisting ';
+            listHoursExisting = Database.Query(strSoql);
 
-                //  now copy over all the non-null fields 
-                for (string strF : listStrFieldsJob) {
-                    if (strF != 'Id' && job.get(strF) != null) {
-                        try {
-                            jobNew.put(strF, job.get(strF));
-                        } catch (exception ex) {
-                            // catch errors from readonly fields, and continue.                                             
-                        }
-                    }
-                }
-                jobNew.Campaign__c = cmpVols.Id;
-                listJobs.add(jobNew);
+            // create a map of existing ShiftId to new ShiftId
+            map<ID, ID> mapShiftId = new map<ID, ID>();
+            for (Integer i = 0; i < listShiftsExisting.size(); i++) {
+                mapShiftId.put(listShiftsExisting[i].Id, listShifts[i].Id);
             }
-            
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
-            insert listJobs;
-            
-            // create a map of existing JobId to new JobId
-            map<ID, ID> mapJobId = new map<ID, ID>();
-            for (Integer i = 0; i < listJobsExisting.size(); i++) {
-                mapJobId.put(listJobsExisting[i].Id, listJobs[i].Id);
+
+            // create a map of new ShiftId to new Shift (so we can get dates)
+            map<ID, Volunteer_Shift__c> mapIdToShift = new map<ID, Volunteer_Shift__c>();
+            for (Volunteer_Shift__c shift : listShifts) {
+                mapIdToShift.put(shift.Id, shift);
             }
-            
-            // figure out our base date to use.
-            Date dt = cmpShiftDates.EndDate;
-            if (dt == null) dt = cmpVols.StartDate;
-            if (dt == null) dt = System.Now().date();
-            
-            // figure out date offset
-            integer cDays;        
-            if (cmpShiftDates.StartDate == null) {
-                cDays = -1; // don't offset, use fixed dt.                      
-            } else {
-                cDays = cmpShiftDates.StartDate.daysBetween(dt);
-            }
-                    
-            // clone the shifts
-            for (Volunteer_Shift__c shift : listShiftsExisting) {
-                Volunteer_Shift__c shiftNew = new Volunteer_Shift__c();
 
-                //  now copy over all the non-null fields 
-                for (string strF : listStrFieldsShift) {
-                    if (strF != 'Id' && shift.get(strF) != null) {
-                        try {
-                            shiftNew.put(strF, shift.get(strF));
-                        } catch (exception ex) {
-                            // catch errors from readonly fields, and continue.                     
-                        }
-                    }
-                }
+            // clone the hours
+            for (Volunteer_Hours__c hours : listHoursExisting) {
+                Volunteer_Hours__c hoursNew = new Volunteer_Hours__c();
 
-                shiftNew.Volunteer_Job__c = mapJobId.get(shift.Volunteer_Job__c);
-                
-                // just use the time, not the date, from the existing shift.
-                Time tm = shift.Start_Date_Time__c.time();
-                
-                if (cDays > -1) {
-                    dt = shift.Start_Date_Time__c.addDays(cDays).date();    
-                }
-                shiftNew.Start_Date_Time__c = DateTime.newInstance(dt, tm);
-                
-                // clear the volunteer count
-                shiftNew.Total_Volunteers__c = 0;
-                
-                listShifts.add(shiftNew);
-            }
-            
-            // Ensure the user has access to the object and fields before querying
-            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
-            insert listShifts;
-
-            if (fCopyVolunteers) {
-                // initialize the list of all fields on Hours.
-                mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
-                list<string> listStrFieldsHours = new list<string>();
-                listStrFieldsHours.addAll(mapS.keySet());       
-
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
-                    new Set<String>(listStrFieldsHours));
-                
-                // find the existing hours for those jobs and shifts
-                // we need to use dynamic soql to pick up all custom fields we don't know about
-                strSoql = 'select ';
-                strComma = '';
+                //  now copy over all the non-null fields
                 for (string strF : listStrFieldsHours) {
-                    strSoql += strComma + strF;
-                    strComma = ', ';
-                }
-                strSoql += ' from Volunteer_Hours__c where Volunteer_Job__c in :listJobsExisting ';
-                strSoql += ' or Volunteer_Shift__c in :listShiftsExisting ';
-                listHoursExisting = Database.Query(strSoql); 
-
-                // create a map of existing ShiftId to new ShiftId
-                map<ID, ID> mapShiftId = new map<ID, ID>();
-                for (Integer i = 0; i < listShiftsExisting.size(); i++) {
-                    mapShiftId.put(listShiftsExisting[i].Id, listShifts[i].Id);
-                }
-                
-                // create a map of new ShiftId to new Shift (so we can get dates)
-                map<ID, Volunteer_Shift__c> mapIdToShift = new map<ID, Volunteer_Shift__c>();
-                for (Volunteer_Shift__c shift : listShifts) {
-                    mapIdToShift.put(shift.Id, shift);
-                }
-
-                // clone the hours
-                for (Volunteer_Hours__c hours : listHoursExisting) {
-                    Volunteer_Hours__c hoursNew = new Volunteer_Hours__c();
-        
-                    //  now copy over all the non-null fields 
-                    for (string strF : listStrFieldsHours) {
-                        if (strF != 'Id' && hours.get(strF) != null) {
-                            try {
-                                hoursNew.put(strF, hours.get(strF));
-                            } catch (exception ex) {
-                                // catch errors from readonly fields, and continue.                     
-                            }
+                    if (strF != 'Id' && hours.get(strF) != null) {
+                        try {
+                            hoursNew.put(strF, hours.get(strF));
+                        } catch (exception ex) {
+                            // catch errors from readonly fields, and continue.
                         }
                     }
-        
-                    hoursNew.Volunteer_Job__c = mapJobId.get(hours.Volunteer_Job__c);
-                    hoursNew.Volunteer_Shift__c = mapShiftId.get(hours.Volunteer_Shift__c);
-                    
-                    // override hours status
-                    if (hoursStatus.Status__c != null) {
-                        hoursNew.Status__c = hoursStatus.Status__c;
-                    }
-                    
-                    // override start date and end date
-                    if (hoursNew.Volunteer_Shift__c != null) {
-                        Date dtNew = mapIdToShift.get(hoursNew.Volunteer_Shift__c).Start_Date_Time__c.date();
-                        hoursNew.Start_Date__c = dtNew;
-                        hoursNew.End_Date__c = dtNew;                   
-                        // fixup Planned_Start_Date_Time__c
-                        if (hours.Planned_Start_Date_Time__c != null) {
-                            Time tm = hours.Planned_Start_Date_Time__c.time();
-                            hoursNew.Planned_Start_Date_Time__c = DateTime.newInstance(dtNew, tm);
-                        }
-                    } else {
-                        hoursNew.Start_Date__c = cmpVols.StartDate;
-                        hoursNew.End_Date__c = null;
-                    }
-                                                
-                    listHours.add(hoursNew);
                 }
-                
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
-                insert listHours;
+
+                hoursNew.Volunteer_Job__c = mapJobId.get(hours.Volunteer_Job__c);
+                hoursNew.Volunteer_Shift__c = mapShiftId.get(hours.Volunteer_Shift__c);
+
+                // override hours status
+                if (hoursStatus.Status__c != null) {
+                    hoursNew.Status__c = hoursStatus.Status__c;
+                }
+
+                // override start date and end date
+                if (hoursNew.Volunteer_Shift__c != null) {
+                    Date dtNew = mapIdToShift.get(hoursNew.Volunteer_Shift__c).Start_Date_Time__c.date();
+                    hoursNew.Start_Date__c = dtNew;
+                    hoursNew.End_Date__c = dtNew;
+                    // fixup Planned_Start_Date_Time__c
+                    if (hours.Planned_Start_Date_Time__c != null) {
+                        Time tm = hours.Planned_Start_Date_Time__c.time();
+                        hoursNew.Planned_Start_Date_Time__c = DateTime.newInstance(dtNew, tm);
+                    }
+                } else {
+                    hoursNew.Start_Date__c = cmpVols.StartDate;
+                    hoursNew.End_Date__c = null;
+                }
+
+                listHours.add(hoursNew);
             }
-        } catch (Exception e) {
-            ApexPages.addMessages(e);
+
+            // Ensure the user has access to the object and fields before querying
+            UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
+            insert listHours;
         }
     }
     
     /*******************************************************************************************************
     * @description action method called whenever the existing campaign dropdown changes.  Queries the 
     * campaign to find its earliest job shift.
+    * @return PageReference always null, so the page redisplays
     ********************************************************************************************************/
     public PageReference ChangeCampaign() {
         try {
