@@ -99,7 +99,9 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.labelVolunteersWizardErrorNoJobsWithShifts)); 
             return null; 
         }
-                
+
+        Savepoint sp = Database.setSavepoint();
+
         try {
             // Ensure the user can create the object 
             UTIL_Describe.checkObjectCreateAccess('Campaign');            
@@ -117,6 +119,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             return p;
             
         } catch (Exception e) {
+            Database.rollback(sp);
             ApexPages.addMessages(e);
             return null;
         }           
