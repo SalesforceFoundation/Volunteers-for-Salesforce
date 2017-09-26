@@ -152,7 +152,7 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
         ctrl.vhours.Hours_Worked__c = 1;
         ctrl.Save();
         System.assertNotEquals(system.label.labelVolunteerReportHoursThankYou, ctrl.strSaveResult);
-        Sysatem.assertEquals(cContact, [SELECT COUNT() FROM Contact]);
+        System.assertEquals(cContact, [SELECT COUNT() FROM Contact]);
 
     }       
 
