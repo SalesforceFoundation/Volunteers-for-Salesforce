@@ -167,6 +167,20 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.AssertEquals(hoursId, ctrl.volunteerHoursIdSignUp);
         vh = [select Number_Of_Volunteers__c from Volunteer_Hours__c where Id = :hoursId];
         System.AssertEquals(2, vh.Number_Of_Volunteers__c);
+
+        // test permissions checks
+        Integer cContact = [SELECT COUNT() FROM CONTACT];
+        UTIL_Describe.throwException = true;
+        ctrl.ClearVolunteerHoursIdSignUp();
+        ctrl.contact.FirstName = 'New person2';
+        ctrl.contact.LastName = 'New person2 for my test';
+        ctrl.contact.Email = 'newperson2@volunteersjoblisting.com';
+        ctrl.jobIdSignUp = job.id;
+        ctrl.VolunteerShiftSignUp();
+        System.assertEquals(null, ctrl.contactIdSignUp);
+        System.assertEquals(null, ctrl.volunteerHoursIdSignUp);
+        System.assertEquals(cContact, [SELECT COUNT() FROM CONTACT]);
+
     }
 
     public static testmethod void testCampaignHierarchies() {
