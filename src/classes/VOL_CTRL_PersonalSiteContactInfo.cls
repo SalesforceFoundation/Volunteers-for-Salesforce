@@ -291,7 +291,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                             contactReadOnly.put(strF, contactEdit.get(strF));
                             contactFieldsToUpdate.add(strF);
                         } catch (exception ex) {
-
+                            // we need this catch because some of the fields in listStrContactFields
+                            // are readonly formula fields.  We can't use describes for isCreatable,
+                            // because we won't know the difference between a formula field vs. one
+                            // they don't have permissions to (which we will check below).
                         }
                     }
                 }
