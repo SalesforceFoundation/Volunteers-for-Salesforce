@@ -140,7 +140,7 @@ private with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
         System.assertEquals(null, ctrl.Save());
         System.assertEquals(0, [SELECT COUNT() FROM Campaign]);
 
-        // scenario2: clone non-existant campaign
+        // scenario2: clone non-existent campaign
         // create a contact to get a real (but incorrect) Id
         Contact con = new Contact(Lastname='temp');
         insert con;
