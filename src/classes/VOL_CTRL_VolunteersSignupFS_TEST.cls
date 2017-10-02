@@ -124,7 +124,7 @@ private with sharing class VOL_CTRL_VolunteersSignupFS_TEST {
         contact = [select Id, Volunteer_Status__c, Phone from Contact where Email='foo2volunteer@bar.com' and Firstname='TestFirstName2' limit 1];
         System.AssertEquals('New Sign Up', contact.Volunteer_Status__c);
         System.Assert(('425-123-4567' == contact.Phone) || ('206-123-4567' == contact.Phone));
-                
+
         // anything else
         System.Assert(ctrl.strURLtoCSSFile == ctrl.strURLtoCSSFile);
         
@@ -133,7 +133,18 @@ private with sharing class VOL_CTRL_VolunteersSignupFS_TEST {
         ctrl.attachment.Body = Blob.valueof('some random test string');
         System.assert(ctrl.attachment.body != null);
         ctrl.Save();
-        
-    }       
+
+        // test error handling
+        UTIL_Describe.throwException = true;
+        contact = ctrl.contact;
+        System.Assert(contact != null);
+        contact.FirstName = 'TestFirstName';
+        contact.LastName = 'TestLastName';
+        contact.Email = 'foovolunteer@bar.com';
+        contact.Department = 'Some Random Company';
+        system.assertEquals(null, ctrl.Save());
+        System.assert(ctrl.StrSaveResult.contains('permissions'));
+
+    }
 
 }

@@ -149,7 +149,8 @@
                 <!-- the controller assumes that Group Size is saved in the volunteer hours temp object. -->
                 <apex:outputLabel value="# in Group" for="txtGroupSize" />
                 <apex:inputField value="{!vhTemp.Number_of_Volunteers__c}" id="txtGroupSize" required="true" styleClass="cssInputFields" />
-            </apex:panelGrid>   
+            </apex:panelGrid>
+            <apex:Messages style="color:red;" />
             <p>         
             <apex:inputText value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent;" size="60" /><br/>
             <apex:inputText value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent;" size="60" />

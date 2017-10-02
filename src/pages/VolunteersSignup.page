@@ -30,7 +30,7 @@
  
 <apex:page controller="VOL_CTRL_VolunteersSignup" showheader="false" sidebar="false" standardStylesheets="false" cache="false">
 
-    <apex:stylesheet value="{!strURLtoCSSFile}" /> 
+    <apex:stylesheet value="{!strURLtoCSSFile}" />
 
     <apex:form id="frm" styleClass="cssForm" > 
         <apex:panelGrid columns="2" columnClasses="cssLabelsColumn, cssInputFieldsColumn" >
@@ -67,6 +67,7 @@
             <apex:actionFunction name="DoSave" action="{!Save}" />         
             
             <apex:outputLabel value="{!StrSaveResult}" />                        
-        </apex:panelGrid>    
+        </apex:panelGrid>
+        <apex:messages style="color:red;" />
     </apex:form>
 </apex:page>

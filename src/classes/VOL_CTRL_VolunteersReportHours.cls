@@ -238,8 +238,9 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
 
     // action method for saving the the volunteer's hours.    
-    global virtual PageReference Save() {  
-        try { 
+    global virtual PageReference Save() {
+        Savepoint sp = Database.setSavepoint();
+        try {
             // because we need to use actionSupport immediate=false to support the combo's,
             // we couldn't actually use visualforce's required=true property on fields.
             // so we must manually enforce the fields we want required ourselves.
@@ -360,6 +361,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             
             strSaveResult = system.label.labelVolunteerReportHoursThankYou;
         } catch (DMLException ex) {
+            Database.rollback(sp);
             //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
             strSaveResult = ex.getMessage(); 
             if (strSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
@@ -368,6 +370,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
             strSaveResult = null;
         } catch (exception ex) {
+            Database.rollback(sp);
             strSaveResult = null;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage()));                     
         }
