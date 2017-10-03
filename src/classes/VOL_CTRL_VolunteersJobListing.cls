@@ -233,6 +233,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
     }   
     
     global virtual PageReference VolunteerShiftSignUp() {
+
+        Savepoint sp = Database.setSavepoint();
         try {
             // clear return variables in case we fail.
             contactIdSignUp = null;
@@ -260,7 +262,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                 volunteerHoursIdSignUp = vh.Id;
             }
             
-            // now recreate the temp contact object so permissions will treat the object as now,
+            // now recreate the temp contact object so permissions will treat the object as new,
             // and thus allow the user to edit its fields.
             Contact c2 = new Contact();
             c2.FirstName = contact.FirstName;
@@ -273,6 +275,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
             
             return null;
         } catch (Exception e) {
+            Database.rollback(sp);
             ApexPages.addMessages(e);  
             return null;
         }
