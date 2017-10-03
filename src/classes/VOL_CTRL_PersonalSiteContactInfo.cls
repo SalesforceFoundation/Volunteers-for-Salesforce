@@ -279,26 +279,33 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         return null;
     }
 
-    global PageReference save() { 
-        if (contactReadOnly != null) {          
-            Set<String> contactFieldsToUpdate = new Set<String>();
+    global PageReference save() {
+        try {
+            if (contactReadOnly != null) {
+                Set<String> contactFieldsToUpdate = new Set<String>();
 
-            //  now copy over all the non-null fields from the form's contact to the existing contact.
-            for (string strF : listStrContactFields) {
-                if (contactEdit.get(strF) != null) {
-                    try {
-                        contactReadOnly.put(strF, contactEdit.get(strF));
-                        contactFieldsToUpdate.add(strF);
-                    } catch(exception ex) {
-                        
+                //  now copy over all the non-null fields from the form's contact to the existing contact.
+                for (string strF : listStrContactFields) {
+                    if (contactEdit.get(strF) != null) {
+                        try {
+                            contactReadOnly.put(strF, contactEdit.get(strF));
+                            contactFieldsToUpdate.add(strF);
+                        } catch (exception ex) {
+                            // we need this catch because some of the fields in listStrContactFields
+                            // are readonly formula fields.  We can't use describes for isCreatable,
+                            // because we won't know the difference between a formula field vs. one
+                            // they don't have permissions to (which we will check below).
+                        }
                     }
                 }
-            }
 
-            VOL_SharedCode.checkUpdateAccessSites('Contact', contactFieldsToUpdate);
-            update contactReadOnly;
+                VOL_SharedCode.checkUpdateAccessSites('Contact', contactFieldsToUpdate);
+                update contactReadOnly;
+            }
+            isEditing = false;
+        } catch (Exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage()));
         }
-        isEditing = false;
         return null;
     }
     

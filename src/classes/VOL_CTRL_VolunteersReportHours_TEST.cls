@@ -137,8 +137,23 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
         ctrl.ChangeVolunteerJob();
         System.Assert(ctrl.listSOVolunteerShifts != null);
         system.assertEquals(true, ctrl.hasShifts);
-        
-               
+
+        // test permissions handling
+        UTIL_Describe.throwException = true;
+        Integer cContact = [SELECT COUNT() FROM Contact];
+        contact = ctrl.contact;
+        System.Assert(contact != null);
+        contact.FirstName = 'TestFirstName2';
+        contact.LastName = 'TestLastName2';
+        contact.Email = 'foovolunteer2@bar.com';
+        ctrl.volunteerJobId = job.Id;
+        ctrl.vhours.Start_Date__c = System.Today();
+        ctrl.vhours.End_Date__c = System.Today();
+        ctrl.vhours.Hours_Worked__c = 1;
+        ctrl.Save();
+        System.assertNotEquals(system.label.labelVolunteerReportHoursThankYou, ctrl.strSaveResult);
+        System.assertEquals(cContact, [SELECT COUNT() FROM Contact]);
+
     }       
 
 }

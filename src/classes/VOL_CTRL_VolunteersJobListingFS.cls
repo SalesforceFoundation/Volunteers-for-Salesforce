@@ -407,7 +407,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     private class MyException extends Exception {}
     
     global virtual PageReference VolunteerShiftSignUp() {
-        try {               
+
+        Savepoint sp = Database.setSavepoint();
+        try {
             // clear return variables in case we fail.
             contactIdSignUp = null;
             volunteerHoursIdSignUp = null;
@@ -528,6 +530,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 vhours = null;
             }
         } catch (DMLException ex) {
+            Database.rollback(sp);
             //Added check for FIELD_CUSTOM_VALIDATION_EXCEPTION to return user friendly error.
             strSaveResult = ex.getMessage(); 
             if (strSaveResult.contains('FIELD_CUSTOM_VALIDATION_EXCEPTION')) {
@@ -535,9 +538,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             }
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
         } catch (exception ex) {
-            strSaveResult = ex.getMessage(); 
-            //StrSaveResult += ' stack: ' + ex.getStackTraceString();
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));         
+            Database.rollback(sp);
+            strSaveResult = ex.getMessage();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
         }
         return null; 
     }
