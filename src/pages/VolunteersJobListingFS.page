@@ -58,7 +58,9 @@
         j$('input[name$=txtShiftId]').val(ShiftId);                         
         j$('span[id$="txtJobDisplayName"]').text(JobName); 
         j$('span[id$="txtShiftDisplayName"]').text(ShiftName); 
-        j$('#dlgSignUp').dialog("option", "position", { my: "left+10 top+10", at: "left top", of: event, collision: "fit"});
+        // new attempt doesn't work in firefox j$('#dlgSignUp').dialog("option", "position", { my: "left+10 top+10", at: "left top", of: event, collision: "fit"});
+        // original code doesn't work well with newer jqueryui j$('#dlgSignUp').dialog("option", "position", [(document.documentElement.offsetWidth /2)-225, y + 20] );
+        // so let's try default dialog position!
         j$('#dlgSignUp').dialog('open');
         return false;
     };
