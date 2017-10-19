@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
-        <article>None</article>
-        <plural>false</plural>
-        <value><!-- Job Recurrence Schedule --></value>
-    </caseValues>
-    <caseValues>
         <article>Definite</article>
         <plural>false</plural>
-        <value><!-- הJob Recurrence Schedule --></value>
+        <value>לוח זמנים של משימה חוזרת</value>
     </caseValues>
     <caseValues>
         <article>None</article>
-        <plural>true</plural>
-        <value><!-- Job Recurrence Schedule --></value>
+        <plural>false</plural>
+        <value>לוח זמנים של משימה חוזרת</value>
     </caseValues>
     <caseValues>
         <article>Definite</article>
         <plural>true</plural>
-        <value><!-- הJob Recurrence Schedule --></value>
+        <value>לוח זמנים של משימה חוזרת</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value>לוח זמנים של משימה חוזרת</value>
     </caseValues>
     <fields>
         <label>ימים בשבוע</label>
@@ -111,7 +111,7 @@
             <translation>כל</translation>
         </picklistValues>
     </fields>
-    <gender><!-- Masculine --></gender>
+    <gender>Masculine</gender>
     <layouts>
         <layout>Volunteer Job Recurrence Schedule Layout</layout>
         <sections>

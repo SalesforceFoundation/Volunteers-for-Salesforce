@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
-        <article>None</article>
-        <plural>false</plural>
-        <value><!-- Volunteer Shift --></value>
-    </caseValues>
-    <caseValues>
         <article>Definite</article>
         <plural>false</plural>
-        <value><!-- הVolunteer Shift --></value>
+        <value>משמרות התנדבות</value>
     </caseValues>
     <caseValues>
         <article>None</article>
-        <plural>true</plural>
-        <value><!-- Volunteer Shift --></value>
+        <plural>false</plural>
+        <value>משמרות התנדבות</value>
     </caseValues>
     <caseValues>
         <article>Definite</article>
         <plural>true</plural>
-        <value><!-- הVolunteer Shift --></value>
+        <value>משמרות התנדבות</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value>משמרות התנדבות</value>
     </caseValues>
     <fields>
         <label>תיאור</label>
@@ -78,7 +78,7 @@
         <name>Volunteer_Job__c</name>
         <relationshipLabel>משמרות התנדבות</relationshipLabel>
     </fields>
-    <gender><!-- Masculine --></gender>
+    <gender>Masculine</gender>
     <layouts>
         <layout>Volunteer Shift Layout</layout>
         <sections>

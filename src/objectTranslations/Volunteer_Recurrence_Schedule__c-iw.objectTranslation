@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
-        <article>None</article>
-        <plural>false</plural>
-        <value><!-- Volunteer Recurrence Schedule --></value>
-    </caseValues>
-    <caseValues>
         <article>Definite</article>
         <plural>false</plural>
-        <value><!-- הVolunteer Recurrence Schedule --></value>
+        <value>לוח זמנים של התנדבות חוזרת</value>
     </caseValues>
     <caseValues>
         <article>None</article>
-        <plural>true</plural>
-        <value><!-- Volunteer Recurrence Schedule --></value>
+        <plural>false</plural>
+        <value>לוח זמנים של התנדבות חוזרת</value>
     </caseValues>
     <caseValues>
         <article>Definite</article>
         <plural>true</plural>
-        <value><!-- הVolunteer Recurrence Schedule --></value>
+        <value>לוח זמנים של התנדבות חוזרת</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value>לוח זמנים של התנדבות חוזרת</value>
     </caseValues>
     <fields>
         <help>טקסט שיועתק אל שדה ההערות לשעות התנדבות, עבור כל השעות שנוצרו על-ידי לוח הזמנים של התנדבות חוזרת.</help>
@@ -137,7 +137,7 @@
             <translation>כל</translation>
         </picklistValues>
     </fields>
-    <gender><!-- Masculine --></gender>
+    <gender>Masculine</gender>
     <layouts>
         <layout>Volunteer Recurrence Schedule Layout</layout>
         <sections>

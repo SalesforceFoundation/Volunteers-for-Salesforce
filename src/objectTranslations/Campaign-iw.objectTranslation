@@ -414,4 +414,8 @@
         <label>מבצע חדש לגיוס מתנדבים</label>
         <name>New_Volunteer_Campaign</name>
     </webLinks>
+    <webLinks>
+        <label><!-- ViewCampaignInfluenceReport --></label>
+        <name>ViewCampaignInfluenceReport</name>
+    </webLinks>
 </CustomObjectTranslation>
