@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <value>לוח זמנים של משימה חוזרת</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <value>לוח זמנים של משימה חוזרת</value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <value>לוח זמנים של משימה חוזרת</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value>לוח זמנים של משימה חוזרת</value>
+    </caseValues>
+    <fields>
+        <label>ימים בשבוע</label>
+        <name>Days_of_Week__c</name>
+        <picklistValues>
+            <masterLabel>Friday</masterLabel>
+            <translation>שישי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monday</masterLabel>
+            <translation>שני</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saturday</masterLabel>
+            <translation>שבת</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sunday</masterLabel>
+            <translation>ראשון</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thursday</masterLabel>
+            <translation>חמישי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tuesday</masterLabel>
+            <translation>שלישי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Wednesday</masterLabel>
+            <translation>רביעי</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help>טקסט תיאורי שניתן להעתיק לרשומות משמרת שנוצרו בלוח זמנים זה.</help>
+        <label>תיאור</label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label>מספר מתנדבים רצוי</label>
+        <name>Desired_Number_of_Volunteers__c</name>
+    </fields>
+    <fields>
+        <label>משך זמן</label>
+        <name>Duration__c</name>
+    </fields>
+    <fields>
+        <label>תאריך סיום לוח זמנים</label>
+        <name>Schedule_End_Date__c</name>
+    </fields>
+    <fields>
+        <label>תאריך ושעת התחלה של לוח זמנים</label>
+        <name>Schedule_Start_Date_Time__c</name>
+    </fields>
+    <fields>
+        <help>המשימה שלוח זמנים חוזר זה מיועד עבורה.</help>
+        <label>משימת התנדבות</label>
+        <name>Volunteer_Job__c</name>
+        <relationshipLabel>לוחות זמנים של משימות חוזרות</relationshipLabel>
+    </fields>
+    <fields>
+        <label>התרחשות שבועית</label>
+        <name>Weekly_Occurrence__c</name>
+        <picklistValues>
+            <masterLabel>1st</masterLabel>
+            <translation>ראשון</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2nd</masterLabel>
+            <translation>שני</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3rd</masterLabel>
+            <translation>שלישי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4th</masterLabel>
+            <translation>רביעי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5th</masterLabel>
+            <translation>חמישי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alternate</masterLabel>
+            <translation>חלופה</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Every</masterLabel>
+            <translation>כל</translation>
+        </picklistValues>
+    </fields>
+    <gender>Masculine</gender>
+    <layouts>
+        <layout>Volunteer Job Recurrence Schedule Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- JRS ID --></nameFieldLabel>
+    <validationRules>
+        <errorMessage>עליך לציין לפחות ערך אחד עבור &apos;ימי חול&apos;.</errorMessage>
+        <name>JRS_Days_Of_Week_Required</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>עליך לציין לפחות ערך אחד עבור &apos;התרחשות שבועית&apos;</errorMessage>
+        <name>JRS_Weekly_Occurrence_Required</name>
+    </validationRules>
+</CustomObjectTranslation>
