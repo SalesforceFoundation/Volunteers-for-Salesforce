@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <value><!-- Volunteers Settings --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <value><!-- הVolunteers Settings --></value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value><!-- Volunteers Settings --></value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <value><!-- הVolunteers Settings --></value>
+    </caseValues>
+    <fields>
+        <help>רשימה מופרדת בסימני נקודה-פסיק של שדות דואר אלקטרוני נוספים של אנשי קשר, לצורך התאמת אנשי קשר. שים לב שהשדות מצוינים על-ידי שם המפתח המלא שלהם, כולל קידומת מרחב שמות. שדות דואר אלקטרוני של NPSP נבדקים באופן אוטומטי.</help>
+        <label>שדות דואר אלקטרוני להתאמת אנשי קשר</label>
+        <name>Contact_Match_Email_Fields__c</name>
+    </fields>
+    <fields>
+        <help>רשימה מופרדת בסימני נקודה-פסיק של שדות שם פרטי נוספים של אנשי קשר, לצורך התאמת אנשי קשר. לדוגמה, שדה כינוי.  שים לב שהשדות מצוינים על-ידי שם המפתח המלא שלהם, כולל קידומת מרחב שמות.</help>
+        <label>שדות שם פרטי להתאמת אנשי קשר</label>
+        <name>Contact_Match_First_Name_Fields__c</name>
+    </fields>
+    <fields>
+        <help>מציין איזה כלל יש ליישם בעת ניסיון להתאים אנשי קשר כנגד אנשי קשר קיימים מדפי המתנדבים ב&apos;אתרים&apos;. מחרוזת המופרדת בסימני נקודה-פסיק המכילה אחד או יותר מהשדות Firstname, ‏Lastname ו-Email.</help>
+        <label>כלל התאמת אנשי קשר</label>
+        <name>Contact_Matching_Rule__c</name>
+    </fields>
+    <fields>
+        <help>אם תכלול מפתח API של &apos;מפות Google&apos; דפי JobListing יכילו הפניה אל מפה של מיקום המשימה באתר המתנדבים שלך.</help>
+        <label>מפתח API של מפות Google</label>
+        <name>Google_Maps_API_Key__c</name>
+    </fields>
+    <fields>
+        <help>שם התצוגה של כתובת הדואר האלקטרוני הכלל-ארגונית, שיוצג בהודעה שתישלח מהדף PersonalSiteContactLookup ב&apos;אתרים&apos;.</help>
+        <label>שם של אתר אישי לדואר אלקטרוני כלל-ארגוני</label>
+        <name>Personal_Site_Org_Wide_Email_Name__c</name>
+    </fields>
+    <fields>
+        <help>דיווח שעות מסונן לפי איש קשר באתר פרטי</help>
+        <label>דיווח שעות מסונן באתר פרטי</label>
+        <name>Personal_Site_Report_Hours_Filtered__c</name>
+    </fields>
+    <fields>
+        <help>אם אפשרות זו מסומנת, האתר האישי מחייב לציין את פרמטר כתובת ה-URL של דואר אלקטרוני וכן את התאמתו לשדה דואר אלקטרוני באיש הקשר שצוין.</help>
+        <label>האתר הפרטי מחייב התאמת URL של דוא&quot;ל</label>
+        <name>Personal_Site_Requires_URL_Email_Match__c</name>
+    </fields>
+    <fields>
+        <help>כמה חודשים קדימה יש לתכנן את לוח הזמנים של המשימה החוזרת?</help>
+        <label>חודשי משימה חוזרת בעתיד</label>
+        <name>Recurring_Job_Future_Months__c</name>
+    </fields>
+    <fields>
+        <help>שם החשבון שישמש בעת יצירה של אנשי קשר חדשים במהלך ההרשמה.  אם אתה משתמש במודל &apos;אחד לאחד&apos; של ערכת ההתחלה למלכ&quot;רים (NPSP), השאר הגדרה זו ריקה.  אם אתה משתמש במודל Bucket, הגדר כשם החשבון; לרוב &apos;אישי&apos;.</help>
+        <label>חשבון Bucket של הרשמה ביצירה</label>
+        <name>Signup_Bucket_Account_On_Create__c</name>
+    </fields>
+    <fields>
+        <help>האם טופס רישום המתנדבים צריך ליצור רשומות אנשי קשר חדשות, אם לא נמצאו אנשי קשר קיימים (או כאשר האפשרות &apos;הרישום תואם לאנשי קשר קיימים&apos; אינה מסומנת)?  אם הגדרה זו אינה מסומנת, היא תיצור הפניות כאשר לא יימצאו התאמות.</help>
+        <label>הרשמה יוצרת אנשי קשר אם אין התאמה</label>
+        <name>Signup_Creates_Contacts_If_No_Match__c</name>
+    </fields>
+    <fields>
+        <help>האם דף רישום המתנדבים צריך לנסות להתאים את האדם לאיש קשר קיים (לפי שם פרטי, שם משפחה, דואר אלקטרוני)?</help>
+        <label>הרישום תואם לאנשי קשר קיימים</label>
+        <name>Signup_Matches_Existing_Contacts__c</name>
+    </fields>
+    <gender><!-- Masculine --></gender>
+</CustomObjectTranslation>

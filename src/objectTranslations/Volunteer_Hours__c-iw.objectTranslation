@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <article>Definite</article>
+        <plural>false</plural>
+        <value>שעות התנדבות</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>false</plural>
+        <value>שעות התנדבות</value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
+        <plural>true</plural>
+        <value>שעות התנדבות</value>
+    </caseValues>
+    <caseValues>
+        <article>None</article>
+        <plural>true</plural>
+        <value>שעות התנדבות</value>
+    </caseValues>
+    <fields>
+        <label>הערות</label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label>איש קשר</label>
+        <name>Contact__c</name>
+        <relationshipLabel>שעות התנדבות</relationshipLabel>
+    </fields>
+    <fields>
+        <label>תאריך סיום</label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label>שם מלא</label>
+        <name>Full_Name__c</name>
+    </fields>
+    <fields>
+        <label>שעות עבודה בפועל</label>
+        <name>Hours_Worked__c</name>
+    </fields>
+    <fields>
+        <help>ערך ברירת המחדל הוא 1. הזן ערך גדול יותר אם אדם זה מביא עמו אנשים נוספים שאחריהם אינך עוקב ישירות כאנשי קשר, ולא תרשום עבורם שעות התנדבות אישיות.</help>
+        <label>מספר מתנדבים</label>
+        <name>Number_of_Volunteers__c</name>
+    </fields>
+    <fields>
+        <help>התאריך והשעה שבהם המתנדב מתכנן להתחיל לעבוד בפועל.</help>
+        <label>תאריך ושעת התחלה מתוכננים</label>
+        <name>Planned_Start_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label>תאריך ושעת התחלה של משמרת</label>
+        <name>Shift_Start_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label>תאריך התחלה</label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label>מצב</label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation>בוטל</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation>הושלם</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Confirmed</masterLabel>
+            <translation>אושר</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No-Show</masterLabel>
+            <translation>היעדרות</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prospect</masterLabel>
+            <translation>פוטנציאלי</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web Sign Up</masterLabel>
+            <translation>הרשמה באינטרנט</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help>טקסט מידע ממתזמן המערכת.</help>
+        <label>הערת מערכת</label>
+        <name>System_Note__c</name>
+    </fields>
+    <fields>
+        <label>סה&quot;כ שעות עבודה בפועל</label>
+        <name>Total_Hours_Worked__c</name>
+    </fields>
+    <fields>
+        <label>שם מבצע לגיוס מתנדבים</label>
+        <name>Volunteer_Campaign_Name__c</name>
+    </fields>
+    <fields>
+        <label>מבצע לגיוס מתנדבים</label>
+        <name>Volunteer_Campaign__c</name>
+    </fields>
+    <fields>
+        <label>משימת התנדבות</label>
+        <name>Volunteer_Job__c</name>
+        <relationshipLabel>שעות התנדבות</relationshipLabel>
+    </fields>
+    <fields>
+        <label>לוח זמנים של התנדבות חוזרת</label>
+        <name>Volunteer_Recurrence_Schedule__c</name>
+        <relationshipLabel>שעות התנדבות</relationshipLabel>
+    </fields>
+    <fields>
+        <label>משמרת התנדבות</label>
+        <lookupFilter>
+            <informationalMessage>ניתן לבחור משמרת השייכת למשימה הנוכחית בלבד.</informationalMessage>
+        </lookupFilter>
+        <name>Volunteer_Shift__c</name>
+        <relationshipLabel>שעות התנדבות</relationshipLabel>
+    </fields>
+    <gender>Masculine</gender>
+    <layouts>
+        <layout>Volunteer Hours Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- HoursID --></nameFieldLabel>
+    <validationRules>
+        <errorMessage>ציין את שעות העבודה בפועל בעת הגדרת המצב כ&apos;הושלם&apos;.</errorMessage>
+        <name>HoursRequiredOnCompletion</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>ציין ערך מצב.</errorMessage>
+        <name>StatusMustBeSet</name>
+    </validationRules>
+    <webLinks>
+        <label>עריכת פריטים מרובים של שעות התנדבות</label>
+        <name>Mass_Edit_Volunteer_Hours</name>
+    </webLinks>
+</CustomObjectTranslation>

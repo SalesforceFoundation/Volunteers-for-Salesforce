@@ -408,54 +408,63 @@
         <members>Campaign-en_US</members>
         <members>Campaign-es</members>
         <members>Campaign-fr</members>
+        <members>Campaign-iw</members>
         <members>Campaign-ja</members>
         <members>Campaign-nl_NL</members>
         <members>Contact-de</members>
         <members>Contact-en_US</members>
         <members>Contact-es</members>
         <members>Contact-fr</members>
+        <members>Contact-iw</members>
         <members>Contact-ja</members>
         <members>Contact-nl_NL</members>
         <members>Job_Recurrence_Schedule__c-de</members>
         <members>Job_Recurrence_Schedule__c-en_US</members>
         <members>Job_Recurrence_Schedule__c-es</members>
         <members>Job_Recurrence_Schedule__c-fr</members>
+        <members>Job_Recurrence_Schedule__c-iw</members>
         <members>Job_Recurrence_Schedule__c-ja</members>
         <members>Job_Recurrence_Schedule__c-nl_NL</members>
         <members>Lead-de</members>
         <members>Lead-en_US</members>
         <members>Lead-es</members>
         <members>Lead-fr</members>
+        <members>Lead-iw</members>
         <members>Lead-ja</members>
         <members>Lead-nl_NL</members>
         <members>Volunteer_Hours__c-de</members>
         <members>Volunteer_Hours__c-en_US</members>
         <members>Volunteer_Hours__c-es</members>
         <members>Volunteer_Hours__c-fr</members>
+        <members>Volunteer_Hours__c-iw</members>
         <members>Volunteer_Hours__c-ja</members>
         <members>Volunteer_Hours__c-nl_NL</members>
         <members>Volunteer_Job__c-de</members>
         <members>Volunteer_Job__c-en_US</members>
         <members>Volunteer_Job__c-es</members>
         <members>Volunteer_Job__c-fr</members>
+        <members>Volunteer_Job__c-iw</members>
         <members>Volunteer_Job__c-ja</members>
         <members>Volunteer_Job__c-nl_NL</members>
         <members>Volunteer_Recurrence_Schedule__c-de</members>
         <members>Volunteer_Recurrence_Schedule__c-en_US</members>
         <members>Volunteer_Recurrence_Schedule__c-es</members>
         <members>Volunteer_Recurrence_Schedule__c-fr</members>
+        <members>Volunteer_Recurrence_Schedule__c-iw</members>
         <members>Volunteer_Recurrence_Schedule__c-ja</members>
         <members>Volunteer_Recurrence_Schedule__c-nl_NL</members>
         <members>Volunteer_Shift__c-de</members>
         <members>Volunteer_Shift__c-en_US</members>
         <members>Volunteer_Shift__c-es</members>
         <members>Volunteer_Shift__c-fr</members>
+        <members>Volunteer_Shift__c-iw</members>
         <members>Volunteer_Shift__c-ja</members>
         <members>Volunteer_Shift__c-nl_NL</members>
         <members>Volunteers_Settings__c-de</members>
         <members>Volunteers_Settings__c-en_US</members>
         <members>Volunteers_Settings__c-es</members>
         <members>Volunteers_Settings__c-fr</members>
+        <members>Volunteers_Settings__c-iw</members>
         <members>Volunteers_Settings__c-ja</members>
         <members>Volunteers_Settings__c-nl_NL</members>
         <name>CustomObjectTranslation</name>
@@ -626,6 +635,7 @@
         <members>en_US</members>
         <members>es</members>
         <members>fr</members>
+        <members>iw</members>
         <members>ja</members>
         <members>nl_NL</members>
         <name>Translations</name>
