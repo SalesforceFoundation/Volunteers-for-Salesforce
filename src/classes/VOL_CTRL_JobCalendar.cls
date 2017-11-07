@@ -278,7 +278,6 @@ global with sharing class VOL_CTRL_JobCalendar {
     @RemoteAction global static list<Volunteer_Shift__c> getListShiftsWeb2(string strCampaignId, string strJobId, 
         string strStartDateTime, string strEndDateTime, boolean fWeb, boolean fShowCampaignHierarchy) {
 
-        try {
             DateTime dtStart = datetime.valueOf(strStartDateTime);
             DateTime dtEnd = datetime.valueOf(strEndDateTime);
             boolean fAllCampaign = (strCampaignId == '*');
@@ -342,11 +341,6 @@ global with sharing class VOL_CTRL_JobCalendar {
             }
             
             return listShifts;
-
-        } catch (Exception e) {
-            ApexPages.addMessages(e);
-            return null;
-        }       
     }       
     
     // this was a testmethod which can't be compiled in this class under api 31.  
