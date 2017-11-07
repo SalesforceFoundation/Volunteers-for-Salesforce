@@ -118,7 +118,7 @@
                     '{!$RemoteAction.VOL_CTRL_JobCalendar.getListShiftsWeb2}',
                     campaignId, jobId, strApexDateLocale(start, false), strApexDateLocale(end, false), {!fWeb}, {!fShowCampaignHierarchy}, function(result, event) {
                     if (event.type == 'exception') {
-                        alert(event.message);
+                        document.getElementById("errorMessage").innerText = event.message;
                     } else {
                         if (result != null) {
                             var shifts = [];
@@ -280,6 +280,18 @@
     
 </script>
 
+<style type="text/css">
+    div.message-panel {
+        color: red;
+        text-align: center;
+        font-size: 15px; 
+        padding: 5px;
+    }
+    div.message-panel:empty {
+        display: none;
+    }
+</style>
+
     <apex:outputPanel id="panelPrint" layout="block" style="float:right;margin-right:10px;margin-top:10px;" rendered="{!AND(NOT(fPrint),NOT(fWeb))}">
         <a href="javascript:printWin('/apex/{!ns}JobCalendar?Print=1' +
             '&campaignId={!campaignId}' +
@@ -316,6 +328,7 @@
                 </div>
             </apex:outputText>
             <!-- PAGE BODY -->
+            <div id="errorMessage" role="alert" class="message-panel"></div>
             <apex:outputText rendered="{!NOT(fWeb)}" >
                 <div class="slds-container--small slds-p-top--large slds-p-bottom--small">
                     <div class="slds-form--horizontal">

@@ -38,7 +38,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionCreateException</shortDescription>
-        <value>User does not have permissions to create {0}.</value>
+        <value>You don&apos;&apos;t have the permissions required to create {0}. Please contact the system administrator.</value>
     </labels>
     <labels>
         <fullName>PermissionDeleteException</fullName>
@@ -46,7 +46,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionDeleteException</shortDescription>
-        <value>User does not have permissions to delete {0}.</value>
+        <value>You don&apos;&apos;t have the permissions required to delete {0}. Please contact the system administrator.</value>
     </labels>
     <labels>
         <fullName>PermissionReadException</fullName>
@@ -54,7 +54,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionReadException</shortDescription>
-        <value>User does not have permissions to view {0}.</value>
+        <value>You don&apos;&apos;t have the permissions required to view {0}. Please contact the system administrator.</value>
     </labels>
     <labels>
         <fullName>PermissionUpdateException</fullName>
@@ -62,7 +62,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionUpdateException</shortDescription>
-        <value>User does not have permissions to update {0}.</value>
+        <value>You don&apos;&apos;t have the permissions required to update {0}. Please contact the system administrator.</value>
     </labels>
     <labels>
         <fullName>labelButtonAssign</fullName>
