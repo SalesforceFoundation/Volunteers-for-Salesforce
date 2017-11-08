@@ -35,9 +35,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     // constructor
     global VOL_CTRL_VolunteersReportHours() {
         try {
-            checkCreateAccess();
-            checkUpdateAccess();
-
             volSharedCode = new VOL_SharedCode();
 
             // initial values for potential parameters
@@ -62,6 +59,9 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
             // we can derive whether we are within the Personal Site or not, so no need for parameter.
             fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');           
+            
+            checkCreateAccess();
+            checkUpdateAccess();
         }   
         catch(Exception e) {
             ApexPages.addMessages(e);
