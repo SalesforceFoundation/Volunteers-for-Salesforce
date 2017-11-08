@@ -34,6 +34,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
      
     // constructor
     global VOL_CTRL_VolunteersReportHours() {
+        try {
         volSharedCode = new VOL_SharedCode();
 
         // initial values for potential parameters
@@ -58,6 +59,12 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
         // we can derive whether we are within the Personal Site or not, so no need for parameter.
         fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');              
+
+            checkCreateAccess();
+            checkUpdateAccess();
+        } catch (Exception e) {
+            ApexPages.addMessages(e);
+        }
     } 
             
     // holds the contact fields on the page            
@@ -310,6 +317,9 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
             // if we found a matching Hours, just update it
             if (listHours != null && listHours.size() > 0) {
+                // Ensure the user has access to the object and fields before querying
+                checkUpdateAccess();
+
                 listHours[0].Status__c = 'Completed';
                 listHours[0].Start_Date__c = vhours.Start_Date__c;
                 listHours[0].End_Date__c = vhours.End_Date__c;
@@ -326,31 +336,17 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                     String fieldName = f.getFieldPath();
                     if (vhours.get(fieldName) != null) {
                         listHours[0].put(fieldName, vhours.get(fieldName)); 
-                        flsCheckFields.add(fieldName);
                     }   
                 }   
-
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), flsCheckFields);
-                
                 update listHours[0];
             } else {        
-                // create new hours if needed
+                checkCreateAccess();
+
                 vhours.Volunteer_Job__c = volunteerJobId;
                 vhours.Volunteer_Shift__c = volunteerShiftId;
                 vhours.Status__c = 'Completed';
                 vhours.Contact__c = contactId;
                 vhours.Number_of_Volunteers__c = 1;
-                
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
-                    new Set<String>{
-                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
-                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
-                        UTIL_Describe.StrTokenNSPrefix('Status__c'),
-                        UTIL_Describe.StrTokenNSPrefix('Contact__c'),
-                        UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c')});
-                
                 insert vhours;
             }
             
@@ -375,6 +371,37 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, ex.getMessage()));                     
         }
         return null;
+    }
+
+    private void checkCreateAccess() {
+        UTIL_Describe.checkCreateAccess(
+            UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+            new Set<String>{
+                UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                UTIL_Describe.StrTokenNSPrefix('Status__c'),
+                UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c')
+            }
+        );
+    }
+
+    private void checkUpdateAccess() {
+        Set<String> flsCheckFields = new Set<String> {
+            UTIL_Describe.StrTokenNSPrefix('End_Date__c'),
+            UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
+            UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+            UTIL_Describe.StrTokenNSPrefix('Status__c')
+        };
+
+        // Get the additional fields from the FieldSet
+        for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
+            if (vhours.get(f.getFieldPath()) != null) {
+                flsCheckFields.add(f.getFieldPath());
+            }
+        }
+
+        UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), flsCheckFields);
     }
 
     // this was a testmethod which can't be compiled in this class under api 31.  
