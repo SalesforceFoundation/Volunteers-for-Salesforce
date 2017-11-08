@@ -35,6 +35,9 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     // constructor
     global VOL_CTRL_VolunteersReportHours() {
         try {
+            checkCreateAccess();
+            checkUpdateAccess();
+
         volSharedCode = new VOL_SharedCode();
 
         // initial values for potential parameters
@@ -59,10 +62,8 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
         // we can derive whether we are within the Personal Site or not, so no need for parameter.
         fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');              
-
-            checkCreateAccess();
-            checkUpdateAccess();
-        } catch (Exception e) {
+        }   
+        catch(Exception e) {
             ApexPages.addMessages(e);
         }
     } 
@@ -317,7 +318,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
             // if we found a matching Hours, just update it
             if (listHours != null && listHours.size() > 0) {
-                // Ensure the user has access to the object and fields before querying
                 checkUpdateAccess();
 
                 listHours[0].Status__c = 'Completed';
@@ -325,12 +325,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 listHours[0].End_Date__c = vhours.End_Date__c;
                 listHours[0].Hours_Worked__c = vhours.Hours_Worked__c;
             
-                Set<String> flsCheckFields = new Set<String> {
-                    UTIL_Describe.StrTokenNSPrefix('End_Date__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Status__c')};
-                
                 // update the additional fields, if any
                 for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
                     String fieldName = f.getFieldPath();
