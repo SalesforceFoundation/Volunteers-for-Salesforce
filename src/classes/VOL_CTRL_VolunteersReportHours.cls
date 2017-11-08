@@ -38,30 +38,30 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             checkCreateAccess();
             checkUpdateAccess();
 
-        volSharedCode = new VOL_SharedCode();
+            volSharedCode = new VOL_SharedCode();
 
-        // initial values for potential parameters
-        strLanguage = 'en-us'; 
-        strDateFormat = 'EEEE M/d/yyyy';
-        strTimeFormat = 'h:mm tt';
+            // initial values for potential parameters
+            strLanguage = 'en-us'; 
+            strDateFormat = 'EEEE M/d/yyyy';
+            strTimeFormat = 'h:mm tt';
 
-        // handle optional page parameters (must use string, not ID, to handle null)
-        map<string, string> params = ApexPages.currentPage().getParameters();
-        string p = params.get('Language');
-        if (p != null && p != '') strLanguage = p;
-        p = params.get('DateFormat');
-        if (p != null && p != '') strDateFormat = p;
-        p = params.get('TimeFormat');
-        if (p != null && p != '') strTimeFormat = p;
+            // handle optional page parameters (must use string, not ID, to handle null)
+            map<string, string> params = ApexPages.currentPage().getParameters();
+            string p = params.get('Language');
+            if (p != null && p != '') strLanguage = p;
+            p = params.get('DateFormat');
+            if (p != null && p != '') strDateFormat = p;
+            p = params.get('TimeFormat');
+            if (p != null && p != '') strTimeFormat = p;
 
-        // we now get the fields from the fieldset
-        listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersReportHoursFS);
-        
-        // output error page messages for any field that doesn't have visibility correctly set.
-        VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
+            // we now get the fields from the fieldset
+            listStrFields = VOL_SharedCode.listStrFieldsFromContactFieldSet(Schema.SObjectType.Contact.fieldSets.VolunteersReportHoursFS);
+            
+            // output error page messages for any field that doesn't have visibility correctly set.
+            VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
 
-        // we can derive whether we are within the Personal Site or not, so no need for parameter.
-        fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');              
+            // we can derive whether we are within the Personal Site or not, so no need for parameter.
+            fPersonalSite = ApexPages.currentPage().getUrl().contains('PersonalSite');           
         }   
         catch(Exception e) {
             ApexPages.addMessages(e);
@@ -329,13 +329,15 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 for (Schema.FieldSetMember f : SObjectType.Volunteer_Hours__c.FieldSets.VolunteersReportHoursFS.getFields()) {
                     String fieldName = f.getFieldPath();
                     if (vhours.get(fieldName) != null) {
-                        listHours[0].put(fieldName, vhours.get(fieldName)); 
+                        listHours[0].put(fieldName, vhours.get(fieldName));
                     }   
                 }   
+
                 update listHours[0];
             } else {        
                 checkCreateAccess();
 
+                // create new hours if needed
                 vhours.Volunteer_Job__c = volunteerJobId;
                 vhours.Volunteer_Shift__c = volunteerShiftId;
                 vhours.Status__c = 'Completed';
