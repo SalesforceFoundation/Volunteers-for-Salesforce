@@ -369,6 +369,10 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         return null;
     }
 
+    /*******************************************************************************************************
+    * @description check if the current user has a "Create" permission on the listed fields
+    * @return void.
+    ********************************************************************************************************/
     private void checkCreateAccess() {
         UTIL_Describe.checkCreateAccess(
             UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
@@ -382,6 +386,10 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         );
     }
 
+    /*******************************************************************************************************
+    * @description check if the current user has a "Edit" permission on the listed fields
+    * @return void.
+    ********************************************************************************************************/
     private void checkUpdateAccess() {
         Set<String> flsCheckFields = new Set<String> {
             UTIL_Describe.StrTokenNSPrefix('End_Date__c'),
