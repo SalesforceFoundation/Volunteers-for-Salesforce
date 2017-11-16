@@ -118,5 +118,35 @@ private with sharing class VOL_CTRL_VolunteersCampaignWizard_TEST {
         ctrl.cSampleJobs = 0;
         System.Assert(ctrl.Save() == null);
         
-    }   
+    }
+
+    /*******************************************************************************************************
+    * @description tests that any permission errors during save prevent any objects from being created.
+    */
+    static testMethod void testPermissions() {
+        // cause our permissions tests to always fail
+        UTIL_Describe.throwException = true;
+
+        VOL_CTRL_VolunteersCampaignWizard ctrl = new VOL_CTRL_VolunteersCampaignWizard();
+
+        // scenario1: new campaign with sample jobs & shifts
+        ctrl.cmpVols.Name = 'Should Fail';
+        ctrl.cmpVols.StartDate = System.today();
+        ctrl.cmpVols.IsActive = true;
+        ctrl.campaignIdClone = null;  // invalid Id
+        ctrl.cSampleJobs = 1;
+        ctrl.cSampleShifts = 1;
+        ctrl.fCopyVolunteers = false;
+        System.assertEquals(null, ctrl.Save());
+        System.assertEquals(0, [SELECT COUNT() FROM Campaign]);
+
+        // scenario2: clone non-existent campaign
+        // create a contact to get a real (but incorrect) Id
+        Contact con = new Contact(Lastname='temp');
+        insert con;
+        ctrl.campaignIdClone = con.Id;
+        ctrl.fCopyVolunteers = true;
+        System.assertEquals(null, ctrl.Save());
+        System.assertEquals(0, [SELECT COUNT() FROM Campaign]);
+    }
 }

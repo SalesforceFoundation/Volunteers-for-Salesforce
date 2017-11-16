@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label>זמינות מתנדב</label>
+        <name>Volunteer_Availability__c</name>
+        <picklistValues>
+            <masterLabel>Afternoon</masterLabel>
+            <translation>אחה&quot;צ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Morning</masterLabel>
+            <translation>בוקר</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekdays</masterLabel>
+            <translation>ימי חול</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekends</masterLabel>
+            <translation>סופי שבוע</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation>שבועית</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>הערות מתנדב</label>
+        <name>Volunteer_Notes__c</name>
+    </fields>
+    <fields>
+        <help>בחר את הכישורים של אדם זה שצריכים לשמש לחיפוש משימות התנדבות.</help>
+        <label>כישורי מתנדב</label>
+        <name>Volunteer_Skills__c</name>
+        <picklistValues>
+            <masterLabel>Computer usage</masterLabel>
+            <translation>שימוש במחשב</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Event Planning</masterLabel>
+            <translation>תכנון אירועים</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fundraising</masterLabel>
+            <translation>גיוס תרומות</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landscaping</masterLabel>
+            <translation>גינון</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual labor</masterLabel>
+            <translation>עבודה פיזית</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation>שיווק</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>מצב מתנדב</label>
+        <name>Volunteer_Status__c</name>
+        <picklistValues>
+            <masterLabel>New Sign Up</masterLabel>
+            <translation>הרשמה חדשה</translation>
+        </picklistValues>
+    </fields>
+    <workflowTasks>
+        <description><!-- An automatic email has been sent to the lead thanking them for signing up to be a volunteer. --></description>
+        <name>Volunteer_Signup_Thank_You_Sent_Lead</name>
+        <subject><!-- Volunteer Signup Thank You Sent - Lead --></subject>
+    </workflowTasks>
+</CustomObjectTranslation>

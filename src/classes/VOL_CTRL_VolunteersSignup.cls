@@ -60,15 +60,19 @@ global virtual with sharing class VOL_CTRL_VolunteersSignup {
         // Signup_Matches_Existing_Contacts__c
         // Signup_Creates_Contacts_If_No_Match__c
         // Signup_Bucket_Account_On_Create__c
-                 
-        VOL_SharedCode.CreateContactOrLead(contact,
-            VOL_SharedCode.VolunteersSettings.Signup_Matches_Existing_Contacts__c,
-            VOL_SharedCode.VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c);   
-                         
-        StrSaveResult = system.label.labelVolunteerSignupThankYou;
-        contact = null; // so fields get reset to null.
-        return null;
+
+        try {
+            VOL_SharedCode.CreateContactOrLead(contact,
+                VOL_SharedCode.VolunteersSettings.Signup_Matches_Existing_Contacts__c,
+                VOL_SharedCode.VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c);
+            StrSaveResult = system.label.labelVolunteerSignupThankYou;
+            contact = null; // so fields get reset to null.
+        } catch (exception ex) {
+            strSaveResult = ex.getMessage();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, strSaveResult));
         }
+        return null;
+    }
 
     global String StrSaveResult { get; set; }
 

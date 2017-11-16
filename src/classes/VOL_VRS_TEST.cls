@@ -574,9 +574,9 @@ private with sharing class VOL_VRS_TEST {
         Contact contact = new Contact(firstname='test', lastname='test');
         insert contact;
         
-        Date dtStart1 = system.today().addmonths(1).toStartOfMonth();
+        DateTime dtStart1 = datetime.newInstance(system.today().addmonths(1).toStartOfMonth(), time.newInstance(0,0,0,0));
         Date dtEnd1 = system.today().addmonths(2).toStartOfMonth().addDays(-1);
-        Date dtStart2 = system.today().addmonths(2).toStartOfMonth();
+        DateTime dtStart2 = datetime.newInstance(system.today().addmonths(2).toStartOfMonth(), time.newInstance(0,0,0,0));
         Date dtEnd2 = system.today().addmonths(3).toStartOfMonth().addDays(-1);
         //system.debug('****DJH: dtStart1: ' + dtStart1 + ' dtEnd1: ' + dtEnd1 + ' dtStart2: ' + dtStart2 + ' dtEnd2: ' + dtEnd2);
         

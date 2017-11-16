@@ -39,7 +39,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static void testPageWithSitesGuestUser() {
+    private static testMethod void testPageWithSitesGuestUser() {
         list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and 
             Name like '%Site Guest User%'];
         if (listU.size() > 0) {
@@ -135,7 +135,14 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         VOL_CTRL_PersonalSiteReportHours ctrlRH = new VOL_CTRL_PersonalSiteReportHours();
         system.assertNotEquals(null, ctrlRH);
         system.assertEquals('en-us', ctrlRH.strLanguage);
-                
+
+        // test permissions
+        UTIL_Describe.throwException = true;
+        ctrl.contactEdit.LastName = 'PermTest';
+        ctrl.save();
+        con = [select Id, LastName from Contact where Id = :ctrl.contactId];
+        system.assertEquals('TestIsNowTesty', con.LastName);
+
     }
     
 }

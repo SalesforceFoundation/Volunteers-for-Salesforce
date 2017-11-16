@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Volunteers --></label>
+        <name>Groundwire_Volunteers</name>
+    </customApplications>
+    <customLabels>
+        <label>הצלחה</label>
+        <name>PageMessagesConfirm</name>
+    </customLabels>
+    <customLabels>
+        <label>שגיאה</label>
+        <name>PageMessagesError</name>
+    </customLabels>
+    <customLabels>
+        <label>שגיאה</label>
+        <name>PageMessagesFatal</name>
+    </customLabels>
+    <customLabels>
+        <label>אזהרה</label>
+        <name>PageMessagesWarning</name>
+    </customLabels>
+    <customLabels>
+        <label>הקצאה</label>
+        <name>labelButtonAssign</name>
+    </customLabels>
+    <customLabels>
+        <label>ביטול</label>
+        <name>labelButtonCancel</name>
+    </customLabels>
+    <customLabels>
+        <label>סגור</label>
+        <name>labelButtonClose</name>
+    </customLabels>
+    <customLabels>
+        <label>עדכון</label>
+        <name>labelButtonEdit</name>
+    </customLabels>
+    <customLabels>
+        <label>איתור</label>
+        <name>labelButtonFind</name>
+    </customLabels>
+    <customLabels>
+        <label>שמור</label>
+        <name>labelButtonSave</name>
+    </customLabels>
+    <customLabels>
+        <label>שמור וסגור</label>
+        <name>labelButtonSaveAndClose</name>
+    </customLabels>
+    <customLabels>
+        <label>שלח</label>
+        <name>labelButtonSend</name>
+    </customLabels>
+    <customLabels>
+        <label>הרשמה</label>
+        <name>labelButtonSignUp</name>
+    </customLabels>
+    <customLabels>
+        <label>כל היום</label>
+        <name>labelCalendarAllDay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- calendar label for axisFormat of agenda views --></label>
+        <name>labelCalendarAxisFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>prev:     &apos;&amp;nbsp;&amp;#9668;&amp;nbsp;&apos;,
+next:     &apos;&amp;nbsp;&amp;#9658;&amp;nbsp;&apos;,
+prevYear: &apos;&amp;nbsp;&amp;lt;&amp;lt;&amp;nbsp;&apos;,
+nextYear: &apos;&amp;nbsp;&amp;gt;&amp;gt;&amp;nbsp;&apos;,
+today: &apos;היום&apos;,
+month: &apos;חודש&apos;,
+week: &apos;שבוע&apos;,
+day: &apos;ום&apos;</label>
+        <name>labelCalendarButtonText</name>
+    </customLabels>
+    <customLabels>
+        <label>סגור חלון</label>
+        <name>labelCalendarCloseWindow</name>
+    </customLabels>
+    <customLabels>
+        <label>month: &apos;ddd&apos;, week: &apos;ddd M/d&apos;, day: &apos;dddd M/d&apos;</label>
+        <name>labelCalendarColumnFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>אושר:&amp;nbsp;</label>
+        <name>labelCalendarConfirmed</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;ראשון&apos;, &apos;שני&apos;, &apos;שלישי&apos;, &apos;רביעי&apos;, &apos;חמישי&apos;, &apos;שישי&apos;, &apos;שבת&apos;</label>
+        <name>labelCalendarDayNames</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;א&apos;, &apos;ב&apos;, &apos;ג&apos;, &apos;ד&apos;, &apos;ה&apos;, &apos;ו&apos;, &apos;ש&apos;</label>
+        <name>labelCalendarDayNamesShort</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- the first day of the week the calendar should start on --></label>
+        <name>labelCalendarFirstDay</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;ינואר&apos;, &apos;פברואר&apos;, &apos;מרץ&apos;, &apos;אפריל&apos;, &apos;מאי&apos;, &apos;יוני&apos;, &apos;יולי&apos;, &apos;אוגוסט&apos;, &apos;ספטמבר&apos;, &apos;אוקטובר&apos;, &apos;נובמבר&apos;, &apos;דצמבר&apos;</label>
+        <name>labelCalendarMonthNames</name>
+    </customLabels>
+    <customLabels>
+        <label>&apos;ינו&apos;, &apos;פבר&apos;, &apos;מרץ&apos;, &apos;אפר&apos;, &apos;מאי&apos;, &apos;יונ&apos;, &apos;יול&apos;, &apos;אוג&apos;, &apos;ספט&apos;, &apos;אוק&apos;, &apos;נוב&apos;, &apos;דצמ&apos;</label>
+        <name>labelCalendarMonthNamesShort</name>
+    </customLabels>
+    <customLabels>
+        <label>יומן משמרות מתנדבים</label>
+        <name>labelCalendarPageTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>הדפס דף זה</label>
+        <name>labelCalendarPrintThisPage</name>
+    </customLabels>
+    <customLabels>
+        <label>תצוגה ניתנת להדפסה</label>
+        <name>labelCalendarPrintableView</name>
+    </customLabels>
+    <customLabels>
+        <label>לוח משמרות</label>
+        <name>labelCalendarRoster</name>
+    </customLabels>
+    <customLabels>
+        <label>(מלא)</label>
+        <name>labelCalendarShiftFull</name>
+    </customLabels>
+    <customLabels>
+        <label>&amp;nbsp;&amp;nbsp;עדיין דרושים:&amp;nbsp;</label>
+        <name>labelCalendarStillNeeded</name>
+    </customLabels>
+    <customLabels>
+        <label>agenda: &apos;h:mm{ - h:mm}&apos;, &apos;&apos;: &apos;h(:mm)t&apos;</label>
+        <name>labelCalendarTimeFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>month: &apos;MMMM yyyy&apos;, week: &quot;MMM d[ yyyy]{ &apos;&amp;#8212;&apos;[ MMM] d yyyy}&quot;, day: &apos;dddd, MMM d, yyyy&apos;</label>
+        <name>labelCalendarTitleFormat</name>
+    </customLabels>
+    <customLabels>
+        <label>(כל מבצעי גיוס המתנדבים הפעילים)</label>
+        <name>labelChoiceAllActiveCampaigns</name>
+    </customLabels>
+    <customLabels>
+        <label>(כל המשימות)</label>
+        <name>labelChoiceAllJobs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- labelChooseCriteria --></label>
+        <name>labelChooseCriteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- list of browser color values for JobCalendar --></label>
+        <name>labelColorValues</name>
+    </customLabels>
+    <customLabels>
+        <label>האם אתה בטוח שברצונך לבטל משמרת זו?</label>
+        <name>labelContactInfoCancelMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>כיצד אתה מבצע מעקב?</label>
+        <name>labelContactInfoChart</name>
+    </customLabels>
+    <customLabels>
+        <label>חודש</label>
+        <name>labelContactInfoChartXAxis</name>
+    </customLabels>
+    <customLabels>
+        <label>שעות התנדבות</label>
+        <name>labelContactInfoChartYAxis</name>
+    </customLabels>
+    <customLabels>
+        <label>תאריך</label>
+        <name>labelContactInfoDateTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label>פרטים</label>
+        <name>labelContactInfoDetails</name>
+    </customLabels>
+    <customLabels>
+        <label>היסטוריית ההתנדבות האחרונה שלך</label>
+        <name>labelContactInfoHistory</name>
+    </customLabels>
+    <customLabels>
+        <label>שעות</label>
+        <name>labelContactInfoHoursTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label>משימה</label>
+        <name>labelContactInfoJobTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label>פרטי ההתנדבות שלך</label>
+        <name>labelContactInfoLookupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ראה את הנתונים הסטטיסטיים והיסטוריית ההתנדבות שלך לאחר השתתפותך בפעם הראשונה.</label>
+        <name>labelContactInfoNewVolunteerText</name>
+    </customLabels>
+    <customLabels>
+        <label>קבלת פנים למתנדב חדש</label>
+        <name>labelContactInfoNewVolunteerTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>קצה עליון</label>
+        <name>labelContactInfoRankText</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} מובילים ב-12 החודשים האחרונים</label>
+        <name>labelContactInfoRankText12Months</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} מובילים במחזור החיים</label>
+        <name>labelContactInfoRankTextLifetime</name>
+    </customLabels>
+    <customLabels>
+        <label>הדירוג שלך</label>
+        <name>labelContactInfoRankTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>מועד</label>
+        <name>labelContactInfoTimeTableColumn</name>
+    </customLabels>
+    <customLabels>
+        <label>משמרות התנדבות מתוכננות</label>
+        <name>labelContactInfoUpcomingShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>מלא את השם וכתובת הדואר האלקטרוני שלך, ויישלח אליך קישור אל פרטי ההתנדבות שלך.</label>
+        <name>labelContactLookupInstructions</name>
+    </customLabels>
+    <customLabels>
+        <label>המידע שלך לא נמצא.  נסה שם או דואר אלקטרוני אחר.</label>
+        <name>labelContactLookupNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>ההודעה נשלחה.  בדוק אם קיבלת הודעת הדואר האלקטרוני עם קישור אל פרטי ההתנדבות שלך.  תודה.</label>
+        <name>labelContactLookupSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>העתק לוח זמנים מ-</label>
+        <name>labelCopySchedule</name>
+    </customLabels>
+    <customLabels>
+        <label>למשימה זו אין משמרות קרובות.</label>
+        <name>labelEventInThePast</name>
+    </customLabels>
+    <customLabels>
+        <label>הירשם (אתר חיצוני)</label>
+        <name>labelExternalSignupUrl</name>
+    </customLabels>
+    <customLabels>
+        <label>(נטען מדף האינטרנט לרישום מתנדבים).</label>
+        <name>labelFileUploadDescription</name>
+    </customLabels>
+    <customLabels>
+        <label>מצא מתנדבים</label>
+        <name>labelFindVolunteers</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} מתנדבים שנבחרו כבר הוקצו למשימה או משמרת זו.</label>
+        <name>labelFindVolunteersAlreadyAssigned</name>
+    </customLabels>
+    <customLabels>
+        <label>הקצה למשימה או משמרת</label>
+        <name>labelFindVolunteersAssign</name>
+    </customLabels>
+    <customLabels>
+        <label>קריטריונים</label>
+        <name>labelFindVolunteersCriteria</name>
+    </customLabels>
+    <customLabels>
+        <label>מתנדבים</label>
+        <name>labelFindVolunteersFindResults</name>
+    </customLabels>
+    <customLabels>
+        <label>סמן את המתנדבים שברצונך להוסיף למשימה או משמרת ההתנדבות שצוינה, ולחץ על &apos;הקצאה&apos;.</label>
+        <name>labelFindVolunteersHelpAssign</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר קריטריונים ולחץ על &apos;חיפוש&apos;.  המתנדבים תואמים אם נמצאת התאמה לאחד או יותר מהערכים שנבחרו בשדה.  השאר קריטריון ריק כדי לא לסנן לפיו.</label>
+        <name>labelFindVolunteersHelpCriteria</name>
+    </customLabels>
+    <customLabels>
+        <label>ציין קריטריוני סינון כדי להציג תוצאות.</label>
+        <name>labelFindVolunteersHelpFindResults</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} מתנדבים שנבחרו הוקצו למשימה או משמרת זו.</label>
+        <name>labelFindVolunteersNewlyAssigned</name>
+    </customLabels>
+    <customLabels>
+        <label>משמרת ראשונה:</label>
+        <name>labelFirstShift</name>
+    </customLabels>
+    <customLabels>
+        <label>מ-</label>
+        <name>labelFrom</name>
+    </customLabels>
+    <customLabels>
+        <label>הסתר</label>
+        <name>labelHide</name>
+    </customLabels>
+    <customLabels>
+        <label>פרטים</label>
+        <name>labelInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>נוצר באופן אוטומטי עבור לוח זמנים של משימה חוזרת:</label>
+        <name>labelJRSShiftCreatedSystemNote</name>
+    </customLabels>
+    <customLabels>
+        <label>הוסר מלוח זמנים של משימה חוזרת:</label>
+        <name>labelJRSShiftRemovedSystemNote</name>
+    </customLabels>
+    <customLabels>
+        <label>הוסף שורות נוספות</label>
+        <name>labelLinkAddMoreRows</name>
+    </customLabels>
+    <customLabels>
+        <label>מלא</label>
+        <name>labelLinkFull</name>
+    </customLabels>
+    <customLabels>
+        <label>הרשמה</label>
+        <name>labelLinkSignUp</name>
+    </customLabels>
+    <customLabels>
+        <label>ראשון</label>
+        <name>labelListViewFirst</name>
+    </customLabels>
+    <customLabels>
+        <label>אחרון</label>
+        <name>labelListViewLast</name>
+    </customLabels>
+    <customLabels>
+        <label>הבא</label>
+        <name>labelListViewNext</name>
+    </customLabels>
+    <customLabels>
+        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;דף {0} מתוך {1} &amp;nbsp;&amp;nbsp;({2} רשומות)</label>
+        <name>labelListViewPageInfo</name>
+    </customLabels>
+    <customLabels>
+        <label>הקודם</label>
+        <name>labelListViewPrevious</name>
+    </customLabels>
+    <customLabels>
+        <label>הצג משמרות ושעות מ-</label>
+        <name>labelMassEditDateFilterFrom</name>
+    </customLabels>
+    <customLabels>
+        <label>עד</label>
+        <name>labelMassEditDateFilterTo</name>
+    </customLabels>
+    <customLabels>
+        <label>אירעו שגיאות בעת ניסיון לשמור את שעות ההתנדבות.</label>
+        <name>labelMassEditErrorOnSave</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר את המבצע ומשימת ההתנדבות, וכן משמרת התנדבות אופציונלית, והדף יציג את כל הרשומות של שעות ההתנדבות שכבר נשמרו עבור המשימה, וכן רשומות חדשות שבאפשרותך להוסיף. עדכן את כל השורות לפי הצורך ולאחר מכן לחץ על &apos;שמור&apos;.</label>
+        <name>labelMassEditHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>(אופציונלי)</label>
+        <name>labelMassEditOptional</name>
+    </customLabels>
+    <customLabels>
+        <label>רשומות שעות ההתנדבות נשמרו.</label>
+        <name>labelMassEditSaveSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>עריכת פריטים מרובים של שעות התנדבות</label>
+        <name>labelMassEditTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>שלח דואר אלקטרוני למתנדבים עם המצב</label>
+        <name>labelMassEditVolunteersStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>עריכת תבנית</label>
+        <name>labelMassEmailEditTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label>אין אנשי קשר למשלוח דואר אלקטרוני.  נסה לבחור מצב אחר לסינון.</label>
+        <name>labelMassEmailErrorNoContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>ציין תבנית דואר אלקטרוני למשלוח.</label>
+        <name>labelMassEmailErrorNoTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label>דואר אלקטרוני המוני למתנדבים יכיל את כל רשומות שעות ההתנדבות של משימות חוזרות.</label>
+        <name>labelMassEmailHelp1</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר את המצב כדי לציין אילו רשומות ברצונך לכלול.</label>
+        <name>labelMassEmailHelp2</name>
+    </customLabels>
+    <customLabels>
+        <label>אם האפשרות &apos;כלול אנשי קשר פעם אחת בלבד&apos; אינה מסומנת, תישלח הודעת דואר אלקטרוני עבור כל רשומה של שעות התנדבות.</label>
+        <name>labelMassEmailHelp3</name>
+    </customLabels>
+    <customLabels>
+        <label>אם האפשרות &apos;כלול אנשי קשר פעם אחת בלבד&apos; מסומנת, תישלח הודעת דואר אלקטרוני אחת בלבד עבור רשומת שעות ההתנדבות הראשונה של איש הקשר.</label>
+        <name>labelMassEmailHelp4</name>
+    </customLabels>
+    <customLabels>
+        <label>סמן את האפשרות &apos;רשום פעילות עבור כל הודעת דואר אלקטרוני&apos; כדי לשמור פעילות עם איש הקשר.</label>
+        <name>labelMassEmailHelp5</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר את התבנית לפי האובייקט כדי לציין באיזה אובייקט להשתמש עם תבנית הדואר האלקטרוני.</label>
+        <name>labelMassEmailHelp6</name>
+    </customLabels>
+    <customLabels>
+        <label>Salesforce מגבילה את מספר הודעות הדואר האלקטרוני שניתן לשלוח ביום, לכן מומלץ לא להשתמש ב&apos;דואר אלקטרוני המוני למתנדבים&apos; עבור כמויות גדולות של הודעות.</label>
+        <name>labelMassEmailHelp7</name>
+    </customLabels>
+    <customLabels>
+        <label>דואר אלקטרוני המוני למתנדבים מאת</label>
+        <name>labelMassEmailTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>הצג תבניות</label>
+        <name>labelMassEmailViewTemplates</name>
+    </customLabels>
+    <customLabels>
+        <label>יש להפעיל רישום פעילויות עבור משימות ומשמרות התנדבות. עיין ב מדריך ההתקנה והגדרת התצורה של &apos;מתנדבים ל-Salesforce&apos;.</label>
+        <name>labelMassEmailVolunteersActivityLoggingError</name>
+    </customLabels>
+    <customLabels>
+        <label>רשום פעילות עבור כל הודעת דואר אלקטרוני</label>
+        <name>labelMassEmailVolunteersLogActivity</name>
+    </customLabels>
+    <customLabels>
+        <label>הפעילות תתועד ברשומה של איש הקשר.</label>
+        <name>labelMassEmailVolunteersLogActivityHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>הודעות דואר אלקטרוני נשלחו בהצלחה:</label>
+        <name>labelMassEmailVolunteersSuccessCount</name>
+    </customLabels>
+    <customLabels>
+        <label>דואר אלקטרוני המוני למתנדבים</label>
+        <name>labelMassEmailVolunteersTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>כלול אנשי קשר פעם אחת בלבד</label>
+        <name>labelMassEmailVolunteersUniqueContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>אם אפשרות זו אינה מסומנת, תישלח הודעת דואר אלקטרוני לאיש הקשר המתנדב עבור כל רשומת שעות במשימה או משמרת. סימון תיבה זו יגביל את השליחה להודעה אחת לכל איש קשר ייחודי.</label>
+        <name>labelMassEmailVolunteersUniqueContactsHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>הודעה</label>
+        <name>labelMessageBody</name>
+    </customLabels>
+    <customLabels>
+        <label>טוען...</label>
+        <name>labelMessageLoading</name>
+    </customLabels>
+    <customLabels>
+        <label>מצטערים, בשלב זה אין משימות התנדבות זמינות.</label>
+        <name>labelMessageNoJobs</name>
+    </customLabels>
+    <customLabels>
+        <label>שומר...</label>
+        <name>labelMessageSaving</name>
+    </customLabels>
+    <customLabels>
+        <label>מספר הודעות דואר אלקטרוני לאיש קשר</label>
+        <name>labelNumberOfContacts</name>
+    </customLabels>
+    <customLabels>
+        <label>מספר הודעות הדואר האלקטרוני שיישלחו. שינוי המצב של תיבת הסימון &apos;כלול אנשי קשר פעם אחת בלבד&apos; עשוי לשנות מספר זה.</label>
+        <name>labelNumberOfContactsHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>הצג את המידע שלך</label>
+        <name>labelPersonalSiteContactInfoTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>הזן כתובת דואר אלקטרוני חוקית.</label>
+        <name>labelPersonalSiteEmailError</name>
+    </customLabels>
+    <customLabels>
+        <label>דרושה כתובת דואר אלקטרוני.</label>
+        <name>labelPersonalSiteEmailRequired</name>
+    </customLabels>
+    <customLabels>
+        <label>דרוש שם פרטי.</label>
+        <name>labelPersonalSiteFirstnameRequired</name>
+    </customLabels>
+    <customLabels>
+        <label>יומן משימות</label>
+        <name>labelPersonalSiteJobCalendarTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>משימות התנדבות</label>
+        <name>labelPersonalSiteJobListingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>דרוש שם משפחה.</label>
+        <name>labelPersonalSiteLastnameRequired</name>
+    </customLabels>
+    <customLabels>
+        <label>אין משימות שעבורן תוכל לדווח על שעות.</label>
+        <name>labelPersonalSiteNoJobsForContact</name>
+    </customLabels>
+    <customLabels>
+        <label>דיווח על שעות</label>
+        <name>labelPersonalSiteReportHoursTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>אתר מתנדבים אישי</label>
+        <name>labelPersonalSiteTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>חזור ליומן</label>
+        <name>labelReturnToCalendar</name>
+    </customLabels>
+    <customLabels>
+        <label>סגור</label>
+        <name>labelShiftClosed</name>
+    </customLabels>
+    <customLabels>
+        <label>מאושר: {0}&amp;nbsp;&amp;nbsp;זמין: {1}</label>
+        <name>labelShiftNumbers</name>
+    </customLabels>
+    <customLabels>
+        <label>הצג עזרה</label>
+        <name>labelShowHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>הצג עוד</label>
+        <name>labelShowMore</name>
+    </customLabels>
+    <customLabels>
+        <label>נושא</label>
+        <name>labelSubject</name>
+    </customLabels>
+    <customLabels>
+        <label>שלח</label>
+        <name>labelSubmitButton</name>
+    </customLabels>
+    <customLabels>
+        <label>תבנית מבוססת על אובייקט</label>
+        <name>labelTemplateObject</name>
+    </customLabels>
+    <customLabels>
+        <label>ודא שהתבנית והאובייקט תואמים זה לזה. אם האפשרות &apos;כלול אנשי קשר פעם אחת בלבד&apos; מסומנת, רק רשומת שעות ההתנדבות הראשונה תישלח, כך שייתכן שתרצה להשתמש באובייקט תבנית ספציפי פחות.</label>
+        <name>labelTemplateObjectHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>רישום מתנדבים</label>
+        <name>labelTitleJobSignup</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;p&gt;&apos;מתנדבים ל-Salesforce&apos; תומכת בלוחות זמנים של התנדבות ומשימות חוזרות בעזרת תהליך אצווה, כדי ליצור משימות עתידיות ולהקצות להן מתנדבים. כדי להפעיל תהליך זה באופן ידני, לחץ על &apos;הפעל אצווה&apos;. לחלופין, ניתן לתזמן אותו לפעול באופן אוטומטי בשעות הלילה.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;יוצג סרגל התקדמות מתחת לתהליך האצווה האחרון. התהליך עשוי להימשך זמן מה; הוא יארך יותר ככל שמסד הנתונים שלך מכיל נתונים רבים יותר. תוכל לסגור דף זה והתהליך ימשיך לפעול ברקע.&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;כדי להציג את המשימות המתוזמנות כעת, עבור אל &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;דף המשימות המתוזמנות.&lt;/a&gt;&lt;/p&gt;
+&lt;br/&gt;
+&lt;p&gt;כדי לתזמן הפעלה אוטומטית של תהליך החזרה, עבור אל &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;דף תזמון משימות Apex.‏&lt;/a&gt;&lt;/p&gt;</label>
+        <name>labelVRSBatchDescription</name>
+    </customLabels>
+    <customLabels>
+        <label>לוחות זמנים של תהליכים חוזרים</label>
+        <name>labelVRSBatchProcess</name>
+    </customLabels>
+    <customLabels>
+        <label>התקדמות לוחות זמנים של תהליכים חוזרים</label>
+        <name>labelVRSBatchProcessProgress</name>
+    </customLabels>
+    <customLabels>
+        <label>הפעל אצווה</label>
+        <name>labelVRSBatchRun</name>
+    </customLabels>
+    <customLabels>
+        <label>נוצר באופן אוטומטי עבור לוח זמנים של התנדבות חוזרת:</label>
+        <name>labelVRSHoursCreatedSystemNote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- system annotation when  an Hours record is detached from a VRS --></label>
+        <name>labelVRSHoursRemovedSystemNote</name>
+    </customLabels>
+    <customLabels>
+        <label>{0} נדרש.</label>
+        <name>labelVolunteerReportHoursErrorRequiredField</name>
+    </customLabels>
+    <customLabels>
+        <label>ציין את מסגרת הזמן שעליה אתה מדווח ואת מספר השעות הכולל שביצעת.</label>
+        <name>labelVolunteerReportHoursNotesNoShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר את המשמרת בה עבדת ועדכן את מספר השעות שביצעת לפי הצורך.</label>
+        <name>labelVolunteerReportHoursNotesShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>תודה שדיווחת את שעות ההתנדבות שלך.</label>
+        <name>labelVolunteerReportHoursThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label>תודה שנרשמת להתנדבות.</label>
+        <name>labelVolunteerSignupThankYou</name>
+    </customLabels>
+    <customLabels>
+        <label>עזרה למתנדבים</label>
+        <name>labelVolunteersHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>קל להתחיל לעבוד עם &apos;מתנדבים ל-Salesforce&apos; ‏(V4S). למשאבים נוספים, עבור אל &lt;a href=&quot;https://powerofus.force.com&quot; target=&quot;_blank&quot;&gt;Power of Us HUB&lt;/a&gt;.</label>
+        <name>labelVolunteersHelpDescription</name>
+    </customLabels>
+    <customLabels>
+        <label>שלב 1</label>
+        <name>labelVolunteersHelpStep1</name>
+    </customLabels>
+    <customLabels>
+        <label>השתמש ב-Trailhead לקבלת מידע נוסף על V4S וכיצד להגדיר גרסה זו.</label>
+        <name>labelVolunteersHelpStep1Text</name>
+    </customLabels>
+    <customLabels>
+        <label>שלב 2</label>
+        <name>labelVolunteersHelpStep2</name>
+    </customLabels>
+    <customLabels>
+        <label>גלה משאבים נוספים ב-V4S.</label>
+        <name>labelVolunteersHelpStep2Text</name>
+    </customLabels>
+    <customLabels>
+        <label>שלב 3</label>
+        <name>labelVolunteersHelpStep3</name>
+    </customLabels>
+    <customLabels>
+        <label>היה מעורב בקהילה.</label>
+        <name>labelVolunteersHelpStep3Text</name>
+    </customLabels>
+    <customLabels>
+        <label>רק {0} מתנדבים עדיין חסרים למשמרת זו.</label>
+        <name>labelVolunteersJobListingErrorTooManyVols</name>
+    </customLabels>
+    <customLabels>
+        <label>פרטי מבצע</label>
+        <name>labelVolunteersWizardCampaignInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>שכפל מבצע קיים</label>
+        <name>labelVolunteersWizardClone</name>
+    </customLabels>
+    <customLabels>
+        <label>העתק מתנדבים למשימה ומשמרת</label>
+        <name>labelVolunteersWizardCopyVolunteers</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר מבצע קיים להעתקה, או את מספר המשימות והמשמרות לדוגמה שברצונך ליצור, אך לא את שניהם.</label>
+        <name>labelVolunteersWizardErrorExistingOrSample</name>
+    </customLabels>
+    <customLabels>
+        <label>ציין את מספר המשימות לדוגמה ביחד עם מספר המשמרות לדוגמה.</label>
+        <name>labelVolunteersWizardErrorNoJobsWithShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>תאריך משמרת ראשונה</label>
+        <name>labelVolunteersWizardFirstShiftDate</name>
+    </customLabels>
+    <customLabels>
+        <label>אשף המתנדבים יוצר מבצע גיוס מתנדבים חדש ומאפשר לך להעתיק את כל המשימות, המשמרות ושעות ההתנדבות ממבצע קיים, או ליצור משימות ומשמרות לדוגמה.</label>
+        <name>labelVolunteersWizardHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>בחר מבצע קיים כדי להעתיק ממנו משימות, משמרות ושעות, או ציין כמה משימות ומשמרות לדוגמה ברצונך ליצור.  שים לב שניתן גם להשתמש בלוחות זמנים של משימות חוזרות כדי לחזור על משימות ומשמרות בעתיד.</label>
+        <name>labelVolunteersWizardJobAndShiftHelp</name>
+    </customLabels>
+    <customLabels>
+        <label>משימות, משמרות ושעות התנדבות</label>
+        <name>labelVolunteersWizardJobsAndShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>מבצע חדש לגיוס מתנדבים</label>
+        <name>labelVolunteersWizardNewCampaignTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>תאריך חדש למשמרת ראשונה</label>
+        <name>labelVolunteersWizardNewShiftDate</name>
+    </customLabels>
+    <customLabels>
+        <label>עקוף מצב שעות התנדבות</label>
+        <name>labelVolunteersWizardOverrideHoursStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>משימה לדוגמה</label>
+        <name>labelVolunteersWizardSampleJobName</name>
+    </customLabels>
+    <customLabels>
+        <label>מספר עבודות לדוגמה</label>
+        <name>labelVolunteersWizardSampleJobs</name>
+    </customLabels>
+    <customLabels>
+        <label>משמרת לדוגמה</label>
+        <name>labelVolunteersWizardSampleShiftName</name>
+    </customLabels>
+    <customLabels>
+        <label>מספר משמרות לדוגמה לכל עבודה</label>
+        <name>labelVolunteersWizardSampleShifts</name>
+    </customLabels>
+    <customLabels>
+        <label>אשף המתנדבים</label>
+        <name>labelVolunteersWizardTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lblRequired --></label>
+        <name>lblRequired</name>
+    </customLabels>
+    <customTabs>
+        <label>עזרה למתנדבים</label>
+        <name>About_Volunteers</name>
+    </customTabs>
+    <customTabs>
+        <label>מצא מתנדבים</label>
+        <name>Find_Volunteers</name>
+    </customTabs>
+    <customTabs>
+        <label>לוחות זמנים של תהליכים חוזרים</label>
+        <name>Process_Recurrence_Schedules</name>
+    </customTabs>
+    <customTabs>
+        <label>יומן משמרות</label>
+        <name>Shift_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label>אשף המתנדבים</label>
+        <name>Volunteers_Wizard</name>
+    </customTabs>
+    <reportTypes>
+        <description>חשבונות עם שעות התנדבות המשויכות באמצעות אנשי קשר.</description>
+        <label>חשבונות עם שעות התנדבות</label>
+        <name>Accounts</name>
+        <sections>
+            <label>חשבונות</label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label>אנשי קשר</label>
+            <name>Contacts</name>
+        </sections>
+        <sections>
+            <label>שעות התנדבות</label>
+            <name>Volunteer Hours</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description>מבצעים עם רשומות של משימות התנדבות.</description>
+        <label>מבצעים לגיוס מתנדבים</label>
+        <name>Volunteer_Campaigns</name>
+        <sections>
+            <label>מבצעים</label>
+            <name>Campaigns</name>
+        </sections>
+        <sections>
+            <label>משימות התנדבות</label>
+            <name>Volunteer Jobs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description>כל משימות ההתנדבות והשעות הקשורות אליהן.</description>
+        <label>משימות ושעות התנדבות</label>
+        <name>Volunteer_Jobs_and_Hours</name>
+        <sections>
+            <label>שעות התנדבות</label>
+            <name>Volunteer Hours</name>
+        </sections>
+        <sections>
+            <label>משימות התנדבות</label>
+            <name>Volunteer Jobs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description>משימות התנדבות עם רשומות של משמרות ושעות</description>
+        <label>משימות התנדבות עם משמרות ושעות</label>
+        <name>Volunteer_Jobs_with_Shifts_Hours</name>
+        <sections>
+            <label>שעות התנדבות</label>
+            <name>Volunteer Hours</name>
+        </sections>
+        <sections>
+            <label>משימות התנדבות</label>
+            <name>Volunteer Jobs</name>
+        </sections>
+        <sections>
+            <label>משמרות התנדבות</label>
+            <name>Volunteer Shifts</name>
+        </sections>
+    </reportTypes>
+</Translations>
