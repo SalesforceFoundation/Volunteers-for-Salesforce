@@ -89,3 +89,5 @@ orgs:
         dev_namespaced:
             config_file: orgs/dev.json
             namespaced: True
+        browsertest_classic:
+            config_file: orgs/browsertest_classic.json
