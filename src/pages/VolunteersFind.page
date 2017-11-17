@@ -210,7 +210,7 @@
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Volunteer_Hours__c.Fields.Status__c.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:inputField styleClass="slds-select" value="{!vhAssign.Status__c}"/>
+                                <apex:inputField id="volunteer_status" styleClass="slds-select" value="{!vhAssign.Status__c}"/>
                             </div>
                         </div>
                         <div class="slds-form-element slds-p-top--small">
