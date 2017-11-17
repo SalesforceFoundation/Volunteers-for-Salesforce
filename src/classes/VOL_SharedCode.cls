@@ -564,11 +564,11 @@ global with sharing class VOL_SharedCode {
             for (string strF : listStrFields) {
                 strF = strF.toLowerCase();
                 if (strF != 'id' && contact.get(strF) != null) {
-                    if (strF.contains('mailing')) {
+                    if (strF.contains('mailing') && !strF.contains('__c')) {
                         hasMailingAddress = true;
                         continue;
                     }
-                    if (strF.contains('other')) {
+                    if (strF.contains('other') && !strF.contains('__c')) {
                         hasOtherAddress = true;
                         continue;
                     }
