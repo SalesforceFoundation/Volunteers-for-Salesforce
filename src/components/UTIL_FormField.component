@@ -63,7 +63,7 @@
                                         'picklist', 'slds-select',
                                         'multipicklist', 'slds-select multipicklistSLDSFixup',
                                         'reference', IF(field=='RecordTypeId', 'slds-select', 'lookupInput ' + field),
-                                        'slds-input')}">
+                                        'slds-input')} {!$ObjectType[sObjType].fields[field].name}">
                 <apex:actionSupport event="onchange" action="{!actSupAction}" reRender="{!actSupReRender}" rendered="{!actSup}" status="{!actSupStatus}" immediate="{!actSupImmediate}"/>
             </apex:inputField>
         </div>
