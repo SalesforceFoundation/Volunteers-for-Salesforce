@@ -182,7 +182,7 @@
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Campaign.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:selectList value="{!campaignId}" size="1" styleClass="slds-select">
+                                <apex:selectList id="volunteerCampaignSelect" value="{!campaignId}" size="1" styleClass="slds-select">
                                     <apex:actionSupport immediate="false" event="onchange" rerender="ddlVolunteerJobs,ddlVolunteerShifts" status="statusLoad" action="{!ChangeCampaign}" />
                                     <apex:selectOptions value="{!listSOCampaigns}" /> 
                                 </apex:selectList>
@@ -210,13 +210,13 @@
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Volunteer_Hours__c.Fields.Status__c.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:inputField id="volunteer_status" styleClass="slds-select" value="{!vhAssign.Status__c}"/>
+                                <apex:inputField id="volunteerStatus" styleClass="slds-select" value="{!vhAssign.Status__c}"/>
                             </div>
                         </div>
                         <div class="slds-form-element slds-p-top--small">
                             <apex:outputLabel value="{!$ObjectType.Volunteer_Hours__c.Fields.Hours_Worked__c.Label}" styleClass="slds-form-element__label" />
                             <div class="slds-form-element__control">
-                                <apex:inputField styleClass="slds-input" value="{!vhAssign.Hours_Worked__c}"/>
+                                <apex:inputField id="volunteer_hours" styleClass="slds-input" value="{!vhAssign.Hours_Worked__c}"/>
                             </div>
                         </div>
                     </div>
