@@ -42,7 +42,14 @@ tasks:
         options:
             path: dev_config/delete
 
-
+    assign_pset:
+        description: Runs anonymous apex to assign pset for guest user.
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+                Id psetId = [SELECT ID From PermissionSet WHERE Name = 'V4S_Site_Minimum' LIMIT 1][0].id;
+                Id guestId = [SELECT ID From User WHERE Name = 'Volunteers Site Guest User' LIMIT 1][0].id;
+                insert new PermissionSetAssignment(PermissionSetId=psetId, AssigneeId=guestId);
 
 flows:
     browsertests_chrome:
@@ -83,6 +90,8 @@ flows:
                 task: deploy_dev_config_delete
             9:
                 task: deploy_dev_config
+            10:
+                task: assign_pset
 
 orgs:
     scratch:
