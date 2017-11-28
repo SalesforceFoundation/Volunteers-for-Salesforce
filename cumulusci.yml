@@ -92,6 +92,8 @@ flows:
                 task: deploy_dev_config
             10:
                 task: assign_pset
+                ignore_failure: True
+
 
 orgs:
     scratch:
