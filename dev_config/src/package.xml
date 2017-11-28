@@ -5,6 +5,10 @@
         <name>Profile</name>
     </types>
     <types>
+        <members>V4S_Site_Minimum</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
         <members>Volunteers</members>
         <name>CustomSite</name>
     </types>
