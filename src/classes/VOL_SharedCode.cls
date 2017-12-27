@@ -564,11 +564,11 @@ global with sharing class VOL_SharedCode {
             for (string strF : listStrFields) {
                 strF = strF.toLowerCase();
                 if (strF != 'id' && contact.get(strF) != null) {
-                    if (strF.contains('mailing')) {
+                    if (strF.contains('mailing') && !strF.contains('__c')) {
                         hasMailingAddress = true;
                         continue;
                     }
-                    if (strF.contains('other')) {
+                    if (strF.contains('other') && !strF.contains('__c')) {
                         hasOtherAddress = true;
                         continue;
                     }
@@ -801,7 +801,7 @@ global with sharing class VOL_SharedCode {
                 Schema.SObjectField fld = mapFieldDesc.get(strField.replace(StrTokenNSPrefix(''), ''));     
                 if (fld != null && !fld.getDescribe().isAccessible()) {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Field ' + strObj + '.' + strField +
-                        ' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Installation & Configuration Guide.'));
+                        ' needs to have field level security enabled on the Site\'s Guest User profile. Please see the V4S Setup & Configuration Guide.'));
                 } 
             }
     }
