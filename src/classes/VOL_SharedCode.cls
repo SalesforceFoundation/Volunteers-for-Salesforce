@@ -611,7 +611,7 @@ global with sharing class VOL_SharedCode {
     * @description detects standard mailing address fields
     * @return Boolean True if it is a standard mailing address field, false if not.
     */
-    private static Boolean isMailingAddressField(String strField) {
+    public static Boolean isMailingAddressField(String strField) {
         return (strField.containsIgnoreCase('mailing') && !strField.endsWith('__c'));
     }
 
@@ -619,7 +619,7 @@ global with sharing class VOL_SharedCode {
     * @description detects standard other address fields
     * @return Boolean True if it is a standard other address field, false if not.
     */
-    private static Boolean isOtherAddressField(String strField) {
+    public static Boolean isOtherAddressField(String strField) {
         return (strField.containsIgnoreCase('other') && !strField.endsWith('__c') && !strField.equalsIgnoreCase('otherphone'));
     }
 

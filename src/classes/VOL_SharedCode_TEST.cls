@@ -233,4 +233,41 @@ public with sharing class VOL_SharedCode_TEST {
 		system.assertEquals(false, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'bar@baz.com'));
 		system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'foo@bar.com'));
 	}
+
+    static testmethod void testAddressFieldDetection() {
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingCity'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('mailingcity'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingState'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingStreet'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingPostalCode'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingCountry'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingAccuracy'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingCountryCode'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingStateCode'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingLatitude'));
+        system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingLongitude'));
+        system.assertEquals(false, VOL_SharedCode.isMailingAddressField('MyMailingCity__c'));
+        system.assertEquals(false, VOL_SharedCode.isMailingAddressField('mymailingcity__c'));
+        system.assertEquals(false, VOL_SharedCode.isMailingAddressField('OtherCity'));
+        system.assertEquals(false, VOL_SharedCode.isMailingAddressField('othercity'));
+
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherCity'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('othercity'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherState'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherStreet'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherPostalCode'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherCountry'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherAccuracy'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherCountryCode'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherStateCode'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherLatitude'));
+        system.assertEquals(true, VOL_SharedCode.isOtherAddressField('OtherLongitude'));
+        system.assertEquals(false, VOL_SharedCode.isOtherAddressField('MyOtherCity__c'));
+        system.assertEquals(false, VOL_SharedCode.isOtherAddressField('myOthercity__c'));
+        system.assertEquals(false, VOL_SharedCode.isOtherAddressField('MailingCity'));
+        system.assertEquals(false, VOL_SharedCode.isOtherAddressField('mailingcity'));
+        system.assertEquals(false, VOL_SharedCode.isOtherAddressField('OtherPhone'));
+        system.assertEquals(false, VOL_SharedCode.isOtherAddressField('otherphone'));
+
+    }
 }
