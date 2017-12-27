@@ -1,6 +1,7 @@
 {
   "edition": "Developer", 
   "orgName": "V4S - Feature Test Org", 
+  "features": "Sites",  
   "orgPreferences": {
     "enabled": [
       "ChatterEnabled", 

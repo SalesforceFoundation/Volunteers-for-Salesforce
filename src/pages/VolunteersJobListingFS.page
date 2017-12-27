@@ -60,8 +60,15 @@
         j$('span[id$="txtShiftDisplayName"]').text(ShiftName); 
 
         // The dialog position should be related to the Shift.
-        var $button = j$('#' + ShiftId);
-        var top = $button.position().top + $button.height() + (($button.outerHeight() - $button.height()));
+        var signUpButton;
+        if (ShiftId == null) {
+            signUpButton = j$('#' + JobId);
+        }
+        else {
+            signUpButton = j$('#' + ShiftId);
+        }
+        
+        var top = signUpButton.position().top + signUpButton.height() + ((signUpButton.outerHeight() - signUpButton.height()));
         j$('#dlgSignUp').dialog({
             position: {
                 my: "center top+" + top,
@@ -165,7 +172,7 @@
         </apex:outputPanel>
         
         <apex:outputPanel id="panelJobOnly" rendered="{!(job.Number_of_Shifts__c == 0 || ShowShifts == false) && job.External_Signup_Url__c == null}" >
-            <input type="button" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg('{!job.Id}', '', '{!JSENCODE(job.Name)}', ''); return false;"/>
+            <input type="button" id="{!job.Id}" value="{!$Label.labelButtonSignUp}"  class="cssJobShiftSignup btn" onclick="OpenSignUpDlg('{!job.Id}', null, '{!JSENCODE(job.Name)}', ''); return false;"/>
         </apex:outputPanel>
         
         <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null && NOT(jobAllShiftsInThePast)}" >
