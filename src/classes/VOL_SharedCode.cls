@@ -527,11 +527,11 @@ global with sharing class VOL_SharedCode {
                     continue;
                 }
                 if (strF != 'id' && strF != 'firstname' && strF != 'email' && contact.get(strF) != null) {
-                    if (strF.contains('mailing') && !strF.contains('__c')) {
+                    if (isMailingAddressField(strF)) {
                         hasMailingAddress = true;
                         continue;
                     }
-                    if (strF.contains('other') && !strF.contains('__c')) {
+                    if (isOtherAddressField(strF)) {
                         hasOtherAddress = true;
                         continue;
                     }
@@ -564,11 +564,11 @@ global with sharing class VOL_SharedCode {
             for (string strF : listStrFields) {
                 strF = strF.toLowerCase();
                 if (strF != 'id' && contact.get(strF) != null) {
-                    if (strF.contains('mailing') && !strF.contains('__c')) {
+                    if (isMailingAddressField(strF)) {
                         hasMailingAddress = true;
                         continue;
                     }
-                    if (strF.contains('other') && !strF.contains('__c')) {
+                    if (isOtherAddressField(strF)) {
                         hasOtherAddress = true;
                         continue;
                     }
@@ -605,7 +605,23 @@ global with sharing class VOL_SharedCode {
             contact.Volunteer_Notes__c = null;
             return conNew.Id;
         }       
-    }    
+    }
+
+    /*******************************************************************************************************
+    * @description detects standard mailing address fields
+    * @return Boolean True if it is a standard mailing address field, false if not.
+    */
+    private static Boolean isMailingAddressField(String strField) {
+        return (strField.containsIgnoreCase('mailing') && !strField.endsWith('__c'));
+    }
+
+    /*******************************************************************************************************
+    * @description detects standard other address fields
+    * @return Boolean True if it is a standard other address field, false if not.
+    */
+    private static Boolean isOtherAddressField(String strField) {
+        return (strField.containsIgnoreCase('other') && !strField.endsWith('__c') && !strField.equalsIgnoreCase('otherphone'));
+    }
 
     // global utility to escape a string.
     global static string StrEscape(string str) {
