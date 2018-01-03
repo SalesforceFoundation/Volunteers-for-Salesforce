@@ -609,6 +609,7 @@ global with sharing class VOL_SharedCode {
 
     /*******************************************************************************************************
     * @description detects standard mailing address fields
+    * @param strField The field to check against
     * @return Boolean True if it is a standard mailing address field, false if not.
     */
     public static Boolean isMailingAddressField(String strField) {
@@ -617,6 +618,7 @@ global with sharing class VOL_SharedCode {
 
     /*******************************************************************************************************
     * @description detects standard other address fields
+    * @param strField The field to check against
     * @return Boolean True if it is a standard other address field, false if not.
     */
     public static Boolean isOtherAddressField(String strField) {
