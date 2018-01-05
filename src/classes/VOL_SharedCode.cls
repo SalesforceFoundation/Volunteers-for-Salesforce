@@ -899,6 +899,5 @@ global with sharing class VOL_SharedCode {
         str = Label.labelFindVolunteersHelpAssign;
         str = Label.labelVolunteersWizardNewCampaignTitle;
     }
-
      
 }
