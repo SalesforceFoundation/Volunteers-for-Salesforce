@@ -144,5 +144,53 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         system.assertEquals('TestIsNowTesty', con.LastName);
 
     }
-    
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts under LA timezone
+    * @return void
+    */
+    private static testMethod void testTimeZoneHandlingFromLA() {
+        testTimeZoneHandling('America/Los_Angeles');
+    }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts under Sydney timezone
+    * @return void
+    */
+    private static testMethod void testTimeZoneHandlingFromSydney() {
+        testTimeZoneHandling('Australia/Sydney');
+    }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts
+    * @param timezone what timezone to run under while creating and querying shifts
+    * @return void
+    */
+    private static void testTimeZoneHandling(String timezone) {
+
+        String uniqueUserName = 'admin' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'admin', Email='admin@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = p.Id,
+            TimeZoneSidKey=timezone,
+            UserName=uniqueUserName);
+
+        system.runAs(u) {
+            Id conId = VOL_SharedCode_TEST.setupTimeZoneTestData();
+
+            // setup page
+            PageReference pageRef = Page.PersonalSiteContactInfo;
+            pageRef.getParameters().put('contactId', conId);
+            Test.setCurrentPage(pageRef);
+
+            //instantiate the controller
+            VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
+            System.AssertEquals(conId, ctrl.contactId);
+            ctrl.cRowsUpcoming = 100;
+            System.AssertEquals(0, ctrl.listCompletedVolunteerHours.size());
+            System.AssertEquals(48, ctrl.listUpcomingVolunteerHours.size(), 'we should always get back today and tomorrow shifts');
+        }
+    }
+
 }

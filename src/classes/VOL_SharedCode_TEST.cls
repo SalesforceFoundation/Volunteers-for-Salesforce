@@ -270,4 +270,52 @@ public with sharing class VOL_SharedCode_TEST {
         system.assertEquals(false, VOL_SharedCode.isOtherAddressField('otherphone'));
 
     }
+
+    /*******************************************************************************************************
+    * @description create a campaign, job, hourly shifts for yesterday, today, and tomorrow, then create
+    * a contact and assign Hours for each shift.
+    * @return Id the created Contact's Id
+    */
+    public static Id setupTimeZoneTestData() {
+
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign,
+            name='timeZoneCampaign', IsActive=true);
+        insert cmp;
+
+        Volunteer_Job__c job = new Volunteer_Job__c(name='timeZoneJob', campaign__c=cmp.Id, Display_On_Website__c=true);
+        insert job;
+
+        List<Volunteer_Shift__c> listShift = new List<Volunteer_Shift__c>();
+        for (Integer iDay = -1; iDay < 2; iDay++) {
+            Date d = system.Today().addDays(iDay);
+            for (Integer i = 0; i < 24; i++) {
+                Volunteer_Shift__c shift = new Volunteer_Shift__c();
+                shift.Volunteer_Job__c = job.Id;
+                shift.Duration__c = 1;
+                shift.Desired_Number_of_Volunteers__c = 4;
+                shift.Start_Date_Time__c = dateTime.newInstance(d, time.newInstance(i, 0,0,0));
+                listShift.add(shift);
+            }
+        }
+        insert listShift;
+
+        Contact contact = new Contact(firstname='timezone', lastname='test');
+        insert contact;
+
+        List<Volunteer_Hours__c> listHours = new List<Volunteer_Hours__c>();
+        for (Volunteer_Shift__c shift : listShift) {
+            Volunteer_Hours__c hour = new Volunteer_Hours__c();
+            hour.Volunteer_Job__c = shift.Volunteer_Job__c;
+            hour.Volunteer_Shift__c = shift.Id;
+            hour.Contact__c = contact.Id;
+            hour.Status__c = 'Confirmed';
+            hour.Start_Date__c = shift.Start_Date_Time__c.date();
+            listHours.add(hour);
+        }
+        insert listHours;
+
+        return contact.Id;
+    }
+
+
 }
