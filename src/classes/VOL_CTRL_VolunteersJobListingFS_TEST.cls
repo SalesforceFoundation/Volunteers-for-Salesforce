@@ -206,4 +206,49 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
 		system.assertEquals(mapCmp.size(), ctrl2.listVolunteerJobs.size()); 
     }
 
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts under LA timezone
+    * @return void
+    */
+    private static testMethod void testTimeZoneHandlingFromLA() {
+        testTimeZoneHandling('America/Los_Angeles');
+    }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts under Sydney timezone
+    * @return void
+    */
+    private static testMethod void testTimeZoneHandlingFromSydney() {
+        testTimeZoneHandling('Australia/Sydney');
+    }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts
+    * @param timezone what timezone to run under while creating and querying shifts
+    * @return void
+    */
+    private static void testTimeZoneHandling(String timezone) {
+
+        String uniqueUserName = 'admin' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'admin', Email='admin@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = p.Id,
+            TimeZoneSidKey=timezone,
+            UserName=uniqueUserName);
+
+        system.runAs(u) {
+            VOL_SharedCode_TEST.setupTimeZoneTestData();
+
+            PageReference pageRef = Page.VolunteersJobListingFS;
+            Test.setCurrentPage(pageRef);
+
+            //instantiate the controller
+            VOL_CTRL_VolunteersJobListingFS ctrl = new VOL_CTRL_VolunteersJobListingFS();
+            System.AssertEquals(1, ctrl.listVolunteerJobs.size());
+            Volunteer_Job__c job = ctrl.listVolunteerJobs[0];
+            System.assertEquals(48, job.Volunteer_Job_Slots__r.size(), 'we should always get today and tomorrow shifts');
+        }
+    }
+
 }

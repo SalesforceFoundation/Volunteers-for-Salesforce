@@ -87,4 +87,47 @@ private with sharing class VOL_CTRL_JobCalendar_TEST {
 		listS = VOL_CTRL_JobCalendar.getListShiftsWeb2(cmpIdGrandparent, '*', '2010-01-01 1:1:1', '2050-01-01 1:1:1', false, true);
 		system.assertEquals(mapCmp.size(), listS.size()); 
     }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts under LA timezone
+    * @return void
+    */
+    private static testMethod void testTimeZoneHandlingFromLA() {
+        testTimeZoneHandling('America/Los_Angeles');
+    }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts under Sydney timezone
+    * @return void
+    */
+    private static testMethod void testTimeZoneHandlingFromSydney() {
+        testTimeZoneHandling('Australia/Sydney');
+    }
+
+    /*******************************************************************************************************
+    * @description test timezone handling for Shifts
+    * @param timezone what timezone to run under while creating and querying shifts
+    * @return void
+    */
+    private static void testTimeZoneHandling(String timezone) {
+
+        String uniqueUserName = 'admin' + DateTime.now().getTime() + '@testorg.com';
+        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
+        User u = new User(Alias = 'admin', Email='admin@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = p.Id,
+            TimeZoneSidKey=timezone,
+            UserName=uniqueUserName);
+
+        system.runAs(u) {
+            VOL_SharedCode_TEST.setupTimeZoneTestData();
+
+            list<Volunteer_Shift__c> listS = VOL_CTRL_JobCalendar.getListShiftsWeb('*', '*',
+                datetime.newInstanceGMT(system.Today(), time.newInstance(0,0,0,0)).format('yyyy-MM-dd hh:mm:ss'),
+                datetime.newInstanceGMT(system.Today(), time.newInstance(23,59,59,0)).format('yyyy-MM-dd hh:mm:ss'),
+                false);
+            system.assertEquals(24, listS.size(), 'we should get exactly one days worth of shifts, regardless of timezone');
+        }
+    }
+
 }

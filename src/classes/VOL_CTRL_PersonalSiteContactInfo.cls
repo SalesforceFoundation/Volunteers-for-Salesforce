@@ -213,9 +213,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                         strSoql += strComma + strF;
                         strComma = ', ';
                     }
+                    DateTime dtToday = datetime.newInstance(system.today(), time.newInstance(0, 0, 0, 0));
                     strSoql += ' from Volunteer_Hours__c where Contact__c = :contactId ';
                     strSoql += ' and Status__c <> \'Canceled\' and Status__c <>  \'Completed\' ';
-                    Date dtToday = system.today();
                     strSoql += ' and Shift_Start_Date_Time__c >= :dtToday ';
                     strSoql += ' order by Shift_Start_Date_Time__c ASC ';        
                     strSoql += ' limit ' + cRowsUpcoming;
