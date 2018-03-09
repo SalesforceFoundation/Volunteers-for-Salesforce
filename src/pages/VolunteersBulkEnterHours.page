@@ -145,8 +145,24 @@
                     <apex:facet name="header">{!$ObjectType.Contact.Label} *</apex:facet>
                     <apex:inputField value="{!vh.Contact__c}" styleClass="lookupInput" required="false" >
                     </apex:inputField>
+                </apex:column>
+                <apex:column rendered="{!allJobsVisible}" styleClass="myTD reference" >
+                    <apex:facet name="header">{!$ObjectType.Volunteer_Job__c.Label} *</apex:facet>
+                    <apex:selectList id="ddlVolunteerJobs" value="{!vh.Volunteer_Job__c}" required="false" size="1" styleClass="slds-select" disabled="{!listSOVolunteerJobs.size=1}">
+                    <!-- CHANGE -->
+                        <apex:actionSupport immediate="false" event="onchange" rerender="tblVolunteerHours" status="retrieveStatus" action="{!updateVolunteerShift}">
+                            <apex:param assignTo="{!rowVolunteerJobId}" value="{!vh.Volunteer_Job__c}" name="selectedJobId"/>
+                        </apex:actionSupport>
+                        <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
+                    </apex:selectList>
                 </apex:column> 
-                <apex:column rendered="{!volunteerShiftId == null}" styleClass="myTD picklist" >
+                <apex:column rendered="{!AND(allJobsVisible, isVisibleDynamicShift)}" styleClass="myTD picklist" >
+                    <apex:facet name="header">{!$ObjectType.Volunteer_Shift__c.Label}</apex:facet>
+                    <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts_dynamic" styleClass="slds-select">
+                        <apex:selectOptions value="{!rowVolunteerShifts[vh.Volunteer_Job__c]}" /> 
+                    </apex:selectList>              
+                </apex:column>  
+                <apex:column rendered="{!AND(NOT(isVisibleDynamicShift),volunteerShiftId == null)}" styleClass="myTD picklist" >
                     <apex:facet name="header">{!$ObjectType.Volunteer_Shift__c.Label}</apex:facet>
                     <apex:selectList value="{!vh.Volunteer_Shift__c}" size="1" id="ddlVolunteerShifts" styleClass="slds-select">
                         <apex:selectOptions value="{!listSOVolunteerShifts}" /> 

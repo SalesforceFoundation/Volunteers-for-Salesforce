@@ -57,6 +57,58 @@ global with sharing class VOL_SharedCode {
     global list<SelectOption> listSOVolunteerShiftsOfVolunteerJobId(ID volunteerJobId, Date dtStart, Date dtEnd, boolean fIncludeShiftName, boolean fIncludeNumberNeeded) {
         return listSOVolunteerShiftsOfVolunteerJobIdFormat(volunteerJobId, dtStart, dtEnd, fIncludeShiftName, fIncludeNumberNeeded, null, null);
     }
+
+    public Map<String, List<SelectOption>> mapSOVolunteerJobToVolunteerShifts(Date dtStart, Date dtEnd, 
+            boolean fIncludeShiftName, boolean fIncludeNumberNeeded, string strDateFormat, string strTimeFormat) {
+        
+        Map<String, List<SelectOption>> mapSO = new Map<String, List<SelectOption>>();
+        
+        // ensure valid date ranges
+        if (dtStart == null)
+            dtStart = system.today();
+        if (dtEnd == null)
+            dtEnd = system.today().addMonths(12);
+        dtEnd = dtEnd.addDays(1);
+           
+        // get our shifts in a Job query, so we can use our common date/time formatting routine.
+        list<Volunteer_Job__c> listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
+            Volunteer_Website_Time_Zone__c,
+            (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
+                Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
+                order by Start_Date_Time__c LIMIT 999) 
+            from Volunteer_Job__c];
+                
+        // bail out if no jobs found
+        if (listVolunteerJobs.size() == 0)
+            return mapSO;
+        
+        // whether to use our datetime formatting, or salesforce default for the current user
+        boolean useDateTimeFixup = (strDateFormat != null && strTimeFormat != null);        
+        
+        // put correct date/time format with appropriate timezone in system note field (in memory only)
+        if (useDateTimeFixup)
+            dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
+        
+        for (Volunteer_Job__c job : listVolunteerJobs) {
+            List<SelectOption> listSO = new List<SelectOption>();
+            listSO.add(new SelectOption('', ''));
+            for (Volunteer_Shift__c vs : job.Volunteer_Job_Slots__r) {
+                SelectOption so = new SelectOption(vs.id, 
+                    (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) + 
+                    (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
+                    (fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
+                        (vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
+                            system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
+                        ' ' : '' ));
+                so.setEscapeItem(false); 
+                listSO.add(so);
+            } 
+            mapSO.put(job.Id, listSO);
+        }
+            
+        return mapSO;       
+    }
      
     // list of select options of Shifts for the specified job, using the date & time format strings for the shifts
     public static list<SelectOption> listSOVolunteerShiftsOfVolunteerJobIdFormat(ID volunteerJobId, Date dtStart, Date dtEnd, 
@@ -75,13 +127,25 @@ global with sharing class VOL_SharedCode {
         dtEnd = dtEnd.addDays(1);
            
         // get our shifts in a Job query, so we can use our common date/time formatting routine.
-        listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
-            Volunteer_Website_Time_Zone__c,
-            (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
-                Description__c, System_Note__c From Volunteer_Job_Slots__r 
-                where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
-                order by Start_Date_Time__c LIMIT 999) 
-            from Volunteer_Job__c where Id = :volunteerJobId];
+        if (volunteerJobId == null) {
+            listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
+                Volunteer_Website_Time_Zone__c,
+                (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
+                    Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                    where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
+                    order by Start_Date_Time__c LIMIT 999) 
+                from Volunteer_Job__c];
+        }
+        else {
+            listVolunteerJobs = [select Id, Campaign__r.IsActive, Campaign__r.Volunteer_Website_Time_Zone__c,
+                Volunteer_Website_Time_Zone__c,
+                (Select Id, Name, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c,
+                    Description__c, System_Note__c From Volunteer_Job_Slots__r 
+                    where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
+                    order by Start_Date_Time__c LIMIT 999) 
+                from Volunteer_Job__c where Id = :volunteerJobId];
+        }
+            
                 
         // bail out if no jobs found
         if (listVolunteerJobs.size() == 0)
@@ -94,17 +158,21 @@ global with sharing class VOL_SharedCode {
         if (useDateTimeFixup)
             dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
         
-        for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
-            SelectOption so = new SelectOption(vs.id, 
-                (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) + 
-                (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
-                (fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
-                    (vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
-                        system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
-                    ' ' : '' ));
-            so.setEscapeItem(false); 
-            listSO.add(so);
-        }       
+        for (Volunteer_Job__c job : listVolunteerJobs) {
+            for (Volunteer_Shift__c vs : job.Volunteer_Job_Slots__r) {
+                SelectOption so = new SelectOption(vs.id, 
+                    (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) + 
+                    (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
+                    (fIncludeNumberNeeded ? '&nbsp;&nbsp;' + 
+                        (vs.Number_of_Volunteers_Still_Needed__c > 0 ? 
+                            system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
+                        ' ' : '' ));
+                so.setEscapeItem(false); 
+                listSO.add(so);
+            }
+        }    
+        //if (volunteerJobId == null)
+            //System.assert(false, listSO); 
         return listSO;       
     }
     

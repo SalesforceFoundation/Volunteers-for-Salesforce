@@ -30,10 +30,26 @@
 
 global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
 
+    global String rowVolunteerJobId {get; set;}
+
     global integer cEmptyVolunteerHourRecords {
         get {
             return 5;
         }
+    }
+
+    global Boolean isVisibleDynamicShift {
+        get {
+            return rowVolunteerShifts.isEmpty() == false;
+        }
+        set;
+    }
+
+    global Boolean allJobsVisible {
+        get {
+            return volunteerJobId == null;
+        }
+        set;
     }
     
     private VOL_SharedCode volSharedCode;
@@ -47,13 +63,17 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         redirect = false;
         volSharedCode = new VOL_SharedCode();
         listSOCampaigns = volSharedCode.listSOCampaignsWithJobs;
+        rowVolunteerShifts = new Map<String, List<SelectOption>>();
         
         // handle optional parameters (must use string, not ID, to handle null)
         string id = ApexPages.currentPage().getParameters().get('campaignId');
         if (id != null && id != '') campaignId = id;
         
         id = ApexPages.currentPage().getParameters().get('volunteerJobId');
-        if (id != null && id != '') volunteerJobId = id;
+        if (id != null && id != '') {
+            volunteerJobId = id;
+            rowVolunteerJobId = id;
+        }
 
         id = ApexPages.currentPage().getParameters().get('volunteerShiftId');
         if (id != null && id != '') volunteerShiftId = id;
@@ -145,17 +165,36 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         return null;
     }
 
+    // the user has changed the Volunteer Job dropdown
+    global virtual PageReference updateVolunteerShift() {
+        
+            rowVolunteerShifts = volSharedCode.mapSOVolunteerJobToVolunteerShifts(
+                vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c, true, false, null, null
+            ); 
+        
+        return null;
+    }
+
     // holds the currently select Job Shift in the Job Shift dropdown
     global ID volunteerShiftId { get; set; }
     
     // the list of Volunteer Shifts to put in the dropdown
     global list<SelectOption> listSOVolunteerShifts {
         get {
-            if (listSOVolunteerShifts == null && volunteerJobId != null) {
+            if (listSOVolunteerShifts == null) {
                 listSOVolunteerShifts = volSharedCode.listSOVolunteerShiftsOfVolunteerJobId(volunteerJobId, 
                     vhDateFilter.Start_Date__c, vhDateFilter.End_Date__c, true, false); 
             }
             return listSOVolunteerShifts;
+        }
+        
+        set;
+    }
+
+    // the list of Volunteer Shifts to put in the dropdown
+    global Map<String, List<SelectOption>> rowVolunteerShifts {
+        get {
+            return rowVolunteerShifts;
         }
         
         set;
@@ -186,7 +225,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     // helper function that the client can override, to query for the appropriate fields in Volunteer_Hours.
     global virtual void FillListVolunteerHours() {
         // if they haven't yet picked a job, there are no hours to show or add.
-        if (volunteerJobId == null) return;           
+        //if (volunteerJobId == null) return;           
         
         // find the existing jobs
         // we need to use dynamic soql to pick up all custom fields we don't know about
