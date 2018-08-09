@@ -172,46 +172,48 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
     global String strSaveResults { get; set; }
       
     // The list of Volunteer Hours.
-    global list<Volunteer_Hours__c> listVolunteerHours {
+    global List<Volunteer_Hours__c> listVolunteerHours {
         get {
             if (listVolunteerHours == null) {
-                FillListVolunteerHours();
+                fillListVolunteerHours();
             }
             return listVolunteerHours;
         }
-        
+
         set;
     }
-    
+
     // helper function that the client can override, to query for the appropriate fields in Volunteer_Hours.
-    global virtual void FillListVolunteerHours() {
+    global virtual void fillListVolunteerHours() {
         // if they haven't yet picked a job, there are no hours to show or add.
-        if (volunteerJobId == null) return;           
-        
+        if (volunteerJobId == null) {
+            return;
+        }
+
         // find the existing jobs
         // we need to use dynamic soql to pick up all custom fields we don't know about
-        string strSoql = 'select ';
-        string strComma = '';
-        for (string strF : listStrFields) {
-            strSoql += strComma + strF;
-            strComma = ', ';
-        }
-        strSoql += ' from Volunteer_Hours__c where Volunteer_Job__c = :volunteerJobId ';
+        String strSoql = 'SELECT ';
+        strSoql += String.join(listStrFields, ', ');
+        strSoql += ' FROM Volunteer_Hours__c WHERE Volunteer_Job__c = :volunteerJobId ';
+
         if (volunteerShiftId != null) {
-            strSoql += ' and Volunteer_Shift__c = :volunteerShiftId ';
+            strSoql += ' AND Volunteer_Shift__c = :volunteerShiftId ';
         }
+
         if (vhDateFilter.Start_Date__c != null) {
             Date dtStart = vhDateFilter.Start_Date__c;
-            strSoql += ' and Start_Date__c >= :dtStart ';
+            strSoql += ' AND Start_Date__c >= :dtStart ';
         }
+
         if (vhDateFilter.End_Date__c != null) {
             Date dtEnd = vhDateFilter.End_Date__c;
-            strSoql += ' and Start_Date__c <= :dtEnd ';
+            strSoql += ' AND Start_Date__c <= :dtEnd ';
         }
-        strSoql += ' order by Full_Name__c, Start_Date__c ';
-        
+
+        strSoql += ' ORDER BY Contact__r.LastName, Contact__r.FirstName, Start_Date__c ';
+
         listVolunteerHours = Database.Query(strSoql); 
-                
+
         AddMoreEmptyRowsToVolunteerHours();
     }
     
