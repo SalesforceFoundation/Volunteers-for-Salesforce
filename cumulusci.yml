@@ -3,7 +3,7 @@ project:
     package:
         name: Volunteers for Salesforce
         namespace: GW_Volunteers
-        api_version: '41.0'
+        api_version: '40.0'
     git:
         prefix_release: rel/
 
