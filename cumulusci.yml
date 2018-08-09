@@ -3,6 +3,7 @@ project:
     package:
         name: Volunteers for Salesforce
         namespace: GW_Volunteers
+        api_version: '41.0'
     git:
         prefix_release: rel/
 
@@ -84,16 +85,15 @@ flows:
             5:
                 task: None
 
-    dev_org:
-        tasks:
-            8:
+    config_dev:
+        steps:
+            3:
                 task: deploy_dev_config_delete
-            9:
+            4:
                 task: deploy_dev_config
-            10:
+            5:
                 task: assign_pset
                 ignore_failure: True
-
 
 orgs:
     scratch:
