@@ -146,7 +146,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
             strSubject = template.Subject;
             strMessage = (template.HtmlValue != null) ? template.HtmlValue : template.Body;
-            strMessage.escapeHtml4();
+
             return null;
 
         } catch (Exception e) {
