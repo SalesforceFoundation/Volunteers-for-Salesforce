@@ -118,24 +118,39 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     }
     
     public string templateObject { get; set; }
-    
-    // action method to load up the email template the user has chosen
-    public PageReference LoadEmailTemplate() {
-        try {
-            if (templateId != null) {
-                // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkReadAccess('EmailTemplate', new Set<String>{'Id','Name', 'Subject', 'HtmlValue', 'Body'});    
-                    
-                EmailTemplate et = [select Id, Name, Subject, HtmlValue, Body from EmailTemplate where Id = :templateId];
-                strSubject = et.Subject;
-                strMessage = (et.HtmlValue != null) ? et.HtmlValue : et.Body;
-            } else {
-                strSubject = null;
-                strMessage = null;      
-            }
+
+    /*******************************************************************************************************
+    * @description Sets the email body and subject from the template matching the template Id selected
+    * @return null
+    ********************************************************************************************************/
+    public PageReference loadEmailTemplate() {
+        strSubject = null;
+        strMessage = null;
+
+        if (templateId == null) {
             return null;
+        }
+
+        try {
+            // Ensure the user has access to the object and fields before querying
+            UTIL_Describe.checkReadAccess(
+                'EmailTemplate',
+                new Set<String>{ 'Id', 'Name', 'Subject', 'HtmlValue', 'Body' }
+            );
+
+            EmailTemplate template = [
+                SELECT Id, Name, Subject, HtmlValue, Body
+                FROM EmailTemplate
+                WHERE Id = :templateId
+            ];
+
+            strSubject = template.Subject;
+            strMessage = (template.HtmlValue != null) ? template.HtmlValue : template.Body;
+            strMessage.escapeHtml4();
+            return null;
+
         } catch (Exception e) {
-            ApexPages.addMessages(e);  
+            ApexPages.addMessages(e);
             return null;
         }
     }
