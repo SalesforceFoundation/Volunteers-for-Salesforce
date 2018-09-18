@@ -119,10 +119,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     
     public string templateObject { get; set; }
 
-    /*******************************************************************************************************
+    /*******************************************************************************************************************
     * @description Sets the email body and subject from the template matching the template Id selected
     * @return null
-    ********************************************************************************************************/
+    */
     public PageReference loadEmailTemplate() {
         strSubject = null;
         strMessage = null;
@@ -139,13 +139,19 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             );
 
             EmailTemplate template = [
-                SELECT Id, Name, Subject, HtmlValue, Body
+                SELECT Id, Name, Subject, HtmlValue, Body, TemplateType
                 FROM EmailTemplate
                 WHERE Id = :templateId
             ];
 
             strSubject = template.Subject;
-            strMessage = (template.HtmlValue != null) ? template.HtmlValue : template.Body;
+
+            if (template.HtmlValue != null) {
+                strMessage = cleanHtml(template);
+
+            } else {
+                strMessage = template.Body;
+            }
 
             return null;
 
@@ -153,6 +159,69 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             ApexPages.addMessages(e);
             return null;
         }
+    }
+
+    /*******************************************************************************************************************
+    * @description Html values are only cleaned automatically by Salesforce when the TemplateType is html
+    * in order to clean the other html values, we will do a temporary commit to a Rich Text Area field to allow
+    * Salesforce to strip the non whitelisted tags for us
+    * @return Volunteer_Job__c the job associated with this page
+    */
+    @TestVisible
+    private String cleanHtml(EmailTemplate template) {
+        if (template.TemplateType.equalsIgnoreCase('html')) {
+            return template.HtmlValue;
+        }
+
+        Savepoint savepoint = Database.setSavePoint();
+        String value = '';
+        Volunteer_Job__c job = getRelatedJob();
+
+        try {
+            job.Description__c = template.HtmlValue;
+            upsert job;
+            value = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
+
+            // Intentionally throw an error to ensure a rollback always occurs even when a non intentionl error occurs
+            throw new SendBulkEmailException('');
+
+        } catch (Exception ex) {
+            Database.rollback(savepoint);
+        }
+
+        return value;
+    }
+
+    /*******************************************************************************************************************
+    * @description Retrieves the job associated with this page, either via shift, job or campaign
+    * @return Volunteer_Job__c the job associated with this page
+    */
+    @TestVisible
+    private Volunteer_Job__c getRelatedJob() {
+        Volunteer_Job__c relatedJob = new Volunteer_Job__c();
+
+        if (shiftId != null) {
+            relatedJob.Id = [SELECT Volunteer_Job__c FROM Volunteer_Shift__c WHERE Id = :shiftId LIMIT 1].Volunteer_Job__c;
+            return relatedJob;
+        }
+
+        if (jobId != null) {
+            relatedJob.Id = jobId;
+            return relatedJob;
+        }
+
+        if (campaignId != null) {
+            List<Volunteer_Job__c> jobs = [SELECT Id FROM Volunteer_Job__c WHERE Campaign__c = :campaignId LIMIT 1];
+            if (jobs.isEmpty()) {
+                relatedJob.Campaign__c = campaignId;
+            } else {
+                relatedJob = jobs[0];
+            }
+
+            return relatedJob;
+        }
+
+        return null;
     }
 
     // action method called when status picklist has changed.  requery for number of contacts to email.
@@ -328,5 +397,6 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         p.setRedirect(true);
         return p;
     }
-    
+
+    private class SendBulkEmailException extends Exception {}
 }
