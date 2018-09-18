@@ -182,10 +182,9 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             upsert job;
             value = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
 
-            // Intentionally throw an error to ensure a rollback always occurs even when a unintentional error occurs
-            throw new SendBulkEmailException('');
-
         } catch (Exception ex) {
+            // Catch errors and rollback in the finally block
+        } finally {
             Database.rollback(savepoint);
         }
 
@@ -398,5 +397,4 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         return p;
     }
 
-    private class SendBulkEmailException extends Exception {}
 }
