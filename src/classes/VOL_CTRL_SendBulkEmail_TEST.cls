@@ -322,6 +322,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         template.TemplateType = 'html';
         sendBulkEmail.loadEmailTemplate(template);
 
+        System.assert(sendBulkEmail.isHtmlTemplate, 'The isHtmlTemplate should be set to true.');
         System.assertEquals(template.HtmlValue, sendBulkEmail.message);
         System.assertEquals(template.Subject, sendBulkEmail.subject);
     }

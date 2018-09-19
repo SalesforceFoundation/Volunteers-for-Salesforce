@@ -30,21 +30,21 @@
 
 public with sharing class VOL_CTRL_SendBulkEmail {
 
-    public string subject { get; set; }
-    public string message { get; set; }
+    public String subject { get; set; }
+    public String message { get; set; }
     public Volunteer_Hours__c hourStatus { get; set; }
-    public ID templateId { get; set; }
+    public Id templateId { get; set; }
     public Boolean isHtmlTemplate { get; private set; }
-    public integer numberOfContacts { get; set; }
-    public ID fromEmailId { get; set; }
-    public string strJobName { get; set; }
-    public boolean fLogActivity { get; set; }
-    public boolean fEmailContactsOnlyOnce { get; set; }
+    public Integer numberOfContacts { get; set; }
+    public Id fromEmailId { get; set; }
+    public String strJobName { get; set; }
+    public Boolean fLogActivity { get; set; }
+    public Boolean fEmailContactsOnlyOnce { get; set; }
 
-    public ID folderId { get; set; }
-    public ID campaignId { get; set; }
-    public ID shiftId { get; set; }
-    public ID jobId { get; set; }
+    public Id folderId { get; set; }
+    public Id campaignId { get; set; }
+    public Id shiftId { get; set; }
+    public Id jobId { get; set; }
     
     // constructor
     public VOL_CTRL_SendBulkEmail() { 
@@ -118,7 +118,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         return listSO;
     }
     
-    public string templateObject { get; set; }
+    public String templateObject { get; set; }
 
     /*******************************************************************************************************************
     * @description Sets the email body and subject from the template matching the template Id selected
