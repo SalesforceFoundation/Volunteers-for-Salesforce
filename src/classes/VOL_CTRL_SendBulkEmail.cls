@@ -177,13 +177,13 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         }
 
         Savepoint savepoint = Database.setSavePoint();
-        String value = '';
+        String htmlValue = '';
         Volunteer_Job__c job = getRelatedJob();
 
         try {
             job.Description__c = template.HtmlValue;
             upsert job;
-            value = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
+            htmlValue = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
 
         } catch (Exception ex) {
             // Catch errors and rollback in the finally block
@@ -191,7 +191,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             Database.rollback(savepoint);
         }
 
-        return value;
+        return htmlValue;
     }
 
     /*******************************************************************************************************************
