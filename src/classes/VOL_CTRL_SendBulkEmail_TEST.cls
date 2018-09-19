@@ -78,8 +78,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         EmailTemplate et = [select Id from EmailTemplate where DeveloperName='Volunteer_Shift_Reminder'];
         ctrl.templateId = et.Id;
         ctrl.LoadEmailTemplate();
-        System.assert(ctrl.strSubject != null);
-        System.assert(ctrl.strMessage != null);
+        System.assert(ctrl.subject != null);
+        System.assert(ctrl.message != null);
         
         // find contacts
         ctrl.hourStatus.Status__c = 'Confirmed';
@@ -96,8 +96,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         // test no template
         ctrl.templateId = null;
         ctrl.LoadEmailTemplate();
-        System.assert(ctrl.strSubject == null);
-        System.assert(ctrl.strMessage == null);
+        System.assert(ctrl.subject == null);
+        System.assert(ctrl.message == null);
         system.assertEquals(null, ctrl.SendMail());
         
         // test no contacts found
@@ -150,8 +150,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         EmailTemplate et = [select Id from EmailTemplate where DeveloperName='Volunteer_Shift_Reminder'];
         ctrl.templateId = et.Id;
         ctrl.LoadEmailTemplate();
-        System.assert(ctrl.strSubject != null);
-        System.assert(ctrl.strMessage != null);
+        System.assert(ctrl.subject != null);
+        System.assert(ctrl.message != null);
         
         // find contacts
         ctrl.hourStatus.Status__c = 'Confirmed';
@@ -215,8 +215,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         EmailTemplate et = [select Id from EmailTemplate where DeveloperName='Volunteer_Shift_Reminder'];
         ctrl.templateId = et.Id;
         ctrl.LoadEmailTemplate();
-        System.assert(ctrl.strSubject != null);
-        System.assert(ctrl.strMessage != null);
+        System.assert(ctrl.subject != null);
+        System.assert(ctrl.message != null);
         
         // find contacts
         ctrl.fEmailContactsOnlyOnce = false;
@@ -240,7 +240,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     /*******************************************************************************************************************
     * @description Verifies the job related to the id provided is returned
     */
-    @isTest static void returnsJobWhenAnIdIsProvided() {
+    @isTest
+    private static void returnsJobWhenAnIdIsProvided() {
         Campaign campaign = new Campaign(Name = 'Related Job Campaign');
         insert campaign;
 
@@ -270,7 +271,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     /*******************************************************************************************************************
     * @description Verifies a job is not returned when an id is not provided
     */
-    @isTest static void returnsNullWhenAnIdIsNotProvided() {
+    @isTest
+    private static void returnsNullWhenAnIdIsNotProvided() {
         VOL_CTRL_SendBulkEmail sendBulkEmail = new VOL_CTRL_SendBulkEmail();
         sendBulkEmail.shiftId = null;
         sendBulkEmail.campaignId = null;
@@ -282,7 +284,8 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     /*******************************************************************************************************************
     * @description Verifies tags that are not whitelisted are removed from the template html value
     */
-    @isTest static void returnsTemplateWithCleanHtml() {
+    @isTest
+    private static void returnsTemplateWithEscapedHtml() {
         VOL_CTRL_SendBulkEmail sendBulkEmail = new VOL_CTRL_SendBulkEmail();
         EmailTemplate template = new EmailTemplate(TemplateType = 'custom');
         Campaign campaign = new Campaign(Name = 'Related Job Campaign');
@@ -290,11 +293,11 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
 
         sendBulkEmail.campaignId = campaign.Id;
         template.HtmlValue = 'BAD XSS: <img src=x onerror=alert(document.cookie)>';
-        String cleanHtml = sendBulkEmail.cleanHtml(template);
+        String escapeHtmlFrom = sendBulkEmail.escapeHtmlFrom(template);
 
-        System.assertNotEquals(template.HtmlValue, cleanHtml, 'Html string should be modified: ' + cleanHtml);
-        System.assert(cleanHtml.contains('BAD XSS:'), 'Html string should contain valid text: ' + cleanHtml);
-        System.assert(!cleanHtml.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not whitelisted: ' + cleanHtml);
+        System.assertNotEquals(template.HtmlValue, escapeHtmlFrom, 'Html string should be modified: ' + escapeHtmlFrom);
+        System.assert(escapeHtmlFrom.contains('BAD XSS:'), 'Html string should contain valid text: ' + escapeHtmlFrom);
+        System.assert(!escapeHtmlFrom.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not whitelisted: ' + escapeHtmlFrom);
         System.assert([SELECT Id FROM Volunteer_Job__c].isEmpty(), 'The database should be rolled back and the record created to clean the html has been removed.');
     }
 }

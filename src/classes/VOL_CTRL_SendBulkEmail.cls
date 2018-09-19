@@ -30,8 +30,8 @@
 
 public with sharing class VOL_CTRL_SendBulkEmail {
 
-    public string strSubject { get; set; }
-    public string strMessage { get; set; }
+    public string subject { get; set; }
+    public string message { get; set; }
     public Volunteer_Hours__c hourStatus { get; set; }
     public ID templateId { get; set; }
     public Boolean isHtmlTemplate { get; private set; }
@@ -126,8 +126,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     */
     public PageReference loadEmailTemplate() {
         isHtmlTemplate = false;
-        strSubject = null;
-        strMessage = null;
+        subject = null;
+        message = null;
 
         if (templateId == null) {
             return null;
@@ -146,14 +146,14 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                 WHERE Id = :templateId
             ];
 
-            strSubject = template.Subject;
+            subject = template.Subject;
 
             if (template.HtmlValue != null) {
                 isHtmlTemplate = true;
-                strMessage = cleanHtml(template);
+                message = escapeHtmlFrom(template);
 
             } else {
-                strMessage = template.Body;
+                message = template.Body;
             }
 
             return null;
@@ -171,7 +171,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     * @return Volunteer_Job__c the job associated with this page
     */
     @TestVisible
-    private String cleanHtml(EmailTemplate template) {
+    private String escapeHtmlFrom(EmailTemplate template) {
         if (template.TemplateType.equalsIgnoreCase('html')) {
             return template.HtmlValue;
         }
