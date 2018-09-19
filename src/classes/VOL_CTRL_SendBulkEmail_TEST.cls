@@ -285,7 +285,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     * @description Verifies tags that are not whitelisted are removed from the template html value
     */
     @isTest
-    private static void returnsTemplateWithEscapedHtml() {
+    private static void returnsEscapedHtml() {
         VOL_CTRL_SendBulkEmail sendBulkEmail = new VOL_CTRL_SendBulkEmail();
         EmailTemplate template = new EmailTemplate(TemplateType = 'custom');
         Campaign campaign = new Campaign(Name = 'Related Job Campaign');
