@@ -293,11 +293,11 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
 
         sendBulkEmail.campaignId = campaign.Id;
         template.HtmlValue = 'BAD XSS: <img src=x onerror=alert(document.cookie)>';
-        String escapeHtmlFrom = sendBulkEmail.escapeHtmlFrom(template);
+        String escapeHtml = sendBulkEmail.escapeHtml(template.HtmlValue);
 
-        System.assertNotEquals(template.HtmlValue, escapeHtmlFrom, 'Html string should be modified: ' + escapeHtmlFrom);
-        System.assert(escapeHtmlFrom.contains('BAD XSS:'), 'Html string should contain valid text: ' + escapeHtmlFrom);
-        System.assert(!escapeHtmlFrom.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not whitelisted: ' + escapeHtmlFrom);
+        System.assertNotEquals(template.HtmlValue, escapeHtml, 'Html string should be modified: ' + escapeHtml);
+        System.assert(escapeHtml.contains('BAD XSS:'), 'Html string should contain valid text: ' + escapeHtml);
+        System.assert(!escapeHtml.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not whitelisted: ' + escapeHtml);
         System.assert([SELECT Id FROM Volunteer_Job__c].isEmpty(), 'The database should be rolled back and the record created to clean the html has been removed.');
     }
 }

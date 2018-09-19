@@ -150,7 +150,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
             if (template.HtmlValue != null) {
                 isHtmlTemplate = true;
-                message = escapeHtmlFrom(template);
+                // Salesforce escapes html type email templates, we must escape when displaying html value from other types
+                message = template.TemplateType.equalsIgnoreCase('html')
+                    ? template.HtmlValue
+                    : escapeHtml(template.HtmlValue);
 
             } else {
                 message = template.Body;
@@ -165,25 +168,21 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     }
 
     /*******************************************************************************************************************
-    * @description Html values are only cleaned automatically by Salesforce when the TemplateType is html
-    * in order to clean the other html values, we will do a temporary commit to a Rich Text Area field to allow
+    * @description Escape the html values by doing a temporary commit to a Rich Text Area field to allow
     * Salesforce to strip the non whitelisted tags for us
+    * @param htmlValue - the value to escape
     * @return Volunteer_Job__c the job associated with this page
     */
     @TestVisible
-    private String escapeHtmlFrom(EmailTemplate template) {
-        if (template.TemplateType.equalsIgnoreCase('html')) {
-            return template.HtmlValue;
-        }
-
+    private String escapeHtml(String htmlValue) {
         Savepoint savepoint = Database.setSavePoint();
-        String htmlValue = '';
+        String escapedHtml = '';
         Volunteer_Job__c job = getRelatedJob();
 
         try {
-            job.Description__c = template.HtmlValue;
+            job.Description__c = htmlValue;
             upsert job;
-            htmlValue = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
+            escapedHtml = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
 
         } catch (Exception ex) {
             // Catch errors and rollback in the finally block
@@ -191,7 +190,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             Database.rollback(savepoint);
         }
 
-        return htmlValue;
+        return escapedHtml;
     }
 
     /*******************************************************************************************************************
