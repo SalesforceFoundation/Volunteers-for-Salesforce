@@ -300,4 +300,29 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         System.assert(!escapeHtml.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not whitelisted: ' + escapeHtml);
         System.assert([SELECT Id FROM Volunteer_Job__c].isEmpty(), 'The database should be rolled back and the record created to clean the html has been removed.');
     }
+
+    /*******************************************************************************************************************
+    * @description Verifies the subject, message and isHtmlTemplate are loaded from the template passed in
+    */
+    @isTest
+    private static void loadsEmailDetailsFromTemplate() {
+        VOL_CTRL_SendBulkEmail sendBulkEmail = new VOL_CTRL_SendBulkEmail();
+        EmailTemplate template = new EmailTemplate(TemplateType = 'text');
+
+        template.Subject = 'Test subject';
+        template.Body = 'Test load from template';
+        sendBulkEmail.loadEmailTemplate(template);
+
+        System.assertEquals(template.Body, sendBulkEmail.message);
+        System.assertEquals(template.Subject, sendBulkEmail.subject);
+
+        template.Subject = 'Test subject from html template';
+        template.HtmlValue = 'Test load from html template';
+        template.Body = 'Something else';
+        template.TemplateType = 'html';
+        sendBulkEmail.loadEmailTemplate(template);
+
+        System.assertEquals(template.HtmlValue, sendBulkEmail.message);
+        System.assertEquals(template.Subject, sendBulkEmail.subject);
+    }
 }

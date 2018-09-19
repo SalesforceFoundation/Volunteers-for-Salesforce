@@ -146,24 +146,32 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                 WHERE Id = :templateId
             ];
 
-            subject = template.Subject;
-
-            if (template.HtmlValue != null) {
-                isHtmlTemplate = true;
-                // Salesforce escapes html type email templates, we must escape when displaying html value from other types
-                message = template.TemplateType.equalsIgnoreCase('html')
-                    ? template.HtmlValue
-                    : escapeHtml(template.HtmlValue);
-
-            } else {
-                message = template.Body;
-            }
-
+            loadEmailTemplate(template);
             return null;
 
         } catch (Exception e) {
             ApexPages.addMessages(e);
             return null;
+        }
+    }
+
+    /*******************************************************************************************************************
+    * @description Sets the email body and subject from the template provided
+    * @return null
+    */
+    @TestVisible
+    private void loadEmailTemplate(EmailTemplate template) {
+        subject = template.Subject;
+
+        if (template.HtmlValue != null) {
+            isHtmlTemplate = true;
+            // Salesforce escapes html type email templates, we must escape when displaying html value from other types
+            message = template.TemplateType.equalsIgnoreCase('html')
+                ? template.HtmlValue
+                : escapeHtml(template.HtmlValue);
+
+        } else {
+            message = template.Body;
         }
     }
 
