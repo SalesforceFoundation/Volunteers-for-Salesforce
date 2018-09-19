@@ -163,7 +163,7 @@
                     <apex:outputLabel value="{!$Label.labelMessageBody}" styleClass="slds-form-element__label" for="readMessage"/>
                     <div class="slds-form-element__control">
                         <div class="slds-text-body--regular">
-                            <apex:outputText id="txtMessage" value="{!strMessage}" escape="false" />
+                            <apex:outputText id="txtMessage" value="{!strMessage}" escape="{!!isHtmlTemplate}" />
                             <apex:inputText id="readMessage" value="{!strMessage}" html-readonly="true" styleClass="slds-assistive-text" />
                         </div>
                     </div>

@@ -34,6 +34,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     public string strMessage { get; set; }
     public Volunteer_Hours__c hourStatus { get; set; }
     public ID templateId { get; set; }
+    public Boolean isHtmlTemplate { get; private set; }
     public integer numberOfContacts { get; set; }
     public ID fromEmailId { get; set; }
     public string strJobName { get; set; }
@@ -124,6 +125,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     * @return null
     */
     public PageReference loadEmailTemplate() {
+        isHtmlTemplate = false;
         strSubject = null;
         strMessage = null;
 
@@ -147,6 +149,7 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             strSubject = template.Subject;
 
             if (template.HtmlValue != null) {
+                isHtmlTemplate = true;
                 strMessage = cleanHtml(template);
 
             } else {
