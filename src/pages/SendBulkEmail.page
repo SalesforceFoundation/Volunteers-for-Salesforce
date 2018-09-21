@@ -154,8 +154,8 @@
                     <apex:outputLabel value="{!$Label.labelSubject}" styleClass="slds-form-element__label" for="readSubject"/>
                     <div class="slds-form-element__control">
                         <div class="slds-text-body--regular">
-                            <apex:outputText id="txtSubject" value="{!strSubject}" />
-                            <apex:inputText id="readSubject" value="{!strSubject}" html-readonly="true" styleClass="slds-assistive-text" />
+                            <apex:outputText id="txtSubject" value="{!subject}" />
+                            <apex:inputText id="readSubject" value="{!subject}" html-readonly="true" styleClass="slds-assistive-text" />
                         </div>
                     </div>
                 </div>
@@ -163,8 +163,8 @@
                     <apex:outputLabel value="{!$Label.labelMessageBody}" styleClass="slds-form-element__label" for="readMessage"/>
                     <div class="slds-form-element__control">
                         <div class="slds-text-body--regular">
-                            <apex:outputText id="txtMessage" value="{!strMessage}" escape="false" />
-                            <apex:inputText id="readMessage" value="{!strMessage}" html-readonly="true" styleClass="slds-assistive-text" />
+                            <apex:outputText id="txtMessage" value="{!message}" escape="{!!isHtmlTemplate}" />
+                            <apex:inputText id="readMessage" value="{!message}" html-readonly="true" styleClass="slds-assistive-text" />
                         </div>
                     </div>
                 </div>
