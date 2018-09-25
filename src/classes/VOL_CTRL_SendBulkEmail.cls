@@ -177,7 +177,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
     /*******************************************************************************************************************
     * @description Escape the html values by doing a temporary commit to a Rich Text Area field to allow
-    * Salesforce to strip the non whitelisted tags for us
+    * Salesforce to strip the non whitelisted tags for us (NOTE: You cannot rerender rich text input fields on
+    * Visualforce pages, https://success.salesforce.com/ideaview?id=08730000000BpHiAAK)
     * @param htmlValue - the value to escape
     * @return Volunteer_Job__c the job associated with this page
     */
