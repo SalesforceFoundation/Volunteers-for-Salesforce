@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Volunteers for Salesforce</fullName>
-    <apiAccessLevel>Unrestricted</apiAccessLevel>
     <types>
         <members>ComponentControllerBase</members>
         <members>PageControllerBase</members>
@@ -154,6 +153,7 @@
         <members>Volunteer_Hours__c.Volunteer_Job__c</members>
         <members>Volunteer_Hours__c.Volunteer_Recurrence_Schedule__c</members>
         <members>Volunteer_Hours__c.Volunteer_Shift__c</members>
+        <members>Volunteer_Job__c.Allow_Waitlist__c</members>
         <members>Volunteer_Job__c.Campaign__c</members>
         <members>Volunteer_Job__c.Description__c</members>
         <members>Volunteer_Job__c.Display_on_Website__c</members>
@@ -163,8 +163,8 @@
         <members>Volunteer_Job__c.Location_City__c</members>
         <members>Volunteer_Job__c.Location_Information__c</members>
         <members>Volunteer_Job__c.Location_Street__c</members>
-        <members>Volunteer_Job__c.Location__c</members>
         <members>Volunteer_Job__c.Location_Zip_Postal_Code__c</members>
+        <members>Volunteer_Job__c.Location__c</members>
         <members>Volunteer_Job__c.Number_of_Completed_Hours__c</members>
         <members>Volunteer_Job__c.Number_of_Shifts__c</members>
         <members>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</members>
@@ -292,6 +292,7 @@
         <members>labelLinkAddMoreRows</members>
         <members>labelLinkFull</members>
         <members>labelLinkSignUp</members>
+        <members>labelLinkWaitlist</members>
         <members>labelListViewFirst</members>
         <members>labelListViewLast</members>
         <members>labelListViewNext</members>
@@ -685,9 +686,9 @@
     <types>
         <members>Contact.Volunteer Signup - Contact</members>
         <members>Lead.Volunteer Signup - Lead</members>
-        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
         <members>Volunteer_Hours__c.Volunteer Hours - Set End Date</members>
         <members>Volunteer_Hours__c.Volunteer Hours - Set Planned Start Date %26 Time</members>
+        <members>Volunteer_Hours__c.Volunteer Hours Reminder Email</members>
         <members>Volunteer_Hours__c.Volunteer Job Signup</members>
         <name>WorkflowRule</name>
     </types>

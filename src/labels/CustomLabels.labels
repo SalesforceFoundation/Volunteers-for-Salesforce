@@ -672,6 +672,13 @@ day:      &apos;day&apos;</value>
         <value>sign up</value>
     </labels>
     <labels>
+        <fullName>labelLinkWaitlist</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>label for add me to waitlist link</shortDescription>
+        <value>add me to waitlist</value>
+    </labels>
+    <labels>
         <fullName>labelListViewFirst</fullName>
         <categories>FindVolunteers</categories>
         <language>en_US</language>

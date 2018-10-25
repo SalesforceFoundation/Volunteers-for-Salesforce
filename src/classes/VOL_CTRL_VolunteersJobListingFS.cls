@@ -103,6 +103,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     // NOTE: while these are actually ID's, we need to make the type string so the client can clear them with null!
     global string contactIdSignUp { get; set; }
     global string volunteerHoursIdSignUp { get; set; }
+    global integer shiftVolsNeeded { get; set; }
     
     // the instance specific url to the css that can be modified by the user.
     global string strURLtoCSSFile { 
@@ -265,7 +266,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c, Allow_Waitlist__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
@@ -274,7 +275,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else if (jobIdFilter != null) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c, Allow_Waitlist__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
@@ -288,7 +289,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(campaignIdFilter);    
                     }
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c, Allow_Waitlist__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
@@ -298,7 +299,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
-                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
+                        Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c, Allow_Waitlist__c,
                         Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
@@ -416,6 +417,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             strSaveResult = null;
             Date dtStart = system.today();
             decimal duration = null; 
+            Decimal shiftVolsNeeded;
             
             // do any validation we weren't able to do directly on the client.
             // also find the shift's start date.
@@ -428,9 +430,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         UTIL_Describe.StrTokenNSPrefix('Duration__c')});
                 
                 // make sure we don't go over the number of volunteers still needed on the shift.
-                list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
+                list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c, Volunteer_Job__r.Allow_Waitlist__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
                 if (listShift != null) {
-                    if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {
+                    shiftVolsNeeded = listShift[0].Number_of_Volunteers_Still_Needed__c;
+                    if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c && !listShift[0].Volunteer_Job__r.Allow_Waitlist__c) {
                         string strError = String.Format(system.label.labelVolunteersJobListingErrorTooManyVols, 
                             new string[] { string.valueOf(listShift[0].Number_of_Volunteers_Still_Needed__c) }); 
                         throw (new MyException(strError));                  
@@ -470,6 +473,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         strSoql += strComma + strF;
                         strComma = ', ';
                     }
+                    strSoql += ' , Volunteer_Shift__r.Number_of_Volunteers_Still_Needed__c ';
                     strSoql += ' from ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c');
                     strSoql += ' where ' + VOL_SharedCode.StrTokenNSPrefix('Contact__c') + ' = :contactIdSignUp ';
                     strSoql += ' and ' + VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c') + ' = :jobIdSignUp ';
@@ -494,7 +498,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         }
                     }
                     // update the  status if not already Confirmed or Completed
-                    if (listVHours[0].Status__c != 'Confirmed' && listVHours[0].Status__c != 'Completed')
+                    if (listVHours[0].Volunteer_Shift__r.Number_of_Volunteers_Still_Needed__c == 0)
+                        listVHours[0].Status__c = 'Waitlist';
+                    else if (listVHours[0].Status__c != 'Confirmed' && listVHours[0].Status__c != 'Completed')
                     	listVHours[0].Status__c = 'Web Sign Up';
                     	
                     VolunteerHoursBeforeInsert(listVHours[0]);
@@ -508,9 +514,14 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     vhours.Contact__c = contactIdSignUp;
                     vhours.Volunteer_Job__c = jobIdSignUp;
                     if (shiftIdSignUp != null && shiftIdSignUp != '') { vhours.Volunteer_Shift__c = shiftIdSignUp; }
-                    vhours.Status__c = 'Web Sign Up';
+                    if (shiftVolsNeeded == 0) {
+                        vhours.Status__c = 'Waitlist';
+                    } else {
+	                    vhours.Status__c = 'Web Sign Up';                        
+                    }
                     vhours.Start_Date__c = dtStart;
                     vhours.Hours_Worked__c = duration;
+
                     VolunteerHoursBeforeInsert(vhours);
                     
                     // Ensure the user has access to the object and fields before querying
