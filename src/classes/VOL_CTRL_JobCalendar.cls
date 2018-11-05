@@ -120,8 +120,9 @@ global with sharing class VOL_CTRL_JobCalendar {
             if (p != null && p != '') initialDate = Date.valueOf(p);
 
             strCalendarView = 'month';
+            Set<String> validViews = new Set<String>{'month', 'agendaWeek', 'agendaDay', 'basicWeek', 'basicDay'};
             p = params.get('CalendarView');
-            if (p != null && p != '') strCalendarView = p;
+            if (p != null && p != '' && validViews.contains(p)) strCalendarView = p;
 
             fShowCampaignHierarchy = false;
             p = params.get('ShowCampaignHierarchy');

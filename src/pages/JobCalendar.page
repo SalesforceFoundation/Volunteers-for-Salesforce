@@ -216,11 +216,11 @@
         });    // end of initializing fullcalendar
 
         // set initial Calendar View based on parameters to page
-        if ('{!JSENCODE(strCalendarView)}' != '') {
-            j$('#calendar').fullCalendar('changeView', '{!JSENCODE(strCalendarView)}');
+        if ('{!JSINHTMLENCODE(strCalendarView)}' != '') {
+            j$('#calendar').fullCalendar('changeView', '{!JSINHTMLENCODE(strCalendarView)}');
             
             // make taller for full agenda views
-            if ('{!JSENCODE(strCalendarView)}' != 'month') {
+            if ('{!JSINHTMLENCODE(strCalendarView)}' != 'month') {
                 j$('#calendar').fullCalendar('option', 'height', 1200);
             }
         }

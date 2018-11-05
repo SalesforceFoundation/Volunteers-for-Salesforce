@@ -46,7 +46,7 @@
             <div class="slds-col slds-size--1-of-6" id="colStep2">
                 <div class="slds-text-align--center slds-p-bottom--small">{!$Label.labelVolunteersHelpStep2}</div>
                 <figure class="slds-image">
-                    <a href="https://powerofus.force.com/kA080000000Cj9S" class="slds-align--absolute-center">
+                    <a href="https://powerofus.force.com/V4S_Documentation" class="slds-align--absolute-center">
                         <img src="{!URLFOR($Resource.v4sStaticResources, '/Images/v4s_logo.png')}" alt="{!$Label.labelVolunteersHelpStep2}"/>
                     </a>
                 </figure>
@@ -55,7 +55,7 @@
             <div class="slds-col slds-size--1-of-6"  id="colStep3">
                 <div class="slds-text-align--center slds-p-bottom--small">{!$Label.labelVolunteersHelpStep3}</div>
                 <figure class="slds-image">
-                    <a href="https://powerofus.force.com/0F980000000Cjjx" class="slds-align--absolute-center">
+                    <a href="https://powerofus.force.com/V4S_Group" class="slds-align--absolute-center">
                         <img src="{!URLFOR($Resource.v4sStaticResources, '/Images/power-of-us-hub_rgb.png')}"
                             alt="{!$Label.labelVolunteersHelpStep3}" height="100" width="130"/>
                     </a>
