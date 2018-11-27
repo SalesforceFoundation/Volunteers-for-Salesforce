@@ -973,7 +973,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for Number of Contacts</shortDescription>
-        <value>The number of emails to send based on the Status you selected. This number may decrease if you select &lt;b&gt;Include Contacts Only Once&lt;/b&rt;.</value>
+        <value>The number of emails to send based on the Status you selected. This number may decrease if you select &lt;b&gt;Include Contacts Only Once&lt;/b&gt;.</value>
     </labels>
     <labels>
         <fullName>labelPersonalSiteContactInfoTitle</fullName>
