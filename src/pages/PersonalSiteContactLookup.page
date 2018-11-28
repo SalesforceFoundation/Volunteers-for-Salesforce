@@ -58,30 +58,30 @@
 
             jQuery('[id$=FirstName]').rules("add", {
                 required: true,
-                notEqual: "{!$ObjectType.Contact.Fields.FirstName.Label}",
+                notEqual: "{!JSINHTMLENCODE($ObjectType.Contact.Fields.FirstName.Label)}",
                 messages: {
-                    required: "{!$Label.labelPersonalSiteFirstnameRequired}",
-                    notEqual: "{!$Label.labelPersonalSiteFirstnameRequired}"
+                    required: "{!JSINHTMLENCODE($Label.labelPersonalSiteFirstnameRequired)}",
+                    notEqual: "{!JSINHTMLENCODE($Label.labelPersonalSiteFirstnameRequired)}"
                 }
             });
 
             jQuery('[id$=LastName]').rules("add", {
                 required: true,
-                notEqual: "{!$ObjectType.Contact.Fields.LastName.Label}",
+                notEqual: "{!JSINHTMLENCODE($ObjectType.Contact.Fields.LastName.Label)}",
                 messages: {
-                    required: "{!$Label.labelPersonalSiteLastnameRequired}",
-                    notEqual: "{!$Label.labelPersonalSiteLastnameRequired}"
+                    required: "{!JSINHTMLENCODE($Label.labelPersonalSiteLastnameRequired)}",
+                    notEqual: "{!JSINHTMLENCODE($Label.labelPersonalSiteLastnameRequired)}"
                 }
             });
 
             jQuery('[id$=Email]').rules("add", {
                 required: true,
                 email: true,
-                notEqual: "{!$ObjectType.Contact.Fields.Email.Label}",
+                notEqual: "{!JSINHTMLENCODE($ObjectType.Contact.Fields.Email.Label)}",
                 messages: {
-                    required: "{!$Label.labelPersonalSiteEmailRequired}",
-                    email: "{!$Label.labelPersonalSiteEmailError}",
-                    notEqual: "{!$Label.labelPersonalSiteEmailError}"
+                    required: "{!JSINHTMLENCODE($Label.labelPersonalSiteEmailRequired)}",
+                    email: "{!JSINHTMLENCODE($Label.labelPersonalSiteEmailError)}",
+                    notEqual: "{!JSINHTMLENCODE($Label.labelPersonalSiteEmailError)}"
                 }
             });
 
@@ -95,11 +95,11 @@
         }
 
         function Prefill() {
-            jQuery(".FirstName").val('{!$ObjectType.Contact.Fields.Firstname.Label}');
+            jQuery(".FirstName").val('{!JSINHTMLENCODE($ObjectType.Contact.Fields.Firstname.Label)}');
             jQuery(".FirstName").css("color", "gray");
-            jQuery(".LastName").val('{!$ObjectType.Contact.Fields.Lastname.Label}');
+            jQuery(".LastName").val('{!JSINHTMLENCODE($ObjectType.Contact.Fields.Lastname.Label)}');
             jQuery(".LastName").css("color", "gray");
-            jQuery(".Email").val('{!$ObjectType.Contact.Fields.Email.Label}');
+            jQuery(".Email").val('{!JSINHTMLENCODE($ObjectType.Contact.Fields.Email.Label)}');
             jQuery(".Email").css("color", "gray");
         }
     </script>
