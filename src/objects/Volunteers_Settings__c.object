@@ -28,9 +28,9 @@
     <fields>
         <fullName>Contact_Matching_Rule__c</fullName>
         <defaultValue>&quot;Firstname;Lastname;Email&quot;</defaultValue>
-        <description>Determines which fields (FirstName, LastName, and/or Email) V4S uses when trying to match Contacts against existing Contacts on the Volunteers Sites pages. The value should be a semicolon-separated list, for example: FirstName;Email.  Note that the fields are specified by their full API Name, including namespace prefix.</description>
+        <description>Determines which fields (FirstName, LastName, and/or Email) V4S uses when matching Contacts against existing Contacts on Volunteers Sites pages. Use a semicolon-separated list, for example: FirstName;Email. Specify fields by their API Name.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Determines which fields (FirstName, LastName, and/or Email) V4S uses when trying to match Contacts against existing Contacts on the Volunteers Sites pages. The value should be a semicolon-separated list, for example: FirstName;Email.  Note that the fields are specified by their full API Name, including namespace prefix.</inlineHelpText>
+        <inlineHelpText>Determines which fields (FirstName, LastName, and/or Email) V4S uses when matching Contacts against existing Contacts on Volunteers Sites pages. Use a semicolon-separated list, for example: FirstName;Email. Specify fields by their API Name.</inlineHelpText>
         <label>Contact Matching Rule</label>
         <length>255</length>
         <required>false</required>
@@ -52,7 +52,7 @@
     <fields>
         <fullName>Personal_Site_Org_Wide_Email_Name__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If you've configured an Organization-Wide Email Address that you'd like to use on the email sent from the Personal Site Contact Lookup Sites page, enter the Display Name of the Organization-Wide Email Address here.If you've configured an Organization-Wide Email Address that you'd like to use on the email sent from the Personal Site Contact Lookup Sites page, enter the Display Name of the Org-Wide Email Address here.</inlineHelpText>
+        <inlineHelpText>If you&apos;ve configured an Organization-Wide Email Address that you&apos;d like to use on the email sent from the Personal Site Contact Lookup Sites page, enter the Display Name of the Organization-Wide Email Address here.</inlineHelpText>
         <label>Personal Site Org-Wide Email Name</label>
         <length>255</length>
         <required>false</required>
