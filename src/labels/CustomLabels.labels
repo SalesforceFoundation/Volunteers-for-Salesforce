@@ -877,7 +877,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Activity logging error on the MassEmailVolunteers page</shortDescription>
-        <value>You must enable the ability to log Activities for Volunteer Jobs and Shifts. For more information, see the &lt;a target=&apos;_blank&apos; href=&apos;https://powerofus.force.com/V4S_Config_Guide&apos;&gt;Set Up and Configure Volunteers for Salesforce Guide&lt;/a&gt;.</value>
+        <value>You must enable the ability to log Activities for Volunteer Jobs and Shifts. For more information, see the Set Up and Configure Volunteers for Salesforce Guide.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersLogActivity</fullName>
