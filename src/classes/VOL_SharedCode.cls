@@ -819,7 +819,7 @@ global with sharing class VOL_SharedCode {
                 Schema.SObjectField fld = mapFieldDesc.get(strField.replace(StrTokenNSPrefix(''), ''));     
                 if (fld != null && !fld.getDescribe().isAccessible()) {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Field ' + strObj + '.' + strField +
-                        ' You need to enable field level security for this field on the Site\'s Guest User profile. For more information, see the <a target="_blank" href="https://powerofus.force.com/V4S_Config_Guide">Set Up and Configure Volunteers for Salesforce Guide</a>.'));
+                        ' You need to enable field level security for this field on the Site\'s Guest User profile.'));
                 } 
             }
     }
