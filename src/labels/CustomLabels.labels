@@ -573,7 +573,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for help text in the Assign section.</shortDescription>
-        <value>To assign Volunteers that matched your criteria, select the checkbox next to the Volunteer(s), enter a Job or Shift and Status, then click Assign. </value>
+        <value>To assign Volunteers that matched your criteria, select the checkbox next to the Volunteer(s), enter a Job or Shift and Status, then click Assign.</value>
     </labels>
     <labels>
         <fullName>labelFindVolunteersHelpCriteria</fullName>
@@ -741,7 +741,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for the Mass Edit Volunteer Hours page</shortDescription>
-        <value>This page shows the Volunteer Hours, Volunteer Job, and Shift (optional) for the selected Campaign. You can update existing Volunteer Hours records or add new ones. Click Save when you're done.</value>
+        <value>This page shows the Volunteer Hours, Volunteer Job, and Shift (optional) for the selected Campaign. You can update existing Volunteer Hours records or add new ones. Click Save when you&apos;re done.</value>
     </labels>
     <labels>
         <fullName>labelMassEditOptional</fullName>
@@ -789,7 +789,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error message for no contacts to email</shortDescription>
-        <value>V4S can't send an email because there are no Contacts for this Job or Shift with the selected Status. Try choosing a different Status.</value>
+        <value>V4S can&apos;t send an email because there are no Contacts for this Job or Shift with the selected Status. Try choosing a different Status.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailErrorNoTemplate</fullName>
@@ -821,7 +821,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp3</shortDescription>
-        <value>If Include Contacts Only Once is unchecked, an email is sent for each Volunteer Hours record associated with this Job or Shift. </value>
+        <value>If Include Contacts Only Once is unchecked, an email is sent for each Volunteer Hours record associated with this Job or Shift.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailHelp4</fullName>
@@ -853,7 +853,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp7</shortDescription>
-        <value>Salesforce limits how many emails you can send each day, so we don't recommend using Mass Email Volunteers for large amounts of email.</value>
+        <value>Salesforce limits how many emails you can send each day, so we don&apos;t recommend using Mass Email Volunteers for large amounts of email.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailTitle</fullName>
@@ -1125,7 +1125,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelTemplateObjectHelpText</shortDescription>
-        <value>For best results, choose an email template that's based on the template type. For example, if you choose the Volunteer Hours Reminder Email template, make sure you've selected the Volunteer Hours template type.</value>
+        <value>For best results, choose an email template that&apos;s based on the template type. For example, if you choose the Volunteer Hours Reminder Email template, make sure you&apos;ve selected the Volunteer Hours template type.</value>
     </labels>
     <labels>
         <fullName>labelTitleJobSignup</fullName>
