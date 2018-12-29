@@ -244,8 +244,43 @@ global with sharing class VOL_CTRL_JobCalendar {
         return null;
     }
     
-    
-    /*******************************************************************************************************
+    public String getLabelCalendarButtonText() {
+        return buildSerializedObject(Label.labelCalendarButtonText);
+    }
+
+    public String getLabelCalendarTitleFormat() {
+        return buildSerializedObject(Label.labelCalendarTitleFormat);
+    }
+
+    public String getLabelCalendarTimeFormat() {
+        return buildSerializedObject(Label.labelCalendarTimeFormat);
+    }
+
+    public String getLabelCalendarColumnFormat() {
+        return buildSerializedObject(Label.labelCalendarColumnFormat);
+    }
+
+    public String getLabelCalendarMonthNames() {
+        return buildSerializedList(Label.labelCalendarMonthNames);
+    }
+
+    public String getLabelCalendarMonthNamesShort() {
+        return buildSerializedList(Label.labelCalendarMonthNamesShort);
+    }
+
+    public String getLabelCalendarDayNames() {
+        return buildSerializedList(Label.labelCalendarDayNames);
+    }
+
+    public String getLabelCalendarDayNamesShort() {
+        return buildSerializedList(Label.labelCalendarDayNamesShort);
+    }
+
+    public String getLabelColorValues() {
+        return buildSerializedList(Label.labelColorValues);
+    }
+
+    /********************************************************************************************************
     * @description Javascript Remoting method to return a list of Shifts, optionally filtered by strFilter.
     * @param strStartDateTime filter for Logs >= startDate
     * @param strEndDateTime filter for Logs <= endDate
@@ -347,4 +382,78 @@ global with sharing class VOL_CTRL_JobCalendar {
     // this was a testmethod which can't be compiled in this class under api 31.  
     // but because it was marked global, it could not be completely removed.
     global static void TestJobCalendar() { }
+
+    private String buildSerializedList(String toParse) {
+        List<String> parsedList = new List<String>();
+        for (String listItem : toParse.split(',') ) {
+            parsedList.add(trimStartAndEndQuotes(listItem));
+        }
+        return JSON.serialize(parsedList);
+    }
+
+    private String buildSerializedObject(String toParse) {
+        Map<String,String> keyPairings = new Map<String,String>();
+        toParse = replaceCommasWithSplitMarkers(toParse);
+        List<String> pairings = toParse.split('&split&');
+        for (String s : pairings) {
+            List<String> keyValue = s.split(':',2);
+            keyPairings.put(
+                trimStartAndEndQuotes(keyValue[0]),
+                trimStartAndEndQuotes(keyValue[1])
+            );
+        }
+
+        return JSON.serialize(keyPairings);
+    }
+
+    private String replaceCommasWithSplitMarkers(String toParse) {
+        Boolean inQuotes = false;
+        String openQuoteChar;
+        Integer i=0;
+
+        String substitutedValue = '';
+        do {
+            if (i < toParse.length()) {
+                String currentChar = toParse.substring(i, i+1);
+                //Hit a quote - determine if it's an open or closed quote
+                if (currentChar == '\'' || currentChar == '"') {
+                    if (!inQuotes) {
+                        inQuotes = true;
+                        openQuoteChar = currentChar;
+                    } else {
+                        inQuotes = false;
+                        openQuoteChar = null;
+                    }
+                }
+
+                if (currentChar == ',' && !inQuotes) {
+                    substitutedValue += '&split&';
+                } else {
+                    substitutedValue += currentChar;
+                }
+            }
+            i = i+1;
+        } while(i < toParse.length());
+
+        return substitutedValue;
+    }
+
+    private String trimStartAndEndQuotes(String toTrim) {
+        toTrim = toTrim.trim();
+        //Trim single quote from beginning
+        if (toTrim.indexOf('\'') == 0) {
+            toTrim = toTrim.removeStart('\'');
+        } else if (toTrim.indexOf('"') == 0) {
+            toTrim = toTrim.removeStart('"');
+        }
+
+        //Trim single quote from end
+        if (toTrim.indexOf('\'') == toTrim.length() - 1) {
+            toTrim = toTrim.removeEnd('\'');
+        } else if (toTrim.indexOf('"') == toTrim.length() -1) {
+            toTrim = toTrim.removeEnd('"');
+        }
+
+        return toTrim;
+    }
 }
