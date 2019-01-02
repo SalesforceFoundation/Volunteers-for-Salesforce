@@ -250,7 +250,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarButtonText for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarButtonText() {
+    public String getCalendarButtonText() {
         return sanitizer.buildSerializedObject(Label.labelCalendarButtonText);
     }
 
@@ -258,7 +258,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarTitleFormat for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarTitleFormat() {
+    public String getCalendarTitleFormat() {
         return sanitizer.buildSerializedObject(Label.labelCalendarTitleFormat);
     }
 
@@ -266,7 +266,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarTimeFormat for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarTimeFormat() {
+    public String getCalendarTimeFormat() {
         return sanitizer.buildSerializedObject(Label.labelCalendarTimeFormat);
     }
 
@@ -274,7 +274,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarColumnFormat for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarColumnFormat() {
+    public String getCalendarColumnFormat() {
         return sanitizer.buildSerializedObject(Label.labelCalendarColumnFormat);
     }
 
@@ -282,7 +282,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarMonthNames for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarMonthNames() {
+    public String getCalendarMonthNames() {
         return sanitizer.buildSerializedList(Label.labelCalendarMonthNames);
     }
 
@@ -290,7 +290,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarMonthNamesShort for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarMonthNamesShort() {
+    public String getCalendarMonthNamesShort() {
         return sanitizer.buildSerializedList(Label.labelCalendarMonthNamesShort);
     }
 
@@ -298,7 +298,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarDayNames for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarDayNames() {
+    public String getCalendarDayNames() {
         return sanitizer.buildSerializedList(Label.labelCalendarDayNames);
     }
 
@@ -306,7 +306,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelCalendarDayNamesShort for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelCalendarDayNamesShort() {
+    public String getCalendarDayNamesShort() {
         return sanitizer.buildSerializedList(Label.labelCalendarDayNamesShort);
     }
 
@@ -314,7 +314,7 @@ global with sharing class VOL_CTRL_JobCalendar {
     * @description Sanitizes Label.labelColorValues for use in JavaScript evaluation
     * @return string sanitized to use in JavaScript
     */
-    public String getLabelColorValues() {
+    public String getColorValues() {
         return sanitizer.buildSerializedList(Label.labelColorValues);
     }
 
