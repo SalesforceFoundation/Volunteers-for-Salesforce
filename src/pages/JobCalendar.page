@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
     var j$ = jQuery.noConflict();
-    var colors = JSON.parse('{!JSENCODE(labelColorValues)}');
+    var colors = JSON.parse('{!labelColorValues}');
 
     j$(function() {
 
@@ -68,14 +68,14 @@
             firstHour: 8,
             firstDay: {!JSINHTMLENCODE($Label.labelCalendarFirstDay)},
             
-            buttonText:     JSON.parse('{!JSENCODE(labelCalendarButtonText)}'),
-            timeFormat:     JSON.parse('{!JSENCODE(labelCalendarTimeFormat)}'),
-            columnFormat:   JSON.parse('{!JSENCODE(labelCalendarColumnFormat)}'),
-            titleFormat:    JSON.parse('{!JSENCODE(labelCalendarTitleFormat)}'),
-            monthNames:     JSON.parse('{!JSENCODE(labelCalendarMonthNames)}'),
-            monthNamesShort:JSON.parse('{!JSENCODE(labelCalendarMonthNamesShort)}'),
-            dayNames:       JSON.parse('{!JSENCODE(labelCalendarDayNames)}'),
-            dayNamesShort:  JSON.parse('{!JSENCODE(labelCalendarDayNamesShort)}'),
+            buttonText:     JSON.parse('{!labelCalendarButtonText}'),
+            timeFormat:     JSON.parse('{!labelCalendarTimeFormat}'),
+            columnFormat:   JSON.parse('{!labelCalendarColumnFormat}'),
+            titleFormat:    JSON.parse('{!labelCalendarTitleFormat}'),
+            monthNames:     JSON.parse('{!labelCalendarMonthNames}'),
+            monthNamesShort:JSON.parse('{!labelCalendarMonthNamesShort}'),
+            dayNames:       JSON.parse('{!labelCalendarDayNames}'),
+            dayNamesShort:  JSON.parse('{!labelCalendarDayNamesShort}'),
             allDayText:     '{!JSINHTMLENCODE($Label.labelCalendarAllDay)}',
             axisFormat:     '{!JSINHTMLENCODE($Label.labelCalendarAxisFormat)}',
             
