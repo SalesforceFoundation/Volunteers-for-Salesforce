@@ -31,19 +31,19 @@
  * @author Salesforce.org
  * @date 2019
  * @group Volunteers for Salesforce (V4S)
- * @description A utility class sanitizes strings that are used to dynamically create JavaScript objects and arrays
+ * @description A utility class that sanitizes strings used to dynamically create JavaScript objects and arrays
  */
 
 public with sharing class UTIL_JavaScriptSanitizer {
     private static final String SPLIT_DELIMITER = '&split&';
 
     /********************************************************************************************************
-    * @description Converts a custom label that is being used to store comma separated value pairs into valid JSON.
+    * @description Converts a custom label that is being used to store comma separated values into a valid JSON string.
     * Assumes values are in quotes (single or double) and separated by commas
     * For Example, the following is stored as a custom label:
         "MediumBlue","Green","DarkRed", "Purple", "DarkSlateGray", "MidnightBlue"
-    * To prevent CSRF issues, instead of evaluating that as JavaScript in Visualforce, converting this to a valid JSON
-    * string so that it can be JS ENCODED and parsed on the front end.
+    * To prevent CSRF issues, instead of evaluating that as JavaScript in Visualforce, converting this to a
+    * valid JSON string so that it can be JS ENCODED and parsed on the front end.
     * @param toParse string that contains key/value pairs
     * @return String as a serialized object
     ********************************************************************************************************/
@@ -56,8 +56,8 @@ public with sharing class UTIL_JavaScriptSanitizer {
     }
 
     /********************************************************************************************************
-    * @description Converts a custom label that is being used to store comma separated key/value pairs into valid JSON.
-    * Assumes key values pairs are separated with commas and that values encapsulated in quotes
+    * @description Converts a custom label that is being used to store comma separated key/value pairs
+    * into valid JSON. Assumes key values pairs are separated with commas and that values encapsulated in quotes
     * For Example, the following is stored as a custom label
         prev:     '&nbsp;&#9668;&nbsp;',
         next:     '&nbsp;&#9658;&nbsp;',
@@ -67,8 +67,8 @@ public with sharing class UTIL_JavaScriptSanitizer {
         month:    'month',
         week:     'week',
         day:      'day'
-    * To prevent CSRF issues, instead of evaluating that as JavaScript in Visualforce, converting this to a valid JSON
-    * string instead to be parsed on the front end.
+    * To prevent CSRF issues, instead of evaluating that as JavaScript in Visualforce, converting this to
+    * a valid JSON string instead to be parsed on the front end.
     * @param toParse string that contains key/value pairs
     * @return String as a JS escaped serialized object
     ********************************************************************************************************/
@@ -132,14 +132,14 @@ public with sharing class UTIL_JavaScriptSanitizer {
     ********************************************************************************************************/
     private String trimStartAndEndQuotes(String toTrim) {
         toTrim = toTrim.trim();
-        //Trim single quote from beginning
+        //Trim single or double quote from beginning
         if (toTrim.indexOf('\'') == 0) {
             toTrim = toTrim.removeStart('\'');
         } else if (toTrim.indexOf('"') == 0) {
             toTrim = toTrim.removeStart('"');
         }
 
-        //Trim single quote from end
+        //Trim single or double quote from end
         if (toTrim.indexOf('\'') == toTrim.length() - 1) {
             toTrim = toTrim.removeEnd('\'');
         } else if (toTrim.indexOf('"') == toTrim.length() -1) {
