@@ -135,7 +135,7 @@ private with sharing class VOL_CTRL_JobCalendar_TEST {
     }
 
     @isTest
-    private static void shouldSanitzeLabels() {
+    private static void shouldSanitizeLabels() {
         JavaScriptSanitizerMock sanitizerMock = new JavaScriptSanitizerMock();
         VOL_CTRL_JobCalendar controller = new VOL_CTRL_JobCalendar();
         controller.sanitizer = (UTIL_JavaScriptSanitizer) Test.createStub(UTIL_JavaScriptSanitizer.class, sanitizerMock);

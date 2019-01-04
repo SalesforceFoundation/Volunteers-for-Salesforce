@@ -96,10 +96,8 @@ public with sharing class UTIL_JavaScriptSanitizer {
     private String replaceCommasWithSplitMarkers(String toParse) {
         Boolean inQuotes = false;
         String openQuoteChar;
-        Integer i = 0;
-
         String substitutedValue = '';
-        do {
+        for ( Integer i = 0; i < toParse.length(); i++ ){
             if (i < toParse.length()) {
                 String currentChar = toParse.substring(i, i + 1);
                 //Hit a quote - determine if it's an open or closed quote
@@ -119,8 +117,7 @@ public with sharing class UTIL_JavaScriptSanitizer {
                     substitutedValue += currentChar;
                 }
             }
-            i = i+1;
-        } while (i < toParse.length());
+        }
 
         return substitutedValue;
     }

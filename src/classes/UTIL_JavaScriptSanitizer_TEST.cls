@@ -87,6 +87,11 @@ private with sharing class UTIL_JavaScriptSanitizer_TEST {
              'All of the months should be parsed out in the correct order');
         System.assertEquals('Dec', String.valueOf(months[11]),
              'All of the months should be parsed out in the correct order');
+
+        String injectedJavaScript = '\'+alert(document.domain)+\'';
+        String expectedEscapedString = '[\\"+alert(document.domain)+\\"]';
+        System.assertEquals(expectedEscapedString, sanitizer.buildSerializedList(injectedJavaScript),
+            'Injected JavaScript should be escaped properly');
     }
 
     @isTest
@@ -165,5 +170,11 @@ private with sharing class UTIL_JavaScriptSanitizer_TEST {
             'The button label object should contain the "day" key');
         System.assertEquals('day', String.valueOf(buttonLabelByButtonType.get('day')),
             'The correct value should be mapped to the "day" key');
+
+        String injectedJavaScript = 'prev:     \'+alert(document.domain)+\'';
+        String expectedEscapedString = '{\\"prev\\":\\"+alert(document.domain)+\\"}';
+
+        System.assertEquals(expectedEscapedString, sanitizer.buildSerializedObject(injectedJavaScript),
+            'Injected JavaScript should be escaped properly');
     }
 }
