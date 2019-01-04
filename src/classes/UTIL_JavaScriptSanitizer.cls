@@ -97,25 +97,23 @@ public with sharing class UTIL_JavaScriptSanitizer {
         Boolean inQuotes = false;
         String openQuoteChar;
         String substitutedValue = '';
-        for ( Integer i = 0; i < toParse.length(); i++ ){
-            if (i < toParse.length()) {
-                String currentChar = toParse.substring(i, i + 1);
-                //Hit a quote - determine if it's an open or closed quote
-                if (currentChar == '\'' || currentChar == '"') {
-                    if (!inQuotes) {
-                        inQuotes = true;
-                        openQuoteChar = currentChar;
-                    } else {
-                        inQuotes = false;
-                        openQuoteChar = null;
-                    }
-                }
-
-                if (currentChar == ',' && !inQuotes) {
-                    substitutedValue += SPLIT_DELIMITER;
+        for (Integer i = 0; i < toParse.length(); i++) {
+            String currentChar = toParse.substring(i, i + 1);
+            //Hit a quote - determine if it's an open or closed quote
+            if (currentChar == '\'' || currentChar == '"') {
+                if (!inQuotes) {
+                    inQuotes = true;
+                    openQuoteChar = currentChar;
                 } else {
-                    substitutedValue += currentChar;
+                    inQuotes = false;
+                    openQuoteChar = null;
                 }
+            }
+
+            if (currentChar == ',' && !inQuotes) {
+                substitutedValue += SPLIT_DELIMITER;
+            } else {
+                substitutedValue += currentChar;
             }
         }
 
