@@ -176,7 +176,13 @@
         </apex:outputPanel>
         
         <apex:outputPanel id="panelExternalJob" rendered="{!job.External_Signup_Url__c != null && NOT(jobAllShiftsInThePast)}" >
-            <apex:outputLink target="_blank" styleClass="externalJobLink" value="{!job.External_Signup_Url__c}" >{!$Label.labelExternalSignupUrl}</apex:outputLink>
+            <apex:outputLink
+                target="_blank"
+                styleClass="externalJobLink"
+                rendered="{!NOT(BEGINS(LOWER(job.External_Signup_Url__c), 'javascript:'))}"
+                value="{!job.External_Signup_Url__c}">
+                {!$Label.labelExternalSignupUrl}
+            </apex:outputLink>
             <br/><br/>
         </apex:outputPanel>
 
