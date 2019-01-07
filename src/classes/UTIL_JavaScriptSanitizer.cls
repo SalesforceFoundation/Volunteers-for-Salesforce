@@ -42,7 +42,7 @@ public with sharing class UTIL_JavaScriptSanitizer {
     * Assumes values are in quotes (single or double) and separated by commas
     * For Example, the following is stored as a custom label:
         "MediumBlue","Green","DarkRed", "Purple", "DarkSlateGray", "MidnightBlue"
-    * To prevent CSRF issues, instead of evaluating that as JavaScript in Visualforce, converting this to a
+    * To prevent XSS issues, instead of evaluating that as JavaScript in Visualforce, converting this to a
     * valid JSON string so that it can be JS ENCODED and parsed on the front end.
     * @param toParse string that contains key/value pairs
     * @return String as a serialized object
@@ -67,7 +67,7 @@ public with sharing class UTIL_JavaScriptSanitizer {
         month:    'month',
         week:     'week',
         day:      'day'
-    * To prevent CSRF issues, instead of evaluating that as JavaScript in Visualforce, converting this to
+    * To prevent XSS issues, instead of evaluating that as JavaScript in Visualforce, converting this to
     * a valid JSON string instead to be parsed on the front end.
     * @param toParse string that contains key/value pairs
     * @return String as a JS escaped serialized object
