@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
     var j$ = jQuery.noConflict();
-    var colors = new Array({!$Label.labelColorValues});
+    var colors = JSON.parse('{!colorValues}');
 
     j$(function() {
 
@@ -59,7 +59,6 @@
         j$.curCSS = function(element, prop, val) {
             return j$(element).css(prop, val);
         };
-    
         // initialize the Calendar
         j$('#calendar').fullCalendar({
             
@@ -67,18 +66,18 @@
             selectable: true,
             aspectRatio: 2,
             firstHour: 8,
-            firstDay: {!$Label.labelCalendarFirstDay},
+            firstDay: {!JSINHTMLENCODE($Label.labelCalendarFirstDay)},
             
-            buttonText:     { {!$Label.labelCalendarButtonText} },
-            timeFormat:     { {!$Label.labelCalendarTimeFormat} },
-            columnFormat:   { {!$Label.labelCalendarColumnFormat} },
-            titleFormat:    { {!$Label.labelCalendarTitleFormat} },
-            monthNames:     [ {!$Label.labelCalendarMonthNames} ],
-            monthNamesShort:[ {!$Label.labelCalendarMonthNamesShort} ], 
-            dayNames:       [ {!$Label.labelCalendarDayNames} ],
-            dayNamesShort:  [ {!$Label.labelCalendarDayNamesShort} ],   
-            allDayText:     '{!$Label.labelCalendarAllDay}',
-            axisFormat:     '{!$Label.labelCalendarAxisFormat}',
+            buttonText:     JSON.parse('{!calendarButtonText}'),
+            timeFormat:     JSON.parse('{!calendarTimeFormat}'),
+            columnFormat:   JSON.parse('{!calendarColumnFormat}'),
+            titleFormat:    JSON.parse('{!calendarTitleFormat}'),
+            monthNames:     JSON.parse('{!calendarMonthNames}'),
+            monthNamesShort:JSON.parse('{!calendarMonthNamesShort}'),
+            dayNames:       JSON.parse('{!calendarDayNames}'),
+            dayNamesShort:  JSON.parse('{!calendarDayNamesShort}'),
+            allDayText:     '{!JSINHTMLENCODE($Label.labelCalendarAllDay)}',
+            axisFormat:     '{!JSINHTMLENCODE($Label.labelCalendarAxisFormat)}',
             
             
             header: {
@@ -143,7 +142,7 @@
                                 if (intTotalVolunteers == null) intTotalVolunteers = 0;
                                 var intStillNeeded = result[i].{!ns}Number_of_Volunteers_Still_Needed__c;
                                 if (intStillNeeded == null) intStillNeeded = 0;
-                                var strShiftNumbers = '{!$Label.labelShiftNumbers}';
+                                var strShiftNumbers = '{!JSINHTMLENCODE($Label.labelShiftNumbers)}';
                                 strShiftNumbers = strShiftNumbers.replace('{0}', intTotalVolunteers);
                                 strShiftNumbers = strShiftNumbers.replace('{1}', intStillNeeded);
                                 
@@ -156,7 +155,7 @@
                                     strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, ns+'PersonalSiteJobListing', ns+'VolunteersJobListingFS')}' +
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
                                         '&dtMonthFilter=' + strApexDateUTC(dtStart) +
-                                        '{!JSENCODE(IF(strParams != null, '&' + strParams, ''))}';
+                                        '{!JSINHTMLENCODE(IF(strParams != null, '&' + strParams, ''))}';
                                 } else if ({!NOT(fPrint)}) {
                                     strUrl = '/' + strShiftId;
                                 }                                
@@ -164,7 +163,7 @@
                                 // note that we lop off the timezone, to avoid FullCalendar from translating it to the current browser locale.
                                 shifts.push({
                                     title: result[i].{!ns}Volunteer_Job__r.Name + (intStillNeeded == 0 ? ' ' +
-                                        '{!$Label.labelCalendarShiftFull}' : ''),
+                                        '{!JSINHTMLENCODE($Label.labelCalendarShiftFull)}' : ''),
                                     description: result[i].{!ns}Description__c,
                                     strNumbers: strShiftNumbers,
                                     urlRoster:  '/apex/{!ns}OpenReport?ReportDevName=Volunteer_Roster' + 
@@ -199,7 +198,7 @@
                     newinfo.html('<i>' + event.strNumbers + '</i>' +
                                 ({!NOT(fPrint)} ? 
                                     '<br/><a href="' + event.urlRoster + 
-                                    '" target="_blank"><b>{!$Label.labelCalendarRoster}</b></a>' : '') +                            
+                                    '" target="_blank"><b>{!JSINHTMLENCODE($Label.labelCalendarRoster)}</b></a>' : '') +                            
                                     (event.description != null ? '<br/>' + event.description  : '') );
                 }
                 element.find('.fc-event-content').css('padding',2);
@@ -299,12 +298,12 @@
             '&initialDate=' + strApexDateLocale(j$('#calendar').fullCalendar('getDate'), true) +
             '&CalendarView=' + j$('#calendar').fullCalendar('getView').name
             );"
-            class="configLinks" title="Printable View (New Window)">{!$Label.labelCalendarPrintableView}</a>
+            class="configLinks" title="Printable View (New Window)">{!JSINHTMLENCODE($Label.labelCalendarPrintableView)}</a>
     </apex:outputPanel>
     <apex:outputPanel layout="block" style="float:right;margin-right:10px;" rendered="{!AND(fPrint,NOT(fWeb))}">
         <ul>
-            <li><a href="javascript:window.close();">{!$Label.labelCalendarCloseWindow}</a></li>
-            <li><a href="javascript:window.print();">{!$Label.labelCalendarPrintThisPage}</a></li>
+            <li><a href="javascript:window.close();">{!JSINHTMLENCODE($Label.labelCalendarCloseWindow)}</a></li>
+            <li><a href="javascript:window.print();">{!JSINHTMLENCODE($Label.labelCalendarPrintThisPage)}</a></li>
         </ul>
     </apex:outputPanel>
 
@@ -322,7 +321,7 @@
                 <div class="slds-page-header" role="banner">
                     <div class="slds-grid">
                         <div class="slds-col slds-size--1-of-1">
-                            <h1 class="slds-text-heading--medium">{!$Label.labelCalendarPageTitle}</h1>
+                            <h1 class="slds-text-heading--medium">{!JSINHTMLENCODE($Label.labelCalendarPageTitle)}</h1>
                         </div>
                     </div>
                 </div>
