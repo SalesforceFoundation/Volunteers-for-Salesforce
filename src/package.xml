@@ -8,6 +8,8 @@
         <members>SoqlListView</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
+        <members>UTIL_JavaScriptSanitizer</members>
+        <members>UTIL_JavaScriptSanitizer_TEST</members>
         <members>UTIL_JobProgress_CTRL</members>
         <members>UTIL_PageMessages_CTRL</members>
         <members>VOL_BATCH_Recurrence</members>
