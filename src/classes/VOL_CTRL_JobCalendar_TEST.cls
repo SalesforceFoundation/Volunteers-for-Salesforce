@@ -32,7 +32,8 @@
 private with sharing class VOL_CTRL_JobCalendar_TEST {
 
     //==================== TEST METHOD(s) ======================================
-    private static testmethod void TestJobCalendar() {
+    @isTest
+    private static void TestJobCalendar() {
     	
 		// create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
@@ -74,7 +75,8 @@ private with sharing class VOL_CTRL_JobCalendar_TEST {
 
     }
     
-    private static testmethod void testCampaignHierarchies() {
+    @isTest
+    private static void testCampaignHierarchies() {
 
 		//create our test data
 		map<string, Campaign> mapCmp = VOL_SharedCode_TEST.mapCampaignTestHierarchy();
@@ -92,7 +94,8 @@ private with sharing class VOL_CTRL_JobCalendar_TEST {
     * @description test timezone handling for Shifts under LA timezone
     * @return void
     */
-    private static testMethod void testTimeZoneHandlingFromLA() {
+    @isTest
+    private static void testTimeZoneHandlingFromLA() {
         testTimeZoneHandling('America/Los_Angeles');
     }
 
@@ -100,7 +103,8 @@ private with sharing class VOL_CTRL_JobCalendar_TEST {
     * @description test timezone handling for Shifts under Sydney timezone
     * @return void
     */
-    private static testMethod void testTimeZoneHandlingFromSydney() {
+    @isTest
+    private static void testTimeZoneHandlingFromSydney() {
         testTimeZoneHandling('Australia/Sydney');
     }
 
@@ -130,4 +134,84 @@ private with sharing class VOL_CTRL_JobCalendar_TEST {
         }
     }
 
+    @isTest
+    private static void shouldSanitizeLabels() {
+        JavaScriptSanitizerMock sanitizerMock = new JavaScriptSanitizerMock();
+        VOL_CTRL_JobCalendar controller = new VOL_CTRL_JobCalendar();
+        controller.sanitizer = (UTIL_JavaScriptSanitizer) Test.createStub(UTIL_JavaScriptSanitizer.class, sanitizerMock);
+
+        controller.getCalendarButtonText();
+        System.assertEquals('buildSerializedObject', sanitizerMock.calledMethod,
+            'buildSerializedObject should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarButtonText, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarTitleFormat();
+        System.assertEquals('buildSerializedObject', sanitizerMock.calledMethod,
+            'buildSerializedObject should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarTitleFormat, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarTimeFormat();
+        System.assertEquals('buildSerializedObject', sanitizerMock.calledMethod,
+            'buildSerializedObject should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarTimeFormat, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarColumnFormat();
+        System.assertEquals('buildSerializedObject', sanitizerMock.calledMethod,
+            'buildSerializedObject should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarColumnFormat, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarMonthNames();
+        System.assertEquals('buildSerializedList', sanitizerMock.calledMethod,
+            'buildSerializedList should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarMonthNames, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarMonthNamesShort();
+        System.assertEquals('buildSerializedList', sanitizerMock.calledMethod,
+            'buildSerializedList should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarMonthNamesShort, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarDayNames();
+        System.assertEquals('buildSerializedList', sanitizerMock.calledMethod,
+            'buildSerializedList should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarDayNames, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getCalendarDayNamesShort();
+        System.assertEquals('buildSerializedList', sanitizerMock.calledMethod,
+            'buildSerializedList should have been called to sanitize the label');
+        System.assertEquals(Label.labelCalendarDayNamesShort, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+
+        controller.getColorValues();
+        System.assertEquals('buildSerializedList', sanitizerMock.calledMethod,
+            'buildSerializedList should have been called to sanitize the label');
+        System.assertEquals(Label.labelColorValues, sanitizerMock.sanitizedString,
+            'The correct label should be passed to the sanitizer');
+    }
+
+    /*******************************************************************************************************************
+    * @description Stub for UTIL_JavaScriptSanitizer instance
+    */
+    private class JavaScriptSanitizerMock implements System.StubProvider {
+        private String sanitizedString;
+        private String calledMethod;
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ) {
+            sanitizedString = (String) listOfArgs[0];
+            calledMethod = stubbedMethodName;
+            return null;
+        }
+    }
 }

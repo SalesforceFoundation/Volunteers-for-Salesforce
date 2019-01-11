@@ -34,6 +34,8 @@
 * method for getting Job Shift data. 
 ********************************************************************************************************/
 global with sharing class VOL_CTRL_JobCalendar {
+    @TestVisible
+    private UTIL_JavaScriptSanitizer sanitizer = new UTIL_JavaScriptSanitizer();
 
     // constructor
     global VOL_CTRL_JobCalendar() {
@@ -243,9 +245,80 @@ global with sharing class VOL_CTRL_JobCalendar {
         // clear out all state that is specific to the Job
         return null;
     }
-    
-    
+
     /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarButtonText for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarButtonText() {
+        return sanitizer.buildSerializedObject(Label.labelCalendarButtonText);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarTitleFormat for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarTitleFormat() {
+        return sanitizer.buildSerializedObject(Label.labelCalendarTitleFormat);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarTimeFormat for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarTimeFormat() {
+        return sanitizer.buildSerializedObject(Label.labelCalendarTimeFormat);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarColumnFormat for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarColumnFormat() {
+        return sanitizer.buildSerializedObject(Label.labelCalendarColumnFormat);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarMonthNames for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarMonthNames() {
+        return sanitizer.buildSerializedList(Label.labelCalendarMonthNames);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarMonthNamesShort for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarMonthNamesShort() {
+        return sanitizer.buildSerializedList(Label.labelCalendarMonthNamesShort);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarDayNames for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarDayNames() {
+        return sanitizer.buildSerializedList(Label.labelCalendarDayNames);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelCalendarDayNamesShort for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getCalendarDayNamesShort() {
+        return sanitizer.buildSerializedList(Label.labelCalendarDayNamesShort);
+    }
+
+    /*******************************************************************************************************
+    * @description Sanitizes Label.labelColorValues for use in JavaScript evaluation
+    * @return string sanitized to use in JavaScript
+    */
+    public String getColorValues() {
+        return sanitizer.buildSerializedList(Label.labelColorValues);
+    }
+
+    /********************************************************************************************************
     * @description Javascript Remoting method to return a list of Shifts, optionally filtered by strFilter.
     * @param strStartDateTime filter for Logs >= startDate
     * @param strEndDateTime filter for Logs <= endDate
