@@ -138,9 +138,9 @@
     </fieldSets>
     <fields>
         <fullName>Comments__c</fullName>
-        <description>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</description>
+        <description>Enter any notes that you&apos;d like V4S to copy to the Comments field of all Volunteer Hours records created by this Volunteer Recurrence Schedule.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Text that will get copied to the Volunteer Hours Comment field for all Hours created by this Volunteer Recurrence Schedule.</inlineHelpText>
+        <inlineHelpText>Enter any notes that you&apos;d like V4S to copy to the Comments field of all Volunteer Hours records created by this Volunteer Recurrence Schedule.</inlineHelpText>
         <label>Comments</label>
         <length>32000</length>
         <trackTrending>false</trackTrending>
@@ -246,7 +246,7 @@
     <fields>
         <fullName>Volunteer_Hours_Status__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The Volunteer Hours Status value to specify on newly created Hours records.</inlineHelpText>
+        <inlineHelpText>Select the default status for Volunteer Hours records created by this Volunteer Recurrence Schedule.</inlineHelpText>
         <label>Volunteer Hours Status</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -380,13 +380,13 @@
         <active>true</active>
         <errorConditionFormula>ISNULL(Days_of_Week__c)</errorConditionFormula>
         <errorDisplayField>Days_of_Week__c</errorDisplayField>
-        <errorMessage>You must specify at least one value for Days of Week</errorMessage>
+        <errorMessage>You must select at least one value for Days of Week.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>VRS_Weekly_Occurrence_Required</fullName>
         <active>true</active>
         <errorConditionFormula>ISNULL(Weekly_Occurrence__c)</errorConditionFormula>
         <errorDisplayField>Weekly_Occurrence__c</errorDisplayField>
-        <errorMessage>You must specify at least one value for Weekly Occurrence</errorMessage>
+        <errorMessage>You must select at least one value for Weekly Occurence.</errorMessage>
     </validationRules>
 </CustomObject>

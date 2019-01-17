@@ -121,7 +121,7 @@ private with sharing class VOL_CTRL_VolunteersBulkEnterHours_TEST {
         // test the save!
         ctrl.SaveVolunteerHours();
         system.debug(ctrl.strSaveResults);
-        System.Assert(ctrl.strSaveResults.startsWith('Error'));
+        System.assert(ctrl.strSaveResults.contains(Label.labelMassEditErrorOnSave), 'An error is expected.');
         vh.Hours_Worked__c = 2.5;
         ctrl.SaveAndCloseVolunteerHours();      
         System.AssertEquals(0, ctrl.numberOfRecordsDirty);

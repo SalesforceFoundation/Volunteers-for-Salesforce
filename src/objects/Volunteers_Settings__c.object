@@ -6,7 +6,7 @@
     <fields>
         <fullName>Contact_Match_Email_Fields__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full Developer name, including namespace prefix. NPSP email fields are automatically checked.</inlineHelpText>
+        <inlineHelpText>A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full API Name, including namespace prefix. NPSP email fields are automatically checked.</inlineHelpText>
         <label>Contact Match Email Fields</label>
         <length>255</length>
         <required>false</required>
@@ -17,7 +17,7 @@
     <fields>
         <fullName>Contact_Match_First_Name_Fields__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>A semicolon separated list of additional Contact first name fields to try to match against when doing Contact matching. E.g., a nickname field.  Note that the fields are specified by their full Developer name, including namespace prefix.</inlineHelpText>
+        <inlineHelpText>A semicolon separated list of additional Contact first name fields to try to match against when doing Contact matching. E.g., a nickname field. Note that the fields are specified by their full API Name, including namespace prefix.</inlineHelpText>
         <label>Contact Match First Name Fields</label>
         <length>255</length>
         <required>false</required>
@@ -28,9 +28,9 @@
     <fields>
         <fullName>Contact_Matching_Rule__c</fullName>
         <defaultValue>&quot;Firstname;Lastname;Email&quot;</defaultValue>
-        <description>Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email.</description>
+        <description>Determines which fields (FirstName, LastName, and/or Email) V4S uses when matching Contacts against existing Contacts on Volunteers Sites pages. Use a semicolon-separated list, for example: FirstName;Email. Specify fields by their API Name.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Specifies which rule to follow when trying to match Contacts against existing Contacts from the Volunteers Sites pages. Semicolon separated string containing one or more of the fields Firstname, Lastname, and Email.</inlineHelpText>
+        <inlineHelpText>Determines which fields (FirstName, LastName, and/or Email) V4S uses when matching Contacts against existing Contacts on Volunteers Sites pages. Use a semicolon-separated list, for example: FirstName;Email. Specify fields by their API Name.</inlineHelpText>
         <label>Contact Matching Rule</label>
         <length>255</length>
         <required>false</required>
@@ -41,7 +41,7 @@
     <fields>
         <fullName>Google_Maps_API_Key__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>If you include a Google Maps API Key, the JobListing pages will display a map on your volunteers site for the Job Location.</inlineHelpText>
+        <inlineHelpText>If you enter a Google Maps API Key, V4S includes a map of the Job Location on the Job Listing pages of your Volunteer Site.</inlineHelpText>
         <label>Google Maps API Key</label>
         <length>255</length>
         <required>false</required>
@@ -52,7 +52,7 @@
     <fields>
         <fullName>Personal_Site_Org_Wide_Email_Name__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The Display Name of the Organization-Wide Email Address to use on the email sent from the PersonalSiteContactLookup Sites page.</inlineHelpText>
+        <inlineHelpText>If you&apos;ve configured an Organization-Wide Email Address that you&apos;d like to use on the email sent from the Personal Site Contact Lookup Sites page, enter the Display Name of the Organization-Wide Email Address here.</inlineHelpText>
         <label>Personal Site Org-Wide Email Name</label>
         <length>255</length>
         <required>false</required>
@@ -73,9 +73,9 @@
     <fields>
         <fullName>Personal_Site_Requires_URL_Email_Match__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact.</description>
+        <description>If selected, the Personal Site link needs to include the Email URL parameter, which V4S uses to match against an email field on the specified Contact.</description>
         <externalId>false</externalId>
-        <inlineHelpText>If checked, then the Personal Site requires the Email URL parameter is included and matches an Email field on the specified Contact.</inlineHelpText>
+        <inlineHelpText>If selected, the Personal Site link needs to include the Email URL parameter, which V4S uses to match against an email field on the specified Contact.</inlineHelpText>
         <label>Personal Site Requires URL Email Match</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -83,9 +83,9 @@
     <fields>
         <fullName>Recurring_Job_Future_Months__c</fullName>
         <defaultValue>4</defaultValue>
-        <description>How many months into the future should Recurring Job Shifts be scheduled?  If this number is too large, you may run into Salesforce CPU time limits which will prevent the Job Scheduler from running completely.  It is recommended to use 4 months or less.</description>
+        <description>Determines how many months into the future Recurring Job Shifts are scheduled. Scheduling more than 4 months may cause a Salesforce CPU time limit exceeded error, which would prevent the Job Scheduler from completing.</description>
         <externalId>false</externalId>
-        <inlineHelpText>How many months into the future should Recurring Job Shifts be scheduled?  If this number is too large, you may run into Salesforce CPU time limits which will prevent the Job Scheduler from running completely.  It is recommended to use 4 months or less.</inlineHelpText>
+        <inlineHelpText>Determines how many months into the future Recurring Job Shifts are scheduled. Scheduling more than 4 months may cause a Salesforce CPU time limit exceeded error, which would prevent the Job Scheduler from completing.</inlineHelpText>
         <label>Recurring Job Future Months</label>
         <precision>3</precision>
         <required>false</required>
@@ -97,7 +97,7 @@
     <fields>
         <fullName>Signup_Bucket_Account_On_Create__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The name of the account to use when creating new Contacts during Signup.  If you are using the Non Profit Start Pack One-to-One model, leave this setting blank.  If you are using the bucket model, set this to the name of the account; usually &apos;Individual&apos;.</inlineHelpText>
+        <inlineHelpText>The name of the Account to use when creating new Contacts during Signup. If you are using the Nonprofit Success Pack One-to-One model, leave this setting blank. If you are using the bucket model, set this to the name of the Account, usually &apos;Individual&apos;.</inlineHelpText>
         <label>Signup Bucket Account On Create</label>
         <length>255</length>
         <required>false</required>
@@ -109,7 +109,7 @@
         <fullName>Signup_Creates_Contacts_If_No_Match__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Should the Volunteer Signup form create new Contact records, if no existing contact is found (or Signup Matches Existing Contacts is unchecked).  If this setting is unchecked, it will create Leads when no matches found.</inlineHelpText>
+        <inlineHelpText>When selected, the Volunteer Signup form creates a new Contact record, if Signup Matches Existing Contacts is selected and no existing Contact is found. Otherwise, the form creates a Lead.</inlineHelpText>
         <label>Signup Creates Contacts If No Match</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -118,7 +118,7 @@
         <fullName>Signup_Matches_Existing_Contacts__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Should the Volunteer Signup page try to match the person to an existing Contact (by First Name, Last Name, Email).</inlineHelpText>
+        <inlineHelpText>If selected, the Volunteer Signup Page tries to match the person to an existing Contact (by First Name, Last Name, and Email), and updates their existing Contact information with the data submitted on the Volunteer Signup Page.</inlineHelpText>
         <label>Signup Matches Existing Contacts</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
