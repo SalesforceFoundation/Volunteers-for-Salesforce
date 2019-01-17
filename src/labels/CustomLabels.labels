@@ -301,7 +301,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>all campaigns entry in the Campaign filter on the JobCalendar page</shortDescription>
-        <value>(all active volunteer campaigns)</value>
+        <value>(All Active Volunteer Campaigns)</value>
     </labels>
     <labels>
         <fullName>labelChoiceAllJobs</fullName>
@@ -309,7 +309,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>all jobs entry in the Campaign filter on the JobCalendar page</shortDescription>
-        <value>(all jobs)</value>
+        <value>(All Jobs)</value>
     </labels>
     <labels>
         <fullName>labelChooseCriteria</fullName>
@@ -333,7 +333,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for the cancel messagbox on the PersonalSiteContactInfo page</shortDescription>
-        <value>Are you sure you want to cancel this shift?</value>
+        <value>Are you sure you want to cancel this Shift?</value>
     </labels>
     <labels>
         <fullName>labelContactInfoChart</fullName>
@@ -477,7 +477,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for instructions on the PersonalSiteContactLookup Sites page</shortDescription>
-        <value>Fill in your name and email, and a link to your volunteer information will be emailed to you.</value>
+        <value>Enter your name and email address, and we will email your volunteer information.</value>
     </labels>
     <labels>
         <fullName>labelContactLookupNotFound</fullName>
@@ -509,7 +509,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelEventInThePast</shortDescription>
-        <value>This job has no upcoming shifts.</value>
+        <value>This Job has no upcoming Shifts.</value>
     </labels>
     <labels>
         <fullName>labelExternalSignupUrl</fullName>
@@ -541,7 +541,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Number already assigned in Find Volunteers page.</shortDescription>
-        <value>{0} selected volunteer(s) were already assigned to this job or shift.</value>
+        <value>{0} Volunteer(s) are already assigned to this Job or Shift.</value>
     </labels>
     <labels>
         <fullName>labelFindVolunteersAssign</fullName>
@@ -573,7 +573,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for help text in the Assign section.</shortDescription>
-        <value>Check the volunteers you want to add to the specified Volunteer Job or Shift, and click Assign.</value>
+        <value>To assign Volunteers that matched your criteria, select the checkbox next to the Volunteer(s), enter a Job or Shift and Status, then click Assign.</value>
     </labels>
     <labels>
         <fullName>labelFindVolunteersHelpCriteria</fullName>
@@ -581,7 +581,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for help text in the Criteria section.</shortDescription>
-        <value>Choose your criteria and click Find.  Volunteers match if any of the selected values within a field match.  Leave a criteria blank, to not filter on it.</value>
+        <value>Select your search criteria and click Find to see a list of Volunteers matching your criteria. For example, selecting Active as the Volunteer Status, Morning and Weekends as Availability, and Landscaping and Manual Labor as Volunteer Skills returns a list of all active Volunteers who are available either mornings or weekends and who have either landscaping or manual labor skills.</value>
     </labels>
     <labels>
         <fullName>labelFindVolunteersHelpFindResults</fullName>
@@ -589,7 +589,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for help text in the Find Results section.</shortDescription>
-        <value>Specify filter criteria to see results.</value>
+        <value>Select at least one search criterion above to see results.</value>
     </labels>
     <labels>
         <fullName>labelFindVolunteersNewlyAssigned</fullName>
@@ -597,7 +597,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Number newly assigned in Find Volunteers page.</shortDescription>
-        <value>{0} selected volunteer(s) have been assigned to this job or shift.</value>
+        <value>You assigned {0} Volunteer(s) to this Job or Shift.</value>
     </labels>
     <labels>
         <fullName>labelFirstShift</fullName>
@@ -733,7 +733,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error message when Mass Edit Volunteer Hours save fails.</shortDescription>
-        <value>Errors were encountered trying to save the Volunteer Hours.</value>
+        <value>There were errors when trying to save Volunteer Hours. Please try again.</value>
     </labels>
     <labels>
         <fullName>labelMassEditHelp</fullName>
@@ -741,7 +741,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for the Mass Edit Volunteer Hours page</shortDescription>
-        <value>Choose the Campaign and Volunteer Job, and optional Volunteer Shift, and the page will display all Volunteer Hour records already saved for the job, as well as new records you can add.  Update all rows as appropriate, and then click Save.</value>
+        <value>This page shows the Volunteer Hours, Volunteer Job, and Shift (optional) for the selected Campaign. You can update existing Volunteer Hours records or add new ones. Click Save when you&apos;re done.</value>
     </labels>
     <labels>
         <fullName>labelMassEditOptional</fullName>
@@ -757,7 +757,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>message displayed when Mass Edit Volunteer Hours saves successfully.</shortDescription>
-        <value>Volunteer Hours records have been saved.</value>
+        <value>Volunteer Hours were successfully saved.</value>
     </labels>
     <labels>
         <fullName>labelMassEditTitle</fullName>
@@ -789,7 +789,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error message for no contacts to email</shortDescription>
-        <value>There are no contacts to email.  Try choosing another Status to filter on.</value>
+        <value>V4S can&apos;t send an email because there are no Contacts for this Job or Shift with the selected Status. Try choosing a different Status.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailErrorNoTemplate</fullName>
@@ -797,7 +797,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error message for no template specified in MassEmail</shortDescription>
-        <value>Please specify an Email Template to send.</value>
+        <value>You must select an Email Template.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailHelp1</fullName>
@@ -805,7 +805,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp1</shortDescription>
-        <value>Mass Email Volunteers will look at all Volunteer Hours records for Recurring Jobs.</value>
+        <value>Mass Email Volunteers reviews all Volunteer Hours records for recurring Jobs.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailHelp2</fullName>
@@ -813,7 +813,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp2</shortDescription>
-        <value>Choose the Status to specify which records to include.</value>
+        <value>Choose a Status in the Email volunteers with Status field to determine which Volunteers to send a message to.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailHelp3</fullName>
@@ -821,7 +821,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp3</shortDescription>
-        <value>If Include Contacts only once is unchecked, one email for each Volunteer Hours record will be sent.</value>
+        <value>If Include Contacts Only Once is unchecked, an email is sent for each Volunteer Hours record associated with this Job or Shift.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailHelp4</fullName>
@@ -829,7 +829,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp4</shortDescription>
-        <value>If Include Contacts only once is checked, only one email for the Contact&apos;s first Volunteer Hours record will be sent.</value>
+        <value>If Include Contacts Only Once is checked, only one email is sent to Volunteers signed up for this Job or Shift, even if they have more than one Volunteer Hours record.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailHelp5</fullName>
@@ -853,7 +853,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailHelp7</shortDescription>
-        <value>Salesforce limits how many emails you can send each day, so it is recommended you don&apos;t use Mass Email Volunteers for large amounts of email.</value>
+        <value>Salesforce limits how many emails you can send each day, so we don&apos;t recommend using Mass Email Volunteers for large amounts of email.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailTitle</fullName>
@@ -877,7 +877,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Activity logging error on the MassEmailVolunteers page</shortDescription>
-        <value>- Logging of Activities must be enabled for Volunteer Jobs and Volunteer Shifts.  Please see the Volunteers for Salesforce Installation and Configuration Guide.</value>
+        <value>You must enable the ability to log Activities for Volunteer Jobs and Shifts. For more information, see the Set Up and Configure Volunteers for Salesforce Guide.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersLogActivity</fullName>
@@ -885,7 +885,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for Log Activity checkbox on Mass Email Volunteers page</shortDescription>
-        <value>Log an Activity for each email</value>
+        <value>Log an Activity for each email sent.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersLogActivityHelpText</fullName>
@@ -893,7 +893,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelMassEmailVolunteersLogActivityHelpText</shortDescription>
-        <value>The activity will be logged on the Contact&apos;s record.</value>
+        <value>The Activity is logged on the Contact record.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersSuccessCount</fullName>
@@ -917,7 +917,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for Include Contacts Only Once checkbox on Mass Email Volunteers page</shortDescription>
-        <value>Include Contacts only once</value>
+        <value>Include Contacts only once.</value>
     </labels>
     <labels>
         <fullName>labelMassEmailVolunteersUniqueContactsHelpText</fullName>
@@ -925,7 +925,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for Include Contacts Only Once checkbox</shortDescription>
-        <value>If unchecked, email the volunteer Contact for every Hours record on a Job or Shift. Checking this box will limit to only one email for each unique Contact.</value>
+        <value>If not selected, V4S emails the Volunteer Contact for every Hours record on a Job or Shift. Checking this box ensures that Volunteers with more than one Hours record are only emailed once.</value>
     </labels>
     <labels>
         <fullName>labelMessageBody</fullName>
@@ -973,7 +973,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for Number of Contacts</shortDescription>
-        <value>The number of emails that will be sent. Changing the &quot;Include Contacts only once&quot; checkbox may change this number.</value>
+        <value>The number of emails to send based on the Status you selected. This number may decrease if you select &lt;b&gt;Include Contacts Only Once&lt;/b&gt;.</value>
     </labels>
     <labels>
         <fullName>labelPersonalSiteContactInfoTitle</fullName>
@@ -1037,7 +1037,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>displays when the contact hasn&apos;t signed up for any jobs</shortDescription>
-        <value>There are no jobs available for you to report hours against.</value>
+        <value>There are no Jobs available for you to report hours against.</value>
     </labels>
     <labels>
         <fullName>labelPersonalSiteReportHoursTitle</fullName>
@@ -1061,7 +1061,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for the return to Calendar link on VolunteersJobListingFS</shortDescription>
-        <value>return to Calendar</value>
+        <value>Return to Calendar</value>
     </labels>
     <labels>
         <fullName>labelShiftClosed</fullName>
@@ -1117,7 +1117,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelTemplateObject</shortDescription>
-        <value>Template based on object</value>
+        <value>Choose a template type. The template type determines which merge field values can be populated in your email template.</value>
     </labels>
     <labels>
         <fullName>labelTemplateObjectHelpText</fullName>
@@ -1125,7 +1125,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelTemplateObjectHelpText</shortDescription>
-        <value>Make sure the template and the object match each other. If Include Contacts only once is checked, only the first Volunteer Hours record is emailed, so you may want to use a less specific template object.</value>
+        <value>For best results, choose an email template that&apos;s based on the template type. For example, if you choose the Volunteer Hours Reminder Email template, make sure you&apos;ve selected the Volunteer Hours template type.</value>
     </labels>
     <labels>
         <fullName>labelTitleJobSignup</fullName>
@@ -1141,13 +1141,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVRSBatchDescription</shortDescription>
-        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future shifts and assign volunteers to them. You can run this process manually, by clicking the Run Batch button, or you can schedule it to automatically run nightly.&lt;/p&gt;
-&lt;br/&gt;
-&lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;
-&lt;br/&gt;
-&lt;p&gt;To view currently scheduled jobs, go to the &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Scheduled Jobs page.&lt;/a&gt;&lt;/p&gt;
-&lt;br/&gt;
-&lt;p&gt;To schedule the Recurrence Schedules process to run automatically, go to the &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Schedule Apex Jobs page.&lt;/a&gt;&lt;/p&gt;</value>
+        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future Shifts and assign volunteers to them. You can run this process manually, by clicking the Run Batch button, or you can schedule it to automatically run nightly.&lt;/p&gt;&lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;&lt;p&gt;To view currently scheduled Jobs, go to the &lt;a href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Scheduled Jobs page.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;To schedule the Recurrence Schedules process to run automatically, go to the &lt;a href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Schedule Apex Jobs page.&lt;/a&gt;&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>labelVRSBatchProcess</fullName>
@@ -1219,7 +1213,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>The message displayed when a volunteer successfully records their hours.</shortDescription>
-        <value>Thank you for reporting your volunteer hours.</value>
+        <value>Thank you for reporting your Volunteer Hours.</value>
     </labels>
     <labels>
         <fullName>labelVolunteerSignupThankYou</fullName>
@@ -1243,7 +1237,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVolunteersHelpDescription</shortDescription>
-        <value>Getting started with Volunteers for Salesforce (V4S) is easy. For more resources, go to the &lt;a href=&quot;https://powerofus.force.com&quot; target=&quot;_blank&quot;&gt;Power of Us HUB&lt;/a&gt;.</value>
+        <value>Welcome to Volunteers for Salesforce (V4S)! Getting started is easy. Click on the images below to check out our resources.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersHelpStep1</fullName>
@@ -1259,7 +1253,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVolunteersHelpStep1Text</shortDescription>
-        <value>Use Trailhead to learn more about V4S and how to configure it.</value>
+        <value>Get started with Trailhead to learn the basics of V4S and see how to configure it.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersHelpStep2</fullName>
@@ -1275,7 +1269,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVolunteersHelpStep2Text</shortDescription>
-        <value>Explore more V4S Resources.</value>
+        <value>Dive into the V4S Documentation to learn everything you need to be successful.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersHelpStep3</fullName>
@@ -1291,7 +1285,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVolunteersHelpStep3Text</shortDescription>
-        <value>Get involved with the community.</value>
+        <value>Get help from our active community of fellow V4S users, or reach out to Salesforce.org.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersJobListingErrorTooManyVols</fullName>
@@ -1299,7 +1293,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error string for signup of too many volunteers</shortDescription>
-        <value>There are only {0} volunteers still needed on this shift.</value>
+        <value>There are only {0} volunteers still needed on this Shift.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersWizardCampaignInformation</fullName>
@@ -1331,7 +1325,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error message for not choosing an existing campaign or sample jobs</shortDescription>
-        <value>Please choose either an existing Campaign to copy, or the number of Sample Jobs and Shifts to create, but not both.</value>
+        <value>You can only use one method to add Jobs and Shifts. Either copy from an existing Campaign, or create Sample Jobs.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersWizardErrorNoJobsWithShifts</fullName>
@@ -1339,7 +1333,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>error message for not choosing Sample Jobs along with Sample Shifts</shortDescription>
-        <value>Please specify the number of Sample Jobs along with the number of Sample Shifts.</value>
+        <value>You must specify a number of Sample Jobs along with the number of Sample Shifts.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersWizardFirstShiftDate</fullName>
@@ -1355,7 +1349,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>The help text displayed at the top of the Volunteers Wizard page.</shortDescription>
-        <value>The Volunteers Wizard creates a new Volunteer Campaign, and allows you to either copy all the Volunteer Jobs, Shifts, and Hours from an existing campaign, or to create sample Jobs and Shifts.</value>
+        <value>Use the Volunteer Wizard to quickly and easily create a new Volunteer Campaign. You can choose to either copy the Volunteer Jobs, Shifts, and Hours from an existing Volunteer Campaign or create sample Jobs and Shifts.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersWizardJobAndShiftHelp</fullName>
@@ -1363,7 +1357,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>help text for the Volunteers Wizard Jobs &amp; Shifts section.</shortDescription>
-        <value>Choose an existing campaign to copy Jobs, Shifts, and Hours from, or fill out how many sample Jobs and Shifts to create.  Note that you can also use Job Recurrence Schedules to repeat Jobs and Shifts into the future.</value>
+        <value>You can automatically add Jobs, Shifts, and Hours to your Campaign: either choose an existing Campaign to copy from, or enter the number of Sample Jobs and Shifts to create.  Note that you can also use Job Recurrence Schedules later to create repeating Jobs and Shifts.</value>
     </labels>
     <labels>
         <fullName>labelVolunteersWizardJobsAndShifts</fullName>

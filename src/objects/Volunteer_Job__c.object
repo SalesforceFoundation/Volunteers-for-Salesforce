@@ -77,7 +77,7 @@
         <fullName>Display_on_Website__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Check this field if this Volunteer Job should be included in the Available Volunteer Jobs Sites page.</inlineHelpText>
+        <inlineHelpText>If selected, this Volunteer Job will be included on the Available Volunteer Jobs Sites page.</inlineHelpText>
         <label>Display on Website</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -86,7 +86,7 @@
         <fullName>External_Signup_Url__c</fullName>
         <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</description>
         <externalId>false</externalId>
-        <inlineHelpText>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</inlineHelpText>
+        <inlineHelpText>The external registration site, if any, for this Job. If you include an External Signup URL, V4S redirects to the site from the Sign Up link on the Job Listing FS page.</inlineHelpText>
         <label>External Signup Url</label>
         <length>255</length>
         <required>false</required>
@@ -108,7 +108,7 @@
         <fullName>Inactive__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Check if this Volunteer Job is no longer active, and it won&apos;t be included in the Volunteers Report Hours Sites page.</inlineHelpText>
+        <inlineHelpText>If selected, this Volunteer Job will not be included on the Volunteers Report Hours Sites page.</inlineHelpText>
         <label>Inactive</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -126,7 +126,7 @@
     <fields>
         <fullName>Location_Information__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Put in any additional details, like driving directions or a URL to a map, in this field, and it will be included in automated email reminders.</inlineHelpText>
+        <inlineHelpText>Additional details such as driving directions. Information in this field is included in automated email reminders.</inlineHelpText>
         <label>Location Information</label>
         <length>32000</length>
         <trackTrending>false</trackTrending>
@@ -166,7 +166,7 @@
     <fields>
         <fullName>Number_of_Completed_Hours__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Total number of Hours that are Completed.  Hours with other status values are not included.</inlineHelpText>
+        <inlineHelpText>Total number of Volunteer Hours with a Status of Completed. Hours with other status values aren&apos;t included.</inlineHelpText>
         <label>Number of Completed Hours</label>
         <summarizedField>Volunteer_Hours__c.Total_Hours_Worked__c</summarizedField>
         <summaryFilterItems>
@@ -201,7 +201,7 @@
     <fields>
         <fullName>Number_of_Volunteers__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The total number of volunteers whose Hours Status = Completed or Confirmed.</inlineHelpText>
+        <inlineHelpText>The total number of volunteers for this Job who have at least one Volunteer Hours record with a status of either Completed or Confirmed.</inlineHelpText>
         <label>Number of Volunteers</label>
         <summarizedField>Volunteer_Hours__c.Number_of_Volunteers__c</summarizedField>
         <summaryFilterItems>
@@ -225,7 +225,7 @@
     <fields>
         <fullName>Skills_Needed__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>the skills the volunteer should have to do this job</inlineHelpText>
+        <inlineHelpText>The skills the volunteer should have to do this Job.</inlineHelpText>
         <label>Skills Needed</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -268,7 +268,7 @@
     <fields>
         <fullName>Volunteer_Website_Time_Zone__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The Time Zone to use when displaying Shift times on Sites pages.   You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign.</inlineHelpText>
+        <inlineHelpText>The Time Zone used when displaying Shift times on Sites pages. You only need to set this if you want to override both the Time Zone set on the Site Guest User profile, and the Time Zone set on the Volunteers campaign.</inlineHelpText>
         <label>Volunteer Website Time Zone</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
