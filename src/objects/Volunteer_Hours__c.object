@@ -493,7 +493,7 @@
     <fields>
         <fullName>Planned_Start_Date_Time__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The actual date &amp; time the volunteer is planning on starting.</inlineHelpText>
+        <inlineHelpText>The date and time the Volunteer is planning to start working.</inlineHelpText>
         <label>Planned Start Date &amp; Time</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -556,7 +556,7 @@
     <fields>
         <fullName>System_Note__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Text information from the system scheduler.</inlineHelpText>
+        <inlineHelpText>Notes generated from the system scheduler.</inlineHelpText>
         <label>System Note</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -633,7 +633,7 @@
                 <operation>equals</operation>
                 <valueField>$Source.Volunteer_Job__c</valueField>
             </filterItems>
-            <infoMessage>You can only pick a Shift which belongs to the current Job.</infoMessage>
+            <infoMessage>You can only pick a Shift that is associated with the current Job.</infoMessage>
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>Volunteer_Shift__c</referenceTo>
@@ -686,14 +686,14 @@
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(Status__c, &apos;Completed&apos;) , ISNULL( Hours_Worked__c ))</errorConditionFormula>
         <errorDisplayField>Hours_Worked__c</errorDisplayField>
-        <errorMessage>Please specify the Hours Worked when setting Status to Completed.</errorMessage>
+        <errorMessage>You must specify the Hours Worked when setting Status to Completed.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>StatusMustBeSet</fullName>
         <active>true</active>
         <errorConditionFormula>ISPICKVAL(Status__c,&quot;&quot; )</errorConditionFormula>
         <errorDisplayField>Status__c</errorDisplayField>
-        <errorMessage>Please specify a Status value.</errorMessage>
+        <errorMessage>You must specify a Status value.</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Mass_Edit_Volunteer_Hours</fullName>

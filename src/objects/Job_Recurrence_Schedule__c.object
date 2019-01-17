@@ -97,7 +97,7 @@
     <fields>
         <fullName>Description__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Description text to copy to shift records created on this schedule.</inlineHelpText>
+        <inlineHelpText>Enter any text that you&apos;d like V4S to copy to the Description field of all Shift records created by this Job Recurrence Schedule.</inlineHelpText>
         <label>Description</label>
         <length>32768</length>
         <trackTrending>false</trackTrending>
@@ -145,7 +145,7 @@
     <fields>
         <fullName>Volunteer_Job__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The Job this Recurrence Schedule is for.</inlineHelpText>
+        <inlineHelpText>The Volunteer Job this Recurrence Schedule should be associated with.</inlineHelpText>
         <label>Volunteer Job</label>
         <referenceTo>Volunteer_Job__c</referenceTo>
         <relationshipName>Volunteer_Job_Recurrence_Schedules</relationshipName>
@@ -250,13 +250,13 @@
         <active>true</active>
         <errorConditionFormula>ISNULL(Days_of_Week__c)</errorConditionFormula>
         <errorDisplayField>Days_of_Week__c</errorDisplayField>
-        <errorMessage>You must specify at least one value for Days of Week.</errorMessage>
+        <errorMessage>You must select at least one value for Days of Week.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>JRS_Weekly_Occurrence_Required</fullName>
         <active>true</active>
         <errorConditionFormula>ISNULL(Weekly_Occurrence__c)</errorConditionFormula>
         <errorDisplayField>Weekly_Occurrence__c</errorDisplayField>
-        <errorMessage>You must specify at least one value for Weekly Occurrence</errorMessage>
+        <errorMessage>You must select at least one value for Weekly Occurrence.</errorMessage>
     </validationRules>
 </CustomObject>
