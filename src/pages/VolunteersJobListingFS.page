@@ -179,10 +179,19 @@
             <apex:outputLink
                 target="_blank"
                 styleClass="externalJobLink"
-                rendered="{!NOT(BEGINS(LOWER(job.External_Signup_Url__c), 'javascript:'))}"
+                rendered="{!ISBLANK(job.ExternalSignupLink__c)}"
                 value="{!job.External_Signup_Url__c}">
                 {!$Label.labelExternalSignupUrl}
             </apex:outputLink>
+            <apex:panelGrid columns="2" rendered="{!NOT(ISBLANK(job.ExternalSignupLink__c))}">
+                <apex:outputLabel value="{!$Label.labelExternalSignupUrl}" for="jobLink"/>
+                <apex:outputField
+                    id="jobLink"
+                    styleClass="externalJobLink"
+                    label="{!$Label.labelExternalSignupUrl}"
+                    value="{!job.ExternalSignupLink__c}">
+                </apex:outputField>
+            </apex:panelGrid>
             <br/><br/>
         </apex:outputPanel>
 

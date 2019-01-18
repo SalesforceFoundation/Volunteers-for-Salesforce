@@ -83,6 +83,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ExternalSignupLink__c</fullName>
+        <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page. This allows you to advertise jobs that one must register for on another web site.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page. This allows you to advertise jobs that one must register for on another web site.</inlineHelpText>
+        <label>External Signup Link</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>External_Signup_Url__c</fullName>
         <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</description>
         <externalId>false</externalId>
