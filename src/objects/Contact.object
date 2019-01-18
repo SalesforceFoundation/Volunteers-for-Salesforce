@@ -1898,7 +1898,7 @@
     <fields>
         <fullName>First_Volunteer_Date__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The first Volunteer Hours Start Date</inlineHelpText>
+        <inlineHelpText>The date of the first Volunteer Hours record for this Contact with a status of Completed (read only).</inlineHelpText>
         <label>First Volunteer Date</label>
         <summarizedField>Volunteer_Hours__c.Start_Date__c</summarizedField>
         <summaryFilterItems>
@@ -1913,7 +1913,7 @@
     <fields>
         <fullName>Last_Volunteer_Date__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The latest Volunteer Hours End Date</inlineHelpText>
+        <inlineHelpText>The date of the most recent Volunteer Hours record for this Contact with a status of Completed (read only).</inlineHelpText>
         <label>Last Volunteer Date</label>
         <summarizedField>Volunteer_Hours__c.End_Date__c</summarizedField>
         <summaryFilterItems>
@@ -1941,7 +1941,7 @@
         <fullName>Volunteer_Auto_Reminder_Email_Opt_Out__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Check if this Contact does not want to receive automatic reminder emails about their upcoming shifts.  Used in the &quot;Volunteer Hours Reminder Email&quot; workflow rule.</inlineHelpText>
+        <inlineHelpText>If selected, this Contact will not receive automatic reminder emails about their upcoming Volunteer Shifts.</inlineHelpText>
         <label>Volunteer Auto-Reminder Email Opt Out</label>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Checkbox</type>
@@ -1983,7 +1983,7 @@
     <fields>
         <fullName>Volunteer_Hours__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Total number of Hours that are Completed. Hours with other status values are not included.</inlineHelpText>
+        <inlineHelpText>Total number of Volunteer Hours with a Status of Completed. Hours with other status values aren&apos;t included.</inlineHelpText>
         <label>Volunteer Hours</label>
         <summarizedField>Volunteer_Hours__c.Hours_Worked__c</summarizedField>
         <summaryFilterItems>
@@ -1998,7 +1998,7 @@
     <fields>
         <fullName>Volunteer_Last_Web_Signup_Date__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The date of the most recent volunteer signup from the web.  Used to trigger workflow for notifications and thank you emails.</inlineHelpText>
+        <inlineHelpText>The date of this Contact&apos;s most recent online volunteer signup. This field is automatically populated from the web signup form. Used to trigger workflow for notification and thank you emails.</inlineHelpText>
         <label>Volunteer Last Web Signup Date</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -2007,7 +2007,7 @@
     <fields>
         <fullName>Volunteer_Manager_Notes__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Notes about the volunteer that the volunteer manager or organization staff want to record.</inlineHelpText>
+        <inlineHelpText>Internal notes about the volunteer from your organizational staff.</inlineHelpText>
         <label>Volunteer Manager Notes</label>
         <length>32000</length>
         <trackFeedHistory>false</trackFeedHistory>
@@ -2017,7 +2017,7 @@
     <fields>
         <fullName>Volunteer_Notes__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Notes from the volunteer.  Note that the web signup form appends the volunteers comments to this field.</inlineHelpText>
+        <inlineHelpText>Notes from the volunteer. If the volunteer included comments in the web signup form, those comments will be appended here.</inlineHelpText>
         <label>Volunteer Notes</label>
         <length>32000</length>
         <trackFeedHistory>false</trackFeedHistory>
@@ -2027,7 +2027,7 @@
     <fields>
         <fullName>Volunteer_Organization__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>The organization, company, or group the contact is volunteering on behalf of.</inlineHelpText>
+        <inlineHelpText>The organization, company, or group the Contact is volunteering on behalf of.</inlineHelpText>
         <label>Volunteer Organization</label>
         <length>255</length>
         <required>false</required>
@@ -2038,7 +2038,7 @@
     <fields>
         <fullName>Volunteer_Skills__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Select the skill(s) this contact has that should be used to find volunteer jobs.</inlineHelpText>
+        <inlineHelpText>Indicates which skills this Contact has. You can filter on skills when you look for volunteers for particular Jobs.</inlineHelpText>
         <label>Volunteer Skills</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>

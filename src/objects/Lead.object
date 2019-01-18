@@ -46,7 +46,7 @@
     <fields>
         <fullName>Volunteer_Skills__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Select the skill(s) this person has that should be used to find volunteer jobs.</inlineHelpText>
+        <inlineHelpText>Indicates which skills this Lead has. You can filter on skills when you look for volunteers for particular Jobs.</inlineHelpText>
         <label>Volunteer Skills</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
