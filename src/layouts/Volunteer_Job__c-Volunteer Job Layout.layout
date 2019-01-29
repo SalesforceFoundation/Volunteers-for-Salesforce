@@ -63,10 +63,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>External_Signup_Url__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ExternalSignupLink__c</field>
             </layoutItems>
         </layoutColumns>
