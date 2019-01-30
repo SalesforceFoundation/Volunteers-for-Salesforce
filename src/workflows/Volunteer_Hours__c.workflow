@@ -83,26 +83,11 @@
     <rules>
         <fullName>Volunteer Hours Reminder Email</fullName>
         <active>false</active>
-        <criteriaItems>
-            <field>Volunteer_Hours__c.Status__c</field>
-            <operation>equals</operation>
-            <value>Confirmed,Completed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
-            <operation>notEqual</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Volunteer_Hours__c.Start_Date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>TODAY</value>
-        </criteriaItems>
         <description>TEMPLATE TO CLONE, for a time based workflow rule to send a Contact an email reminding them of their upcoming Job Shift.</description>
+        <formula>(ISPICKVAL(Status__c, &quot;Confirmed&quot;) ||  ISPICKVAL(Status__c, &quot;Completed&quot;)) &amp;&amp;
+NOT(ISBLANK(Contact__r.Email)) &amp;&amp;
+NOT(Contact__r.Volunteer_Auto_Reminder_Email_Opt_Out__c) &amp;&amp;
+Start_Date__c &gt;= TODAY()</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
