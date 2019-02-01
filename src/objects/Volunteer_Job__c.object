@@ -83,11 +83,21 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>External_Signup_Url__c</fullName>
-        <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page.  This allows you to advertise jobs that one must register for on another web site.</description>
+        <fullName>ExternalSignupLink__c</fullName>
+        <description>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page. This allows you to advertise jobs that one must register for on another web site.</description>
         <externalId>false</externalId>
-        <inlineHelpText>The external registration site, if any, for this Job. If you include an External Signup URL, V4S redirects to the site from the Sign Up link on the Job Listing FS page.</inlineHelpText>
-        <label>External Signup Url</label>
+        <inlineHelpText>If provided, the VolunteersJobListingFS page will redirect to this website when the user clicks on the Sign Up link on the page. This allows you to advertise jobs that one must register for on another web site.</inlineHelpText>
+        <label>External Signup Link</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>External_Signup_Url__c</fullName>
+        <description>This field has been deprecated and is no longer in use. Use External Signup Link instead.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field has been deprecated and is no longer in use. Use External Signup Link instead.</inlineHelpText>
+        <label>DEPRECATED-External Signup Url</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
