@@ -528,7 +528,7 @@ day: &apos;ום&apos;</label>
         <name>labelShiftClosed</name>
     </customLabels>
     <customLabels>
-        <label>מאושר: {0}&amp;nbsp;&amp;nbsp;זמין: {1}</label>
+        <label>מאושר: {0} - זמין: {1}</label>
         <name>labelShiftNumbers</name>
     </customLabels>
     <customLabels>
