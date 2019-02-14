@@ -266,7 +266,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, ExternalSignupLink__c, First_Shift__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Id = :shiftIdFilter) 
@@ -275,7 +275,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 } else if (jobIdFilter != null) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, ExternalSignupLink__c, First_Shift__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
@@ -289,7 +289,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     }
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c, 
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, ExternalSignupLink__c, First_Shift__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
@@ -299,7 +299,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 } else {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
                         Description__c, Location_Information__c, Number_of_Shifts__c, Skills_Needed__c, Volunteer_Website_Time_Zone__c,
-                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, ExternalSignupLink__c, First_Shift__c,
+                        Location_Street__c, Location_City__c, Location__c, Location_Zip_Postal_Code__c, External_Signup_Url__c, First_Shift__c,
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
@@ -561,4 +561,5 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 	// this was a testmethod which can't be compiled in this class under api 31.  
 	// but because it was marked global, it could not be completely removed.
     global static void UnitTest1() {}
+    
 }

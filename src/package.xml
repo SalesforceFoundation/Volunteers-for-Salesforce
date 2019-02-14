@@ -160,7 +160,6 @@
         <members>Volunteer_Job__c.Description__c</members>
         <members>Volunteer_Job__c.Display_on_Website__c</members>
         <members>Volunteer_Job__c.External_Signup_Url__c</members>
-        <members>Volunteer_Job__c.ExternalSignupLink__c</members>
         <members>Volunteer_Job__c.First_Shift__c</members>
         <members>Volunteer_Job__c.Inactive__c</members>
         <members>Volunteer_Job__c.Location_City__c</members>
