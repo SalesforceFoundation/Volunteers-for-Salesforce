@@ -528,7 +528,7 @@ day: &apos;jour&apos;</label>
         <name>labelShiftClosed</name>
     </customLabels>
     <customLabels>
-        <label>confirmé : {0}&amp;Nbsp;&amp;nbsp;disponible(s) : {1}</label>
+        <label>confirmé : {0} - disponible(s) : {1}</label>
         <name>labelShiftNumbers</name>
     </customLabels>
     <customLabels>

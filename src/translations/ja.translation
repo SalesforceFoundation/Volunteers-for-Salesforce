@@ -528,7 +528,7 @@ day:      &apos;日&apos;</label>
         <name>labelShiftClosed</name>
     </customLabels>
     <customLabels>
-        <label>確認済み: {0}&amp;nbsp;&amp;nbsp;利用可: {1}</label>
+        <label>確認済み: {0} - 利用可: {1}</label>
         <name>labelShiftNumbers</name>
     </customLabels>
     <customLabels>
