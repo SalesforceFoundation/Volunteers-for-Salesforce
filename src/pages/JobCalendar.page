@@ -155,7 +155,7 @@
                                     strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, ns+'PersonalSiteJobListing', ns+'VolunteersJobListingFS')}' +
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
                                         '&dtMonthFilter=' + strApexDateUTC(dtStart) +
-                                        '{!JSINHTMLENCODE(IF(strParams != null, '&' + strParams, ''))}';
+                                        '{!JSENCODE(IF(strParams != null, '&' + strParams, ''))}';
                                 } else if ({!NOT(fPrint)}) {
                                     strUrl = '/' + strShiftId;
                                 }                                
