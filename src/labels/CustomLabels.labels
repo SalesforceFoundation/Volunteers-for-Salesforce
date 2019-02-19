@@ -1077,7 +1077,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>labelShiftNumbers</shortDescription>
-        <value>confirmed: {0}&amp;nbsp;&amp;nbsp;available: {1}</value>
+        <value>confirmed: {0} - available: {1}</value>
     </labels>
     <labels>
         <fullName>labelShowHelp</fullName>
