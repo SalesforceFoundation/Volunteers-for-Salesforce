@@ -1,5 +1,6 @@
 .appcloud
 .appcloud/.project
+.python-version
 .settings
 .sfdx
 /browser_tests
