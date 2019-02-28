@@ -4,6 +4,8 @@
     <apiAccessLevel>Unrestricted</apiAccessLevel>
     <types>
         <members>ComponentControllerBase</members>
+        <members>FeatureManagementService</members>
+        <members>FeatureParam</members>
         <members>PageControllerBase</members>
         <members>SoqlListView</members>
         <members>UTIL_Describe</members>
