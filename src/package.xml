@@ -5,6 +5,7 @@
     <types>
         <members>ComponentControllerBase</members>
         <members>InstallScript</members>
+        <members>InstallScript_TEST</members>
         <members>PageControllerBase</members>
         <members>SoqlListView</members>
         <members>UTIL_Describe</members>
