@@ -714,7 +714,7 @@
         <masterLabel>Find Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__VolunteersFind?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}VolunteersFind?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>JobRoster</fullName>
@@ -725,7 +725,7 @@
         <masterLabel>Volunteer Roster</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Volunteer_Job__c.CampaignId__c}&amp;pv1={!Volunteer_Job__c.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Volunteer_Job__c.CampaignId__c}&amp;pv1={!Volunteer_Job__c.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Job_Shift_Calendar</fullName>
@@ -736,7 +736,7 @@
         <masterLabel>Shift Calendar</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__JobCalendar?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}JobCalendar?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Mass_Edit_Volunteer_Hours</fullName>
@@ -760,6 +760,6 @@
         <masterLabel>Mass Email Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__SendBulkEmail?jobId={!Volunteer_Job__c.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}SendBulkEmail?jobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
 </CustomObject>

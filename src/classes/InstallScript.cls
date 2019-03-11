@@ -41,7 +41,7 @@ public without sharing class InstallScript implements InstallHandler {
           return;
         }
 
-        packageSettings.NamespacePrefix__c = VOL_SharedCode.getNamespace();
+        packageSettings.NamespacePrefix__c = VOL_SharedCode.StrTokenNSPrefix('');
         insert packageSettings;
     }
 }

@@ -72,7 +72,7 @@ public with sharing class InstallScript_TEST {
         PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
         String expectedNamespace = VOL_SharedCode.getNamespace() == ''
             ? null :
-            VOL_SharedCode.getNamespace();
+            VOL_SharedCode.StrTokenNSPrefix('');
 
         System.assertNotEquals(null, packageSettings.Id, 'Expected the package setting to have an Id.');
         System.assertEquals(expectedNamespace, packageSettings.NamespacePrefix__c, 'Expected the package namespace to be set.');
