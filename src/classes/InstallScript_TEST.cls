@@ -13,9 +13,7 @@ public with sharing class InstallScript_TEST {
         Integer endingDmlRows = System.Limits.getDmlRows();
         Test.stopTest();
 
-        packageSettings = PackageSettings__c.getOrgDefaults();
-        System.assertNotEquals(null, packageSettings.Id, 'Expected the package setting to have an Id.');
-        System.assertEquals(1, endingDmlRows - startingDmlRows, 'Expected the dml rows to increase by one.');
+        assertInsertOfPackageSettings(endingDmlRows - startingDmlRows);
     }
 
     @IsTest
@@ -32,5 +30,52 @@ public with sharing class InstallScript_TEST {
         Test.stopTest();
 
         System.assertEquals(0, endingDmlRows - startingDmlRows, 'Dml should not occur when the package already exists.');
+    }
+
+    @IsTest
+    private static void shouldInsertPackageSettingsOnInstall() {
+        InstallScript installScript = new InstallScript();
+
+        Integer startingDmlRows = System.Limits.getDmlRows();
+        Test.testInstall(installScript, null);
+        Integer endingDmlRows = System.Limits.getDmlRows();
+
+        assertInsertOfPackageSettings(endingDmlRows - startingDmlRows);
+    }
+
+    @IsTest
+    private static void shouldInsertPackageSettingsOnUpdate() {
+        InstallScript installScript = new InstallScript();
+
+        Integer startingDmlRows = System.Limits.getDmlRows();
+        Test.testInstall(installScript, new Version(1,0));
+        Integer endingDmlRows = System.Limits.getDmlRows();
+
+        assertInsertOfPackageSettings(endingDmlRows - startingDmlRows);
+    }
+
+    @IsTest
+    private static void shouldInsertPackageSettingsOnPush() {
+        InstallScript installScript = new InstallScript();
+
+        Integer startingDmlRows = System.Limits.getDmlRows();
+        Test.testInstall(installScript, new Version(1,0), true);
+        Integer endingDmlRows = System.Limits.getDmlRows();
+
+        assertInsertOfPackageSettings(endingDmlRows - startingDmlRows);
+    }
+
+
+    /// Helpers
+
+    private static void assertInsertOfPackageSettings(Integer actualRows) {
+        PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
+        String expectedNamespace = VOL_SharedCode.getNamespace() == ''
+            ? null :
+            VOL_SharedCode.getNamespace();
+
+        System.assertNotEquals(null, packageSettings.Id, 'Expected the package setting to have an Id.');
+        System.assertEquals(expectedNamespace, packageSettings.NamespacePrefix__c, 'Expected the package namespace to be set.');
+        System.assertEquals(1, actualRows, 'Expected the dml rows to increase by one.');
     }
 }
