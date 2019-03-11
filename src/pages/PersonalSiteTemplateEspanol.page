@@ -49,10 +49,10 @@
             </div>
             <div class="navbar-inner" style="padding:0 20px;">              
                 <ul class="nav">
-                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteJobListing', 'active', '')}"><a href="{!$Page.PersonalSiteJobListing + '?Language=ES&nMonthsToShow=1&DateFormat=d/M/yy'}" >Lista de Trabajos Voluntarios</a></li>
-                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteJobCalendar', 'active', '')}"><a href="{!$Page.PersonalSiteJobCalendar + '?Language=ES&nMonthsToShow=1&DateFormat=d/M/yy'}" >Calendario de Trabajo del Voluntario</a></li>
-                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteContactInfo', 'active', '')}"><a href="{!$Page.PersonalSiteContactInfo + '?Language=ES'}" >Tu Información</a></li>
-                    <li class="{!IF($CurrentPage.Name == 'GW_Volunteers__PersonalSiteReportHours', 'active', '')}"><a href="{!$Page.PersonalSiteReportHours + '?Language=ES'}" >Registra tus Horas como Voluntario</a></li>                
+                    <li class="{!IF($CurrentPage.Name == $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteJobListing', 'active', '')}"><a href="{!$Page.PersonalSiteJobListing + '?Language=ES&nMonthsToShow=1&DateFormat=d/M/yy'}" >Lista de Trabajos Voluntarios</a></li>
+                    <li class="{!IF($CurrentPage.Name == $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteJobCalendar', 'active', '')}"><a href="{!$Page.PersonalSiteJobCalendar + '?Language=ES&nMonthsToShow=1&DateFormat=d/M/yy'}" >Calendario de Trabajo del Voluntario</a></li>
+                    <li class="{!IF($CurrentPage.Name == $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteContactInfo', 'active', '')}"><a href="{!$Page.PersonalSiteContactInfo + '?Language=ES'}" >Tu Información</a></li>
+                    <li class="{!IF($CurrentPage.Name == $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteReportHours', 'active', '')}"><a href="{!$Page.PersonalSiteReportHours + '?Language=ES'}" >Registra tus Horas como Voluntario</a></li>                
                 </ul>
             </div>          
         </div>
