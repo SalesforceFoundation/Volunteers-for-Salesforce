@@ -388,7 +388,7 @@ global with sharing class VOL_SharedCode {
 
     // global code to lookup an existing contact
     // listStrFields are optional fields to include in the soql call
-    global static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {
+    global static list<Contact> LookupContact(Contact contactRecord, list<string> listStrFields) {
         // let's see if we can find any matching Contacts.
         // we need to use dynamic soql, since we allow the user to modify the FieldSet of fields to edit.
         string strSoql = 'select ';
@@ -411,11 +411,11 @@ global with sharing class VOL_SharedCode {
 
         final String rule = VolunteersSettings.Contact_Matching_Rule__c;
         if (rule.containsIgnoreCase(String.valueOf(Contact.LastName))) {
-            strSoql += strAnd + ' (Lastname=\'' + StrEscape(contact.Lastname) + '\') ';
+            strSoql += strAnd + ' (Lastname=\'' + StrEscape(contactRecord.LastName) + '\') ';
             strAnd = ' and ';
         }
         if (rule.containsIgnoreCase(String.valueOf(Contact.FirstName))) {
-            strSoql += strAnd + ' (Firstname=\'' + StrEscape(contact.Firstname) + '\'';
+            strSoql += strAnd + ' (Firstname=\'' + StrEscape(contactRecord.FirstName) + '\'';
             strAnd = ' and ';
 
             // any additional firstname fields to check
@@ -423,27 +423,27 @@ global with sharing class VOL_SharedCode {
                 list<string> listStrFname = new list<string>();
                 listStrFname = VolunteersSettings.Contact_Match_First_Name_Fields__c.split(';');
                 for (string str : listStrFname) {
-                    strSoql += ' or ' + str + '=\'' + StrEscape(contact.Firstname) + '\'';
+                    strSoql += ' or ' + str + '=\'' + StrEscape(contactRecord.FirstName) + '\'';
                 }
             }
             strSoql += ') ';
         }
         if (rule.containsIgnoreCase(String.valueOf(Contact.Email))) {
-            strSoql += strAnd + ' (Email=\'' + contact.Email + '\'';
+            strSoql += strAnd + ' (Email=\'' + contactRecord.Email + '\'';
             strAnd = ' and ';
             // any additional email fields to check
             if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
                 list<string> listStrEmail = new list<string>();
                 listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
                 for (string str : listStrEmail) {
-                    strSoql += ' or ' + str + '=\'' + contact.Email + '\'';
+                    strSoql += ' or ' + str + '=\'' + contactRecord.Email + '\'';
                 }
             }
             // handle NPSP email fields
             if (IsNPSPInstalled) {
-                strSoql += ' or npe01__AlternateEmail__c=\'' + contact.Email + '\'';
-                strSoql += ' or npe01__HomeEmail__c=\'' + contact.Email + '\'';
-                strSoql += ' or npe01__WorkEmail__c=\'' + contact.Email + '\'';
+                strSoql += ' or npe01__AlternateEmail__c=\'' + contactRecord.Email + '\'';
+                strSoql += ' or npe01__HomeEmail__c=\'' + contactRecord.Email + '\'';
+                strSoql += ' or npe01__WorkEmail__c=\'' + contactRecord.Email + '\'';
             }
             strSoql += ') ';
         }
