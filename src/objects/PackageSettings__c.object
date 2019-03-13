@@ -6,7 +6,7 @@
         <fullName>NamespacePrefix__c</fullName>
         <description>The active package namespace prefix for Volunteers.</description>
         <externalId>false</externalId>
-        <inlineHelpText>The active package namespace prefix for Volunteers. Do not edit manually.</inlineHelpText>
+        <inlineHelpText>The active package namespace prefix for Volunteers. Do not edit.</inlineHelpText>
         <label>Namespace Prefix</label>
         <length>17</length>
         <required>false</required>
