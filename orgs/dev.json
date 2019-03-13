@@ -6,9 +6,9 @@
   "orgPreferences": {
     "enabled": [
       "ChatterEnabled", 
+      "Translation",
       "S1DesktopEnabled", 
-      "DisableParallelApexTesting",
-      "Translations"
+      "DisableParallelApexTesting"
     ],
     "disabled": [
       "S1EncryptedStoragePref2"
