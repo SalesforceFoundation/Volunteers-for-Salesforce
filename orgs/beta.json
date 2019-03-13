@@ -8,9 +8,6 @@
       "ChatterEnabled", 
       "S1DesktopEnabled", 
       "DisableParallelApexTesting"
-    ],
-    "disabled": [
-      "S1EncryptedStoragePref2"
     ]
   }
 }
