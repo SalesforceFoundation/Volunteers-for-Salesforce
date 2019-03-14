@@ -5,8 +5,9 @@
     <types>
         <members>ComponentControllerBase</members>
         <members>FeatureManagementService</members>
-        <members>FeatureParam</members>
+        <members>FeatureTelemetry</members>
         <members>PageControllerBase</members>
+        <members>QueryBuilder</members>
         <members>SoqlListView</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
@@ -213,6 +214,7 @@
         <name>CustomField</name>
     </types>
     <types>
+        <members>FeatureParamException</members>
         <members>PageMessagesConfirm</members>
         <members>PageMessagesError</members>
         <members>PageMessagesFatal</members>
@@ -221,6 +223,7 @@
         <members>PermissionDeleteException</members>
         <members>PermissionReadException</members>
         <members>PermissionUpdateException</members>
+        <members>TelemetryException</members>
         <members>labelButtonAssign</members>
         <members>labelButtonCancel</members>
         <members>labelButtonClose</members>
