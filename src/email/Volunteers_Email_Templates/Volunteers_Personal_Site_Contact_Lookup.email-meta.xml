@@ -12,7 +12,7 @@ Here is the link to your Volunteer information:
 
 ADMIN: You must edit this template to put in the full URL to your PersonalSiteContactInfo page in the sample URL found below.  There is no way to get the Sites URL from a merge field in the email template.  The URL should look something like the following example.  Full details in the Installation &amp; Configuration Guide.
 
-https://xxxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}&amp;Email={!Contact.Email}
+https://xxxxxxxx.na3.force.com/Volunteers/{!$Setup.PackageSettings__c.NamespacePrefix__c}PersonalSiteContactInfo?contactId={!Contact.Id}&amp;Email={!Contact.Email}
 
 Thank you.</textOnly>
     <type>custom</type>

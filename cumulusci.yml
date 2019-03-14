@@ -4,6 +4,7 @@ project:
         name: Volunteers for Salesforce
         namespace: GW_Volunteers
         api_version: '40.0'
+        install_class: InstallScript
     git:
         prefix_release: rel/
 
@@ -42,6 +43,13 @@ tasks:
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: dev_config/delete
+
+    deploy_package_settings:
+        description: Configure the default Volunteers Package Settings
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            path: scripts/DeployScript.cls
+            apex: insertPackageSettings();
 
     assign_pset:
         description: Runs anonymous apex to assign pset for guest user.
@@ -92,6 +100,8 @@ flows:
             4:
                 task: deploy_dev_config
             5:
+                task: deploy_package_settings
+            6:
                 task: assign_pset
                 ignore_failure: True
 
