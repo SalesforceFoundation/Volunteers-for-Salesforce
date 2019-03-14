@@ -940,7 +940,7 @@
         <masterLabel>Volunteer Roster</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Campaign.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}OpenReport?ReportDevName=Volunteer_Roster&amp;pv0={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Campaign_Shift_Calendar</fullName>
@@ -951,7 +951,7 @@
         <masterLabel>Shift Calendar</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__JobCalendar?campaignId={!Campaign.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}JobCalendar?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Find_Volunteers</fullName>
@@ -963,7 +963,7 @@
         <masterLabel>Find Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__VolunteersFind?campaignId={!Campaign.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}VolunteersFind?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Mass_Email_Volunteers</fullName>
@@ -975,7 +975,7 @@
         <masterLabel>Mass Email Volunteers</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
-        <url>/apex/GW_Volunteers__SendBulkEmail?campaignId={!Campaign.Id}</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}SendBulkEmail?campaignId={!Campaign.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>New_Volunteer_Campaign</fullName>
@@ -988,6 +988,6 @@
         <openType>sidebar</openType>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
-        <url>/apex/GW_Volunteers__VolunteersCampaignWizard</url>
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}VolunteersCampaignWizard</url>
     </webLinks>
 </CustomObject>
