@@ -27,62 +27,35 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class FeatureTelemetry {
-    private SObjectType sObjType;
-    private String developerName;
-    private String criteria;
+@IsTest(IsParallel=true)
+public with sharing class QueryBuilder_TEST {
+    private static QueryBuilder queryBuilder = new QueryBuilder(Account.SObjectType);
+    private static final Integer NUMBER_OF_ACCOUNTS = 2;
 
-    @TestVisible
-    private FeatureParam param {
-        get {
-            if (param == null) {
-                param = createParam();
-            }
+    @TestSetup
+    private static void makeData(){
+        List<Account> accounts = new List<Account>{
+            new Account(Name = 'Find Me', Type='Prospect'),
+            new Account(Name = 'Hide Me', Type='Customer')
+        };
 
-            return param;
-        }
-        set;
+        insert accounts;
     }
 
-    @TestVisible
-    private QueryBuilder queryBuilder {
-        get {
-            if (queryBuilder == null) {
-                return new QueryBuilder(sObjType);
-            }
-
-            return queryBuilder;
-        }
-        set;
+    @IsTest
+    private static void countQueryShouldIncludeWhereClauseWhenConditionProvided() {
+        String expectedCountQuery = 'SELECT COUNT() FROM Account WHERE Type = \'Prospect\'';
+        String actualCountQuery = queryBuilder.withCondition('Type = \'Prospect\'').buildCount();
+        System.assertEquals(expectedCountQuery, actualCountQuery, 'Expected the where clause to be part of the count query.');
+        System.assertEquals(1, Database.countQuery(actualCountQuery), 'Expected one account to be found.');
     }
 
-    public FeatureTelemetry(SObjectType sObjType, String developerName) {
-        this.sObjType = sObjType;
-        this.developerName = developerName;
-    }
-
-    public FeatureTelemetry(SObjectType sObjType, String developerName, String criteria) {
-        this.sObjType = sObjType;
-        this.developerName = developerName;
-        this.criteria = criteria;
-    }
-
-    public void send() {
-        if (sObjType == null || String.isBlank(developerName)) {
-            return;
-        }
-
-        param.send();
-    }
-
-    private FeatureParam createParam() {
-        return new FeatureParam(developerName, getRecordCount());
-    }
-
-    @TestVisible
-    private Integer getRecordCount() {
-        queryBuilder.withCondition(criteria);
-        return Database.countQuery(queryBuilder.buildCount());
+    @IsTest
+    private static void countQueryShouldNotIncludeWhereClause() {
+        String expectedCountQuery = 'SELECT COUNT() FROM Account';
+        String actualCountQuery = queryBuilder.buildCount();
+        System.assertEquals(expectedCountQuery, actualCountQuery, 'Expected count query to be returned without a WHERE clause.');
+        System.assertEquals(NUMBER_OF_ACCOUNTS, Database.countQuery(actualCountQuery), 'Expected all accounts to be found.');
     }
 
 }

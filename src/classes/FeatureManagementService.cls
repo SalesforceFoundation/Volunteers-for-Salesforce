@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 public with sharing class FeatureManagementService {
-
+    @TestVisible
     private Config config {
         get {
             if (config == null) {
@@ -75,6 +75,7 @@ public with sharing class FeatureManagementService {
         private final String volunteerJobsOnWebsite = 'VolunteerJobsDisplayOnWebsite';
         private final String volunteerShifts = 'VolunteerShifts';
         private final String volunteerShiftsLastYear = 'VolunteerShiftsCreatedLastYear';
+        private final String jobRecurrenceSchedules = 'JobRecurrenceSchedules';
 
         public List<List<FeatureTelemetry>> getGroupedTelemetries() {
             List<List<FeatureTelemetry>> groupedTelemetries = new List<List<FeatureTelemetry>>();
@@ -106,7 +107,7 @@ public with sharing class FeatureManagementService {
 
         private List<FeatureTelemetry> createVolunteerJobTelemetries() {
             return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobs, ''),
+                new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobs),
                 new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobsLastYear, 'CreatedDate = LAST_YEAR'),
                 new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobsOnWebsite, 'Display_on_Website__c = true')
             };
@@ -114,14 +115,14 @@ public with sharing class FeatureManagementService {
 
         private List<FeatureTelemetry> createVolunteerShiftTelemetries() {
             return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Volunteer_Shift__c.SObjectType, volunteerShifts, ''),
+                new FeatureTelemetry(Volunteer_Shift__c.SObjectType, volunteerShifts),
                 new FeatureTelemetry(Volunteer_Shift__c.SObjectType, volunteerShiftsLastYear, 'CreatedDate = LAST_YEAR')
             };
         }
 
         private List<FeatureTelemetry> createJobRecurrenceScheduleTelemetries() {
             return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Job_Recurrence_Schedule__c.SObjectType, 'JobRecurrenceSchedules', '')
+                new FeatureTelemetry(Job_Recurrence_Schedule__c.SObjectType, jobRecurrenceSchedules)
             };
         }
     }

@@ -27,62 +27,23 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class FeatureTelemetry {
-    private SObjectType sObjType;
+public with sharing class FeatureParam {
     private String developerName;
-    private String criteria;
+    private Object val;
 
-    @TestVisible
-    private FeatureParam param {
-        get {
-            if (param == null) {
-                param = createParam();
-            }
-
-            return param;
-        }
-        set;
-    }
-
-    @TestVisible
-    private QueryBuilder queryBuilder {
-        get {
-            if (queryBuilder == null) {
-                return new QueryBuilder(sObjType);
-            }
-
-            return queryBuilder;
-        }
-        set;
-    }
-
-    public FeatureTelemetry(SObjectType sObjType, String developerName) {
-        this.sObjType = sObjType;
+    public FeatureParam(String developerName, Object val) {
         this.developerName = developerName;
-    }
-
-    public FeatureTelemetry(SObjectType sObjType, String developerName, String criteria) {
-        this.sObjType = sObjType;
-        this.developerName = developerName;
-        this.criteria = criteria;
+        this.val = val;
     }
 
     public void send() {
-        if (sObjType == null || String.isBlank(developerName)) {
-            return;
+        if (val instanceof Integer) {
+            FeatureManagement.setPackageIntegerValue(developerName, (Integer) val);
+
+        } else {
+            throw new FeatureParamException(System.Label.FeatureParamException);
         }
-
-        param.send();
     }
 
-    private FeatureParam createParam() {
-        return new FeatureParam(developerName, getRecordCount());
-    }
-
-    @TestVisible
-    private Integer getRecordCount() {
-        queryBuilder.withCondition(criteria);
-        return Database.countQuery(queryBuilder.buildCount());
-    }
-
+    public class FeatureParamException extends Exception {}
 }

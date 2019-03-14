@@ -27,62 +27,16 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class FeatureTelemetry {
-    private SObjectType sObjType;
-    private String developerName;
-    private String criteria;
+@IsTest // (IsParallel=true) - Setting Feature Management Parameters results in an exception when ran in parallel
+public with sharing class FeatureManagementService_TEST {
+    private static FeatureManagementService featureManagmentService = new FeatureManagementService();
+    @IsTest
+    private static void shouldEnqueueJobsCorrespondingToConfigGrouping() {
+        Test.startTest();
+        featureManagmentService.sendUsageMetrics();
+        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'FeatureManagementService'];
+        Test.stopTest();
 
-    @TestVisible
-    private FeatureParam param {
-        get {
-            if (param == null) {
-                param = createParam();
-            }
-
-            return param;
-        }
-        set;
+        System.assertEquals(featureManagmentService.config.getGroupedTelemetries().size(), asyncJobs.size(), 'Expected a job to be enqueued for each group of telemetry lists.') ;
     }
-
-    @TestVisible
-    private QueryBuilder queryBuilder {
-        get {
-            if (queryBuilder == null) {
-                return new QueryBuilder(sObjType);
-            }
-
-            return queryBuilder;
-        }
-        set;
-    }
-
-    public FeatureTelemetry(SObjectType sObjType, String developerName) {
-        this.sObjType = sObjType;
-        this.developerName = developerName;
-    }
-
-    public FeatureTelemetry(SObjectType sObjType, String developerName, String criteria) {
-        this.sObjType = sObjType;
-        this.developerName = developerName;
-        this.criteria = criteria;
-    }
-
-    public void send() {
-        if (sObjType == null || String.isBlank(developerName)) {
-            return;
-        }
-
-        param.send();
-    }
-
-    private FeatureParam createParam() {
-        return new FeatureParam(developerName, getRecordCount());
-    }
-
-    @TestVisible
-    private Integer getRecordCount() {
-        queryBuilder.withCondition(criteria);
-        return Database.countQuery(queryBuilder.buildCount());
-    }
-
 }

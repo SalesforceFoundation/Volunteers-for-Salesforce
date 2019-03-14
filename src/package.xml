@@ -5,9 +5,14 @@
     <types>
         <members>ComponentControllerBase</members>
         <members>FeatureManagementService</members>
+        <members>FeatureManagementService_TEST</members>
+        <members>FeatureParam</members>
+        <members>FeatureParam_TEST</members>
         <members>FeatureTelemetry</members>
+        <members>FeatureTelemetry_TEST</members>
         <members>PageControllerBase</members>
         <members>QueryBuilder</members>
+        <members>QueryBuilder_TEST</members>
         <members>SoqlListView</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
@@ -539,6 +544,18 @@
         <members>Volunteers_Email_Templates/Volunteer_Signup_Thank_You</members>
         <members>Volunteers_Email_Templates/Volunteers_Personal_Site_Contact_Lookup</members>
         <name>EmailTemplate</name>
+    </types>
+    <types>
+        <members>CampaignsWithJobs</members>
+        <members>ContactsWithLastWebSignup</members>
+        <members>ContactsWithLastWebSignUpLastYear</members>
+        <members>JobRecurrenceSchedules</members>
+        <members>VolunteerJobs</members>
+        <members>VolunteerJobsDisplayOnWebsite</members>
+        <members>VolunteerJobsLastYear</members>
+        <members>VolunteerShifts</members>
+        <members>VolunteerShiftsCreatedLastYear</members>
+        <name>FeatureParameterInteger</name>
     </types>
     <types>
         <members>Campaign.VolunteersWizardFS</members>
