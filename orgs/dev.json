@@ -1,13 +1,17 @@
 {
-  "edition": "Developer", 
   "orgName": "V4S - Dev Workspace", 
-  "features": "Sites",
+  "edition": "Developer", 
+  "hasSampleData": "true",
+  "features": "Sites",  
   "orgPreferences": {
     "enabled": [
       "ChatterEnabled", 
-      "Translation", 
+      "Translation",
       "S1DesktopEnabled", 
       "DisableParallelApexTesting"
+    ],
+    "disabled": [
+      "S1EncryptedStoragePref2"
     ]
   }
 }

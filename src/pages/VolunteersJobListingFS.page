@@ -136,7 +136,7 @@
 </script>
     <apex:Messages style="color:red;" />            
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
-        <apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobCalendar', 'GW_Volunteers__JobCalendar') + '?' + strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
+        <apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteJobCalendar', $Setup.PackageSettings__c.NamespacePrefix__c + 'JobCalendar') + '?' + strParams}" id="linkCal1" >{!$Label.labelReturnToCalendar}</apex:outputLink>
     </apex:outputPanel>
 
     <apex:repeat value="{!listVolunteerJobs}" var="job" id="rptJobs" >
@@ -232,7 +232,7 @@
     </apex:repeat>
     <apex:outputText value="{!$Label.labelMessageNoJobs}" rendered="{!NOT(VolunteersHasJobs)}" />
     <apex:outputPanel rendered="{!fCalendar}" layout="block" style="text-align:right">
-        <apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, 'GW_Volunteers__PersonalSiteJobCalendar', 'GW_Volunteers__JobCalendar') + '?' + strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>     
+        <apex:outputLink value="{!$Site.CurrentSiteUrl + IF(fPersonalSite, $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteJobCalendar', $Setup.PackageSettings__c.NamespacePrefix__c + 'JobCalendar') + '?' + strParams}" id="linkCal2" >{!$Label.labelReturnToCalendar}</apex:outputLink>     
     </apex:outputPanel>
 
 <!-- this div contains the signup dialog we'll use jQuery to display -->
