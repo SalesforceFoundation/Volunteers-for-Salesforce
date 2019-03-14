@@ -4,6 +4,8 @@
     <apiAccessLevel>Unrestricted</apiAccessLevel>
     <types>
         <members>ComponentControllerBase</members>
+        <members>InstallScript</members>
+        <members>InstallScript_TEST</members>
         <members>PageControllerBase</members>
         <members>SoqlListView</members>
         <members>UTIL_Describe</members>
@@ -139,6 +141,7 @@
         <members>Lead.Volunteer_Notes__c</members>
         <members>Lead.Volunteer_Skills__c</members>
         <members>Lead.Volunteer_Status__c</members>
+        <members>PackageSettings__c.NamespacePrefix__c</members>
         <members>Volunteer_Hours__c.Comments__c</members>
         <members>Volunteer_Hours__c.Contact__c</members>
         <members>Volunteer_Hours__c.End_Date__c</members>
@@ -398,6 +401,7 @@
     </types>
     <types>
         <members>Job_Recurrence_Schedule__c</members>
+        <members>PackageSettings__c</members>
         <members>Volunteer_Hours__c</members>
         <members>Volunteer_Job__c</members>
         <members>Volunteer_Recurrence_Schedule__c</members>
@@ -434,6 +438,13 @@
         <members>Lead-iw</members>
         <members>Lead-ja</members>
         <members>Lead-nl_NL</members>
+        <members>PackageSettings__c-de</members>
+        <members>PackageSettings__c-en_US</members>
+        <members>PackageSettings__c-es</members>
+        <members>PackageSettings__c-fr</members>
+        <members>PackageSettings__c-iw</members>
+        <members>PackageSettings__c-ja</members>
+        <members>PackageSettings__c-nl_NL</members>
         <members>Volunteer_Hours__c-de</members>
         <members>Volunteer_Hours__c-en_US</members>
         <members>Volunteer_Hours__c-es</members>

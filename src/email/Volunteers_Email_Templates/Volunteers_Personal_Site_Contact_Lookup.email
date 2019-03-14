@@ -6,7 +6,7 @@
 </b></p>
 
 <p><i>
-https://xxxxxxxx.na3.force.com/Volunteers/GW_Volunteers__PersonalSiteContactInfo?contactId={!Contact.Id}&Email={!Contact.Email}
+https://xxxxxxxx.na3.force.com/Volunteers/{!$Setup.PackageSettings__c.NamespacePrefix__c}PersonalSiteContactInfo?contactId={!Contact.Id}&Email={!Contact.Email}
 </i></p>
 
 <a href="YOUR HTTPS URL HERE!!!!!">Volunteer Information</a>
