@@ -11,11 +11,11 @@
         <members>QueryBuilder_TEST</members>
         <members>SoqlListView</members>
         <members>Telemetry</members>
-        <members>TelemetryParam</members>
-        <members>TelemetryParam_TEST</members>
+        <members>Telemetry_TEST</members>
         <members>TelemetryService</members>
         <members>TelemetryService_TEST</members>
-        <members>Telemetry_TEST</members>
+        <members>TelemetryQueueable</members>
+        <members>TelemetryQueueable_TEST</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
         <members>UTIL_JavaScriptSanitizer</members>

@@ -29,21 +29,28 @@
 */
 @IsTest(IsParallel=true)
 public with sharing class Telemetry_TEST {
-    private static TelemetryParam.Stub mockParam = new TelemetryParam.Stub();
     private static QueryBuilder.Stub mockQB = new QueryBuilder.Stub();
     private static Telemetry telemetry;
     private static final String DEV_NAME = 'DeveloperName';
 
     @IsTest
-    private static void paramSentWhenDeveloperNameAndSObjTypeProvided() {
-        sendTelemetry(Account.SObjectType, DEV_NAME, '');
-        System.assertEquals(1, mockParam.sendCount, 'Expected the send method to be called.');
+    private static void returnsDeveloperNameProvided() {
+        telemetry = new Telemetry(Account.SObjectType, DEV_NAME);
+        System.assertEquals(DEV_NAME, telemetry.getDeveloperName(), 'Expected the developer names to match.');
     }
 
     @IsTest
-    private static void paramNotSentWhenDeveloperNameIsNotProvided() {
-        sendTelemetry(Account.SObjectType, '', '');
-        System.assertEquals(0, mockParam.sendCount, 'Did not expect the send method to be called without a developer name.');
+    private static void returnsEmptyStringWhenDeveloperNameNotProvided() {
+        telemetry = new Telemetry(Account.SObjectType, null);
+        System.assertEquals('', telemetry.getDeveloperName(), 'Expected the developer names to be an empty string.');
+    }
+
+    @IsTest
+    private static void returnsIntegerValueOfRecordCount() {
+        telemetry = new Telemetry(Account.SObjectType, DEV_NAME);
+        System.assertEquals(0, (Integer) telemetry.getValue(), 'Did not expect any records to be found.');
+        insert new Account(Name = 'Count me!');
+        System.assertEquals(1, (Integer) telemetry.getValue(), 'Expected one record to be found.');
     }
 
     @IsTest
@@ -58,22 +65,5 @@ public with sharing class Telemetry_TEST {
         System.assertEquals(0, actualCount, 'Did not expect any records to have been created in the future!');
     }
 
-    @IsTest
-    private static void paramCreatedWithDeveloperNameAndRecordCount() {
-        telemetry = new Telemetry(Account.SObjectType, DEV_NAME);
-        String actualParam = JSON.serialize(telemetry.param);
-        String expectedParam = JSON.serialize(new TelemetryParam(DEV_NAME, 0));
-
-        System.assertEquals(expectedParam, actualParam, 'Expected the telemetry to create the same param.');
-    }
-
-
-    /// Helpers ///
-
-    private static void sendTelemetry(SObjectType sObjType, String developerName, String criteria) {
-        telemetry = new Telemetry(sObjType, developerName, criteria);
-        telemetry.param = (TelemetryParam) Test.createStub(TelemetryParam.class, mockParam);
-        telemetry.send();
-    }
 
 }

@@ -52,30 +52,22 @@ public without sharing class TelemetryService {
         set;
     }
 
-    public void sendUsageMetrics() {
-        for (List<Telemetry> telemetries : groupedTelemetries) {
-            System.enqueueJob(new Queueable(telemetries));
+    @TestVisible
+    private TelemetryQueueable telemetryQueueable {
+        get {
+            if (telemetryQueueable == null) {
+                telemetryQueueable = new TelemetryQueueable();
+            }
+
+            return telemetryQueueable;
         }
+        set;
     }
 
-    public without sharing class Queueable implements System.Queueable {
-        private List<Telemetry> telemetries;
-
-        public Queueable(List<Telemetry> telemetries) {
-            this.telemetries = telemetries;
+    public void sendUsageMetrics() {
+        for (List<Telemetry> telemetries : groupedTelemetries) {
+            telemetryQueueable.enqueue(telemetries);
         }
-
-        public void execute(QueueableContext qc) {
-            try {
-                for (Telemetry telemetry : telemetries) {
-                    telemetry.send();
-                }
-
-            } catch (Exception ex) {
-                throw new TelemetryException(System.Label.TelemetryException);
-            }
-        }
-
     }
 
     public with sharing class Config {
@@ -138,8 +130,6 @@ public without sharing class TelemetryService {
             };
         }
     }
-
-    public class TelemetryException extends Exception {}
 
 
     //////////////////// -------------------- ////////////////////

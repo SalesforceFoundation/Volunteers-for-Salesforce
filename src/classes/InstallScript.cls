@@ -46,14 +46,14 @@ public without sharing class InstallScript implements InstallHandler {
 
         insertPackageSettings();
 
-        if (isNew()) {
+        if (isNewInstall()) {
             return;
         }
 
         sendUsageMetrics();
     }
 
-    private Boolean isNew() {
+    private Boolean isNewInstall() {
         return context.previousVersion() == null;
     }
 

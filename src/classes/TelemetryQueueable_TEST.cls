@@ -27,49 +27,34 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class TelemetryParam {
-    private String developerName;
-    private Object val;
+@IsTest (IsParallel=true)
+public with sharing class TelemetryQueueable_TEST {
+    private static TelemetryQueueable telemetryQueueable = new TelemetryQueueable();
 
-    public TelemetryParam(String developerName, Object val) {
-        this.developerName = developerName;
-        this.val = val;
+    @IsTest
+    private static void enqueuesSelf() {
+        Test.startTest();
+        telemetryQueueable.enqueue(new List<Telemetry>());
+        Test.stopTest();
+
+        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'TelemetryQueueable'];
+        System.assertEquals(1, asyncJobs.size(), 'One job should be enqueued.');
     }
 
-    public void send() {
-        if (val instanceof Integer) {
-            FeatureManagement.setPackageIntegerValue(developerName, (Integer) val);
+    @IsTest
+    private static void exceptionThrownWhenFeatureParamIsInvalid() {
+        Integer exceptionCount = 0;
+        List<String> badNames = new List<String>{ 'BadName', '' };
 
-        } else {
-            throw new TelemetryParamException(System.Label.TelemetryParamException);
-        }
-    }
-
-    public class TelemetryParamException extends Exception {}
-
-
-    //////////////////// -------------------- ////////////////////
-
-    public class Stub implements System.StubProvider {
-        public Integer sendCount = 0;
-
-        public Object handleMethodCall(
-            Object stubbedObject,
-            String stubbedMethodName,
-            Type returnType,
-            List<Type> listOfParamTypes,
-            List<String> listOfParamNames,
-            List<Object> listOfArgs
-        ) {
-            switch on stubbedMethodName {
-                when 'send' {
-                    sendCount++;
-                    return null;
-
-                } when else {
-                    return null;
-                }
+        for (String badName : badNames) {
+            try {
+                telemetryQueueable.send(badName, 0);
+            } catch(Exception ex) {
+                exceptionCount++;
             }
         }
+
+        System.assertEquals(badNames.size(), exceptionCount, 'Expected all of the names to cause an exception to be thrown.');
     }
+
 }

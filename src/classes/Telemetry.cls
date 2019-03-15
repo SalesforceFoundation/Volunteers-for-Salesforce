@@ -29,21 +29,8 @@
 */
 public without sharing class Telemetry {
     private SObjectType sObjType;
-    @TestVisible
     private String developerName;
     private String criteria;
-
-    @TestVisible
-    private TelemetryParam param {
-        get {
-            if (param == null) {
-                param = createParam();
-            }
-
-            return param;
-        }
-        set;
-    }
 
     @TestVisible
     private QueryBuilder queryBuilder {
@@ -68,16 +55,16 @@ public without sharing class Telemetry {
         this.criteria = criteria;
     }
 
-    public void send() {
-        if (sObjType == null || String.isBlank(developerName)) {
-            return;
+    public String getDeveloperName() {
+        if (developerName == null) {
+            return '';
         }
 
-        param.send();
+        return developerName;
     }
 
-    private TelemetryParam createParam() {
-        return new TelemetryParam(developerName, getRecordCount());
+    public Object getValue() {
+        return getRecordCount();
     }
 
     @TestVisible
@@ -91,10 +78,11 @@ public without sharing class Telemetry {
 
     public class Stub implements System.StubProvider {
         public Integer sendCount = 0;
-        private TelemetryParam param;
+        private String developerName = 'CampaignsWithJobs';
+        private Object val = 0;
 
-        public Stub returnParam(TelemetryParam param) {
-            this.param = param;
+        public Stub returnDeveloperName(String developerName) {
+            this.developerName = developerName;
             return this;
         }
 
@@ -107,12 +95,11 @@ public without sharing class Telemetry {
             List<Object> listOfArgs
         ) {
             switch on stubbedMethodName {
-                when 'send' {
-                    sendCount++;
-                    return null;
+                when 'getDeveloperName' {
+                    return developerName;
 
-                } when 'createParam' {
-                    return param;
+                } when 'getValue' {
+                    return val;
 
                 } when else {
                     return null;

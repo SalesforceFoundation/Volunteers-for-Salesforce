@@ -27,20 +27,21 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-@IsTest (IsParallel=true)
+@IsTest // (IsParallel=true) - Cannot run test in parallel when sending feature params to LMO
 public with sharing class TelemetryService_TEST {
     private static TelemetryService telemetryService = new TelemetryService();
     private static List<Telemetry.Stub> mockTelemetries = new List<Telemetry.Stub>();
-    private static TelemetryParam.Stub mockParam = new TelemetryParam.Stub();
+    private static TelemetryQueueable.Stub mockQueueable = new TelemetryQueueable.Stub();
     private static final Integer TOTAL_TELEMETRIES = 9;
+    private static final Integer TOTAL_GROUPS = 3;
 
     @IsTest
     private static void enqueuesNumberOfJobsCorrespondingToTelemetryGroups() {
-        final Integer groupSize = 3;
         telemetryService.groupedTelemetries = new List<List<Telemetry>>();
+        telemetryService.telemetryQueueable = (TelemetryQueueable) Test.createStub(TelemetryQueueable.class, mockQueueable);
 
-        for (Integer count = 0; count < groupSize; count++) {
-            Telemetry.Stub mockTelemetry = createMockTelemetry();
+        for (Integer count = 0; count < TOTAL_GROUPS; count++) {
+            Telemetry.Stub mockTelemetry = new Telemetry.Stub();
             mockTelemetries.add(mockTelemetry);
             telemetryService.groupedTelemetries.add(
                 new List<Telemetry>{ (Telemetry) Test.createStub(Telemetry.class, mockTelemetry) }
@@ -49,17 +50,13 @@ public with sharing class TelemetryService_TEST {
 
         Test.startTest();
         telemetryService.sendUsageMetrics();
-        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'TelemetryService'];
         Test.stopTest();
 
-        System.assertEquals(groupSize, asyncJobs.size(), 'Expected a job to be enqueued for each group of telemetry lists.');
-        for (Integer index; index < groupSize; index++) {
-            System.assertEquals(1, mockTelemetries[index].sendCount, 'Expected each telemetry to be sent.');
-        }
+        System.assertEquals(TOTAL_GROUPS, mockQueueable.enqueueCount, 'Expected a job to be enqueued for each group of telemetry lists.');
     }
 
     @IsTest
-    private static void configReturnsTelemetryPerDeveloperName() {
+    private static void configReturnsAllTelemetryRequests() {
         Integer actualTelemetries = 0;
 
         for (List<Telemetry> telemetries : telemetryService.groupedTelemetries) {
@@ -68,12 +65,28 @@ public with sharing class TelemetryService_TEST {
         System.assertEquals(TOTAL_TELEMETRIES, actualTelemetries, 'Expected the config to return the total number of telemetries.');
     }
 
+    @IsTest
+    private static void sendMetricsIntegrationTest() {
+        Campaign campaignRecord = new Campaign(
+            IsActive = true,
+            Status = 'In Progress',
+            Name = 'Telemetry Campaign'
+        );
 
-    /// Helpers ///
+        Volunteer_Job__c job = new Volunteer_Job__c(
+            Name = 'Telemetry Job',
+            Campaign__c = campaignRecord.Id,
+            Display_on_Website__c = true
+        );
 
-    private static Telemetry.Stub createMockTelemetry() {
-        return new Telemetry.Stub()
-            .returnParam((TelemetryParam) Test.createStub(TelemetryParam.class, mockParam));
+        Test.startTest();
+        telemetryService.sendUsageMetrics();
+        Test.stopTest();
+
+        // Unable to assert the metrics were sent by the System.FeatureManagement class
+        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'TelemetryQueueable'];
+        System.assertEquals(TOTAL_GROUPS, asyncJobs.size(), 'Expected a job to be enqueued for each group.');
     }
+
 
 }
