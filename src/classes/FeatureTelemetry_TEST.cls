@@ -29,8 +29,8 @@
 */
 @IsTest(IsParallel=true)
 public with sharing class FeatureTelemetry_TEST {
-    private static ParamMock mockParam = new ParamMock();
-    private static QueryBuilderMock mockQB = new QueryBuilderMock();
+    private static FeatureParam.Stub mockParam = new FeatureParam.Stub();
+    private static QueryBuilder.Stub mockQB = new QueryBuilder.Stub();
     private static FeatureTelemetry telemetry;
     private static final String DEV_NAME = 'DeveloperName';
 
@@ -76,61 +76,4 @@ public with sharing class FeatureTelemetry_TEST {
         telemetry.send();
     }
 
-
-    /// Mocks ///
-
-    private class ParamMock implements System.StubProvider {
-        private Integer sendCount = 0;
-
-        public Object handleMethodCall(
-            Object stubbedObject,
-            String stubbedMethodName,
-            Type returnType,
-            List<Type> listOfParamTypes,
-            List<String> listOfParamNames,
-            List<Object> listOfArgs
-        ) {
-            switch on stubbedMethodName {
-                when 'send' {
-                    sendCount++;
-                    return null;
-
-                } when else {
-                    return null;
-                }
-            }
-        }
-    }
-
-    private class QueryBuilderMock implements System.StubProvider {
-        private String criteria;
-        private String query;
-
-        private QueryBuilderMock returnCountQuery(String query) {
-            this.query = query;
-            return this;
-        }
-
-        public Object handleMethodCall(
-            Object stubbedObject,
-            String stubbedMethodName,
-            Type returnType,
-            List<Type> listOfParamTypes,
-            List<String> listOfParamNames,
-            List<Object> listOfArgs
-        ) {
-            switch on stubbedMethodName {
-                when 'withCondition' {
-                    criteria = (String) listOfArgs[0];
-                    return null;
-
-                } when 'buildCount' {
-                    return query;
-
-                } when else {
-                    return null;
-                }
-            }
-        }
-    }
 }

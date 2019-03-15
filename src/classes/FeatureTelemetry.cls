@@ -29,6 +29,7 @@
 */
 public without sharing class FeatureTelemetry {
     private SObjectType sObjType;
+    @TestVisible
     private String developerName;
     private String criteria;
 
@@ -83,6 +84,41 @@ public without sharing class FeatureTelemetry {
     private Integer getRecordCount() {
         queryBuilder.withCondition(criteria);
         return Database.countQuery(queryBuilder.buildCount());
+    }
+
+
+    //////////////////// -------------------- ////////////////////
+
+    public class Stub implements System.StubProvider {
+        public Integer sendCount = 0;
+        private FeatureParam param;
+
+        public Stub returnParam(FeatureParam param) {
+            this.param = param;
+            return this;
+        }
+
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ) {
+            switch on stubbedMethodName {
+                when 'send' {
+                    sendCount++;
+                    return null;
+
+                } when 'createParam' {
+                    return param;
+
+                } when else {
+                    return null;
+                }
+            }
+        }
     }
 
 }

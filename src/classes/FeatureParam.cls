@@ -27,7 +27,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public with sharing class FeatureParam {
+public without sharing class FeatureParam {
     private String developerName;
     private Object val;
 
@@ -46,4 +46,30 @@ public with sharing class FeatureParam {
     }
 
     public class FeatureParamException extends Exception {}
+
+
+    //////////////////// -------------------- ////////////////////
+
+    public class Stub implements System.StubProvider {
+        public Integer sendCount = 0;
+
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ) {
+            switch on stubbedMethodName {
+                when 'send' {
+                    sendCount++;
+                    return null;
+
+                } when else {
+                    return null;
+                }
+            }
+        }
+    }
 }

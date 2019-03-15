@@ -86,4 +86,5 @@ public with sharing class FeatureParam_TEST {
 
         System.assertEquals(params.size(), countExceptions, 'Expected all params to throw an error.');
     }
+
 }

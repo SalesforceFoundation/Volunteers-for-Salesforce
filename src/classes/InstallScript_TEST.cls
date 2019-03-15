@@ -29,9 +29,10 @@
 */
 @IsTest(IsParallel=true)
 public with sharing class InstallScript_TEST {
+    private static FeatureManagementService.Stub mockFeatureManagementService = new FeatureManagementService.Stub();
+    private static InstallScript installScript = new InstallScript();
     @IsTest
-    private static void shouldInsertPackageSettingsWhenNull() {
-        InstallScript installScript = new InstallScript();
+    private static void insertsPackageSettingsWhenNull() {
         PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
         System.assertEquals(null, packageSettings.Id, 'Expected the Id of the package setting to be null: ' + packageSettings.Id);
 
@@ -46,7 +47,6 @@ public with sharing class InstallScript_TEST {
 
     @IsTest
     private static void shouldNotInsertPackageSettingsWhenSettingsExists() {
-        InstallScript installScript = new InstallScript();
         PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
         packageSettings.NamespacePrefix__c = VOL_SharedCode.getNamespace();
         insert packageSettings;
@@ -61,9 +61,7 @@ public with sharing class InstallScript_TEST {
     }
 
     @IsTest
-    private static void shouldInsertPackageSettingsOnInstall() {
-        InstallScript installScript = new InstallScript();
-
+    private static void insertsPackageSettingsOnInstall() {
         Integer startingDmlRows = System.Limits.getDmlRows();
         Test.testInstall(installScript, null);
         Integer endingDmlRows = System.Limits.getDmlRows();
@@ -72,8 +70,8 @@ public with sharing class InstallScript_TEST {
     }
 
     @IsTest
-    private static void shouldInsertPackageSettingsOnUpdate() {
-        InstallScript installScript = new InstallScript();
+    private static void insertsPackageSettingsOnUpdate() {
+        setFeatureManagementServiceStub();
 
         Integer startingDmlRows = System.Limits.getDmlRows();
         Test.testInstall(installScript, new Version(1,0));
@@ -83,14 +81,37 @@ public with sharing class InstallScript_TEST {
     }
 
     @IsTest
-    private static void shouldInsertPackageSettingsOnPush() {
-        InstallScript installScript = new InstallScript();
+    private static void insertsPackageSettingsOnPush() {
+        setFeatureManagementServiceStub();
 
         Integer startingDmlRows = System.Limits.getDmlRows();
         Test.testInstall(installScript, new Version(1,0), true);
         Integer endingDmlRows = System.Limits.getDmlRows();
 
         assertInsertOfPackageSettings(endingDmlRows - startingDmlRows);
+    }
+
+     @IsTest
+    private static void shouldNotCallFeatureManagementServiceOnInstall() {
+        Test.testInstall(installScript, null);
+
+        System.assertEquals(0, mockFeatureManagementService.sendCount, 'Did not expect the sendMetricUsage method to be called from the Feature Management Service.');
+    }
+
+    @IsTest
+    private static void callsFeatureManagementServiceOnUpdate() {
+        setFeatureManagementServiceStub();
+        Test.testInstall(installScript, new Version(1,0));
+
+        System.assertEquals(1, mockFeatureManagementService.sendCount, 'Expected the sendMetricUsage method to be called from the Feature Management Service.');
+    }
+
+    @IsTest
+    private static void callsFeatureManagementServiceOnPush() {
+        setFeatureManagementServiceStub();
+        Test.testInstall(installScript, new Version(1,0), true);
+
+        System.assertEquals(1, mockFeatureManagementService.sendCount, 'Expected the sendMetricUsage method to be called from the Feature Management Service.');
     }
 
 
@@ -105,5 +126,10 @@ public with sharing class InstallScript_TEST {
         System.assertNotEquals(null, packageSettings.Id, 'Expected the package setting to have an Id.');
         System.assertEquals(expectedNamespace, packageSettings.NamespacePrefix__c, 'Expected the package namespace to be set.');
         System.assertEquals(1, actualRows, 'Expected the dml rows to increase by one.');
+    }
+
+    private static void setFeatureManagementServiceStub() {
+        installScript.featureManagementService =
+            (FeatureManagementService) Test.createStub(FeatureManagementService.class, mockFeatureManagementService);
     }
 }

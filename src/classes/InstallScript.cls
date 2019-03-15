@@ -28,9 +28,33 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 public without sharing class InstallScript implements InstallHandler {
+    private InstallContext context;
+    @TestVisible
+    private FeatureManagementService featureManagementService {
+        get {
+            if (featureManagementService == null) {
+                featureManagementService = new FeatureManagementService();
+            }
+
+            return featureManagementService;
+        }
+        set;
+    }
 
     public void onInstall(InstallContext context) {
+        this.context = context;
+
         insertPackageSettings();
+
+        if (isNew()) {
+            return;
+        }
+
+        sendUsageMetrics();
+    }
+
+    private Boolean isNew() {
+        return context.previousVersion() == null;
     }
 
     @TestVisible
@@ -43,5 +67,10 @@ public without sharing class InstallScript implements InstallHandler {
 
         packageSettings.NamespacePrefix__c = VOL_SharedCode.StrTokenNSPrefix('');
         insert packageSettings;
+    }
+
+    @TestVisible
+    private void sendUsageMetrics() {
+        featureManagementService.sendUsageMetrics();
     }
 }

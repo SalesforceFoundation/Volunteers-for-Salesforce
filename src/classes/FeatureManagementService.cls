@@ -27,7 +27,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public with sharing class FeatureManagementService {
+public without sharing class FeatureManagementService {
     @TestVisible
     private Config config {
         get {
@@ -40,13 +40,25 @@ public with sharing class FeatureManagementService {
         set;
     }
 
+    @TestVisible
+    private List<List<FeatureTelemetry>> groupedTelemetries {
+        get {
+            if (groupedTelemetries == null) {
+                groupedTelemetries = config.getGroupedTelemetries();
+            }
+
+            return groupedTelemetries;
+        }
+        set;
+    }
+
     public void sendUsageMetrics() {
-        for (List<FeatureTelemetry> telemetries : config.getGroupedTelemetries()) {
+        for (List<FeatureTelemetry> telemetries : groupedTelemetries) {
             System.enqueueJob(new Queueable(telemetries));
         }
     }
 
-    public with sharing class Queueable implements System.Queueable {
+    public without sharing class Queueable implements System.Queueable {
         private List<FeatureTelemetry> telemetries;
 
         public Queueable(List<FeatureTelemetry> telemetries) {
@@ -128,5 +140,31 @@ public with sharing class FeatureManagementService {
     }
 
     public class FeatureManagementException extends Exception {}
+
+
+    //////////////////// -------------------- ////////////////////
+
+    public class Stub implements System.StubProvider {
+        public Integer sendCount = 0;
+
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ){
+            switch on stubbedMethodName {
+                when 'sendUsageMetrics' {
+                    sendCount++;
+                    return null;
+
+                } when else {
+                    return null;
+                }
+            }
+        }
+    }
 
 }

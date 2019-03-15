@@ -27,16 +27,53 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-@IsTest // (IsParallel=true) - Setting Feature Management Parameters results in an exception when ran in parallel
+@IsTest (IsParallel=true)
 public with sharing class FeatureManagementService_TEST {
     private static FeatureManagementService featureManagmentService = new FeatureManagementService();
+    private static List<FeatureTelemetry.Stub> mockTelemetries = new List<FeatureTelemetry.Stub>();
+    private static FeatureParam.Stub mockParam = new FeatureParam.Stub();
+    private static final Integer TOTAL_TELEMETRIES = 9;
+
     @IsTest
-    private static void shouldEnqueueJobsCorrespondingToConfigGrouping() {
+    private static void enqueuesNumberOfJobsCorrespondingToTelemetryGroups() {
+        final Integer groupSize = 3;
+        featureManagmentService.groupedTelemetries = new List<List<FeatureTelemetry>>();
+
+        for (Integer count = 0; count < groupSize; count++) {
+            FeatureTelemetry.Stub mockTelemetry = createMockTelemetry();
+            mockTelemetries.add(mockTelemetry);
+            featureManagmentService.groupedTelemetries.add(
+                new List<FeatureTelemetry>{ (FeatureTelemetry) Test.createStub(FeatureTelemetry.class, mockTelemetry) }
+            );
+        }
+
         Test.startTest();
         featureManagmentService.sendUsageMetrics();
         List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'FeatureManagementService'];
         Test.stopTest();
 
-        System.assertEquals(featureManagmentService.config.getGroupedTelemetries().size(), asyncJobs.size(), 'Expected a job to be enqueued for each group of telemetry lists.') ;
+        System.assertEquals(groupSize, asyncJobs.size(), 'Expected a job to be enqueued for each group of telemetry lists.');
+        for (Integer index; index < groupSize; index++) {
+            System.assertEquals(1, mockTelemetries[index].sendCount, 'Expected each telemetry to be sent.');
+        }
     }
+
+    @IsTest
+    private static void configReturnsTelemetryPerDeveloperName() {
+        Integer actualTelemetries = 0;
+
+        for (List<FeatureTelemetry> telemetries : featureManagmentService.groupedTelemetries) {
+            actualTelemetries += telemetries.size();
+        }
+        System.assertEquals(TOTAL_TELEMETRIES, actualTelemetries, 'Expected the config to return the total number of telemetries.');
+    }
+
+
+    /// Helpers ///
+
+    private static FeatureTelemetry.Stub createMockTelemetry() {
+        return new FeatureTelemetry.Stub()
+            .returnParam((FeatureParam) Test.createStub(FeatureParam.class, mockParam));
+    }
+
 }

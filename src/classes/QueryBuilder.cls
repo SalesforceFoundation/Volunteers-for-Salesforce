@@ -59,4 +59,39 @@ public with sharing class QueryBuilder {
         return ' WHERE ' + condition;
     }
 
+
+    //////////////////// -------------------- ////////////////////
+
+    public class Stub implements System.StubProvider {
+        public String criteria;
+        private String countQuery = 'SELECT COUNT() FROM Account';
+
+        public Stub returnCountQuery(String countQuery) {
+            this.countQuery = countQuery;
+            return this;
+        }
+
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ) {
+            switch on stubbedMethodName {
+                when 'withCondition' {
+                    criteria = (String) listOfArgs[0];
+                    return null;
+
+                } when 'buildCount' {
+                    return countQuery;
+
+                } when else {
+                    return null;
+                }
+            }
+        }
+    }
+
 }
