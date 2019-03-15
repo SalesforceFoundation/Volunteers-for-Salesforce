@@ -28,10 +28,10 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest(IsParallel=true)
-public with sharing class FeatureTelemetry_TEST {
-    private static FeatureParam.Stub mockParam = new FeatureParam.Stub();
+public with sharing class Telemetry_TEST {
+    private static TelemetryParam.Stub mockParam = new TelemetryParam.Stub();
     private static QueryBuilder.Stub mockQB = new QueryBuilder.Stub();
-    private static FeatureTelemetry telemetry;
+    private static Telemetry telemetry;
     private static final String DEV_NAME = 'DeveloperName';
 
     @IsTest
@@ -49,7 +49,7 @@ public with sharing class FeatureTelemetry_TEST {
     @IsTest
     private static void criteriaPassedToQueryBuilder() {
         String criteria = 'CreatedDate = NEXT_YEAR';
-        telemetry = new FeatureTelemetry(Account.SObjectType, DEV_NAME, criteria);
+        telemetry = new Telemetry(Account.SObjectType, DEV_NAME, criteria);
         mockQB = mockQB.returnCountQuery('SELECT COUNT() FROM Account WHERE CreatedDate = NEXT_YEAR');
         telemetry.queryBuilder = (QueryBuilder) Test.createStub(QueryBuilder.class, mockQB);
         Integer actualCount = telemetry.getRecordCount();
@@ -60,9 +60,9 @@ public with sharing class FeatureTelemetry_TEST {
 
     @IsTest
     private static void paramCreatedWithDeveloperNameAndRecordCount() {
-        telemetry = new FeatureTelemetry(Account.SObjectType, DEV_NAME);
+        telemetry = new Telemetry(Account.SObjectType, DEV_NAME);
         String actualParam = JSON.serialize(telemetry.param);
-        String expectedParam = JSON.serialize(new FeatureParam(DEV_NAME, 0));
+        String expectedParam = JSON.serialize(new TelemetryParam(DEV_NAME, 0));
 
         System.assertEquals(expectedParam, actualParam, 'Expected the telemetry to create the same param.');
     }
@@ -71,8 +71,8 @@ public with sharing class FeatureTelemetry_TEST {
     /// Helpers ///
 
     private static void sendTelemetry(SObjectType sObjType, String developerName, String criteria) {
-        telemetry = new FeatureTelemetry(sObjType, developerName, criteria);
-        telemetry.param = (FeatureParam) Test.createStub(FeatureParam.class, mockParam);
+        telemetry = new Telemetry(sObjType, developerName, criteria);
+        telemetry.param = (TelemetryParam) Test.createStub(TelemetryParam.class, mockParam);
         telemetry.send();
     }
 

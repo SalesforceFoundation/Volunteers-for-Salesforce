@@ -28,28 +28,28 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest (IsParallel=true)
-public with sharing class FeatureManagementService_TEST {
-    private static FeatureManagementService featureManagmentService = new FeatureManagementService();
-    private static List<FeatureTelemetry.Stub> mockTelemetries = new List<FeatureTelemetry.Stub>();
-    private static FeatureParam.Stub mockParam = new FeatureParam.Stub();
+public with sharing class TelemetryService_TEST {
+    private static TelemetryService telemetryService = new TelemetryService();
+    private static List<Telemetry.Stub> mockTelemetries = new List<Telemetry.Stub>();
+    private static TelemetryParam.Stub mockParam = new TelemetryParam.Stub();
     private static final Integer TOTAL_TELEMETRIES = 9;
 
     @IsTest
     private static void enqueuesNumberOfJobsCorrespondingToTelemetryGroups() {
         final Integer groupSize = 3;
-        featureManagmentService.groupedTelemetries = new List<List<FeatureTelemetry>>();
+        telemetryService.groupedTelemetries = new List<List<Telemetry>>();
 
         for (Integer count = 0; count < groupSize; count++) {
-            FeatureTelemetry.Stub mockTelemetry = createMockTelemetry();
+            Telemetry.Stub mockTelemetry = createMockTelemetry();
             mockTelemetries.add(mockTelemetry);
-            featureManagmentService.groupedTelemetries.add(
-                new List<FeatureTelemetry>{ (FeatureTelemetry) Test.createStub(FeatureTelemetry.class, mockTelemetry) }
+            telemetryService.groupedTelemetries.add(
+                new List<Telemetry>{ (Telemetry) Test.createStub(Telemetry.class, mockTelemetry) }
             );
         }
 
         Test.startTest();
-        featureManagmentService.sendUsageMetrics();
-        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'FeatureManagementService'];
+        telemetryService.sendUsageMetrics();
+        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'TelemetryService'];
         Test.stopTest();
 
         System.assertEquals(groupSize, asyncJobs.size(), 'Expected a job to be enqueued for each group of telemetry lists.');
@@ -62,7 +62,7 @@ public with sharing class FeatureManagementService_TEST {
     private static void configReturnsTelemetryPerDeveloperName() {
         Integer actualTelemetries = 0;
 
-        for (List<FeatureTelemetry> telemetries : featureManagmentService.groupedTelemetries) {
+        for (List<Telemetry> telemetries : telemetryService.groupedTelemetries) {
             actualTelemetries += telemetries.size();
         }
         System.assertEquals(TOTAL_TELEMETRIES, actualTelemetries, 'Expected the config to return the total number of telemetries.');
@@ -71,9 +71,9 @@ public with sharing class FeatureManagementService_TEST {
 
     /// Helpers ///
 
-    private static FeatureTelemetry.Stub createMockTelemetry() {
-        return new FeatureTelemetry.Stub()
-            .returnParam((FeatureParam) Test.createStub(FeatureParam.class, mockParam));
+    private static Telemetry.Stub createMockTelemetry() {
+        return new Telemetry.Stub()
+            .returnParam((TelemetryParam) Test.createStub(TelemetryParam.class, mockParam));
     }
 
 }

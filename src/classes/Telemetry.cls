@@ -27,31 +27,76 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class FeatureParam {
+public without sharing class Telemetry {
+    private SObjectType sObjType;
+    @TestVisible
     private String developerName;
-    private Object val;
+    private String criteria;
 
-    public FeatureParam(String developerName, Object val) {
+    @TestVisible
+    private TelemetryParam param {
+        get {
+            if (param == null) {
+                param = createParam();
+            }
+
+            return param;
+        }
+        set;
+    }
+
+    @TestVisible
+    private QueryBuilder queryBuilder {
+        get {
+            if (queryBuilder == null) {
+                return new QueryBuilder(sObjType);
+            }
+
+            return queryBuilder;
+        }
+        set;
+    }
+
+    public Telemetry(SObjectType sObjType, String developerName) {
+        this.sObjType = sObjType;
         this.developerName = developerName;
-        this.val = val;
+    }
+
+    public Telemetry(SObjectType sObjType, String developerName, String criteria) {
+        this.sObjType = sObjType;
+        this.developerName = developerName;
+        this.criteria = criteria;
     }
 
     public void send() {
-        if (val instanceof Integer) {
-            FeatureManagement.setPackageIntegerValue(developerName, (Integer) val);
-
-        } else {
-            throw new FeatureParamException(System.Label.FeatureParamException);
+        if (sObjType == null || String.isBlank(developerName)) {
+            return;
         }
+
+        param.send();
     }
 
-    public class FeatureParamException extends Exception {}
+    private TelemetryParam createParam() {
+        return new TelemetryParam(developerName, getRecordCount());
+    }
+
+    @TestVisible
+    private Integer getRecordCount() {
+        queryBuilder.withCondition(criteria);
+        return Database.countQuery(queryBuilder.buildCount());
+    }
 
 
     //////////////////// -------------------- ////////////////////
 
     public class Stub implements System.StubProvider {
         public Integer sendCount = 0;
+        private TelemetryParam param;
+
+        public Stub returnParam(TelemetryParam param) {
+            this.param = param;
+            return this;
+        }
 
         public Object handleMethodCall(
             Object stubbedObject,
@@ -66,10 +111,14 @@ public without sharing class FeatureParam {
                     sendCount++;
                     return null;
 
+                } when 'createParam' {
+                    return param;
+
                 } when else {
                     return null;
                 }
             }
         }
     }
+
 }

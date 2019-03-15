@@ -30,13 +30,13 @@
 public without sharing class InstallScript implements InstallHandler {
     private InstallContext context;
     @TestVisible
-    private FeatureManagementService featureManagementService {
+    private TelemetryService telemetryService {
         get {
-            if (featureManagementService == null) {
-                featureManagementService = new FeatureManagementService();
+            if (telemetryService == null) {
+                telemetryService = new TelemetryService();
             }
 
-            return featureManagementService;
+            return telemetryService;
         }
         set;
     }
@@ -71,6 +71,6 @@ public without sharing class InstallScript implements InstallHandler {
 
     @TestVisible
     private void sendUsageMetrics() {
-        featureManagementService.sendUsageMetrics();
+        telemetryService.sendUsageMetrics();
     }
 }

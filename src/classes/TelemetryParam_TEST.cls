@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest // (IsParallel=true) - Setting Feature Management Parameters results in an exception when ran in parallel
-public with sharing class FeatureParam_TEST {
+public with sharing class TelemetryParam_TEST {
     private static final String DEV_NAME = 'CampaignsWithJobs';
 
     @IsTest
@@ -37,7 +37,7 @@ public with sharing class FeatureParam_TEST {
 
         Test.startTest();
         try {
-            new FeatureParam(DEV_NAME, 1).send();
+            new TelemetryParam(DEV_NAME, 1).send();
         } catch (Exception ex) {
             countExceptions++;
         }
@@ -54,7 +54,7 @@ public with sharing class FeatureParam_TEST {
         Test.startTest();
         for (String developerName : developerNames) {
             try {
-                new FeatureParam('FAKE', 1).send();
+                new TelemetryParam('FAKE', 1).send();
             } catch (Exception ex) {
                 countExceptions++;
             }
@@ -66,19 +66,19 @@ public with sharing class FeatureParam_TEST {
 
     @IsTest
     private static void throwsExceptionWhenValueTypeIsNotSupported() {
-        List<FeatureParam> params = new List<FeatureParam>{
-            new FeatureParam(DEV_NAME, true),
-            new FeatureParam(DEV_NAME, 'This is not the paramater you are looking for!'),
-            new FeatureParam(DEV_NAME, System.today()),
-            new FeatureParam(DEV_NAME, null)
+        List<TelemetryParam> params = new List<TelemetryParam>{
+            new TelemetryParam(DEV_NAME, true),
+            new TelemetryParam(DEV_NAME, 'This is not the paramater you are looking for!'),
+            new TelemetryParam(DEV_NAME, System.today()),
+            new TelemetryParam(DEV_NAME, null)
         };
         Integer countExceptions = 0;
 
         Test.startTest();
-        for (FeatureParam param : params) {
+        for (TelemetryParam param : params) {
             try {
                 param.send();
-            } catch (FeatureParam.FeatureParamException ex) {
+            } catch (TelemetryParam.TelemetryParamException ex) {
                 countExceptions++;
             }
         }

@@ -4,18 +4,18 @@
     <apiAccessLevel>Unrestricted</apiAccessLevel>
     <types>
         <members>ComponentControllerBase</members>
-        <members>FeatureManagementService</members>
-        <members>FeatureManagementService_TEST</members>
-        <members>FeatureParam</members>
-        <members>FeatureParam_TEST</members>
-        <members>FeatureTelemetry</members>
-        <members>FeatureTelemetry_TEST</members>
         <members>InstallScript</members>
         <members>InstallScript_TEST</members>
         <members>PageControllerBase</members>
         <members>QueryBuilder</members>
         <members>QueryBuilder_TEST</members>
         <members>SoqlListView</members>
+        <members>Telemetry</members>
+        <members>TelemetryParam</members>
+        <members>TelemetryParam_TEST</members>
+        <members>TelemetryService</members>
+        <members>TelemetryService_TEST</members>
+        <members>Telemetry_TEST</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
         <members>UTIL_JavaScriptSanitizer</members>
@@ -222,7 +222,6 @@
         <name>CustomField</name>
     </types>
     <types>
-        <members>FeatureParamException</members>
         <members>PageMessagesConfirm</members>
         <members>PageMessagesError</members>
         <members>PageMessagesFatal</members>
@@ -232,6 +231,7 @@
         <members>PermissionReadException</members>
         <members>PermissionUpdateException</members>
         <members>TelemetryException</members>
+        <members>TelemetryParamException</members>
         <members>labelButtonAssign</members>
         <members>labelButtonCancel</members>
         <members>labelButtonClose</members>
@@ -558,8 +558,8 @@
     </types>
     <types>
         <members>CampaignsWithJobs</members>
-        <members>ContactsWithLastWebSignup</members>
         <members>ContactsWithLastWebSignUpLastYear</members>
+        <members>ContactsWithLastWebSignup</members>
         <members>JobRecurrenceSchedules</members>
         <members>VolunteerJobs</members>
         <members>VolunteerJobsDisplayOnWebsite</members>

@@ -27,7 +27,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class FeatureManagementService {
+public without sharing class TelemetryService {
     @TestVisible
     private Config config {
         get {
@@ -41,7 +41,7 @@ public without sharing class FeatureManagementService {
     }
 
     @TestVisible
-    private List<List<FeatureTelemetry>> groupedTelemetries {
+    private List<List<Telemetry>> groupedTelemetries {
         get {
             if (groupedTelemetries == null) {
                 groupedTelemetries = config.getGroupedTelemetries();
@@ -53,26 +53,26 @@ public without sharing class FeatureManagementService {
     }
 
     public void sendUsageMetrics() {
-        for (List<FeatureTelemetry> telemetries : groupedTelemetries) {
+        for (List<Telemetry> telemetries : groupedTelemetries) {
             System.enqueueJob(new Queueable(telemetries));
         }
     }
 
     public without sharing class Queueable implements System.Queueable {
-        private List<FeatureTelemetry> telemetries;
+        private List<Telemetry> telemetries;
 
-        public Queueable(List<FeatureTelemetry> telemetries) {
+        public Queueable(List<Telemetry> telemetries) {
             this.telemetries = telemetries;
         }
 
         public void execute(QueueableContext qc) {
             try {
-                for (FeatureTelemetry telemetry : telemetries) {
+                for (Telemetry telemetry : telemetries) {
                     telemetry.send();
                 }
 
             } catch (Exception ex) {
-                throw new FeatureManagementException(System.Label.TelemetryException);
+                throw new TelemetryException(System.Label.TelemetryException);
             }
         }
 
@@ -89,9 +89,9 @@ public without sharing class FeatureManagementService {
         private final String volunteerShiftsLastYear = 'VolunteerShiftsCreatedLastYear';
         private final String jobRecurrenceSchedules = 'JobRecurrenceSchedules';
 
-        public List<List<FeatureTelemetry>> getGroupedTelemetries() {
-            List<List<FeatureTelemetry>> groupedTelemetries = new List<List<FeatureTelemetry>>();
-            List<FeatureTelemetry> volunteerTelemetries = new List<FeatureTelemetry>();
+        public List<List<Telemetry>> getGroupedTelemetries() {
+            List<List<Telemetry>> groupedTelemetries = new List<List<Telemetry>>();
+            List<Telemetry> volunteerTelemetries = new List<Telemetry>();
 
             volunteerTelemetries.addAll(createVolunteerJobTelemetries());
             volunteerTelemetries.addAll(createVolunteerShiftTelemetries());
@@ -104,42 +104,42 @@ public without sharing class FeatureManagementService {
             return groupedTelemetries;
         }
 
-        private List<FeatureTelemetry> createCampaignTelemetries() {
-            return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Campaign.SObjectType, campaignsWithJobs, 'Id IN (SELECT Campaign__c FROM Volunteer_Jobs)')
+        private List<Telemetry> createCampaignTelemetries() {
+            return new List<Telemetry>{
+                new Telemetry(Campaign.SObjectType, campaignsWithJobs, 'Id IN (SELECT Campaign__c FROM Volunteer_Jobs)')
             };
         }
 
-        private List<FeatureTelemetry> createContactTelemetries() {
-            return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Contact.SObjectType, contactsWithWebSignups, 'Volunteer_Last_Web_Signup_Date__c != null'),
-                new FeatureTelemetry(Contact.SObjectType, contactsWithWebSignupsLastYear, 'Volunteer_Last_Web_Signup_Date__c = LAST_YEAR')
+        private List<Telemetry> createContactTelemetries() {
+            return new List<Telemetry>{
+                new Telemetry(Contact.SObjectType, contactsWithWebSignups, 'Volunteer_Last_Web_Signup_Date__c != null'),
+                new Telemetry(Contact.SObjectType, contactsWithWebSignupsLastYear, 'Volunteer_Last_Web_Signup_Date__c = LAST_YEAR')
             };
         }
 
-        private List<FeatureTelemetry> createVolunteerJobTelemetries() {
-            return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobs),
-                new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobsLastYear, 'CreatedDate = LAST_YEAR'),
-                new FeatureTelemetry(Volunteer_Job__c.SObjectType, volunteerJobsOnWebsite, 'Display_on_Website__c = true')
+        private List<Telemetry> createVolunteerJobTelemetries() {
+            return new List<Telemetry>{
+                new Telemetry(Volunteer_Job__c.SObjectType, volunteerJobs),
+                new Telemetry(Volunteer_Job__c.SObjectType, volunteerJobsLastYear, 'CreatedDate = LAST_YEAR'),
+                new Telemetry(Volunteer_Job__c.SObjectType, volunteerJobsOnWebsite, 'Display_on_Website__c = true')
             };
         }
 
-        private List<FeatureTelemetry> createVolunteerShiftTelemetries() {
-            return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Volunteer_Shift__c.SObjectType, volunteerShifts),
-                new FeatureTelemetry(Volunteer_Shift__c.SObjectType, volunteerShiftsLastYear, 'CreatedDate = LAST_YEAR')
+        private List<Telemetry> createVolunteerShiftTelemetries() {
+            return new List<Telemetry>{
+                new Telemetry(Volunteer_Shift__c.SObjectType, volunteerShifts),
+                new Telemetry(Volunteer_Shift__c.SObjectType, volunteerShiftsLastYear, 'CreatedDate = LAST_YEAR')
             };
         }
 
-        private List<FeatureTelemetry> createJobRecurrenceScheduleTelemetries() {
-            return new List<FeatureTelemetry>{
-                new FeatureTelemetry(Job_Recurrence_Schedule__c.SObjectType, jobRecurrenceSchedules)
+        private List<Telemetry> createJobRecurrenceScheduleTelemetries() {
+            return new List<Telemetry>{
+                new Telemetry(Job_Recurrence_Schedule__c.SObjectType, jobRecurrenceSchedules)
             };
         }
     }
 
-    public class FeatureManagementException extends Exception {}
+    public class TelemetryException extends Exception {}
 
 
     //////////////////// -------------------- ////////////////////

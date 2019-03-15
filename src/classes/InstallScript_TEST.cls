@@ -29,7 +29,7 @@
 */
 @IsTest(IsParallel=true)
 public with sharing class InstallScript_TEST {
-    private static FeatureManagementService.Stub mockFeatureManagementService = new FeatureManagementService.Stub();
+    private static TelemetryService.Stub mockTelemetryService = new TelemetryService.Stub();
     private static InstallScript installScript = new InstallScript();
     @IsTest
     private static void insertsPackageSettingsWhenNull() {
@@ -71,7 +71,7 @@ public with sharing class InstallScript_TEST {
 
     @IsTest
     private static void insertsPackageSettingsOnUpdate() {
-        setFeatureManagementServiceStub();
+        setTelemetryServiceStub();
 
         Integer startingDmlRows = System.Limits.getDmlRows();
         Test.testInstall(installScript, new Version(1,0));
@@ -82,7 +82,7 @@ public with sharing class InstallScript_TEST {
 
     @IsTest
     private static void insertsPackageSettingsOnPush() {
-        setFeatureManagementServiceStub();
+        setTelemetryServiceStub();
 
         Integer startingDmlRows = System.Limits.getDmlRows();
         Test.testInstall(installScript, new Version(1,0), true);
@@ -92,26 +92,26 @@ public with sharing class InstallScript_TEST {
     }
 
      @IsTest
-    private static void shouldNotCallFeatureManagementServiceOnInstall() {
+    private static void shouldNotCallTelemetryServiceOnInstall() {
         Test.testInstall(installScript, null);
 
-        System.assertEquals(0, mockFeatureManagementService.sendCount, 'Did not expect the sendMetricUsage method to be called from the Feature Management Service.');
+        System.assertEquals(0, mockTelemetryService.sendCount, 'Did not expect the sendMetricUsage method to be called from the Telemetry Service.');
     }
 
     @IsTest
-    private static void callsFeatureManagementServiceOnUpdate() {
-        setFeatureManagementServiceStub();
+    private static void callsTelemetryServiceOnUpdate() {
+        setTelemetryServiceStub();
         Test.testInstall(installScript, new Version(1,0));
 
-        System.assertEquals(1, mockFeatureManagementService.sendCount, 'Expected the sendMetricUsage method to be called from the Feature Management Service.');
+        System.assertEquals(1, mockTelemetryService.sendCount, 'Expected the sendMetricUsage method to be called from the Telemetry Service.');
     }
 
     @IsTest
-    private static void callsFeatureManagementServiceOnPush() {
-        setFeatureManagementServiceStub();
+    private static void callsTelemetryServiceOnPush() {
+        setTelemetryServiceStub();
         Test.testInstall(installScript, new Version(1,0), true);
 
-        System.assertEquals(1, mockFeatureManagementService.sendCount, 'Expected the sendMetricUsage method to be called from the Feature Management Service.');
+        System.assertEquals(1, mockTelemetryService.sendCount, 'Expected the sendMetricUsage method to be called from the Telemetry Service.');
     }
 
 
@@ -128,8 +128,8 @@ public with sharing class InstallScript_TEST {
         System.assertEquals(1, actualRows, 'Expected the dml rows to increase by one.');
     }
 
-    private static void setFeatureManagementServiceStub() {
-        installScript.featureManagementService =
-            (FeatureManagementService) Test.createStub(FeatureManagementService.class, mockFeatureManagementService);
+    private static void setTelemetryServiceStub() {
+        installScript.TelemetryService =
+            (TelemetryService) Test.createStub(TelemetryService.class, mockTelemetryService);
     }
 }
