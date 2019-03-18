@@ -32,7 +32,7 @@ private class TelemetryService_TEST {
     private static TelemetryService telemetryService = new TelemetryService();
     private static List<Telemetry.Stub> mockTelemetries = new List<Telemetry.Stub>();
     private static TelemetryQueueable.Stub mockQueueable = new TelemetryQueueable.Stub();
-    private static final Integer TOTAL_TELEMETRIES = 9;
+    private static final Integer TOTAL_TELEMETRIES = Telemetry.DeveloperName.values().size();
     private static final Integer TOTAL_GROUPS = 3;
 
     @IsTest
@@ -72,12 +72,14 @@ private class TelemetryService_TEST {
             Status = 'In Progress',
             Name = 'Telemetry Campaign'
         );
+        insert campaignRecord;
 
         Volunteer_Job__c job = new Volunteer_Job__c(
             Name = 'Telemetry Job',
             Campaign__c = campaignRecord.Id,
             Display_on_Website__c = true
         );
+        insert job;
 
         Test.startTest();
         telemetryService.sendUsageMetrics();

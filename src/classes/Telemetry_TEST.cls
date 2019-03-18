@@ -30,40 +30,61 @@
 @IsTest(IsParallel=true)
 private class Telemetry_TEST {
     private static QueryBuilder.Stub mockQB = new QueryBuilder.Stub();
-    private static Telemetry telemetry;
-    private static final String DEV_NAME = 'DeveloperName';
+    private static Telemetry accountTelemetry;
+    private static final Telemetry.DeveloperName DEV_NAME = Telemetry.DeveloperName.CAMPAIGNS_WITH_JOBS;
+    private static final SObjectType SOBJECT_TYPE = Account.SObjectType;
 
     @IsTest
-    private static void returnsDeveloperNameProvided() {
-        telemetry = new Telemetry(Account.SObjectType, DEV_NAME);
-        System.assertEquals(DEV_NAME, telemetry.getDeveloperName(), 'Expected the developer names to match.');
+    private static void constructorSetsPropertiesWithValuesProvided() {
+        accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME);
+        System.assertEquals(SOBJECT_TYPE, accountTelemetry.sObjType, 'Expected the sObject Type to be set.');
+        System.assertEquals(DEV_NAME.name(), accountTelemetry.developerName.name(), 'Expected the developer name to be set.');
     }
 
     @IsTest
-    private static void returnsEmptyStringWhenDeveloperNameNotProvided() {
-        telemetry = new Telemetry(Account.SObjectType, null);
-        System.assertEquals('', telemetry.getDeveloperName(), 'Expected the developer names to be an empty string.');
+    private static void getDeveloperNameRemovesUnderscores() {
+        accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME);
+        System.assert(!accountTelemetry.getDeveloperName().contains('_'), 'Did not expect the string to have any underscores.');
     }
 
     @IsTest
-    private static void returnsIntegerValueOfRecordCount() {
-        telemetry = new Telemetry(Account.SObjectType, DEV_NAME);
-        System.assertEquals(0, (Integer) telemetry.getValue(), 'Did not expect any records to be found.');
+    private static void getDeveloperNameReturnsAnEmptyStringWhenNull() {
+        accountTelemetry = new Telemetry(SOBJECT_TYPE, null);
+        System.assertEquals('', accountTelemetry.getDeveloperName(), 'Expected an empty string to be returned when a null value is provided.');
+    }
+
+    @IsTest
+    private static void getRecordCountReturnsNumberOfExistingRecords() {
+        accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME);
+        System.assertEquals(0, (Integer) accountTelemetry.getRecordCount(), 'Did not expect any records to be found.');
+
         insert new Account(Name = 'Count me!');
-        System.assertEquals(1, (Integer) telemetry.getValue(), 'Expected one record to be found.');
+        System.assertEquals(1, (Integer) accountTelemetry.getRecordCount(), 'Expected one record to be found.');
     }
 
     @IsTest
-    private static void criteriaPassedToQueryBuilder() {
+    private static void recordCountPassesCriteriaToQueryBuilder() {
         String criteria = 'CreatedDate = NEXT_YEAR';
-        telemetry = new Telemetry(Account.SObjectType, DEV_NAME, criteria);
+        accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME).withCriteria(criteria);
         mockQB = mockQB.returnCountQuery('SELECT COUNT() FROM Account WHERE CreatedDate = NEXT_YEAR');
-        telemetry.queryBuilder = (QueryBuilder) Test.createStub(QueryBuilder.class, mockQB);
-        Integer actualCount = telemetry.getRecordCount();
+        accountTelemetry.queryBuilder = (QueryBuilder) Test.createStub(QueryBuilder.class, mockQB);
+        Integer actualCount = accountTelemetry.getRecordCount();
 
-        System.assertEquals(criteria, mockQB.criteria, 'Expected the criteria to be sent to the query builder.');
+        System.assertEquals(criteria, mockQB.condition, 'Expected the criteria to be sent to the query builder.');
         System.assertEquals(0, actualCount, 'Did not expect any records to have been created in the future!');
     }
 
+
+    @IsTest
+    private static void sendThrowsAnExceptionWhenDeveloperNameIsNotProvided() {
+        String exceptionMessage = '';
+        try {
+            new Telemetry(SOBJECT_TYPE, null).send();
+        } catch(Exception ex) {
+            exceptionMessage = ex.getMessage();
+        }
+
+        System.assertNotEquals(null, exceptionMessage, 'Expected an exception to be thrown.');
+    }
 
 }

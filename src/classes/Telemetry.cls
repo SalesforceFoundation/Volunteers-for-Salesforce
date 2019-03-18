@@ -28,8 +28,21 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 public without sharing class Telemetry {
+    public enum DeveloperName {
+        CAMPAIGNS_WITH_JOBS,
+        CONTACTS_WITH_LAST_WEB_SIGNUP,
+        CONTACTS_WITH_LAST_WEB_SIGN_UP_LAST_YEAR,
+        VOLUNTEER_JOBS,
+        VOLUNTEER_JOBS_LAST_YEAR,
+        VOLUNTEER_JOBS_DISPLAY_ON_WEBSITE,
+        VOLUNTEER_SHIFTS,
+        VOLUNTEER_SHIFTS_CREATED_LAST_YEAR,
+        JOB_RECURRENCE_SCHEDULES
+    }
+    @TestVisible
     private SObjectType sObjType;
-    private String developerName;
+    @TestVisible
+    private DeveloperName developerName;
     private String criteria;
 
     @TestVisible
@@ -44,47 +57,44 @@ public without sharing class Telemetry {
         set;
     }
 
-    public Telemetry(SObjectType sObjType, String developerName) {
+    public Telemetry(SObjectType sObjType, DeveloperName developerName) {
         this.sObjType = sObjType;
         this.developerName = developerName;
     }
 
-    public Telemetry(SObjectType sObjType, String developerName, String criteria) {
-        this.sObjType = sObjType;
-        this.developerName = developerName;
+    public Telemetry withCriteria(String criteria) {
         this.criteria = criteria;
+        return this;
     }
 
-    public String getDeveloperName() {
-        if (developerName == null) {
-            return '';
-        }
-
-        return developerName;
-    }
-
-    public Object getValue() {
-        return getRecordCount();
+    public void send() {
+        FeatureManagement.setPackageIntegerValue(getDeveloperName(), getRecordCount());
     }
 
     @TestVisible
     private Integer getRecordCount() {
-        queryBuilder.withCondition(criteria);
+        if (String.isNotBlank(criteria)) {
+            queryBuilder.withCondition(criteria);
+        }
+
         return Database.countQuery(queryBuilder.buildCount());
     }
+
+    @TestVisible
+    private String getDeveloperName() {
+        if (developerName == null) {
+            return '';
+        }
+        return developerName.name().remove('_');
+    }
+
+    public class TelemetryException extends Exception {}
 
 
     //////////////////// -------------------- ////////////////////
 
     public class Stub implements System.StubProvider {
         public Integer sendCount = 0;
-        private String developerName = 'CampaignsWithJobs';
-        private Object val = 0;
-
-        public Stub returnDeveloperName(String developerName) {
-            this.developerName = developerName;
-            return this;
-        }
 
         public Object handleMethodCall(
             Object stubbedObject,
@@ -95,11 +105,9 @@ public without sharing class Telemetry {
             List<Object> listOfArgs
         ) {
             switch on stubbedMethodName {
-                when 'getDeveloperName' {
-                    return developerName;
-
-                } when 'getValue' {
-                    return val;
+                when 'send' {
+                    sendCount++;
+                    return null;
 
                 } when else {
                     return null;

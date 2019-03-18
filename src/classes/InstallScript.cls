@@ -71,6 +71,11 @@ public without sharing class InstallScript implements InstallHandler {
 
     @TestVisible
     private void sendUsageMetrics() {
-        telemetryService.sendUsageMetrics();
+        try {
+            telemetryService.sendUsageMetrics();
+        }
+        catch (Exception ex) {
+            // Ignore error and allow the install to continue.
+        }
     }
 }

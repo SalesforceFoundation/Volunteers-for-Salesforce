@@ -32,7 +32,7 @@ private class TelemetryQueueable_TEST {
     private static TelemetryQueueable telemetryQueueable = new TelemetryQueueable();
 
     @IsTest
-    private static void enqueuesSelf() {
+    private static void enqueueEnqueuesSelf() {
         Test.startTest();
         telemetryQueueable.enqueue(new List<Telemetry>());
         Test.stopTest();
@@ -42,19 +42,18 @@ private class TelemetryQueueable_TEST {
     }
 
     @IsTest
-    private static void exceptionThrownWhenFeatureParamIsInvalid() {
-        Integer exceptionCount = 0;
-        List<String> badNames = new List<String>{ 'BadName', '' };
+    private static void executeSendsTelemetries() {
+        Telemetry.Stub mockTelemetry = new Telemetry.Stub();
+        telemetryQueueable.telemetries = new List<Telemetry>{
+            (Telemetry) Test.createStub(Telemetry.class, mockTelemetry),
+            (Telemetry) Test.createStub(Telemetry.class, mockTelemetry)
+        };
 
-        for (String badName : badNames) {
-            try {
-                telemetryQueueable.send(badName, 0);
-            } catch(Exception ex) {
-                exceptionCount++;
-            }
-        }
+        Test.startTest();
+        telemetryQueueable.execute(null);
+        Test.stopTest();
 
-        System.assertEquals(badNames.size(), exceptionCount, 'Expected all of the names to cause an exception to be thrown.');
+        System.assertEquals(telemetryQueueable.telemetries.size(), mockTelemetry.sendCount, 'Expected the send method to be called from telemetry.');
     }
 
 }

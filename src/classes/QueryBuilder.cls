@@ -63,7 +63,7 @@ public with sharing class QueryBuilder {
     //////////////////// -------------------- ////////////////////
 
     public class Stub implements System.StubProvider {
-        public String criteria;
+        public String condition;
         private String countQuery = 'SELECT COUNT() FROM Account';
 
         public Stub returnCountQuery(String countQuery) {
@@ -81,7 +81,7 @@ public with sharing class QueryBuilder {
         ) {
             switch on stubbedMethodName {
                 when 'withCondition' {
-                    criteria = (String) listOfArgs[0];
+                    condition = (String) listOfArgs[0];
                     return null;
 
                 } when 'buildCount' {

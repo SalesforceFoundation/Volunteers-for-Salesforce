@@ -71,16 +71,6 @@ public without sharing class TelemetryService {
     }
 
     public with sharing class Config {
-        private final String campaignsWithJobs = 'CampaignsWithJobs';
-        private final String contactsWithWebSignups = 'ContactsWithLastWebSignup';
-        private final String contactsWithWebSignupsLastYear = 'ContactsWithLastWebSignUpLastYear';
-        private final String volunteerJobs = 'VolunteerJobs';
-        private final String volunteerJobsLastYear = 'VolunteerJobsLastYear';
-        private final String volunteerJobsOnWebsite = 'VolunteerJobsDisplayOnWebsite';
-        private final String volunteerShifts = 'VolunteerShifts';
-        private final String volunteerShiftsLastYear = 'VolunteerShiftsCreatedLastYear';
-        private final String jobRecurrenceSchedules = 'JobRecurrenceSchedules';
-
         public List<List<Telemetry>> getGroupedTelemetries() {
             List<List<Telemetry>> groupedTelemetries = new List<List<Telemetry>>();
             List<Telemetry> volunteerTelemetries = new List<Telemetry>();
@@ -98,35 +88,41 @@ public without sharing class TelemetryService {
 
         private List<Telemetry> createCampaignTelemetries() {
             return new List<Telemetry>{
-                new Telemetry(Campaign.SObjectType, campaignsWithJobs, 'Id IN (SELECT Campaign__c FROM Volunteer_Jobs)')
+                new Telemetry(Campaign.SObjectType, Telemetry.DeveloperName.CAMPAIGNS_WITH_JOBS)
+                    .withCriteria('Id IN (SELECT Campaign__c FROM Volunteer_Jobs)')
             };
         }
 
         private List<Telemetry> createContactTelemetries() {
             return new List<Telemetry>{
-                new Telemetry(Contact.SObjectType, contactsWithWebSignups, 'Volunteer_Last_Web_Signup_Date__c != null'),
-                new Telemetry(Contact.SObjectType, contactsWithWebSignupsLastYear, 'Volunteer_Last_Web_Signup_Date__c = LAST_YEAR')
+                new Telemetry(Contact.SObjectType, Telemetry.DeveloperName.CONTACTS_WITH_LAST_WEB_SIGNUP)
+                    .withCriteria('Volunteer_Last_Web_Signup_Date__c != null'),
+                new Telemetry(Contact.SObjectType, Telemetry.DeveloperName.CONTACTS_WITH_LAST_WEB_SIGN_UP_LAST_YEAR)
+                    .withCriteria('Volunteer_Last_Web_Signup_Date__c = LAST_YEAR')
             };
         }
 
         private List<Telemetry> createVolunteerJobTelemetries() {
             return new List<Telemetry>{
-                new Telemetry(Volunteer_Job__c.SObjectType, volunteerJobs),
-                new Telemetry(Volunteer_Job__c.SObjectType, volunteerJobsLastYear, 'CreatedDate = LAST_YEAR'),
-                new Telemetry(Volunteer_Job__c.SObjectType, volunteerJobsOnWebsite, 'Display_on_Website__c = true')
+                new Telemetry(Volunteer_Job__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_JOBS),
+                new Telemetry(Volunteer_Job__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_JOBS_LAST_YEAR)
+                    .withCriteria('CreatedDate = LAST_YEAR'),
+                new Telemetry(Volunteer_Job__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_JOBS_DISPLAY_ON_WEBSITE)
+                    .withCriteria('Display_on_Website__c = true')
             };
         }
 
         private List<Telemetry> createVolunteerShiftTelemetries() {
             return new List<Telemetry>{
-                new Telemetry(Volunteer_Shift__c.SObjectType, volunteerShifts),
-                new Telemetry(Volunteer_Shift__c.SObjectType, volunteerShiftsLastYear, 'CreatedDate = LAST_YEAR')
+                new Telemetry(Volunteer_Shift__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_SHIFTS),
+                new Telemetry(Volunteer_Shift__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_SHIFTS_CREATED_LAST_YEAR)
+                    .withCriteria('CreatedDate = LAST_YEAR')
             };
         }
 
         private List<Telemetry> createJobRecurrenceScheduleTelemetries() {
             return new List<Telemetry>{
-                new Telemetry(Job_Recurrence_Schedule__c.SObjectType, jobRecurrenceSchedules)
+                new Telemetry(Job_Recurrence_Schedule__c.SObjectType, Telemetry.DeveloperName.JOB_RECURRENCE_SCHEDULES)
             };
         }
     }
