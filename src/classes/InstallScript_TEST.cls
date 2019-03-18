@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest(IsParallel=true)
-public with sharing class InstallScript_TEST {
+private class InstallScript_TEST {
     private static TelemetryService.Stub mockTelemetryService = new TelemetryService.Stub();
     private static InstallScript installScript = new InstallScript();
     @IsTest

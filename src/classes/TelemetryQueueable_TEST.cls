@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest (IsParallel=true)
-public with sharing class TelemetryQueueable_TEST {
+private class TelemetryQueueable_TEST {
     private static TelemetryQueueable telemetryQueueable = new TelemetryQueueable();
 
     @IsTest

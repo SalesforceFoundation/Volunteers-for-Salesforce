@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest(IsParallel=true)
-public with sharing class QueryBuilder_TEST {
+private class QueryBuilder_TEST {
     private static QueryBuilder queryBuilder = new QueryBuilder(Account.SObjectType);
     private static final Integer NUMBER_OF_ACCOUNTS = 2;
 

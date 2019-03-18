@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest // (IsParallel=true) - Cannot run test in parallel when sending feature params to LMO
-public with sharing class TelemetryService_TEST {
+private class TelemetryService_TEST {
     private static TelemetryService telemetryService = new TelemetryService();
     private static List<Telemetry.Stub> mockTelemetries = new List<Telemetry.Stub>();
     private static TelemetryQueueable.Stub mockQueueable = new TelemetryQueueable.Stub();

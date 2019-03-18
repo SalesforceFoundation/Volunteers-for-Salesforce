@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest(IsParallel=true)
-public with sharing class Telemetry_TEST {
+private class Telemetry_TEST {
     private static QueryBuilder.Stub mockQB = new QueryBuilder.Stub();
     private static Telemetry telemetry;
     private static final String DEV_NAME = 'DeveloperName';
