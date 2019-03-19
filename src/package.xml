@@ -7,7 +7,15 @@
         <members>InstallScript</members>
         <members>InstallScript_TEST</members>
         <members>PageControllerBase</members>
+        <members>QueryBuilder</members>
+        <members>QueryBuilder_TEST</members>
         <members>SoqlListView</members>
+        <members>Telemetry</members>
+        <members>Telemetry_TEST</members>
+        <members>TelemetryService</members>
+        <members>TelemetryService_TEST</members>
+        <members>TelemetryQueueable</members>
+        <members>TelemetryQueueable_TEST</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
         <members>UTIL_JavaScriptSanitizer</members>
@@ -222,6 +230,8 @@
         <members>PermissionDeleteException</members>
         <members>PermissionReadException</members>
         <members>PermissionUpdateException</members>
+        <members>TelemetryException</members>
+        <members>TelemetryParamException</members>
         <members>labelButtonAssign</members>
         <members>labelButtonCancel</members>
         <members>labelButtonClose</members>
@@ -545,6 +555,18 @@
         <members>Volunteers_Email_Templates/Volunteer_Signup_Thank_You</members>
         <members>Volunteers_Email_Templates/Volunteers_Personal_Site_Contact_Lookup</members>
         <name>EmailTemplate</name>
+    </types>
+    <types>
+        <members>CampaignsWithJobs</members>
+        <members>ContactsWithLastWebSignUpLastYear</members>
+        <members>ContactsWithLastWebSignup</members>
+        <members>JobRecurrenceSchedules</members>
+        <members>VolunteerJobs</members>
+        <members>VolunteerJobsDisplayOnWebsite</members>
+        <members>VolunteerJobsLastYear</members>
+        <members>VolunteerShifts</members>
+        <members>VolunteerShiftsCreatedLastYear</members>
+        <name>FeatureParameterInteger</name>
     </types>
     <types>
         <members>Campaign.VolunteersWizardFS</members>

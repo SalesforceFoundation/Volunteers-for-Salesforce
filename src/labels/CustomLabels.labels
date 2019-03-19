@@ -34,7 +34,7 @@
     </labels>
     <labels>
         <fullName>PermissionCreateException</fullName>
-        <categories>CampaignTools,Exceptions</categories>
+        <categories>Exceptions</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionCreateException</shortDescription>
@@ -42,7 +42,7 @@
     </labels>
     <labels>
         <fullName>PermissionDeleteException</fullName>
-        <categories>CampaignTools,Exceptions</categories>
+        <categories>Exceptions</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionDeleteException</shortDescription>
@@ -50,7 +50,7 @@
     </labels>
     <labels>
         <fullName>PermissionReadException</fullName>
-        <categories>CampaignTools,Exceptions</categories>
+        <categories>Exceptions</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionReadException</shortDescription>
@@ -58,11 +58,27 @@
     </labels>
     <labels>
         <fullName>PermissionUpdateException</fullName>
-        <categories>CampaignTools,Exceptions</categories>
+        <categories>Exceptions</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>PermissionUpdateException</shortDescription>
         <value>You don&apos;&apos;t have the permissions required to update {0}. Please contact the system administrator.</value>
+    </labels>
+    <labels>
+        <fullName>TelemetryException</fullName>
+        <categories>Exceptions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error capturing metrics.</shortDescription>
+        <value>An error occurred when attempting to capture usage metrics.</value>
+    </labels>
+    <labels>
+        <fullName>TelemetryParamException</fullName>
+        <categories>Exceptions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Unsupported metric value.</shortDescription>
+        <value>The data type being submitted is not currently being collected.</value>
     </labels>
     <labels>
         <fullName>labelButtonAssign</fullName>

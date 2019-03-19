@@ -27,55 +27,55 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class InstallScript implements InstallHandler {
-    private InstallContext context;
+public without sharing class TelemetryQueueable implements System.Queueable {
     @TestVisible
-    private TelemetryService telemetryService {
-        get {
-            if (telemetryService == null) {
-                telemetryService = new TelemetryService();
-            }
+    private List<Telemetry> telemetries;
 
-            return telemetryService;
-        }
-        set;
+    public void enqueue(List<Telemetry> telemetries) {
+        this.telemetries = telemetries;
+        System.enqueueJob(this);
     }
 
-    public void onInstall(InstallContext context) {
-        this.context = context;
-
-        insertPackageSettings();
-
-        if (isNewInstall()) {
+    public void execute(QueueableContext qc) {
+        if (telemetries == null) {
             return;
         }
 
-        sendUsageMetrics();
-    }
-
-    private Boolean isNewInstall() {
-        return context.previousVersion() == null;
-    }
-
-    @TestVisible
-    private void insertPackageSettings() {
-        PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
-
-        if (packageSettings.Id != null) {
-          return;
-        }
-
-        packageSettings.NamespacePrefix__c = VOL_SharedCode.StrTokenNSPrefix('');
-        insert packageSettings;
-    }
-
-    @TestVisible
-    private void sendUsageMetrics() {
         try {
-            telemetryService.sendUsageMetrics();
+            for (Telemetry telemetry : telemetries) {
+                telemetry.send();
+            }
+
+        } catch (Exception ex) {
+            throw new TelemetryException(System.Label.TelemetryException);
         }
-        catch (Exception ex) {
-            // Ignore error and allow the install to continue.
+    }
+
+    public class TelemetryException extends Exception {}
+
+
+    //////////////////// -------------------- ////////////////////
+
+    public class Stub implements System.StubProvider {
+        public Integer enqueueCount = 0;
+
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ){
+            switch on stubbedMethodName {
+                when 'enqueue' {
+                    enqueueCount++;
+                    return null;
+
+                } when else {
+                    return null;
+                }
+            }
         }
     }
 }
