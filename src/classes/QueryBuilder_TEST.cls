@@ -27,55 +27,35 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class InstallScript implements InstallHandler {
-    private InstallContext context;
-    @TestVisible
-    private TelemetryService telemetryService {
-        get {
-            if (telemetryService == null) {
-                telemetryService = new TelemetryService();
-            }
+@IsTest(IsParallel=true)
+private class QueryBuilder_TEST {
+    private static QueryBuilder queryBuilder = new QueryBuilder(Account.SObjectType);
+    private static final Integer NUMBER_OF_ACCOUNTS = 2;
 
-            return telemetryService;
-        }
-        set;
+    @TestSetup
+    private static void makeData(){
+        List<Account> accounts = new List<Account>{
+            new Account(Name = 'Find Me', Type='Prospect'),
+            new Account(Name = 'Hide Me', Type='Customer')
+        };
+
+        insert accounts;
     }
 
-    public void onInstall(InstallContext context) {
-        this.context = context;
-
-        insertPackageSettings();
-
-        if (isNewInstall()) {
-            return;
-        }
-
-        sendUsageMetrics();
+    @IsTest
+    private static void countQueryShouldIncludeWhereClauseWhenConditionProvided() {
+        String expectedCountQuery = 'SELECT COUNT() FROM Account WHERE Type = \'Prospect\'';
+        String actualCountQuery = queryBuilder.withCondition('Type = \'Prospect\'').buildCount();
+        System.assertEquals(expectedCountQuery, actualCountQuery, 'Expected the where clause to be part of the count query.');
+        System.assertEquals(1, Database.countQuery(actualCountQuery), 'Expected one account to be found.');
     }
 
-    private Boolean isNewInstall() {
-        return context.previousVersion() == null;
+    @IsTest
+    private static void countQueryShouldNotIncludeWhereClause() {
+        String expectedCountQuery = 'SELECT COUNT() FROM Account';
+        String actualCountQuery = queryBuilder.buildCount();
+        System.assertEquals(expectedCountQuery, actualCountQuery, 'Expected count query to be returned without a WHERE clause.');
+        System.assertEquals(NUMBER_OF_ACCOUNTS, Database.countQuery(actualCountQuery), 'Expected all accounts to be found.');
     }
 
-    @TestVisible
-    private void insertPackageSettings() {
-        PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
-
-        if (packageSettings.Id != null) {
-          return;
-        }
-
-        packageSettings.NamespacePrefix__c = VOL_SharedCode.StrTokenNSPrefix('');
-        insert packageSettings;
-    }
-
-    @TestVisible
-    private void sendUsageMetrics() {
-        try {
-            telemetryService.sendUsageMetrics();
-        }
-        catch (Exception ex) {
-            // Ignore error and allow the install to continue.
-        }
-    }
 }

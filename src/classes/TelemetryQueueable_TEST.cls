@@ -27,55 +27,33 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class InstallScript implements InstallHandler {
-    private InstallContext context;
-    @TestVisible
-    private TelemetryService telemetryService {
-        get {
-            if (telemetryService == null) {
-                telemetryService = new TelemetryService();
-            }
+@IsTest (IsParallel=true)
+private class TelemetryQueueable_TEST {
+    private static TelemetryQueueable telemetryQueueable = new TelemetryQueueable();
 
-            return telemetryService;
-        }
-        set;
+    @IsTest
+    private static void enqueueEnqueuesSelf() {
+        Test.startTest();
+        telemetryQueueable.enqueue(new List<Telemetry>());
+        Test.stopTest();
+
+        List<AsyncApexJob> asyncJobs = [SELECT Id FROM AsyncApexJob WHERE ApexClass.Name = 'TelemetryQueueable'];
+        System.assertEquals(1, asyncJobs.size(), 'One job should be enqueued.');
     }
 
-    public void onInstall(InstallContext context) {
-        this.context = context;
+    @IsTest
+    private static void executeSendsTelemetries() {
+        Telemetry.Stub mockTelemetry = new Telemetry.Stub();
+        telemetryQueueable.telemetries = new List<Telemetry>{
+            (Telemetry) Test.createStub(Telemetry.class, mockTelemetry),
+            (Telemetry) Test.createStub(Telemetry.class, mockTelemetry)
+        };
 
-        insertPackageSettings();
+        Test.startTest();
+        telemetryQueueable.execute(null);
+        Test.stopTest();
 
-        if (isNewInstall()) {
-            return;
-        }
-
-        sendUsageMetrics();
+        System.assertEquals(telemetryQueueable.telemetries.size(), mockTelemetry.sendCount, 'Expected the send method to be called from telemetry.');
     }
 
-    private Boolean isNewInstall() {
-        return context.previousVersion() == null;
-    }
-
-    @TestVisible
-    private void insertPackageSettings() {
-        PackageSettings__c packageSettings = PackageSettings__c.getOrgDefaults();
-
-        if (packageSettings.Id != null) {
-          return;
-        }
-
-        packageSettings.NamespacePrefix__c = VOL_SharedCode.StrTokenNSPrefix('');
-        insert packageSettings;
-    }
-
-    @TestVisible
-    private void sendUsageMetrics() {
-        try {
-            telemetryService.sendUsageMetrics();
-        }
-        catch (Exception ex) {
-            // Ignore error and allow the install to continue.
-        }
-    }
 }
