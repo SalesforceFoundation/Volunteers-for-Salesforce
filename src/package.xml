@@ -14,8 +14,6 @@
         <members>Telemetry_TEST</members>
         <members>TelemetryService</members>
         <members>TelemetryService_TEST</members>
-        <members>TelemetryQueueable</members>
-        <members>TelemetryQueueable_TEST</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
         <members>UTIL_JavaScriptSanitizer</members>
@@ -231,7 +229,6 @@
         <members>PermissionReadException</members>
         <members>PermissionUpdateException</members>
         <members>TelemetryException</members>
-        <members>TelemetryParamException</members>
         <members>labelButtonAssign</members>
         <members>labelButtonCancel</members>
         <members>labelButtonClose</members>

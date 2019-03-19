@@ -75,16 +75,4 @@ private class Telemetry_TEST {
     }
 
 
-    @IsTest
-    private static void sendThrowsAnExceptionWhenDeveloperNameIsNotProvided() {
-        String exceptionMessage = '';
-        try {
-            new Telemetry(SOBJECT_TYPE, null).send();
-        } catch(Exception ex) {
-            exceptionMessage = ex.getMessage();
-        }
-
-        System.assertNotEquals(null, exceptionMessage, 'Expected an exception to be thrown.');
-    }
-
 }

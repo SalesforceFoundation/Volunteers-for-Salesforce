@@ -41,49 +41,34 @@ public without sharing class TelemetryService {
     }
 
     @TestVisible
-    private List<List<Telemetry>> groupedTelemetries {
+    private List<Telemetry> telemetries {
         get {
-            if (groupedTelemetries == null) {
-                groupedTelemetries = config.getGroupedTelemetries();
+            if (telemetries == null) {
+                telemetries = config.getTelemetries();
             }
 
-            return groupedTelemetries;
-        }
-        set;
-    }
-
-    @TestVisible
-    private TelemetryQueueable telemetryQueueable {
-        get {
-            if (telemetryQueueable == null) {
-                telemetryQueueable = new TelemetryQueueable();
-            }
-
-            return telemetryQueueable;
+            return telemetries;
         }
         set;
     }
 
     public void sendUsageMetrics() {
-        for (List<Telemetry> telemetries : groupedTelemetries) {
-            telemetryQueueable.enqueue(telemetries);
+        for (Telemetry telemetry : telemetries) {
+            telemetry.send();
         }
     }
 
     public with sharing class Config {
-        public List<List<Telemetry>> getGroupedTelemetries() {
-            List<List<Telemetry>> groupedTelemetries = new List<List<Telemetry>>();
-            List<Telemetry> volunteerTelemetries = new List<Telemetry>();
+        public List<Telemetry> getTelemetries() {
+            List<Telemetry> telemetries = new List<Telemetry>();
 
-            volunteerTelemetries.addAll(createVolunteerJobTelemetries());
-            volunteerTelemetries.addAll(createVolunteerShiftTelemetries());
-            volunteerTelemetries.addAll(createJobRecurrenceScheduleTelemetries());
+            telemetries.addAll(createVolunteerJobTelemetries());
+            telemetries.addAll(createVolunteerShiftTelemetries());
+            telemetries.addAll(createJobRecurrenceScheduleTelemetries());
+            telemetries.addAll(createCampaignTelemetries());
+            telemetries.addAll(createContactTelemetries());
 
-            groupedTelemetries.add(volunteerTelemetries);
-            groupedTelemetries.add(createCampaignTelemetries());
-            groupedTelemetries.add(createContactTelemetries());
-
-            return groupedTelemetries;
+            return telemetries;
         }
 
         private List<Telemetry> createCampaignTelemetries() {
