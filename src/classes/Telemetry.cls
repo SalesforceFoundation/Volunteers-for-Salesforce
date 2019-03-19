@@ -68,7 +68,16 @@ public without sharing class Telemetry {
     }
 
     public void send() {
-        FeatureManagement.setPackageIntegerValue(getDeveloperName(), getRecordCount());
+        send(getDeveloperName(), getRecordCount());
+    }
+
+    @Future
+    private static void send(String developerName, Integer recordCount) {
+        try {
+            FeatureManagement.setPackageIntegerValue(developerName, recordCount);
+        } catch (Exception ex) {
+            throw new TelemetryException(System.Label.TelemetryException);
+        }
     }
 
     @TestVisible
