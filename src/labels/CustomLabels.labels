@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>TelemetryParamException</fullName>
-        <categories>Exceptions</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Unsupported metric value.</shortDescription>
-        <value>The metric value being submitted is not currently supported.</value>
-    </labels>
-    <labels>
         <fullName>PageMessagesConfirm</fullName>
         <categories>PageMessages</categories>
         <language>en_US</language>
@@ -78,7 +70,15 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error capturing metrics.</shortDescription>
-        <value>An unknown error occurred when attempting to capture usage metrics.</value>
+        <value>An error occurred when attempting to capture usage metrics.</value>
+    </labels>
+    <labels>
+        <fullName>TelemetryParamException</fullName>
+        <categories>Exceptions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Unsupported metric value.</shortDescription>
+        <value>The data type being submitted is not currently being collected.</value>
     </labels>
     <labels>
         <fullName>labelButtonAssign</fullName>
