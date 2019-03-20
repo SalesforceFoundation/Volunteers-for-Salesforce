@@ -68,25 +68,26 @@ public without sharing class Telemetry {
     }
 
     public void send() {
-        send(getDeveloperName(), getRecordCount());
+        send(getDeveloperName(), getCountQuery());
     }
 
     @Future
-    private static void send(String developerName, Integer recordCount) {
+    private static void send(String developerName, String query) {
         try {
-            FeatureManagement.setPackageIntegerValue(developerName, recordCount);
+            FeatureManagement.setPackageIntegerValue(developerName, Database.countQuery(query));
+
         } catch (Exception ex) {
             throw new TelemetryException(System.Label.TelemetryException);
         }
     }
 
     @TestVisible
-    private Integer getRecordCount() {
+    private String getCountQuery() {
         if (String.isNotBlank(criteria)) {
             queryBuilder.withCondition(criteria);
         }
 
-        return Database.countQuery(queryBuilder.buildCount());
+        return queryBuilder.buildCount();
     }
 
     @TestVisible
