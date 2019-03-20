@@ -27,7 +27,7 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public with sharing class QueryBuilder {
+public inherited sharing class QueryBuilder {
     private static final String COUNT = 'COUNT()';
     private SObjectType sObjType;
     private String condition;
