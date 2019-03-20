@@ -53,16 +53,9 @@ public without sharing class TelemetryService {
     }
 
     public void sendUsageMetrics() {
-        sendTest();
-
-        /** for (Telemetry telemetry : telemetries) {
+        for (Telemetry telemetry : telemetries) {
             telemetry.send();
-        } */
-    }
-
-    @Future
-    private static void sendTest() {
-        FeatureManagement.setPackageIntegerValue('CampaignsWithJobs', 1);
+        }
     }
 
     public with sharing class Config {
