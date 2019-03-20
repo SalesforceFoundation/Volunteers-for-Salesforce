@@ -29,7 +29,7 @@
 */
 public without sharing class InstallScript implements InstallHandler {
     private static final String EMAIL_REPLY_TO = 'donotreply@salesforce.org';
-    private static final String EMAIL_TO = 'errors@salesforce.org';
+    private static final String EMAIL_TO = 'jennifer.bennett+errors@salesforce.com';
     private static final String EMAIL_SUBJECT = 'V4S Install Errors';
     private static final String EMAIL_SENDER = 'V4S Install Script';
     private InstallContext context;
