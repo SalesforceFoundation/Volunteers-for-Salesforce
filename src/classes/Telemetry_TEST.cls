@@ -54,12 +54,12 @@ private class Telemetry_TEST {
     }
 
     @IsTest
-    private static void getRecordCountReturnsNumberOfExistingRecords() {
+    private static void getCountQueryReturnsValidQuery() {
         accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME);
-        System.assertEquals(0, (Integer) accountTelemetry.getRecordCount(), 'Did not expect any records to be found.');
+        System.assertEquals(0, Database.countQuery(accountTelemetry.getCountQuery()), 'Expected the query not to find any records.');
 
         insert new Account(Name = 'Count me!');
-        System.assertEquals(1, (Integer) accountTelemetry.getRecordCount(), 'Expected one record to be found.');
+        System.assertEquals(1, Database.countQuery(accountTelemetry.getCountQuery()), 'Expected the query to find one record.');
     }
 
     @IsTest
@@ -68,7 +68,7 @@ private class Telemetry_TEST {
         accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME).withCriteria(criteria);
         mockQB = mockQB.returnCountQuery('SELECT COUNT() FROM Account WHERE CreatedDate = NEXT_YEAR');
         accountTelemetry.queryBuilder = (QueryBuilder) Test.createStub(QueryBuilder.class, mockQB);
-        Integer actualCount = accountTelemetry.getRecordCount();
+        Integer actualCount = Database.countQuery(accountTelemetry.getCountQuery());
 
         System.assertEquals(criteria, mockQB.condition, 'Expected the criteria to be sent to the query builder.');
         System.assertEquals(0, actualCount, 'Did not expect any records to have been created in the future!');
