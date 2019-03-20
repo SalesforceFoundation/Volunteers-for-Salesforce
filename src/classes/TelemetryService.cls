@@ -58,7 +58,7 @@ public without sharing class TelemetryService {
         }
     }
 
-    public with sharing class Config {
+    public without sharing class Config {
         public List<Telemetry> getTelemetries() {
             List<Telemetry> telemetries = new List<Telemetry>();
 
