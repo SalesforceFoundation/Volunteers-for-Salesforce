@@ -33,8 +33,8 @@ global with sharing class VOL_SharedCode {
     // the list of Campaigns that have Volunteer Jobs
     global List<SelectOption> listSOCampaignsWithJobs {
         get {
-            List<SelectOption> selectOptions = new List<SelectOption>();
-            selectOptions.add(new SelectOption('', ''));
+            List<SelectOption> selectOptions = new List<SelectOption>{ new SelectOption('', '') };
+    
             for (Campaign campaignRecord : [
                 SELECT Name, Id, StartDate
                 FROM Campaign
@@ -51,8 +51,8 @@ global with sharing class VOL_SharedCode {
 
     // the list of Volunteer Jobs for the specified Campaign
     global List<SelectOption> listSOVolunteerJobsOfCampaignId(Id campaignId) {
-        List<SelectOption> selectOptions = new List<SelectOption>();
-        selectOptions.add(new SelectOption('', ''));
+        List<SelectOption> selectOptions = new List<SelectOption>{ new SelectOption('', '') };
+
         for (Volunteer_Job__c jobRecord : [
             SELECT Name, Id
             FROM Volunteer_Job__c
@@ -94,22 +94,11 @@ global with sharing class VOL_SharedCode {
         String dateFormat,
         String timeFormat
     ) {
-
         List<Volunteer_Job__c> jobs = new List<Volunteer_Job__c>();
+        List<SelectOption> selectOptions = new List<SelectOption>{ new SelectOption('', '') };
 
-        List<SelectOption> selectOptions = new List<SelectOption>();
-        selectOptions.add(new SelectOption('', ''));
-
-        // ensure valid date ranges
-        if (startDate == null) {
-            startDate = System.today();
-        }
-
-        if (endDate == null) {
-            endDate = System.today().addMonths(12);
-        }
-
-        endDate = endDate.addDays(1);
+        startDate = startDate == null ? System.today() : startDate;
+        endDate = (endDate == null ? System.today().addMonths(12) : endDate).addDays(1);
 
         // get our shifts in a Job query, so we can use our common date/time formatting routine.
         jobs = [
@@ -120,10 +109,9 @@ global with sharing class VOL_SharedCode {
                 WHERE Start_Date_Time__c >= :startDate and Start_Date_Time__c < :endDate
                 ORDER BY Start_Date_Time__c
                 LIMIT 999)
-            FROM Volunteer_Job__c WHERE Id = :volunteerJobId];
+            FROM Volunteer_Job__c WHERE Id = :jobId];
 
-        // bail out if no jobs found
-        if (jobs.size() == 0) {
+        if (jobs.isEmpty()) {
             return selectOptions;
         }
 
@@ -315,7 +303,7 @@ global with sharing class VOL_SharedCode {
         //fields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_status__c').tolowerCase());
         //fields.add(VOL_SharedCode.StrTokenNSPrefix('volunteer_notes__c').toLowerCase());
 
-        return (List<String>) fields;
+        return new List<String>(fields);
     }
 
     // shared routine to get all Fields names form the specified Field Set
@@ -712,7 +700,7 @@ global with sharing class VOL_SharedCode {
             contactRecord.LeadSource = 'Web Volunteer Signup';
             contactRecord.Volunteer_Status__c = 'New Sign Up';
 
-            UTIL_Describe.checkCreateAccess('Contact', setStrFields);
+            UTIL_Describe.checkCreateAccess('Contact', uniqueFields);
             Database.insert(contactRecord, dmlDuplicateOptions);
 
             // null out notes, so another update won't append them again!
@@ -982,26 +970,27 @@ global with sharing class VOL_SharedCode {
         return new List<Id>(campaignsInHierarchy.keySet());
     }
 
+
     /*******************************************************************************************************
     * @description keeps references to old labels that have been packaged, that we no longer use.
     * @return void
     ********************************************************************************************************/
     private static void keepUnusedLabelsInPackage() {
-        String label;
-        label = Label.labelCalendarConfirmed;
-        label = Label.labelContactInfoRankText;
-        label = Label.labelHide;
-        label = Label.labelMassEmailHelp1;
-        label = Label.labelMassEmailHelp2;
-        label = Label.labelMassEmailHelp3;
-        label = Label.labelMassEmailHelp4;
-        label = Label.labelMassEmailHelp5;
-        label = Label.labelMassEmailHelp6;
-        label = Label.labelMassEmailHelp7;
-        label = Label.labelShowHelp;
-        label = Label.labelFindVolunteersCriteria;
-        label = Label.labelFindVolunteersHelpAssign;
-        label = Label.labelVolunteersWizardNewCampaignTitle;
+        String unusedLabel;
+        unusedLabel = System.Label.labelCalendarConfirmed;
+        unusedLabel = System.Label.labelContactInfoRankText;
+        unusedLabel = System.Label.labelHide;
+        unusedLabel = System.Label.labelMassEmailHelp1;
+        unusedLabel = System.Label.labelMassEmailHelp2;
+        unusedLabel = System.Label.labelMassEmailHelp3;
+        unusedLabel = System.Label.labelMassEmailHelp4;
+        unusedLabel = System.Label.labelMassEmailHelp5;
+        unusedLabel = System.Label.labelMassEmailHelp6;
+        unusedLabel = System.Label.labelMassEmailHelp7;
+        unusedLabel = System.Label.labelShowHelp;
+        unusedLabel = System.Label.labelFindVolunteersCriteria;
+        unusedLabel = System.Label.labelFindVolunteersHelpAssign;
+        unusedLabel = System.Label.labelVolunteersWizardNewCampaignTitle;
     }
 
 }
