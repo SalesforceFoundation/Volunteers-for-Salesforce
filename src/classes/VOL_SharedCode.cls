@@ -73,7 +73,7 @@ global with sharing class VOL_SharedCode {
         Boolean shouldIncludeShiftName,
         Boolean shouldIncludeNumberNeeded
     ) {
-        return listSOVolunteerShiftsOfVolunteerJobIdFormat(
+        return getShiftOptions(
             jobId,
             startDate,
             endDate,
@@ -85,7 +85,7 @@ global with sharing class VOL_SharedCode {
     }
 
     // list of select options of Shifts for the specified job, using the date & time format strings for the shifts
-    public static List<SelectOption> listSOVolunteerShiftsOfVolunteerJobIdFormat(
+    public static List<SelectOption> getShiftOptions(
         Id jobId,
         Date startDate,
         Date endDate,
