@@ -29,6 +29,7 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
+    private static final Integer COLLECTION_LIMIT = 1000;
 
     // page parameters that can get passed into the page to control its behavior.
     global ID campaignIdFilter { get; set; }
@@ -228,11 +229,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         volunteerHoursIdSignUp = null;
     }
 
-    global list<Volunteer_Job__c> listVolunteerJobs {
+    global List<Volunteer_Job__c> listVolunteerJobs {
         get {
             if (listVolunteerJobs == null) {
                 listVolunteerJobs = getJobs();
             }
+
             VOL_SharedCode.dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
             return sortVolunteerJobs(listVolunteerJobs);
         }
@@ -284,7 +286,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 
         } else if (shouldFilterByCampaignId) {
             Set<Id> campaignIds = getCampaignIds();
-            jobs = Database.query(jobQueryBuilder.withCondition('Campaign__c IN :campaignIds').build());
+            jobs = Database.query(
+                jobQueryBuilder
+                    .withCondition('Campaign__c IN :campaignIds')
+                    .withLimit(COLLECTION_LIMIT)
+                    .build()
+            );
 
         } else {
             jobs = Database.query(jobQueryBuilder.build());
@@ -297,10 +304,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             Set<Id> jobIds = new Map<Id, Volunteer_Job__c>(jobs).keySet();
             shifts = Database.query(
                 shiftQueryBuilder
-                .withCondition('Volunteer_Job__c IN :jobIds' +
-                    ' AND Start_Date_Time__c <= :firstDateTime' +
-                    ' AND Start_Date_Time__c < :lastDateTime')
-                .build()
+                    .withCondition('Volunteer_Job__c IN :jobIds' +
+                        ' AND Start_Date_Time__c >= :firstDateTime' +
+                        ' AND Start_Date_Time__c < :lastDateTime')
+                    .withLimit(COLLECTION_LIMIT)
+                    .build()
             );
         }
 
@@ -387,7 +395,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         return VOL_SharedCode.dtGmtFromDtTimeZone(filterDate.addMonths(nMonthsToShow).toStartOfMonth(), userTimeZone);
     }
 
-    private Boolean setJobAllShiftsInThePast(List<Volunteer_Job__c jobs) {
+    private void setJobAllShiftsInThePast(List<Volunteer_Job__c> jobs) {
         // if one event was selected; check if the event was in the past
         jobAllShiftsInThePast = false;
 

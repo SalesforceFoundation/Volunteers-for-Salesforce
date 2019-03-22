@@ -31,10 +31,12 @@ public inherited sharing class QueryBuilder {
     private static final String COUNT = 'COUNT()';
     private static final String WHERE_CLAUSE = ' WHERE ';
     private static final String ORDER_BY_CLAUSE = ' ORDER BY ';
+    private static final String LIMIT_CLAUSE = ' LIMIT ';
     private static final String DEFAULT_FIELD = 'Id';
     private SObjectType sObjType;
     private String condition;
     private String orderBy;
+    private Integer limitTo;
     private Set<String> selectFields;
 
     public QueryBuilder(SObjectType sObjType) {
@@ -56,13 +58,19 @@ public inherited sharing class QueryBuilder {
         return this;
     }
 
+    public QueryBuilder withLimit(Integer limitTo) {
+        this.limitTo = limitTo;
+        return this;
+    }
+
     public String build() {
         return String.format(
-            'SELECT {0} FROM {1}{2}{3}', new List<String>{
+            'SELECT {0} FROM {1}{2}{3}{4}', new List<String>{
                 buildSelectFields(),
                 String.valueOf(sObjType),
                 buildWhereClause(),
-                buildOrderBy()
+                buildOrderBy(),
+                buildLimit()
             }
         );
     }
@@ -85,6 +93,14 @@ public inherited sharing class QueryBuilder {
         return String.join(new List<String>(selectFields), ',');
     }
 
+    private String buildWhereClause() {
+        if (String.isBlank(condition)) {
+            return '';
+        }
+
+        return WHERE_CLAUSE + condition;
+    }
+
     private String buildOrderBy() {
         if (String.isBlank(orderBy)) {
             return '';
@@ -93,12 +109,12 @@ public inherited sharing class QueryBuilder {
         return ORDER_BY_CLAUSE + orderBy;
     }
 
-    private String buildWhereClause() {
-        if (String.isBlank(condition)) {
+    private String buildLimit() {
+        if (limitTo == null || limitTo <= 0) {
             return '';
         }
 
-        return WHERE_CLAUSE + condition;
+        return LIMIT_CLAUSE + limitTo;
     }
 
 
