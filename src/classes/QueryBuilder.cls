@@ -90,7 +90,7 @@ public inherited sharing class QueryBuilder {
             return DEFAULT_FIELD;
         }
 
-        return String.join(new List<String>(selectFields), ',');
+        return String.join(new List<String>(selectFields), ', ');
     }
 
     private String buildWhereClause() {
