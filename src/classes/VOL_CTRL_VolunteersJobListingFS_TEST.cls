@@ -30,8 +30,30 @@
 
 @IsTest
 private class VOL_CTRL_VolunteersJobListingFS_TEST {
+    private static Contact contactRecord;
+    private static Campaign campaignRecord;
+    private static Volunteer_Job__c job;
+    private static Volunteer_Shift__c shift;
+    private static PageReference pageRef = Page.VolunteersJobListingFS;
+    private static VOL_CTRL_VolunteersJobListingFS ctrl;
 
-    //==================== TEST METHOD(s) ======================================
+    @TestSetup
+    private static void makeData() {
+        Account accountRecord = new Account(Name = 'Test Individual Bucket Account');
+        insert accountRecord;
+
+        contactRecord = new Contact(LastName = 'Testy', FirstName = 'Test', Email = 'test@testy.com', AccountId = accountRecord.Id);
+        insert contactRecord;
+
+        campaignRecord = new Campaign(RecordTypeId = VOL_SharedCode.recordtypeIdVolunteersCampaign, Name = 'Test Job Campaign', IsActive = true);
+        insert campaignRecord;
+
+        job = new Volunteer_Job__c(Name = 'Job1', campaign__c = campaignRecord.Id, Display_on_Website__c = true);
+        insert job;
+
+        shift = new Volunteer_Shift__c(Volunteer_Job__c = job.Id, Duration__c = 2, Start_Date_Time__c = System.now());
+        insert shift;
+    }
 
 
     /*******************************************************************************************************
@@ -58,30 +80,31 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
     }
 
     private static void unitTest1() {
+        setSetupData();
+        shouldLoadDefultPageParameters();
+        shouldLoadAllJobsWhenFiltersAreNotPresent();
+        shouldSignupExistingContact();
+        shouldLoadJobsRelatedToCampaignIdFilter();
+        shouldSignupNewContact();
+        shouldUpdateExistingHour();
+        shouldNotCreateContactWithoutPermissions();
+    }
 
-        // set up intial test data
-        Account accountRecord = new Account(Name='Test Individual Bucket Account');
-        insert accountRecord;
-        Contact contactRecord = new Contact(LastName='Testy', FirstName='Test', Email='test@testy.com', AccountId = accountRecord.Id);
-        insert contactRecord;
-        Campaign campaignRecordId = new Campaign(RecordTypeId = VOL_SharedCode.recordtypeIdVolunteersCampaign, Name='Test Job Campaign', IsActive = true);
-        insert campaignRecordId;
-        Volunteer_Job__c job = new Volunteer_Job__c(Name='Job1', campaign__c = campaignRecordId.Id, Display_on_Website__c = true);
-        insert job;
-        Volunteer_Shift__c shift = new Volunteer_Shift__c(Volunteer_Job__c = job.Id, Duration__c = 2, Start_Date_Time__c = System.now());
-        insert shift;
-
-        // specify our settings
+    private static void setSetupData() {
         Volunteers_Settings__c settings = new Volunteers_Settings__c();
         settings.Signup_Bucket_Account_On_Create__c = 'Test Individual Bucket Account';
         VOL_SharedCode.getVolunteersSettingsForTests(settings);
 
-        PageReference pageRef = Page.VolunteersJobListingFS;
-        pageRef.getParameters().put('ShowSkills', '1');
-        Test.setCurrentPage(pageRef);
+        contactRecord = [SELECT Id, FirstName, LastName, Email FROM Contact ORDER BY Id LIMIT 1];
+        campaignRecord = [SELECT Id FROM Campaign ORDER BY Id LIMIT 1];
+        job = [SELECT Id FROM Volunteer_Job__c ORDER BY Id LIMIT 1];
+        shift = [SELECT Id, Duration__c FROM Volunteer_Shift__c ORDER BY Id LIMIT 1];
 
-        //instantiate the controller
-        VOL_CTRL_VolunteersJobListingFS ctrl = new VOL_CTRL_VolunteersJobListingFS();
+        Test.setCurrentPage(pageRef);
+        ctrl = new VOL_CTRL_VolunteersJobListingFS();
+    }
+
+    private static void shouldLoadDefultPageParameters() {
         System.assertEquals(null, ctrl.campaignIdFilter, 'Did not expect the campaignIdFilter param to be populated.');
         System.assertEquals(null, ctrl.jobIdFilter, 'Did not expect the jobIdFilter param to be populated.');
         System.assertEquals(true, ctrl.ShowJobName, 'Expected ShowJobName to be set to the default true value.');
@@ -89,7 +112,7 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assertEquals(true, ctrl.ShowLocationAddress, 'Expected ShowLocationAddress to be set to the default true value.');
         System.assertEquals(true, ctrl.ShowLocationInfo, 'Expected ShowLocationInfo to be set to the default true value.');
         System.assertEquals(true, ctrl.ShowShifts, 'Expected ShowShifts to be set to the default true value.');
-        System.assertEquals(true, ctrl.ShowSkills, 'Expected ShowSkills to be set to true the override of 1 is passed in via the param.');
+        System.assertEquals(false, ctrl.ShowSkills, 'Expected ShowSkills to be set to the default false value.');
         System.assertEquals(null, ctrl.contact.Id, 'Expected the contact Id to be set to the default null value.');
         System.assertEquals(null, ctrl.jobIdSignUp, 'Expected jobIdSignUp to be set to the default null value.');
         System.assertEquals(null, ctrl.shiftIdSignUp, 'Expected shiftIdSignUp to be set to the default null value.');
@@ -99,24 +122,28 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assertEquals(null, ctrl.contactIdSignUp, 'Expected contactIdSignUp to be set to the default null value.');
         System.assertEquals(null, ctrl.volunteerHoursIdSignUp, 'Expected volunteerHoursIdSignUp to be set to the default null value.');
         System.assert(ctrl.strURLtoCSSFile == ctrl.strURLtoCSSFile, 'Expected the strURLtoCSSFile to be set to the default null value when not on a personal site page.');
+    }
 
+    private static void shouldLoadAllJobsWhenFiltersAreNotPresent() {
         System.assertEquals(1, ctrl.listVolunteerJobs.size(), 'Expected all jobs to be found when a filter Id is not provided.');
-        Volunteer_Job__c job2 = new Volunteer_Job__c(Name = 'Job2', Campaign__c = campaignRecordId.Id, Display_on_Website__c = true);
+        Volunteer_Job__c job2 = new Volunteer_Job__c(Name = 'Job2', Campaign__c = campaignRecord.Id, Display_on_Website__c = true);
         insert job2;
 
         ctrl.listVolunteerJobs = null;
         System.assertEquals(2, ctrl.listVolunteerJobs.size(), 'Expected all jobs to be found when a filter Id is not provided.');
+    }
 
+    private static void shouldSignupExistingContact() {
         ctrl.ClearVolunteerHoursIdSignUp();
         // sign someone up
         System.assertEquals(null, ctrl.contact.Id, 'Still expected the Id to be null.');
         System.assertEquals(null, ctrl.volunteerHoursIdSignUp, 'Still expected the volunteer hours Id to be null.');
-        ctrl.contact.FirstName = 'Test';
-        ctrl.contact.LastName = 'Testy';
-        ctrl.contact.Email = 'test@testy.com';
-        ctrl.contact.MailingState='WA';
-        ctrl.jobIdSignUp = job.id;
-        ctrl.shiftIdSignUp = shift.id;
+        ctrl.contact.FirstName = contactRecord.FirstName;
+        ctrl.contact.LastName = contactRecord.LastName;
+        ctrl.contact.Email = contactRecord.Email;
+        ctrl.contact.MailingState = 'WA';
+        ctrl.jobIdSignUp = job.Id;
+        ctrl.shiftIdSignUp = shift.Id;
         ctrl.VolunteerShiftSignUp();
         System.assertEquals(contactRecord.Id, ctrl.contactIdSignUp, 'Expected the matching contact record to be found and set.');
         System.assert(ctrl.volunteerHoursIdSignUp != null, 'Expected the volunteer hour record to be created.');
@@ -125,8 +152,10 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
             FROM Volunteer_Hours__c
             WHERE Volunteer_Job__c = :job.Id];
         System.assertEquals(shift.Duration__c, volunteerHour.Hours_Worked__c, 'Expected the hours worked to default to the duration of the shift.');
+    }
 
-        // pass campaignRecordId.Id as filter, verify only 2 jobs.
+    private static void shouldLoadJobsRelatedToCampaignIdFilter() {
+        // pass campaignRecord.Id as filter, verify only 2 jobs.
         // pass Show params with 0, verify values.
         pageRef = Page.VolunteersJobListingFS;
         pageRef.getParameters().put('ShowJobName', '0');
@@ -134,28 +163,31 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         pageRef.getParameters().put('ShowLocationAddress', '0');
         pageRef.getParameters().put('ShowLocationInfo', '0');
         pageRef.getParameters().put('ShowShifts', '0');
-        pageRef.getParameters().put('ShowSkills', '0');
-        pageRef.getParameters().put('campaignId', campaignRecordId.Id);
+        pageRef.getParameters().put('campaignId', campaignRecord.Id);
+        pageRef.getParameters().put('ShowSkills', '1');
         Test.setCurrentPage(pageRef);
 
         //instantiate the controller
         ctrl = new VOL_CTRL_VolunteersJobListingFS();
         System.assertEquals(2, ctrl.listVolunteerJobs.size(), 'Expected both jobs related to the campaign to be returned.');
-        System.assertEquals(campaignRecordId.Id, ctrl.campaignIdFilter, 'Expected the passed in campaign Id record to be set.');
+        System.assertEquals(campaignRecord.Id, ctrl.campaignIdFilter, 'Expected the passed in campaign Id record to be set.');
+    }
 
+    private static void shouldSignupNewContact() {
         // create hours for new person, verify contact created
         ctrl.ClearVolunteerHoursIdSignUp();
         ctrl.contact.FirstName = 'New person';
         ctrl.contact.LastName = 'New person for my test';
         ctrl.contact.Email = 'newperson@volunteersjoblisting.com';
         ctrl.contact.MailingState = 'OR';
-        ctrl.jobIdSignUp = job.id;
-        ctrl.shiftIdSignUp = shift.id;
+        ctrl.jobIdSignUp = job.Id;
+        ctrl.shiftIdSignUp = shift.Id;
         ctrl.VolunteerShiftSignUp();
         System.assert(ctrl.contactIdSignUp != null, 'Expected a new contact to be created.');
         System.assert(ctrl.volunteerHoursIdSignUp != null, 'Expected the volunteer hour record to be created.');
+    }
 
-        // test shift reuse
+    private static void shouldUpdateExistingHour() {
         Id hoursId = ctrl.volunteerHoursIdSignUp;
         System.assertEquals(1, ctrl.vhours.Number_Of_Volunteers__c, 'Expected the number of volunteers to be set to the default value of 1.');
         ctrl.vhours.Number_Of_Volunteers__c = 2;
@@ -164,22 +196,22 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assert(ctrl.contactIdSignUp != null, 'Expected the contact Id value to be set.');
         System.assert(ctrl.volunteerHoursIdSignUp != null, 'Expected the volunteer hour record to be set.');
         System.assertEquals(hoursId, ctrl.volunteerHoursIdSignUp, 'Expected the volunteerHoursIdSignUp to remain unchanged.');
-        volunteerHour = [SELECT Number_Of_Volunteers__c FROM Volunteer_Hours__c WHERE Id = :hoursId];
+        Volunteer_Hours__c volunteerHour = [SELECT Number_Of_Volunteers__c FROM Volunteer_Hours__c WHERE Id = :hoursId];
         System.assertEquals(2, volunteerHour.Number_Of_Volunteers__c, 'Expected the number of volunteers to have increased by 1 on the existing volunteer hour record.');
+    }
 
-        // test permissions checks
+    private static void shouldNotCreateContactWithoutPermissions() {
         Integer contactCount = [SELECT COUNT() FROM CONTACT];
         UTIL_Describe.throwException = true;
         ctrl.ClearVolunteerHoursIdSignUp();
         ctrl.contact.FirstName = 'New person2';
         ctrl.contact.LastName = 'New person2 for my test';
         ctrl.contact.Email = 'newperson2@volunteersjoblisting.com';
-        ctrl.jobIdSignUp = job.id;
+        ctrl.jobIdSignUp = job.Id;
         ctrl.VolunteerShiftSignUp();
         System.assertEquals(null, ctrl.contactIdSignUp, 'Did not expect a contact to be created without permissions.');
         System.assertEquals(null, ctrl.volunteerHoursIdSignUp, 'Did not expect a volunteer hour to be created without permissions.');
         System.assertEquals(contactCount, [SELECT COUNT() FROM CONTACT], 'Did not expect a new contact to be inserted without permissions.');
-
     }
 
     @IsTest
@@ -191,10 +223,9 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assertNotEquals(null, grandparentId, 'Expected a campaign to be found at the grandparent hierarchy level.');
 
         // verify w/ no hierarchy
-        PageReference pageRef = Page.VolunteersJobListingFS;
         pageRef.getParameters().put('campaignId', grandparentId);
         Test.setCurrentPage(pageRef);
-        VOL_CTRL_VolunteersJobListingFS ctrl = new VOL_CTRL_VolunteersJobListingFS();
+        ctrl = new VOL_CTRL_VolunteersJobListingFS();
         System.assertEquals(1, ctrl.listVolunteerJobs.size(), 'Expected only the job related to the grandparent campaign to be found.');
 
         // verify w/ hierarchy
@@ -253,8 +284,8 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
 
             //instantiate the controller
             VOL_CTRL_VolunteersJobListingFS ctrl = new VOL_CTRL_VolunteersJobListingFS();
-            System.assertEquals(1, ctrl.listVolunteerJobs.size(), 'Expected a job to be found.');
-            Volunteer_Job__c job = ctrl.listVolunteerJobs[0];
+            System.assertEquals(2, ctrl.listVolunteerJobs.size(), 'Expected the timezone job and test setup jobs to be returned, timezone first since the first shift is today -1.');
+            job = ctrl.listVolunteerJobs[0];
             System.assertEquals(48, job.Volunteer_Job_Slots__r.size(), 'We should always get today and tomorrow shifts.');
         }
     }
