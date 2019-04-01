@@ -352,12 +352,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
 
     private Volunteer_Job__c combine(Volunteer_Job__c job, List<Volunteer_Shift__c> shifts) {
         Map<String, Object> jobFieldMap = new Map<String, Object>(job.getPopulatedFieldsAsMap());
-        jobFieldMap.put('Volunteer_Job_Slots__r', makeArray(shifts));
+        jobFieldMap.put('Volunteer_Job_Slots__r', makeMap(shifts));
 
         return (Volunteer_Job__c) JSON.deserialize(JSON.serialize(jobFieldMap), Volunteer_Job__c.class);
     }
 
-    private Map<String, Object> makeArray(List<Volunteer_Shift__c> shifts) {
+    private Map<String, Object> makeMap(List<Volunteer_Shift__c> shifts) {
         Map<String, Object> result = new Map<String, Object>();
         result.put('records', shifts);
         result.put('totalSize', shifts.size());
