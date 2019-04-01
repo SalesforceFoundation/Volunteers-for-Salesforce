@@ -98,7 +98,7 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         contactRecord = [SELECT Id, FirstName, LastName, Email FROM Contact ORDER BY Id LIMIT 1];
         campaignRecord = [SELECT Id FROM Campaign ORDER BY Id LIMIT 1];
         job = [SELECT Id FROM Volunteer_Job__c ORDER BY Id LIMIT 1];
-        shift = [SELECT Id, Duration__c FROM Volunteer_Shift__c ORDER BY Id LIMIT 1];
+        shift = [SELECT Id, Duration__c, Volunteer_Shift__c.Volunteer_Job__c FROM Volunteer_Shift__c ORDER BY Id LIMIT 1];
 
         Test.setCurrentPage(pageRef);
         ctrl = new VOL_CTRL_VolunteersJobListingFS();
@@ -212,6 +212,16 @@ private class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assertEquals(null, ctrl.contactIdSignUp, 'Did not expect a contact to be created without permissions.');
         System.assertEquals(null, ctrl.volunteerHoursIdSignUp, 'Did not expect a volunteer hour to be created without permissions.');
         System.assertEquals(contactCount, [SELECT COUNT() FROM CONTACT], 'Did not expect a new contact to be inserted without permissions.');
+    }
+
+    @IsTest
+    private static void returnsCombinedJobWithShifts() {
+        setSetupData();
+        List<Volunteer_Job__c> combinedJobs = ctrl.combine(new List<Volunteer_Job__c>{ job }, new List<Volunteer_Shift__c>{ shift });
+        List<Volunteer_Job__c> queriedJobs = new List<Volunteer_Job__c>([SELECT Id, (SELECT Id FROM Volunteer_Job_Slots__r) FROM Volunteer_Job__c]);
+
+        System.assertEquals(queriedJobs[0].Volunteer_Job_Slots__r.size(), combinedJobs[0].Volunteer_Job_Slots__r.size(), 'Expected the number of shifts to be the same.');
+        System.assertEquals(queriedJobs[0].Volunteer_Job_Slots__r[0].Id, combinedJobs[0].Volunteer_Job_Slots__r[0].Id, 'Expected the Id for the shifts to be the same.');
     }
 
     @IsTest

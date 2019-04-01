@@ -319,6 +319,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         return jobs;
     }
 
+    @TestVisible
     private List<Volunteer_Job__c> combine(List<Volunteer_Job__c> jobs, List<Volunteer_Shift__c> shifts) {
         List<Volunteer_Job__c> combinedJobs = new List<Volunteer_Job__c>();
         Map<Id, Volunteer_Job__c> jobsById = new Map<Id, Volunteer_Job__c>(jobs);
