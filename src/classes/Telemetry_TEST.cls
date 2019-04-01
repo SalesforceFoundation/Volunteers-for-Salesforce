@@ -63,6 +63,16 @@ private class Telemetry_TEST {
     }
 
     @IsTest
+    private static void getCountQueryReturnsValidQueryWithCriteria() {
+        accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME).withCriteria('Type = \'Prospect\'');
+        System.assertEquals(0, Database.countQuery(accountTelemetry.getCountQuery()), 'Expected the query not to find any records.');
+
+        insert new Account(Name = 'Count me!', Type = 'Prospect');
+        insert new Account(Name = 'Do NOT Count me!', Type = 'Customer');
+        System.assertEquals(1, Database.countQuery(accountTelemetry.getCountQuery()), 'Expected the query to find one record.');
+    }
+
+    @IsTest
     private static void recordCountPassesCriteriaToQueryBuilder() {
         String criteria = 'CreatedDate = NEXT_YEAR';
         accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME).withCriteria(criteria);
