@@ -74,7 +74,7 @@ public without sharing class TelemetryService {
         private List<Telemetry> createCampaignTelemetries() {
             return new List<Telemetry>{
                 new Telemetry(Campaign.SObjectType, Telemetry.DeveloperName.CAMPAIGNS_WITH_JOBS)
-                    .withCriteria('Id IN (SELECT Campaign__c FROM Volunteer_Jobs)')
+                    .withCriteria('Id IN (SELECT Campaign__c FROM Volunteer_Job__c)')
             };
         }
 

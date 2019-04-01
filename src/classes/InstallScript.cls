@@ -85,15 +85,20 @@ public without sharing class InstallScript implements InstallHandler {
     }
 
     private void sendError(String message) {
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        try {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
-        mail.setUseSignature(false);
-        mail.setReplyTo(EMAIL_REPLY_TO);
-        mail.setSenderDisplayName(EMAIL_SENDER);
-        mail.setSubject(EMAIL_SUBJECT);
-        mail.setToAddresses(new List<String> { EMAIL_TO });
-        mail.setPlainTextBody(message);
+            mail.setUseSignature(false);
+            mail.setReplyTo(EMAIL_REPLY_TO);
+            mail.setSenderDisplayName(EMAIL_SENDER);
+            mail.setSubject(EMAIL_SUBJECT);
+            mail.setToAddresses(new List<String> { EMAIL_TO });
+            mail.setPlainTextBody(message);
 
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        } catch (Exception ex) {
+            // We do not want to block install when the email cannot be sent, allow the install to continue.
+        }
+
     }
 }
