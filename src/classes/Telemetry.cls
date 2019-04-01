@@ -49,7 +49,7 @@ public without sharing class Telemetry {
     private QueryBuilder queryBuilder {
         get {
             if (queryBuilder == null) {
-                return new QueryBuilder(sObjType);
+                queryBuilder = new QueryBuilder(sObjType);
             }
 
             return queryBuilder;
