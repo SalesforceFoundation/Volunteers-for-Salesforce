@@ -33,7 +33,7 @@ private class QueryBuilder_TEST {
     private static final Integer NUMBER_OF_ACCOUNTS = 2;
 
     @TestSetup
-    private static void makeData(){
+    private static void makeData() {
         List<Account> accounts = new List<Account>{
             new Account(Name = 'Find Me', Type='Prospect'),
             new Account(Name = 'Hide Me', Type='Customer')
@@ -43,7 +43,35 @@ private class QueryBuilder_TEST {
     }
 
     @IsTest
-    private static void countQueryShouldIncludeWhereClauseWhenConditionProvided() {
+    private static void queryShouldIncludeSelectFields() {
+        String expectedQuery = 'SELECT Id, Name FROM Account';
+        String actualQuery = queryBuilder.withSelectFields(new Set<String>{ 'Id', 'Name' }).build();
+        System.assertEquals(expectedQuery, actualQuery, 'Expected the fields to be included in the query.');
+    }
+
+    @IsTest
+    private static void queryShouldIncludeOrderBy() {
+        String expectedQuery = 'SELECT Id FROM Account ORDER BY Id';
+        String actualQuery = queryBuilder.withOrderBy('Id').build();
+        System.assertEquals(expectedQuery, actualQuery, 'Expected the order by statement to be added.');
+    }
+
+    @IsTest
+    private static void queryShouldIncludeLimit() {
+        String expectedQuery = 'SELECT Id FROM Account LIMIT 1';
+        String actualQuery = queryBuilder.withLimit(1).build();
+        System.assertEquals(expectedQuery, actualQuery, 'Expected the limit statement to be added.');
+    }
+
+    @IsTest
+    private static void queryShouldIncludeWhere() {
+        String expectedQuery = 'SELECT Id FROM Account WHERE Id != null';
+        String actualQuery = queryBuilder.withCondition('Id != null').build();
+        System.assertEquals(expectedQuery, actualQuery, 'Expected the where clause to be added.');
+    }
+
+    @IsTest
+    private static void countQueryShouldIncludeWhere() {
         String expectedCountQuery = 'SELECT COUNT() FROM Account WHERE Type = \'Prospect\'';
         String actualCountQuery = queryBuilder.withCondition('Type = \'Prospect\'').buildCount();
         System.assertEquals(expectedCountQuery, actualCountQuery, 'Expected the where clause to be part of the count query.');
