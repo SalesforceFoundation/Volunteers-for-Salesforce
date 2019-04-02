@@ -528,7 +528,7 @@ day:      &apos;Tag&apos;</label>
         <name>labelShiftClosed</name>
     </customLabels>
     <customLabels>
-        <label>Bestätigt: {0}&amp;nbsp;&amp;nbsp;verfügbar: {1}</label>
+        <label>Bestätigt: {0} - verfügbar: {1}</label>
         <name>labelShiftNumbers</name>
     </customLabels>
     <customLabels>

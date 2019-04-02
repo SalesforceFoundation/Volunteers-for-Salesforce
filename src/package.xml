@@ -3,8 +3,16 @@
     <fullName>Volunteers for Salesforce</fullName>
     <types>
         <members>ComponentControllerBase</members>
+        <members>InstallScript</members>
+        <members>InstallScript_TEST</members>
         <members>PageControllerBase</members>
+        <members>QueryBuilder</members>
+        <members>QueryBuilder_TEST</members>
         <members>SoqlListView</members>
+        <members>Telemetry</members>
+        <members>Telemetry_TEST</members>
+        <members>TelemetryService</members>
+        <members>TelemetryService_TEST</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
         <members>UTIL_JavaScriptSanitizer</members>
@@ -138,6 +146,7 @@
         <members>Lead.Volunteer_Notes__c</members>
         <members>Lead.Volunteer_Skills__c</members>
         <members>Lead.Volunteer_Status__c</members>
+        <members>PackageSettings__c.NamespacePrefix__c</members>
         <members>Volunteer_Hours__c.Comments__c</members>
         <members>Volunteer_Hours__c.Contact__c</members>
         <members>Volunteer_Hours__c.End_Date__c</members>
@@ -160,7 +169,6 @@
         <members>Volunteer_Job__c.Description__c</members>
         <members>Volunteer_Job__c.Display_on_Website__c</members>
         <members>Volunteer_Job__c.External_Signup_Url__c</members>
-        <members>Volunteer_Job__c.ExternalSignupLink__c</members>
         <members>Volunteer_Job__c.First_Shift__c</members>
         <members>Volunteer_Job__c.Inactive__c</members>
         <members>Volunteer_Job__c.Location_City__c</members>
@@ -220,6 +228,7 @@
         <members>PermissionDeleteException</members>
         <members>PermissionReadException</members>
         <members>PermissionUpdateException</members>
+        <members>TelemetryException</members>
         <members>labelButtonAssign</members>
         <members>labelButtonCancel</members>
         <members>labelButtonClose</members>
@@ -400,6 +409,7 @@
     </types>
     <types>
         <members>Job_Recurrence_Schedule__c</members>
+        <members>PackageSettings__c</members>
         <members>Volunteer_Hours__c</members>
         <members>Volunteer_Job__c</members>
         <members>Volunteer_Recurrence_Schedule__c</members>
@@ -436,6 +446,13 @@
         <members>Lead-iw</members>
         <members>Lead-ja</members>
         <members>Lead-nl_NL</members>
+        <members>PackageSettings__c-de</members>
+        <members>PackageSettings__c-en_US</members>
+        <members>PackageSettings__c-es</members>
+        <members>PackageSettings__c-fr</members>
+        <members>PackageSettings__c-iw</members>
+        <members>PackageSettings__c-ja</members>
+        <members>PackageSettings__c-nl_NL</members>
         <members>Volunteer_Hours__c-de</members>
         <members>Volunteer_Hours__c-en_US</members>
         <members>Volunteer_Hours__c-es</members>
@@ -536,6 +553,18 @@
         <members>Volunteers_Email_Templates/Volunteer_Signup_Thank_You</members>
         <members>Volunteers_Email_Templates/Volunteers_Personal_Site_Contact_Lookup</members>
         <name>EmailTemplate</name>
+    </types>
+    <types>
+        <members>CampaignsWithJobs</members>
+        <members>ContactsWithLastWebSignUpLastYear</members>
+        <members>ContactsWithLastWebSignup</members>
+        <members>JobRecurrenceSchedules</members>
+        <members>VolunteerJobs</members>
+        <members>VolunteerJobsDisplayOnWebsite</members>
+        <members>VolunteerJobsLastYear</members>
+        <members>VolunteerShifts</members>
+        <members>VolunteerShiftsCreatedLastYear</members>
+        <name>FeatureParameterInteger</name>
     </types>
     <types>
         <members>Campaign.VolunteersWizardFS</members>

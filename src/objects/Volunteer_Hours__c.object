@@ -706,7 +706,7 @@
         <openType>sidebar</openType>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
-        <url>/apex/GW_Volunteers__VolunteersBulkEnterHours?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}&amp;volunteerShiftId={!Volunteer_Shift__c.Id}&amp;retURL={!
+        <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}VolunteersBulkEnterHours?campaignId={!Volunteer_Job__c.CampaignId__c}&amp;volunteerJobId={!Volunteer_Job__c.Id}&amp;volunteerShiftId={!Volunteer_Shift__c.Id}&amp;retURL={!
 
 IF(ISNULL( Volunteer_Job__c.Id), 
     URLFOR($Action.Contact.View, Contact.Id), 
