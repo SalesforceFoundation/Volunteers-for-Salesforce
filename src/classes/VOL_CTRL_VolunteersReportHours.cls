@@ -204,7 +204,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     global list<SelectOption> listSOVolunteerShifts {
         get {
             if (listSOVolunteerShifts == null && volunteerJobId != null) {
-                listSOVolunteerShifts = VOL_SharedCode.getShiftOptions(volunteerJobId, 
+                listSOVolunteerShifts = VOL_SharedCode.listSOVolunteerShiftsOfVolunteerJobIdFormat(volunteerJobId, 
                     system.today().addMonths(-2), system.today().addMonths(1), false, false, strDateFormat, strTimeFormat); 
             }
             return listSOVolunteerShifts;
