@@ -32,7 +32,7 @@ public without sharing class InstallScript implements InstallHandler {
     private static final String EMAIL_TO = 'errors@salesforcefoundation.org';
     private static final String EMAIL_SUBJECT = 'V4S Install Errors';
     private static final String EMAIL_SENDER = 'V4S Install Script';
-    private static final String EMAIL_MESSAGE = 'Org Id: {0} encountered the following error: {1}';
+    private static final String EMAIL_MESSAGE = 'Org ID {0} encountered this error: {1}';
     private InstallContext context;
 
     @TestVisible
