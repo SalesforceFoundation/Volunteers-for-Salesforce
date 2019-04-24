@@ -15,9 +15,9 @@
     <cspUpgradeInsecureRequests>false</cspUpgradeInsecureRequests>
     <fileNotFoundPage>FileNotFound</fileNotFoundPage>
     <genericErrorPage>Exception</genericErrorPage>
-    <inMaintenancePage>%%%NAMESPACE%%%VolunteersAbout</inMaintenancePage>
-    <inactiveIndexPage>%%%NAMESPACE%%%VolunteersAbout</inactiveIndexPage>
-    <indexPage>%%%NAMESPACE%%%VolunteersAbout</indexPage>
+    <inMaintenancePage>%%%NAMESPACE%%%PersonalSiteJobListing</inMaintenancePage>
+    <inactiveIndexPage>%%%NAMESPACE%%%PersonalSiteJobListing</inactiveIndexPage>
+    <indexPage>%%%NAMESPACE%%%PersonalSiteJobListing</indexPage>
     <masterLabel>Volunteers</masterLabel>
     <referrerPolicyOriginWhenCrossOrigin>false</referrerPolicyOriginWhenCrossOrigin>
     <requireHttps>false</requireHttps>
