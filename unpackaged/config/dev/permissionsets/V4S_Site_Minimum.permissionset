@@ -242,22 +242,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Availability__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Notes__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Skills__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Status__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -407,7 +407,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.Number_of_Volunteers__c</field>
+        <field>Campaign.%%%NAMESPACE%%%Number_of_Volunteers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -432,27 +432,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.Volunteer_Completed_Hours__c</field>
+        <field>Campaign.%%%NAMESPACE%%%Volunteer_Completed_Hours__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.Volunteer_Jobs__c</field>
+        <field>Campaign.%%%NAMESPACE%%%Volunteer_Jobs__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.Volunteer_Shifts__c</field>
+        <field>Campaign.%%%NAMESPACE%%%Volunteer_Shifts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.Volunteer_Website_Time_Zone__c</field>
+        <field>Campaign.%%%NAMESPACE%%%Volunteer_Website_Time_Zone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Campaign.Volunteers_Still_Needed__c</field>
+        <field>Campaign.%%%NAMESPACE%%%Volunteers_Still_Needed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -507,7 +507,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.First_Volunteer_Date__c</field>
+        <field>Contact.%%%NAMESPACE%%%First_Volunteer_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -532,7 +532,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Last_Volunteer_Date__c</field>
+        <field>Contact.%%%NAMESPACE%%%Last_Volunteer_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -577,282 +577,282 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Unique_Volunteer_Count__c</field>
+        <field>Contact.%%%NAMESPACE%%%Unique_Volunteer_Count__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Availability__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Hours__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Hours__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Last_Web_Signup_Date__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Last_Web_Signup_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Manager_Notes__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Manager_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Notes__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Organization__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Organization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Skills__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.Volunteer_Status__c</field>
+        <field>Contact.%%%NAMESPACE%%%Volunteer_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Comments__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.End_Date__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Full_Name__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Full_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Hours_Worked__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Hours_Worked__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Planned_Start_Date_Time__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Planned_Start_Date_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Shift_Start_Date_Time__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Shift_Start_Date_Time__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Status__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.System_Note__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%System_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Total_Hours_Worked__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Total_Hours_Worked__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Volunteer_Campaign_Name__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Volunteer_Campaign_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Volunteer_Campaign__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Volunteer_Campaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Volunteer_Recurrence_Schedule__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Hours__c.Volunteer_Shift__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Volunteer_Shift__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Description__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Display_on_Website__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Display_on_Website__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.External_Signup_Url__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%External_Signup_Url__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.First_Shift__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%First_Shift__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Inactive__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Inactive__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Location_City__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Location_City__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Location_Information__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Location_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Location_Street__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Location_Street__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Location_Zip_Postal_Code__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Location_Zip_Postal_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Location__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Number_of_Completed_Hours__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Number_of_Completed_Hours__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Number_of_Shifts__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Number_of_Shifts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Number_of_Volunteers_Still_Needed__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Number_of_Volunteers_Still_Needed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Number_of_Volunteers__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Number_of_Volunteers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Ongoing__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Ongoing__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Skills_Needed__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Skills_Needed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Job__c.Volunteer_Website_Time_Zone__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Job__c.%%%NAMESPACE%%%Volunteer_Website_Time_Zone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Recurrence_Schedule__c.Comments__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c.%%%NAMESPACE%%%Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Recurrence_Schedule__c.Days_of_Week__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c.%%%NAMESPACE%%%Days_of_Week__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Recurrence_Schedule__c.Schedule_End_Date__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c.%%%NAMESPACE%%%Schedule_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Recurrence_Schedule__c.Volunteer_Hours_Status__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c.%%%NAMESPACE%%%Volunteer_Hours_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Recurrence_Schedule__c.Volunteer_Job__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c.%%%NAMESPACE%%%Volunteer_Job__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Recurrence_Schedule__c.Weekly_Occurrence__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c.%%%NAMESPACE%%%Weekly_Occurrence__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Description__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Desired_Number_of_Volunteers__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Desired_Number_of_Volunteers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Job_Location_City__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Job_Location_City__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Job_Location_State_Province__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Job_Location_State_Province__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Job_Location_Street__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Job_Location_Street__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Job_Location_Zip_Postal_Code__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Job_Location_Zip_Postal_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Job_Recurrence_Schedule__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Job_Recurrence_Schedule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Number_of_Volunteers_Still_Needed__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Number_of_Volunteers_Still_Needed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.System_Note__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%System_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Volunteer_Shift__c.Total_Volunteers__c</field>
+        <field>%%%NAMESPACE%%%Volunteer_Shift__c.%%%NAMESPACE%%%Total_Volunteers__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -896,10 +896,10 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Volunteer_Hours__c</object>
+        <object>%%%NAMESPACE%%%Volunteer_Hours__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -908,7 +908,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Volunteer_Job__c</object>
+        <object>%%%NAMESPACE%%%Volunteer_Job__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -917,7 +917,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Volunteer_Recurrence_Schedule__c</object>
+        <object>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -926,71 +926,71 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Volunteer_Shift__c</object>
+        <object>%%%NAMESPACE%%%Volunteer_Shift__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>JobCalendar</apexPage>
+        <apexPage>%%%NAMESPACE%%%JobCalendar</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteContactInfo</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteContactInfo</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteContactLookup</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteContactLookup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteJobCalendar</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteJobCalendar</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteJobListing</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteJobListing</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteReportHours</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteReportHours</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteTemplate</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteTemplate</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteTemplateEspanol</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteTemplateEspanol</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>SendBulkEmail</apexPage>
+        <apexPage>%%%NAMESPACE%%%SendBulkEmail</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersAbout</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersAbout</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersJobListing</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersJobListing</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersJobListingFS</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersJobListingFS</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersReportHours</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersReportHours</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersSignup</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersSignup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersSignupFS</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersSignupFS</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <recordTypeVisibilities>
-        <recordType>Campaign.Volunteers_Campaign</recordType>
+        <recordType>Campaign.%%%NAMESPACE%%%Volunteers_Campaign</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 </PermissionSet>
