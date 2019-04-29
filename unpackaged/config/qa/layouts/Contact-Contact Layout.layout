@@ -87,49 +87,49 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Status__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>GW_Volunteers__Volunteer_Hours__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Hours__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Organization__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Organization__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Skills__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Skills__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Availability__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Availability__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Notes__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Notes__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Manager_Notes__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Manager_Notes__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>GW_Volunteers__First_Volunteer_Date__c</field>
+                <field>%%%NAMESPACE%%%First_Volunteer_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>GW_Volunteers__Last_Volunteer_Date__c</field>
+                <field>%%%NAMESPACE%%%Last_Volunteer_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Last_Web_Signup_Date__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Last_Web_Signup_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GW_Volunteers__Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
+                <field>%%%NAMESPACE%%%Volunteer_Auto_Reminder_Email_Opt_Out__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -266,11 +266,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>GW_Volunteers__Shift_Start_Date_Time__c</fields>
-        <fields>GW_Volunteers__Volunteer_Campaign_Name__c</fields>
-        <fields>GW_Volunteers__Status__c</fields>
-        <fields>GW_Volunteers__Hours_Worked__c</fields>
-        <relatedList>GW_Volunteers__Volunteer_Hours__c.GW_Volunteers__Contact__c</relatedList>
+        <fields>%%%NAMESPACE%%%Shift_Start_Date_Time__c</fields>
+        <fields>%%%NAMESPACE%%%Volunteer_Campaign_Name__c</fields>
+        <fields>%%%NAMESPACE%%%Status__c</fields>
+        <fields>%%%NAMESPACE%%%Hours_Worked__c</fields>
+        <relatedList>%%%NAMESPACE%%%Volunteer_Hours__c.%%%NAMESPACE%%%Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedContentNoteList</relatedList>
