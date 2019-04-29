@@ -15,14 +15,14 @@
     <cspUpgradeInsecureRequests>false</cspUpgradeInsecureRequests>
     <fileNotFoundPage>FileNotFound</fileNotFoundPage>
     <genericErrorPage>Exception</genericErrorPage>
-    <inMaintenancePage>VolunteersAbout</inMaintenancePage>
-    <inactiveIndexPage>VolunteersAbout</inactiveIndexPage>
-    <indexPage>VolunteersAbout</indexPage>
+    <inMaintenancePage>%%%NAMESPACE%%%PersonalSiteJobListing</inMaintenancePage>
+    <inactiveIndexPage>%%%NAMESPACE%%%PersonalSiteJobListing</inactiveIndexPage>
+    <indexPage>%%%NAMESPACE%%%PersonalSiteJobListing</indexPage>
     <masterLabel>Volunteers</masterLabel>
     <referrerPolicyOriginWhenCrossOrigin>false</referrerPolicyOriginWhenCrossOrigin>
     <requireHttps>false</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <siteAdmin>jsohn@npsp385.salesforce.com</siteAdmin>
-    <siteTemplate>PersonalSiteTemplate</siteTemplate>
+    <siteTemplate>%%%NAMESPACE%%%PersonalSiteTemplate</siteTemplate>
     <siteType>Visualforce</siteType>
 </CustomSite>

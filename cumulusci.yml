@@ -13,19 +13,19 @@ tasks:
         description: Deploys the post install configuration for an unmanaged DE org
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
-            path: dev_config/src
+            path: unpackaged/config/dev
 
-    deploy_dev_config_managed:
-        description: Deploys the post install configuration for a managed DE org
+    deploy_qa_config:
+        description: Deploys the post install configuration for a regression or QA scratch org
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
-            path: dev_config/src_managed
+            path: unpackaged/config/qa
 
-    deploy_dev_config_delete:
+    deploy_delete_config:
         description: Deploys the metadata deletions for the post install DE org config
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
-            path: dev_config/delete
+            path: unpackaged/config/delete
 
     deploy_package_settings:
         description: Configure the default Volunteers Package Settings
@@ -53,14 +53,54 @@ flows:
     config_dev:
         steps:
             3:
-                task: deploy_dev_config_delete
+                task: deploy_delete_config
             4:
                 task: deploy_dev_config
+                options:
+                    unmanaged: True
+                    namespace_inject: $project_config.project__package__namespace
             5:
                 task: deploy_package_settings
             6:
                 task: assign_pset
                 ignore_failure: True
+
+    config_qa:
+        steps:
+            3:
+                task: deploy_delete_config
+            4:
+                task: deploy_dev_config
+                options:
+                    unmanaged: True
+                    namespace_inject: $project_config.project__package__namespace
+            5:
+                task: deploy_qa_config
+                options:
+                    unmanaged: True
+                    namespace_inject: $project_config.project__package__namespace
+            6:
+                task: deploy_package_settings
+            7:
+                task: assign_pset
+                ignore_failure: True
+
+    install_regression:
+        steps:
+            5:
+                task: deploy_delete_config
+            6:
+                task: deploy_dev_config
+                options:
+                    unmanaged: False
+                    namespace_inject: $project_config.project__package__namespace
+            7:
+                task: deploy_qa_config
+                options:
+                    unmanaged: False
+                    namespace_inject: $project_config.project__package__namespace
+            8:
+                task: assign_pset
 
 orgs:
     scratch:
@@ -68,3 +108,6 @@ orgs:
             config_file: orgs/dev.json
             namespaced: True
             days: 7
+        prerelease:
+            config_file: orgs/prerelease.json
+
