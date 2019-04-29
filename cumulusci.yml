@@ -15,6 +15,7 @@ tasks:
         options:
             path: unpackaged/config/dev/src
             unmanaged: True
+            namespace_inject: $project_config.project__package__namespace
 
     deploy_qa_config:
         description: Deploys the post install configuration for a regression scratch org
