@@ -474,10 +474,10 @@ private with sharing class VOL_VRS_TEST {
         system.assertEquals(4, listHours.size());
         
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs1.Id order by Planned_Start_Date_Time__c];
-        system.assertEquals(0, listHours.size());
+        system.assertEquals(2, listHours.size());
         
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs2.Id order by Planned_Start_Date_Time__c];
-        system.assertEquals(4, listHours.size());
+        system.assertEquals(2, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status1' ];
         system.assertEquals(2, listHours.size());
@@ -548,10 +548,10 @@ private with sharing class VOL_VRS_TEST {
         system.assertEquals(4, listHours.size());
         
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs1.Id order by Planned_Start_Date_Time__c];
-        system.assertEquals(0, listHours.size());
+        system.assertEquals(2, listHours.size());
         
         listHours = [select Id, Status__c, Planned_Start_Date_Time__c from Volunteer_Hours__c where Volunteer_Recurrence_Schedule__c = :vrs2.Id order by Planned_Start_Date_Time__c];
-        system.assertEquals(4, listHours.size());
+        system.assertEquals(2, listHours.size());
         
         listHours = [select Id, Status__c from Volunteer_Hours__c where Status__c = 'My Custom Status1' ];
         system.assertEquals(2, listHours.size());
@@ -880,4 +880,92 @@ private with sharing class VOL_VRS_TEST {
         system.assertEquals(1, listHours.size());
     }
 
+
+    //******************************************************************************************************
+    // Test a single Contact with two VRS for two different JRS occuring on the same day.
+    // VRS insert, and then second VRS inserted.  Hours from first VRS should not be reparented to second VRS.
+    private static testmethod void OneContactTwoVRS() {
+
+        // create test data
+        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
+            name='Job Calendar Test Campaign', IsActive=true);
+        insert cmp;
+        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
+        insert job;
+        
+        Contact con = new Contact(firstname='test1', lastname='test1');
+        insert con;
+        
+        DateTime startTime = DateTime.newInstance(System.today().addmonths(-1).toStartOfMonth(), Time.newInstance(10,0,0,0));
+        
+        Job_Recurrence_Schedule__c jrs1 = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
+        jrs1.Days_of_Week__c = 'Monday;';
+        jrs1.Duration__c = 1;
+        jrs1.Schedule_Start_Date_Time__c = startTime;
+        jrs1.Weekly_Occurrence__c = '2nd';
+        jrs1.Desired_Number_of_Volunteers__c = 5;
+        insert jrs1;
+
+        List<Volunteer_Shift__c> shifts1 = [SELECT Id FROM Volunteer_Shift__c WHERE Volunteer_Job__c = :job.id];
+
+        Job_Recurrence_Schedule__c jrs2 = new Job_Recurrence_Schedule__c(Volunteer_Job__c = job.Id);
+        jrs2.Days_of_Week__c = 'Monday;';
+        jrs2.Duration__c = 1;
+        jrs2.Schedule_Start_Date_Time__c = startTime.addHours(2);
+        jrs2.Weekly_Occurrence__c = '2nd';
+        jrs2.Desired_Number_of_Volunteers__c = 5;
+        insert jrs2;
+
+        List<Volunteer_Shift__c> shifts2 = [SELECT Id FROM Volunteer_Shift__c WHERE Volunteer_Job__c = :job.id];
+        System.assertEquals(shifts2.size(), shifts1.size()*2, 'Double the number of shifts should exist after second JRS is inserted.');
+
+
+        Volunteer_Recurrence_Schedule__c vrs1 = new Volunteer_Recurrence_Schedule__c(
+            Contact__c = con.Id, 
+            Volunteer_Job__c = job.Id,
+            Volunteer_Hours_Status__c = 'My Custom Status1',
+            Days_of_Week__c = 'Monday',
+            Duration__c = 1.5,
+            Number_of_Volunteers__c = 2,
+            Comments__c = 'my comments!',
+            Schedule_Start_Date_Time__c = startTime,
+            Weekly_Occurrence__c = '2nd'
+        );
+        insert vrs1;
+
+        List<Volunteer_Hours__c> vrs1hours = [
+            SELECT Id, Status__c, Comments__c, Planned_Start_Date_Time__c 
+            FROM Volunteer_Hours__c 
+            WHERE Volunteer_Recurrence_Schedule__c = :vrs1.Id 
+            ORDER BY Planned_Start_Date_Time__c
+        ];
+
+        System.assertEquals(6,vrs1hours.size(), 'First VRS inserted successfully.');
+
+        Volunteer_Recurrence_Schedule__c vrs2 = new Volunteer_Recurrence_Schedule__c(
+            Contact__c = con.Id, 
+            Volunteer_Job__c = job.Id,
+            Volunteer_Hours_Status__c = 'My Custom Status1',
+            Days_of_Week__c = 'Monday',
+            Duration__c = 1.5,
+            Number_of_Volunteers__c = 2,
+            Comments__c = 'my comments!',
+            Schedule_Start_Date_Time__c = startTime.addHours(2),
+            Weekly_Occurrence__c = '2nd'
+        );
+
+        Test.startTest();
+        insert vrs2;
+        Test.stopTest();  
+         
+        // make sure VRS1's hours untouched
+        List<Volunteer_Hours__c> vrs1hoursAfterUpdate = [
+            SELECT Id, Status__c, Comments__c, Planned_Start_Date_Time__c 
+            FROM Volunteer_Hours__c 
+            WHERE Volunteer_Recurrence_Schedule__c = :vrs1.Id 
+            ORDER BY Planned_Start_Date_Time__c
+        ];
+
+        system.assertEquals(vrs1hours.size(), vrs1hoursAfterUpdate.size());
+    }
 }
