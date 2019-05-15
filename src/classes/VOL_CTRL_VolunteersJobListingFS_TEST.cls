@@ -30,8 +30,109 @@
 
 @isTest
 private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
+    private static VOL_CTRL_VolunteersJobListingFS jobListingCtrl;
 
     //==================== TEST METHOD(s) ======================================
+    @IsTest
+    private static void shouldReturnOneShiftWhenJobIdAndShiftIdAreProvidedWithZeroMonths() {
+        generateData(10);
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
+        setupPage(new Map<String, String>{'jobId' => jobId, 'volunteerShiftId' => shiftId, 'nMonthsToShow' => '0'});
+
+        System.assertEquals(shiftId, jobListingCtrl.shiftIdFilter);
+        System.assertEquals(1, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnAllShiftsWhenJobIdIsProvidedAndLessThanLimit() {
+        generateData(10);
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        setupPage(new Map<String, String>{'jobId' => jobId});
+
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter);
+        System.assertEquals(10, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnAllShiftsWhenCampaingIdIsProvidedAndLessThanLimit() {
+        generateData(10);
+        Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
+        setupPage(new Map<String, String>{'campaignId' => campaignId});
+
+        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter);
+        System.assertEquals(10, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldRetrunLimitedShiftsWhenIdFiltersAreNotProvided() {
+        generateData(101);
+        setupPage(new Map<String, String>());
+
+        System.assertEquals(100, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldRetrunLimitedShiftsWhenJobIdIsProvided() {
+        generateData(251);
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        setupPage(new Map<String, String>{'jobId' => jobId});
+
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter);
+        System.assertEquals(200, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldRetrunLimitedShiftsWhenCampaignIdIsProvided() {
+        generateData(251);
+        Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
+        setupPage(new Map<String, String>{'campaignId' => campaignId});
+
+        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter);
+        System.assertEquals(200, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    private static void setupPage(Map<String, String> params) {
+        PageReference pageRef = Page.VolunteersJobListingFS;
+
+        for (String param : params.keySet()) {
+            pageRef.getParameters().put(param, params.get(param));
+        }
+
+        Test.setCurrentPage(pageRef);
+        jobListingCtrl = new VOL_CTRL_VolunteersJobListingFS();
+    }
+
+    private static void generateData(Integer numberOfShifts) {
+        Volunteers_Settings__c settings = new Volunteers_Settings__c();
+        VOL_SharedCode.getVolunteersSettingsForTests(settings);
+
+        String uniqueName = String.valueOf(System.now());
+        String campaignName = 'Pet Adoption Event';
+
+        Campaign campaignRecord = new Campaign(
+        Name = campaignName + ' ' + uniqueName,
+        IsActive = true);
+        insert campaignRecord;
+
+        Volunteer_Job__c job = new Volunteer_Job__c(
+            Name =  campaignName + ' Job ' + uniqueName,
+            Campaign__c = campaignRecord.Id,
+            Display_on_Website__c = true
+        );
+        insert job;
+
+        List<Volunteer_Shift__c> shifts = new List<Volunteer_Shift__c>();
+        for (Integer counter = 0; counter < numberOfShifts; counter++) {
+            shifts.add(new Volunteer_Shift__c(
+                Volunteer_Job__c = job.Id,
+                Desired_Number_of_Volunteers__c = 10,
+                Duration__c = 2,
+                Start_Date_Time__c = System.today().addDays(1)
+            ));
+        }
+        insert shifts;
+    }
 
 
     /*******************************************************************************************************
