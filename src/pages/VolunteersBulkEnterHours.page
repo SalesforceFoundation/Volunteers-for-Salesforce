@@ -55,22 +55,22 @@
         
         // Function set that prevent save buttons from being clicked before 
         // an initial save request has completed. 
-        function getCommandButtons(){
+        function getCommandButtons() {
             var buttons = [];
-            buttons.push(document.getElementById('{!$Component.vfform.btnSave}'));
-            buttons.push(document.getElementById('{!$Component.vfform.btnSaveClose}'));
-            buttons.push(document.getElementById('{!$Component.vfform.btnClose}'));
+            buttons.push( document.getElementById('{!$Component.vfform.btnSave}') );
+            buttons.push( document.getElementById('{!$Component.vfform.btnSaveClose}') );
+            buttons.push( document.getElementById('{!$Component.vfform.btnClose}') );
             return buttons;
         }
-        function disableCommandButtons(){            
+        function disableCommandButtons() {            
             var buttons = getCommandButtons();
-            buttons.forEach(function(btn){
+            buttons.forEach( function(btn) {
                 btn.disabled = true;
             });
         }
-        function enableCommandButtons(){
+        function enableCommandButtons() {
             var buttons = getCommandButtons();
-            buttons.forEach(function(btn){
+            buttons.forEach( function(btn) {
                 btn.disabled = false;
             });
         }
