@@ -52,6 +52,28 @@
         // hack that prevents Salesforce from always putting focus
         // on the first date field, which pops up the ugly calendar control!
         window.onload = function() {}
+        
+        // Function set that prevent save buttons from being clicked before 
+        // an initial save request has completed. 
+        function getCommandButtons(){
+            var buttons = [];
+            buttons.push(document.getElementById('{!$Component.vfform.btnSave}'));
+            buttons.push(document.getElementById('{!$Component.vfform.btnSaveClose}'));
+            buttons.push(document.getElementById('{!$Component.vfform.btnClose}'));
+            return buttons;
+        }
+        function disableCommandButtons(){            
+            var buttons = getCommandButtons();
+            buttons.forEach(function(btn){
+                btn.disabled = true;
+            });
+        }
+        function enableCommandButtons(){
+            var buttons = getCommandButtons();
+            buttons.forEach(function(btn){
+                btn.disabled = false;
+            });
+        }
     </script>
 
     <apex:form id="vfform">
@@ -76,9 +98,9 @@
     
                     <div class="slds-col--padded slds-no-flex slds-align-middle">
                         <div class="slds-button-group" role="group">
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}" immediate="true" reRender="vfform"/> 
-                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" reRender="vfform"/>
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" reRender="vfform"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}" id="btnClose" immediate="true" reRender="vfform"/> 
+                            <apex:commandButton styleClass="slds-button slds-button--brand" onclick="disableCommandButtons();" oncomplete="enableCommandButtons();" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" reRender="vfform"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" onclick="disableCommandButtons();" oncomplete="enableCommandButtons();" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" reRender="vfform"/>
                         </div>
                     </div>
                 </div>
