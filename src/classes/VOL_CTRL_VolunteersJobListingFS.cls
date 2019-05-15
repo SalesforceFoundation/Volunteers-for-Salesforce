@@ -279,7 +279,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
-                            order by Start_Date_Time__c) 
+                            order by Start_Date_Time__c LIMIT 200) 
                         from Volunteer_Job__c where Id = :jobIdFilter  
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else if (campaignIdFilter != null) {
@@ -293,7 +293,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
-                            order by Start_Date_Time__c) 
+                            order by Start_Date_Time__c LIMIT 200) 
                         from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else {
