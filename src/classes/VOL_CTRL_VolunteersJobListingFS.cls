@@ -37,7 +37,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
      * but our customers are running into this at 200 likely due to more fields being populated and returned
      */
     @TestVisible
-    private static Integer SUBQUERY_LIMIT = 200;
+    private static final Integer SUBQUERY_LIMIT = 200;
 
     // page parameters that can get passed into the page to control its behavior.
     global ID campaignIdFilter { get; set; }

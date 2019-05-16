@@ -69,7 +69,7 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     }
 
     @IsTest
-    private static void shouldReturnnLimitedShiftsWhenIdFiltersAreNotProvided() {
+    private static void shouldReturnLimitedShiftsWhenIdFiltersAreNotProvided() {
         generateData(101);
         setupPage(new Map<String, String>());
 
@@ -77,7 +77,7 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     }
 
     @IsTest
-    private static void shouldReturnnLimitedShiftsWhenJobIdIsProvided() {
+    private static void shouldReturnLimitedShiftsWhenJobIdIsProvided() {
         generateData(SUBQUERY_ERROR_THRESHOLD);
         Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
         setupPage(new Map<String, String>{'jobId' => jobId});
@@ -87,7 +87,7 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     }
 
     @IsTest
-    private static void shouldReturnnLimitedShiftsWhenCampaignIdIsProvided() {
+    private static void shouldReturnLimitedShiftsWhenCampaignIdIsProvided() {
         generateData(SUBQUERY_ERROR_THRESHOLD);
         Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
         setupPage(new Map<String, String>{'campaignId' => campaignId});
