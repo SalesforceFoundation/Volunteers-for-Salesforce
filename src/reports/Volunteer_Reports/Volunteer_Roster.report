@@ -27,6 +27,12 @@
     <columns>
         <field>Volunteer_Job__c.Volunteer_Job_Slots__r.Volunteer_Hours__r$Contact__c.Account</field>
     </columns>
+    <crossFilters>
+        <operation>with</operation>
+        <primaryTableColumn>Volunteer_Job__c.Volunteer_Job_Slots__r$Id</primaryTableColumn>
+        <relatedTable>Volunteer_Hours__c</relatedTable>
+        <relatedTableJoinColumn>Volunteer_Shift__c</relatedTableJoinColumn>
+    </crossFilters>
     <description>list of all volunteers for the specified Campaign, Job, and Shift (USED BY ROSTER BUTTONS)</description>
     <filter>
         <criteriaItems>
