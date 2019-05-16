@@ -37,19 +37,19 @@
     <filter>
         <criteriaItems>
             <column>Volunteer_Job__c.Volunteer_Job_Slots__r.Volunteer_Hours__r$Volunteer_Campaign__c</column>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Job__c$Id</column>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>startsWith</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Volunteer_Job__c.Volunteer_Job_Slots__r$Id</column>
-            <isUnlocked>false</isUnlocked>
+            <isUnlocked>true</isUnlocked>
             <operator>startsWith</operator>
             <value></value>
         </criteriaItems>
