@@ -36,7 +36,7 @@
     <description>list of all volunteers for the specified Campaign, Job, and Shift (USED BY ROSTER BUTTONS)</description>
     <filter>
         <criteriaItems>
-            <column>Volunteer_Job__c.Volunteer_Job_Slots__r.Volunteer_Hours__r$Volunteer_Campaign__c</column>
+            <column>Volunteer_Job__c$Campaign__c.Id</column>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value></value>
