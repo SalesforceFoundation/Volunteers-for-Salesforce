@@ -40,7 +40,9 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
         setupPage(new Map<String, String>{'jobId' => jobId, 'volunteerShiftId' => shiftId, 'nMonthsToShow' => '0'});
 
-        System.assertEquals(shiftId, jobListingCtrl.shiftIdFilter);
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(shiftId, jobListingCtrl.shiftIdFilter, 'Expecting the shift Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(0, jobListingCtrl.nMonthsToShow, 'Expecting the nMonthsToShow on the controller to match the parameter passed in.');
         System.assertEquals(1, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
@@ -50,22 +52,22 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
         setupPage(new Map<String, String>{'jobId' => jobId});
 
-        System.assertEquals(jobId, jobListingCtrl.jobIdFilter);
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
         System.assertEquals(10, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
     @IsTest
-    private static void shouldReturnAllShiftsWhenCampaingIdIsProvidedAndLessThanLimit() {
+    private static void shouldReturnAllShiftsWhenCampaignIdIsProvidedAndLessThanLimit() {
         generateData(10);
         Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
         setupPage(new Map<String, String>{'campaignId' => campaignId});
 
-        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter);
+        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter, 'Expecting the campaign Id filter on the controller to match the parameter passed in.');
         System.assertEquals(10, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
     @IsTest
-    private static void shouldRetrunLimitedShiftsWhenIdFiltersAreNotProvided() {
+    private static void shouldReturnnLimitedShiftsWhenIdFiltersAreNotProvided() {
         generateData(101);
         setupPage(new Map<String, String>());
 
@@ -73,22 +75,22 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     }
 
     @IsTest
-    private static void shouldRetrunLimitedShiftsWhenJobIdIsProvided() {
+    private static void shouldReturnnLimitedShiftsWhenJobIdIsProvided() {
         generateData(251);
         Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
         setupPage(new Map<String, String>{'jobId' => jobId});
 
-        System.assertEquals(jobId, jobListingCtrl.jobIdFilter);
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
         System.assertEquals(200, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
     @IsTest
-    private static void shouldRetrunLimitedShiftsWhenCampaignIdIsProvided() {
+    private static void shouldReturnnLimitedShiftsWhenCampaignIdIsProvided() {
         generateData(251);
         Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
         setupPage(new Map<String, String>{'campaignId' => campaignId});
 
-        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter);
+        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter, 'Expecting the campaign Id filter on the controller to match the parameter passed in.');
         System.assertEquals(200, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
