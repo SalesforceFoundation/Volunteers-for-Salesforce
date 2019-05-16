@@ -139,6 +139,11 @@
             <field>External_Signup_Url__c</field>
             <table>Volunteer_Job__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Campaign__c.Id</field>
+            <table>Volunteer_Job__c</table>
+        </columns>
         <masterLabel>Volunteer Jobs</masterLabel>
     </sections>
     <sections>
