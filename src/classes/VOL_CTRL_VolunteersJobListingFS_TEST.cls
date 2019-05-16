@@ -31,6 +31,8 @@
 @isTest
 private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     private static VOL_CTRL_VolunteersJobListingFS jobListingCtrl;
+    private static final Integer queryLimit = VOL_CTRL_VolunteersJobListingFS.SUBQUERY_LIMIT;
+    private static final Integer SUBQUERY_ERROR_THRESHOLD = 251; // causes query exception with test data at this number
 
     //==================== TEST METHOD(s) ======================================
     @IsTest
@@ -76,22 +78,22 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
 
     @IsTest
     private static void shouldReturnnLimitedShiftsWhenJobIdIsProvided() {
-        generateData(251);
+        generateData(SUBQUERY_ERROR_THRESHOLD);
         Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
         setupPage(new Map<String, String>{'jobId' => jobId});
 
         System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
-        System.assertEquals(200, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+        System.assertEquals(queryLimit, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
     @IsTest
     private static void shouldReturnnLimitedShiftsWhenCampaignIdIsProvided() {
-        generateData(251);
+        generateData(SUBQUERY_ERROR_THRESHOLD);
         Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
         setupPage(new Map<String, String>{'campaignId' => campaignId});
 
         System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter, 'Expecting the campaign Id filter on the controller to match the parameter passed in.');
-        System.assertEquals(200, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+        System.assertEquals(queryLimit, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
     private static void setupPage(Map<String, String> params) {
