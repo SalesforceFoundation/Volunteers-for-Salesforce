@@ -87,9 +87,9 @@
                             <apex:facet name="start">
                                 <apex:outputPanel>
                                     <div class="slds-button-group" role="group">
-                                        <apex:commandButton styleClass="slds-button slds-button--neutral" status="hourSaveStatus" disabled="true" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}"/> 
-                                        <apex:commandButton styleClass="slds-button slds-button--brand" status="hourSaveStatus" disabled="true" value="{!$Label.labelButtonSave}"/>
-                                        <apex:commandButton styleClass="slds-button slds-button--neutral" status="hourSaveStatus" disabled="true"  value="{!$Label.labelButtonSaveAndClose}"/>
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" disabled="true" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}"/> 
+                                        <apex:commandButton styleClass="slds-button slds-button--brand" disabled="true" value="{!$Label.labelButtonSave}"/>
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" disabled="true"  value="{!$Label.labelButtonSaveAndClose}"/>
                                     </div>
                                 </apex:outputPanel>
                             </apex:facet>
