@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
-        <application>Groundwire_Volunteers</application>
+        <application>%%%NAMESPACE%%%Groundwire_Volunteers</application>
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <recordType>Campaign.Volunteers_Campaign</recordType>
+        <recordType>Campaign.%%%NAMESPACE%%%Volunteers_Campaign</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>About_Volunteers</tab>
+        <tab>%%%NAMESPACE%%%About_Volunteers</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Job_Recurrence_Schedule__c</tab>
+        <tab>%%%NAMESPACE%%%Job_Recurrence_Schedule__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Shift_Calendar</tab>
+        <tab>%%%NAMESPACE%%%Shift_Calendar</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Volunteer_Recurrence_Schedule__c</tab>
+        <tab>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Find_Volunteers</tab>
+        <tab>%%%NAMESPACE%%%Find_Volunteers</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Process_Recurrence_Schedules</tab>
+        <tab>%%%NAMESPACE%%%Process_Recurrence_Schedules</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Volunteer_Job__c</tab>
+        <tab>%%%NAMESPACE%%%Volunteer_Job__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Volunteers_Wizard</tab>
+        <tab>%%%NAMESPACE%%%Volunteers_Wizard</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
 </Profile>

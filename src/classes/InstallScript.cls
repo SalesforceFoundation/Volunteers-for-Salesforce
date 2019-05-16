@@ -28,9 +28,37 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 public without sharing class InstallScript implements InstallHandler {
+    private static final String EMAIL_REPLY_TO = 'donotreply@salesforce.org';
+    private static final String EMAIL_TO = 'jennifer.bennett+errors@salesforce.com';
+    private static final String EMAIL_SUBJECT = 'V4S Install Errors';
+    private static final String EMAIL_SENDER = 'V4S Install Script';
+    private InstallContext context;
+
+    @TestVisible
+    private TelemetryService telemetryService {
+        get {
+            if (telemetryService == null) {
+                telemetryService = new TelemetryService();
+            }
+
+            return telemetryService;
+        }
+        set;
+    }
 
     public void onInstall(InstallContext context) {
+        this.context = context;
+
         insertPackageSettings();
+
+        if (isUpgrade()) {
+            sendUsageMetrics();
+        }
+
+    }
+
+    private Boolean isUpgrade() {
+        return context.isUpgrade() || context.isPush();
     }
 
     @TestVisible
@@ -43,5 +71,34 @@ public without sharing class InstallScript implements InstallHandler {
 
         packageSettings.NamespacePrefix__c = VOL_SharedCode.StrTokenNSPrefix('');
         insert packageSettings;
+    }
+
+    @TestVisible
+    private void sendUsageMetrics() {
+        try {
+            telemetryService.sendUsageMetrics();
+
+        } catch (Exception ex) {
+            // Email error and allow the install to continue.
+            sendError(ex.getMessage());
+        }
+    }
+
+    private void sendError(String message) {
+        try {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+            mail.setUseSignature(false);
+            mail.setReplyTo(EMAIL_REPLY_TO);
+            mail.setSenderDisplayName(EMAIL_SENDER);
+            mail.setSubject(EMAIL_SUBJECT);
+            mail.setToAddresses(new List<String> { EMAIL_TO });
+            mail.setPlainTextBody(message);
+
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        } catch (Exception ex) {
+            // We do not want to block install when the email cannot be sent, allow the install to continue.
+        }
+
     }
 }
