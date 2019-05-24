@@ -73,14 +73,28 @@
                     <div class="slds-col--padded">
                         <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle">{!$Label.labelMassEditTitle}</h1>
                     </div>        
-    
-                    <div class="slds-col--padded slds-no-flex slds-align-middle">
-                        <div class="slds-button-group" role="group">
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}" immediate="true" reRender="vfform"/> 
-                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" reRender="vfform"/>
-                            <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" reRender="vfform"/>
+                    <apex:actionStatus id="hourSaveStatus">
+                        <div class="slds-col--padded slds-no-flex slds-align-middle">                            
+                            <apex:facet name="stop">
+                                <apex:outputPanel>
+                                    <div class="slds-button-group" role="group">
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" status="hourSaveStatus" action="{!Cancel}" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}" id="btnClose" immediate="true" reRender="vfform"/> 
+                                        <apex:commandButton styleClass="slds-button slds-button--brand" status="hourSaveStatus" action="{!SaveVolunteerHours}" value="{!$Label.labelButtonSave}" id="btnSave" immediate="false" reRender="vfform"/>
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" status="hourSaveStatus" action="{!SaveAndCloseVolunteerHours}" value="{!$Label.labelButtonSaveAndClose}" id="btnSaveClose" immediate="false" reRender="vfform"/>
+                                    </div>
+                                </apex:outputPanel> 
+                            </apex:facet>
+                            <apex:facet name="start">
+                                <apex:outputPanel>
+                                    <div class="slds-button-group" role="group">
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" disabled="true" value="{!IF(ISNULL(strSaveResults), $Label.labelButtonCancel, $Label.labelButtonClose)}"/> 
+                                        <apex:commandButton styleClass="slds-button slds-button--brand" disabled="true" value="{!$Label.labelButtonSave}"/>
+                                        <apex:commandButton styleClass="slds-button slds-button--neutral" disabled="true"  value="{!$Label.labelButtonSaveAndClose}"/>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:facet>
                         </div>
-                    </div>
+                    </apex:actionStatus>
                 </div>
             </div>
             <!-- /PAGE HEADER -->
