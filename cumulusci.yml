@@ -43,6 +43,13 @@ tasks:
                 Id guestId = [SELECT ID From User WHERE Name = 'Volunteers Site Guest User' LIMIT 1][0].id;
                 insert new PermissionSetAssignment(PermissionSetId=psetId, AssigneeId=guestId);
 
+    test_data:
+        description: Runs the generateData method from the DataCreator script with the following defaults (Pet Adoption Event, 250)
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            path: scripts/DataCreator.cls
+            apex: generateData(defaultCampaignName, defaultNumberOfShifts);
+
 flows:
     ci_feature:
         description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
