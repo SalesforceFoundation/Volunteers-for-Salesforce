@@ -47,10 +47,10 @@ public with sharing class VOL_VRS {
         }
 
         // get all hours associated with these VRS's
-        list<Volunteer_Hours__c> listHours =  [select Id, Status__c, Shift_Start_Date_Time__c, 
+        list<Volunteer_Hours__c> listHours =  [SELECT Id, Status__c, Shift_Start_Date_Time__c, 
             Volunteer_Recurrence_Schedule__r.Name, Volunteer_Recurrence_Schedule__c, System_Note__c 
             from Volunteer_Hours__c  
-            where Volunteer_Recurrence_Schedule__c in : setVRSId];
+            WHERE Volunteer_Recurrence_Schedule__c IN : setVRSId];
             
         deleteOrDetachVRSHours(listHours);       
     }
@@ -120,13 +120,13 @@ public with sharing class VOL_VRS {
         // get appropriate shifts of the jobs these vrs's are associated with
         list<Volunteer_Shift__c> listShift = new list<Volunteer_Shift__c>();
         if (fReviewAllShifts) {
-            listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
-                Volunteer_Job__c from Volunteer_Shift__c
-                where Volunteer_Job__c in :setJobId];
+            listShift = [SELECT Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
+                Volunteer_Job__c FROM Volunteer_Shift__c
+                WHERE Volunteer_Job__c IN :setJobId];
         } else {
-            listShift = [select Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
-                Volunteer_Job__c from Volunteer_Shift__c
-                where Volunteer_Job__c in :setJobId and Start_Date_Time__c >= TODAY];
+            listShift = [SELECT Id, Duration__c, Start_Date_Time__c, Desired_Number_of_Volunteers__c, 
+                Volunteer_Job__c FROM Volunteer_Shift__c
+                WHERE Volunteer_Job__c IN :setJobId and Start_Date_Time__c >= TODAY];
         }
         
         // construct a map of Job to its associated list of VRS's
@@ -145,15 +145,20 @@ public with sharing class VOL_VRS {
         // already have an hours record for the given shift and contact.
         list<Volunteer_Hours__c> listHoursExisting = new list<Volunteer_Hours__c>();
         if (fReviewAllShifts) { 
-            listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
-                Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
-                Volunteer_Shift__c, Status__c, Contact__c from
-                Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId];
+            listHoursExisting = [
+                SELECT Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c, Shift_Start_Date_Time__c,
+                Volunteer_Recurrence_Schedule__r.Name, System_Note__c, Volunteer_Shift__c, Status__c, Contact__c
+                FROM Volunteer_Hours__c 
+                WHERE Volunteer_Job__c IN :setJobId AND Contact__c IN :setContactId
+                
+            ];
         } else {
-            listHoursExisting = [select Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c,
-                Shift_Start_Date_Time__c, Volunteer_Recurrence_Schedule__r.Name, System_Note__c,
-                Volunteer_Shift__c, Status__c, Contact__c from
-                Volunteer_Hours__c where Volunteer_Job__c in :setJobId and Contact__c in :setContactId and Shift_Start_Date_Time__c >= TODAY];
+            listHoursExisting = [
+                SELECT Id, Volunteer_Job__c, Volunteer_Recurrence_Schedule__c, Shift_Start_Date_Time__c, 
+                Volunteer_Recurrence_Schedule__r.Name, System_Note__c, Volunteer_Shift__c, Status__c, Contact__c
+                FROM Volunteer_Hours__c
+                WHERE Volunteer_Job__c IN :setJobId AND Contact__c IN :setContactId AND Shift_Start_Date_Time__c >= TODAY
+            ];
         }
         map<string, Volunteer_Hours__c> mapShiftIdContactIdToHours = new map<string, Volunteer_Hours__c>();
         for (Volunteer_Hours__c hr : listHoursExisting) {
@@ -262,6 +267,11 @@ public with sharing class VOL_VRS {
                 // note that if we match, we remove the key from the map, so we know it was matched.
                 Volunteer_Hours__c hrExisting = mapShiftIdContactIdToHours.get(shift.Id + '|' + vrs.Contact__c);
                 if (hrExisting != null) {
+                    // only operate on hours from the current VRS or not yet belonging to a VRS to avoid reparenting hours from another VRS
+                    if (hrExisting.Volunteer_Recurrence_Schedule__c != null && hrExisting.Volunteer_Recurrence_Schedule__c != vrs.Id) {
+                        continue;
+                    }
+
                     // if shift/hour in the future, we update a subset of fields (Not Status though!)
                     if (dtShift >= System.today()) {
                         hrExisting.Hours_Worked__c = vrs.Duration__c;
