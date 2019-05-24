@@ -29,6 +29,15 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
+    /**
+     * Hard coding the subquery limit to 200 to prevent an error being displayed when
+     * attempting to access the list of child records when more than 200 are present
+     * https://success.salesforce.com/issues_view?id=a1p300000008YGjAAM&title=invalid-query-locator-error-occurs-when-iterating-child-objects-in-parent-child-relationship-query-result
+     * NOTE: In a test environment we are not hitting this error until we have 250 child records
+     * but our customers are running into this at 200 likely due to more fields being populated and returned
+     */
+    @TestVisible
+    private static final Integer SUBQUERY_LIMIT = 200;
 
     // page parameters that can get passed into the page to control its behavior.
     global ID campaignIdFilter { get; set; }
@@ -279,7 +288,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
-                            order by Start_Date_Time__c) 
+                            order by Start_Date_Time__c LIMIT :SUBQUERY_LIMIT) 
                         from Volunteer_Job__c where Id = :jobIdFilter  
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else if (campaignIdFilter != null) {
@@ -293,7 +302,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         (Select Id, Start_Date_Time__c, Duration__c, Number_of_Volunteers_Still_Needed__c, Total_Volunteers__c,
                             Description__c, System_Note__c From Volunteer_Job_Slots__r 
                             where Start_Date_Time__c >= :dtNow and Start_Date_Time__c < :dtLast
-                            order by Start_Date_Time__c) 
+                            order by Start_Date_Time__c LIMIT :SUBQUERY_LIMIT) 
                         from Volunteer_Job__c where Campaign__c IN :listCampaignIds and Display_on_Website__c = true 
                         order by First_Shift__c, Campaign__r.StartDate, Campaign__r.Name, Name];
                 } else {
