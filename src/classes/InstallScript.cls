@@ -29,9 +29,10 @@
 */
 public without sharing class InstallScript implements InstallHandler {
     private static final String EMAIL_REPLY_TO = 'donotreply@salesforce.org';
-    private static final String EMAIL_TO = 'jennifer.bennett+errors@salesforce.com';
+    private static final String EMAIL_TO = 'errors@salesforcefoundation.org';
     private static final String EMAIL_SUBJECT = 'V4S Install Errors';
     private static final String EMAIL_SENDER = 'V4S Install Script';
+    private static final String EMAIL_MESSAGE = 'Org ID {0} encountered this error: {1}';
     private InstallContext context;
 
     @TestVisible
@@ -80,7 +81,12 @@ public without sharing class InstallScript implements InstallHandler {
 
         } catch (Exception ex) {
             // Email error and allow the install to continue.
-            sendError(ex.getMessage());
+            sendError(
+                String.format(
+                    EMAIL_MESSAGE,
+                    new List<String>{ context.organizationId(), ex.getMessage() }
+                )
+            );
         }
     }
 
