@@ -30,8 +30,113 @@
 
 @isTest
 private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
+    private static VOL_CTRL_VolunteersJobListingFS jobListingCtrl;
+    private static final Integer QUERY_LIMIT = VOL_CTRL_VolunteersJobListingFS.SUBQUERY_LIMIT;
+    private static final Integer SUBQUERY_ERROR_THRESHOLD = 251; // causes query exception with test data at this number
 
     //==================== TEST METHOD(s) ======================================
+    @IsTest
+    private static void shouldReturnOneShiftWhenJobIdAndShiftIdAreProvidedWithZeroMonths() {
+        generateData(10);
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
+        setupPage(new Map<String, String>{'jobId' => jobId, 'volunteerShiftId' => shiftId, 'nMonthsToShow' => '0'});
+
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(shiftId, jobListingCtrl.shiftIdFilter, 'Expecting the shift Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(0, jobListingCtrl.nMonthsToShow, 'Expecting the nMonthsToShow on the controller to match the parameter passed in.');
+        System.assertEquals(1, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnAllShiftsWhenJobIdIsProvidedAndLessThanLimit() {
+        generateData(10);
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        setupPage(new Map<String, String>{'jobId' => jobId});
+
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(10, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnAllShiftsWhenCampaignIdIsProvidedAndLessThanLimit() {
+        generateData(10);
+        Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
+        setupPage(new Map<String, String>{'campaignId' => campaignId});
+
+        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter, 'Expecting the campaign Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(10, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnLimitedShiftsWhenIdFiltersAreNotProvided() {
+        generateData(101);
+        setupPage(new Map<String, String>());
+
+        System.assertEquals(100, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnLimitedShiftsWhenJobIdIsProvided() {
+        generateData(SUBQUERY_ERROR_THRESHOLD);
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        setupPage(new Map<String, String>{'jobId' => jobId});
+
+        System.assertEquals(jobId, jobListingCtrl.jobIdFilter, 'Expecting the job Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(QUERY_LIMIT, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    @IsTest
+    private static void shouldReturnLimitedShiftsWhenCampaignIdIsProvided() {
+        generateData(SUBQUERY_ERROR_THRESHOLD);
+        Id campaignId = [SELECT Id FROM Campaign LIMIT 1].Id;
+        setupPage(new Map<String, String>{'campaignId' => campaignId});
+
+        System.assertEquals(campaignId, jobListingCtrl.campaignIdFilter, 'Expecting the campaign Id filter on the controller to match the parameter passed in.');
+        System.assertEquals(QUERY_LIMIT, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
+    }
+
+    private static void setupPage(Map<String, String> params) {
+        PageReference pageRef = Page.VolunteersJobListingFS;
+
+        for (String param : params.keySet()) {
+            pageRef.getParameters().put(param, params.get(param));
+        }
+
+        Test.setCurrentPage(pageRef);
+        jobListingCtrl = new VOL_CTRL_VolunteersJobListingFS();
+    }
+
+    private static void generateData(Integer numberOfShifts) {
+        Volunteers_Settings__c settings = new Volunteers_Settings__c();
+        VOL_SharedCode.getVolunteersSettingsForTests(settings);
+
+        String uniqueName = String.valueOf(System.now());
+        String campaignName = 'Pet Adoption Event';
+
+        Campaign campaignRecord = new Campaign(
+        Name = campaignName + ' ' + uniqueName,
+        IsActive = true);
+        insert campaignRecord;
+
+        Volunteer_Job__c job = new Volunteer_Job__c(
+            Name =  campaignName + ' Job ' + uniqueName,
+            Campaign__c = campaignRecord.Id,
+            Display_on_Website__c = true
+        );
+        insert job;
+
+        List<Volunteer_Shift__c> shifts = new List<Volunteer_Shift__c>();
+        for (Integer counter = 0; counter < numberOfShifts; counter++) {
+            shifts.add(new Volunteer_Shift__c(
+                Volunteer_Job__c = job.Id,
+                Desired_Number_of_Volunteers__c = 10,
+                Duration__c = 2,
+                Start_Date_Time__c = System.today().addDays(1)
+            ));
+        }
+        insert shifts;
+    }
 
 
     /*******************************************************************************************************
