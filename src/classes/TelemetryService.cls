@@ -83,7 +83,7 @@ public without sharing class TelemetryService {
                 new Telemetry(Contact.SObjectType, Telemetry.DeveloperName.CONTACTS_WITH_LAST_WEB_SIGNUP)
                     .withCriteria('Volunteer_Last_Web_Signup_Date__c != null'),
                 new Telemetry(Contact.SObjectType, Telemetry.DeveloperName.CONTACTS_WITH_LAST_WEB_SIGN_UP_LAST_YEAR)
-                    .withCriteria('Volunteer_Last_Web_Signup_Date__c = LAST_YEAR')
+                    .withCriteria('Volunteer_Last_Web_Signup_Date__c = LAST_N_DAYS:365')
             };
         }
 
@@ -91,7 +91,7 @@ public without sharing class TelemetryService {
             return new List<Telemetry>{
                 new Telemetry(Volunteer_Job__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_JOBS),
                 new Telemetry(Volunteer_Job__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_JOBS_LAST_YEAR)
-                    .withCriteria('CreatedDate = LAST_YEAR'),
+                    .withCriteria('CreatedDate = LAST_N_DAYS:365'),
                 new Telemetry(Volunteer_Job__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_JOBS_DISPLAY_ON_WEBSITE)
                     .withCriteria('Display_on_Website__c = true')
             };
@@ -101,7 +101,7 @@ public without sharing class TelemetryService {
             return new List<Telemetry>{
                 new Telemetry(Volunteer_Shift__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_SHIFTS),
                 new Telemetry(Volunteer_Shift__c.SObjectType, Telemetry.DeveloperName.VOLUNTEER_SHIFTS_CREATED_LAST_YEAR)
-                    .withCriteria('CreatedDate = LAST_YEAR')
+                    .withCriteria('CreatedDate = LAST_N_DAYS:365')
             };
         }
 
