@@ -1,3 +1,4 @@
+minimum_cumulusci_version: 2.5.0
 project:
     name: Volunteers-for-Salesforce
     package:
@@ -92,21 +93,21 @@ flows:
                 task: assign_pset
                 ignore_failure: True
 
-    install_regression:
+    config_regression:
         steps:
-            5:
+            2:
                 task: deploy_delete_config
-            6:
+            3:
                 task: deploy_dev_config
                 options:
                     unmanaged: False
                     namespace_inject: $project_config.project__package__namespace
-            7:
+            4:
                 task: deploy_qa_config
                 options:
                     unmanaged: False
                     namespace_inject: $project_config.project__package__namespace
-            8:
+            5:
                 task: assign_pset
 
 orgs:
