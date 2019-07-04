@@ -2,15 +2,13 @@
   "orgName": "V4S - Release Test Org", 
   "edition": "Developer", 
   "hasSampleData": "true",
-  "features": "Sites",  
-  "orgPreferences": {
-    "enabled": [
-      "ChatterEnabled", 
-      "S1DesktopEnabled", 
-      "DisableParallelApexTesting"
-    ],
-    "disabled": [
-      "S1EncryptedStoragePref2"
-    ]
+  "features": "Sites",
+  "settings": {
+    "orgPreferenceSettings": {
+      "chatterEnabled": true,
+      "disableParallelApexTesting": true,
+      "s1DesktopEnabled": true,
+      "s1EncryptedStoragePref2": false
+    }
   }
 }

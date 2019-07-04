@@ -3,11 +3,11 @@
   "edition": "Developer", 
   "hasSampleData": "true",
   "features": "Sites",  
-  "orgPreferences": {
-    "enabled": [
-      "ChatterEnabled", 
-      "S1DesktopEnabled", 
-      "DisableParallelApexTesting"
-    ]
+  "settings": {
+    "orgPreferenceSettings": {
+      "chatterEnabled": true,
+      "disableParallelApexTesting": true,
+      "s1DesktopEnabled": true
+    }
   }
 }
