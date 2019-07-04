@@ -4,15 +4,13 @@
   "instance": "CS46",
   "hasSampleData": "true",
   "features": "Sites",  
-  "orgPreferences": {
-    "enabled": [
-      "ChatterEnabled", 
-      "Translation",
-      "S1DesktopEnabled", 
-      "DisableParallelApexTesting"
-    ],
-    "disabled": [
-      "S1EncryptedStoragePref2"
-    ]
+  "settings": {
+    "orgPreferenceSettings": {
+      "chatterEnabled": true,
+      "disableParallelApexTesting": true,
+      "s1DesktopEnabled": true,
+      "translation": true,
+      "s1EncryptedStoragePref2": false
+    }
   }
 }
