@@ -78,19 +78,10 @@ CREATE TABLE volunteer_hours__c (
 	volunteer_shift__c VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YoszAAC','','2019-07-17','1.0','1.0','2019-07-17T19:00:00.000Z','2019-07-17','Completed','','0031k00000MPhYQAA1','a031k000001OMGqAAO','','');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002Yot0AAC','','2019-07-17','1.0','1.0','2019-07-17T19:00:00.000Z','2019-07-17','Completed','','0031k00000MPhYGAA1','a031k000001OMGqAAO','','');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YosyAAC','','2019-07-17','1.0','1.0','2019-07-17T19:00:00.000Z','2019-07-17','Completed','','0031k00000MPhY1AAL','a031k000001OMGqAAO','','');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YosZAAS','','2019-09-07','2.0','1.0','2019-09-07T15:00:00.000Z','2019-09-07','Confirmed','','0031k00000MPhY6AAL','a031k000001OMGrAAO','','a051k000001HZwnAAG');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YosoAAC','','2019-12-07','2.0','1.0','2019-12-07T16:00:00.000Z','2019-12-07','Confirmed','','0031k00000MPhY6AAL','a031k000001OMGrAAO','','a051k000001HZx0AAG');
 INSERT INTO "volunteer_hours__c" VALUES('a021k000002YotkAAC','','2019-08-24','2.0','1.0','2019-08-24T17:00:00.000Z','2019-08-24','Confirmed','','0031k00000MPhYQAA1','a031k000001OMHFAA4','','a051k000001HaSVAA0');
 INSERT INTO "volunteer_hours__c" VALUES('a021k000002YotlAAC','','2019-08-24','2.0','1.0','2019-08-24T17:00:00.000Z','2019-08-24','Confirmed','','0031k00000MPhY6AAL','a031k000001OMHFAA4','','a051k000001HaSVAA0');
 INSERT INTO "volunteer_hours__c" VALUES('a021k000002YotmAAC','','2019-08-24','2.0','1.0','2019-08-24T17:00:00.000Z','2019-08-24','Confirmed','','0031k00000MPhYLAA1','a031k000001OMHFAA4','','a051k000001HaSVAA0');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YoseAAC','','2019-10-05','2.0','1.0','2019-10-05T15:00:00.000Z','2019-10-05','Confirmed','','0031k00000MPhY6AAL','a031k000001OMGrAAO','','a051k000001HZwrAAG');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YosUAAS','','2019-07-06','2.0','1.0','2019-07-06T15:00:00.000Z','2019-07-06','Completed','','0031k00000MPhY6AAL','a031k000001OMGrAAO','','a051k000001HZweAAG');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YosVAAS','','2019-08-03','2.0','1.0','2019-08-03T15:00:00.000Z','2019-08-03','Confirmed','','0031k00000MPhY6AAL','a031k000001OMGrAAO','','a051k000001HZwiAAG');
 INSERT INTO "volunteer_hours__c" VALUES('a021k000002YostAAC','','2019-08-24','5.0','1.0','2019-08-24T19:00:00.000Z','2019-08-24','Confirmed','','0031k00000MPixMAAT','a031k000001OMHAAA4','','a051k000001HaSkAAK');
-INSERT INTO "volunteer_hours__c" VALUES('a021k000002YosjAAC','','2019-11-02','2.0','1.0','2019-11-02T15:00:00.000Z','2019-11-02','Confirmed','','0031k00000MPhY6AAL','a031k000001OMGrAAO','','a051k000001HZwvAAG');
 CREATE TABLE volunteer_job__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	description VARCHAR(255), 
@@ -161,7 +152,7 @@ INSERT INTO "volunteer_shift__c" VALUES('a051k000001HZxZAAW','Help us get our pu
 INSERT INTO "volunteer_shift__c" VALUES('a051k000001HZxaAAG','Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.','3.0','1.0','2020-01-19T18:00:00.000Z','','','','a031k000001OMGsAAO');
 INSERT INTO "volunteer_shift__c" VALUES('a051k000001HZxbAAG','Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.','3.0','1.0','2020-06-21T17:00:00.000Z','','','','a031k000001OMGsAAO');
 INSERT INTO "volunteer_shift__c" VALUES('a051k000001HZxcAAG','Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.','3.0','1.0','2020-07-19T17:00:00.000Z','','','','a031k000001OMGsAAO');
-INSERT INTO "volunteer_shift__c" VALUES('a051k000001HaSVAA0','','10.0','2.0','2019-08-24T17:00:00.000Z','','3.0','','a031k000001OMHFAA4');
+INSERT INTO "volunteer_shift__c" VALUES('a051k000001HaSVAA0','','10.0','2.0','2019-08-24T17:00:00.000Z','','','','a031k000001OMHFAA4');
 INSERT INTO "volunteer_shift__c" VALUES('a051k000001HZsCAAW','Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.','3.0','1.0','2019-07-21T17:00:00.000Z','','','','a031k000001OMGsAAO');
 INSERT INTO "volunteer_shift__c" VALUES('a051k000001HaSQAA0','','4.0','1.0','2019-08-17T22:00:00.000Z','','','','a031k000001OMH5AAO');
 INSERT INTO "volunteer_shift__c" VALUES('a051k000001HaSaAAK','','12.0','2.0','2019-08-25T01:00:00.000Z','','','','a031k000001OMHKAA4');
