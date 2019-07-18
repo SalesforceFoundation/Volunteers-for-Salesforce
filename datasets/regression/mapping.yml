@@ -1,0 +1,128 @@
+Insert Campaign:
+  sf_object: Campaign
+  table: campaign
+  fields:
+    Id: sf_id
+    IsActive: isactive
+    Name: name
+    Status: status
+    StartDate: startdate
+    EndDate: enddate
+    Volunteer_Website_Time_Zone__c: volunteer_website_time_zone
+Insert Account:
+  sf_object: Account
+  table: account
+  fields:
+    Id: sf_id
+    Name: name
+Insert Contact:
+  sf_object: Contact
+  table: contact
+  fields:
+    Id: sf_id
+    FirstName: firstname
+    LastName: lastname
+    Email: email
+    Volunteer_Auto_Reminder_Email_Opt_Out__c: volunteer_auto_reminder_email_opt_out
+    Volunteer_Availability__c: volunteer_availability
+    Volunteer_Last_Web_Signup_Date__c: volunteer_last_web_signup_date
+    Volunteer_Manager_Notes__c: volunteer_manager_notes
+    Volunteer_Notes__c: volunteer_notes
+    Volunteer_Organization__c: volunteer_organization
+    Volunteer_Skills__c: volunteer_skills
+    Volunteer_Status__c: volunteer_status
+  lookups:
+    AccountId:
+      table: account
+Insert Volunteer_Job__c:
+  sf_object: Volunteer_Job__c
+  table: volunteer_job__c
+  fields:
+    Description__c: description
+    Display_on_Website__c: display_on_website
+    External_Signup_Url__c: external_signup_url
+    Id: sf_id
+    Inactive__c: inactive
+    Location_City__c: location_city
+    Location_Information__c: location_information
+    Location_Street__c: location_street
+    Location_Zip_Postal_Code__c: location_zip_postal_code
+    Location__c: location
+    Name: name
+    Ongoing__c: ongoing
+    Skills_Needed__c: skills_needed
+    Volunteer_Website_Time_Zone__c: volunteer_website_time_zone
+  lookups:
+    Campaign__c:
+      table: campaign
+Insert Volunteer_Recurrence_Schedule__c:
+  sf_object: Volunteer_Recurrence_Schedule__c
+  table: volunteer_recurrence_schedule__c
+  fields:
+    Comments__c: comments
+    Days_of_Week__c: days_of_week
+    Duration__c: duration
+    Id: sf_id
+    Number_of_Volunteers__c: number_of_volunteers
+    Schedule_End_Date__c: schedule_end_date
+    Schedule_Start_Date_Time__c: schedule_start_date_time
+    Volunteer_Hours_Status__c: volunteer_hours_status
+    Weekly_Occurrence__c: weekly_occurrence
+  lookups:
+    Contact__c:
+      table: contact
+    Volunteer_Job__c:
+      table: volunteer_job__c
+Insert Job_Recurrence_Schedule__c:
+  sf_object: Job_Recurrence_Schedule__c
+  table: job_recurrence_schedule__c
+  fields:
+    Days_of_Week__c: days_of_week
+    Description__c: description
+    Desired_Number_of_Volunteers__c: desired_number_of_volunteers
+    Duration__c: duration
+    Id: sf_id
+    Schedule_End_Date__c: schedule_end_date
+    Schedule_Start_Date_Time__c: schedule_start_date_time
+    Weekly_Occurrence__c: weekly_occurrence
+  lookups:
+    Volunteer_Job__c:
+      table: volunteer_job__c
+Insert Volunteer_Shift__c:
+  sf_object: Volunteer_Shift__c
+  table: volunteer_shift__c
+  fields:
+    Description__c: description
+    Desired_Number_of_Volunteers__c: desired_number_of_volunteers
+    Duration__c: duration
+    Id: sf_id
+    Start_Date_Time__c: start_date_time
+    System_Note__c: system_note
+    Total_Volunteers__c: total_volunteers
+  lookups:
+    Job_Recurrence_Schedule__c:
+      table: job_recurrence_schedule__c
+    Volunteer_Job__c:
+      table: volunteer_job__c
+Insert Volunteer_Hours__c:
+  sf_object: Volunteer_Hours__c
+  table: volunteer_hours__c
+  fields:
+    Comments__c: comments
+    End_Date__c: end_date
+    Hours_Worked__c: hours_worked
+    Id: sf_id
+    Number_of_Volunteers__c: number_of_volunteers
+    Planned_Start_Date_Time__c: planned_start_date_time
+    Start_Date__c: start_date
+    Status__c: status
+    System_Note__c: system_note
+  lookups:
+    Contact__c:
+      table: contact
+    Volunteer_Job__c:
+      table: volunteer_job__c
+    Volunteer_Recurrence_Schedule__c:
+      table: volunteer_recurrence_schedule__c
+    Volunteer_Shift__c:
+      table: volunteer_shift__c
