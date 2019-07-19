@@ -1,7 +1,7 @@
 {
   "orgName": "V4S - Dev Workspace", 
   "edition": "Developer", 
-  "hasSampleData": "true",
+  "hasSampleData": "false",
   "features": "Sites",  
   "settings": {
     "orgPreferenceSettings": {
