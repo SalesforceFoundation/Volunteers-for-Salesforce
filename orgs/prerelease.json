@@ -2,7 +2,7 @@
   "orgName": "V4S - Dev Workspace",
   "edition": "Developer",
   "instance": "CS46",
-  "hasSampleData": "true",
+  "hasSampleData": "false",
   "features": "Sites",  
   "settings": {
     "orgPreferenceSettings": {
