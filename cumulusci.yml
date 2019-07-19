@@ -43,14 +43,55 @@ tasks:
                 Id psetId = [SELECT ID From PermissionSet WHERE Name = 'V4S_Site_Minimum' LIMIT 1][0].id;
                 Id guestId = [SELECT ID From User WHERE Name = 'Volunteers Site Guest User' LIMIT 1][0].id;
                 insert new PermissionSetAssignment(PermissionSetId=psetId, AssigneeId=guestId);
-
-    test_data:
-        description: Runs the generateData method from the DataCreator script with the following defaults (Pet Adoption Event, 250)
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    
+    deploy_test_data:
+        description: 'Loads a test data set for Volunteers for Salesforce'
+        class_path: cumulusci.tasks.bulkdata.LoadData
         options:
-            path: scripts/DataCreator.cls
-            apex: generateData(defaultCampaignName, defaultNumberOfShifts);
+            sql_path: 'datasets/regression/test_data.sql'
+            mapping: 'datasets/regression/mapping.yml'
 
+    delete_test_data:
+        description: 'WARNING: deletes all data in sObjects used for testing'
+        class_path: cumulusci.tasks.bulkdata.DeleteData
+        options:
+            objects:
+                - Volunteer_Hours__c
+                - Volunteer_Shift__c
+                - Job_Recurrence_Schedule__c
+                - Volunteer_Recurrence_Schedule__c
+                - Volunteer_Job__c
+                - Contact
+                - Account
+                - Campaign
+
+    deploy_test_data_managed:
+        description: 'Loads a test data set for Volunteers for Salesforce to a managed install'
+        class_path: cumulusci.tasks.bulkdata.LoadData
+        options:
+            sql_path: 'datasets/regression/test_data.sql'
+            mapping: 'datasets/regression/mapping_managed.yml'
+    
+    delete_test_data_managed:
+        description: 'WARNING: deletes all data in sObjects used for testing'
+        class_path: cumulusci.tasks.bulkdata.DeleteData
+        options:
+            objects:
+                - GW_Volunteers__Volunteer_Hours__c
+                - GW_Volunteers__Volunteer_Shift__c
+                - GW_Volunteers__Job_Recurrence_Schedule__c
+                - GW_Volunteers__Volunteer_Recurrence_Schedule__c
+                - GW_Volunteers__Volunteer_Job__c
+                - Contact
+                - Account
+                - Campaign
+
+    capture_test_data:
+        description: 'Capture test data from an org'
+        class_path: cumulusci.tasks.bulkdata.ExtractData
+        options:
+            sql_path: 'datasets/regression/test_data.sql'
+            mapping: 'datasets/regression/mapping.yml'
 flows:
     ci_feature:
         description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
@@ -72,6 +113,8 @@ flows:
             6:
                 task: assign_pset
                 ignore_failure: True
+            7:
+                task: deploy_test_data
 
     config_qa:
         steps:
@@ -92,6 +135,8 @@ flows:
             7:
                 task: assign_pset
                 ignore_failure: True
+            8:
+                task: deploy_test_data
 
     config_regression:
         steps:
@@ -109,6 +154,8 @@ flows:
                     namespace_inject: $project_config.project__package__namespace
             5:
                 task: assign_pset
+            6:
+                task: deploy_test_data_managed
 
 orgs:
     scratch:

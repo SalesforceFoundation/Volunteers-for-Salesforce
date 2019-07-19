@@ -1,7 +1,7 @@
 {
   "orgName": "V4S - Feature Test Org", 
   "edition": "Developer", 
-  "hasSampleData": "true",
+  "hasSampleData": "false",
   "features": "Sites",  
   "settings": {
     "orgPreferenceSettings": {
