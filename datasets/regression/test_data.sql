@@ -41,13 +41,13 @@ CREATE TABLE contact (
 	account_id VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "contact" VALUES('0031k00000MPhYGAA1','Camila','Al Jamil','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzaAAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhY1AAL','Eleanor','Shellstrop','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzZvAAL');
-INSERT INTO "contact" VALUES('0031k00000MPhY6AAL','Jason','Mendoza','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIza5AAD');
-INSERT INTO "contact" VALUES('0031k00000MPhYBAA1','Tahani','Al Jamil','kselvocki@salesforce.com','false','','','','','','Fundraising;Event Planning','Active','0011k00000QIzaAAAT');
-INSERT INTO "contact" VALUES('0031k00000MPixMAAT','Chidi','Anagonye','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QJ0iNAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhYQAA1','Janet','Scoop','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhYLAA1','Michael','Scoop','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYGAA1','Camila','Al Jamil','kselvocki+camila@salesforce.com','false','','','','','','','Active','0011k00000QIzaAAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhY1AAL','Eleanor','Shellstrop','kselvocki+eleanor@salesforce.com','false','','','','','','','Active','0011k00000QIzZvAAL');
+INSERT INTO "contact" VALUES('0031k00000MPhY6AAL','Jason','Mendoza','kselvocki+jason@salesforce.com','false','','','','','','','Active','0011k00000QIza5AAD');
+INSERT INTO "contact" VALUES('0031k00000MPhYBAA1','Tahani','Al Jamil','kselvocki+tahani@salesforce.com','false','','','','','','Fundraising;Event Planning','Active','0011k00000QIzaAAAT');
+INSERT INTO "contact" VALUES('0031k00000MPixMAAT','Chidi','Anagonye','kselvocki+chidi@salesforce.com','false','','','','','','','Active','0011k00000QJ0iNAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYQAA1','Janet','Scoop','kselvocki+janet@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYLAA1','Michael','Scoop','kselvocki+michael@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
 CREATE TABLE job_recurrence_schedule__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	days_of_week VARCHAR(255), 
