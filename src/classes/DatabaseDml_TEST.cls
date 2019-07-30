@@ -1,0 +1,185 @@
+@IsTest
+private with sharing class DatabaseDml_TEST {
+    private static List<SObject> setupSObjects = new List<SObject>();
+
+    /**
+    * Creates base data used throughout the different test scenarios
+    */
+    @TestSetup
+    private static void generateData() {
+        UTIL_UnitTest.generateData();
+    }
+
+    @IsTest
+    private static void guestSiteUserCanUpdateUnownedRecords() {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Updated Me ' + System.now();
+        setSetupSObjects();
+
+        System.runAs(UTIL_UnitTest.guestSiteUser) {
+            for (SObject record : setupSObjects) {
+                if (record.getSObjectType() == Contact.SObjectType) {
+                    record.put('LastName', name);
+                } else {
+                    record.put('Name', name);
+                }
+                records.add(record);
+            }
+
+            DatabaseDml.getInstance().updateRecords(records);
+        }
+
+        System.assertEquals(name, getCampaigns()[0].Name, 'The campaign name should have been updated.');
+        System.assertEquals(name, getJobs()[0].Name, 'The job name should have been updated.');
+        System.assertEquals(name, getContacts()[0].LastName, 'The contact name should have been updated.');
+    }
+
+    @IsTest
+    private static void guestSiteUserCanInsertRecords() {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Created Me ' + System.now();
+
+        System.runAs(UTIL_UnitTest.guestSiteUser) {
+            records.add(UTIL_UnitTest.createCampaign(name));
+            records.add(UTIL_UnitTest.createContact(name));
+
+            DatabaseDml.getInstance().insertRecords(records);
+        }
+
+        for (SObject record : records) {
+            System.assertNotEquals(null, record.Id, 'Expected the records to have been inserted.');
+        }
+    }
+
+    @IsTest
+    private static void updateRecordsShouldFailAllRecordsWhenAllOrNone() {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Updated Me ' + System.now();
+        Database.DMLOptions allOrNoneOption = new Database.DMLOptions();
+        allOrNoneOption.OptAllOrNone = true;
+        setSetupSObjects();
+
+        for (SObject record : setupSObjects) {
+            if (record.getSObjectType() == Contact.SObjectType) {
+                record.put('FirstName', null);
+                record.put('LastName', null);
+            } else {
+                record.put('Name', name);
+            }
+
+            records.add(record);
+        }
+
+        try {
+            DatabaseDml.getInstance().updateRecords(records, allOrNoneOption);
+            System.assert(false, 'An exception should have been thrown.');
+
+        } catch (Exception ex) {
+            System.assert(ex.getMessage().contains('REQUIRED_FIELD_MISSING'), 'Expected the missing required field to cause an exception.');
+        }
+
+        System.assertNotEquals(name, getCampaigns()[0].Name, 'The campaign name should not have been updated.');
+        System.assertNotEquals(name, getJobs()[0].Name, 'The job name should not have been updated.');
+        System.assertNotEquals(null, getContacts()[0].LastName, 'The contact name should not have been updated.');
+    }
+
+    @IsTest
+    private static void updateRecordsShouldFailOneRecordWhenNotAllOrNone() {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Updated Me ' + System.now();
+        Database.DMLOptions allOrNoneOption = new Database.DMLOptions();
+        allOrNoneOption.OptAllOrNone = false;
+        setSetupSObjects();
+
+        for (SObject record : setupSObjects) {
+            if (record.getSObjectType() == Contact.SObjectType) {
+                record.put('FirstName', null);
+                record.put('LastName', null);
+            } else {
+                record.put('Name', name);
+            }
+
+            records.add(record);
+        }
+
+        try {
+            DatabaseDml.getInstance().updateRecords(records, allOrNoneOption);
+
+        } catch (Exception ex) {
+            System.assert(false, 'An exception should not have been thrown. ' + ex.getMessage());
+        }
+
+        System.assertEquals(name, getCampaigns()[0].Name, 'The campaign name should have been updated.');
+        System.assertEquals(name, getJobs()[0].Name, 'The job name should have been updated.');
+        System.assertNotEquals(null, getContacts()[0].LastName, 'The contact name should not have been updated.');
+    }
+
+    @IsTest
+    private static void insertRecordsShouldFailAllRecordsWhenAllOrNone() {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Created Me ' + System.now();
+        Database.DMLOptions allOrNoneOption = new Database.DMLOptions();
+        allOrNoneOption.OptAllOrNone = true;
+        records.add(UTIL_UnitTest.createCampaign(name));
+        records.add(UTIL_UnitTest.createContact(name));
+        records.add(UTIL_UnitTest.createJob(name, null));
+
+        try {
+            DatabaseDml.getInstance().insertRecords(records, allOrNoneOption);
+            System.assert(false, 'An exception should have been thrown.');
+
+        } catch (Exception ex) {
+            System.assert(ex.getMessage().contains('REQUIRED_FIELD_MISSING'), 'Expected the missing required field to cause an exception.');
+        }
+
+        System.assertEquals(null, records[0].get('Id'), 'The campaign should not have been created.');
+        System.assertEquals(null, records[1].get('Id'), 'The contact should not have been created.');
+        System.assertEquals(null, records[2].get('Id'), 'The job should not have been created.');
+    }
+
+    @IsTest
+    private static void insertRecordsShouldFailOneRecordWhenNotAllOrNone() {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Created Me ' + System.now();
+        Database.DMLOptions allOrNoneOption = new Database.DMLOptions();
+        allOrNoneOption.OptAllOrNone = false;
+        records.add(UTIL_UnitTest.createCampaign(name));
+        records.add(UTIL_UnitTest.createContact(name));
+        records.add(UTIL_UnitTest.createJob(name, null));
+
+        try {
+            DatabaseDml.getInstance().insertRecords(records, allOrNoneOption);
+
+        } catch (Exception ex) {
+            System.assert(false, 'An exception should not have been thrown. ' + ex.getMessage());
+        }
+
+        System.assertNotEquals(null, records[0].get('Id'), 'The campaign should have been created.');
+        System.assertNotEquals(null, records[1].get('Id'), 'The contact should have been created.');
+        System.assertEquals(null, records[2].get('Id'), 'The job should not have been created.');
+    }
+
+
+    /////////////////
+    /// Helpers
+    /////////////////
+
+
+    private static void setSetupSObjects() {
+        setupSObjects.addAll(getCampaigns());
+        setupSObjects.addAll(getJobs());
+        setupSObjects.addAll(getContacts());
+    }
+
+    private static List<Campaign> getCampaigns() {
+        return [SELECT Id, Name FROM Campaign];
+    }
+
+    private static List<Volunteer_Job__c> getJobs() {
+        return [SELECT Id, Name FROM Volunteer_Job__c];
+    }
+
+    private static List<Contact> getContacts() {
+        return [SELECT Id, FirstName, LastName FROM Contact];
+    }
+}

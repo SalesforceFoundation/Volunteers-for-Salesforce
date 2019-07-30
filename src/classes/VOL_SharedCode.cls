@@ -309,8 +309,15 @@ global with sharing class VOL_SharedCode {
                 // but we can at least put it in the new Volunteer_Organization__c field.
                 if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
-            checkUpdateAccessSites('Contact', setFlds);
-            Database.update(listCon, dmlDuplicateOptions);
+
+            if (UTIL_Describe.isGuestAccessElevated) {
+                UTIL_Describe.checkCreateAccess('Contact', setFlds);
+                DatabaseDml.getInstance().updateRecords(listCon, dmlDuplicateOptions);
+            } else {
+                UTIL_Describe.checkUpdateAccess('Contact', setFlds);
+                Database.update(listCon, dmlDuplicateOptions);
+            }
+ 
             return listCon[0].Id;
         } else if (fCreateContacts) {  // No Match found, create a Contact
             contact.LeadSource = 'Web Volunteer Signup';
@@ -408,7 +415,6 @@ global with sharing class VOL_SharedCode {
         if (VolunteersSettings.Contact_Matching_Rule__c == null || VolunteersSettings.Contact_Matching_Rule__c == '') {
             VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
         }
-
         final String rule = VolunteersSettings.Contact_Matching_Rule__c;
         if (rule.containsIgnoreCase(String.valueOf(Contact.LastName))) {
             strSoql += strAnd + ' (Lastname=\'' + StrEscape(contactRecord.LastName) + '\') ';
@@ -547,8 +553,15 @@ global with sharing class VOL_SharedCode {
             if (setLastWebSignup)
                 conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
 
-            checkUpdateAccessSites('Contact', setStrFields);
-            Database.update(conExisting, dmlDuplicateOptions);
+            // checkUpdateAccessSites('Contact', setStrFields);
+            if (UTIL_Describe.isGuestAccessElevated) {
+                UTIL_Describe.checkCreateAccess('Contact', setStrFields);
+                DatabaseDml.getInstance().updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
+            } else {
+                UTIL_Describe.checkUpdateAccess('Contact', setStrFields);
+                Database.update(conExisting, dmlDuplicateOptions);
+            }
+
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
             return conExisting.Id;
@@ -601,7 +614,12 @@ global with sharing class VOL_SharedCode {
             conNew.Volunteer_Status__c = 'New Sign Up';
 
             UTIL_Describe.checkCreateAccess('Contact', setStrFields);
-            Database.insert(conNew, dmlDuplicateOptions);
+            if (UTIL_Describe.isGuestAccessElevated) {
+                DatabaseDml.getInstance().insertRecords(new List<Contact>{ conNew }, dmlDuplicateOptions);
+            } else {
+                Database.insert(conNew, dmlDuplicateOptions);
+            }
+
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
             return conNew.Id;
