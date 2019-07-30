@@ -133,9 +133,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     }
     
     global string strGoogleMapAPIKey {
-    	get {
-    		return VOL_SharedCode.VolunteersSettings.Google_Maps_API_Key__c;
-    	}
+        get {
+            return VOL_SharedCode.VolunteersSettings.Google_Maps_API_Key__c;
+        }
     }  
     
     // constructor
@@ -154,7 +154,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         ShowSkills = false;
         ShowShifts = true;
         ShowCampaignHierarchy = false;
-		ShowNumberAvailable = false;
+        ShowNumberAvailable = false;
         strLanguage = 'en-us'; 
         strDateFormat = 'EEEE M/d/yyyy';
         strTimeFormat = 'h:mm tt';
@@ -226,12 +226,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFields);
         VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Job__c'), 
-        	new list<string>{'Name','Description__c','Campaign__c','Location_Information__c','Number_of_Shifts__c','Skills_Needed__c',
-        					'Volunteer_Website_Time_Zone__c','Location_Street__c','First_Shift__c'});
+            new list<string>{'Name','Description__c','Campaign__c','Location_Information__c','Number_of_Shifts__c','Skills_Needed__c',
+                            'Volunteer_Website_Time_Zone__c','Location_Street__c','First_Shift__c'});
         VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Shift__c'), 
-        	new list<string>{'Start_Date_Time__c','Duration__c','Number_of_Volunteers_Still_Needed__c','Description__c','System_Note__c'});
-       	VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
-       		VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS));
+            new list<string>{'Start_Date_Time__c','Duration__c','Number_of_Volunteers_Still_Needed__c','Description__c','System_Note__c'});
+           VOL_SharedCode.testObjectFieldVisibility(VOL_SharedCode.StrTokenNSPrefix('Volunteer_Hours__c'), 
+               VOL_SharedCode.listStrFieldsFromFieldSet(Schema.SObjectType.Volunteer_Hours__c.FieldSets.VolunteersJobListingFS));
         
         contactIdSignUp = null;
         volunteerHoursIdSignUp = null;        
@@ -245,8 +245,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 listVolunteerJobs = new list<Volunteer_Job__c>();
                 Date dateNow = dtMonthFilter;
                 if (nDaysToShow == 0) {
-                	dateNow = dateNow.toStartOfMonth();
-                	if (dateNow < system.Today()) dateNow = system.Today();
+                    dateNow = dateNow.toStartOfMonth();
+                    if (dateNow < system.Today()) dateNow = system.Today();
                 }
                 DateTime dtNow = dateNow;
                 
@@ -268,9 +268,9 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // but are in the next month GMT.
                 DateTime dtLast;
                 if (nDaysToShow > 0) 
-                	dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addDays(nDaysToShow), tz);
+                    dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addDays(nDaysToShow), tz);
                 else
-                	dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);                
+                    dtLast = VOL_SharedCode.dtGmtFromDtTimeZone(dateNow.addMonths(nMonthsToShow).toStartOfMonth(), tz);                
                 
                 if (shiftIdFilter != null && nMonthsToShow == 0) {
                     listVolunteerJobs = [select Id, Name, Campaign__c, Campaign__r.IsActive, Campaign__r.Name, Campaign__r.StartDate, Campaign__r.Volunteer_Website_Time_Zone__c,
@@ -320,25 +320,25 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 // now remove any jobs whose shifts are all past date.
                 // unless the user links directly to the job
                 if (shiftIdFilter == null && jobIdFilter == null) {
-                	for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
-	                    Volunteer_Job__c job = listVolunteerJobs[i];
-	                    if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
-	                        listVolunteerJobs.remove(i);                    
-	                    }
-	                }
+                    for (integer i = listVolunteerJobs.size() - 1; i >= 0; i--) {
+                        Volunteer_Job__c job = listVolunteerJobs[i];
+                        if (job.Number_of_Shifts__c > 0 && job.Volunteer_Job_Slots__r.size() == 0) {
+                            listVolunteerJobs.remove(i);                    
+                        }
+                    }
                 }
                 
                 // if one event was selected; check if the event was in the past
                 jobAllShiftsInThePast = false;
                 if (listVolunteerJobs.size() == 1) {
-                	Volunteer_Job__c job = listVolunteerJobs[0];
-                	jobAllShiftsInThePast = 0 < job.Number_of_Shifts__c;
-                	for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
-                		if (date.today() <= shift.Start_Date_Time__c) {
-                			jobAllShiftsInThePast = false;
-                			break;
-                		}
-                	}
+                    Volunteer_Job__c job = listVolunteerJobs[0];
+                    jobAllShiftsInThePast = 0 < job.Number_of_Shifts__c;
+                    for (Volunteer_Shift__c shift : job.Volunteer_Job_Slots__r) {
+                        if (date.today() <= shift.Start_Date_Time__c) {
+                            jobAllShiftsInThePast = false;
+                            break;
+                        }
+                    }
                 }
               
             }
@@ -455,7 +455,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (cId != null) contactIdPersonalSite = cId.getValue();
 
             // save or update the contact              
-            contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields, true);
+            contactIdSignUp = VOL_SharedCode.CreateOrUpdateContactFS(contactIdPersonalSite, contact, contact.Volunteer_Organization__c, listStrFields, true);            
 
             // upload any attachment
             if (contactIdSignUp != null && attachment != null && attachment.body != null) {
@@ -464,10 +464,15 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkCreateAccess('Attachment', new Set<String>{'ParentId', 'Description'});
-                insert attachment;
+                if (UTIL_Describe.isGuestAccessElevated) {
+                    DatabaseDml.getInstance().insertRecords(new List<Attachment>{ attachment });
+                } else {
+                    insert attachment;
+                }
+
                 attachment = new Attachment();
             }
-                        
+
             // then Update or Create hours if it was successful.
             if (contactIdSignUp != null) {              
                 // if signing up for a specific shift, see if they already have an Hours record.
@@ -504,14 +509,19 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     }
                     // update the  status if not already Confirmed or Completed
                     if (listVHours[0].Status__c != 'Confirmed' && listVHours[0].Status__c != 'Completed')
-                    	listVHours[0].Status__c = 'Web Sign Up';
-                    	
+                        listVHours[0].Status__c = 'Web Sign Up';
+                        
                     VolunteerHoursBeforeInsert(listVHours[0]);
 
                     // Ensure the user has access to the object and fields before updating
-                    UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
-
-                    update listVHours[0];
+                    if (UTIL_Describe.isGuestAccessElevated) {
+                        UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
+                        DatabaseDml.getInstance().updateRecords(new List<Volunteer_Hours__c>{ listVHours[0] });
+                    } else {
+                        UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
+                        update listVHours[0];
+                    }
+                    
                     volunteerHoursIdSignUp = listVHours[0].Id;
                 } else {    
                     vhours.Contact__c = contactIdSignUp;
@@ -531,7 +541,12 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                             UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
                             UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
                 
-                    insert vhours;
+                    if (UTIL_Describe.isGuestAccessElevated) {
+                        DatabaseDml.getInstance().insertRecords(new List<SObject>{vhours});
+                    } else {
+                        insert vhours;
+                    }
+                    
                     volunteerHoursIdSignUp = vhours.Id;
                 }
                 
@@ -567,8 +582,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         set;
     }
 
-	// this was a testmethod which can't be compiled in this class under api 31.  
-	// but because it was marked global, it could not be completely removed.
+    // this was a testmethod which can't be compiled in this class under api 31.  
+    // but because it was marked global, it could not be completely removed.
     global static void UnitTest1() {}
     
 }
