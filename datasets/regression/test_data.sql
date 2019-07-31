@@ -41,13 +41,13 @@ CREATE TABLE contact (
 	account_id VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "contact" VALUES('0031k00000MPhYGAA1','Camila','Al Jamil','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzaAAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhY1AAL','Eleanor','Shellstrop','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzZvAAL');
-INSERT INTO "contact" VALUES('0031k00000MPhY6AAL','Jason','Mendoza','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIza5AAD');
-INSERT INTO "contact" VALUES('0031k00000MPhYBAA1','Tahani','Al Jamil','kselvocki@salesforce.com','false','','','','','','Fundraising;Event Planning','Active','0011k00000QIzaAAAT');
-INSERT INTO "contact" VALUES('0031k00000MPixMAAT','Chidi','Anagonye','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QJ0iNAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhYQAA1','Janet','Scoop','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhYLAA1','Michael','Scoop','kselvocki@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYGAA1','Camila','Al Jamil','kselvocki+camila@salesforce.com','false','','','','','','','Active','0011k00000QIzaAAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhY1AAL','Eleanor','Shellstrop','kselvocki+eleanor@salesforce.com','false','','','','','','','Active','0011k00000QIzZvAAL');
+INSERT INTO "contact" VALUES('0031k00000MPhY6AAL','Jason','Mendoza','kselvocki+jason@salesforce.com','false','','','','','','','Active','0011k00000QIza5AAD');
+INSERT INTO "contact" VALUES('0031k00000MPhYBAA1','Tahani','Al Jamil','kselvocki+tahani@salesforce.com','false','','','','','','Fundraising;Event Planning','Active','0011k00000QIzaAAAT');
+INSERT INTO "contact" VALUES('0031k00000MPixMAAT','Chidi','Anagonye','kselvocki+chidi@salesforce.com','false','','','','','','','Active','0011k00000QJ0iNAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYQAA1','Janet','Scoop','kselvocki+janet@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYLAA1','Michael','Scoop','kselvocki+michael@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
 CREATE TABLE job_recurrence_schedule__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	days_of_week VARCHAR(255), 
@@ -108,6 +108,11 @@ INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHKAA4','<p>Enjoy fun treats 
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGqAAO','<p>Take the puppers of The Good Place for Pets for a midday walk!</p>','true','','false','','','','','','Lunchtime Dog Walking','false','','','7011k000000gzcYAAQ');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGrAAO','<p>Keep the kennels of The Good Place for Pets clean and cozy for our adoptable dogs!</p>','true','','false','','','','','','Weekly Kennel Cleaning','false','Manual Labor','','7011k000000gzcYAAQ');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGsAAO','<p>Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.</p>','false','','false','','','','','','Puppy Playtime','false','','','7011k000000gzcYAAQ');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGtAAO','','true','','false','','','','','','Recruit Chili Cooks','false','','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGuAAO','','true','','false','','','','','','Quality Entertainment','false','','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGvAAO','','true','','false','','','','','','Foster Care for Small Dogs','false','','','7011k000000gzcYAAQ');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGwAAO','','true','','false','','','','','','Foster Care for Large Dogs','false','','','7011k000000gzcYAAQ');
+
 CREATE TABLE volunteer_recurrence_schedule__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	comments VARCHAR(255), 
