@@ -43,16 +43,21 @@ public class UTIL_UnitTest {
         List<User> guestSiteUsers = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
 
-        if (!guestSiteUsers.isEmpty()) {
-            return guestSiteUsers[0];
+        if (guestSiteUsers.isEmpty()) {
+            return null;
         }
 
+        return guestSiteUsers[0];
+    }
+
+    public static User createDefaultGuestUser() {
         List<Profile> guestProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'Guest License User'];
         if (guestProfiles.isEmpty()) {
             return null;
         }
 
         String email = 'guest' + DateTime.now().getTime() + '@testorg.com';
+
         return new User(
             Alias = 'guest',
             Email = email,
