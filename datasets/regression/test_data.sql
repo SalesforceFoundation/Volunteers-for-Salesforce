@@ -108,6 +108,11 @@ INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHKAA4','<p>Enjoy fun treats 
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGqAAO','<p>Take the puppers of The Good Place for Pets for a midday walk!</p>','true','','false','','','','','','Lunchtime Dog Walking','false','','','7011k000000gzcYAAQ');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGrAAO','<p>Keep the kennels of The Good Place for Pets clean and cozy for our adoptable dogs!</p>','true','','false','','','','','','Weekly Kennel Cleaning','false','Manual Labor','','7011k000000gzcYAAQ');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGsAAO','<p>Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.</p>','false','','false','','','','','','Puppy Playtime','false','','','7011k000000gzcYAAQ');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGtAAO','','true','','false','','','','','','Recruit Chili Cooks','false','','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGuAAO','','true','','false','','','','','','Quality Entertainment','false','','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGvAAO','','true','','false','','','','','','Foster Care for Small Dogs','false','','','7011k000000gzcYAAQ');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGwAAO','','true','','false','','','','','','Foster Care for Large Dogs','false','','','7011k000000gzcYAAQ');
+
 CREATE TABLE volunteer_recurrence_schedule__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	comments VARCHAR(255), 
