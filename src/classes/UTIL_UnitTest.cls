@@ -29,29 +29,37 @@
 */
 @IsTest
 public class UTIL_UnitTest {
-    public static User guestSiteUser {
+    /**
+     * @description: The guest site user when found otherwise creates a default guest user
+     */
+    public static User guestUser {
         get {
-            if (guestSiteUser == null) {
-                guestSiteUser = findGuestSiteUser();
+            if (guestUser == null) {
+                guestUser = findGuestSiteUser();
             }
-            return guestSiteUser;
+
+            if (guestUser == null) {
+                guestUser = createStandardGuestUser();
+            }
+
+            return guestUser;
         }
         private set;
     }
 
-    private static User findGuestSiteUser() {
-        List<User> guestSiteUsers = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+    public static User findGuestSiteUser() {
+        List<User> guestUsers = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
 
-        if (guestSiteUsers.isEmpty()) {
+        if (guestUsers.isEmpty()) {
             return null;
         }
 
-        return guestSiteUsers[0];
+        return guestUsers[0];
     }
 
-    public static User createDefaultGuestUser() {
-        List<Profile> guestProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'Guest License User'];
+    public static User createStandardGuestUser() {
+        List<Profile> guestProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'Standard Guest'];
         if (guestProfiles.isEmpty()) {
             return null;
         }
@@ -66,6 +74,27 @@ public class UTIL_UnitTest {
             LanguageLocaleKey = 'en_US',
             LocaleSidKey = 'en_US',
             ProfileId = guestProfiles[0].Id,
+            TimeZoneSidKey = 'America/Chicago',
+            UserName = email
+        );
+    }
+
+    public static User createStandardUser() {
+        List<Profile> standardProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'Standard User'];
+        if (standardProfiles.isEmpty()) {
+            return null;
+        }
+
+        String email = 'standard' + DateTime.now().getTime() + '@testorg.com';
+
+        return new User(
+            Alias = 'standard',
+            Email = email,
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'Testing',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = standardProfiles[0].Id,
             TimeZoneSidKey = 'America/Chicago',
             UserName = email
         );
