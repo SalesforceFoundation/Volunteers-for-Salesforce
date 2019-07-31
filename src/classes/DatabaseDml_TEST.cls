@@ -45,7 +45,15 @@ private with sharing class DatabaseDml_TEST {
         String name = 'Guest Updated Me ' + System.now();
         setSetupSObjects();
 
-        System.runAs(UTIL_UnitTest.guestSiteUser) {
+        User guest = UTIL_UnitTest.guestSiteUser != null
+            ? UTIL_UnitTest.guestSiteUser
+            : UTIL_UnitTest.createDefaultGuestUser();
+
+        if (guest == null) {
+            return;
+        }
+
+        System.runAs(guest) {
             for (SObject record : setupSObjects) {
                 if (record.getSObjectType() == Contact.SObjectType) {
                     record.put('LastName', name);
@@ -68,7 +76,15 @@ private with sharing class DatabaseDml_TEST {
         List<SObject> records = new List<SObject>();
         String name = 'Guest Created Me ' + System.now();
 
-        System.runAs(UTIL_UnitTest.guestSiteUser) {
+        User guest = UTIL_UnitTest.guestSiteUser != null
+            ? UTIL_UnitTest.guestSiteUser
+            : UTIL_UnitTest.createDefaultGuestUser();
+
+        if (guest == null) {
+            return;
+        }
+
+        System.runAs(guest) {
             records.add(UTIL_UnitTest.createCampaign(name));
             records.add(UTIL_UnitTest.createContact(name));
 
