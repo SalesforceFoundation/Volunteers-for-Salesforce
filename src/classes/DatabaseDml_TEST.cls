@@ -40,20 +40,16 @@ private with sharing class DatabaseDml_TEST {
     }
 
     @IsTest
-    private static void guestSiteUserCanUpdateUnownedRecords() {
+    private static void guestUserCanUpdateUnownedRecords() {
+        if (UTIL_UnitTest.guestUser == null) {
+            return;
+        }
+
         List<SObject> records = new List<SObject>();
         String name = 'Guest Updated Me ' + System.now();
         setSetupSObjects();
 
-        User guest = UTIL_UnitTest.guestSiteUser != null
-            ? UTIL_UnitTest.guestSiteUser
-            : UTIL_UnitTest.createDefaultGuestUser();
-
-        if (guest == null) {
-            return;
-        }
-
-        System.runAs(guest) {
+        System.runAs(UTIL_UnitTest.guestUser) {
             for (SObject record : setupSObjects) {
                 if (record.getSObjectType() == Contact.SObjectType) {
                     record.put('LastName', name);
@@ -72,19 +68,15 @@ private with sharing class DatabaseDml_TEST {
     }
 
     @IsTest
-    private static void guestSiteUserCanInsertRecords() {
-        List<SObject> records = new List<SObject>();
-        String name = 'Guest Created Me ' + System.now();
-
-        User guest = UTIL_UnitTest.guestSiteUser != null
-            ? UTIL_UnitTest.guestSiteUser
-            : UTIL_UnitTest.createDefaultGuestUser();
-
-        if (guest == null) {
+    private static void guestUserCanInsertRecords() {
+        if (UTIL_UnitTest.guestUser == null) {
             return;
         }
 
-        System.runAs(guest) {
+        List<SObject> records = new List<SObject>();
+        String name = 'Guest Created Me ' + System.now();
+
+        System.runAs(UTIL_UnitTest.guestUser) {
             records.add(UTIL_UnitTest.createCampaign(name));
             records.add(UTIL_UnitTest.createContact(name));
 

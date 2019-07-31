@@ -43,12 +43,13 @@
     * @description Calls UserInfo to determine whether the current user is the Sites Guest User
     * @return boolean value indicating whether current user is a guest user
     ********************************************************************************************************/
-    private static Boolean isGuestSiteUser {
+    @TestVisible
+    private static Boolean isGuestUser {
         get {
-            if(isGuestSiteUser == null){
-                isGuestSiteUser = UserInfo.getUserType() == 'Guest';
+            if(isGuestUser == null){
+                isGuestUser = UserInfo.getUserType() == 'Guest';
             }
-            return isGuestSiteUser;
+            return isGuestUser;
         }
         private set;
     }
@@ -65,7 +66,7 @@
     public static Boolean isGuestAccessElevated {
         get {
             if (isGuestAccessElevated == null) {
-                isGuestAccessElevated = isGuestSiteUser && elevateGuestUserAccessSetting;
+                isGuestAccessElevated = isGuestUser && elevateGuestUserAccessSetting;
             }
             return isGuestAccessElevated;
         }

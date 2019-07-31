@@ -35,6 +35,43 @@
  */
 @isTest
     private with sharing class UTIL_Describe_TEST {
+
+    @IsTest
+    private static void isGuestUserReturnsTrueForExistingGuestSiteUser() {
+        User guestSiteUser = UTIL_UnitTest.findGuestSiteUser();
+        if (guestSiteUser == null) {
+            return; // bail if no guest site users are found
+        }
+
+        System.runAs(guestSiteUser) {
+            System.assert(UTIL_Describe.isGuestUser, 'Expected isGuestUser to be true for a guest site users.');
+        }
+    }
+
+    @IsTest
+    private static void isGuestUserReturnsTrueForStandardGuestUsers() {
+        User standardGuest = UTIL_UnitTest.createStandardGuestUser();
+        if (standardGuest == null) {
+            return; // bail if no guest site users are found
+        }
+
+        System.runAs(standardGuest) {
+            System.assert(UTIL_Describe.isGuestUser, 'Expected isGuestUser to be true for a standard guest user.');
+        }
+    }
+
+    @IsTest
+    private static void isGuestUserReturnsFalseForStandardUser() {
+        User standardUser = UTIL_UnitTest.createStandardUser();
+        if (standardUser == null) {
+            return; // bail if no guest site users are found
+        }
+
+        System.runAs(standardUser) {
+            System.assert(!UTIL_Describe.isGuestUser, 'Expected isGuestUser to be false for a standard users.');
+        }
+    }
+
     /*******************************************************************************************************
      * @description Tests namespace fixup conditionally depending on whether a namespace is present
      *******************************************************************************************************/
