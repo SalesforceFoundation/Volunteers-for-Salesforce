@@ -310,13 +310,8 @@ global with sharing class VOL_SharedCode {
                 if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
 
-            if (UTIL_Describe.isGuestAccessElevated) {
-                UTIL_Describe.checkCreateAccess('Contact', setFlds);
-                DatabaseDml.getInstance().updateRecords(listCon, dmlDuplicateOptions);
-            } else {
-                UTIL_Describe.checkUpdateAccess('Contact', setFlds);
-                Database.update(listCon, dmlDuplicateOptions);
-            }
+            VOL_Access.getInstance().checkUpdateAccess('Contact', setFlds);
+            VOL_Access.getInstance().updateRecords(listCon, dmlDuplicateOptions);
  
             return listCon[0].Id;
         } else if (fCreateContacts) {  // No Match found, create a Contact
@@ -554,13 +549,8 @@ global with sharing class VOL_SharedCode {
                 conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
 
             // checkUpdateAccessSites('Contact', setStrFields);
-            if (UTIL_Describe.isGuestAccessElevated) {
-                UTIL_Describe.checkCreateAccess('Contact', setStrFields);
-                DatabaseDml.getInstance().updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
-            } else {
-                UTIL_Describe.checkUpdateAccess('Contact', setStrFields);
-                Database.update(conExisting, dmlDuplicateOptions);
-            }
+            VOL_Access.getInstance().checkUpdateAccess('Contact', setStrFields);
+            VOL_Access.getInstance().updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
 
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
@@ -613,12 +603,8 @@ global with sharing class VOL_SharedCode {
             conNew.LeadSource = 'Web Volunteer Signup';
             conNew.Volunteer_Status__c = 'New Sign Up';
 
-            UTIL_Describe.checkCreateAccess('Contact', setStrFields);
-            if (UTIL_Describe.isGuestAccessElevated) {
-                DatabaseDml.getInstance().insertRecords(new List<Contact>{ conNew }, dmlDuplicateOptions);
-            } else {
-                Database.insert(conNew, dmlDuplicateOptions);
-            }
+            VOL_Access.getInstance().checkCreateAccess('Contact', setStrFields);
+            VOL_Access.getInstance().insertRecords(new List<Contact>{ conNew }, dmlDuplicateOptions);
 
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
