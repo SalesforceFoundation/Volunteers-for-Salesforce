@@ -29,6 +29,7 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
+    private static VOL_Access access = VOL_Access.getInstance();
     /**
      * Hard coding the subquery limit to 200 to prevent an error being displayed when
      * attempting to access the list of child records when more than 200 are present
@@ -463,12 +464,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 attachment.Description = strFileUploadLabel + ' ' + system.label.labelFileUploadDescription;
                 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkCreateAccess('Attachment', new Set<String>{'ParentId', 'Description'});
-                if (UTIL_Describe.isGuestAccessElevated) {
-                    DatabaseDml.getInstance().insertRecords(new List<Attachment>{ attachment });
-                } else {
-                    insert attachment;
-                }
+                access.checkCreateAccess('Attachment', new Set<String>{'ParentId', 'Description'});
+                access.insertRecords(new List<Attachment>{ attachment });
 
                 attachment = new Attachment();
             }
@@ -514,14 +511,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     VolunteerHoursBeforeInsert(listVHours[0]);
 
                     // Ensure the user has access to the object and fields before updating
-                    if (UTIL_Describe.isGuestAccessElevated) {
-                        UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
-                        DatabaseDml.getInstance().updateRecords(new List<Volunteer_Hours__c>{ listVHours[0] });
-                    } else {
-                        UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
-                        update listVHours[0];
-                    }
-                    
+                    access.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), vhFieldsToUpdate);
+                    access.updateRecords(new List<Volunteer_Hours__c>{ listVHours[0] });
                     volunteerHoursIdSignUp = listVHours[0].Id;
                 } else {    
                     vhours.Contact__c = contactIdSignUp;
@@ -533,7 +524,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     VolunteerHoursBeforeInsert(vhours);
                     
                     // Ensure the user has access to the object and fields before querying
-                    UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                    access.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
                         new Set<String>{
                             UTIL_Describe.StrTokenNSPrefix('Contact__c'),
                             UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
@@ -541,12 +532,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                             UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
                             UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
                 
-                    if (UTIL_Describe.isGuestAccessElevated) {
-                        DatabaseDml.getInstance().insertRecords(new List<SObject>{vhours});
-                    } else {
-                        insert vhours;
-                    }
-                    
+                    access.insertRecords(new List<SObject>{vhours});
                     volunteerHoursIdSignUp = vhours.Id;
                 }
                 
