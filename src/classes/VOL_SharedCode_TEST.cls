@@ -36,8 +36,8 @@ public with sharing class VOL_SharedCode_TEST {
     //==================== TEST METHOD(s) ======================================
     @IsTest
     private static void shouldCheckUpdateAccessAndUpdateMatchingContact() {
-        setAccessMock();
         insert contactRecord;
+        setAccessMock();
 
         VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
         System.assertEquals(1, accessMock.countByMethodName.get('checkUpdateAccess'), 'Expected check update access to have been called.');
@@ -46,8 +46,8 @@ public with sharing class VOL_SharedCode_TEST {
 
     @IsTest
     private static void shouldCheckUpdateAccessAndUpdateMatchingContactFS() {
-        setAccessMock();
         insert contactRecord;
+        setAccessMock();
 
         VOL_SharedCode.CreateOrUpdateContactFS('', contactRecord, 'ABC Company', new List<String>{ 'FirstName', 'LastName', 'Email' });
         System.assertEquals(1, accessMock.countByMethodName.get('checkUpdateAccess'), 'Expected check update access to have been called. ' + accessMock.countByMethodName);

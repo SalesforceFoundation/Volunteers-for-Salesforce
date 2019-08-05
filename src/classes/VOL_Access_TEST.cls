@@ -141,6 +141,7 @@ public with sharing class VOL_Access_TEST {
     private static void indirectUpdateForGuestUserWithElevateSettingChecked() {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
             VOL_Access.getInstance().updateRecords(contacts);
         }
@@ -152,6 +153,7 @@ public with sharing class VOL_Access_TEST {
     private static void indirectUpdateWithOptionsForGuestUserWithElevateSettingChecked() {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
             VOL_Access.getInstance().updateRecords(contacts, new Database.DMLOptions());
         }
@@ -163,6 +165,7 @@ public with sharing class VOL_Access_TEST {
     private static void indirectInsertForGuestUserWithElevateSettingChecked() {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
             VOL_Access.getInstance().insertRecords(contacts);
         }
@@ -174,6 +177,7 @@ public with sharing class VOL_Access_TEST {
     private static void indirectInsertWithOptionsForGuestUserWithElevateSettingChecked() {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
             VOL_Access.getInstance().insertRecords(contacts, new Database.DMLOptions());
         }
@@ -203,6 +207,7 @@ public with sharing class VOL_Access_TEST {
         insert contactRecord;
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createAdminUser()) {
             contactRecord.LastName = 'After Update With Options';
             VOL_Access.getInstance().updateRecords(contacts);
@@ -216,6 +221,7 @@ public with sharing class VOL_Access_TEST {
     private static void directInsertForAdminUsers() {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createAdminUser()) {
             contactRecord.LastName = 'After Insert';
             VOL_Access.getInstance().insertRecords(contacts);
@@ -229,6 +235,7 @@ public with sharing class VOL_Access_TEST {
     private static void directInsertWithOptionsForAdminUsers() {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+
         System.runAs(UTIL_UnitTest.createAdminUser()) {
             contactRecord.LastName = 'After Insert With Options';
             VOL_Access.getInstance().insertRecords(contacts);
