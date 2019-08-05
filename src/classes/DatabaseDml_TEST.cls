@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest
-private with sharing class DatabaseDml_TEST {
+public with sharing class DatabaseDml_TEST {
     private static List<SObject> setupSObjects = new List<SObject>();
 
     /**
@@ -218,5 +218,28 @@ private with sharing class DatabaseDml_TEST {
 
     private static List<Contact> getContacts() {
         return [SELECT Id, FirstName, LastName FROM Contact];
+    }
+
+
+    /*******************************************************************************************************************
+     * @description Stub for DatabaseDml instance
+     */
+    public class Stub implements System.StubProvider {
+        public Map<String, Integer> countByMethodName = new Map<String, Integer>{
+            'updateRecords' => 0,
+            'insertRecords' => 0
+        };
+
+        public Object handleMethodCall(
+            Object stubbedObject,
+            String stubbedMethodName,
+            Type returnType,
+            List<Type> listOfParamTypes,
+            List<String> listOfParamNames,
+            List<Object> listOfArgs
+        ) {
+            countByMethodName.put(stubbedMethodName, countByMethodName.get(stubbedMethodName) + 1);
+            return null;
+        }
     }
 }
