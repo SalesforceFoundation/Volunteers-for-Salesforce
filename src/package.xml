@@ -22,6 +22,8 @@
         <members>UTIL_JobProgress_CTRL</members>
         <members>UTIL_PageMessages_CTRL</members>
         <members>UTIL_UnitTest</members>
+        <members>VOL_Access</members>
+        <members>VOL_Access_TEST</members>
         <members>VOL_BATCH_Recurrence</members>
         <members>VOL_BATCH_Recurrence_TEST</members>
         <members>VOL_CTRL_BatchProgress</members>

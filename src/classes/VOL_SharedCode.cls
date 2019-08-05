@@ -29,6 +29,7 @@
 */
 
 global with sharing class VOL_SharedCode {
+    private static VOL_Access access = VOL_Access.getInstance();
 
     // the list of Campaigns that have Volunteer Jobs
     global list<SelectOption> listSOCampaignsWithJobs {
@@ -310,8 +311,8 @@ global with sharing class VOL_SharedCode {
                 if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
 
-            VOL_Access.getInstance().checkUpdateAccess('Contact', setFlds);
-            VOL_Access.getInstance().updateRecords(listCon, dmlDuplicateOptions);
+            access.checkUpdateAccess('Contact', setFlds);
+            access.updateRecords(listCon, dmlDuplicateOptions);
  
             return listCon[0].Id;
         } else if (fCreateContacts) {  // No Match found, create a Contact
@@ -549,8 +550,8 @@ global with sharing class VOL_SharedCode {
                 conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
 
             // checkUpdateAccessSites('Contact', setStrFields);
-            VOL_Access.getInstance().checkUpdateAccess('Contact', setStrFields);
-            VOL_Access.getInstance().updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
+            access.checkUpdateAccess('Contact', setStrFields);
+            access.updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
 
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
@@ -603,8 +604,8 @@ global with sharing class VOL_SharedCode {
             conNew.LeadSource = 'Web Volunteer Signup';
             conNew.Volunteer_Status__c = 'New Sign Up';
 
-            VOL_Access.getInstance().checkCreateAccess('Contact', setStrFields);
-            VOL_Access.getInstance().insertRecords(new List<Contact>{ conNew }, dmlDuplicateOptions);
+            access.checkCreateAccess('Contact', setStrFields);
+            access.insertRecords(new List<Contact>{ conNew }, dmlDuplicateOptions);
 
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
