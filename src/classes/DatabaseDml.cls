@@ -27,11 +27,11 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
-public without sharing class DatabaseDml {
+public without sharing virtual class DatabaseDml {
 
-    private DatabaseDml() {}
+    protected DatabaseDml() {}
 
-    private static DatabaseDml instance = null;
+    @TestVisible private static DatabaseDml instance = null;
 
     public static DatabaseDml getInstance() {
         if (instance == null) {

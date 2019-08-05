@@ -37,45 +37,6 @@
  */
 
  public with sharing class UTIL_Describe {
-
-
-    /*******************************************************************************************************
-    * @description Calls UserInfo to determine whether the current user is the Sites Guest User
-    * @return boolean value indicating whether current user is a guest user
-    ********************************************************************************************************/
-    @TestVisible
-    private static Boolean isGuestUser {
-        get {
-            if(isGuestUser == null){
-                isGuestUser = UserInfo.getUserType() == 'Guest';
-            }
-            return isGuestUser;
-        }
-        private set;
-    }
-
-    /**
-     * @description TODO: Replace with custom setting
-     */
-    private static Boolean elevateGuestUserAccessSetting = true;
-
-    /**
-     * @description True when the current user is a guest user and the setting to elevate guest user access
-     * is enabled.
-     */
-    public static Boolean isGuestAccessElevated {
-        get {
-            if (isGuestAccessElevated == null) {
-                isGuestAccessElevated = isGuestUser && elevateGuestUserAccessSetting;
-            }
-            return isGuestAccessElevated;
-        }
-        private set;
-    }
-
-    public UTIL_Describe() {}
-
-
     /** @description our exception object for Field Level & Object Security errors. */
     public class PermsException extends Exception {}
     /** @description our exceptions when a bogus object or field is provided. */
@@ -254,7 +215,6 @@
             checkFieldCreateAccess(objectName, fieldName);
         }
     }
-
 
     /*******************************************************************************************************
     * @description Static method checks if running user has object create access and throws error

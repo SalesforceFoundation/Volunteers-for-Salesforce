@@ -59,45 +59,38 @@ public class UTIL_UnitTest {
     }
 
     public static User createStandardGuestUser() {
-        List<Profile> guestProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'Standard Guest'];
-        if (guestProfiles.isEmpty()) {
-            return null;
-        }
+        String email = 'guest' + '@testorg.com';
 
-        String email = 'guest' + DateTime.now().getTime() + '@testorg.com';
-
-        return new User(
-            Alias = 'guest',
-            Email = email,
-            EmailEncodingKey = 'UTF-8',
-            LastName = 'Testing',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US',
-            ProfileId = guestProfiles[0].Id,
-            TimeZoneSidKey = 'America/Chicago',
-            UserName = email
-        );
+        return createUser(email, 'Standard Guest');
     }
 
     public static User createStandardUser() {
-        List<Profile> standardProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'Standard User'];
-        if (standardProfiles.isEmpty()) {
-            return null;
-        }
+        String email = 'guest' + '@testorg.com';
 
-        String email = 'standard' + DateTime.now().getTime() + '@testorg.com';
+        return createUser(email, 'Standard User');
+    }
 
-        return new User(
-            Alias = 'standard',
+    public static User createAdminUser() {
+        String email = 'admin' + '@testorg.com';
+
+        return createUser(email, 'System Administrator');
+    }
+
+    public static User createUser(String email, String profileName) {
+        Profile profileRecord = [SELECT Id FROM Profile WHERE Name = :profileName];
+        User userRecord =  new User(
+            Alias = 'jdoe',
             Email = email,
             EmailEncodingKey = 'UTF-8',
-            LastName = 'Testing',
             LanguageLocaleKey = 'en_US',
+            LastName = 'Doe',
             LocaleSidKey = 'en_US',
-            ProfileId = standardProfiles[0].Id,
-            TimeZoneSidKey = 'America/Chicago',
-            UserName = email
+            ProfileId = profileRecord.Id,
+            TimeZoneSidKey = 'America/Los_Angeles',
+            Username = email + Datetime.now().getTime()
         );
+
+        return userRecord;
     }
 
     public static Map<Id, SObject> generateData() {
@@ -137,6 +130,7 @@ public class UTIL_UnitTest {
     public static Contact createContact(String lastName) {
         return new Contact(
             FirstName = 'Andy',
-            LastName = lastName);
+            LastName = lastName,
+            Email = 'andy@test.com');
     }
 }
