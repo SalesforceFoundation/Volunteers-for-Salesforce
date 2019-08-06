@@ -29,6 +29,7 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
+    @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
     /**
      * Hard coding the subquery limit to 200 to prevent an error being displayed when
@@ -532,7 +533,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                             UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
                             UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
                 
-                    access.insertRecords(new List<SObject>{vhours});
+                    access.insertRecords(new List<SObject>{ vhours });
                     volunteerHoursIdSignUp = vhours.Id;
                 }
                 
