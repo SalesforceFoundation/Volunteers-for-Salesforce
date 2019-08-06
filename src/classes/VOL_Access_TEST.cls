@@ -330,12 +330,8 @@ public with sharing class VOL_Access_TEST {
      * @description Stub for DatabaseDml instance
      */
     public class Stub implements System.StubProvider {
-        public Map<String, Integer> countByMethodName = new Map<String, Integer>{
-            'checkCreateAccess' => 0,
-            'checkUpdateAccess' => 0,
-            'updateRecords' => 0,
-            'insertRecords' => 0
-        };
+        public Map<String, Set<SObjectType>> sObjectTypesByMethodName = new Map<String, Set<SObjectType>>();
+        public Map<String, Integer> countByMethodName = new Map<String, Integer>();
 
         public Object handleMethodCall(
             Object stubbedObject,
@@ -345,8 +341,66 @@ public with sharing class VOL_Access_TEST {
             List<String> listOfParamNames,
             List<Object> listOfArgs
         ) {
-            countByMethodName.put(stubbedMethodName, countByMethodName.get(stubbedMethodName) + 1);
+            increment(stubbedMethodName);
+            addSObjectType(stubbedMethodName, listOfArgs);
+
             return null;
+        }
+
+        public void assertMethodCalled(String stubbedMethodName) {
+            System.assert(countByMethodName.containsKey(stubbedMethodName), 'Expected the method, ' + stubbedMethodName + ', to have been called.');
+        }
+
+        public void assertMethodCalled(String stubbedMethodName, Integer count) {
+            System.assertEquals(count, countByMethodName.get(stubbedMethodName), 'Expected the method, ' + stubbedMethodName + ', to have been called ' + count + 'x.');
+        }
+
+        public void assertMethodCalledWith(String stubbedMethodName, SObjectType sObjType) {
+            if (String.isEmpty(stubbedMethodName) || sObjType == null) {
+                return;
+            }
+
+            System.assert(sObjectTypesByMethodName.containsKey(stubbedMethodName), 'Expected the method, ' + stubbedMethodName + ', to have been called with ' + sObjType + ' records.');
+            System.assert(sObjectTypesByMethodName.get(stubbedMethodName).contains(sObjType), 'Expected ' + sObjType + ' records to have been passed in. ' + sObjectTypesByMethodName.get(stubbedMethodName));
+        }
+
+        private void increment(String stubbedMethodName) {
+            Integer count = countByMethodName.get(stubbedMethodName);
+            if (count == null) {
+                count = 0;
+            }
+            count++;
+
+            countByMethodName.put(stubbedMethodName, count);
+        }
+
+        private void addSObjectType(String stubbedMethodName, List<Object> listOfArgs) {
+            if (listOfArgs == null || listOfArgs.isEmpty()) {
+                return;
+            }
+
+            Set<SObjectType> sObjectTypes = sObjectTypesByMethodName.get(stubbedMethodName);
+            if (sObjectTypes == null) {
+                sObjectTypes = new Set<SObjectType>();
+            }
+
+            for (Object arg : listOfArgs) {
+                addSObjectType(stubbedMethodName, arg, sObjectTypes);
+            }
+        }
+
+        private void addSObjectType(String stubbedMethodName, Object arg, Set<SObjectType> sObjectTypes) {
+            if (arg instanceof List<SObject>) {
+                List<SObject> records = (List<SObject>) arg;
+                if (records.isEmpty()) {
+                    return; // getSObjectType returns null for the list, need to request it form the first record.
+                }
+
+                SObjectType sObjType = records[0].getSObjectType();
+                sObjectTypes.add(sObjType);
+
+                sObjectTypesByMethodName.put(stubbedMethodName, sObjectTypes);
+            }
         }
     }
 
