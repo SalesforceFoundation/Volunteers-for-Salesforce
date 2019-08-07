@@ -335,7 +335,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                     }   
                 }   
 
-                update listHours[0];
+                access.updateRecords(new List<Volunteer_Hours__c>{ listHours[0] });
             } else {        
                 checkCreateAccess();
 
@@ -345,7 +345,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 vhours.Status__c = 'Completed';
                 vhours.Contact__c = contactId;
                 vhours.Number_of_Volunteers__c = 1;
-                insert vhours;
+                access.insertRecords(new List<Volunteer_Hours__c>{ vhours });
             }
             
             // clear current job & shift info

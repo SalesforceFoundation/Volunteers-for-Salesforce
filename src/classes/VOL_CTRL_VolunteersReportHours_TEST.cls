@@ -31,19 +31,82 @@
 @isTest
 private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
     private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+    private static PageReference reportHoursPage = Page.VolunteersReportHours;
 
     //==================== TEST METHOD(s) ======================================
     @IsTest
     private static void shouldCheckAccessOnPageLoad() {
-        PageReference reportHoursPage = Page.VolunteersReportHours; 
         Test.setCurrentPage(reportHoursPage);
         setAccessMock();
-        VOL_CTRL_VolunteersReportHours ctrl = new VOL_CTRL_VolunteersReportHours();
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
 
         accessMock.assertMethodCalled('checkCreateAccess', 1);
         accessMock.assertMethodCalled('checkUpdateAccess', 1);
         accessMock.assertMethodCalledWith('checkCreateAccess', Volunteer_Hours__c.SObjectType);
         accessMock.assertMethodCalledWith('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckCreateAccessAndInsertHoursOnSave() {
+        Map<Id, SObject> sObjectsById = UTIL_UnitTest.generateData();
+        Contact contactRecord;
+        Id jobId;
+
+        for (SObject sObj : sObjectsById.values()) {
+            switch on sObj {
+                when Contact contactSObject {
+                    contactRecord = (Contact) contactSObject;
+                }
+                when Volunteer_Job__c job {
+                    jobId = job.Id;
+                }
+            }
+        }
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHour(contactRecord.Id, jobId, null);
+
+        Test.setCurrentPage(reportHoursPage);
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+        setAccessMock();
+        reportHoursCtrl.contact = contactRecord;
+        reportHoursCtrl.volunteerJobId = jobId;
+        reportHoursCtrl.vhours = hours;
+        reportHoursCtrl.Save();
+
+        accessMock.assertMethodCalled('checkCreateAccess', 1);
+        accessMock.assertMethodCalledWith('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalledWith('insertRecords', Volunteer_Hours__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckUpdateAccessAndUpdateHoursOnSave() {
+        Map<Id, SObject> sObjectsById = UTIL_UnitTest.generateData();
+        Contact contactRecord;
+        Id jobId;
+
+        for (SObject sObj : sObjectsById.values()) {
+            switch on sObj {
+                when Contact contactSObject {
+                    contactRecord = (Contact) contactSObject;
+                }
+                when Volunteer_Job__c job {
+                    jobId = job.Id;
+                }
+            }
+        }
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHour(contactRecord.Id, jobId, null);
+        insert hours;
+
+        Test.setCurrentPage(reportHoursPage);
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+        setAccessMock();
+        reportHoursCtrl.contact = contactRecord;
+        reportHoursCtrl.volunteerJobId = jobId;
+        reportHoursCtrl.vhours = hours;
+        reportHoursCtrl.Save();
+
+        accessMock.assertMethodCalled('checkUpdateAccess', 1);
+        accessMock.assertMethodCalledWith('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalledWith('updateRecords', Volunteer_Hours__c.SObjectType);
     }
 
     /*******************************************************************************************************
