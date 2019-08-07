@@ -22,6 +22,20 @@ tasks:
         options:
             path: unpackaged/config/qa
 
+    deploy_v4s_only_page_layouts:
+        description: Deploys the page layouts for an org with Volunteers for Salesforce, but not NPSP
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: unpackaged/config/v4s_only_layouts
+            namespace_inject: $project_config.project__package__namespace
+
+    deploy_npsp_v4s_page_layouts:
+        description: Deploys the page layouts for an org with Volunteers for Salesforce and NPSP
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: unpackaged/config/npsp_v4s_layouts
+            namespace_inject: $project_config.project__package__namespace
+
     deploy_delete_config:
         description: Deploys the metadata deletions for the post install DE org config
         class_path: cumulusci.tasks.salesforce.Deploy
@@ -92,6 +106,70 @@ tasks:
         options:
             sql_path: 'datasets/regression/test_data.sql'
             mapping: 'datasets/regression/mapping.yml'
+
+    ensure_record_type:
+        name: Ensure Campaign Record Types
+        description: This will ensure Record Types are enabled for the Campaign object in your org before installing Volunteers for Salesforce. If there are no Campaign record types yet, it will create one called Default.
+        class_path: cumulusci.tasks.salesforce.EnsureRecordTypes
+        options:
+            record_type_label: Default
+            record_type_developer_name: Default
+            sobject: Campaign
+
+    install_npsp_with_unpackaged_config:
+        description: Install NPSP with dependencies and unpackaged configuration
+        class_path: cumulusci.tasks.salesforce.UpdateDependencies
+        options:
+            dependencies:
+                - github: 'https://github.com/SalesforceFoundation/Cumulus'
+                - repo_name: Cumulus
+                  repo_owner: SalesforceFoundation
+                  subfolder: unpackaged/config/trial
+                  namespace_inject: 'npsp'
+                  unmanaged: False
+                - repo_name: Cumulus
+                  repo_owner: SalesforceFoundation
+                  subfolder: unpackaged/config/reports
+                  namespace_inject: 'npsp'
+                  unmanaged: False
+
+    insert_npsp_relationships:
+        description: 'Runs execute anonymous to insert the default NPSP relationships.  Copied from Cumulus on 2019-07-09.'
+        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+        options:
+            apex: >
+                List<npe4__Relationship_Lookup__c> defaultRelationships = new List<npe4__Relationship_Lookup__c>{
+                    new npe4__Relationship_Lookup__c(Name = 'Father',npe4__Male__c = 'Son', npe4__Female__c = 'Daughter', npe4__Neutral__c = 'Child'),
+                    new npe4__Relationship_Lookup__c(Name = 'Mother',npe4__Male__c = 'Son', npe4__Female__c = 'Daughter', npe4__Neutral__c = 'Child'),
+                    new npe4__Relationship_Lookup__c(Name = 'Parent',npe4__Male__c = 'Son', npe4__Female__c = 'Daughter', npe4__Neutral__c = 'Child'),
+                    new npe4__Relationship_Lookup__c(Name = 'Son',npe4__Male__c = 'Father', npe4__Female__c = 'Mother', npe4__Neutral__c = 'Parent'),
+                    new npe4__Relationship_Lookup__c(Name = 'Daughter',npe4__Male__c = 'Father', npe4__Female__c = 'Mother', npe4__Neutral__c = 'Parent'),
+                    new npe4__Relationship_Lookup__c(Name = 'Child',npe4__Male__c = 'Father', npe4__Female__c = 'Mother', npe4__Neutral__c = 'Parent'),
+                    new npe4__Relationship_Lookup__c(Name = 'Aunt',npe4__Male__c = 'Nephew', npe4__Female__c = 'Niece', npe4__Neutral__c = 'Sibling\'s Child'),
+                    new npe4__Relationship_Lookup__c(Name = 'Uncle',npe4__Male__c = 'Nephew', npe4__Female__c = 'Niece', npe4__Neutral__c = 'Sibling\'s Child'),
+                    new npe4__Relationship_Lookup__c(Name = 'Husband',npe4__Male__c = 'Husband', npe4__Female__c = 'Wife', npe4__Neutral__c = 'Spouse'),
+                    new npe4__Relationship_Lookup__c(Name = 'Wife',npe4__Male__c = 'Husband', npe4__Female__c = 'Wife', npe4__Neutral__c = 'Spouse'),
+                    new npe4__Relationship_Lookup__c(Name = 'Partner',npe4__Male__c = 'Partner', npe4__Female__c = 'Partner', npe4__Neutral__c = 'Partner'),
+                    new npe4__Relationship_Lookup__c(Name = 'Cousin',npe4__Male__c = 'Cousin', npe4__Female__c = 'Cousin', npe4__Neutral__c = 'Cousin'),
+                    new npe4__Relationship_Lookup__c(Name = 'Grandmother',npe4__Male__c = 'Grandson', npe4__Female__c = 'Granddaughter', npe4__Neutral__c = 'Grandchild'),
+                    new npe4__Relationship_Lookup__c(Name = 'Grandfather',npe4__Male__c = 'Grandson', npe4__Female__c = 'Granddaughter', npe4__Neutral__c = 'Grandchild'),
+                    new npe4__Relationship_Lookup__c(Name = 'Grandparent',npe4__Male__c = 'Grandson', npe4__Female__c = 'Granddaughter', npe4__Neutral__c = 'Grandchild'),
+                    new npe4__Relationship_Lookup__c(Name = 'Grandson',npe4__Male__c = 'Grandfather', npe4__Female__c = 'Grandmother', npe4__Neutral__c = 'Grandparent'),
+                    new npe4__Relationship_Lookup__c(Name = 'Granddaughter',npe4__Male__c = 'Grandfather', npe4__Female__c = 'Grandmother', npe4__Neutral__c = 'Grandparent'),
+                    new npe4__Relationship_Lookup__c(Name = 'Grandchild',npe4__Male__c = 'Grandfather', npe4__Female__c = 'Grandmother', npe4__Neutral__c = 'Grandparent'),
+                    new npe4__Relationship_Lookup__c(Name = 'Employer',npe4__Male__c = 'Employee', npe4__Female__c = 'Employee', npe4__Neutral__c = 'Employee'),
+                    new npe4__Relationship_Lookup__c(Name = 'Employee',npe4__Male__c = 'Employer', npe4__Female__c = 'Employer', npe4__Neutral__c = 'Employer')
+                };
+                insert defaultRelationships;
+
+    insert_npsp_test_data:
+        group: 'CaseMan: NPSP'
+        description: 'Loads a NPSP test data set for most NPSP objects based on 100 Contacts that should fit into a scratch org or DE org'
+        class_path: cumulusci.tasks.bulkdata.LoadData
+        options:
+            database_url: 'sqlite:///Cumulus/datasets/dev_org/test_data.db'
+            mapping: 'Cumulus/datasets/mapping_managed.yml'
+
 flows:
     ci_feature:
         description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
@@ -157,6 +235,38 @@ flows:
             6:
                 task: deploy_test_data_managed
 
+    install_npsp:
+        description: 'Installs NPSP with unmanaged metadata and inserts NPSP test data'
+        steps:
+            1:
+                task: install_npsp_with_unpackaged_config
+            2:
+                task: insert_npsp_relationships
+
+    customer_org_npsp:
+        steps:
+            1:
+                flow: install_npsp
+            2:
+                task: ensure_record_type
+            3:
+                task: install_managed
+            4:
+                task: deploy_npsp_v4s_page_layouts
+                options:
+                    unmanaged: False
+
+    customer_org:
+        steps:
+            1:
+                task: ensure_record_type
+            2:
+                task: install_managed
+            3:
+                task: deploy_v4s_only_page_layouts
+                options:
+                    unmanaged: False
+
 orgs:
     scratch:
         dev_namespaced:
@@ -166,3 +276,32 @@ orgs:
         prerelease:
             config_file: orgs/prerelease.json
 
+plans:
+    install:
+        slug: install
+        title: Install Volunteers for Salesforce
+        tier: primary
+        is_listed: False
+        steps:
+            1:
+                task: ensure_record_type
+                ui_options:
+                    name: Default Campaign Record Type
+            2:
+                task: install_managed
+                ui_options:
+                    name: Install Volunteers for Salesforce
+            3:
+                task: deploy_npsp_v4s_page_layouts
+                checks:
+                    - when: "'npsp' not in tasks.get_installed_packages()"
+                      action: hide
+                ui_options:
+                    is_required: False
+            3:
+                task: deploy_v4s_only_page_layouts
+                checks:
+                    - when: "'npsp' in tasks.get_installed_packages()"
+                      action: hide
+                ui_options:
+                    is_required: False
