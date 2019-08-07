@@ -30,8 +30,21 @@
 
 @isTest
 private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
+    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
 
     //==================== TEST METHOD(s) ======================================
+    @IsTest
+    private static void shouldCheckAccessOnPageLoad() {
+        PageReference reportHoursPage = Page.VolunteersReportHours; 
+        Test.setCurrentPage(reportHoursPage);
+        setAccessMock();
+        VOL_CTRL_VolunteersReportHours ctrl = new VOL_CTRL_VolunteersReportHours();
+
+        accessMock.assertMethodCalled('checkCreateAccess', 1);
+        accessMock.assertMethodCalled('checkUpdateAccess', 1);
+        accessMock.assertMethodCalledWith('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalledWith('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+    }
 
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
@@ -50,6 +63,10 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
             system.debug('Running test as system.');
             CodeCoverageTests();
         }
+    }
+
+    private static void setAccessMock() {
+        VOL_CTRL_VolunteersReportHours.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }
 
     private static void CodeCoverageTests() {

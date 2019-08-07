@@ -29,9 +29,11 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersReportHours {
-  
-    private VOL_SharedCode volSharedCode; 
-     
+    private VOL_SharedCode volSharedCode;
+
+    @TestVisible
+    private static VOL_Access access = VOL_Access.getInstance();
+
     // constructor
     global VOL_CTRL_VolunteersReportHours() {
         try {
@@ -374,7 +376,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     * @return void.
     ********************************************************************************************************/
     private void checkCreateAccess() {
-        UTIL_Describe.checkCreateAccess(
+        access.checkCreateAccess(
             UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
             new Set<String>{
                 UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
@@ -405,7 +407,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             }
         }
 
-        UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), flsCheckFields);
+        access.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'), flsCheckFields);
     }
 
     // this was a testmethod which can't be compiled in this class under api 31.  
