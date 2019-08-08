@@ -34,6 +34,7 @@
 ********************************************************************************************************/
 public with sharing class VOL_VRS {
 
+    private static VOL_Access access = VOL_Access.getInstance();
 
     //******************************************************************************************************
     // for the specified VRS's, delete all future hours that are not completed or canceled hours.  
@@ -73,11 +74,11 @@ public with sharing class VOL_VRS {
         }
         
         if (listHoursUpdate.size() > 0) {
-            update listHoursUpdate;
+            access.updateRecords(listHoursUpdate);
         }
             
         if (listHoursDelete.size() > 0) {
-            delete listHoursDelete;
+            access.deleteRecords(listHoursDelete);
         }       
     }
 
@@ -173,11 +174,11 @@ public with sharing class VOL_VRS {
             AssignVRSHours(shift, listVRSforJob, mapShiftIdContactIdToHours, listHoursNew, listHoursUpdate);
         }
         if (listHoursNew.size() > 0) {
-            insert listHoursNew;
+            access.insertRecords(listHoursNew);
         }
             
         if (listHoursUpdate.size() > 0) {
-            update listHoursUpdate;
+            access.updateRecords(listHoursUpdate);
         }
 
         // mapShiftIdContactIdToHours now contains only the Future Hours that did not match the VRS's, 

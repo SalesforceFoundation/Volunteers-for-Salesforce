@@ -54,14 +54,18 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     }
         
     private static void testPSC() {
-        // create test data
+        VOL_Access access = VOL_Access.getInstance();
+
+        // create test data        
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
             name='Volunteer Personal Site Test Campaign', IsActive=true);
-        insert cmp;
+        access.insertRecords(new List<Campaign>{cmp});
+
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
-        insert job;
+        access.insertRecords(new List<Volunteer_Job__c>{job});
+        
         Contact contact = new Contact(firstname='test', lastname='test');
-        insert contact;
+        access.insertRecords(new List<Contact>{contact});
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
             Volunteer_Job__c = job.Id,
@@ -69,7 +73,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
             Duration__c = 1.5,
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
-        insert jrs;
+        access.insertRecords(new List<Job_Recurrence_Schedule__c>{jrs});
         system.assertNotEquals(null, jrs.Id);
         
         Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
@@ -79,7 +83,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
             Duration__c = 1.5,
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
-        insert vrs;
+        access.insertRecords(new List<Volunteer_Recurrence_Schedule__c>{vrs});
+
         system.assertNotEquals(null, vrs.Id);
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
@@ -105,8 +110,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         system.assertNotEquals(null, listHours);
         system.assert(listHours.size() > 2);
         listHours[0].Status__c = 'Completed';
-        listHours[1].Status__c = 'Completed';
-        update listHours;
+        listHours[1].Status__c = 'Completed';        
+        access.updateRecords(listHours);
         
         system.assertNotEquals(null, ctrl.getChartData());
         system.assertEquals('', ctrl.strRank); // null because we don't have enough other volunteers in test data.

@@ -73,4 +73,13 @@ public without sharing virtual class DatabaseDml {
     public void insertRecords(List<SObject> sObjects, Database.DMLOptions dmlDuplicateOptions) {
         Database.insert(sObjects, dmlDuplicateOptions);
     }
+    
+    /*******************************************************************************************************
+    * @description Deletes a list of SObjects
+    * @param List of SObjects to delete
+    ********************************************************************************************************/
+    public void deleteRecords(List<SObject> sObjects) {
+        delete sObjects;
+    }
+
 }
