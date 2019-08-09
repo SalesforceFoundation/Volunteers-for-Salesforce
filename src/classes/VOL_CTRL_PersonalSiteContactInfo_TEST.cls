@@ -64,7 +64,10 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
         access.insertRecords(new List<Volunteer_Job__c>{job});
         
-        Contact contact = new Contact(firstname='test', lastname='test');
+        Account defaultAccount = new Account(Name='DefaultTestAccount');
+        access.insertRecords(new List<Account>{defaultAccount});
+        
+        Contact contact = new Contact(firstname='test', lastname='test', AccountId=defaultAccount.Id);
         access.insertRecords(new List<Contact>{contact});
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
@@ -89,7 +92,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
         pageRef.getParameters().put('contactId', contact.Id);     
-        system.assertNotEquals(null, contact.Id);   
+        system.assertNotEquals(null, contact.Id);
         Test.setCurrentPage(pageRef); 
 
         //instantiate the controller 
