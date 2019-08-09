@@ -115,18 +115,5 @@ public with sharing virtual class VOL_Access {
         }
 
         Database.insert(sObjects, dmlDuplicateOptions);
-    }
-
-    /*******************************************************************************************************
-    * @description Routes the DML delete to the DatabaseDml class for elevated users
-    * @param List of SObjects to delete
-    ********************************************************************************************************/
-    public void deleteRecords(List<SObject> sObjects) {
-        if (isElevated) {
-            DatabaseDml.getInstance().deleteRecords(sObjects);
-            return;
-        }
-
-        delete sObjects;
-    }    
+    }  
 }

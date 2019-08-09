@@ -54,21 +54,14 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     }
         
     private static void testPSC() {
-        VOL_Access access = VOL_Access.getInstance();
-
-        // create test data        
+        // create test data
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
             name='Volunteer Personal Site Test Campaign', IsActive=true);
-        access.insertRecords(new List<Campaign>{cmp});
-
+        insert cmp;
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
-        access.insertRecords(new List<Volunteer_Job__c>{job});
-        
-        Account defaultAccount = new Account(Name='DefaultTestAccount');
-        access.insertRecords(new List<Account>{defaultAccount});
-        
-        Contact contact = new Contact(firstname='test', lastname='test', AccountId=defaultAccount.Id);
-        access.insertRecords(new List<Contact>{contact});
+        insert job;
+        Contact contact = new Contact(firstname='test', lastname='test');
+        insert contact;
         
         Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
             Volunteer_Job__c = job.Id,
@@ -76,7 +69,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
             Duration__c = 1.5,
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
-        access.insertRecords(new List<Job_Recurrence_Schedule__c>{jrs});
+        insert jrs;
         system.assertNotEquals(null, jrs.Id);
         
         Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
@@ -86,13 +79,12 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
             Duration__c = 1.5,
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
-        access.insertRecords(new List<Volunteer_Recurrence_Schedule__c>{vrs});
-
+        insert vrs;
         system.assertNotEquals(null, vrs.Id);
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
         pageRef.getParameters().put('contactId', contact.Id);     
-        system.assertNotEquals(null, contact.Id);
+        system.assertNotEquals(null, contact.Id);   
         Test.setCurrentPage(pageRef); 
 
         //instantiate the controller 
@@ -113,8 +105,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         system.assertNotEquals(null, listHours);
         system.assert(listHours.size() > 2);
         listHours[0].Status__c = 'Completed';
-        listHours[1].Status__c = 'Completed';        
-        access.updateRecords(listHours);
+        listHours[1].Status__c = 'Completed';
+        update listHours;
         
         system.assertNotEquals(null, ctrl.getChartData());
         system.assertEquals('', ctrl.strRank); // null because we don't have enough other volunteers in test data.
