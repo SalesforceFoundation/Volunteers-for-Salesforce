@@ -400,6 +400,12 @@ public with sharing class VOL_Access_TEST {
                 sObjectTypes.add(sObjType);
 
                 sObjectTypesByMethodName.put(stubbedMethodName, sObjectTypes);
+
+            } else if (arg instanceof String) {
+                SObjectType sObjType = ((SObject)(Type.forName('Schema.' + arg).newInstance())).getSObjectType();
+                sObjectTypes.add(sObjType);
+
+                sObjectTypesByMethodName.put(stubbedMethodName, sObjectTypes);
             }
         }
     }
