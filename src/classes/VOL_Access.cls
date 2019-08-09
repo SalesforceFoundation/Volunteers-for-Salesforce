@@ -26,9 +26,19 @@ public with sharing virtual class VOL_Access {
     }
 
     /**
-     * @description TODO: Replace with custom setting
+     * @description Custom setting that determines whether or not V4S should grant guest user update access
+     * based on their create access.
      */
-    @TestVisible private Boolean elevateGuestUserAccessSetting = true;
+    @TestVisible
+    private Boolean elevateGuestUserAccessSetting {
+        get {
+            if (elevateGuestUserAccessSetting == null) {
+                elevateGuestUserAccessSetting = VOL_SharedCode.VolunteersSettings.Grant_Guest_Users_Update_Access__c;
+            }
+            return elevateGuestUserAccessSetting;
+        }
+        set;
+    }
 
     /**
      * @description Determines whether the users update access should match their create access and

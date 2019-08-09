@@ -58,6 +58,10 @@ public class UTIL_UnitTest {
         return guestUsers[0];
     }
 
+    public static void elevateGuestUserAccess() {
+        VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+    }
+
     public static User createStandardGuestUser() {
         String email = 'guest' + '@testorg.com';
 
