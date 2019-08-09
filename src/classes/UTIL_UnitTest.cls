@@ -133,4 +133,21 @@ public class UTIL_UnitTest {
             LastName = lastName,
             Email = 'andy@test.com');
     }
+
+    public static Contact createContact() {
+        return createContact('Testerton ' + Datetime.now().getTime());
+    }
+
+    public static Volunteer_Hours__c createHour(Id contactId, Id jobId, Id shiftId) {
+        return new Volunteer_Hours__c(
+            Contact__c = contactId,
+            Volunteer_Job__c = jobId,
+            Volunteer_Shift__c = shiftId,
+            Status__c = 'Web Sign Up',
+            Start_Date__c = System.today(),
+            End_Date__c = System.today(),
+            Hours_Worked__c = 1,
+            Number_of_Volunteers__c = 1
+        );
+    }
 }
