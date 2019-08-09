@@ -73,5 +73,4 @@ public without sharing virtual class DatabaseDml {
     public void insertRecords(List<SObject> sObjects, Database.DMLOptions dmlDuplicateOptions) {
         Database.insert(sObjects, dmlDuplicateOptions);
     }
-
 }
