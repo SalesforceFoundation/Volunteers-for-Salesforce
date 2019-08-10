@@ -163,7 +163,6 @@ tasks:
                 insert defaultRelationships;
 
     insert_npsp_test_data:
-        group: 'CaseMan: NPSP'
         description: 'Loads a NPSP test data set for most NPSP objects based on 100 Contacts that should fit into a scratch org or DE org'
         class_path: cumulusci.tasks.bulkdata.LoadData
         options:
