@@ -165,6 +165,7 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c = false;
                     VolunteersSettings.Signup_Bucket_Account_On_Create__c = null;
                     VolunteersSettings.Recurring_Job_Future_Months__c = 4;
+                    VolunteersSettings.Grant_Guest_Users_Update_Access__c = false;
                     VolunteersSettings.Contact_Match_Email_Fields__c = null;
                     VolunteersSettings.Contact_Match_First_Name_Fields__c = null;
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
