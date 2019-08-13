@@ -77,13 +77,13 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         System.assert(contactShares.size() > 0);
         
         if (guestUser != null) {
-            system.debug('Running test as Sites Guest User: ' + guestUser);
-            system.runAs(guestUser) {
+            System.debug('Running test as Sites Guest User: ' + guestUser);
+            System.runAs(guestUser) {
 
                 testPSC();
             }
         } else {
-            system.debug('Running test as system.');
+            System.debug('Running test as system.');
             testPSC();
         }
     }
