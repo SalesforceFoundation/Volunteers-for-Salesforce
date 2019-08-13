@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest
-public without sharing class UTIL_UnitTest {
+public class UTIL_UnitTest {
     /**
      * @description: The guest site user when found otherwise creates a default guest user
      */

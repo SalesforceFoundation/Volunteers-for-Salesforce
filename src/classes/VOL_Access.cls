@@ -74,7 +74,7 @@ public with sharing virtual class VOL_Access {
     }
 
     /*******************************************************************************************************
-    * @description Routes the DML update to the DatabaseDml class for elevated users
+    * @description Routes the DML to the DatabaseDml class for elevated users
     * @param List of SObjects to update
     ********************************************************************************************************/
     public void updateRecords(List<SObject> sObjects) {
@@ -87,7 +87,7 @@ public with sharing virtual class VOL_Access {
     }
 
     /*******************************************************************************************************
-    * @description Routes the DML update to the DatabaseDml class for elevated users
+    * @description Routes the DML to the DatabaseDml class for elevated users
     * @param List of SObjects to update
     * @param DML Options for handling duplicates
     ********************************************************************************************************/
@@ -114,7 +114,7 @@ public with sharing virtual class VOL_Access {
     }
 
     /*******************************************************************************************************
-    * @description Routes the DML insert to the DatabaseDml class for elevated users
+    * @description Routes the DML to the DatabaseDml class for elevated users
     * @param List of SObjects to insert
     * @param DML Options for handling duplicates
     ********************************************************************************************************/

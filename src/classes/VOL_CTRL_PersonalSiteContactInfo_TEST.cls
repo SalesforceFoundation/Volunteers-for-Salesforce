@@ -69,7 +69,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * @return void
     ********************************************************************************************************/
     private static testMethod void testPageWithSitesGuestUser() {
-		User guestUser = Util_UnitTest.guestUser;
+        User guestUser = Util_UnitTest.guestUser;
         Util_UnitTest.elevateGuestUserAccess();
         Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
         
