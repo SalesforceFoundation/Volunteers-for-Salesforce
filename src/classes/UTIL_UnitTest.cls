@@ -124,10 +124,8 @@ public class UTIL_UnitTest {
         // Simulate CBS Rule
         ContactShare contactShare = new ContactShare(ContactId=guestContact.Id, ContactAccessLevel='Read', UserOrGroupId=guestUser.Id);
         insert contactShare;
-        System.debug('contactShare: ' + contactShare);
         
         CampaignShare campaignShare = new CampaignShare(CampaignId=guestCampaign.Id, CampaignAccessLevel='Read', UserOrGroupId=guestUser.Id);
-        System.debug('campaignShare: ' + campaignShare);
         insert campaignShare;
         
         Job_Recurrence_Schedule__c jrsRecord = createJobRecurrence(guestJob.Id);
