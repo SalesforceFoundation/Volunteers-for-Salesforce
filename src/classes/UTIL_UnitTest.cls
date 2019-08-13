@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest
-public class UTIL_UnitTest {
+public without sharing class UTIL_UnitTest {
     /**
      * @description: The guest site user when found otherwise creates a default guest user
      */
@@ -58,6 +58,10 @@ public class UTIL_UnitTest {
         return guestUsers[0];
     }
 
+    public static void elevateGuestUserAccess() {
+        VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
+    }
+
     public static User createStandardGuestUser() {
         String email = 'guest' + '@testorg.com';
 
@@ -78,6 +82,7 @@ public class UTIL_UnitTest {
 
     public static User createUser(String email, String profileName) {
         Profile profileRecord = [SELECT Id FROM Profile WHERE Name = :profileName];
+        
         User userRecord =  new User(
             Alias = 'jdoe',
             Email = email,
@@ -92,6 +97,47 @@ public class UTIL_UnitTest {
 
         return userRecord;
     }
+    
+    public static Map<Id, SObject> generateDataForGuestUser(){
+        Campaign guestCampaign;
+        Contact guestContact;
+        Volunteer_Job__c guestJob;
+        
+        DateTime now = System.now();
+       	
+        User guestUser = Util_UnitTest.guestUser;        
+        
+        Map<Id, SObject> sObjectById = generateData();
+        
+        for(SObject sObj : sObjectById.values()){
+            if(sObj.getSObjectType() == Schema.Contact.getSObjectType()){
+                guestContact = (Contact)sObj;
+            }
+            if(sObj.getSObjectType() == Schema.Volunteer_Job__c.getSObjectType()){
+                guestJob = (Volunteer_Job__c)sObj;
+            }
+            if(sObj.getSobjectType() == Schema.Campaign.getSObjectType()){
+                guestCampaign = (Campaign)sObj;
+            }
+        }
+
+        // Simulate CBS Rule
+        ContactShare contactShare = new ContactShare(ContactId=guestContact.Id, ContactAccessLevel='Read', UserOrGroupId=guestUser.Id);
+        insert contactShare;
+        System.debug('contactShare: ' + contactShare);
+        
+        CampaignShare campaignShare = new CampaignShare(CampaignId=guestCampaign.Id, CampaignAccessLevel='Read', UserOrGroupId=guestUser.Id);
+        System.debug('campaignShare: ' + campaignShare);
+        insert campaignShare;
+        
+        Job_Recurrence_Schedule__c jrsRecord = createJobRecurrence(guestJob.Id);
+        sObjectById.put(jrsRecord.Id, jrsRecord);
+        
+        Volunteer_Recurrence_Schedule__c vrsRecord = createVolunteerRecurrence(guestContact.Id, guestJob.Id);
+        sObjectById.put(vrsRecord.Id, vrsRecord);        
+
+        return sObjectById;
+    }
 
     public static Map<Id, SObject> generateData() {
         Map<Id, SObject> sObjectById = new Map<Id, SObject>();
@@ -105,7 +151,12 @@ public class UTIL_UnitTest {
         insert volunteerJob;
         sObjectById.put(volunteerJob.Id, volunteerJob);
 
+        Account accountRecord = createAccount('TestAccount' + now);
+        insert accountRecord;
+        sObjectById.put(accountRecord.Id, accountRecord);
+        
         Contact contactRecord = createContact('Helper ' + now);
+        contactRecord.AccountId = accountRecord.Id;
         insert contactRecord;
         sObjectById.put(contactRecord.Id, contactRecord);
 
@@ -137,6 +188,10 @@ public class UTIL_UnitTest {
     public static Contact createContact() {
         return createContact('Testerton ' + Datetime.now().getTime());
     }
+    
+    public static Account createAccount(String name) {
+        return new Account(Name=name);
+    }
 
     public static Volunteer_Hours__c createHour(Id contactId, Id jobId, Id shiftId) {
         return new Volunteer_Hours__c(
@@ -149,5 +204,28 @@ public class UTIL_UnitTest {
             Hours_Worked__c = 1,
             Number_of_Volunteers__c = 1
         );
+    }
+    
+    public static Job_Recurrence_Schedule__c createJobRecurrence(Id jobId){
+        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
+            Volunteer_Job__c = jobId,
+            Days_of_Week__c = 'Monday;Friday',
+            Duration__c = 1.5,
+            Schedule_Start_Date_Time__c = datetime.now(),
+            Weekly_Occurrence__c = '1st');
+        insert jrs;
+        return jrs;
+    }
+    
+    public static Volunteer_Recurrence_Schedule__c createVolunteerRecurrence(Id contactId, Id jobid){
+        Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
+            Contact__c = contactId, 
+            Volunteer_Job__c = jobId,
+            Days_of_Week__c = 'Monday;Friday',
+            Duration__c = 1.5,
+            Schedule_Start_Date_Time__c = datetime.now(),
+            Weekly_Occurrence__c = '1st');
+        insert vrs;
+        return vrs;
     }
 }

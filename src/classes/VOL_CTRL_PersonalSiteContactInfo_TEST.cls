@@ -30,21 +30,55 @@
 
 @isTest
 private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
-
+    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+    
     //******************************************************************************************************
     // Test Code
 
+    private static void setAccessMock() {
+        VOL_CTRL_PersonalSiteContactInfo.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+    }    
+    
+    private static testMethod void shouldCheckAccessOnSave(){
+        setAccessMock();
+		User guestUser = Util_UnitTest.guestUser;
+        Util_UnitTest.elevateGuestUserAccess();
+
+        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
+
+        Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
+        System.AssertNotEquals(null, contactRecord);
+
+        // setup page
+        PageReference pageRef = Page.PersonalSiteContactInfo;
+        pageRef.getParameters().put('contactId', contactRecord.Id);
+        system.assertNotEquals(null, contactRecord.Id);   
+        Test.setCurrentPage(pageRef); 
+
+        VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
+        ctrl.contactEdit.LastName = 'ChangedLastName';
+        ctrl.save();
+        
+        accessMock.assertMethodCalled('checkUpdateAccess', 1);
+        accessMock.assertMethodCalledWith('checkUpdateAccess', Contact.SObjectType);
+    }
+    
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
     private static testMethod void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and 
-            Name like '%Site Guest User%'];
-        if (listU.size() > 0) {
-            system.debug('Running test as Sites Guest User: ' + listU[0]);
-            system.runAs(listU[0]) {
+		User guestUser = Util_UnitTest.guestUser;
+        Util_UnitTest.elevateGuestUserAccess();
+        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
+        
+        List<ContactShare> contactShares = [SELECT Id, ContactId  FROM ContactShare WHERE UserOrGroupId = :guestUser.Id];
+        System.assert(contactShares.size() > 0);
+        
+        if (guestUser != null) {
+            system.debug('Running test as Sites Guest User: ' + guestUser);
+            system.runAs(guestUser) {
                 testPSC();
             }
         } else {
@@ -52,38 +86,35 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
             testPSC();
         }
     }
+
+    private static testMethod void testPageWithSitesGuestUserUnelevated(){
+		User guestUser = Util_UnitTest.guestUser;
+        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
+
+        Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
+        System.AssertNotEquals(null, contactRecord);
         
+        System.runAs(guestUser){
+            PageReference pageRef = Page.PersonalSiteContactInfo;
+            pageRef.getParameters().put('contactId', contactRecord.Id);
+            system.assertNotEquals(null, contactRecord.Id);   
+            Test.setCurrentPage(pageRef);
+    
+            VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();      
+            ctrl.contactEdit.LastName = 'TestIsNowTesty';
+            ctrl.save();
+            Contact con = [select Id, LastName from Contact where Id = :ctrl.contactId];
+            system.assertNotEquals('TestIsNowTesty', con.LastName);
+        }
+    }
+    
     private static void testPSC() {
-        // create test data
-        Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-            name='Volunteer Personal Site Test Campaign', IsActive=true);
-        insert cmp;
-        Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
-        insert job;
-        Contact contact = new Contact(firstname='test', lastname='test');
-        insert contact;
-        
-        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
-            Volunteer_Job__c = job.Id,
-            Days_of_Week__c = 'Monday;Friday',
-            Duration__c = 1.5,
-            Schedule_Start_Date_Time__c = datetime.now(),
-            Weekly_Occurrence__c = '1st');
-        insert jrs;
-        system.assertNotEquals(null, jrs.Id);
-        
-        Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
-            Contact__c = contact.Id, 
-            Volunteer_Job__c = job.Id,
-            Days_of_Week__c = 'Monday;Friday',
-            Duration__c = 1.5,
-            Schedule_Start_Date_Time__c = datetime.now(),
-            Weekly_Occurrence__c = '1st');
-        insert vrs;
-        system.assertNotEquals(null, vrs.Id);
+        Contact contact = [SELECT Id FROM Contact LIMIT 1];
+        System.AssertNotEquals(null, contact);
+
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
-        pageRef.getParameters().put('contactId', contact.Id);     
+        pageRef.getParameters().put('contactId', contact.Id);
         system.assertNotEquals(null, contact.Id);   
         Test.setCurrentPage(pageRef); 
 

@@ -29,6 +29,7 @@
 */
 
 global with sharing class VOL_CTRL_PersonalSiteContactInfo {
+    @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
     
     global VOL_CTRL_PersonalSiteContactInfo() {
@@ -90,10 +91,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         setStrFields.addAll(listStrFieldsPanel2FS);
         setStrFields.addAll(listStrFieldsExtraFS);
         setStrFields.add('Firstname');
-        setStrFields.add('Lastname');        
-
-        contactReadOnly = (Contact)VOL_SharedCode.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));
-
+        setStrFields.add('Lastname');
+        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));
+        
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsPanel1FS); 
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsPanel2FS);
@@ -319,7 +319,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             if (hoursId != null) {           
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
-                hr.Hours_Worked__c = 0;
+                hr.Hours_Worked__c = 0;            
                 access.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),                
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
