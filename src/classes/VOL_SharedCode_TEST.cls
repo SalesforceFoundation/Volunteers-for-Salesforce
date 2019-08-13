@@ -45,6 +45,15 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     @IsTest
+    private static void shouldCheckCreateAccessAndInsertWhenMatchingContactNotFound() {
+        setAccessMock();
+
+        VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
+        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check create access to have been called.');
+        System.assertEquals(1, accessMock.countByMethodName.get('insertRecords'), 'Expected create records to have been called.');
+    }
+
+    @IsTest
     private static void shouldCheckUpdateAccessAndUpdateMatchingContactFS() {
         insert contactRecord;
         setAccessMock();
