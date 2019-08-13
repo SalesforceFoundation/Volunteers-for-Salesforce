@@ -79,6 +79,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         if (guestUser != null) {
             system.debug('Running test as Sites Guest User: ' + guestUser);
             system.runAs(guestUser) {
+
                 testPSC();
             }
         } else {

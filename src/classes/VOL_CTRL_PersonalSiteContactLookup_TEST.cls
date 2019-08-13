@@ -43,6 +43,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
+            UTIL_UnitTest.elevateGuestUserAccess();
             system.debug('Running test as Sites Guest User: ' + listU[0]);
             system.runAs(listU[0]) {
                 TestPersonalSiteContactLookup();
