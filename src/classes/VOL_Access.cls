@@ -125,5 +125,5 @@ public with sharing virtual class VOL_Access {
         }
 
         Database.insert(sObjects, dmlDuplicateOptions);
-    }  
+    }
 }
