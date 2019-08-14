@@ -44,7 +44,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
 		User guestUser = Util_UnitTest.guestUser;
         Util_UnitTest.elevateGuestUserAccess();
 
-        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
+        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataWithRecurrenceSchedules();
 
         Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
         System.AssertNotEquals(null, contactRecord);
