@@ -1,0 +1,14 @@
+{
+  "orgName": "V4S - Prerelease Beta Test Org", 
+  "edition": "Developer", 
+  "instance": "cs46",
+  "hasSampleData": "false",
+  "features": "Sites",
+  "settings": {
+    "orgPreferenceSettings": {
+      "chatterEnabled": true,
+      "disableParallelApexTesting": true,
+      "s1DesktopEnabled": true
+    }
+  }
+}
