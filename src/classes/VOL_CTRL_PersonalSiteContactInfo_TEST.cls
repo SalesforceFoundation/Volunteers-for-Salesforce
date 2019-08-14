@@ -68,13 +68,9 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testMethod void testPageWithSitesGuestUser() {
-		User guestUser = Util_UnitTest.guestUser;
-        Util_UnitTest.elevateGuestUserAccess();
-        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
-
-        testPSC();        
-
+    private static testMethod void testPageFunctionality() {
+        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataWithRecurrenceSchedules();
+        testPSC();
     }
     
     private static void testPSC() {

@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest
-public without sharing class UTIL_UnitTest {
+public class UTIL_UnitTest {
     /**
      * @description: The guest site user when found otherwise creates a default guest user
      */
@@ -98,27 +98,25 @@ public without sharing class UTIL_UnitTest {
         return userRecord;
     }
     
-    public static Map<Id, SObject> generateDataForGuestUser(){
-        Contact guestContact;
-        Volunteer_Job__c guestJob;               	
-        User guestUser = Util_UnitTest.guestUser;        
-        
+    public static Map<Id, SObject> generateDataWithRecurrenceSchedules(){
+        Contact contactRecord;        
+        Volunteer_Job__c jobRecord;        
         Map<Id, SObject> sObjectById = generateData();
         
         for(SObject sObj : sObjectById.values()){
             if(sObj.getSObjectType() == Schema.Contact.getSObjectType()){
-                guestContact = (Contact)sObj;
+                contactRecord = (Contact)sObj;
             }
             if(sObj.getSObjectType() == Schema.Volunteer_Job__c.getSObjectType()){
-                guestJob = (Volunteer_Job__c)sObj;
+                jobRecord = (Volunteer_Job__c)sObj;
             }
         }
 
-        Job_Recurrence_Schedule__c jrsRecord = createJobRecurrence(guestJob.Id);
+        Job_Recurrence_Schedule__c jrsRecord = createJobRecurrence(jobRecord.Id);
         insert jrsRecord;
         sObjectById.put(jrsRecord.Id, jrsRecord);
         
-        Volunteer_Recurrence_Schedule__c vrsRecord = createVolunteerRecurrence(guestContact.Id, guestJob.Id);
+        Volunteer_Recurrence_Schedule__c vrsRecord = createVolunteerRecurrence(contactRecord.Id, jobRecord.Id);
         insert vrsRecord;
         sObjectById.put(vrsRecord.Id, vrsRecord);        
 
