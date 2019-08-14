@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 @IsTest
-public class UTIL_UnitTest {
+public without sharing class UTIL_UnitTest {
     /**
      * @description: The guest site user when found otherwise creates a default guest user
      */
@@ -99,12 +99,8 @@ public class UTIL_UnitTest {
     }
     
     public static Map<Id, SObject> generateDataForGuestUser(){
-        Campaign guestCampaign;
         Contact guestContact;
-        Volunteer_Job__c guestJob;
-        
-        DateTime now = System.now();
-       	
+        Volunteer_Job__c guestJob;               	
         User guestUser = Util_UnitTest.guestUser;        
         
         Map<Id, SObject> sObjectById = generateData();
@@ -116,22 +112,14 @@ public class UTIL_UnitTest {
             if(sObj.getSObjectType() == Schema.Volunteer_Job__c.getSObjectType()){
                 guestJob = (Volunteer_Job__c)sObj;
             }
-            if(sObj.getSobjectType() == Schema.Campaign.getSObjectType()){
-                guestCampaign = (Campaign)sObj;
-            }
         }
 
-        // Simulate CBS Rule
-        ContactShare contactShare = new ContactShare(ContactId=guestContact.Id, ContactAccessLevel='Read', UserOrGroupId=guestUser.Id);
-        insert contactShare;
-        
-        CampaignShare campaignShare = new CampaignShare(CampaignId=guestCampaign.Id, CampaignAccessLevel='Read', UserOrGroupId=guestUser.Id);
-        insert campaignShare;
-        
         Job_Recurrence_Schedule__c jrsRecord = createJobRecurrence(guestJob.Id);
+        insert jrsRecord;
         sObjectById.put(jrsRecord.Id, jrsRecord);
         
         Volunteer_Recurrence_Schedule__c vrsRecord = createVolunteerRecurrence(guestContact.Id, guestJob.Id);
+        insert vrsRecord;
         sObjectById.put(vrsRecord.Id, vrsRecord);        
 
         return sObjectById;
@@ -205,25 +193,21 @@ public class UTIL_UnitTest {
     }
     
     public static Job_Recurrence_Schedule__c createJobRecurrence(Id jobId){
-        Job_Recurrence_Schedule__c jrs = new Job_Recurrence_Schedule__c(
+        return new Job_Recurrence_Schedule__c(
             Volunteer_Job__c = jobId,
             Days_of_Week__c = 'Monday;Friday',
             Duration__c = 1.5,
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
-        insert jrs;
-        return jrs;
     }
     
     public static Volunteer_Recurrence_Schedule__c createVolunteerRecurrence(Id contactId, Id jobid){
-        Volunteer_Recurrence_Schedule__c vrs = new Volunteer_Recurrence_Schedule__c(
+        return new Volunteer_Recurrence_Schedule__c(
             Contact__c = contactId, 
             Volunteer_Job__c = jobId,
             Days_of_Week__c = 'Monday;Friday',
             Duration__c = 1.5,
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
-        insert vrs;
-        return vrs;
     }
 }

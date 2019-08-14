@@ -69,44 +69,12 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * @return void
     ********************************************************************************************************/
     private static testMethod void testPageWithSitesGuestUser() {
-        User guestUser = Util_UnitTest.guestUser;
+		User guestUser = Util_UnitTest.guestUser;
         Util_UnitTest.elevateGuestUserAccess();
         Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
-        
-        List<ContactShare> contactShares = [SELECT Id, ContactId  FROM ContactShare WHERE UserOrGroupId = :guestUser.Id];
-        System.assert(contactShares.size() > 0);
-        
-        if (guestUser != null) {
-            System.debug('Running test as Sites Guest User: ' + guestUser);
-            System.runAs(guestUser) {
 
-                testPSC();
-            }
-        } else {
-            System.debug('Running test as system.');
-            testPSC();
-        }
-    }
+        testPSC();        
 
-    private static testMethod void testPageWithSitesGuestUserUnelevated(){
-		User guestUser = Util_UnitTest.guestUser;
-        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataForGuestUser();
-
-        Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
-        System.AssertNotEquals(null, contactRecord);
-        
-        System.runAs(guestUser){
-            PageReference pageRef = Page.PersonalSiteContactInfo;
-            pageRef.getParameters().put('contactId', contactRecord.Id);
-            system.assertNotEquals(null, contactRecord.Id);   
-            Test.setCurrentPage(pageRef);
-    
-            VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();      
-            ctrl.contactEdit.LastName = 'TestIsNowTesty';
-            ctrl.save();
-            Contact con = [select Id, LastName from Contact where Id = :ctrl.contactId];
-            system.assertNotEquals('TestIsNowTesty', con.LastName);
-        }
     }
     
     private static void testPSC() {
