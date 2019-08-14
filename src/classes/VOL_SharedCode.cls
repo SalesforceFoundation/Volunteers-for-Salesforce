@@ -335,8 +335,8 @@ global with sharing class VOL_SharedCode {
             } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
                 contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;
             }
-            UTIL_Describe.checkCreateAccess('Contact', setFlds);
-            Database.insert(contact, dmlDuplicateOptions);
+            access.checkCreateAccess('Contact', setFlds);
+            access.insertRecords(new List<Contact>{ contact }, dmlDuplicateOptions);
             return contact.Id;
         } else { // No Match found, create a Lead
             Lead lead = new lead();

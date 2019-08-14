@@ -29,6 +29,8 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersJobListing {
+    @TestVisible
+    private static VOL_Access access = VOL_Access.getInstance();
 
     // page parameters that can get passed into the page to control its behavior.
     global ID campaignIdFilter { get; set; }
@@ -252,13 +254,13 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                 VolunteerHoursBeforeInsert(vh); 
 
                 // Ensure the user has access to the object and fields before querying
-                UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                access.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c'),
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
                         UTIL_Describe.StrTokenNSPrefix('Start_Date__c')});
                 
-                insert vh;
+                access.insertRecords(new List<Volunteer_Hours__c>{ vh });
                 volunteerHoursIdSignUp = vh.Id;
             }
             
