@@ -42,9 +42,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     @IsTest
     private static void shouldCheckAccessOnSave() {
         setAccessMock();
-        Util_UnitTest.elevateGuestUserAccess();
-
-        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataWithRecurrenceSchedules();
+        Util_UnitTest.generateDataWithRecurrenceSchedules();
 
         Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
         System.assertNotEquals(null, contactRecord);
