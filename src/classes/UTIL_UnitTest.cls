@@ -98,16 +98,16 @@ public class UTIL_UnitTest {
         return userRecord;
     }
     
-    public static Map<Id, SObject> generateDataWithRecurrenceSchedules(){
+    public static Map<Id, SObject> generateDataWithRecurrenceSchedules() {
         Contact contactRecord;        
         Volunteer_Job__c jobRecord;        
         Map<Id, SObject> sObjectById = generateData();
         
-        for(SObject sObj : sObjectById.values()){
-            if(sObj.getSObjectType() == Schema.Contact.getSObjectType()){
+        for (SObject sObj : sObjectById.values()) {
+            if (sObj.getSObjectType() == Schema.Contact.getSObjectType()) {
                 contactRecord = (Contact)sObj;
             }
-            if(sObj.getSObjectType() == Schema.Volunteer_Job__c.getSObjectType()){
+            if (sObj.getSObjectType() == Schema.Volunteer_Job__c.getSObjectType()) {
                 jobRecord = (Volunteer_Job__c)sObj;
             }
         }
@@ -174,7 +174,7 @@ public class UTIL_UnitTest {
     }
     
     public static Account createAccount(String name) {
-        return new Account(Name=name);
+        return new Account(Name = name);
     }
 
     public static Volunteer_Hours__c createHour(Id contactId, Id jobId, Id shiftId) {

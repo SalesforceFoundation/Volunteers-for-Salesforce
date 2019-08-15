@@ -39,15 +39,15 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         VOL_CTRL_PersonalSiteContactInfo.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }    
     
-    private static testMethod void shouldCheckAccessOnSave(){
+    @IsTest
+    private static void shouldCheckAccessOnSave() {
         setAccessMock();
-		User guestUser = Util_UnitTest.guestUser;
         Util_UnitTest.elevateGuestUserAccess();
 
         Map<Id, SObject> sObjectById = Util_UnitTest.generateDataWithRecurrenceSchedules();
 
         Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
-        System.AssertNotEquals(null, contactRecord);
+        System.assertNotEquals(null, contactRecord);
 
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
@@ -69,7 +69,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * @return void
     ********************************************************************************************************/
     private static testMethod void testPageFunctionality() {
-        Map<Id, SObject> sObjectById = Util_UnitTest.generateDataWithRecurrenceSchedules();
+        Util_UnitTest.generateDataWithRecurrenceSchedules();
         testPSC();
     }
     
