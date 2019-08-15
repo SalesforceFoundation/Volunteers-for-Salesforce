@@ -29,6 +29,8 @@
 */
 
 global with sharing class VOL_CTRL_PersonalSiteContactInfo {
+    @TestVisible
+    private static VOL_Access access = VOL_Access.getInstance();
     
     global VOL_CTRL_PersonalSiteContactInfo() {
 
@@ -90,8 +92,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         setStrFields.addAll(listStrFieldsExtraFS);
         setStrFields.add('Firstname');
         setStrFields.add('Lastname');
-        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));                 
-        
+        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));
         
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsPanel1FS); 
@@ -298,9 +299,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                         }
                     }
                 }
-
-                VOL_SharedCode.checkUpdateAccessSites('Contact', contactFieldsToUpdate);
-                update contactReadOnly;
+                access.checkUpdateAccess('Contact', contactFieldsToUpdate);
+                access.updateRecords(new List<Contact>{ contactReadOnly });
             }
             isEditing = false;
         } catch (Exception ex) {
@@ -319,12 +319,13 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             if (hoursId != null) {           
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
-                hr.Hours_Worked__c = 0;
-                UTIL_Describe.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                hr.Hours_Worked__c = 0;            
+                access.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),                
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
                         UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
-                update hr;
+                access.updateRecords(new List<Volunteer_Hours__c>{hr});
+
                 hoursId = null; 
                 listUpcomingVolunteerHours = null; // to force it to be refreshed.
             }
