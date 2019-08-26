@@ -106,6 +106,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Signup_Creates_Account_If_Name_Provided__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>When selected, if the Volunteer Signup form has a value in Volunteer_Organization, create an Account with that name. This allows volunteers to be organization contacts and not 1:1 contacts.</inlineHelpText>
+        <label>Signup Creates Account If Name Provided</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Signup_Creates_Contacts_If_No_Match__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
