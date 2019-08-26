@@ -162,6 +162,7 @@ global with sharing class VOL_SharedCode {
                     // create reasonable defaults
                     VolunteersSettings.Signup_Matches_Existing_Contacts__c = false;
                     VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c = false;
+                    VolunteerSettings.Signup_Creates_Account_If_Name_Provided__c = false;
                     VolunteersSettings.Signup_Bucket_Account_On_Create__c = null;
                     VolunteersSettings.Recurring_Job_Future_Months__c = 4;
                     VolunteersSettings.Contact_Match_Email_Fields__c = null;
@@ -209,6 +210,7 @@ global with sharing class VOL_SharedCode {
         //create our own based on what's passed in from the test
         VolunteersSettings = new Volunteers_Settings__c (
             Signup_Matches_Existing_Contacts__c = mySettings.Signup_Matches_Existing_Contacts__c,
+            Signup_Creates_Account_If_Name_Provided__c = Signup_Creates_Account_If_Name_Provided__c,
             Signup_Creates_Contacts_If_No_Match__c = mySettings.Signup_Creates_Contacts_If_No_Match__c,
             Signup_Bucket_Account_On_Create__c = mySettings.Signup_Bucket_Account_On_Create__c,
             Recurring_Job_Future_Months__c = mySettings.Recurring_Job_Future_Months__c,
@@ -585,7 +587,17 @@ global with sharing class VOL_SharedCode {
             Account accToUse = null;
             if (strAccountName != null) {
                 list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
-                if (listAccount.size() > 0) accToUse = listAccount.get(0);
+                if (listAccount.size() > 0) {
+                    accToUse = listAccount.get(0);
+                }
+            }
+            
+            // If the person gave an employer or organization, use that as a new Account so we can use 
+            // regular contacts and a business account for volunteers. If we wish to use the 1:1 or bucket
+            // account model, don't put Volunteer Organization on the page.
+            if (strAccountName != null && accToUse == null && Volunteers_Settings__c.getInstance().Signup_Creates_Account_If_Name_Provided__c){
+                accToUse = new Account(Name = strAccountName);
+                insert accToUse;
             }
 
             // if company found, use it
