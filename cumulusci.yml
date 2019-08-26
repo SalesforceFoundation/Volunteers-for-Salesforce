@@ -297,7 +297,7 @@ plans:
                       action: hide
                 ui_options:
                     is_required: False
-            3:
+            4:
                 task: deploy_v4s_only_page_layouts
                 checks:
                     - when: "'npsp' in tasks.get_installed_packages()"
