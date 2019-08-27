@@ -18,7 +18,7 @@ public with sharing class VOL_Access_TEST {
 
     @IsTest
     private static void isGuestUserReturnsTrueForStandardGuestUsers() {
-        User standardGuest = UTIL_UnitTest.createStandardGuestUser();
+        User standardGuest = UTIL_UnitTest.createGuestUser();
 
         System.runAs(standardGuest) {
             System.assert(VOL_Access.getInstance().isGuestUser, 'Expected isGuestUser to be true for a standard guest user.');
@@ -39,7 +39,7 @@ public with sharing class VOL_Access_TEST {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
         String actualException;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             try {
                 VOL_Access.getInstance().checkUpdateAccess('Contact', new Set<String>{ 'LastName' });
             } catch (Exception ex) {
@@ -54,7 +54,7 @@ public with sharing class VOL_Access_TEST {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = false;
         String actualException;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             try {
                 VOL_Access.getInstance().checkUpdateAccess('Contact', new Set<String>{ 'LastName' });
             } catch (Exception ex) {
@@ -69,7 +69,7 @@ public with sharing class VOL_Access_TEST {
     private static void createAccessThrowsExceptionOnCreateForGuestUser() {
         List<String> actualExceptions = new List<String>();
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             try {
                 VOL_Access.getInstance().checkCreateAccess('Contact', new Set<String>{ 'LastName' });
             } catch (Exception ex) {
@@ -142,7 +142,7 @@ public with sharing class VOL_Access_TEST {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             VOL_Access.getInstance().updateRecords(contacts);
         }
 
@@ -154,7 +154,7 @@ public with sharing class VOL_Access_TEST {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             VOL_Access.getInstance().updateRecords(contacts, new Database.DMLOptions());
         }
 
@@ -166,7 +166,7 @@ public with sharing class VOL_Access_TEST {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             VOL_Access.getInstance().insertRecords(contacts);
         }
 
@@ -178,7 +178,7 @@ public with sharing class VOL_Access_TEST {
         setDatabaseDmlMock();
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             VOL_Access.getInstance().insertRecords(contacts, new Database.DMLOptions());
         }
 
@@ -254,7 +254,7 @@ public with sharing class VOL_Access_TEST {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = false;
         String actualException;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             contactRecord.LastName = 'After Update';
             try {
                 VOL_Access.getInstance().updateRecords(contacts);
@@ -275,7 +275,7 @@ public with sharing class VOL_Access_TEST {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = false;
         String actualException;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             contactRecord.LastName = 'After Update With Options';
             try {
                 VOL_Access.getInstance().updateRecords(contacts);
@@ -294,7 +294,7 @@ public with sharing class VOL_Access_TEST {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = false;
         String actualException;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             contactRecord.LastName = 'After Insert';
             VOL_Access.getInstance().insertRecords(contacts);
         }
@@ -309,7 +309,7 @@ public with sharing class VOL_Access_TEST {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = false;
         String actualException;
 
-        System.runAs(UTIL_UnitTest.createStandardGuestUser()) {
+        System.runAs(UTIL_UnitTest.createGuestUser()) {
             contactRecord.LastName = 'After Insert With Options';
             VOL_Access.getInstance().insertRecords(contacts);
         }

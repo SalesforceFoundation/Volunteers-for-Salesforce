@@ -374,6 +374,6 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     private static void setAccessMock() {
-        VOL_Access.instance = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+        VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }
 }

@@ -48,21 +48,13 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     @IsTest
     private static void shouldCheckCreateAccessAndInsertHoursOnSave() {
-        Map<Id, SObject> sObjectsById = UTIL_UnitTest.generateData();
+        Map<SObjectType, Map<Id, SObject>> sObjectByIdByType = UTIL_UnitTest.generateData();
         Contact contactRecord;
         Id jobId;
 
-        for (SObject sObj : sObjectsById.values()) {
-            switch on sObj {
-                when Contact contactSObject {
-                    contactRecord = (Contact) contactSObject;
-                }
-                when Volunteer_Job__c job {
-                    jobId = job.Id;
-                }
-            }
-        }
-        Volunteer_Hours__c hours = UTIL_UnitTest.createHour(contactRecord.Id, jobId, null);
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
 
         Test.setCurrentPage(reportHoursPage);
         VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
@@ -79,21 +71,13 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     @IsTest
     private static void shouldCheckUpdateAccessAndUpdateHoursOnSave() {
-        Map<Id, SObject> sObjectsById = UTIL_UnitTest.generateData();
+        Map<SObjectType, Map<Id, SObject>> sObjectByIdByType = UTIL_UnitTest.generateData();
         Contact contactRecord;
         Id jobId;
 
-        for (SObject sObj : sObjectsById.values()) {
-            switch on sObj {
-                when Contact contactSObject {
-                    contactRecord = (Contact) contactSObject;
-                }
-                when Volunteer_Job__c job {
-                    jobId = job.Id;
-                }
-            }
-        }
-        Volunteer_Hours__c hours = UTIL_UnitTest.createHour(contactRecord.Id, jobId, null);
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
         insert hours;
 
         Test.setCurrentPage(reportHoursPage);
