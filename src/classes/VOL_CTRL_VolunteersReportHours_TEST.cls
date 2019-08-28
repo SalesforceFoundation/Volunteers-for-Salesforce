@@ -48,7 +48,6 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     @IsTest
     private static void shouldCheckCreateAccessAndInsertHoursOnSave() {
-        Map<SObjectType, Map<Id, SObject>> sObjectByIdByType = UTIL_UnitTest.generateData();
         Contact contactRecord;
         Id jobId;
 
@@ -71,7 +70,6 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     @IsTest
     private static void shouldCheckUpdateAccessAndUpdateHoursOnSave() {
-        Map<SObjectType, Map<Id, SObject>> sObjectByIdByType = UTIL_UnitTest.generateData();
         Contact contactRecord;
         Id jobId;
 
