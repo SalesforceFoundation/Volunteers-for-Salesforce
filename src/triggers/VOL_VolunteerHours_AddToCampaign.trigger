@@ -29,6 +29,9 @@
 */
 
 trigger VOL_VolunteerHours_AddToCampaign on Volunteer_Hours__c (after insert, after update) {
+    @TestVisible
+    private static VOL_Access access = VOL_Access.getInstance();
+
     // TASK1: Adding to Campaigns
     // given a list of hours, we need to keep track of all the contacts for a given campaign.
     // with that info, we'll need to see if they have CampaignMember records.
@@ -98,9 +101,11 @@ trigger VOL_VolunteerHours_AddToCampaign on Volunteer_Hours__c (after insert, af
 
         }
         
-        insert listCMToAdd;
+        // Note: We will not check CRUD/FLS for this process so that it works regardless of user
+        access.insertRecords(listCMToAdd);
         
-        update listCMToUpdate;
+        // Note: We will not check CRUD/FLS for this process so that it works regardless of user
+        access.updateRecords(listCMToUpdate);
         
         // now take care of setting the active volunteers
         list<Contact> listContactMarkActive = new list<Contact>();
@@ -111,6 +116,7 @@ trigger VOL_VolunteerHours_AddToCampaign on Volunteer_Hours__c (after insert, af
             }
         }
 
-        update listContactMarkActive;
+        // Note: We will not check CRUD/FLS for this process so that it works regardless of user
+        access.updateRecords(listContactMarkActive);
     }
 }
