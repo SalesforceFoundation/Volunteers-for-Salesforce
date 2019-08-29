@@ -29,6 +29,7 @@
 */
 
 global with sharing class VOL_SharedCode {
+    @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
 
     // the list of Campaigns that have Volunteer Jobs
@@ -704,7 +705,8 @@ global with sharing class VOL_SharedCode {
                 if (numVols == null || resetTotals) numVols = 0;
                 shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
             }
-            update listShifts;
+            // Note: We will not check CRUD / FLS for this process so that rollups are always in sync regardless of user
+            access.updateRecords(listShifts);
         }
     }
 

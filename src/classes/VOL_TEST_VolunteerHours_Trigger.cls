@@ -30,6 +30,41 @@
 
 @isTest
 private class VOL_TEST_VolunteerHours_Trigger {
+    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+
+    @IsTest
+    private static void shouldUpdateShiftRecordsOnConfirmedHours() {
+        VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        insert shift;
+
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
+            UTIL_UnitTest.getId(Contact.SObjectType),
+            UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
+            shift.Id
+        );
+        hours.Status__c = 'Confirmed';
+        insert hours;
+
+        accessMock.assertMethodCalledWith('updateRecords', Volunteer_Shift__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldNotUpdateShiftRecordsOnPendingHours() {
+        VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        insert shift;
+
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
+            UTIL_UnitTest.getId(Contact.SObjectType),
+            UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
+            shift.Id
+        );
+        hours.Status__c = 'Pending';
+        insert hours;
+
+        accessMock.assertMethodCalled('updateRecords', null);
+    }
 
     static testMethod void myUnitTest() {
         Account acc = new Account(name='Individual Test Account');
