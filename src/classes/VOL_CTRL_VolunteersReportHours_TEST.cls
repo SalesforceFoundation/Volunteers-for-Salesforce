@@ -48,6 +48,7 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     @IsTest
     private static void shouldCheckCreateAccessAndInsertHoursOnSave() {
+        UTIL_UnitTest.generateData();
         Contact contactRecord;
         Id jobId;
 
@@ -70,6 +71,7 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
 
     @IsTest
     private static void shouldCheckUpdateAccessAndUpdateHoursOnSave() {
+        UTIL_UnitTest.generateData();
         Contact contactRecord;
         Id jobId;
 
