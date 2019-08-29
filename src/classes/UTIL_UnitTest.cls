@@ -29,6 +29,7 @@
 */
 @IsTest
 public class UTIL_UnitTest {
+    private static Map<SObjectType, Map<Id, SObject>> sObjectByIdByType = new Map<SObjectType, Map<Id, SObject>>();
     /**
      * @description: The guest site user when found otherwise creates a default guest user
      */
@@ -39,7 +40,7 @@ public class UTIL_UnitTest {
             }
 
             if (guestUser == null) {
-                guestUser = createStandardGuestUser();
+                guestUser = createGuestUser();
             }
 
             return guestUser;
@@ -62,10 +63,10 @@ public class UTIL_UnitTest {
         VOL_Access.getInstance().elevateGuestUserAccessSetting = true;
     }
 
-    public static User createStandardGuestUser() {
+    public static User createGuestUser() {
         String email = 'guest' + '@testorg.com';
 
-        return createUser(email, 'Standard Guest');
+        return createUser(email, 'Guest License User');
     }
 
     public static User createStandardUser() {
@@ -82,7 +83,7 @@ public class UTIL_UnitTest {
 
     public static User createUser(String email, String profileName) {
         Profile profileRecord = [SELECT Id FROM Profile WHERE Name = :profileName];
-        
+
         User userRecord =  new User(
             Alias = 'jdoe',
             Email = email,
@@ -97,54 +98,48 @@ public class UTIL_UnitTest {
 
         return userRecord;
     }
-    
-    public static Map<Id, SObject> generateDataWithRecurrenceSchedules() {
-        Contact contactRecord;        
-        Volunteer_Job__c jobRecord;        
-        Map<Id, SObject> sObjectById = generateData();
-        
-        for (SObject sObj : sObjectById.values()) {
-            if (sObj.getSObjectType() == Schema.Contact.getSObjectType()) {
-                contactRecord = (Contact)sObj;
-            }
-            if (sObj.getSObjectType() == Schema.Volunteer_Job__c.getSObjectType()) {
-                jobRecord = (Volunteer_Job__c)sObj;
-            }
-        }
+
+    public static Map<SObjectType, Map<Id, SObject>> generateDataWithRecurrenceSchedules() {
+        Contact contactRecord;
+        Volunteer_Job__c jobRecord;
+        generateData();
+
+        contactRecord = (Contact) sObjectByIdByType.get(Contact.SObjectType).values()[0];
+        jobRecord = (Volunteer_Job__c) sObjectByIdByType.get(Volunteer_Job__c.SObjectType).values()[0];
 
         Job_Recurrence_Schedule__c jrsRecord = createJobRecurrence(jobRecord.Id);
         insert jrsRecord;
-        sObjectById.put(jrsRecord.Id, jrsRecord);
-        
+        sObjectByIdByType.put(Job_Recurrence_Schedule__c.SObjectType, new Map<Id, SObject>{ jrsRecord.Id => jrsRecord });
+
         Volunteer_Recurrence_Schedule__c vrsRecord = createVolunteerRecurrence(contactRecord.Id, jobRecord.Id);
         insert vrsRecord;
-        sObjectById.put(vrsRecord.Id, vrsRecord);        
+        sObjectByIdByType.put(Volunteer_Recurrence_Schedule__c.SObjectType, new Map<Id, SObject>{ vrsRecord.Id => vrsRecord });
 
-        return sObjectById;
+        return sObjectByIdByType;
     }
 
-    public static Map<Id, SObject> generateData() {
-        Map<Id, SObject> sObjectById = new Map<Id, SObject>();
+    public static Map<SObjectType, Map<Id, SObject>> generateData() {
+        sObjectByIdByType = new Map<SObjectType, Map<Id, SObject>>();
         DateTime now = System.now();
 
         Campaign campaignRecord = createCampaign('Spring Garden Party ' + now);
         insert campaignRecord;
-        sObjectById.put(campaignRecord.Id, campaignRecord);
+        sObjectByIdByType.put(Campaign.SObjectType, new Map<Id, SObject>{ campaignRecord.Id => campaignRecord });
 
         Volunteer_Job__c volunteerJob = createJob('Classroom Helper ' + now, campaignRecord.Id);
         insert volunteerJob;
-        sObjectById.put(volunteerJob.Id, volunteerJob);
+        sObjectByIdByType.put(Volunteer_Job__c.SObjectType, new Map<Id, SObject>{ volunteerJob.Id => volunteerJob });
 
         Account accountRecord = createAccount('TestAccount' + now);
         insert accountRecord;
-        sObjectById.put(accountRecord.Id, accountRecord);
-        
+        sObjectByIdByType.put(Account.SObjectType, new Map<Id, SObject>{ accountRecord.Id => accountRecord });
+
         Contact contactRecord = createContact('Helper ' + now);
         contactRecord.AccountId = accountRecord.Id;
         insert contactRecord;
-        sObjectById.put(contactRecord.Id, contactRecord);
+        sObjectByIdByType.put(Contact.SObjectType, new Map<Id, SObject>{ contactRecord.Id => contactRecord });
 
-        return sObjectById;
+        return sObjectByIdByType;
     }
 
     public static Campaign createCampaign(String name) {
@@ -172,12 +167,12 @@ public class UTIL_UnitTest {
     public static Contact createContact() {
         return createContact('Testerton ' + Datetime.now().getTime());
     }
-    
+
     public static Account createAccount(String name) {
         return new Account(Name = name);
     }
 
-    public static Volunteer_Hours__c createHour(Id contactId, Id jobId, Id shiftId) {
+    public static Volunteer_Hours__c createHours(Id contactId, Id jobId, Id shiftId) {
         return new Volunteer_Hours__c(
             Contact__c = contactId,
             Volunteer_Job__c = jobId,
@@ -189,7 +184,33 @@ public class UTIL_UnitTest {
             Number_of_Volunteers__c = 1
         );
     }
-    
+
+    public static Id getId(SObjectType sObjType) {
+        SObject sObj = getSObject(sObjType);
+
+        return sObj == null ? null : (Id) sObj.get('Id');
+    }
+
+    public static SObject getSObject(SObjectType sObjType) {
+        Map<Id, SObject> sObjectById = sObjectByIdByType.get(sObjType);
+
+        return sObjectById == null ? null : sObjectById.values()[0];
+    }
+
+    public static Volunteer_Shift__c createShift() {
+        generateData();
+
+        return createShift(getId(Volunteer_Job__c.SObjectType));
+    }
+
+    public static Volunteer_Shift__c createShift(Id jobId) {
+        return new Volunteer_Shift__c(
+            Volunteer_Job__c = jobId,
+            Duration__c = 1,
+            Start_Date_Time__c = System.now()
+        );
+    }
+
     public static Job_Recurrence_Schedule__c createJobRecurrence(Id jobId){
         return new Job_Recurrence_Schedule__c(
             Volunteer_Job__c = jobId,
@@ -198,10 +219,10 @@ public class UTIL_UnitTest {
             Schedule_Start_Date_Time__c = datetime.now(),
             Weekly_Occurrence__c = '1st');
     }
-    
+
     public static Volunteer_Recurrence_Schedule__c createVolunteerRecurrence(Id contactId, Id jobid){
         return new Volunteer_Recurrence_Schedule__c(
-            Contact__c = contactId, 
+            Contact__c = contactId,
             Volunteer_Job__c = jobId,
             Days_of_Week__c = 'Monday;Friday',
             Duration__c = 1.5,
