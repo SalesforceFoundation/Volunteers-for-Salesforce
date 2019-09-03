@@ -30,7 +30,7 @@
 
 @IsTest
 public with sharing class VOL_SharedCode_TEST {
-    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+    public static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
     private static Contact contactRecord = UTIL_UnitTest.createContact('Name ' + DateTime.now().getTime());
 
     //==================== TEST METHOD(s) ======================================
@@ -373,7 +373,7 @@ public with sharing class VOL_SharedCode_TEST {
         return contact.Id;
     }
 
-    private static void setAccessMock() {
+    public static void setAccessMock() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }
 }

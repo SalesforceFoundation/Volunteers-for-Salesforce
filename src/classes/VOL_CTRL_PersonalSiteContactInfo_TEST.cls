@@ -41,6 +41,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     
     @IsTest
     private static void shouldCheckCreateAccessOnSave() {
+        VOL_SharedCode_TEST.setAccessMock();
         setAccessMock();
         Util_UnitTest.generateDataWithRecurrenceSchedules();
 
@@ -57,8 +58,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         ctrl.contactEdit.LastName = 'ChangedLastName';
         ctrl.save();
         
-        accessMock.assertMethodCalled('checkCreateAccess', 1);
-        accessMock.assertMethodCalledWith('checkUpdateAccess', Contact.SObjectType);
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', 1);
+        accessMock.assertMethodCalledWith('updateRecords', Contact.SObjectType);
     }
     
     /*******************************************************************************************************
