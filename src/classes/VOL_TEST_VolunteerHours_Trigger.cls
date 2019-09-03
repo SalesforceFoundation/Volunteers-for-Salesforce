@@ -33,6 +33,72 @@ private class VOL_TEST_VolunteerHours_Trigger {
     private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
 
     @IsTest
+    private static void shouldInsertCampaignMemberForNewHours() {
+        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        insert shift;
+
+        Id contactId = UTIL_UnitTest.getId(Contact.SObjectType);
+
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
+            contactId,
+            UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
+            shift.Id
+        );
+        insert hours;
+
+        List<CampaignMember> campaignMembers = [SELECT Id FROM CampaignMember WHERE ContactId = :contactId];
+        System.assertEquals(1, campaignMembers.size(), 'Expected CampaignMember to get created when Hours got created.');
+    }
+    
+    @IsTest
+    private static void shouldUpdateCampaignMemberForUpdatedHours() {
+        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        insert shift;
+
+        Id contactId = UTIL_UnitTest.getId(Contact.SObjectType);
+
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
+            contactId,
+            UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
+            shift.Id
+        );
+        hours.Status__c = 'Prospect';
+        insert hours;
+
+        List<CampaignMember> campaignMembers = [SELECT Id, Status FROM CampaignMember WHERE ContactId = :contactId];
+        System.assertEquals('Prospect', campaignMembers[0].Status, 'Expected CampaignMember status to be "Prospect".');
+        hours.Status__c = 'Confirmed';
+
+        Test.startTest();
+        update hours;
+        Test.stopTest();
+
+        campaignMembers = [SELECT Id, Status FROM CampaignMember WHERE Id = :campaignMembers[0].Id];
+        System.assertEquals('Confirmed', campaignMembers[0].Status, 'Expected CampaignMember status to be "Confirmed" after update.');
+    }
+
+    @IsTest
+    private static void shouldUpdateContactForConfirmedHours() {
+        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        insert shift;
+
+        Id contactId = UTIL_UnitTest.getId(Contact.SObjectType);
+        List<Contact> contacts = [SELECT Id, Volunteer_Status__c FROM Contact WHERE Id = :contactId];
+        System.assertNotEquals('Active', contacts[0].Volunteer_Status__c, 'Expected Contact volunteer status to not be "Active".');
+
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
+            contactId,
+            UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
+            shift.Id
+        );
+        hours.Status__c = 'Confirmed';
+        insert hours;
+
+        contacts = [SELECT Id, Volunteer_Status__c FROM Contact WHERE Id = :contactId];
+        System.assertEquals('Active', contacts[0].Volunteer_Status__c, 'Expected Contact volunteer status to be "Active" when hours are confirmed.');
+    }
+
+    @IsTest
     private static void shouldUpdateShiftRecordsOnConfirmedHours() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
         Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
