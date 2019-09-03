@@ -313,7 +313,7 @@ global with sharing class VOL_SharedCode {
                 if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
 
-            access.checkUpdateAccess('Contact', setFlds);
+            checkUpdateAccessSites('Contact', setFlds);
             access.updateRecords(listCon, dmlDuplicateOptions);
  
             return listCon[0].Id;
@@ -551,8 +551,7 @@ global with sharing class VOL_SharedCode {
             if (setLastWebSignup)
                 conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
 
-            // checkUpdateAccessSites('Contact', setStrFields);
-            access.checkUpdateAccess('Contact', setStrFields);
+            checkUpdateAccessSites('Contact', setStrFields);
             access.updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
 
             // null out notes, so another update won't append them again!
@@ -816,9 +815,9 @@ global with sharing class VOL_SharedCode {
         // for backward compatibility with 1000's of nonprofit customers, we can
         // only enforce create permissions on the Sites user for Contacts.
         if (objectName == 'Contact') {
-            UTIL_Describe.checkCreateAccess(objectName, fieldNames);
+            access.checkCreateAccess(objectName, fieldNames);
         } else {
-            UTIL_Describe.checkUpdateAccess(objectName, fieldNames);
+            access.checkUpdateAccess(objectName, fieldNames);
         }
     }
 

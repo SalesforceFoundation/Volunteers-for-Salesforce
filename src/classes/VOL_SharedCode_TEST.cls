@@ -30,17 +30,17 @@
 
 @IsTest
 public with sharing class VOL_SharedCode_TEST {
-    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+    public static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
     private static Contact contactRecord = UTIL_UnitTest.createContact('Name ' + DateTime.now().getTime());
 
     //==================== TEST METHOD(s) ======================================
     @IsTest
-    private static void shouldCheckUpdateAccessAndUpdateMatchingContact() {
+    private static void shouldCheckCreateAccessAndUpdateMatchingContact() {
         insert contactRecord;
         setAccessMock();
 
         VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
-        System.assertEquals(1, accessMock.countByMethodName.get('checkUpdateAccess'), 'Expected check update access to have been called.');
+        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check update access to have been called.');
         System.assertEquals(1, accessMock.countByMethodName.get('updateRecords'), 'Expected update records to have been called.');
     }
 
@@ -54,12 +54,12 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     @IsTest
-    private static void shouldCheckUpdateAccessAndUpdateMatchingContactFS() {
+    private static void shouldCheckCreateAccessAndUpdateMatchingContactFS() {
         insert contactRecord;
         setAccessMock();
 
         VOL_SharedCode.CreateOrUpdateContactFS('', contactRecord, 'ABC Company', new List<String>{ 'FirstName', 'LastName', 'Email' });
-        System.assertEquals(1, accessMock.countByMethodName.get('checkUpdateAccess'), 'Expected check update access to have been called. ' + accessMock.countByMethodName);
+        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check update access to have been called. ' + accessMock.countByMethodName);
         System.assertEquals(1, accessMock.countByMethodName.get('updateRecords'), 'Expected update records to have been called.');
     }
 
@@ -373,7 +373,7 @@ public with sharing class VOL_SharedCode_TEST {
         return contact.Id;
     }
 
-    private static void setAccessMock() {
+    public static void setAccessMock() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }
 }

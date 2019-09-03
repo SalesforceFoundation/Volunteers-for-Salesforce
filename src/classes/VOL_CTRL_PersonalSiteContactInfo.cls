@@ -299,7 +299,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                         }
                     }
                 }
-                access.checkUpdateAccess('Contact', contactFieldsToUpdate);
+                VOL_SharedCode.checkUpdateAccessSites('Contact', contactFieldsToUpdate);
                 access.updateRecords(new List<Contact>{ contactReadOnly });
             }
             isEditing = false;
