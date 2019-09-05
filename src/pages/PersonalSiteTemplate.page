@@ -65,7 +65,7 @@
     <apex:insert name="footer">    
         <div class="navbar navbar-static-bottom">
             <div class="navbar-inner" style="padding:18px 0 0 20px;">
-                <p>&copy; Volunteers for Salesforce 2016</p>
+                <p>&copy;&nbsp;<apex:outputText value="{!$Organization.Name} {!YEAR(TODAY())}"/></p>
             </div>
         </div>    
         <site:googleAnalyticsTracking />            
