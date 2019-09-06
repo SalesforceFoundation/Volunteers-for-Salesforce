@@ -32,6 +32,42 @@
 private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
 
     //==================== TEST METHOD(s) ======================================
+
+    @IsTest
+    private static void shouldInsertTaskRecordsWhenEmailSent() {
+        PageReference personalSiteLookupPage = new PageReference('Page.PersonalSiteContactLookup');
+        Test.setCurrentPageReference(personalSiteLookupPage);
+        VOL_CTRL_PersonalSiteContactLookup personalSiteLookupCtrl = new VOL_CTRL_PersonalSiteContactLookup();
+
+        VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+        VOL_CTRL_PersonalSiteContactLookup.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+
+        Contact contactRecord = UTIL_UnitTest.createContact();
+        insert contactRecord;
+
+        personalSiteLookupCtrl.SendEmailToContact(contactRecord);
+        accessMock.assertMethodCalledWith('insertRecords', Task.SObjectType);
+    }
+    @IsTest
+    private static void shouldConvertEmailToTask() {
+        String expectedSubject = 'This is the subject';
+        String expectedDescription = 'This the description.';
+        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+
+        email.setSubject(expectedSubject);
+        email.setPlainTextBody(expectedDescription);
+
+        Task actualTask = VOL_CTRL_PersonalSiteContactLookup.toTask(email);
+        System.assert(actualTask.Subject.contains(expectedSubject), 'Expected the Task subject to contain the Email\'s subject.');
+        System.assert(actualTask.Description.contains(expectedDescription), 'Expected the Task subject to contain the Email\'s subject.');
+    }
+
+    @IsTest
+    private static void shouldReturnDefaultClosedStatus() {
+        final String defaultClosedStatus = 'Completed';
+
+        System.assertEquals(defaultClosedStatus, VOL_CTRL_PersonalSiteContactLookup.getClosedTaskStatus(), 'Expected the system to find the default closed task status.');
+    }
     
     @isTest(SeeAllData=true)  // SeeAllData so the CSS file is viewable
     /*******************************************************************************************************
@@ -91,7 +127,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         insert con;
         
         // test existing contact
-           ctrl.contact.FirstName = 'LookupTestFirstName';
+        ctrl.contact.FirstName = 'LookupTestFirstName';
         ctrl.contact.LastName = 'LookupTestLastName';
         ctrl.contact.Email = 'LookupTestEmail@email.com';
         system.assertEquals(null, ctrl.LookupContact());
