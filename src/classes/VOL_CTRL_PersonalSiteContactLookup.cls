@@ -29,6 +29,8 @@
 */
 
 global with sharing class VOL_CTRL_PersonalSiteContactLookup {
+    @TestVisible
+    private static VOL_Access access = VOL_Access.getInstance();
 
     // constructor
     global VOL_CTRL_PersonalSiteContactLookup() {
@@ -117,7 +119,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
             strResult = null;           
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             mail.setTargetObjectId(con.Id);
-            mail.setSaveAsActivity(true);
+            mail.setSaveAsActivity(false);
             mail.setTemplateID(emailTemplateId);    
             if (orgWideEmailId != null) {
                 mail.setOrgWideEmailAddressId(orgWideEmailId);
@@ -126,6 +128,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
             listSER = Messaging.sendEmail(new Messaging.Email[] { mail }, false);
             if (listSER[0].isSuccess()) {
                 strResult = System.Label.labelContactLookupSuccess;
+                Task taskRecord = toTask(mail);
+                access.insertRecords(new List<SObject>{ taskRecord });
+
             } else {
                 list<Messaging.SendEmailError> listSEE = listSER[0].getErrors();
                 for (Messaging.SendEmailError see : listSEE) {
@@ -152,6 +157,31 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
         } catch (Exception e) {
             ApexPages.addMessages(e);            
         }           
-    }                   
+    }
+
+    @TestVisible
+    private static Task toTask(Messaging.SingleEmailMessage email) {
+        final String subType = 'Email';
+
+        Task taskRecord = new Task(
+            WhoId = email.getTargetObjectId(),
+            Subject = subType + ': ' + email.getSubject(),
+            ActivityDate = System.today(),
+            Status = getClosedTaskStatus(),
+            Description = email.getPlainTextBody(),
+            TaskSubtype = subType
+        );
+
+        return taskRecord;
+    }
+
+    @TestVisible
+    private static String getClosedTaskStatus() {
+        List<TaskStatus> closedTaskStatuses = [SELECT ApiName FROM TaskStatus WHERE IsClosed = true];
+
+        return closedTaskStatuses.isEmpty() ?
+            null :
+            closedTaskStatuses[0].ApiName;
+    }
 
 }
