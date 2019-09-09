@@ -68,6 +68,15 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
 
         System.assertEquals(defaultClosedStatus, VOL_CTRL_PersonalSiteContactLookup.getClosedTaskStatus(), 'Expected the system to find the default closed task status.');
     }
+
+    @IsTest
+    private static void shouldReturnDefaultClosedStatusWhenRunAsGuest() {
+        final String defaultClosedStatus = 'Completed';
+
+        System.runAs(UTIL_UnitTest.guestUser) {
+            System.assertEquals(defaultClosedStatus, VOL_CTRL_PersonalSiteContactLookup.getClosedTaskStatus(), 'Expected the system to find the default closed task status when ran as a guest user.');
+        }
+    }
     
     @isTest(SeeAllData=true)  // SeeAllData so the CSS file is viewable
     /*******************************************************************************************************
