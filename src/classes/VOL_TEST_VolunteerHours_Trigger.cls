@@ -35,7 +35,7 @@ private class VOL_TEST_VolunteerHours_Trigger {
     @IsTest
     private static void shouldUpdateShiftRecordsOnConfirmedHours() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
-        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        Volunteer_Shift__c shift = UTIL_UnitTest.generateDataWithShift();
         insert shift;
 
         Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
@@ -52,7 +52,7 @@ private class VOL_TEST_VolunteerHours_Trigger {
     @IsTest
     private static void shouldNotUpdateShiftRecordsOnPendingHours() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
-        Volunteer_Shift__c shift = UTIL_UnitTest.createShift();
+        Volunteer_Shift__c shift = UTIL_UnitTest.generateDataWithShift();
         insert shift;
 
         Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
