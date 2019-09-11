@@ -67,6 +67,7 @@ public without sharing class TelemetryService {
             telemetries.addAll(createJobRecurrenceScheduleTelemetries());
             telemetries.addAll(createCampaignTelemetries());
             telemetries.addAll(createContactTelemetries());
+            telemetries.addAll(createVolunteerSettingsTelemetries());
 
             return telemetries;
         }
@@ -108,6 +109,13 @@ public without sharing class TelemetryService {
         private List<Telemetry> createJobRecurrenceScheduleTelemetries() {
             return new List<Telemetry>{
                 new Telemetry(Job_Recurrence_Schedule__c.SObjectType, Telemetry.DeveloperName.JOB_RECURRENCE_SCHEDULES)
+            };
+        }
+
+        private List<Telemetry> createVolunteerSettingsTelemetries() {
+            return new List<Telemetry>{
+                new Telemetry(Telemetry.DeveloperName.GRANT_GUEST_USERS_UPDATE_ACCESS)
+                    .withBooleanValue(VOL_SharedCode.VolunteersSettings.Grant_Guest_Users_Update_Access__c)
             };
         }
     }
