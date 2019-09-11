@@ -37,13 +37,17 @@ public without sharing class Telemetry {
         VOLUNTEER_JOBS_DISPLAY_ON_WEBSITE,
         VOLUNTEER_SHIFTS,
         VOLUNTEER_SHIFTS_CREATED_LAST_YEAR,
-        JOB_RECURRENCE_SCHEDULES
+        JOB_RECURRENCE_SCHEDULES,
+        GRANT_GUEST_USERS_UPDATE_ACCESS
     }
+    private static final String TELEMETRY_PARAM_ERROR =
+        'The telemetry param type {0} is already in use, only one type can be sent at a time.';
     @TestVisible
     private SObjectType sObjType;
     @TestVisible
     private DeveloperName developerName;
     private String criteria;
+    private Boolean booleanValue;
 
     @TestVisible
     private QueryBuilder queryBuilder {
@@ -62,13 +66,44 @@ public without sharing class Telemetry {
         this.developerName = developerName;
     }
 
+    public Telemetry(DeveloperName developerName) {
+        this.developerName = developerName;
+    }
+
     public Telemetry withCriteria(String criteria) {
+        if (booleanValue != null) {
+            throw new TelemetryException(String.format(TELEMETRY_PARAM_ERROR, new List<String>{ 'boolean' }));
+        }
+
         this.criteria = criteria;
         return this;
     }
 
+    public Telemetry withBooleanValue(Boolean booleanValue) {
+        if (criteria != null) {
+            throw new TelemetryException(String.format(TELEMETRY_PARAM_ERROR, new List<String>{ 'criteria' }));
+        }
+
+        this.booleanValue = booleanValue;
+        return this;
+    }
+
     public void send() {
-        send(getDeveloperName(), getCountQuery());
+        if (criteria != null) {
+            send(getDeveloperName(), getCountQuery());
+        } else if (booleanValue != null) {
+            send(getDeveloperName(), booleanValue);
+        }
+    }
+
+    @Future
+    private static void send(String developerName, Boolean booleanValue) {
+        try {
+            FeatureManagement.setPackageBooleanValue(developerName, booleanValue);
+
+        } catch (Exception ex) {
+            throw new TelemetryException(System.Label.TelemetryException);
+        }
     }
 
     @Future
