@@ -559,6 +559,10 @@
         <name>EmailTemplate</name>
     </types>
     <types>
+        <members>GrantGuestUsersUpdateAccess</members>
+        <name>FeatureParameterBoolean</name>
+    </types>
+    <types>
         <members>CampaignsWithJobs</members>
         <members>ContactsWithLastWebSignUpLastYear</members>
         <members>ContactsWithLastWebSignup</members>
