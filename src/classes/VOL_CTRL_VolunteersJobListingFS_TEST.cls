@@ -210,7 +210,10 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     * @return void
     ********************************************************************************************************/
     private static testmethod void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+        /** Without the ability to create sharing records in apex when campaign sharing is public, we can no longer
+         * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
+         * if / when the ability to do so becomes available
+         * list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
             UTIL_UnitTest.enableElevateGuestUserAccess();
@@ -219,9 +222,10 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
                 UnitTest1();
             }
         } else {
+        */
             system.debug('Running test as system.');
             UnitTest1();
-        }
+        //}
     }
 
     private static void UnitTest1() {
