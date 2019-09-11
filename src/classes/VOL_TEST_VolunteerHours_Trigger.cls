@@ -35,13 +35,13 @@ private class VOL_TEST_VolunteerHours_Trigger {
     @IsTest
     private static void shouldUpdateShiftRecordsOnConfirmedHours() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
-        Volunteer_Shift__c shift = UTIL_UnitTest.generateDataWithShift();
-        insert shift;
+        UTIL_UnitTest.generateDataWithShift();
+        Id shiftId = UTIL_UnitTest.getId(Volunteer_Shift__c.SObjectType);
 
         Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
             UTIL_UnitTest.getId(Contact.SObjectType),
             UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
-            shift.Id
+            shiftId
         );
         hours.Status__c = 'Confirmed';
         insert hours;
@@ -52,13 +52,13 @@ private class VOL_TEST_VolunteerHours_Trigger {
     @IsTest
     private static void shouldNotUpdateShiftRecordsOnPendingHours() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
-        Volunteer_Shift__c shift = UTIL_UnitTest.generateDataWithShift();
-        insert shift;
+        UTIL_UnitTest.generateDataWithShift();
+        Id shiftId = UTIL_UnitTest.getId(Volunteer_Shift__c.SObjectType);
 
         Volunteer_Hours__c hours = UTIL_UnitTest.createHours(
             UTIL_UnitTest.getId(Contact.SObjectType),
             UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType),
-            shift.Id
+            shiftId
         );
         hours.Status__c = 'Pending';
         insert hours;

@@ -147,10 +147,13 @@ public class UTIL_UnitTest {
         return sObjectByIdByType;
     }
 
-    public static Volunteer_Shift__c generateDataWithShift() {
+    public static Map<SObjectType, Map<Id, SObject>> generateDataWithShift() {
         generateData();
+        Volunteer_Shift__c shift = createShift(getId(Volunteer_Job__c.SObjectType));
+        insert shift;
+        sObjectByIdByType.put(Volunteer_Shift__c.SObjectType, new Map<Id, SObject>{ shift.Id => shift });
 
-        return createShift(getId(Volunteer_Job__c.SObjectType));
+        return sObjectByIdByType;
     }
 
     public static Id getId(SObjectType sObjType) {
@@ -191,7 +194,8 @@ public class UTIL_UnitTest {
     public static Volunteer_Job__c createJob(String name, Id campaignId) {
         return new Volunteer_Job__c(
             Name = name,
-            Campaign__c = campaignId
+            Campaign__c = campaignId,
+            Display_on_Website__c = true
         );
     }
 
