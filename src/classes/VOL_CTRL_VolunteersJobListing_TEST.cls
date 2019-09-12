@@ -43,9 +43,8 @@ private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
 
         jobListingCtrl.VolunteerShiftSignUp();
         // The contact creation is completed by a separate class, VOL_SharedCode
-        accessMock.assertMethodCalled('checkCreateAccess', 1);
-        accessMock.assertMethodCalled('insertRecords', 1);
-        accessMock.assertMethodCalledWith('insertRecords', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
     }
 
     /*******************************************************************************************************
@@ -53,7 +52,8 @@ private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
         /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
          * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
          * if / when the ability to do so becomes available

@@ -46,7 +46,7 @@ private class VOL_TEST_VolunteerHours_Trigger {
         hours.Status__c = 'Confirmed';
         insert hours;
 
-        accessMock.assertMethodCalledWith('updateRecords', Volunteer_Shift__c.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Volunteer_Shift__c.SObjectType);
     }
 
     @IsTest

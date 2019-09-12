@@ -44,9 +44,8 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
 
         jobListingCtrl.VolunteerShiftSignUp();
         // The contact creation is completed by a separate class, VOL_SharedCode
-        accessMock.assertMethodCalled('checkCreateAccess', 1);
-        accessMock.assertMethodCalled('insertRecords', 1);
-        accessMock.assertMethodCalledWith('insertRecords', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
     }
 
     @IsTest
@@ -60,10 +59,10 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         jobListingCtrl.attachment = new Attachment(Body = Blob.valueOf('Signup attachment insert...'));
 
         jobListingCtrl.VolunteerShiftSignUp();
-        accessMock.assertMethodCalled('checkCreateAccess', 2);
-        accessMock.assertMethodCalled('insertRecords', 2);
-        accessMock.assertMethodCalledWith('insertRecords', Attachment.SObjectType);
-        accessMock.assertMethodCalledWith('insertRecords', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('checkCreateAccess', Attachment.SObjectType);
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Attachment.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
     }
 
     @IsTest
@@ -95,9 +94,8 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         jobListingCtrl.vhours.Number_of_Volunteers__c = 2;
 
         jobListingCtrl.VolunteerShiftSignUp();
-        accessMock.assertMethodCalled('checkUpdateAccess', 1);
-        accessMock.assertMethodCalled('updateRecords', 1);
-        accessMock.assertMethodCalledWith('updateRecords', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Volunteer_Hours__c.SObjectType);
     }
 
     @IsTest
@@ -209,7 +207,8 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
         /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
          * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
          * if / when the ability to do so becomes available

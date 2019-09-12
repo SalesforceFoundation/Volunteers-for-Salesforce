@@ -39,7 +39,8 @@ private with sharing class VOL_CTRL_VolunteersSignupFS_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
         /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
          * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
          * if / when the ability to do so becomes available
