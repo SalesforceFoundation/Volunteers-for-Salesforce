@@ -57,9 +57,9 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
         ctrl.contactEdit.LastName = 'ChangedLastName';
         ctrl.save();
-        
-        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', 1);
-        accessMock.assertMethodCalledWith('updateRecords', Contact.SObjectType);
+
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Contact.SObjectType);
     }
     
     /*******************************************************************************************************
