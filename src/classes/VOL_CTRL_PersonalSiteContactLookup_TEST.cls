@@ -46,7 +46,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         insert contactRecord;
 
         personalSiteLookupCtrl.SendEmailToContact(contactRecord);
-        accessMock.assertMethodCalledWith('insertRecords', Task.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Task.SObjectType);
     }
     @IsTest
     private static void shouldConvertEmailToTask() {
@@ -85,18 +85,22 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     * @return void
     ********************************************************************************************************/
     private static void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+        /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
+         * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
+         * if / when the ability to do so becomes available
+         * list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
-            UTIL_UnitTest.elevateGuestUserAccess();
+            UTIL_UnitTest.enableElevateGuestUserAccess();
             system.debug('Running test as Sites Guest User: ' + listU[0]);
             system.runAs(listU[0]) {
                 TestPersonalSiteContactLookup();
             }
         } else {
+        */
             system.debug('Running test as system.');
             TestPersonalSiteContactLookup();
-        }
+        //}
     }
 
     private static void TestPersonalSiteContactLookup() {

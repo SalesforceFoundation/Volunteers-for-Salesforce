@@ -331,7 +331,6 @@ public with sharing class VOL_Access_TEST {
      */
     public class Stub implements System.StubProvider {
         public Map<String, Set<SObjectType>> sObjectTypesByMethodName = new Map<String, Set<SObjectType>>();
-        public Map<String, Integer> countByMethodName = new Map<String, Integer>();
 
         public Object handleMethodCall(
             Object stubbedObject,
@@ -341,37 +340,18 @@ public with sharing class VOL_Access_TEST {
             List<String> listOfParamNames,
             List<Object> listOfArgs
         ) {
-            increment(stubbedMethodName);
             addSObjectType(stubbedMethodName, listOfArgs);
 
             return null;
         }
 
-        public void assertMethodCalled(String stubbedMethodName) {
-            System.assert(countByMethodName.containsKey(stubbedMethodName), 'Expected the method, ' + stubbedMethodName + ', to have been called.');
-        }
-
-        public void assertMethodCalled(String stubbedMethodName, Integer count) {
-            System.assertEquals(count, countByMethodName.get(stubbedMethodName), 'Expected the method, ' + stubbedMethodName + ', to have been called ' + count + 'x.');
-        }
-
-        public void assertMethodCalledWith(String stubbedMethodName, SObjectType sObjType) {
+        public void assertMethodCalled(String stubbedMethodName, SObjectType sObjType) {
             if (String.isEmpty(stubbedMethodName) || sObjType == null) {
                 return;
             }
 
             System.assert(sObjectTypesByMethodName.containsKey(stubbedMethodName), 'Expected the method, ' + stubbedMethodName + ', to have been called with ' + sObjType + ' records.');
             System.assert(sObjectTypesByMethodName.get(stubbedMethodName).contains(sObjType), 'Expected ' + sObjType + ' records to have been passed in. ' + sObjectTypesByMethodName.get(stubbedMethodName));
-        }
-
-        private void increment(String stubbedMethodName) {
-            Integer count = countByMethodName.get(stubbedMethodName);
-            if (count == null) {
-                count = 0;
-            }
-            count++;
-
-            countByMethodName.put(stubbedMethodName, count);
         }
 
         private void addSObjectType(String stubbedMethodName, List<Object> listOfArgs) {

@@ -40,8 +40,8 @@ public with sharing class VOL_SharedCode_TEST {
         setAccessMock();
 
         VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
-        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check update access to have been called.');
-        System.assertEquals(1, accessMock.countByMethodName.get('updateRecords'), 'Expected update records to have been called.');
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Contact.SObjectType);
     }
 
     @IsTest
@@ -49,8 +49,8 @@ public with sharing class VOL_SharedCode_TEST {
         setAccessMock();
 
         VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
-        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check create access to have been called.');
-        System.assertEquals(1, accessMock.countByMethodName.get('insertRecords'), 'Expected create records to have been called.');
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Contact.SObjectType);
     }
 
     @IsTest
@@ -59,8 +59,8 @@ public with sharing class VOL_SharedCode_TEST {
         setAccessMock();
 
         VOL_SharedCode.CreateOrUpdateContactFS('', contactRecord, 'ABC Company', new List<String>{ 'FirstName', 'LastName', 'Email' });
-        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check update access to have been called. ' + accessMock.countByMethodName);
-        System.assertEquals(1, accessMock.countByMethodName.get('updateRecords'), 'Expected update records to have been called.');
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Contact.SObjectType);
     }
 
     @IsTest
@@ -68,8 +68,8 @@ public with sharing class VOL_SharedCode_TEST {
         setAccessMock();
 
         VOL_SharedCode.CreateOrUpdateContactFS('', contactRecord, 'ABC Company', new List<String>{ 'FirstName', 'LastName', 'Email' });
-        System.assertEquals(1, accessMock.countByMethodName.get('checkCreateAccess'), 'Expected check create access to have been called.');
-        System.assertEquals(1, accessMock.countByMethodName.get('insertRecords'), 'Expected create records to have been called.');
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Contact.SObjectType);
     }
 
     @IsTest

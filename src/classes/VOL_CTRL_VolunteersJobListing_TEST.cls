@@ -43,9 +43,8 @@ private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
 
         jobListingCtrl.VolunteerShiftSignUp();
         // The contact creation is completed by a separate class, VOL_SharedCode
-        accessMock.assertMethodCalled('checkCreateAccess', 1);
-        accessMock.assertMethodCalled('insertRecords', 1);
-        accessMock.assertMethodCalledWith('insertRecords', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
     }
 
     /*******************************************************************************************************
@@ -53,19 +52,24 @@ private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
+        /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
+         * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
+         * if / when the ability to do so becomes available
+         * list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
-            UTIL_UnitTest.elevateGuestUserAccess();
+            UTIL_UnitTest.enableElevateGuestUserAccess();
             system.debug('Running test as Sites Guest User: ' + listU[0]);
             system.runAs(listU[0]) {
                 UnitTest1();
             }
         } else {
+        */
             system.debug('Running test as system.');
             UnitTest1();
-        }
+        //}
     }
 
     private static void UnitTest1() {
