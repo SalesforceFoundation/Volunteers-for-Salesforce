@@ -35,9 +35,15 @@ private class Telemetry_TEST {
     private static final SObjectType SOBJECT_TYPE = Account.SObjectType;
 
     @IsTest
-    private static void constructorSetsPropertiesWithValuesProvided() {
+    private static void constructorSetsPropertiesWithSObjectTypeAndDevName() {
         accountTelemetry = new Telemetry(SOBJECT_TYPE, DEV_NAME);
         System.assertEquals(SOBJECT_TYPE, accountTelemetry.sObjType, 'Expected the sObject Type to be set.');
+        System.assertEquals(DEV_NAME.name(), accountTelemetry.developerName.name(), 'Expected the developer name to be set.');
+    }
+
+    @IsTest
+    private static void constructorSetsPropertiesWithDevName() {
+        accountTelemetry = new Telemetry(DEV_NAME);
         System.assertEquals(DEV_NAME.name(), accountTelemetry.developerName.name(), 'Expected the developer name to be set.');
     }
 

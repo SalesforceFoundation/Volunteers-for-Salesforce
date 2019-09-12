@@ -50,6 +50,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Grant_Guest_Users_Update_Access__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Allow guest users to update records based on their Create access.</inlineHelpText>
+        <label>Grant Guest Users Update Access</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Personal_Site_Org_Wide_Email_Name__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>If you&apos;ve configured an Organization-Wide Email Address that you&apos;d like to use on the email sent from the Personal Site Contact Lookup Sites page, enter the Display Name of the Organization-Wide Email Address here.</inlineHelpText>

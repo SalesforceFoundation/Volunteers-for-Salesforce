@@ -32,23 +32,44 @@
 private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
 
     //==================== TEST METHOD(s) ======================================
+    private static void shouldCheckCreateAccessAndInsertHours() {
+        VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+        PageReference volunteersJobListPage = Page.VolunteersJobListing;
+        Test.setCurrentPage(volunteersJobListPage);
+        VOL_CTRL_VolunteersJobListing.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+        VOL_CTRL_VolunteersJobListing jobListingCtrl = new VOL_CTRL_VolunteersJobListing();
+
+        jobListingCtrl.contact = UTIL_UnitTest.createContact('Signup Insert ' + DateTime.now().getTime());
+
+        jobListingCtrl.VolunteerShiftSignUp();
+        // The contact creation is completed by a separate class, VOL_SharedCode
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
+    }
+
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
+        /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
+         * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
+         * if / when the ability to do so becomes available
+         * list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
+            UTIL_UnitTest.enableElevateGuestUserAccess();
             system.debug('Running test as Sites Guest User: ' + listU[0]);
             system.runAs(listU[0]) {
                 UnitTest1();
             }
         } else {
+        */
             system.debug('Running test as system.');
             UnitTest1();
-        }
+        //}
     }
 
     private static void UnitTest1() {
@@ -186,5 +207,5 @@ private with sharing class VOL_CTRL_VolunteersJobListing_TEST {
         VOL_CTRL_VolunteersJobListing ctrl2 = new VOL_CTRL_VolunteersJobListing();
 		system.assertEquals(mapCmp.size(), ctrl2.listVolunteerJobs.size()); 
     }
-    
+
 }

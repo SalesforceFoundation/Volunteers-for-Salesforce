@@ -76,23 +76,7 @@ private with sharing class VOL_VRS_TEST {
     */
     @TestSetup
     private static void generateData() {
-        Campaign campaignRecord = new Campaign(
-            RecordTypeId = VOL_SharedCode.recordtypeIdVolunteersCampaign,
-            Name = 'Spring Garden Party',
-            IsActive = true
-        );
-        insert campaignRecord;
-
-        Volunteer_Job__c volunteerJob = new Volunteer_Job__c(
-            Name = 'Classroom Helper',
-            Campaign__c = campaignRecord.Id
-        );
-        insert volunteerJob;
-
-        Contact contactRecord = new Contact(
-            FirstName = 'Andy',
-            LastName = 'Helper');
-        insert contactRecord;
+        UTIL_UnitTest.generateData();
     }
 
     //******************************************************************************************************
