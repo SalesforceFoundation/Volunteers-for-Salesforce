@@ -30,26 +30,91 @@
 
 @isTest
 private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
+    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+    private static PageReference reportHoursPage = Page.VolunteersReportHours;
 
     //==================== TEST METHOD(s) ======================================
+    @IsTest
+    private static void shouldCheckAccessOnPageLoad() {
+        Test.setCurrentPage(reportHoursPage);
+        setAccessMock();
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckCreateAccessAndInsertHoursOnSave() {
+        UTIL_UnitTest.generateData();
+        Contact contactRecord;
+        Id jobId;
+
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+
+        Test.setCurrentPage(reportHoursPage);
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+        setAccessMock();
+        reportHoursCtrl.contact = contactRecord;
+        reportHoursCtrl.volunteerJobId = jobId;
+        reportHoursCtrl.vhours = hours;
+        reportHoursCtrl.Save();
+
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckUpdateAccessAndUpdateHoursOnSave() {
+        UTIL_UnitTest.generateData();
+        Contact contactRecord;
+        Id jobId;
+
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+        insert hours;
+
+        Test.setCurrentPage(reportHoursPage);
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+        setAccessMock();
+        reportHoursCtrl.contact = contactRecord;
+        reportHoursCtrl.volunteerJobId = jobId;
+        reportHoursCtrl.vhours = hours;
+        reportHoursCtrl.Save();
+
+        accessMock.assertMethodCalled('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Volunteer_Hours__c.SObjectType);
+    }
 
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
+        /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
+         * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
+         * if / when the ability to do so becomes available
+         * list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
+            UTIL_UnitTest.enableElevateGuestUserAccess();
             system.debug('Running test as Sites Guest User: ' + listU[0]);
             system.runAs(listU[0]) {
                 CodeCoverageTests();
             }
         } else {
+        */
             system.debug('Running test as system.');
             CodeCoverageTests();
-        }
+        //}
+    }
+    private static void setAccessMock() {
+        VOL_CTRL_VolunteersReportHours.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }
 
     private static void CodeCoverageTests() {

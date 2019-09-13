@@ -28,12 +28,52 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-@isTest
+@IsTest
 public with sharing class VOL_SharedCode_TEST {
-
+    public static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
+    private static Contact contactRecord = UTIL_UnitTest.createContact('Name ' + DateTime.now().getTime());
 
     //==================== TEST METHOD(s) ======================================
-    static testmethod void CodeCoverageTests() {
+    @IsTest
+    private static void shouldCheckCreateAccessAndUpdateMatchingContact() {
+        insert contactRecord;
+        setAccessMock();
+
+        VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Contact.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckCreateAccessAndInsertWhenMatchingContactNotFound() {
+        setAccessMock();
+
+        VOL_SharedCode.CreateContactOrLead(contactRecord, true, true);
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Contact.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckCreateAccessAndUpdateMatchingContactFS() {
+        insert contactRecord;
+        setAccessMock();
+
+        VOL_SharedCode.CreateOrUpdateContactFS('', contactRecord, 'ABC Company', new List<String>{ 'FirstName', 'LastName', 'Email' });
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Contact.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckCreateAccessAndInsertWhenMatchingContactNotFoundFS() {
+        setAccessMock();
+
+        VOL_SharedCode.CreateOrUpdateContactFS('', contactRecord, 'ABC Company', new List<String>{ 'FirstName', 'LastName', 'Email' });
+        VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Contact.SObjectType);
+    }
+
+    @IsTest
+    private static void CodeCoverageTests() {
         // since this class is all shared code, it gets heavily exercised by all other test code.
         // we just need to add a test for hitting the scenario where there aren't any settings specified in the instance.
 
@@ -57,28 +97,36 @@ public with sharing class VOL_SharedCode_TEST {
     * @description test methods to test all permutations of the Contact Matching Rule.
     * @return void
     */
-    static testmethod void testContactMatchRule1() {
+    @IsTest
+    private static void testContactMatchRule1() {
         testContactMatchRule('Firstname;Lastname;Email');
     }
-    static testmethod void testContactMatchRule2() {
+    @IsTest
+    private static void testContactMatchRule2() {
         testContactMatchRule('Firstname;Lastname');
     }
-    static testmethod void testContactMatchRule3() {
+    @IsTest
+    private static void testContactMatchRule3() {
         testContactMatchRule('Firstname;Email');
     }
-    static testmethod void testContactMatchRule4() {
+    @IsTest
+    private static void testContactMatchRule4() {
         testContactMatchRule('Lastname;Email');
     }
-    static testmethod void testContactMatchRule5() {
+    @IsTest
+    private static void testContactMatchRule5() {
         testContactMatchRule('');
     }
-    static testmethod void testContactMatchRule6() {
+    @IsTest
+    private static void testContactMatchRule6() {
         testContactMatchRule('Firstname;');
     }
-    static testmethod void testContactMatchRule7() {
+    @IsTest
+    private static void testContactMatchRule7() {
         testContactMatchRule('Lastname');
     }
-    static testmethod void testContactMatchRule8() {
+    @IsTest
+    private static void testContactMatchRule8() {
         testContactMatchRule('Email');
     }
     static void testContactMatchRule(string strRule) {
@@ -183,7 +231,8 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
 
-    static testmethod void testCampaignHierarchy() {
+    @IsTest
+    private static void testCampaignHierarchy() {
         // build campaign hierarchy as shown above
         map<string, Campaign> mapCmp = mapCampaignTestHierarchy();
 
@@ -210,7 +259,8 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     // tests for the isValidContactIdAndEmail(ID contactId, string strEmail) method
-    static testmethod void testIsValidContactIdAndEmail() {
+    @IsTest
+    private static void testIsValidContactIdAndEmail() {
         // create an account and contact
         Account acc = new Account(Name='my test account');
         insert acc;
@@ -234,7 +284,8 @@ public with sharing class VOL_SharedCode_TEST {
         system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'foo@bar.com'));
     }
 
-    static testmethod void testAddressFieldDetection() {
+    @IsTest
+    private static void testAddressFieldDetection() {
         system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingCity'));
         system.assertEquals(true, VOL_SharedCode.isMailingAddressField('mailingcity'));
         system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingState'));
@@ -270,6 +321,11 @@ public with sharing class VOL_SharedCode_TEST {
         system.assertEquals(false, VOL_SharedCode.isOtherAddressField('otherphone'));
 
     }
+
+
+    /////////////////
+    /// Helpers
+    /////////////////
 
     /*******************************************************************************************************
     * @description create a campaign, job, hourly shifts for yesterday, today, and tomorrow, then create
@@ -317,5 +373,7 @@ public with sharing class VOL_SharedCode_TEST {
         return contact.Id;
     }
 
-
+    public static void setAccessMock() {
+        VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
+    }
 }

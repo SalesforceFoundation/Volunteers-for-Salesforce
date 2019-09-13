@@ -28,13 +28,76 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-@isTest
+@IsTest
 private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     private static VOL_CTRL_VolunteersJobListingFS jobListingCtrl;
+    private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
     private static final Integer QUERY_LIMIT = VOL_CTRL_VolunteersJobListingFS.SUBQUERY_LIMIT;
     private static final Integer SUBQUERY_ERROR_THRESHOLD = 251; // causes query exception with test data at this number
 
     //==================== TEST METHOD(s) ======================================
+    @IsTest
+    private static void shouldCheckCreateAccessAndInsertHours() {
+        setupPage(new Map<String, String>());
+        setAccessMock();
+        jobListingCtrl.contact = UTIL_UnitTest.createContact('Signup Insert ' + DateTime.now().getTime());
+
+        jobListingCtrl.VolunteerShiftSignUp();
+        // The contact creation is completed by a separate class, VOL_SharedCode
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckCreateAccessAndInsertAttachment() {
+        Contact existingContact = UTIL_UnitTest.createContact('Signup Update ' + DateTime.now().getTime());
+        insert existingContact;
+
+        setupPage(new Map<String, String>());
+        setAccessMock();
+        jobListingCtrl.contact = existingContact;
+        jobListingCtrl.attachment = new Attachment(Body = Blob.valueOf('Signup attachment insert...'));
+
+        jobListingCtrl.VolunteerShiftSignUp();
+        accessMock.assertMethodCalled('checkCreateAccess', Attachment.SObjectType);
+        accessMock.assertMethodCalled('checkCreateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Attachment.SObjectType);
+        accessMock.assertMethodCalled('insertRecords', Volunteer_Hours__c.SObjectType);
+    }
+
+    @IsTest
+    private static void shouldCheckUpdateAccessAndUpdateHours() {
+        generateData(1);
+        
+
+        Contact existingContact = UTIL_UnitTest.createContact('Signup Update ' + DateTime.now().getTime());
+        insert existingContact;
+
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
+        Volunteer_Hours__c hours = new Volunteer_Hours__c(
+            Contact__c = existingContact.Id,
+            Volunteer_Job__c = jobId,
+            Volunteer_Shift__c = shiftId,
+            Status__c = 'Web Sign Up',
+            Start_Date__c = System.today(),
+            Hours_Worked__c = 1,
+            Number_of_Volunteers__c = 1
+        );
+        insert hours;
+
+        setupPage(new Map<String, String>());
+        setAccessMock();
+        jobListingCtrl.shiftIdSignUp = shiftId;
+        jobListingCtrl.jobIdSignUp = jobId;
+        jobListingCtrl.contact = existingContact;
+        jobListingCtrl.vhours.Number_of_Volunteers__c = 2;
+
+        jobListingCtrl.VolunteerShiftSignUp();
+        accessMock.assertMethodCalled('checkUpdateAccess', Volunteer_Hours__c.SObjectType);
+        accessMock.assertMethodCalled('updateRecords', Volunteer_Hours__c.SObjectType);
+    }
+
     @IsTest
     private static void shouldReturnOneShiftWhenJobIdAndShiftIdAreProvidedWithZeroMonths() {
         generateData(10);
@@ -144,18 +207,24 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testmethod void testPageWithSitesGuestUser() {
-        list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
+    @IsTest
+    private static void testPageWithSitesGuestUser() {
+        /** Without the ability to create sharing records in apex when owd sharing is public read/write or controlled by parent, we can no longer
+         * run this test as the guest user and will only run it as the admin. Commenting out so that we can reinstate
+         * if / when the ability to do so becomes available
+         * list<User> listU = [Select Username, UserType, Name, IsActive, Id From User where IsActive = true and UserType = 'Guest' and
         Name like '%Site Guest User%'];
         if (listU.size() > 0) {
+            UTIL_UnitTest.enableElevateGuestUserAccess();
             system.debug('Running test as Sites Guest User: ' + listU[0]);
             system.runAs(listU[0]) {
                 UnitTest1();
             }
         } else {
+        */
             system.debug('Running test as system.');
             UnitTest1();
-        }
+        //}
     }
 
     private static void UnitTest1() {
@@ -354,6 +423,10 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
             Volunteer_Job__c job = ctrl.listVolunteerJobs[0];
             System.assertEquals(48, job.Volunteer_Job_Slots__r.size(), 'we should always get today and tomorrow shifts');
         }
+    }
+
+    private static void setAccessMock() {
+        VOL_CTRL_VolunteersJobListingFS.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
     }
 
 }

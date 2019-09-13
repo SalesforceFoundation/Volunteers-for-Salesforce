@@ -29,6 +29,8 @@
 */
 
 global with sharing class VOL_SharedCode {
+    @TestVisible
+    private static VOL_Access access = VOL_Access.getInstance();
 
     // the list of Campaigns that have Volunteer Jobs
     global list<SelectOption> listSOCampaignsWithJobs {
@@ -164,6 +166,7 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Signup_Creates_Contacts_If_No_Match__c = false;
                     VolunteersSettings.Signup_Bucket_Account_On_Create__c = null;
                     VolunteersSettings.Recurring_Job_Future_Months__c = 4;
+                    VolunteersSettings.Grant_Guest_Users_Update_Access__c = false;
                     VolunteersSettings.Contact_Match_Email_Fields__c = null;
                     VolunteersSettings.Contact_Match_First_Name_Fields__c = null;
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
@@ -309,8 +312,10 @@ global with sharing class VOL_SharedCode {
                 // but we can at least put it in the new Volunteer_Organization__c field.
                 if (contact.Department != null) con.Volunteer_Organization__c = contact.Department;
             }
+
             checkUpdateAccessSites('Contact', setFlds);
-            Database.update(listCon, dmlDuplicateOptions);
+            access.updateRecords(listCon, dmlDuplicateOptions);
+ 
             return listCon[0].Id;
         } else if (fCreateContacts) {  // No Match found, create a Contact
             contact.LeadSource = 'Web Volunteer Signup';
@@ -331,8 +336,8 @@ global with sharing class VOL_SharedCode {
             } else { // otherwise use the bucket account (which may be null and imply the 1:1 model in NPSP)
                 contact.AccountId = VOL_SharedCode.SettingsBucketAccountId;
             }
-            UTIL_Describe.checkCreateAccess('Contact', setFlds);
-            Database.insert(contact, dmlDuplicateOptions);
+            access.checkCreateAccess('Contact', setFlds);
+            access.insertRecords(new List<Contact>{ contact }, dmlDuplicateOptions);
             return contact.Id;
         } else { // No Match found, create a Lead
             Lead lead = new lead();
@@ -408,7 +413,6 @@ global with sharing class VOL_SharedCode {
         if (VolunteersSettings.Contact_Matching_Rule__c == null || VolunteersSettings.Contact_Matching_Rule__c == '') {
             VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
         }
-
         final String rule = VolunteersSettings.Contact_Matching_Rule__c;
         if (rule.containsIgnoreCase(String.valueOf(Contact.LastName))) {
             strSoql += strAnd + ' (Lastname=\'' + StrEscape(contactRecord.LastName) + '\') ';
@@ -548,7 +552,8 @@ global with sharing class VOL_SharedCode {
                 conExisting.Volunteer_Last_Web_Signup_Date__c = system.today();
 
             checkUpdateAccessSites('Contact', setStrFields);
-            Database.update(conExisting, dmlDuplicateOptions);
+            access.updateRecords(new List<Contact>{ conExisting }, dmlDuplicateOptions);
+
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
             return conExisting.Id;
@@ -600,8 +605,9 @@ global with sharing class VOL_SharedCode {
             conNew.LeadSource = 'Web Volunteer Signup';
             conNew.Volunteer_Status__c = 'New Sign Up';
 
-            UTIL_Describe.checkCreateAccess('Contact', setStrFields);
-            Database.insert(conNew, dmlDuplicateOptions);
+            access.checkCreateAccess('Contact', setStrFields);
+            access.insertRecords(new List<Contact>{ conNew }, dmlDuplicateOptions);
+
             // null out notes, so another update won't append them again!
             contact.Volunteer_Notes__c = null;
             return conNew.Id;
@@ -698,7 +704,8 @@ global with sharing class VOL_SharedCode {
                 if (numVols == null || resetTotals) numVols = 0;
                 shift.Total_Volunteers__c = numVols + mpShiftIdDelta.get(shift.Id);
             }
-            update listShifts;
+            // Note: We will not check CRUD / FLS for this process so that rollups are always in sync regardless of user
+            access.updateRecords(listShifts);
         }
     }
 
@@ -808,9 +815,9 @@ global with sharing class VOL_SharedCode {
         // for backward compatibility with 1000's of nonprofit customers, we can
         // only enforce create permissions on the Sites user for Contacts.
         if (objectName == 'Contact') {
-            UTIL_Describe.checkCreateAccess(objectName, fieldNames);
+            access.checkCreateAccess(objectName, fieldNames);
         } else {
-            UTIL_Describe.checkUpdateAccess(objectName, fieldNames);
+            access.checkUpdateAccess(objectName, fieldNames);
         }
     }
 
