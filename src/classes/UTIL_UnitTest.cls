@@ -56,26 +56,40 @@ public class UTIL_UnitTest {
 
     public static User createGuestUser() {
         String email = 'guest' + '@testorg.com';
+        // The OOB guest user profile depends on the type of org
+        // packaging org has Standard Guest and Dev orgs have Guest License User
+        // scratch orgs have both
+        List<Profile> profiles = getProfiles(new Set<String> { 'Standard Guest', 'Guest License User' });
+        if (profiles.isEmpty()) {
+            return null;
+        }
 
-        return createUser(email, 'Guest License User');
+        return createUser(email, profiles[0]);
     }
 
     public static User createStandardUser() {
         String email = 'guest' + '@testorg.com';
 
-        return createUser(email, 'Standard User');
+        return createUser(email, getProfileRecord('Standard User'));
     }
 
     public static User createAdminUser() {
         String email = 'admin' + '@testorg.com';
 
-        return createUser(email, 'System Administrator');
+        return createUser(email, getProfileRecord('System Administrator'));
     }
 
-    private static User createUser(String email, String profileName) {
-        Profile profileRecord = [SELECT Id FROM Profile WHERE Name = :profileName];
+    private static Profile getProfileRecord(String profileName) {
+        List<Profile> profiles = getProfiles(new Set<String>{ profileName });
+        return profiles.isEmpty() ? null : profiles[0];
+    }
 
-        User userRecord =  new User(
+    private static List<Profile> getProfiles(Set<String> profileNames) {
+        return [SELECT Id FROM Profile WHERE Name IN :profileNames];
+    }
+
+    private static User createUser(String email, Profile profileRecord) {
+        return new User(
             Alias = 'jdoe',
             Email = email,
             EmailEncodingKey = 'UTF-8',
@@ -86,8 +100,6 @@ public class UTIL_UnitTest {
             TimeZoneSidKey = 'America/Los_Angeles',
             Username = email + Datetime.now().getTime()
         );
-
-        return userRecord;
     }
 
     @TestVisible
