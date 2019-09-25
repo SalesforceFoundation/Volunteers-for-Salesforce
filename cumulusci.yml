@@ -8,6 +8,8 @@ project:
         install_class: InstallScript
     git:
         prefix_release: rel/
+        prefix_beta: beta/
+        repo_url: https://github.com/SalesforceFoundation/Volunteers-for-Salesforce
 
 tasks:
     deploy_dev_config:
@@ -280,7 +282,7 @@ plans:
         slug: install
         title: Install Volunteers for Salesforce
         tier: primary
-        is_listed: False
+        is_listed: True
         steps:
             1:
                 task: ensure_record_type
@@ -296,6 +298,7 @@ plans:
                     - when: "'npsp' not in tasks.get_installed_packages()"
                       action: hide
                 ui_options:
+                    name: "Install Page Layouts (NPSP)"
                     is_required: False
             4:
                 task: deploy_v4s_only_page_layouts
@@ -303,4 +306,5 @@ plans:
                     - when: "'npsp' in tasks.get_installed_packages()"
                       action: hide
                 ui_options:
+                    name: "Install Page Layouts (V4S)"
                     is_required: False
