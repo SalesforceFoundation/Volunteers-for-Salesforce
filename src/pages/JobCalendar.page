@@ -152,7 +152,7 @@
                                 var strUrl;
                                 
                                 if ({!fWeb}) {
-                                    strUrl = '{!$Site.CurrentSiteUrl + IF(fPersonalSite, ns+'PersonalSiteJobListing', ns+'VolunteersJobListingFS')}' +
+                                    strUrl = '{!$Site.BaseRequestUrl + '/' + IF(fPersonalSite, ns+'PersonalSiteJobListing', ns+'VolunteersJobListingFS')}' +
                                         '?Calendar=1&volunteerShiftId=' + strShiftId + '&jobId=' + strJobId +
                                         '&dtMonthFilter=' + strApexDateUTC(dtStart) +
                                         '{!JSENCODE(IF(strParams != null, '&' + strParams, ''))}';
