@@ -4,10 +4,11 @@
   "hasSampleData": "false",
   "features": "Sites",
   "settings": {
-    "orgPreferenceSettings": {
-      "chatterEnabled": true,
-      "disableParallelApexTesting": true,
-      "s1DesktopEnabled": true
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "chatterSettings": {
+      "enableChatter": true
     }
   }
 }
