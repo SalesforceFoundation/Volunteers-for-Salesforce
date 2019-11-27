@@ -171,6 +171,14 @@ tasks:
             database_url: 'sqlite:///Cumulus/datasets/dev_org/test_data.db'
             mapping: 'Cumulus/datasets/mapping_managed.yml'
 
+    run_tests:
+        options:
+            retry_failures:
+                - "unable to obtain exclusive access to this record"
+                - "UNABLE_TO_LOCK_ROW"
+                - "connection was cancelled here"
+            retry_always: True
+
 flows:
     ci_feature:
         description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests

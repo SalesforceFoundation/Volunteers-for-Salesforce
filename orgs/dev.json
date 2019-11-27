@@ -4,12 +4,17 @@
   "hasSampleData": "false",
   "features": "Sites",  
   "settings": {
-    "orgPreferenceSettings": {
-      "chatterEnabled": true,
-      "disableParallelApexTesting": true,
-      "s1DesktopEnabled": true,
-      "translation": true,
-      "s1EncryptedStoragePref2": false
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "chatterSettings": {
+      "enableChatter": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
     }
   }
 }
