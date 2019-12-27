@@ -31,7 +31,8 @@
 @isTest
 private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     private static VOL_Access_TEST.Stub accessMock = new VOL_Access_TEST.Stub();
-    
+    private static final VOL_CTRL_PersonalSiteContactInfo CTRL_INSTANCE = new VOL_CTRL_PersonalSiteContactInfo();
+
     //******************************************************************************************************
     // Test Code
 
@@ -61,13 +62,121 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         VOL_SharedCode_TEST.accessMock.assertMethodCalled('checkCreateAccess', Contact.SObjectType);
         accessMock.assertMethodCalled('updateRecords', Contact.SObjectType);
     }
-    
+
+    @IsTest
+    private static void shouldReturnEmptyLifeTimeRankWhenHoursAreEmpty() {
+        CTRL_INSTANCE.contactReadOnly = new Contact(FirstName = 'Fred', LastName = 'Test');
+        String rank = CTRL_INSTANCE.strRankLifetime();
+
+        System.assertEquals('', rank, 'Did not expect a value to be returned.');
+    }
+
+    @IsTest
+    private static void shouldReturnEmptyLifeTimeRankWhenTotalVolunteersIsOne() {
+        UTIL_UnitTest.generateData();
+        Contact contactRecord;
+        Id jobId;
+
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+        hours.Status__c = 'Completed';
+        insert hours;
+
+        Test.startTest();
+        contactRecord = [SELECT Id, Volunteer_Hours__c FROM Contact];
+        CTRL_INSTANCE.contactReadOnly = contactRecord;
+        String rank = CTRL_INSTANCE.strRankLifetime();
+        Test.stopTest();
+
+        System.assertEquals(hours.Hours_Worked__c, contactRecord.Volunteer_Hours__c, 'Expected the total completed hours to roll up to the contact.');
+        System.assertEquals('', rank, 'Did not expect a value to be returned.');
+    }
+
+    @IsTest
+    private static void shouldReturnRankWhenThreeTotalVolunteersExist() {
+        UTIL_UnitTest.generateData();
+        Integer expectedRank = Integer.valueOf(100 * (2 / (3 - 1)));
+        expectedRank = expectedRank == 0 ? 1 : expectedRank;
+
+        Contact contactRecord;
+        Id jobId;
+
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+        hours.Status__c = 'Completed';
+        hours.Hours_Worked__c = 1;
+
+        Contact contact2 = contactRecord.clone();
+        contact2.LastName = 'Two';
+        Contact contact3 = contactRecord.clone();
+        contact3.LastName = 'Three';
+        insert new List<Contact>{ contact2, contact3 };
+
+        Volunteer_Hours__c hours2 = UTIL_UnitTest.createHours(contact2.Id, jobId, null);
+        hours2.Hours_Worked__c = 2;
+        hours2.Status__c = 'Completed';
+        Volunteer_Hours__c hours3 = UTIL_UnitTest.createHours(contact3.Id, jobId, null);
+        hours3.Hours_Worked__c = 3;
+        hours3.Status__c = 'Completed';
+        insert new List<Volunteer_Hours__c>{ hours, hours2, hours3 };
+
+        List<Contact> contacts = [SELECT Id, Volunteer_Hours__c FROM Contact ORDER BY Id];
+        CTRL_INSTANCE.contactReadOnly = contacts[0];
+        String actualRank = CTRL_INSTANCE.strRankLifetime();
+
+        System.assertEquals(hours.Hours_Worked__c, contacts[0].Volunteer_Hours__c, 'Expected the total completed hours to roll up to the first contact.');
+        System.assertEquals(hours2.Hours_Worked__c, contacts[1].Volunteer_Hours__c, 'Expected the total completed hours to roll up to the second contact.');
+        System.assertEquals(hours3.Hours_Worked__c, contacts[2].Volunteer_Hours__c, 'Expected the total completed hours to roll up to the third contact.');
+        System.assert(actualRank.contains(String.valueOf(expectedRank)), 'The rank value was not as expected. Expected: ' + expectedRank + '; Actual: ' + actualRank);
+    }
+
+    @IsTest
+    private static void shouldReturnSameRankWhenHoursMatch() {
+        UTIL_UnitTest.generateData();
+        Integer expectedRank = Integer.valueOf(100 * (0 / (3 - 1)));
+        expectedRank = expectedRank == 0 ? 1 : expectedRank;
+        Contact contactRecord;
+        Id jobId;
+
+        contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+        hours.Status__c = 'Completed';
+        hours.Hours_Worked__c = 1;
+
+        Contact contact2 = contactRecord.clone();
+        contact2.LastName = 'Two';
+        Contact contact3 = contactRecord.clone();
+        contact3.LastName = 'Three';
+        insert new List<Contact>{ contact2, contact3 };
+
+        Volunteer_Hours__c hours2 = UTIL_UnitTest.createHours(contact2.Id, jobId, null);
+        hours2.Hours_Worked__c = 2;
+        hours2.Status__c = 'Completed';
+        Volunteer_Hours__c hours3 = UTIL_UnitTest.createHours(contact3.Id, jobId, null);
+        hours3.Hours_Worked__c = 2;
+        hours3.Status__c = 'Completed';
+        insert new List<Volunteer_Hours__c>{ hours, hours2, hours3 };
+
+        List<Contact> contacts = [SELECT Id, Volunteer_Hours__c FROM Contact ORDER BY Id];
+        CTRL_INSTANCE.contactReadOnly = contacts[1];
+        String actualRank = CTRL_INSTANCE.strRankLifetime();
+        CTRL_INSTANCE.contactReadOnly = contacts[2];
+        String actualRank2 = CTRL_INSTANCE.strRankLifetime();
+
+        System.assert(actualRank.contains(String.valueOf(expectedRank)), 'The rank value was not as expected. Expected: ' + expectedRank + '; Actual: ' + actualRank);
+        System.assert(actualRank2.contains(String.valueOf(expectedRank)), 'The rank value was not as expected. Expected: ' + expectedRank + '; Actual: ' + actualRank);
+    }
+
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
     * exists.  if not, will run under the current user.
     * @return void
     ********************************************************************************************************/
-    private static testMethod void testPageFunctionality() {
+    @IsTest
+    private static void testPageFunctionality() {
         Util_UnitTest.generateDataWithRecurrenceSchedules();
         testPSC();
     }
@@ -144,7 +253,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * @description test timezone handling for Shifts under LA timezone
     * @return void
     */
-    private static testMethod void testTimeZoneHandlingFromLA() {
+    @IsTest
+    private static void testTimeZoneHandlingFromLA() {
         testTimeZoneHandling('America/Los_Angeles');
     }
 
@@ -152,7 +262,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     * @description test timezone handling for Shifts under Sydney timezone
     * @return void
     */
-    private static testMethod void testTimeZoneHandlingFromSydney() {
+    @IsTest
+    private static void testTimeZoneHandlingFromSydney() {
         testTimeZoneHandling('Australia/Sydney');
     }
 

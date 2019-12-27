@@ -31,7 +31,7 @@
 global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
-    
+
     global VOL_CTRL_PersonalSiteContactInfo() {
 
         // set default property values
@@ -430,26 +430,41 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             return '';
         }           
     }
-    
-    private string strRankLifetime() {
-        integer iVol = 0;
-        integer iCurrent = 0;
-        for (list<Contact> listCon : [select Id, Volunteer_Hours__c
-            from Contact where Volunteer_Hours__c > 0 order by Volunteer_Hours__c desc]) {
-                
-                for (Contact con : listCon) {
-                    if (con.Id == contactId) {
-                        iCurrent = iVol;
-                    }
-                    iVol++;
-                }
+
+    @TestVisible
+    private String strRankLifetime() {
+        Decimal contactTotalHours = contactReadOnly.Volunteer_Hours__c;
+        if (contactTotalHours == null || contactTotalHours == 0) {
+            return '';
         }
-        if (iVol > 2) {
-            integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
-            if (irank == 0) irank = 1;
-            return string.format(label.labelContactInfoRankTextLifetime, new string[]{irank + '%'});
-        } else {
-            return '';  
-        }           
-    }   
+
+        String hoursField = String.valueOf(Contact.Volunteer_Hours__c);
+        String totalVolunteersQuery = 'SELECT count() FROM Contact WHERE ' + hoursField + ' > 0';
+        String totalVolunteersWithMoreHoursQuery = totalVolunteersQuery + ' AND ' + hoursField + ' > ' + contactTotalHours;
+
+        try {
+            Integer totalVolunteers = Database.countQuery(totalVolunteersQuery);
+
+            if (totalVolunteers <= 2) {
+                return '';
+            }
+
+            Integer totalVolunteersWithMoreHours = Database.countQuery(totalVolunteersWithMoreHoursQuery);
+
+            Integer rank = Integer.valueOf(
+                100 * (
+                    Decimal.valueOf(totalVolunteersWithMoreHours)
+                    / Decimal.valueOf(totalVolunteers - 1)
+                )
+            );
+
+            if (rank == 0) {
+                rank = 1;
+            }
+
+            return String.format(Label.labelContactInfoRankTextLifetime, new List<String>{ rank + '%' });
+        } catch(Exception ex) {
+            return ''; // allow the page to load without the ranking
+        }
+    }
 }
