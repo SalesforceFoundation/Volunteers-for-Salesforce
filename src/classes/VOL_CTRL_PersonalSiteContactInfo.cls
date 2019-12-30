@@ -433,17 +433,16 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 
     @TestVisible
     private String strRankLifetime() {
-        Decimal contactTotalHours = [SELECT Id, Volunteer_Hours__c FROM Contact WHERE Id = :contactId LIMIT 1].Volunteer_Hours__c;
-
-        if (contactTotalHours == null || contactTotalHours == 0) {
-            return '';
-        }
-
-        String hoursField = String.valueOf(Contact.Volunteer_Hours__c);
-        String totalVolunteersQuery = 'SELECT count() FROM Contact WHERE ' + hoursField + ' > 0';
-        String totalVolunteersWithMoreHoursQuery = totalVolunteersQuery + ' AND ' + hoursField + ' > ' + contactTotalHours;
-
         try {
+            Decimal contactTotalHours = [SELECT Id, Volunteer_Hours__c FROM Contact WHERE Id = :contactId LIMIT 1].Volunteer_Hours__c;
+
+            if (contactTotalHours == null || contactTotalHours == 0) {
+                return '';
+            }
+
+            String hoursField = String.valueOf(Contact.Volunteer_Hours__c);
+            String totalVolunteersQuery = 'SELECT count() FROM Contact WHERE ' + hoursField + ' > 0';
+            String totalVolunteersWithMoreHoursQuery = totalVolunteersQuery + ' AND ' + hoursField + ' > ' + contactTotalHours;
             Integer totalVolunteers = Database.countQuery(totalVolunteersQuery);
 
             if (totalVolunteers <= 2) {
