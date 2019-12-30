@@ -149,7 +149,7 @@
                                     <apex:column value="{!hr[f]}" />
                                 </apex:repeat>                  
                                 <apex:column headerValue="{!$Label.labelContactInfoDetails}" >  
-                                    <apex:outputLink value="{!$Site.BaseRequestUrl + '/' + $Setup.PackageSettings__c.NamespacePrefix__c + 'PersonalSiteJobListing' + 
+                                    <apex:outputLink value="{!$Page.PersonalSiteJobListing + 
                                         '?nMonthsToShow=1&JobId=' + hr.Volunteer_Job__c + 
                                         '&dtMonthFilter=' + TEXT(hr.Start_Date__c) }" id="linkDetails" styleClass="btn btn-info" >
                                         <i class="icon-search"></i></apex:outputLink>
