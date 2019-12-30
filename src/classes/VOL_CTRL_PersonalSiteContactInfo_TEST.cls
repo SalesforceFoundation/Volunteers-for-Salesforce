@@ -65,7 +65,10 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
 
     @IsTest
     private static void shouldReturnEmptyLifeTimeRankWhenHoursAreEmpty() {
-        CTRL_INSTANCE.contactReadOnly = new Contact(FirstName = 'Fred', LastName = 'Test');
+        Contact contactRecord = new Contact(FirstName = 'Fred', LastName = 'Test');
+        insert contactRecord;
+
+        CTRL_INSTANCE.contactId = contactRecord.Id;
         String rank = CTRL_INSTANCE.strRankLifetime();
 
         System.assertEquals('', rank, 'Did not expect a value to be returned.');
@@ -85,7 +88,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
 
         Test.startTest();
         contactRecord = [SELECT Id, Volunteer_Hours__c FROM Contact];
-        CTRL_INSTANCE.contactReadOnly = contactRecord;
+        CTRL_INSTANCE.contactId = contactRecord.Id;
         String rank = CTRL_INSTANCE.strRankLifetime();
         Test.stopTest();
 
@@ -123,7 +126,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         insert new List<Volunteer_Hours__c>{ hours, hours2, hours3 };
 
         List<Contact> contacts = [SELECT Id, Volunteer_Hours__c FROM Contact ORDER BY Id];
-        CTRL_INSTANCE.contactReadOnly = contacts[0];
+        CTRL_INSTANCE.contactId = contacts[0].Id;
         String actualRank = CTRL_INSTANCE.strRankLifetime();
 
         System.assertEquals(hours.Hours_Worked__c, contacts[0].Volunteer_Hours__c, 'Expected the total completed hours to roll up to the first contact.');
@@ -161,9 +164,9 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         insert new List<Volunteer_Hours__c>{ hours, hours2, hours3 };
 
         List<Contact> contacts = [SELECT Id, Volunteer_Hours__c FROM Contact ORDER BY Id];
-        CTRL_INSTANCE.contactReadOnly = contacts[1];
+        CTRL_INSTANCE.contactId = contacts[1].Id;
         String actualRank = CTRL_INSTANCE.strRankLifetime();
-        CTRL_INSTANCE.contactReadOnly = contacts[2];
+        CTRL_INSTANCE.contactId = contacts[2].Id;
         String actualRank2 = CTRL_INSTANCE.strRankLifetime();
 
         System.assert(actualRank.contains(String.valueOf(expectedRank)), 'The rank value was not as expected. Expected: ' + expectedRank + '; Actual: ' + actualRank);
