@@ -433,7 +433,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
 
     @TestVisible
     private String strRankLifetime() {
-        Decimal contactTotalHours = contactReadOnly.Volunteer_Hours__c;
+        Decimal contactTotalHours = [SELECT Id, Volunteer_Hours__c FROM Contact WHERE Id = :contactId LIMIT 1].Volunteer_Hours__c;
+
         if (contactTotalHours == null || contactTotalHours == 0) {
             return '';
         }
