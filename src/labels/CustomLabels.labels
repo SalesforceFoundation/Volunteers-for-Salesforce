@@ -504,6 +504,14 @@ day:      &apos;day&apos;</value>
         <value>Message sent.  Please check your email for a message that contains a link to your Volunteer information.  Thank you.</value>
     </labels>
     <labels>
+        <fullName>labelContactLookupAmbiguous</fullName>
+        <categories>PersonalSiteContactInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label displayed on PersonalSiteContactInfo after lookup is complete</shortDescription>
+        <value>If your record was found an email message that contains a link to your Volunteer information will be sent. Thank you.</value>
+    </labels>    
+    <labels>
         <fullName>labelCopySchedule</fullName>
         <categories>NewAndEditVRS</categories>
         <language>en_US</language>
