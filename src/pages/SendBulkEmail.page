@@ -95,7 +95,7 @@
                             <apex:outputText id="idNumContacts" value="{!numberOfContacts}" style="font-weight:bold;"/>
                             <apex:inputText id="idNumContactsRead" value="{!numberOfContacts}" html-readonly="true" styleClass="slds-assistive-text" html-aria-describedby="{!$Component.vfForm.numContactsHelpText}"/>
                         </div>
-                        <apex:outputText styleClass="slds-form-element__help" id="numContactsHelpText" value="{!$Label.labelNumberOfContactsHelpText}" />
+                        <c:UTIL_HtmlOutput styleClass="slds-form-element__help" id="numContactsHelpText" html="{!$Label.labelNumberOfContactsHelpText}" />
                     </div>
                     <div class="slds-form-element slds-p-top--small slds-p-horizontal--medium">
                         <div class="slds-form-element__control">
@@ -163,7 +163,7 @@
                     <apex:outputLabel value="{!$Label.labelMessageBody}" styleClass="slds-form-element__label" for="readMessage"/>
                     <div class="slds-form-element__control">
                         <div class="slds-text-body--regular">
-                            <apex:outputText id="txtMessage" value="{!message}" escape="{!!isHtmlTemplate}" />
+                            <apex:outputText id="txtMessage" value="{!message}" escape="{!!isHtmlTemplate}" /> <!-- escaping the html message in apex -->
                             <apex:inputText id="readMessage" value="{!message}" html-readonly="true" styleClass="slds-assistive-text" />
                         </div>
                     </div>
