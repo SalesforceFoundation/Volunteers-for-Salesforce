@@ -165,9 +165,9 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
         if (template.HtmlValue != null) {
             isHtmlTemplate = true;
-            // Salesforce escapes html type email templates, we must escape when displaying html value from other types
+            // Salesforce HTML templates return the body of the email within the CDATA tag
             message = template.TemplateType.equalsIgnoreCase('html')
-                ? template.HtmlValue
+                ? escapeHtml(template.HtmlValue.substringAfter('<![CDATA[').substringBeforeLast(']]'))
                 : escapeHtml(template.HtmlValue);
 
         } else {
