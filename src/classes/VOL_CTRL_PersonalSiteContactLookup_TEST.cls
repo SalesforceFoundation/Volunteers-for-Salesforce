@@ -167,7 +167,10 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     ctrl.contact.LastName = 'LookupTestLastName';
     ctrl.contact.Email = 'LookupTestEmail@email.com';
     system.assertEquals(null, ctrl.LookupContact());
-    system.assertEquals(System.Label.labelContactLookupSuccess, ctrl.strResult);
+    system.assertEquals(
+      System.Label.labelContactLookupAmbiguous,
+      ctrl.strResult
+    );
 
     // test error email handling
     con.Email = null;
@@ -179,7 +182,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     update con;
     ctrl.SendEmailToContact(con);
     system.assertNotEquals(
-      System.Label.labelContactLookupSuccess,
+      System.Label.labelContactLookupAmbiguous,
       ctrl.strResult
     );
   }
