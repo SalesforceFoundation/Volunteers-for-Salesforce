@@ -509,7 +509,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label displayed on PersonalSiteContactInfo after lookup is complete</shortDescription>
-        <value>If your record was found an email message that contains a link to your Volunteer information will be sent. Thank you.</value>
+        <value>If your contact information was found, we'll send a unique volunteer link to the email we have on file.</value>
     </labels>    
     <labels>
         <fullName>labelCopySchedule</fullName>
