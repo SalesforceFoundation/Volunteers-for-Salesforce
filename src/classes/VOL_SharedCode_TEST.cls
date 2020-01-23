@@ -89,7 +89,7 @@ public with sharing class VOL_SharedCode_TEST {
         System.assertEquals('foo', c2.LastName);
 
         Contact c3 = new Contact();
-        VOL_SharedCodeAPI25.LoadAndCopyObject(c.Id, c3, null);
+        VOL_SharedCode.LoadAndCopyObject(c.Id, c3, null);
         System.assertEquals('foo', c3.LastName);
     }
 
