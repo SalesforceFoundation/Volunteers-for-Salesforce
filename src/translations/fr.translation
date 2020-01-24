@@ -340,7 +340,7 @@ day: &apos;jour&apos;</label>
         <name>labelListViewNext</name>
     </customLabels>
     <customLabels>
-        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;Page {0} de {1} &amp;nbsp;&amp;nbsp;({2} disques)</label>
+        <label>Page {0} de {1} ({2} disques)</label>
         <name>labelListViewPageInfo</name>
     </customLabels>
     <customLabels>
@@ -560,7 +560,7 @@ day: &apos;jour&apos;</label>
         <name>labelTitleJobSignup</name>
     </customLabels>
     <customLabels>
-        <label>V4S assiste les calendriers de récurrence des bénévoles et les calendriers de récurrence de tâches à l’aide d’un processus par lot pour planifier des horaires de travail et leur assigner des bénévoles. Vous pouvez lancer ce processus manuellement, en cliquant sur le bouton Exécution de lot, ou vous pouvez planifier son exécution automatique chaque nuit.Vous verrez une barre de progression en dessous du processus par lot le plus récent. Il se peut que le processus prenne un certain temps, plus vous avez de données dans votre base de données plus le processus est long. Vous pouvez fermer cette page, le processus continuera en arrière-plan.Pour voir les tâches actuellement prévues, accédez à la &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;page des tâches prévues. Pour planifier l’exécution automatique du processus des calendriers de récurrence, accédez à la page de planification des tâches Apex.</label>
+        <label>V4S assiste les calendriers de récurrence des bénévoles et les calendriers de récurrence de tâches à l’aide d’un processus par lot pour planifier des horaires de travail et leur assigner des bénévoles. Vous pouvez lancer ce processus manuellement, en cliquant sur le bouton Exécution de lot, ou vous pouvez planifier son exécution automatique chaque nuit.Vous verrez une barre de progression en dessous du processus par lot le plus récent. Il se peut que le processus prenne un certain temps, plus vous avez de données dans votre base de données plus le processus est long. Vous pouvez fermer cette page, le processus continuera en arrière-plan.Pour voir les tâches actuellement prévues, accédez à la &lt;a  href=&quot;/08e?setupid=ScheduledJobs&quot;&gt;page des tâches prévues. Pour planifier l’exécution automatique du processus des calendriers de récurrence, accédez à la page de planification des tâches Apex.</label>
         <name>labelVRSBatchDescription</name>
     </customLabels>
     <customLabels>
