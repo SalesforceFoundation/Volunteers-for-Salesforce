@@ -37,7 +37,16 @@ global with sharing class VOL_SharedCode {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', ''));
-            for (Campaign c : [select Name, Id, StartDate from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
+
+            // Ensure the user has access to the object before querying
+            try {
+                UTIL_Describe.checkObjectReadAccess(String.valueOf(Campaign.SObjectType));
+            } catch (Exception ex) {
+                // we will return an empty list vs throwing an error
+                return listSO;
+            }
+
+            for (Campaign c : [select Name, Id from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
                 and IsActive = true order by StartDate desc, Name asc limit 999]) {
                 listSO.add(new SelectOption(c.id, c.name));
             }
@@ -49,6 +58,15 @@ global with sharing class VOL_SharedCode {
     global list<SelectOption> listSOVolunteerJobsOfCampaignId(ID campaignId) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+
+        // Ensure the user has access to the object before querying
+        try {
+            UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Job__c.SObjectType));
+        } catch (Exception ex) {
+            // we will return an empty list vs throwing an error
+            return listSO;
+        }
+
         for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
             listSO.add(new SelectOption(vj.id, vj.name));
         }
@@ -68,6 +86,18 @@ global with sharing class VOL_SharedCode {
 
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+
+        // Ensure the user has access to the object before querying
+        try {
+            UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Shift__c.SObjectType));
+
+        } catch (Exception ex) {
+            // we will return an empty list vs throwing an error
+            return listSO;
+        }
+
+        Boolean canReadDate = Schema.sObjectType.Volunteer_Shift__c.fields.Start_Date_Time__c.isAccessible();
+        Boolean canReadNumberNeeded = Schema.sObjectType.Volunteer_Shift__c.fields.Number_of_Volunteers_Still_Needed__c.isAccessible();
 
         // ensure valid date ranges
         if (dtStart == null)
@@ -98,9 +128,9 @@ global with sharing class VOL_SharedCode {
 
         for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
             SelectOption so = new SelectOption(vs.id,
-                (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) +
+                canReadDate ? (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) : '' +
                 (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
-                (fIncludeNumberNeeded ? '&nbsp;&nbsp;' +
+                (fIncludeNumberNeeded && canReadNumberNeeded ? '&nbsp;&nbsp;' +
                     (vs.Number_of_Volunteers_Still_Needed__c > 0 ?
                         system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
                     ' ' : '' ));
