@@ -249,6 +249,10 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
     // action method for saving the the volunteer's hours.    
     global virtual PageReference Save() {
+        if(!VOL_SharedCode.verifyCaptcha()){
+            strSaveResult = 'Please complete the challenge below.'; // TODO label
+            return null;
+        }
         Savepoint sp = Database.setSavepoint();
         try {
             // because we need to use actionSupport immediate=false to support the combo's,

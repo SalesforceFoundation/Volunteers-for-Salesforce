@@ -172,6 +172,7 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
                     VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
+                    VolunteersSettings.Enable_Captcha__c = false;
                     if (UTIL_Describe.hasObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
                         insert VolunteersSettings;
                     }
@@ -857,6 +858,56 @@ global with sharing class VOL_SharedCode {
              OR Parent.Parent.Parent.Parent.ParentId =: campaignId)]
         );
         return new List<Id>(campaignsInHierarchy.keySet());
+    }
+
+    /*******************************************************************************************************
+    * @description If captcha is enabled, verifies that the token received is valid
+    * Return the Boolean verification of the captcha token (or return true if captcha is disabled)
+    * @return Boolean value for captcha check
+    ********************************************************************************************************/
+    public static Boolean verifyCaptcha(){
+        String captchaSecretToken = VolunteersSettings.Google_reCaptcha_API_Key__c;
+        String captchaResponse = ApexPages.currentPage().getParameters().get('g-recaptcha-response');        
+        Boolean responseSuccess = false;
+
+        // If captcha is disabled, pass the check
+        if(VOL_SharedCode.VolunteersSettings.Enable_Captcha__c == false){
+            return true;
+        }
+
+        if(String.isEmpty(captchaResponse)){
+            return false;
+        }
+        
+        // Callout to reCaptcha with response token
+        // TODO
+        HttpResponse response = makeHttpCallout('https://www.google.com/recaptcha/api/siteverify', 'POST', 'secret=' + captchaSecretToken + '&response='+ captchaResponse);
+                
+        JSONParser parser = JSON.createParser(response.getBody());
+        while(parser.nextToken() != null){
+            if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && (parser.getText() == 'success')) {
+                parser.nextToken();
+                responseSuccess = parser.getBooleanValue();
+                break;
+            }
+        }
+        return responseSuccess;
+    }
+
+    public static HttpResponse makeHTTPCallout(String endpoint, String httpMethod, String body){
+        Http http = new Http();
+        HttpResponse response;       
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint); // TODO
+        req.setMethod(httpMethod);
+        req.setBody(body);
+        try{
+            response = http.send(req);            
+        }
+        catch(Exception e){
+            System.debug('Error: ' + e.getMessage());
+        }
+        return response;        
     }
 
     /*******************************************************************************************************
