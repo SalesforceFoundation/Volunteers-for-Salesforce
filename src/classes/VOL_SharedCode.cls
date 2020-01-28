@@ -37,7 +37,16 @@ global with sharing class VOL_SharedCode {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', ''));
-            for (Campaign c : [select Name, Id, StartDate from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
+
+            // Ensure the user has access to the object before querying
+            try {
+                UTIL_Describe.checkObjectReadAccess(String.valueOf(Campaign.SObjectType));
+            } catch (Exception ex) {
+                // we will return an empty list vs throwing an error
+                return listSO;
+            }
+
+            for (Campaign c : [select Name, Id from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
                 and IsActive = true order by StartDate desc, Name asc limit 999]) {
                 listSO.add(new SelectOption(c.id, c.name));
             }
@@ -49,6 +58,15 @@ global with sharing class VOL_SharedCode {
     global list<SelectOption> listSOVolunteerJobsOfCampaignId(ID campaignId) {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+
+        // Ensure the user has access to the object before querying
+        try {
+            UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Job__c.SObjectType));
+        } catch (Exception ex) {
+            // we will return an empty list vs throwing an error
+            return listSO;
+        }
+
         for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
             listSO.add(new SelectOption(vj.id, vj.name));
         }
@@ -68,6 +86,18 @@ global with sharing class VOL_SharedCode {
 
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
+
+        // Ensure the user has access to the object before querying
+        try {
+            UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Shift__c.SObjectType));
+
+        } catch (Exception ex) {
+            // we will return an empty list vs throwing an error
+            return listSO;
+        }
+
+        Boolean canReadDate = Schema.sObjectType.Volunteer_Shift__c.fields.Start_Date_Time__c.isAccessible();
+        Boolean canReadNumberNeeded = Schema.sObjectType.Volunteer_Shift__c.fields.Number_of_Volunteers_Still_Needed__c.isAccessible();
 
         // ensure valid date ranges
         if (dtStart == null)
@@ -98,9 +128,9 @@ global with sharing class VOL_SharedCode {
 
         for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
             SelectOption so = new SelectOption(vs.id,
-                (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) +
+                canReadDate ? (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) : '' +
                 (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
-                (fIncludeNumberNeeded ? '&nbsp;&nbsp;' +
+                (fIncludeNumberNeeded && canReadNumberNeeded ? '&nbsp;&nbsp;' +
                     (vs.Number_of_Volunteers_Still_Needed__c > 0 ?
                         system.label.labelCalendarStillNeeded + vs.Number_of_Volunteers_Still_Needed__c : system.label.labelCalendarShiftFull) +
                     ' ' : '' ));
@@ -641,12 +671,51 @@ global with sharing class VOL_SharedCode {
 
     // global utility to load up an existing object and copy it to the provided object
     global static void LoadAndCopyObject(ID id, SObject sobj) {
+        LoadAndCopyObject(id, sobj, null);
+    }
 
-        // this code moved to VOL_SharedCodeAPI25 to keep it running with api 25
-        // behavior, which is that the Sites Guest User Profile can still edit
-        // this new contact object we created.  Under api 31, the contact object is readonly.
-        // we needed to update the rest of this class to api 31 to handle state & country picklists.
-        VOL_SharedCodeAPI25.LoadAndCopyObject(id, sobj, null);
+    public static SObject LoadAndCopyObject(ID id, SObject sobj, list<String> listStrFields) {
+        
+
+        Schema.DescribeSObjectResult des = sobj.getSObjectType().getDescribe();
+
+        // if fields not provided, get all Contact fields
+        if (listStrFields == null) {
+            listStrFields = new list<string>();
+            // get the fields for the object
+            Map<String, Schema.SObjectField> mapS = des.fields.getMap().clone();
+            // avoid any of the API version 30 compound fields
+            // we only worry about Contact ones, since all callers are giving us contacts to copy.
+            mapS.remove('mailingaddress');
+            mapS.remove('otheraddress');
+            listStrFields.addAll(mapS.keySet());
+        }
+        
+        string strSoql = 'select ';
+        string strComma = '';
+        for (string strF : listStrFields) {
+            strSoql += strComma + strF;
+            strComma = ', ';
+        }
+        strSoql += ' from ' + des.getName() + ' where Id = :id ';
+        strSoql += ' limit 1';      
+        list<SObject> listSObj = Database.Query(strSoql); 
+        
+        if (listSObj.size() > 0) {          
+            SObject sobjT = listSObj[0];
+            //  now copy over all the non-null fields from the form's contact to the existing contact.
+            for (string strF : listStrFields) {
+                if (sobjT.get(strF) != null) {
+                    try {
+                        sobj.put(strF, sobjT.get(strF));
+                    } catch(exception ex) { 
+                        
+                    }
+                }
+            }
+            return sobjT;
+        }
+        return null;
     }
 
     public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {
@@ -932,6 +1001,8 @@ global with sharing class VOL_SharedCode {
         str = Label.labelFindVolunteersCriteria;
         str = Label.labelFindVolunteersHelpAssign;
         str = Label.labelVolunteersWizardNewCampaignTitle;
+        str = Label.labelContactLookupSuccess;
+        str = Label.labelContactLookupNotFound;
     }
 
 }

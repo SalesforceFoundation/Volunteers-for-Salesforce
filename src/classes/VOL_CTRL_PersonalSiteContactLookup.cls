@@ -83,7 +83,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
 
         list<Contact> listCon = VOL_SharedCode.LookupContact(contact, null);        
         if (listCon == null || listCon.size() == 0) {
-            strResult = System.Label.labelContactLookupNotFound;
+            strResult = System.Label.labelContactLookupAmbiguous;
         } else {
             SendEmailToContact(listCon[0]);
         }               
@@ -131,7 +131,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
             list<Messaging.SendEmailResult> listSER;
             listSER = Messaging.sendEmail(new Messaging.Email[] { mail }, false);
             if (listSER[0].isSuccess()) {
-                strResult = System.Label.labelContactLookupSuccess;
+                strResult = System.Label.labelContactLookupAmbiguous;
                 Task taskRecord = toTask(mail);
                 access.insertRecords(new List<SObject>{ taskRecord });
 

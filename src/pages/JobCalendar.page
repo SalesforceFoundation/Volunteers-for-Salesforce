@@ -37,8 +37,8 @@
     cache="false"
     title="{!$Label.labelCalendarPageTitle}">
 
-    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-3.2.1.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui-1.12.1.custom.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery-ui.custom.min.js')}"/>
     <apex:includeScript value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.js')}"/>
     <apex:includeScript value="{!URLFOR($Resource.wtooltip, 'wtooltip.min.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.FullCalendar, 'fullcalendar/fullcalendar.css')}"/>

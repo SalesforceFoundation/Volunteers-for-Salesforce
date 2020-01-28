@@ -81,7 +81,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
                 if (cId != null) contactIdPersonalSite = cId.getValue();
                 if (contactIdPersonalSite != null && contactIdPersonalSite != '') {
-                    VOL_SharedCodeAPI25.LoadAndCopyObject(contactIdPersonalSite, contact, listStrFields);                   
+                    VOL_SharedCode.LoadAndCopyObject(contactIdPersonalSite, contact, listStrFields);                   
                 } else {
                     // if state & country picklists enabled, we want to copy in any defaults from state/country Code to 
                     // the state & country fields, since the picklists cannot be included in the field set.
@@ -155,6 +155,15 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
             if (listSOVolunteerJobs == null) {              
                 listSOVolunteerJobs = new list<SelectOption>();
                 listSOVolunteerJobs.add(new SelectOption('', ''));
+
+
+                // Ensure the user has access to the object before querying
+                try {
+                    UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Job__c.SObjectType));
+                } catch (Exception ex) {
+                    // we will return an empty list vs throwing an error
+                    return listSOVolunteerJobs;
+                }
                 
                 Boolean filterByContact = VOL_SharedCode.VolunteersSettings.Personal_Site_Report_Hours_Filtered__c;
                 List<Volunteer_Job__c> volunteerJobs = new List<Volunteer_Job__c>();
