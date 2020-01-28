@@ -81,7 +81,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
                 Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
                 if (cId != null) contactIdPersonalSite = cId.getValue();
                 if (contactIdPersonalSite != null && contactIdPersonalSite != '') {
-                    VOL_SharedCodeAPI25.LoadAndCopyObject(contactIdPersonalSite, contact, listStrFields);                   
+                    VOL_SharedCode.LoadAndCopyObject(contactIdPersonalSite, contact, listStrFields);                   
                 } else {
                     // if state & country picklists enabled, we want to copy in any defaults from state/country Code to 
                     // the state & country fields, since the picklists cannot be included in the field set.

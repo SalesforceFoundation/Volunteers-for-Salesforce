@@ -92,7 +92,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         setStrFields.addAll(listStrFieldsExtraFS);
         setStrFields.add('Firstname');
         setStrFields.add('Lastname');
-        contactReadOnly = (Contact)VOL_SharedCodeAPI25.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));
+        contactReadOnly = (Contact)VOL_SharedCode.LoadAndCopyObject(contactId, contactEdit, new List<String>(setStrFields));
         
         // output error page messages for any field that doesn't have visibility correctly set.
         VOL_SharedCode.testObjectFieldVisibility('Contact', listStrFieldsPanel1FS); 
