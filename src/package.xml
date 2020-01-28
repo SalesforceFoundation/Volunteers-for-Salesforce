@@ -76,6 +76,7 @@
     </types>
     <types>
         <members>SoqlListView</members>
+        <members>Captcha</members>
         <members>UTIL_FormField</members>
         <members>UTIL_JobProgressLightning</members>
         <members>UTIL_NavigateBack</members>

@@ -42,9 +42,7 @@
 
     <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery.validate-1.17.0.min.js')}" />
 
-    <apex:stylesheet value="{!strURLtoCSSFile}" />
-
-    <script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
+    <apex:stylesheet value="{!strURLtoCSSFile}" />    
 
     <script type="text/javascript"> 
 
@@ -148,16 +146,17 @@
                                 styleclass="btn btn-large" />
             <br/>
             <br/>
-            <c:captcha></c:captcha>
-            <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_Captcha__c}">
-                <div id="captcha" class="btn-group-vertical"> 
-                    <div class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
-                </div>
-            </apex:outputPanel>
-
             <p>
                 <apex:outputText value="{!strResult}" />
             </p>
+            <c:captcha></c:captcha>
+            <!-- <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_captcha__c}">
+                <div id="captcha" class="btn-group-vertical"> 
+                    <div class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
+                </div>
+                <script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
+
+            </apex:outputPanel> -->
         </apex:outputPanel>
 
     </apex:form>

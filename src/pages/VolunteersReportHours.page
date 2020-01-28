@@ -31,7 +31,6 @@
 <apex:page controller="VOL_CTRL_VolunteersReportHours" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false" cache="false">
 
 	<apex:stylesheet value="{!strURLtoCSSFile}" /> 
-	<script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
 
   	<apex:form styleClass="cssForm" id="formReportHours" >	
 		<table columns="2" >
@@ -130,6 +129,7 @@
 			<div id="captcha" class=""> 
 				<div id="recaptcha" class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
 			</div>
+			<script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
 		</apex:outputPanel>
 	</apex:form>
 	<script>

@@ -880,8 +880,10 @@ global with sharing class VOL_SharedCode {
         }
         
         // Callout to reCaptcha with response token
-        // TODO
-        HttpResponse response = makeHttpCallout('https://www.google.com/recaptcha/api/siteverify', 'POST', 'secret=' + captchaSecretToken + '&response='+ captchaResponse);
+        // TODO - Endpoint setting
+        HttpResponse response = makeHttpCallout('https://www.google.com/recaptcha/api/siteverify', 
+                                                'POST', 
+                                                'secret=' + captchaSecretToken + '&response='+ captchaResponse);
                 
         JSONParser parser = JSON.createParser(response.getBody());
         while(parser.nextToken() != null){

@@ -1,0 +1,12 @@
+<apex:component >
+    <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_captcha__c}">
+        <div id="captcha" class="btn-group-vertical">
+            <div class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
+        </div>
+    </apex:outputPanel>
+	<script>
+		var onloadCallback = function() {
+			grecaptcha.render('recaptcha', {'sitekey' : '{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}'});
+		};
+	</script>
+</apex:component>
