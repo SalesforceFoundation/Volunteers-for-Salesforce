@@ -66,7 +66,6 @@
         <members>VOL_JRS</members>
         <members>VOL_JRS_TEST</members>
         <members>VOL_SharedCode</members>
-        <members>VOL_SharedCodeAPI25</members>
         <members>VOL_SharedCode_TEST</members>
         <members>VOL_StateCountryPicklists</members>
         <members>VOL_StateCountryPicklists_TEST</members>
