@@ -162,7 +162,7 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     @IsTest
     private static void shouldReturnErrorOnCaptchaFailure() {
         generateData(1);
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
         
         Contact existingContact = UTIL_UnitTest.createContact('Signup Update ' + DateTime.now().getTime());
         insert existingContact;

@@ -1,5 +1,5 @@
 <apex:component >
-    <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_captcha__c}">
+    <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_Site_Captcha__c}">
         <div id="grecaptcha" class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
         <script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
         <script>

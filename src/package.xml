@@ -215,7 +215,6 @@
         <members>Volunteers_Settings__c.Contact_Match_First_Name_Fields__c</members>
         <members>Volunteers_Settings__c.Contact_Matching_Rule__c</members>
         <members>Volunteers_Settings__c.Enable_Site_Captcha__c</members>
-        <members>Volunteers_Settings__c.Enable_captcha__c</members>
         <members>Volunteers_Settings__c.Google_Maps_API_Key__c</members>
         <members>Volunteers_Settings__c.Google_reCaptcha_Endpoint__c</members>
         <members>Volunteers_Settings__c.Google_reCaptcha_Secret_Key__c</members>

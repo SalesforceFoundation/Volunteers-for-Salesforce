@@ -92,9 +92,9 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
     @IsTest
     private static void shouldReturnErrorOnCaptchaFailure() {
         UTIL_UnitTest.generateData();
-        
+
         //enable captcha
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;        
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;        
         
         Contact contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
         Id jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);

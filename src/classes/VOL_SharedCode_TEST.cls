@@ -323,8 +323,8 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     @isTest
-    private static void testCaptchaResponseSuccess(){   
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+    private static void testCaptchaResponseSuccess() {   
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
         VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
         PageReference lookupPage = Page.PersonalSiteContactLookup;
         Test.setCurrentPage(lookupPage);
@@ -341,8 +341,8 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     @isTest
-    private static void testCaptchaResponseFailure(){
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+    private static void testCaptchaResponseFailure() {
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
         VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
         PageReference lookupPage = Page.PersonalSiteContactLookup;
         Test.setCurrentPage(lookupPage);
@@ -359,8 +359,8 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     @isTest
-    private static void captchaShouldSucceedIfDisabled(){
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = false;        
+    private static void captchaShouldSucceedIfDisabled() {
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = false;        
         PageReference lookupPage = Page.PersonalSiteContactLookup;
         Test.setCurrentPage(lookupPage);        
 
@@ -371,8 +371,8 @@ public with sharing class VOL_SharedCode_TEST {
     }
 
     @isTest
-    private static void captchaShouldFailIfNoTokenReceived(){
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+    private static void captchaShouldFailIfNoTokenReceived() {
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
         VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
         PageReference lookupPage = Page.PersonalSiteContactLookup;
         Test.setCurrentPage(lookupPage);

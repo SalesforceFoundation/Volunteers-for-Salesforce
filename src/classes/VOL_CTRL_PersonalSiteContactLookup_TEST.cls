@@ -81,7 +81,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     @IsTest
     private static void shouldReturnErrorOnCaptchaFailure() {
         //enable captcha
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
 
         //point to our VF page
         PageReference lookupPage = Page.PersonalSiteContactLookup;
@@ -125,7 +125,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
 
     private static void TestPersonalSiteContactLookup() {
         //disable captcha
-        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = false;
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = false;
 
         //point to our VF page
         PageReference p = new PageReference('Page.PersonalSiteContactLookup');

@@ -202,7 +202,7 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
                     VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
-                    VolunteersSettings.Enable_Captcha__c = false;
+                    VolunteersSettings.Enable_Site_Captcha__c = false;
                     if (UTIL_Describe.hasObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
                         insert VolunteersSettings;
                     }
@@ -934,9 +934,9 @@ global with sharing class VOL_SharedCode {
     * Return the Boolean verification of the captcha token (or return true if captcha is disabled)
     * @return Boolean value for captcha check
     ********************************************************************************************************/
-    public static Boolean verifyCaptcha(){
+    public static Boolean verifyCaptcha() {
         // If captcha is disabled, pass the check
-        if (VOL_SharedCode.VolunteersSettings.Enable_Captcha__c == false) {
+        if (VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c == false) {
             return true;
         }
         String captchaSecretToken = VolunteersSettings.Google_reCaptcha_Secret_Key__c;
