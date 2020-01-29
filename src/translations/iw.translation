@@ -340,7 +340,7 @@ day: &apos;ום&apos;</label>
         <name>labelListViewNext</name>
     </customLabels>
     <customLabels>
-        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;דף {0} מתוך {1} &amp;nbsp;&amp;nbsp;({2} רשומות)</label>
+        <label>דף {0} מתוך {1} ({2} רשומות)</label>
         <name>labelListViewPageInfo</name>
     </customLabels>
     <customLabels>
@@ -564,9 +564,9 @@ day: &apos;ום&apos;</label>
 &lt;br/&gt;
 &lt;p&gt;יוצג סרגל התקדמות מתחת לתהליך האצווה האחרון. התהליך עשוי להימשך זמן מה; הוא יארך יותר ככל שמסד הנתונים שלך מכיל נתונים רבים יותר. תוכל לסגור דף זה והתהליך ימשיך לפעול ברקע.&lt;/p&gt;
 &lt;br/&gt;
-&lt;p&gt;כדי להציג את המשימות המתוזמנות כעת, עבור אל &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;דף המשימות המתוזמנות.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;כדי להציג את המשימות המתוזמנות כעת, עבור אל &lt;a  href=&quot;/08e?setupid=ScheduledJobs&quot;&gt;דף המשימות המתוזמנות.&lt;/a&gt;&lt;/p&gt;
 &lt;br/&gt;
-&lt;p&gt;כדי לתזמן הפעלה אוטומטית של תהליך החזרה, עבור אל &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;דף תזמון משימות Apex.‏&lt;/a&gt;&lt;/p&gt;</label>
+&lt;p&gt;כדי לתזמן הפעלה אוטומטית של תהליך החזרה, עבור אל &lt;a  href=&quot;/ui/setup/apex/batch/ScheduleBatchApexPage&quot;&gt;דף תזמון משימות Apex.‏&lt;/a&gt;&lt;/p&gt;</label>
         <name>labelVRSBatchDescription</name>
     </customLabels>
     <customLabels>
