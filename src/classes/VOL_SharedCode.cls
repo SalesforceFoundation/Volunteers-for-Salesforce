@@ -948,6 +948,8 @@ global with sharing class VOL_SharedCode {
         str = Label.labelFindVolunteersCriteria;
         str = Label.labelFindVolunteersHelpAssign;
         str = Label.labelVolunteersWizardNewCampaignTitle;
+        str = Label.labelContactLookupSuccess;
+        str = Label.labelContactLookupNotFound;
     }
 
 }
