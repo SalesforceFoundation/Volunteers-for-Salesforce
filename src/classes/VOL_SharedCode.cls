@@ -935,17 +935,16 @@ global with sharing class VOL_SharedCode {
     * @return Boolean value for captcha check
     ********************************************************************************************************/
     public static Boolean verifyCaptcha(){
+        // If captcha is disabled, pass the check
+        if (VOL_SharedCode.VolunteersSettings.Enable_Captcha__c == false) {
+            return true;
+        }
         String captchaSecretToken = VolunteersSettings.Google_reCaptcha_Secret_Key__c;
         String captchaResponse = ApexPages.currentPage().getParameters().get('g-recaptcha-response');        
         Boolean responseSuccess = false;
 
-        // If captcha is disabled, pass the check
-        if(VOL_SharedCode.VolunteersSettings.Enable_Captcha__c == false) {
-            return true;
-        }
-
         // If captcha parameter is missing, fail the check
-        if(String.isEmpty(captchaResponse)) {
+        if (String.isEmpty(captchaResponse)) {
             return false;
         }
         
@@ -955,7 +954,7 @@ global with sharing class VOL_SharedCode {
                                                 'secret=' + captchaSecretToken + '&response='+ captchaResponse);
 
         JSONParser parser = JSON.createParser(response.getBody());
-        while(parser.nextToken() != null) {
+        while (parser.nextToken() != null) {
             if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && (parser.getText() == 'success')) {
                 parser.nextToken();
                 responseSuccess = parser.getBooleanValue();

@@ -257,7 +257,7 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
     // action method for saving the the volunteer's hours.    
     global virtual PageReference Save() {
-        if(!VOL_SharedCode.verifyCaptcha()){
+        if (!VOL_SharedCode.verifyCaptcha()) {
             strSaveResult = System.Label.CaptchaFailure;
             return null;
         }

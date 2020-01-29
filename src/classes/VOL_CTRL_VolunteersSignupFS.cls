@@ -96,7 +96,7 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     global Attachment attachment { get; set; }   
         
     global virtual PageReference Save() {  
-        if(!VOL_SharedCode.verifyCaptcha()){
+        if (!VOL_SharedCode.verifyCaptcha()) {
             StrSaveResult = System.Label.CaptchaFailure;
             return null;
         }

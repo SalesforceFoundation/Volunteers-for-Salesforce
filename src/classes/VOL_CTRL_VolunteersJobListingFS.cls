@@ -418,10 +418,11 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     private class MyException extends Exception {}
     
     global virtual PageReference VolunteerShiftSignUp() {
-        if(!VOL_SharedCode.verifyCaptcha()){
+        if (!VOL_SharedCode.verifyCaptcha()) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, System.Label.CaptchaFailure));
             return null;
         }
+
         Savepoint sp = Database.setSavepoint();
         try {
             // clear return variables in case we fail.

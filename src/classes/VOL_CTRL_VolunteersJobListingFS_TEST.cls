@@ -159,6 +159,38 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assertEquals(QUERY_LIMIT, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
+    @IsTest
+    private static void shouldReturnErrorOnCaptchaFailure() {
+        generateData(1);
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+        
+        Contact existingContact = UTIL_UnitTest.createContact('Signup Update ' + DateTime.now().getTime());
+        insert existingContact;
+
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
+
+        setupPage(new Map<String, String>());
+
+        jobListingCtrl.shiftIdSignUp = shiftId;
+        jobListingCtrl.jobIdSignUp = jobId;
+        jobListingCtrl.contact = existingContact;
+        jobListingCtrl.vhours.Number_of_Volunteers__c = 2;
+        jobListingCtrl.VolunteerShiftSignUp();
+
+        Boolean expectedMessage = false;
+        List<Apexpages.Message> messages = ApexPages.getMessages();
+        System.assertNotEquals(0, messages.size());
+
+        for (Apexpages.Message message : messages) {
+            if (message.getDetail().contains(System.Label.CaptchaFailure)) {
+                expectedMessage = true;
+            }
+        }
+
+        System.assertEquals(true, expectedMessage);
+    }
+
     private static void setupPage(Map<String, String> params) {
         PageReference pageRef = Page.VolunteersJobListingFS;
 

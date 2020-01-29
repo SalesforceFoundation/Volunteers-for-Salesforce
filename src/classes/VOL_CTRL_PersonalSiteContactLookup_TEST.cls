@@ -77,6 +77,26 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
             System.assertEquals(defaultClosedStatus, VOL_CTRL_PersonalSiteContactLookup.getClosedTaskStatus(), 'Expected the system to find the default closed task status when ran as a guest user.');
         }
     }
+
+    @IsTest
+    private static void shouldReturnErrorOnCaptchaFailure() {
+        //enable captcha
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+
+        //point to our VF page
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+
+        Test.startTest();
+        VOL_CTRL_PersonalSiteContactLookup ctrl = new VOL_CTRL_PersonalSiteContactLookup();        
+        ctrl.contact.Firstname = 'Test';
+        ctrl.contact.Lastname = 'User';
+        ctrl.contact.Email = 'testuser@salesforce.com';
+        ctrl.LookupContact();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.CaptchaFailure, ctrl.strResult);
+    }
     
     @isTest(SeeAllData=true)  // SeeAllData so the CSS file is viewable
     /*******************************************************************************************************
@@ -104,6 +124,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     }
 
     private static void TestPersonalSiteContactLookup() {
+        //disable captcha
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = false;
 
         //point to our VF page
         PageReference p = new PageReference('Page.PersonalSiteContactLookup');

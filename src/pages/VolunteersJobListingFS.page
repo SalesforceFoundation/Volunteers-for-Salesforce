@@ -295,7 +295,7 @@
             <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" styleClass="cssButton btn" />            
             <div id="captcha" style="margin-top:5px;">
                 <c:captcha></c:captcha>
-            </div>            
+            </div>
             <apex:actionStatus startText="{! '  ' + $Label.labelMessageSaving}" stopText="" id="statusSignUp" startStyle="color:green; font-style:italic" stopStyle="color:black;" />                             
         </apex:outputPanel>
                 

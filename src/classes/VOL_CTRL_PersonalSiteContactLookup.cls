@@ -76,7 +76,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
     
     // the action method called from the page to lookup the contact, and to send them email if found.
     global PageReference LookupContact() {                                    
-        if(!VOL_SharedCode.verifyCaptcha()){            
+        if (!VOL_SharedCode.verifyCaptcha()) {
             strResult = System.Label.CaptchaFailure;
             return null;
         }

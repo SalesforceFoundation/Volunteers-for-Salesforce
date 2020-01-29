@@ -89,6 +89,31 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
         accessMock.assertMethodCalled('updateRecords', Volunteer_Hours__c.SObjectType);
     }
 
+    @IsTest
+    private static void shouldReturnErrorOnCaptchaFailure() {
+        UTIL_UnitTest.generateData();
+        
+        //enable captcha
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;        
+        
+        Contact contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        Id jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+        insert hours;
+
+        Test.setCurrentPage(reportHoursPage);
+        
+        Test.startTest();
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+        reportHoursCtrl.contact = contactRecord;
+        reportHoursCtrl.volunteerJobId = jobId;
+        reportHoursCtrl.vhours = hours;        
+        reportHoursCtrl.Save();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.CaptchaFailure, reportHoursCtrl.strSaveResult);
+    }
+
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
     * exists.  if not, will run under the current user.
