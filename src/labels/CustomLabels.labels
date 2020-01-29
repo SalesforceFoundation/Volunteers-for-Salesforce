@@ -717,7 +717,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>label for page info in list view</shortDescription>
-        <value>&amp;nbsp;&amp;nbsp;&amp;nbsp;Page {0} of {1} &amp;nbsp;&amp;nbsp;({2} records)</value>
+        <value>Page {0} of {1} ({2} records)</value>
     </labels>
     <labels>
         <fullName>labelListViewPrevious</fullName>
@@ -1157,7 +1157,7 @@ day:      &apos;day&apos;</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>labelVRSBatchDescription</shortDescription>
-        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future Shifts and assign volunteers to them. You can run this process manually, by clicking the Run Batch button, or you can schedule it to automatically run nightly.&lt;/p&gt;&lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;&lt;p&gt;To view currently scheduled Jobs, go to the &lt;a href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Scheduled Jobs page.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;To schedule the Recurrence Schedules process to run automatically, go to the &lt;a href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Schedule Apex Jobs page.&lt;/a&gt;&lt;/p&gt;</value>
+        <value>&lt;p&gt;Volunteers for Salesforce supports Volunteer Recurrence Schedules and Job Recurrence Schedules with the help of a batch process to create future Shifts and assign volunteers to them. You can run this process manually, by clicking the Run Batch button, or you can schedule it to automatically run nightly.&lt;/p&gt;&lt;p&gt;You will see a progress bar below for the most recent batch process. The process may take some time; it will take longer the more data you have in your database. You can close this page and the process will continue in the background.&lt;/p&gt;&lt;p&gt;To view currently scheduled Jobs, go to the &lt;a href=&quot;/08e?setupid=ScheduledJobs&quot;&gt;Scheduled Jobs page.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;To schedule the Recurrence Schedules process to run automatically, go to the &lt;a href=&quot;/ui/setup/apex/batch/ScheduleBatchApexPage&quot;&gt;Schedule Apex Jobs page.&lt;/a&gt;&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>labelVRSBatchProcess</fullName>
