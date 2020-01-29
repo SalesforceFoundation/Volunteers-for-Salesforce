@@ -218,10 +218,11 @@
                 </div>
             </apex:column>
             <apex:column rendered="{!ShowNumberAvailable}">
-                <apex:outputText value="{!$Label.labelShiftNumbers}&nbsp;&nbsp;&nbsp;" escape="false">
+                <apex:outputText value="{!$Label.labelShiftNumbers}">
                     <apex:param value="{!NULLVALUE(shift.Total_Volunteers__c, 0)} "/>
                     <apex:param value="{!NULLVALUE(shift.Number_of_Volunteers_Still_Needed__c, 0)}"/>
                 </apex:outputText>
+                &nbsp;&nbsp;
             </apex:column>
             <apex:column ><apex:outputField value="{!shift.Description__c}" /></apex:column>
         </apex:dataTable>

@@ -58,13 +58,14 @@
                 <tr>
                     <td style="vertical-align:middle;">
                         <apex:commandLink action="{!setCon.first}" rerender="panelData" status="statusLoad" >{!$Label.labelListViewFirst}</apex:commandlink>
-                        <apex:outputText value="&nbsp;|&nbsp;" escape="false" />
+                        <apex:outputText value=" | " />
                         <apex:commandLink action="{!setCon.previous}" rerender="panelData" status="statusLoad" rendered="{!setCon.HasPrevious}">{!$Label.labelListViewPrevious}</apex:commandlink> 
-                        <apex:outputText rendered="{!setCon.HasPrevious}" value="&nbsp;|&nbsp;" escape="false" />
+                        <apex:outputText rendered="{!setCon.HasPrevious}" value=" | " />
                         <apex:commandLink action="{!setCon.next}" rerender="panelData" status="statusLoad" rendered="{!setCon.HasNext}">{!$Label.labelListViewNext}</apex:commandlink>
-                        <apex:outputText rendered="{!setCon.HasNext}" value="&nbsp;|&nbsp;" escape="false" />
+                        <apex:outputText rendered="{!setCon.HasNext}" value=" | " />
                         <apex:commandLink action="{!setCon.last}" rerender="panelData" status="statusLoad" >{!$Label.labelListViewLast}</apex:commandlink>
-                        <apex:outputText value="{!$Label.labelListViewPageInfo}" escape="false" >
+                        &nbsp;&nbsp;&nbsp;
+                        <apex:outputText value="{!$Label.labelListViewPageInfo}">
                             <apex:param value="{!setCon.PageNumber}" />
                             <apex:param value="{!NumberOfPages}" />
                             <apex:param value="{!NumberOfItems}" />
@@ -139,13 +140,14 @@
         </table>
         <div class="PagerUI">
             <apex:commandLink action="{!setCon.first}" rerender="panelData" status="statusLoad" >{!$Label.labelListViewFirst}</apex:commandlink>
-            <apex:outputText value="&nbsp;|&nbsp;" escape="false"/>
+            <apex:outputText value=" | "/>
             <apex:commandLink action="{!setCon.previous}" rerender="panelData" status="statusLoad" rendered="{!setCon.HasPrevious}">{!$Label.labelListViewPrevious}</apex:commandlink> 
-            <apex:outputText rendered="{!setCon.HasPrevious}" value="&nbsp;|&nbsp;" escape="false" />
+            <apex:outputText rendered="{!setCon.HasPrevious}" value=" | " />
             <apex:commandLink action="{!setCon.next}" rerender="panelData" status="statusLoad" rendered="{!setCon.HasNext}">{!$Label.labelListViewNext}</apex:commandlink>
-            <apex:outputText rendered="{!setCon.HasNext}" value="&nbsp;|&nbsp;" escape="false" />
+            <apex:outputText rendered="{!setCon.HasNext}" value=" | " />
             <apex:commandLink action="{!setCon.last}" rerender="panelData" status="statusLoad" >{!$Label.labelListViewLast}</apex:commandlink>
-            <apex:outputText value="{!$Label.labelListViewPageInfo}" escape="false" >
+            &nbsp;&nbsp;&nbsp;
+            <apex:outputText value="{!$Label.labelListViewPageInfo}">
                 <apex:param value="{!setCon.PageNumber}" />
                 <apex:param value="{!NumberOfPages}" />
                 <apex:param value="{!NumberOfItems}" />

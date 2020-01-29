@@ -18,6 +18,8 @@
         <members>Telemetry_TEST</members>
         <members>UTIL_Describe</members>
         <members>UTIL_Describe_TEST</members>
+        <members>UTIL_HtmlOutput_CTRL</members>
+        <members>UTIL_HtmlOutput_TEST</members>
         <members>UTIL_JavaScriptSanitizer</members>
         <members>UTIL_JavaScriptSanitizer_TEST</members>
         <members>UTIL_JobProgress_CTRL</members>
@@ -78,6 +80,7 @@
         <members>Captcha</members>
         <members>SoqlListView</members>
         <members>UTIL_FormField</members>
+        <members>UTIL_HtmlOutput</members>
         <members>UTIL_JobProgressLightning</members>
         <members>UTIL_NavigateBack</members>
         <members>UTIL_PageMessages</members>
