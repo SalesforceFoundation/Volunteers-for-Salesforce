@@ -340,7 +340,7 @@ day:      &apos;Tag&apos;</label>
         <name>labelListViewNext</name>
     </customLabels>
     <customLabels>
-        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;Seite {0} von {1} &amp;nbsp;&amp;nbsp;({2} Datensätze)</label>
+        <label>Seite {0} von {1} ({2} Datensätze)</label>
         <name>labelListViewPageInfo</name>
     </customLabels>
     <customLabels>
@@ -564,9 +564,9 @@ day:      &apos;Tag&apos;</label>
 &lt;br/&gt;
 &lt;p&gt;Sie sehen eine Statusanzeige für den neuesten Batchvorgang. Der Vorgang kann etwas Zeit in Anspruch nehmen. Je mehr Daten Ihre Datenbank enthält, umso länger dauert er. Sie können diese Seite schließen, um den Vorgang im Hintergrund fortzusetzen.&lt;/p&gt;
 &lt;br/&gt;
-&lt;p&gt;Um die aktuell geplanten Aufträge anzuzeigen, rufen Sie die &lt;a  href=&apos;/08e?setupid=ScheduledJobs&apos;&gt;Seite für geplante Aufträge&lt;/a&gt; auf.&lt;/p&gt;
+&lt;p&gt;Um die aktuell geplanten Aufträge anzuzeigen, rufen Sie die &lt;a  href=&quot;/08e?setupid=ScheduledJobs&quot;&gt;Seite für geplante Aufträge&lt;/a&gt; auf.&lt;/p&gt;
 &lt;br/&gt;
-&lt;p&gt;Um festzulegen, dass wiederkehrende Zeitpläne automatisch ausgeführt werden, rufen Sie die &lt;a  href=&apos;/ui/setup/apex/batch/ScheduleBatchApexPage&apos;&gt;Seite für geplante Apex-Aufträge&lt;/a&gt; auf.&lt;/p&gt;</label>
+&lt;p&gt;Um festzulegen, dass wiederkehrende Zeitpläne automatisch ausgeführt werden, rufen Sie die &lt;a  href=&quot;/ui/setup/apex/batch/ScheduleBatchApexPage&quot;&gt;Seite für geplante Apex-Aufträge&lt;/a&gt; auf.&lt;/p&gt;</label>
         <name>labelVRSBatchDescription</name>
     </customLabels>
     <customLabels>
