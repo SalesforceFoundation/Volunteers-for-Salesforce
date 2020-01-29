@@ -96,6 +96,10 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     global Attachment attachment { get; set; }   
         
     global virtual PageReference Save() {  
+        if(!VOL_SharedCode.verifyCaptcha()){
+            StrSaveResult = System.Label.CaptchaFailure;
+            return null;
+        }
         try { 
             // save or update the contact              
             ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(null, contact, contact.Volunteer_Organization__c, listStrFields, true);

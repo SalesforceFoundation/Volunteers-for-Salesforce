@@ -935,27 +935,27 @@ global with sharing class VOL_SharedCode {
     * @return Boolean value for captcha check
     ********************************************************************************************************/
     public static Boolean verifyCaptcha(){
-        String captchaSecretToken = VolunteersSettings.Google_reCaptcha_API_Key__c;
+        String captchaSecretToken = VolunteersSettings.Google_reCaptcha_Secret_Key__c;
         String captchaResponse = ApexPages.currentPage().getParameters().get('g-recaptcha-response');        
         Boolean responseSuccess = false;
 
         // If captcha is disabled, pass the check
-        if(VOL_SharedCode.VolunteersSettings.Enable_Captcha__c == false){
+        if(VOL_SharedCode.VolunteersSettings.Enable_Captcha__c == false) {
             return true;
         }
 
-        if(String.isEmpty(captchaResponse)){
+        // If captcha parameter is missing, fail the check
+        if(String.isEmpty(captchaResponse)) {
             return false;
         }
         
         // Callout to reCaptcha with response token
-        // TODO - Endpoint setting
-        HttpResponse response = makeHttpCallout('https://www.google.com/recaptcha/api/siteverify', 
+        HttpResponse response = makeHttpCallout(VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c,
                                                 'POST', 
                                                 'secret=' + captchaSecretToken + '&response='+ captchaResponse);
-                
+
         JSONParser parser = JSON.createParser(response.getBody());
-        while(parser.nextToken() != null){
+        while(parser.nextToken() != null) {
             if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && (parser.getText() == 'success')) {
                 parser.nextToken();
                 responseSuccess = parser.getBooleanValue();
@@ -965,17 +965,22 @@ global with sharing class VOL_SharedCode {
         return responseSuccess;
     }
 
-    public static HttpResponse makeHTTPCallout(String endpoint, String httpMethod, String body){
+    /*******************************************************************************************************
+    * @description Make web service callouts to external APIs
+    * Return the HttpResponse object
+    * @return HttpResponse value from the web service callout
+    ********************************************************************************************************/
+    public static HttpResponse makeHTTPCallout(String endpoint, String httpMethod, String body) {
         Http http = new Http();
         HttpResponse response;       
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(endpoint); // TODO
+        req.setEndpoint(endpoint);
         req.setMethod(httpMethod);
         req.setBody(body);
-        try{
+        try {
             response = http.send(req);            
         }
-        catch(Exception e){
+        catch(Exception e) {
             System.debug('Error: ' + e.getMessage());
         }
         return response;        

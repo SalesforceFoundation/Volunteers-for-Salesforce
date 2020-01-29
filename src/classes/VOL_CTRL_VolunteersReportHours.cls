@@ -255,11 +255,10 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
     private class MyException extends Exception {}
 
-
     // action method for saving the the volunteer's hours.    
     global virtual PageReference Save() {
         if(!VOL_SharedCode.verifyCaptcha()){
-            strSaveResult = 'Please complete the challenge below.'; // TODO label
+            strSaveResult = System.Label.CaptchaFailure;
             return null;
         }
         Savepoint sp = Database.setSavepoint();

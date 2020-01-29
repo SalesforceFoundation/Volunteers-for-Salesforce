@@ -322,6 +322,66 @@ public with sharing class VOL_SharedCode_TEST {
 
     }
 
+    @isTest
+    private static void testCaptchaResponseSuccess(){   
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+        VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+        System.currentPageReference().getParameters().put('g-recaptcha-response', '1234567890');
+
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":true}', new Map<String,String>());        
+
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+            Boolean response = VOL_SharedCode.verifyCaptcha();
+        Test.stopTest();
+        System.assertEquals(true, response);
+    }
+
+    @isTest
+    private static void testCaptchaResponseFailure(){
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+        VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+        System.currentPageReference().getParameters().put('g-recaptcha-response', '1234567890');
+
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":false}', new Map<String,String>());        
+
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+            Boolean response = VOL_SharedCode.verifyCaptcha();
+        Test.stopTest();
+        System.assertEquals(false, response);
+    }
+
+    @isTest
+    private static void captchaShouldSucceedIfDisabled(){
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = false;        
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);        
+
+        Test.startTest();
+            Boolean response = VOL_SharedCode.verifyCaptcha();
+        Test.stopTest();
+        System.assertEquals(true, response);
+    }
+
+    @isTest
+    private static void captchaShouldFailIfNoTokenReceived(){
+        VOL_SharedCode.VolunteersSettings.Enable_Captcha__c = true;
+        VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+
+        Test.startTest();
+            Boolean response = VOL_SharedCode.verifyCaptcha();
+        Test.stopTest();
+        System.assertEquals(false, response);
+    }
 
     /////////////////
     /// Helpers
@@ -375,5 +435,5 @@ public with sharing class VOL_SharedCode_TEST {
 
     public static void setAccessMock() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
-    }
+    }    
 }

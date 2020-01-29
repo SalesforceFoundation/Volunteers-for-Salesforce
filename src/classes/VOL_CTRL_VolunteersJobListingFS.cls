@@ -418,7 +418,10 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     private class MyException extends Exception {}
     
     global virtual PageReference VolunteerShiftSignUp() {
-
+        if(!VOL_SharedCode.verifyCaptcha()){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, System.Label.CaptchaFailure));
+            return null;
+        }
         Savepoint sp = Database.setSavepoint();
         try {
             // clear return variables in case we fail.
@@ -449,8 +452,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                     dtStart = listShift[0].Start_Date_Time__c.date();
                     duration = listShift[0].Duration__c;
                 }
-            }
-                        
+            }                        
             // when used within the Personal Site, we should use the appropriate Contact
             Cookie cId = ApexPages.currentPage().getCookies().get('contactIdPersonalSite');
             ID contactIdPersonalSite = null;

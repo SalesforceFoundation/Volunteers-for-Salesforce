@@ -124,17 +124,8 @@
 			</tr>	
 		</table>
 		<apex:Messages style="color:red;" />
-		
-		<apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_Captcha__c}">			
-			<div id="captcha" class=""> 
-				<div id="recaptcha" class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
-			</div>
-			<script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
-		</apex:outputPanel>
+		<div id="captcha">
+			<c:captcha></c:captcha>
+		</div>
 	</apex:form>
-	<script>
-		var onloadCallback = function() {
-			grecaptcha.render('recaptcha', {'sitekey' : '{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}'});
-		};
-	</script>
 </apex:page>

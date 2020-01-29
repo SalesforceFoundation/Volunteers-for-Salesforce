@@ -105,7 +105,6 @@
     </script>
 
     <apex:form id="form1" styleclass="form1">
-        <!-- <apex:actionFunction action="{!captchaSuccess}" name="captchaCallback" rerender="contactLookupBtn" /> -->
         <apex:outputPanel id="panelVolunteerLookup" styleClass="thumbnail center well well-small text-center cssContactLookupPanel">
 
             <h3>{!$Label.labelContactInfoLookupTitle}</h3>
@@ -149,14 +148,9 @@
             <p>
                 <apex:outputText value="{!strResult}" />
             </p>
-            <c:captcha></c:captcha>
-            <!-- <apex:outputPanel rendered="{!$Setup.Volunteers_Settings__c.Enable_captcha__c}">
-                <div id="captcha" class="btn-group-vertical"> 
-                    <div class="g-recaptcha" data-sitekey="{!$Setup.Volunteers_Settings__c.Google_reCaptcha_Site_Key__c}"></div>
-                </div>
-                <script src="https://www.google.com/recaptcha/api.js" async="defer"></script>
-
-            </apex:outputPanel> -->
+            <div id="captcha" style="display: inline-block;">
+                <c:captcha></c:captcha>
+            </div>
         </apex:outputPanel>
 
     </apex:form>
