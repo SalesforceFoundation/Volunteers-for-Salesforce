@@ -123,14 +123,14 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         ctrl.contact.Lastname = null;
         ctrl.contact.Email = null;
         system.assertEquals(null, ctrl.LookupContact());
-        system.assertEquals(System.Label.labelContactLookupNotFound, ctrl.strResult);
+        system.assertEquals(System.Label.labelContactLookupAmbiguous, ctrl.strResult);
         
         // test bogus contact
         ctrl.contact.Firstname = 'Not There';
         ctrl.contact.Lastname = 'Not There';
         ctrl.contact.Email = 'NotThere@NotThere.com';
         system.assertEquals(null, ctrl.LookupContact());
-        system.assertEquals(System.Label.labelContactLookupNotFound, ctrl.strResult);
+        system.assertEquals(System.Label.labelContactLookupAmbiguous, ctrl.strResult);
 
         // create a temp contact
         Contact con = new Contact();
@@ -144,7 +144,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         ctrl.contact.LastName = 'LookupTestLastName';
         ctrl.contact.Email = 'LookupTestEmail@email.com';
         system.assertEquals(null, ctrl.LookupContact());
-        system.assertEquals(System.Label.labelContactLookupSuccess, ctrl.strResult);
+        system.assertEquals(System.Label.labelContactLookupAmbiguous, ctrl.strResult);
                     
         // test error email handling
         con.Email = null;
@@ -155,7 +155,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         }
         update con;
         ctrl.SendEmailToContact(con);
-        system.assertNotEquals(System.Label.labelContactLookupSuccess, ctrl.strResult);
+        system.assertNotEquals(System.Label.labelContactLookupAmbiguous, ctrl.strResult);
     }
         
 }
