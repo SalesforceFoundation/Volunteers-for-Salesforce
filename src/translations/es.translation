@@ -340,7 +340,7 @@ day: &apos;día&apos;</label>
         <name>labelListViewNext</name>
     </customLabels>
     <customLabels>
-        <label>&amp;nbsp;&amp;nbsp;&amp;nbsp;Página {0} de {1} &amp;nbsp;&amp;nbsp;({2} registros)</label>
+        <label>Página {0} de {1} ({2} registros)</label>
         <name>labelListViewPageInfo</name>
     </customLabels>
     <customLabels>
