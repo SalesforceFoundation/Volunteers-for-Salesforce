@@ -286,10 +286,10 @@
         <members>labelContactInfoRankTitle</members>
         <members>labelContactInfoTimeTableColumn</members>
         <members>labelContactInfoUpcomingShifts</members>
+        <members>labelContactLookupAmbiguous</members>
         <members>labelContactLookupInstructions</members>
         <members>labelContactLookupNotFound</members>
         <members>labelContactLookupSuccess</members>
-        <members>labelContactLookupAmbiguous</members>
         <members>labelCopySchedule</members>
         <members>labelEventInThePast</members>
         <members>labelExternalSignupUrl</members>
