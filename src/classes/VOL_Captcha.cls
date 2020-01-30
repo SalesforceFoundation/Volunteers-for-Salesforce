@@ -43,12 +43,12 @@ public with sharing class VOL_Captcha {
             return false;
         }
 
-        try{
+        try {
             // Callout to reCaptcha with response token
             HttpResponse response = VOL_SharedCode.makeHttpCallout(VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c,
                                                     'POST', 
                                                     'secret=' + captchaSecretToken + '&response='+ captchaResponse);
-            if(response == null){
+            if(response == null) {
                 return responseSuccess;
             }
 
@@ -60,8 +60,7 @@ public with sharing class VOL_Captcha {
                     break;
                 }
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.debug(e.getMessage());
         }
 
