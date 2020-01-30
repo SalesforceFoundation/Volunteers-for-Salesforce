@@ -31,6 +31,7 @@
 global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
+    
     @TestVisible
     private static VOL_Captcha captcha = VOL_Captcha.getInstance();
 

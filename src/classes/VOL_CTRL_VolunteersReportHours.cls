@@ -30,8 +30,10 @@
 
 global virtual with sharing class VOL_CTRL_VolunteersReportHours {
     private VOL_SharedCode volSharedCode;        
+    
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
+    
     @TestVisible
     private static VOL_Captcha captcha = VOL_Captcha.getInstance();
 
