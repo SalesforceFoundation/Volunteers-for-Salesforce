@@ -930,41 +930,6 @@ global with sharing class VOL_SharedCode {
     }
 
     /*******************************************************************************************************
-    * @description If captcha is enabled, verifies that the token received is valid
-    * Return the Boolean verification of the captcha token (or return true if captcha is disabled)
-    * @return Boolean value for captcha check
-    ********************************************************************************************************/
-    public static Boolean verifyCaptcha() {
-        // If captcha is disabled, pass the check
-        if (VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c == false) {
-            return true;
-        }
-        String captchaSecretToken = VolunteersSettings.Google_reCaptcha_Secret_Key__c;
-        String captchaResponse = ApexPages.currentPage().getParameters().get('g-recaptcha-response');        
-        Boolean responseSuccess = false;
-
-        // If captcha parameter is missing, fail the check
-        if (String.isEmpty(captchaResponse)) {
-            return false;
-        }
-        
-        // Callout to reCaptcha with response token
-        HttpResponse response = makeHttpCallout(VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c,
-                                                'POST', 
-                                                'secret=' + captchaSecretToken + '&response='+ captchaResponse);
-
-        JSONParser parser = JSON.createParser(response.getBody());
-        while (parser.nextToken() != null) {
-            if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && (parser.getText() == 'success')) {
-                parser.nextToken();
-                responseSuccess = parser.getBooleanValue();
-                break;
-            }
-        }
-        return responseSuccess;
-    }
-
-    /*******************************************************************************************************
     * @description Make web service callouts to external APIs
     * Return the HttpResponse object
     * @return HttpResponse value from the web service callout
@@ -975,14 +940,9 @@ global with sharing class VOL_SharedCode {
         HttpRequest req = new HttpRequest();
         req.setEndpoint(endpoint);
         req.setMethod(httpMethod);
-        req.setBody(body);
-        try {
-            response = http.send(req);            
-        }
-        catch(Exception e) {
-            System.debug('Error: ' + e.getMessage());
-        }
-        return response;        
+        req.setBody(body);        
+        response = http.send(req);
+        return response;
     }
 
     /*******************************************************************************************************

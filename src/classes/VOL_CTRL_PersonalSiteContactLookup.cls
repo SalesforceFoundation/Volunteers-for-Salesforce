@@ -31,6 +31,8 @@
 global with sharing class VOL_CTRL_PersonalSiteContactLookup {
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
+    @TestVisible
+    private static VOL_Captcha captcha = VOL_Captcha.getInstance();
 
     // constructor
     global VOL_CTRL_PersonalSiteContactLookup() {
@@ -75,8 +77,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
     global string strLanguage { get; set; }    
     
     // the action method called from the page to lookup the contact, and to send them email if found.
-    global PageReference LookupContact() {                                    
-        if (!VOL_SharedCode.verifyCaptcha()) {
+    global PageReference LookupContact() {                                            
+        if (!captcha.verifyCaptcha()) {
             strResult = System.Label.CaptchaFailure;
             return null;
         }

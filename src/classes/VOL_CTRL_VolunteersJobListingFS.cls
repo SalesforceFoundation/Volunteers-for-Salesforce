@@ -31,6 +31,9 @@
 global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
+    @TestVisible
+    private static VOL_Captcha captcha = VOL_Captcha.getInstance();
+
     /**
      * Hard coding the subquery limit to 200 to prevent an error being displayed when
      * attempting to access the list of child records when more than 200 are present
@@ -418,7 +421,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     private class MyException extends Exception {}
     
     global virtual PageReference VolunteerShiftSignUp() {
-        if (!VOL_SharedCode.verifyCaptcha()) {
+        if (!captcha.verifyCaptcha()) {
+            strSaveResult = System.Label.CaptchaFailure;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, System.Label.CaptchaFailure));
             return null;
         }

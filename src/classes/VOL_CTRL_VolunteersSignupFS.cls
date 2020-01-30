@@ -29,7 +29,9 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
-     
+    @TestVisible
+    private static VOL_Captcha captcha = VOL_Captcha.getInstance();
+
     // constructor
     global VOL_CTRL_VolunteersSignupFS() {
 
@@ -96,7 +98,7 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     global Attachment attachment { get; set; }   
         
     global virtual PageReference Save() {  
-        if (!VOL_SharedCode.verifyCaptcha()) {
+        if (!captcha.verifyCaptcha()) {
             StrSaveResult = System.Label.CaptchaFailure;
             return null;
         }

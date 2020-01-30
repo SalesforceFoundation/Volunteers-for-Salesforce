@@ -81,7 +81,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     @IsTest
     private static void shouldReturnErrorOnCaptchaFailure() {
         //enable captcha
-        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
+        UTIL_UnitTest.setupCaptchaSettings(true);
 
         //point to our VF page
         PageReference lookupPage = Page.PersonalSiteContactLookup;
@@ -98,6 +98,30 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
         System.assertEquals(System.Label.CaptchaFailure, ctrl.strResult);
     }
     
+    @IsTest
+    private static void shouldReturnSuccessMessageOnCaptchaSuccess() {
+        //enable captcha
+        UTIL_UnitTest.setupCaptchaSettings(true);
+        
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":true}', new Map<String,String>());        
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        //point to our VF page
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+        System.currentPageReference().getParameters().put('g-recaptcha-response', '1234567890');
+
+        Test.startTest();
+        VOL_CTRL_PersonalSiteContactLookup ctrl = new VOL_CTRL_PersonalSiteContactLookup();        
+        ctrl.contact.Firstname = 'Test';
+        ctrl.contact.Lastname = 'User';
+        ctrl.contact.Email = 'testuser@salesforce.com';
+        ctrl.LookupContact();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.labelContactLookupAmbiguous, ctrl.strResult);
+    }
+
     @isTest(SeeAllData=true)  // SeeAllData so the CSS file is viewable
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
@@ -125,7 +149,7 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
 
     private static void TestPersonalSiteContactLookup() {
         //disable captcha
-        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = false;
+        UTIL_UnitTest.setupCaptchaSettings(false);
 
         //point to our VF page
         PageReference p = new PageReference('Page.PersonalSiteContactLookup');

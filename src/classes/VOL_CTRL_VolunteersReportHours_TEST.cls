@@ -90,11 +90,40 @@ private with sharing class VOL_CTRL_VolunteersReportHours_TEST {
     }
 
     @IsTest
+    private static void shouldReturnSuccessMessageOnCaptchaSuccess() {
+        UTIL_UnitTest.generateData();
+
+        //enable captcha
+        UTIL_UnitTest.setupCaptchaSettings(true);
+        
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":true}', new Map<String,String>());        
+        Test.setMock(HttpCalloutMock.class, mock);
+        
+        Contact contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
+        Id jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);
+        Volunteer_Hours__c hours = UTIL_UnitTest.createHours(contactRecord.Id, jobId, null);
+        insert hours;
+
+        Test.setCurrentPage(reportHoursPage);
+        System.currentPageReference().getParameters().put('g-recaptcha-response', '1234567890');
+        
+        Test.startTest();
+        VOL_CTRL_VolunteersReportHours reportHoursCtrl = new VOL_CTRL_VolunteersReportHours();
+        reportHoursCtrl.contact = contactRecord;
+        reportHoursCtrl.volunteerJobId = jobId;
+        reportHoursCtrl.vhours = hours;        
+        reportHoursCtrl.Save();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.labelVolunteerReportHoursThankYou, reportHoursCtrl.strSaveResult);
+    }
+
+    @IsTest
     private static void shouldReturnErrorOnCaptchaFailure() {
         UTIL_UnitTest.generateData();
 
         //enable captcha
-        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;        
+        UTIL_UnitTest.setupCaptchaSettings(true);
         
         Contact contactRecord = (Contact) UTIL_UnitTest.getSObject(Contact.SObjectType);
         Id jobId = UTIL_UnitTest.getId(Volunteer_Job__c.SObjectType);

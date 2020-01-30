@@ -160,9 +160,37 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
     }
 
     @IsTest
+    private static void shouldNotContainPageMessageOnCaptchaSuccess() {
+        generateData(1);
+        UTIL_UnitTest.setupCaptchaSettings(true);
+
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":true}', new Map<String,String>());
+        Test.setMock(HttpCalloutMock.class, mock);
+                
+        Contact existingContact = UTIL_UnitTest.createContact('Signup Update ' + DateTime.now().getTime());
+        insert existingContact;
+
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
+
+        setupPage(new Map<String, String>{'g-recaptcha-response' => '1234567890'});
+
+        Test.startTest();
+        jobListingCtrl.shiftIdSignUp = shiftId;
+        jobListingCtrl.jobIdSignUp = jobId;
+        jobListingCtrl.contact = existingContact;
+        jobListingCtrl.vhours.Number_of_Volunteers__c = 2;
+        jobListingCtrl.VolunteerShiftSignUp();
+        Test.stopTest();
+
+        List<Apexpages.Message> messages = ApexPages.getMessages();
+        System.assertEquals(0, messages.size());
+    }
+
+    @IsTest
     private static void shouldReturnErrorOnCaptchaFailure() {
         generateData(1);
-        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = true;
+        UTIL_UnitTest.setupCaptchaSettings(true);
         
         Contact existingContact = UTIL_UnitTest.createContact('Signup Update ' + DateTime.now().getTime());
         insert existingContact;
@@ -171,12 +199,14 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         Id shiftId = [SELECT Id FROM Volunteer_Shift__c Where Volunteer_Job__c = :jobId LIMIT 1].Id;
 
         setupPage(new Map<String, String>());
-
+        
+        Test.startTest();
         jobListingCtrl.shiftIdSignUp = shiftId;
         jobListingCtrl.jobIdSignUp = jobId;
         jobListingCtrl.contact = existingContact;
         jobListingCtrl.vhours.Number_of_Volunteers__c = 2;
         jobListingCtrl.VolunteerShiftSignUp();
+        Test.stopTest();
 
         Boolean expectedMessage = false;
         List<Apexpages.Message> messages = ApexPages.getMessages();

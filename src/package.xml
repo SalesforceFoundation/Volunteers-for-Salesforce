@@ -62,6 +62,8 @@
         <members>VOL_CTRL_VolunteersSignupFS</members>
         <members>VOL_CTRL_VolunteersSignupFS_TEST</members>
         <members>VOL_CTRL_VolunteersSignup_TEST</members>
+        <members>VOL_Captcha</members>
+        <members>VOL_Captcha_TEST</members>
         <members>VOL_JRS</members>
         <members>VOL_JRS_TEST</members>
         <members>VOL_SharedCode</members>
