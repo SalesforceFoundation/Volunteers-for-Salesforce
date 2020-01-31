@@ -165,14 +165,34 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
         if (template.HtmlValue != null) {
             isHtmlTemplate = true;
-            // Salesforce escapes html type email templates, we must escape when displaying html value from other types
-            message = template.TemplateType.equalsIgnoreCase('html')
-                ? template.HtmlValue
-                : escapeHtml(template.HtmlValue);
-
+            message = parseHtmlBody(template.HtmlValue);
         } else {
             message = template.Body;
         }
+    }
+
+    /*******************************************************************************************************************
+    * @description The HTML classic email template contains each section of the email within cdata tags
+    * @param html - The html value to parse
+    * @return String All parts of the html template joined by line breaks
+    */
+    private String parseHtmlBody(String html) {
+        String htmlBody = html.replaceAll( '<!\\[CDATA\\[', 'CDATA_START' ).replaceAll( ']]>', 'CDATA_END' );
+        Pattern cdataPattern = Pattern.compile( '(CDATA_START)(.*?)(CDATA_END)' );
+        Matcher cdataMatcher = cdataPattern.matcher( htmlBody );
+        List<String> bodyParts = new List<String>();
+
+        while ( cdataMatcher.find() ) {
+            String bodyPart = cdataMatcher.group().substringAfter('CDATA_START').substringBefore('CDATA_END');
+            if (String.isBlank(bodyPart)) {
+                continue;
+            }
+            bodyParts.add(bodyPart);
+        }
+
+        htmlBody = bodyParts.isEmpty() ? html : String.join(bodyParts, '<br>');
+
+        return escapeHtml(htmlBody);
     }
 
     /*******************************************************************************************************************
