@@ -40,7 +40,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         Contact con = new Contact(Lastname='Testy', Email='testy@foo.com', AccountId=acc.Id);
         insert con;
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-            name='Test Campaign', IsActive=true);
+            name='Test Job And Shift Campaign', IsActive=true);
         insert cmp;
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
         insert job;
@@ -116,7 +116,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
         Contact con = new Contact(Lastname='Testy', Email='testy@foo.com', AccountId=acc.Id);
         insert con;
         Campaign cmp = new Campaign(recordtypeid=VOL_SharedCode.recordtypeIdVolunteersCampaign, 
-            name='Test Campaign', IsActive=true);
+            name='Test Campaign Job Only', IsActive=true);
         insert cmp;
         Volunteer_Job__c job = new Volunteer_Job__c(name='Job1', campaign__c=cmp.Id);
         insert job;
@@ -242,7 +242,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     */
     @isTest
     private static void returnsJobWhenAnIdIsProvided() {
-        Campaign campaign = new Campaign(Name = 'Related Job Campaign');
+        Campaign campaign = new Campaign(Name = 'Job Id Provided');
         insert campaign;
 
         Volunteer_Job__c job = new Volunteer_Job__c(Name = 'Job to Return', Campaign__c = campaign.Id);
@@ -288,7 +288,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     private static void returnsEscapedHtml() {
         VOL_CTRL_SendBulkEmail sendBulkEmail = new VOL_CTRL_SendBulkEmail();
         EmailTemplate template = new EmailTemplate(TemplateType = 'custom');
-        Campaign campaign = new Campaign(Name = 'Related Job Campaign');
+        Campaign campaign = new Campaign(Name = 'Escaped Html Campaign');
         insert campaign;
 
         sendBulkEmail.campaignId = campaign.Id;
@@ -308,6 +308,10 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     private static void loadsEmailDetailsFromTemplate() {
         VOL_CTRL_SendBulkEmail sendBulkEmail = new VOL_CTRL_SendBulkEmail();
         EmailTemplate template = new EmailTemplate(TemplateType = 'text');
+        Campaign campaign = new Campaign(Name = 'Load Email Template Campaign');
+        insert campaign;
+
+        sendBulkEmail.campaignId = campaign.Id;
 
         template.Subject = 'Test subject';
         template.Body = 'Test load from template';
