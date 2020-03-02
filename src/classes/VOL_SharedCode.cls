@@ -128,7 +128,7 @@ global with sharing class VOL_SharedCode {
 
         for (Volunteer_Shift__c vs : listVolunteerJobs[0].Volunteer_Job_Slots__r) {
             SelectOption so = new SelectOption(vs.id,
-                canReadDate ? (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) : '' +
+                (canReadDate ? (useDateTimeFixup ? vs.System_Note__c : vs.Start_Date_Time__c.format()) : '') +
                 (fIncludeShiftName ? '&nbsp;&nbsp;&nbsp;&nbsp;(' + vs.name + ')' : '' ) +
                 (fIncludeNumberNeeded && canReadNumberNeeded ? '&nbsp;&nbsp;' +
                     (vs.Number_of_Volunteers_Still_Needed__c > 0 ?
