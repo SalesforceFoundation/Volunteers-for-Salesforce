@@ -4,11 +4,11 @@ CREATE TABLE account (
 	name VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "account" VALUES('0011k00000QIzaAAAT','Al Jamil Household');
-INSERT INTO "account" VALUES('0011k00000QIza5AAD','Mendoza Household');
-INSERT INTO "account" VALUES('0011k00000QJ0iNAAT','Anagonye Household');
-INSERT INTO "account" VALUES('0011k00000QIzZvAAL','Shellstrop Household');
-INSERT INTO "account" VALUES('0011k00000QIzaFAAT','Scoop Household');
+INSERT INTO "account" VALUES('0011k00000QIzaAAAT','Harrison Household');
+INSERT INTO "account" VALUES('0011k00000QIza5AAD','van Hoop Household');
+INSERT INTO "account" VALUES('0011k00000QJ0iNAAT','Regenstein Household');
+INSERT INTO "account" VALUES('0011k00000QIzZvAAL','Mendoza Household');
+INSERT INTO "account" VALUES('0011k00000QIzaFAAT','Fernandez Household');
 CREATE TABLE campaign (
 	sf_id VARCHAR(255) NOT NULL, 
 	isactive VARCHAR(255), 
@@ -19,12 +19,12 @@ CREATE TABLE campaign (
 	volunteer_website_time_zone VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "campaign" VALUES('7011k000000gzcYAAQ','true','Dog Care at The Good Place for Pets','Planned','','','');
+INSERT INTO "campaign" VALUES('7011k000000gzcYAAQ','true','Dog Care at The Place for Pets','Planned','','','');
 INSERT INTO "campaign" VALUES('7011k000000gz5hAAA','true','GC Product Webinar - Jan 7, 2002','Completed','2018-12-25','2018-12-25','');
 INSERT INTO "campaign" VALUES('7011k000000gz5iAAA','true','User Conference - Jun 17-19, 2002','Planned','2019-06-04','2019-06-06','');
 INSERT INTO "campaign" VALUES('7011k000000gz5jAAA','true','DM Campaign to Top Customers - Nov 12-23, 2001','Completed','2018-10-30','2018-11-10','');
 INSERT INTO "campaign" VALUES('7011k000000gz5kAAA','true','International Electrical Engineers Association Trade Show - Mar 4-5, 2002','Planned','2019-02-19','2019-02-20','');
-INSERT INTO "campaign" VALUES('7011k000000gzcnAAA','true','2nd Annual Chidi''s Chili Cookoff','Planned','2019-08-24','2019-08-24','');
+INSERT INTO "campaign" VALUES('7011k000000gzcnAAA','true','2nd Annual Aziz''s Chili Cookoff','Planned','2019-08-24','2019-08-24','');
 CREATE TABLE contact (
 	sf_id VARCHAR(255) NOT NULL, 
 	firstname VARCHAR(255), 
@@ -41,13 +41,13 @@ CREATE TABLE contact (
 	account_id VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "contact" VALUES('0031k00000MPhYGAA1','Camila','Al Jamil','kselvocki+camila@salesforce.com','false','','','','','','','Active','0011k00000QIzaAAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhY1AAL','Eleanor','Shellstrop','kselvocki+eleanor@salesforce.com','false','','','','','','','Active','0011k00000QIzZvAAL');
-INSERT INTO "contact" VALUES('0031k00000MPhY6AAL','Jason','Mendoza','kselvocki+jason@salesforce.com','false','','','','','','','Active','0011k00000QIza5AAD');
-INSERT INTO "contact" VALUES('0031k00000MPhYBAA1','Tahani','Al Jamil','kselvocki+tahani@salesforce.com','false','','','','','','Fundraising;Event Planning','Active','0011k00000QIzaAAAT');
-INSERT INTO "contact" VALUES('0031k00000MPixMAAT','Chidi','Anagonye','kselvocki+chidi@salesforce.com','false','','','','','','','Active','0011k00000QJ0iNAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhYQAA1','Janet','Scoop','kselvocki+janet@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
-INSERT INTO "contact" VALUES('0031k00000MPhYLAA1','Michael','Scoop','kselvocki+michael@salesforce.com','false','','','','','','','Active','0011k00000QIzaFAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYGAA1','Catherine','Harrison','catherine@example.com','false','','','','','','','Active','0011k00000QIzaAAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhY1AAL','Elizabeth','Mendoza','elizabeth@example.com','false','','','','','','','Active','0011k00000QIzZvAAL');
+INSERT INTO "contact" VALUES('0031k00000MPhY6AAL','Jacob','van Hoop','jacob@example.com','false','','','','','','','Active','0011k00000QIza5AAD');
+INSERT INTO "contact" VALUES('0031k00000MPhYBAA1','Tamara','Harrison','tamara@example.com','false','','','','','','Fundraising;Event Planning','Active','0011k00000QIzaAAAT');
+INSERT INTO "contact" VALUES('0031k00000MPixMAAT','Aziz','Regenstein','aziz@example.com','false','','','','','','','Active','0011k00000QJ0iNAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYQAA1','Hiroko','Fernandez','hiroko@example.com','false','','','','','','','Active','0011k00000QIzaFAAT');
+INSERT INTO "contact" VALUES('0031k00000MPhYLAA1','Michael','Fernandez','michael@example.com','false','','','','','','','Active','0011k00000QIzaFAAT');
 CREATE TABLE job_recurrence_schedule__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	days_of_week VARCHAR(255), 
@@ -60,8 +60,8 @@ CREATE TABLE job_recurrence_schedule__c (
 	volunteer_job__c VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jLAAS','Monday;Tuesday;Wednesday;Thursday;Friday','Take the puppers of The Good Place for Pets for a midday walk!','5.0','1.0','2020-07-31','2019-07-17T19:00:00.000Z','Every','a031k000001OMGqAAO');
-INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jQAAS','Saturday','Keep the kennels of The Good Place for Pets clean and cozy for our adoptable dogs!','10.0','2.0','2020-08-01','2019-07-06T15:00:00.000Z','Every','a031k000001OMGrAAO');
+INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jLAAS','Monday;Tuesday;Wednesday;Thursday;Friday','Take the puppers of The Place for Pets for a midday walk!','5.0','1.0','2020-07-31','2019-07-17T19:00:00.000Z','Every','a031k000001OMGqAAO');
+INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jQAAS','Saturday','Keep the kennels of The Place for Pets clean and cozy for our adoptable dogs!','10.0','2.0','2020-08-01','2019-07-06T15:00:00.000Z','Every','a031k000001OMGrAAO');
 CREATE TABLE volunteer_hours__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	comments VARCHAR(255), 
@@ -100,13 +100,13 @@ CREATE TABLE volunteer_job__c (
 	campaign__c VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "volunteer_job__c" VALUES('a031k000001OMH5AAO','<p>Spread the word about the 2nd Annual Chidi&#39;s Chili Cookoff, and help us make this year&#39;s event our biggest and best yet!</p>','true','','false','','','','','','Distribute Flyers for the Chili Cookoff','false','Marketing','','7011k000000gzcnAAA');
-INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHAAA4','<p>Feed all the animal lovers at our 2nd Annual Chidi&#39;s Chili Cookoff, and get the chance to win chili glory!</p>','false','','false','','','','','','Chili Cooks','false','','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMH5AAO','<p>Spread the word about the 2nd Annual Aziz&#39;s Chili Cookoff, and help us make this year&#39;s event our biggest and best yet!</p>','true','','false','','','','','','Distribute Flyers for the Chili Cookoff','false','Marketing','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHAAA4','<p>Feed all the animal lovers at our 2nd Annual Aziz&#39;s Chili Cookoff, and get the chance to win chili glory!</p>','false','','false','','','','','','Chili Cooks','false','','','7011k000000gzcnAAA');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHFAA4','<p>Help prepare for our chili cookoff and get free entry to the day!</p>','true','','false','','','','','','Setup Crew','false','Manual Labor','','7011k000000gzcnAAA');
-INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHPAA4','<p>Who made the best chili of the 2nd Annual Chidi&#39;s Chili Cookoff? You get to help us decide as one of our esteemed judges!</p>','false','','false','','','','','','Chili Judges','false','','','7011k000000gzcnAAA');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHPAA4','<p>Who made the best chili of the 2nd Annual Aziz&#39;s Chili Cookoff? You get to help us decide as one of our esteemed judges!</p>','false','','false','','','','','','Chili Judges','false','','','7011k000000gzcnAAA');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMHKAA4','<p>Enjoy fun treats while helping us break down after a rockin&#39; chili cookoff!</p>','true','','false','','','','','','Cleanup Crew','false','Manual Labor','','7011k000000gzcnAAA');
-INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGqAAO','<p>Take the puppers of The Good Place for Pets for a midday walk!</p>','true','','false','','','','','','Lunchtime Dog Walking','false','','','7011k000000gzcYAAQ');
-INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGrAAO','<p>Keep the kennels of The Good Place for Pets clean and cozy for our adoptable dogs!</p>','true','','false','','','','','','Weekly Kennel Cleaning','false','Manual Labor','','7011k000000gzcYAAQ');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGqAAO','<p>Take the puppers of The Place for Pets for a midday walk!</p>','true','','false','','','','','','Lunchtime Dog Walking','false','','','7011k000000gzcYAAQ');
+INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGrAAO','<p>Keep the kennels of The Place for Pets clean and cozy for our adoptable dogs!</p>','true','','false','','','','','','Weekly Kennel Cleaning','false','Manual Labor','','7011k000000gzcYAAQ');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGsAAO','<p>Help us get our puppies ready for their new forever homes with socialization, snuggles, and positive reinforcement.</p>','false','','false','','','','','','Puppy Playtime','false','','','7011k000000gzcYAAQ');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGtAAO','','true','','false','','','','','','Recruit Chili Cooks','false','','','7011k000000gzcnAAA');
 INSERT INTO "volunteer_job__c" VALUES('a031k000001OMGuAAO','','true','','false','','','','','','Quality Entertainment','false','','','7011k000000gzcnAAA');
