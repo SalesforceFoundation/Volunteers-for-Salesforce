@@ -24,7 +24,7 @@ INSERT INTO "campaign" VALUES('7011k000000gz5hAAA','true','GC Product Webinar - 
 INSERT INTO "campaign" VALUES('7011k000000gz5iAAA','true','User Conference - Jun 17-19, 2002','Planned','2019-06-04','2019-06-06','');
 INSERT INTO "campaign" VALUES('7011k000000gz5jAAA','true','DM Campaign to Top Customers - Nov 12-23, 2001','Completed','2018-10-30','2018-11-10','');
 INSERT INTO "campaign" VALUES('7011k000000gz5kAAA','true','International Electrical Engineers Association Trade Show - Mar 4-5, 2002','Planned','2019-02-19','2019-02-20','');
-INSERT INTO "campaign" VALUES('7011k000000gzcnAAA','true','2nd Annual Aziz''s Chili Cookoff','Planned','2019-08-24','2019-08-24','');
+INSERT INTO "campaign" VALUES('7011k000000gzcnAAA','true','2nd Annual Aziz''s Chili Cookoff','Planned','2020-08-29','2020-08-29','');
 CREATE TABLE contact (
 	sf_id VARCHAR(255) NOT NULL, 
 	firstname VARCHAR(255), 
@@ -60,8 +60,8 @@ CREATE TABLE job_recurrence_schedule__c (
 	volunteer_job__c VARCHAR(255), 
 	PRIMARY KEY (sf_id)
 );
-INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jLAAS','Monday;Tuesday;Wednesday;Thursday;Friday','Take the puppers of The Place for Pets for a midday walk!','5.0','1.0','2020-07-31','2019-07-17T19:00:00.000Z','Every','a031k000001OMGqAAO');
-INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jQAAS','Saturday','Keep the kennels of The Place for Pets clean and cozy for our adoptable dogs!','10.0','2.0','2020-08-01','2019-07-06T15:00:00.000Z','Every','a031k000001OMGrAAO');
+INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jLAAS','Monday;Tuesday;Wednesday;Thursday;Friday','Take the puppers of The Place for Pets for a midday walk!','5.0','1.0','2021-07-31','2020-01-06T19:00:00.000Z','Every','a031k000001OMGqAAO');
+INSERT INTO "job_recurrence_schedule__c" VALUES('a001k000002B1jQAAS','Saturday','Keep the kennels of The Place for Pets clean and cozy for our adoptable dogs!','10.0','2.0','2021-08-01','2020-01-04T15:00:00.000Z','Every','a031k000001OMGrAAO');
 CREATE TABLE volunteer_hours__c (
 	sf_id VARCHAR(255) NOT NULL, 
 	comments VARCHAR(255), 
