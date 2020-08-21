@@ -282,7 +282,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
     }
 
     /*******************************************************************************************************************
-    * @description Verifies tags that are not whitelisted are removed from the template html value
+    * @description Verifies tags that are not allowlisted are removed from the template html value
     */
     @isTest
     private static void returnsEscapedHtml() {
@@ -297,7 +297,7 @@ private with sharing class VOL_CTRL_SendBulkEmail_TEST {
 
         System.assertNotEquals(template.HtmlValue, escapeHtml, 'Html string should be modified: ' + escapeHtml);
         System.assert(escapeHtml.contains('BAD XSS:'), 'Html string should contain valid text: ' + escapeHtml);
-        System.assert(!escapeHtml.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not whitelisted: ' + escapeHtml);
+        System.assert(!escapeHtml.contains('<img src=x onerror=alert(document.cookie)>'), 'Html string should not contain tags that are not allowlisted: ' + escapeHtml);
         System.assert([SELECT Id FROM Volunteer_Job__c].isEmpty(), 'The database should be rolled back and the record created to clean the html has been removed.');
     }
 
