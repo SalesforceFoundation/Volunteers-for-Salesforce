@@ -90,9 +90,9 @@ public with sharing class UTIL_HtmlOutput_CTRL {
             return '';
         }
 
-        String safeHtml = replaceallowlist(unsafeHtml);
+        String safeHtml = replaceAllowlist(unsafeHtml);
         safeHtml = safeHtml.escapeHtml4();
-        safeHtml = resetallowlist(safeHtml);
+        safeHtml = resetAllowlist(safeHtml);
 
         return safeHtml;
     }
@@ -100,7 +100,7 @@ public with sharing class UTIL_HtmlOutput_CTRL {
     /*******************************************************************************************************************
     * @description Returns the unescaped html with the allowlisted tags and url replaced with temporary values
     */
-    private String replaceallowlist(String unescapedHtml) {
+    private String replaceAllowlist(String unescapedHtml) {
         String replacedHtml = unescapedHtml.normalizeSpace();
 
         for (String allowedTag : SUBSTITUTION_BY_ALLOWED_TAG.keySet()) {
@@ -119,7 +119,7 @@ public with sharing class UTIL_HtmlOutput_CTRL {
     /*******************************************************************************************************************
     * @description Returns the escaped html with the temporary tags and url to their original allowlisted values
     */
-    private String resetallowlist(String escapedHtml) {
+    private String resetAllowlist(String escapedHtml) {
         String html = escapedHtml;
 
         for (String allowedTag : SUBSTITUTION_BY_ALLOWED_TAG.keySet()) {
