@@ -252,29 +252,36 @@ flows:
             2:
                 task: insert_npsp_relationships
 
-    customer_org_npsp:
-        steps:
-            1:
-                flow: install_npsp
-            2:
-                task: ensure_record_type
-            3:
-                task: install_managed
-            4:
-                task: deploy_npsp_v4s_page_layouts
-                options:
-                    unmanaged: False
-
     customer_org:
         steps:
             1:
                 task: ensure_record_type
+                ui_options:
+                    name: Default Campaign Record Type
             2:
                 task: install_managed
             3:
-                task: deploy_v4s_only_page_layouts
+                task: deploy_npsp_v4s_page_layouts
+                checks:
+                    - when: "'npsp' not in tasks.get_installed_packages()"
+                      action: hide
                 options:
                     unmanaged: False
+                ui_options:
+                    name: "Install Page Layouts (NPSP)"
+                    is_required: False
+                when: "org_config.has_minimum_package_version('npsp', '1.0')"
+            4:
+                task: deploy_v4s_only_page_layouts
+                checks:
+                    - when: "'npsp' in tasks.get_installed_packages()"
+                      action: hide
+                options:
+                    unmanaged: False
+                ui_options:
+                    name: "Install Page Layouts (V4S)"
+                    is_required: False
+                when: "not org_config.has_minimum_package_version('npsp', '1.0')"
 
 orgs:
     scratch:
@@ -293,30 +300,4 @@ plans:
         is_listed: True
         steps:
             1:
-                task: ensure_record_type
-                ui_options:
-                    name: Default Campaign Record Type
-            2:
-                task: install_managed
-                ui_options:
-                    name: Install Volunteers for Salesforce
-            3:
-                task: deploy_npsp_v4s_page_layouts
-                checks:
-                    - when: "'npsp' not in tasks.get_installed_packages()"
-                      action: hide
-                options:
-                    unmanaged: False
-                ui_options:
-                    name: "Install Page Layouts (NPSP)"
-                    is_required: False
-            4:
-                task: deploy_v4s_only_page_layouts
-                checks:
-                    - when: "'npsp' in tasks.get_installed_packages()"
-                      action: hide
-                options:
-                    unmanaged: False
-                ui_options:
-                    name: "Install Page Layouts (V4S)"
-                    is_required: False
+                flow: customer_org
