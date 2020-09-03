@@ -1,18 +1,54 @@
-.appcloud
-.appcloud/.project
-.python-version
-.settings
-.sfdx
-/browser_tests
-/test_results.xml
-build.properties
-salesforce.schema
-src/layouts/Global-Global Layout.layout
-src/profiles/Customer Community Login User.profile
-src/profiles/Customer Community User.profile
-src/profiles/Partner Community Login User.profile
-src/profiles/Partner Community User.profile
-src/workflows/User.workflow
+# tool caches
 **/.sfdx/
 **/.vscode/
-.cci
+**/.cci/
+**/.vscode
+**/.eslintcache
+
+# MacOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Python
+__pycache__
+venv
+*.pyc
+
+# npm/yarn
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/test_results.json
+/test_results.xml
+junit.xml
+coverage/
+
+# LWC
+**/lwc/jsconfig.json
+
+# SFDO Project Directories
+EDA
+Cumulus
+
+# cci
+force-app-bak
+
+# LWC linting
+**/lwc/.eslintrc.json
+**/lwc/jsconfig.json
+
+# robot
+robot/v4s/results/*
+**/log.html
+**/output.xml
+**/report.html
