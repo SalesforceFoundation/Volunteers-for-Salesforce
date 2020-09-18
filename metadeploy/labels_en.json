@@ -1,7 +1,7 @@
 {
     "product": {
         "title": {
-            "message": "Volunteers for Salesforce (V4S)",
+            "message": "Volunteers for Salesforce",
             "description": "name of product"
         },
         "short_description": {
@@ -30,6 +30,18 @@
         },
         "Install {product} {version}": {
             "message": "Install {product} {version}",
+            "description": "title of installation step"
+        },
+        "Install Volunteers for Salesforce Tabs": {
+            "message": "Install Volunteers for Salesforce Tabs",
+            "description": "title of installation step"
+        },
+        "Install Page Layouts (NPSP)": {
+            "message": "Install Page Layouts (NPSP)",
+            "description": "title of installation step"
+        },
+        "Install Page Layouts (V4S)": {
+            "message": "Install Page Layouts (V4S)",
             "description": "title of installation step"
         }
     }
