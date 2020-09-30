@@ -17,12 +17,21 @@ tasks:
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/dev
+            namespace_inject: $project_config.project__package__namespace
 
     deploy_qa_config:
         description: Deploys the post install configuration for a regression or QA scratch org
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/qa
+            namespace_inject: $project_config.project__package__namespace
+
+    deploy_tab_config:
+        description: Deploys the post install configuration for custom tabs
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: unpackaged/config/tabs
+            namespace_inject: $project_config.project__package__namespace
 
     deploy_v4s_only_page_layouts:
         description: Deploys the page layouts for an org with Volunteers for Salesforce, but not NPSP
@@ -43,6 +52,7 @@ tasks:
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/delete
+            namespace_inject: $project_config.project__package__namespace
 
     deploy_package_settings:
         description: Configure the default Volunteers Package Settings
@@ -194,13 +204,16 @@ flows:
                 task: deploy_dev_config
                 options:
                     unmanaged: True
-                    namespace_inject: $project_config.project__package__namespace
             5:
-                task: deploy_package_settings
+                task: deploy_tab_config
+                options:
+                    unmanaged: True
             6:
+                task: deploy_package_settings
+            7:
                 task: assign_pset
                 ignore_failure: True
-            7:
+            8:
                 task: deploy_test_data
 
     config_qa:
@@ -211,18 +224,20 @@ flows:
                 task: deploy_dev_config
                 options:
                     unmanaged: True
-                    namespace_inject: $project_config.project__package__namespace
             5:
                 task: deploy_qa_config
                 options:
                     unmanaged: True
-                    namespace_inject: $project_config.project__package__namespace
             6:
-                task: deploy_package_settings
+                task: deploy_tab_config
+                options:
+                    unmanaged: True
             7:
+                task: deploy_package_settings
+            8:
                 task: assign_pset
                 ignore_failure: True
-            8:
+            9:
                 task: deploy_test_data
 
     config_regression:
@@ -240,8 +255,12 @@ flows:
                     unmanaged: False
                     namespace_inject: $project_config.project__package__namespace
             5:
-                task: assign_pset
+                task: deploy_tab_config
+                options:
+                    unmanaged: False
             6:
+                task: assign_pset
+            7:
                 task: deploy_test_data_managed
 
     install_npsp:
@@ -261,6 +280,15 @@ flows:
             2:
                 task: install_managed
             3:
+                task: deploy_tab_config
+                checks:
+                    - when: "'GW_Volunteers' in tasks.get_installed_packages()" # Cached at start
+                      action: "hide"
+                options:
+                    unmanaged: False
+                ui_options:
+                    name: "Install Volunteers for Salesforce Tabs"
+            4:
                 task: deploy_npsp_v4s_page_layouts
                 checks:
                     - when: "'npsp' not in tasks.get_installed_packages()"
@@ -271,7 +299,7 @@ flows:
                     name: "Install Page Layouts (NPSP)"
                     is_required: False
                 when: "org_config.has_minimum_package_version('npsp', '1.0')"
-            4:
+            5:
                 task: deploy_v4s_only_page_layouts
                 checks:
                     - when: "'npsp' in tasks.get_installed_packages()"
