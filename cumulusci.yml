@@ -216,6 +216,13 @@ flows:
             8:
                 task: deploy_test_data
 
+    config_managed:
+            steps:
+                3:
+                    task: deploy_tab_config
+                    options:
+                        unmanaged: False
+
     config_qa:
         steps:
             3:
