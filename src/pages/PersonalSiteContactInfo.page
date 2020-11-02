@@ -155,7 +155,7 @@
                                         <i class="icon-search"></i></apex:outputLink>
                                 </apex:column>
                                 <apex:column headerValue="{!$Label.labelButtonCancel}" >
-                                    <apex:commandLink action="{!cancelShift}" onclick="if (confirm('{!JSENCODE($Label.labelContactInfoCancelMessage)}')==false) { return false;}" StyleClass="btn btn-danger" >
+                                    <apex:commandLink action="{!cancelShift}" onclick="if (confirm('{!JSINHTMLENCODE($Label.labelContactInfoCancelMessage)}')==false) { return false;}" StyleClass="btn btn-danger" >
                                         <i class='icon-trash'></i>
                                         <apex:param assignTo="{!hoursId}" name="hoursId" value="{!hr.id}" />
                                     </apex:commandLink>
