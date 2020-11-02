@@ -762,11 +762,11 @@
         <protected>false</protected>
         <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}SendBulkEmail?jobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
-    <!-- <validationRules>
+    <validationRules>
         <fullName>ValidateExternalSignupUrl</fullName>
         <active>true</active>
         <errorConditionFormula>NOT(REGEX(External_Signup_Url__c,"^((http|https)://)??(www[.])??([a-zA-Z0-9]|-)+?([.][a-zA-Z0-9(-|/|=|?)??]+?)+?$"))</errorConditionFormula>
         <errorDisplayField>External_Signup_Url__c</errorDisplayField>
         <errorMessage>Please enter a valid URL.</errorMessage>
-    </validationRules> -->
+    </validationRules>
 </CustomObject>
