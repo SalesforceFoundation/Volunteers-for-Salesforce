@@ -765,7 +765,7 @@
     <validationRules>
         <fullName>ValidateExternalSignupUrl</fullName>
         <active>true</active>
-        <errorConditionFormula>NOT(REGEX(External_Signup_Url__c,"^((http|https)://)??(www[.])??([a-zA-Z0-9]|-)+?([.][a-zA-Z0-9(-|/|=|?)??]+?)+?$"))</errorConditionFormula>
+        <errorConditionFormula>NOT(OR(ISBLANK(External_Signup_Url__c),REGEX(External_Signup_Url__c,"^((http|https)://)??(www[.])??([a-zA-Z0-9]|-)+?([.][a-zA-Z0-9(-|/|=|?)??]+?)+?$")))</errorConditionFormula>
         <errorDisplayField>External_Signup_Url__c</errorDisplayField>
         <errorMessage>Please enter a valid URL.</errorMessage>
     </validationRules>
