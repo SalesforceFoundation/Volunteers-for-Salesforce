@@ -765,7 +765,8 @@
     <validationRules>
         <fullName>ValidateExternalSignupUrl</fullName>
         <active>true</active>
-        <errorConditionFormula>NOT(OR(ISBLANK(External_Signup_Url__c),REGEX(External_Signup_Url__c,"^((http|https)://)??(www[.])??([a-zA-Z0-9]|-)+?([.][a-zA-Z0-9(-|/|=|?)??]+?)+?$")))</errorConditionFormula>
+        <description>Validates that the External Signup URL field begins with an expected protocol.</description>
+        <errorConditionFormula>NOT(OR(ISBLANK(External_Signup_Url__c), REGEX(External_Signup_Url__c,"^(http|https|mailto).*")))</errorConditionFormula>
         <errorDisplayField>External_Signup_Url__c</errorDisplayField>
         <errorMessage>Please enter a valid URL.</errorMessage>
     </validationRules>
