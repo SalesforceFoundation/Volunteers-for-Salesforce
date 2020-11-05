@@ -768,6 +768,6 @@
         <description>Validates that the External Signup URL field begins with an expected URI Scheme.</description>
         <errorConditionFormula>NOT(OR(ISBLANK(External_Signup_Url__c), REGEX(External_Signup_Url__c,"^(http|https|mailto).*")))</errorConditionFormula>
         <errorDisplayField>External_Signup_Url__c</errorDisplayField>
-        <errorMessage>Please enter a valid URL.</errorMessage>
+        <errorMessage>The External Signup Url value must begin with http, https, or mailto.</errorMessage>
     </validationRules>
 </CustomObject>
