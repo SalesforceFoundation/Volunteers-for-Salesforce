@@ -762,4 +762,12 @@
         <protected>false</protected>
         <url>/apex/{!$Setup.PackageSettings__c.NamespacePrefix__c}SendBulkEmail?jobId={!Volunteer_Job__c.Id}</url>
     </webLinks>
+    <validationRules>
+        <fullName>ValidateExternalSignupUrl</fullName>
+        <active>true</active>
+        <description>Validates that the External Signup URL field begins with an expected URI Scheme.</description>
+        <errorConditionFormula>NOT(OR(ISBLANK(External_Signup_Url__c), REGEX(External_Signup_Url__c,"^(http|https|mailto).*")))</errorConditionFormula>
+        <errorDisplayField>External_Signup_Url__c</errorDisplayField>
+        <errorMessage>The External Signup Url value must begin with http, https, or mailto.</errorMessage>
+    </validationRules>
 </CustomObject>
