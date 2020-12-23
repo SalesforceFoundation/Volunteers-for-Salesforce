@@ -81,7 +81,7 @@ Insert Job_Recurrence_Schedule__c:
     - Weekly_Occurrence__c
   lookups:
     Volunteer_Job__c:
-      table: volunteer_job__c
+      table: Volunteer_Job__c
 Insert Volunteer_Shift__c:
   sf_object: Volunteer_Shift__c
   fields:
