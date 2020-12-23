@@ -1,4 +1,4 @@
-minimum_cumulusci_version: 2.5.0
+minimum_cumulusci_version: 3.23.0
 project:
     name: Volunteers-for-Salesforce
     package:
@@ -11,48 +11,46 @@ project:
         prefix_beta: beta/
         repo_url: https://github.com/SalesforceFoundation/Volunteers-for-Salesforce
 
+sources:
+    npsp:
+        github: https://github.com/SalesforceFoundation/NPSP 
+
 tasks:
     deploy_dev_config:
         description: Deploys the post install configuration for an unmanaged DE org
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/dev
-            namespace_inject: $project_config.project__package__namespace
 
     deploy_qa_config:
         description: Deploys the post install configuration for a regression or QA scratch org
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/qa
-            namespace_inject: $project_config.project__package__namespace
 
     deploy_tab_config:
         description: Deploys the post install configuration for custom tabs
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/tabs
-            namespace_inject: $project_config.project__package__namespace
 
     deploy_v4s_only_page_layouts:
         description: Deploys the page layouts for an org with Volunteers for Salesforce, but not NPSP
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/v4s_only_layouts
-            namespace_inject: $project_config.project__package__namespace
 
     deploy_npsp_v4s_page_layouts:
         description: Deploys the page layouts for an org with Volunteers for Salesforce and NPSP
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/npsp_v4s_layouts
-            namespace_inject: $project_config.project__package__namespace
 
     deploy_delete_config:
         description: Deploys the metadata deletions for the post install DE org config
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/delete
-            namespace_inject: $project_config.project__package__namespace
 
     deploy_package_settings:
         description: Configure the default Volunteers Package Settings
@@ -69,17 +67,8 @@ tasks:
                 Id psetId = [SELECT ID From PermissionSet WHERE Name = 'V4S_Site_Minimum' LIMIT 1][0].id;
                 Id guestId = [SELECT ID From User WHERE Name = 'Volunteers Site Guest User' LIMIT 1][0].id;
                 insert new PermissionSetAssignment(PermissionSetId=psetId, AssigneeId=guestId);
-    
-    deploy_test_data:
-        description: 'Loads a test data set for Volunteers for Salesforce'
-        class_path: cumulusci.tasks.bulkdata.LoadData
-        options:
-            sql_path: 'datasets/regression/test_data.sql'
-            mapping: 'datasets/regression/mapping.yml'
 
-    delete_test_data:
-        description: 'WARNING: deletes all data in sObjects used for testing'
-        class_path: cumulusci.tasks.bulkdata.DeleteData
+    delete_data:
         options:
             objects:
                 - Volunteer_Hours__c
@@ -91,34 +80,6 @@ tasks:
                 - Account
                 - Campaign
 
-    deploy_test_data_managed:
-        description: 'Loads a test data set for Volunteers for Salesforce to a managed install'
-        class_path: cumulusci.tasks.bulkdata.LoadData
-        options:
-            sql_path: 'datasets/regression/test_data.sql'
-            mapping: 'datasets/regression/mapping_managed.yml'
-    
-    delete_test_data_managed:
-        description: 'WARNING: deletes all data in sObjects used for testing'
-        class_path: cumulusci.tasks.bulkdata.DeleteData
-        options:
-            objects:
-                - GW_Volunteers__Volunteer_Hours__c
-                - GW_Volunteers__Volunteer_Shift__c
-                - GW_Volunteers__Job_Recurrence_Schedule__c
-                - GW_Volunteers__Volunteer_Recurrence_Schedule__c
-                - GW_Volunteers__Volunteer_Job__c
-                - Contact
-                - Account
-                - Campaign
-
-    capture_test_data:
-        description: 'Capture test data from an org'
-        class_path: cumulusci.tasks.bulkdata.ExtractData
-        options:
-            sql_path: 'datasets/regression/test_data.sql'
-            mapping: 'datasets/regression/mapping.yml'
-
     ensure_record_type:
         name: Ensure Campaign Record Types
         description: This will ensure Record Types are enabled for the Campaign object in your org before installing Volunteers for Salesforce. If there are no Campaign record types yet, it will create one called Default.
@@ -127,59 +88,6 @@ tasks:
             record_type_label: Default
             record_type_developer_name: Default
             sobject: Campaign
-
-    install_npsp_with_unpackaged_config:
-        description: Install NPSP with dependencies and unpackaged configuration
-        class_path: cumulusci.tasks.salesforce.UpdateDependencies
-        options:
-            dependencies:
-                - github: 'https://github.com/SalesforceFoundation/Cumulus'
-                - repo_name: Cumulus
-                  repo_owner: SalesforceFoundation
-                  subfolder: unpackaged/config/trial
-                  namespace_inject: 'npsp'
-                  unmanaged: False
-                - repo_name: Cumulus
-                  repo_owner: SalesforceFoundation
-                  subfolder: unpackaged/config/reports
-                  namespace_inject: 'npsp'
-                  unmanaged: False
-
-    insert_npsp_relationships:
-        description: 'Runs execute anonymous to insert the default NPSP relationships.  Copied from Cumulus on 2019-07-09.'
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            apex: >
-                List<npe4__Relationship_Lookup__c> defaultRelationships = new List<npe4__Relationship_Lookup__c>{
-                    new npe4__Relationship_Lookup__c(Name = 'Father',npe4__Male__c = 'Son', npe4__Female__c = 'Daughter', npe4__Neutral__c = 'Child'),
-                    new npe4__Relationship_Lookup__c(Name = 'Mother',npe4__Male__c = 'Son', npe4__Female__c = 'Daughter', npe4__Neutral__c = 'Child'),
-                    new npe4__Relationship_Lookup__c(Name = 'Parent',npe4__Male__c = 'Son', npe4__Female__c = 'Daughter', npe4__Neutral__c = 'Child'),
-                    new npe4__Relationship_Lookup__c(Name = 'Son',npe4__Male__c = 'Father', npe4__Female__c = 'Mother', npe4__Neutral__c = 'Parent'),
-                    new npe4__Relationship_Lookup__c(Name = 'Daughter',npe4__Male__c = 'Father', npe4__Female__c = 'Mother', npe4__Neutral__c = 'Parent'),
-                    new npe4__Relationship_Lookup__c(Name = 'Child',npe4__Male__c = 'Father', npe4__Female__c = 'Mother', npe4__Neutral__c = 'Parent'),
-                    new npe4__Relationship_Lookup__c(Name = 'Aunt',npe4__Male__c = 'Nephew', npe4__Female__c = 'Niece', npe4__Neutral__c = 'Sibling\'s Child'),
-                    new npe4__Relationship_Lookup__c(Name = 'Uncle',npe4__Male__c = 'Nephew', npe4__Female__c = 'Niece', npe4__Neutral__c = 'Sibling\'s Child'),
-                    new npe4__Relationship_Lookup__c(Name = 'Husband',npe4__Male__c = 'Husband', npe4__Female__c = 'Wife', npe4__Neutral__c = 'Spouse'),
-                    new npe4__Relationship_Lookup__c(Name = 'Wife',npe4__Male__c = 'Husband', npe4__Female__c = 'Wife', npe4__Neutral__c = 'Spouse'),
-                    new npe4__Relationship_Lookup__c(Name = 'Partner',npe4__Male__c = 'Partner', npe4__Female__c = 'Partner', npe4__Neutral__c = 'Partner'),
-                    new npe4__Relationship_Lookup__c(Name = 'Cousin',npe4__Male__c = 'Cousin', npe4__Female__c = 'Cousin', npe4__Neutral__c = 'Cousin'),
-                    new npe4__Relationship_Lookup__c(Name = 'Grandmother',npe4__Male__c = 'Grandson', npe4__Female__c = 'Granddaughter', npe4__Neutral__c = 'Grandchild'),
-                    new npe4__Relationship_Lookup__c(Name = 'Grandfather',npe4__Male__c = 'Grandson', npe4__Female__c = 'Granddaughter', npe4__Neutral__c = 'Grandchild'),
-                    new npe4__Relationship_Lookup__c(Name = 'Grandparent',npe4__Male__c = 'Grandson', npe4__Female__c = 'Granddaughter', npe4__Neutral__c = 'Grandchild'),
-                    new npe4__Relationship_Lookup__c(Name = 'Grandson',npe4__Male__c = 'Grandfather', npe4__Female__c = 'Grandmother', npe4__Neutral__c = 'Grandparent'),
-                    new npe4__Relationship_Lookup__c(Name = 'Granddaughter',npe4__Male__c = 'Grandfather', npe4__Female__c = 'Grandmother', npe4__Neutral__c = 'Grandparent'),
-                    new npe4__Relationship_Lookup__c(Name = 'Grandchild',npe4__Male__c = 'Grandfather', npe4__Female__c = 'Grandmother', npe4__Neutral__c = 'Grandparent'),
-                    new npe4__Relationship_Lookup__c(Name = 'Employer',npe4__Male__c = 'Employee', npe4__Female__c = 'Employee', npe4__Neutral__c = 'Employee'),
-                    new npe4__Relationship_Lookup__c(Name = 'Employee',npe4__Male__c = 'Employer', npe4__Female__c = 'Employer', npe4__Neutral__c = 'Employer')
-                };
-                insert defaultRelationships;
-
-    insert_npsp_test_data:
-        description: 'Loads a NPSP test data set for most NPSP objects based on 100 Contacts that should fit into a scratch org or DE org'
-        class_path: cumulusci.tasks.bulkdata.LoadData
-        options:
-            database_url: 'sqlite:///Cumulus/datasets/dev_org/test_data.db'
-            mapping: 'Cumulus/datasets/mapping_managed.yml'
 
     run_tests:
         options:
@@ -190,88 +98,50 @@ tasks:
             retry_always: True
 
 flows:
-    ci_feature:
-        description: Deploys the unmanaged package metadata and all dependencies to the target org and runs tests
-        tasks:
-            5:
-                task: None
-
-    config_dev:
+    config_unmanaged:
         steps:
-            3:
+            1:
                 task: deploy_delete_config
-            4:
+            2:
                 task: deploy_dev_config
-                options:
-                    unmanaged: True
-            5:
+            3:
                 task: deploy_tab_config
-                options:
-                    unmanaged: True
-            6:
+            4:
                 task: deploy_package_settings
-            7:
+                when: '"GW_Volunteers" not in org_config.installed_packages'
+            5:
                 task: assign_pset
                 ignore_failure: True
-            8:
-                task: deploy_test_data
+            6:
+                task: load_dataset
 
     config_managed:
             steps:
                 3:
                     task: deploy_tab_config
-                    options:
-                        unmanaged: False
+    config_dev:
+        steps:
+            3:
+                flow: config_unmanaged
 
     config_qa:
         steps:
             3:
-                task: deploy_delete_config
+                flow: config_unmanaged
             4:
-                task: deploy_dev_config
-            5:
                 task: deploy_qa_config
-            6:
-                task: deploy_tab_config
-            7:
-                task: deploy_package_settings
-                when: "'GW_Volunteers' not in org_config.installed_packages"
-            8:
-                task: assign_pset
-                ignore_failure: True
-            9:
-                task: deploy_test_data
 
     config_regression:
         steps:
-            2:
-                task: deploy_delete_config
             3:
-                task: deploy_dev_config
-                options:
-                    unmanaged: False
-                    namespace_inject: $project_config.project__package__namespace
+                flow: config_unmanaged
             4:
                 task: deploy_qa_config
-                options:
-                    unmanaged: False
-                    namespace_inject: $project_config.project__package__namespace
-            5:
-                task: deploy_tab_config
-                options:
-                    unmanaged: False
-            6:
-                task: assign_pset
-            7:
-                task: deploy_test_data_managed
 
     install_npsp:
-        description: 'Installs NPSP with unmanaged metadata and inserts NPSP test data'
         steps:
             1:
-                task: install_npsp_with_unpackaged_config
-            2:
-                task: insert_npsp_relationships
+                flow: npsp:install_prod
 
     customer_org:
         steps:
