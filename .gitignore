@@ -16,3 +16,4 @@ src/workflows/User.workflow
 **/.sfdx/
 **/.vscode/
 .cci
+test_results.*
