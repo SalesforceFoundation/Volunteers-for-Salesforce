@@ -10,6 +10,8 @@ project:
         prefix_release: rel/
         prefix_beta: beta/
         repo_url: https://github.com/SalesforceFoundation/Volunteers-for-Salesforce
+    dependency_resolutions:
+        preproduction: include_beta
 
 sources:
     npsp:
