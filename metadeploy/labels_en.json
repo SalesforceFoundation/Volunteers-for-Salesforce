@@ -44,5 +44,11 @@
             "message": "Install Page Layouts (V4S)",
             "description": "title of installation step"
         }
+    },
+    "checks": {
+        "Please enable Chatter in your org prior to installing.": {
+            "message": "Please enable Chatter in your org prior to installing.",
+            "description": "shown if validation fails"
+        }
     }
 }
