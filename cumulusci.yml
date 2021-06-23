@@ -200,10 +200,14 @@ plans:
         title: Install Volunteers for Salesforce
         tier: primary
         is_listed: True
+        checks:
+            - when: "not tasks.check_chatter_enabled()"
+              action: error
+              message: "Please enable Chatter in your org prior to installing."
         steps:
             1:
                 flow: customer_org
-                
+
     upgrade:
         slug: upgrade
         title: Product Upgrade
