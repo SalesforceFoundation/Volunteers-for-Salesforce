@@ -6,4 +6,4 @@
 
 # New Metadata
 
-# Deleted Metadata
+# Removed Metadata
