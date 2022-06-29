@@ -58,8 +58,9 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             if (shiftId != null) {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
-                    new Set<String>{'Id', 'Name'});
-                    
+                    new Set<String>{'Id', 'Name', UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 Volunteer_Shift__c shift = [select Name, Volunteer_Job__r.Name from Volunteer_Shift__c where Id = :shiftId];
                 strJobName = shift.Volunteer_Job__r.Name + ' - ' + shift.Name;  
                 templateObject = 'Shift';       
@@ -67,14 +68,16 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
                     new Set<String>{'Id','Name'});
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 Volunteer_Job__c job = [select Name from Volunteer_Job__c where Id = :jobId];
                 strJobName = job.Name;
                 templateObject = 'Job';     
             } else if (campaignId != null) {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Campaign', new Set<String>{'Id','Name'});    
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 Campaign cmp = [select Name from Campaign where Id = :campaignId];
                 strJobName = cmp.Name;
                 templateObject = 'Campaign';                    
@@ -89,6 +92,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             UTIL_Describe.checkReadAccess('Folder', new Set<String>{'Id','DeveloperName'});    
             
             // get the folderId for our Volunteer email templates
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             list<Folder> listf = [select Id from Folder where DeveloperName='Volunteers_Email_Templates'];
             if (listf.size() > 0) folderId = listf[0].Id;   
         } catch (Exception e) {
@@ -100,21 +105,43 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     public list<SelectOption> getlistSOTemplates() {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
-        for (EmailTemplate et : [select Id, Name, Subject, Body from EmailTemplate 
+
+        try {
+            UTIL_Describe.checkReadAccess('EmailTemplate', new Set<String>{'Id','Name', 'Subject', 'Body'});
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
+            for (EmailTemplate et : [select Id, Name, Subject, Body from EmailTemplate 
                 where isActive=true and FolderId=:folderId order by name limit 999]) {
-            listSO.add(new SelectOption(et.id, et.name));
-        }       
+                listSO.add(new SelectOption(et.id, et.name));
+            } 
+        } catch(Exception ex) {
+            // Allow page to load without options
+        }
+              
         return listSO;
     }   
     
     // the list of Org Wide Email Addresses
     public list<SelectOption> getlistSOFromEmails() { 
         list<SelectOption> listSO = new list<SelectOption>();
+
+        // Getting current users email address to allow sending via there own email
+        // access check not necessary
+        /* sfca-disable-next-line ApexFlsViolationRule */
         User thisUser = [Select Name, Email from User where id = :UserInfo.getUserId()];
         listSO.add(new SelectOption('', thisUser.Name + ' <' + thisUser.Email + '>'));
-        for (OrgWideEmailAddress owa : [select id, Address, DisplayName from OrgWideEmailAddress]) {
-            listSO.add(new SelectOption(owa.id, owa.DisplayName + ' <' + owa.Address + '>'));
-        }       
+
+        try {
+            UTIL_Describe.checkReadAccess('User', new Set<String>{'Id','Name', 'Email'});
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
+            for (OrgWideEmailAddress owa : [select id, Address, DisplayName from OrgWideEmailAddress]) {
+                listSO.add(new SelectOption(owa.id, owa.DisplayName + ' <' + owa.Address + '>'));
+            }       
+        } catch(Exception ex) {
+            // allow page to load with only current users email option
+        }
+        
         return listSO;
     }
     
@@ -210,7 +237,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
         try {
             job.Description__c = htmlValue;
+            // We are using Salesforce to sanitize the field then reverting the save.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             upsert job;
+            /* sfca-disable-next-line ApexFlsViolationRule */
             escapedHtml = [SELECT Description__c FROM Volunteer_Job__c WHERE Id = :job.Id LIMIT 1].Description__c;
 
         } catch (Exception ex) {
@@ -231,6 +261,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         Volunteer_Job__c relatedJob = new Volunteer_Job__c();
 
         if (shiftId != null) {
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                new Set<String>{'Id', UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
             relatedJob.Id = [SELECT Volunteer_Job__c FROM Volunteer_Shift__c WHERE Id = :shiftId LIMIT 1].Volunteer_Job__c;
             return relatedJob;
         }
@@ -241,6 +275,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
         }
 
         if (campaignId != null) {
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>{'Id', UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             List<Volunteer_Job__c> jobs = [SELECT Id FROM Volunteer_Job__c WHERE Campaign__c = :campaignId LIMIT 1];
             if (jobs.isEmpty()) {
                 relatedJob.Campaign__c = campaignId;
@@ -266,13 +304,19 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                     UTIL_Describe.StrTokenNSPrefix('Status__c'),
                     UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
                     UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>{UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
                 
             if (shiftId != null) {
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Shift__c = :shiftId];         
             } else if (jobId != null){
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__c = :jobId];
             } else if (campaignId != null) {
                 // Salesforce failed to match our campaignId against the formula field which is text, so use full reference.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 listHr = [select contact__c from Volunteer_Hours__c where Status__c = :hourStatus.Status__c and Volunteer_Job__r.Campaign__c = :campaignId ];
             }
 
@@ -314,7 +358,16 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             // specific shift
             // specific job with or without shifts (or mixture)
             // specific campaign, with or without jobs, with or without shifts
-            
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                new Set<String>{
+                    UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')
+                });
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>{
+                    UTIL_Describe.StrTokenNSPrefix('Campaign__c')
+                });
             string strSoql = 'select Contact__c, Volunteer_Shift__c, Volunteer_Job__c, Volunteer_Job__r.Campaign__c from Volunteer_Hours__c ' + 
                             ' where Status__c = \'' + VOL_SharedCode.StrEscape(hourStatus.Status__c) + '\' and ' +
                                 ' Contact__r.Email != null ';           
@@ -330,7 +383,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
             
             // to keep track of unique contacts
             set<ID> setContactId = new set<ID>();
-            
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             for (Volunteer_Hours__c hr : database.query(strSoql)) {
                 if (!fEmailContactsOnlyOnce || setContactId.add(hr.Contact__c)) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -388,7 +442,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                             }
                             // Ensure the user has access to the object and fields before querying
                             UTIL_Describe.checkReadAccess('Contact', new Set<String>{'Id', 'Name', 'Email'});    
-            
+                            // Using a dynamic describe access check in the method called above.
+                            /* sfca-disable-next-line ApexFlsViolationRule */
                             list<Contact> listCon = [select Name, Email from Contact where Id =: objId];
                             string strDetails = '';
                             if (listCon.size() > 0) 
