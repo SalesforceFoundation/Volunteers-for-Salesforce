@@ -83,7 +83,9 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        update sObjects;
+        // When a guest user does not have elevated access we strip inaccessible
+        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.UPDATABLE, sObjects);
+        update accessDecision.getRecords();
     }
 
     /*******************************************************************************************************
@@ -97,7 +99,9 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        Database.update(sObjects, dmlDuplicateOptions);
+        // When a guest user does not have elevated access we strip inaccessible
+        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.UPDATABLE, sObjects);
+        Database.update(accessDecision.getRecords(), dmlDuplicateOptions);
     }
 
     /*******************************************************************************************************
@@ -110,7 +114,9 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        insert sObjects;
+        // When a guest user does not have elevated access we strip inaccessible
+        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.CREATABLE, sObjects);
+        insert accessDecision.getRecords();
     }
 
     /*******************************************************************************************************
@@ -124,6 +130,8 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        Database.insert(sObjects, dmlDuplicateOptions);
+        // When a guest user does not have elevated access we strip inaccessible
+        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.CREATABLE, sObjects);
+        Database.insert(accessDecision.getRecords(), dmlDuplicateOptions);
     }
 }

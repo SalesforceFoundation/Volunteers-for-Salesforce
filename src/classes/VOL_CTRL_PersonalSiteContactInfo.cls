@@ -179,7 +179,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 strSoql += ' and Status__c = \'Completed\' ';
                 strSoql += ' order by Start_Date__c DESC ';
                 strSoql += ' limit ' + cRowsCompleted;
-                listCompletedVolunteerHours = Database.Query(strSoql); 
+                SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.READABLE, Database.Query(strSoql));
+                listCompletedVolunteerHours = (List<Volunteer_Hours__c>) accessDecision.getRecords();
+
                 // store friendly datetime string in system field for display only
                 dateTimeFixup(listCompletedVolunteerHours);
             }
@@ -220,6 +222,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                     strSoql += ' and Shift_Start_Date_Time__c >= :dtToday ';
                     strSoql += ' order by Shift_Start_Date_Time__c ASC ';        
                     strSoql += ' limit ' + cRowsUpcoming;
+                    // Using a dynamic describe access check in the method called above.
+                    /* sfca-disable-next-line ApexFlsViolationRule */
                     listUpcomingVolunteerHours = Database.Query(strSoql);                
                     // store friendly datetime string in system field for display only
                     dateTimeFixup(listUpcomingVolunteerHours);
@@ -241,6 +245,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     // Note that it stores the formatted Date in the Hours' Comment field (in memory only).
     private void dateTimeFixup(list<Volunteer_Hours__c> listHours) {
         // get default time zone for site guest user
+        // This is a field required by the system.
+        /* sfca-disable-next-line ApexFlsViolationRule */
         User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
         
         // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.
@@ -316,7 +322,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
        
     global PageReference cancelShift() {
         try {
-            if (hoursId != null) {           
+            if (hoursId != null) {
+                // We are dynamically check update access below, the query result is not being returned to the user.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
                 hr.Hours_Worked__c = 0;            
@@ -324,6 +332,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
                         UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
+                // We are dynamically check update access above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 access.updateRecords(new List<Volunteer_Hours__c>{hr});
 
                 hoursId = null; 
@@ -352,29 +362,41 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     global list<ChartData> getChartData() {
         integer cMonths = 12;
         Date dtStart = date.today().addMonths(-cMonths + 1).toStartOfMonth();
-        
-        list<AggregateResult> listAG = [select CALENDAR_YEAR(Start_Date__c) theYear, CALENDAR_MONTH(Start_Date__c) theMonth, SUM(Hours_Worked__c) sumHours 
-            from Volunteer_Hours__c 
-            where Contact__c = :contactId and Status__c = 'Completed' and Start_Date__c >= :dtStart
-            group by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) 
-            order by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) ];
-        
         list<ChartData> listCD = new list<ChartData>();
-        
-        Date dtNext = dtStart;
-        Time timeT = Time.newInstance(1, 0, 0, 0);
-        for (AggregateResult ag : listAG) {
-            Date dt = date.newInstance(integer.valueOf(ag.get('theYear')), integer.valueOf(ag.get('theMonth')), 1);
+
+        try {
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+                new Set<String>{'Id',
+                    UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Status__c')});
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
+            list<AggregateResult> listAG = [select CALENDAR_YEAR(Start_Date__c) theYear, CALENDAR_MONTH(Start_Date__c) theMonth, SUM(Hours_Worked__c) sumHours 
+                from Volunteer_Hours__c 
+                where Contact__c = :contactId and Status__c = 'Completed' and Start_Date__c >= :dtStart
+                group by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) 
+                order by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) ];
             
-            // handle months with no data
-            while (dtNext < dt) {
-                listCD.add(new ChartData(datetime.newInstance(dtNext,timeT).format(strChartDateFormat), 0));    
-                dtNext = dtNext.addMonths(1);       
+            Date dtNext = dtStart;
+            Time timeT = Time.newInstance(1, 0, 0, 0);
+            for (AggregateResult ag : listAG) {
+                Date dt = date.newInstance(integer.valueOf(ag.get('theYear')), integer.valueOf(ag.get('theMonth')), 1);
+                
+                // handle months with no data
+                while (dtNext < dt) {
+                    listCD.add(new ChartData(datetime.newInstance(dtNext,timeT).format(strChartDateFormat), 0));    
+                    dtNext = dtNext.addMonths(1);       
+                }
+                
+                listCD.add(new ChartData(datetime.newInstance(dt,timeT).format(strChartDateFormat), integer.valueOf(ag.get('sumHours'))));
+                dtNext = dt.addMonths(1);
             }
-            
-            listCD.add(new ChartData(datetime.newInstance(dt,timeT).format(strChartDateFormat), integer.valueOf(ag.get('sumHours'))));
-            dtNext = dt.addMonths(1);
+        } catch (Exception ex) {
+            // Allow the page to load without the chart data.
         }
+
         return listCD;
     }
     
@@ -408,20 +430,33 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         integer iVol = 0;
         integer iCurrent = 0;
 
-        for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
-            from Volunteer_Hours__c 
-            where Status__c = 'Completed' and Start_Date__c >= :dtStart
-            group by Contact__c 
-            having SUM(Hours_Worked__c) > 0 
-            order by SUM(Hours_Worked__c) desc ]) {
-        
-                for (AggregateResult ag : listAG) {
-                    if (ag.get('cId') == contactId) {
-                        iCurrent = iVol;
+        try {
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+            new Set<String>{'Id',
+                UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+                UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
+                UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                UTIL_Describe.StrTokenNSPrefix('Status__c')});
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
+            for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
+                from Volunteer_Hours__c 
+                where Status__c = 'Completed' and Start_Date__c >= :dtStart
+                group by Contact__c 
+                having SUM(Hours_Worked__c) > 0 
+                order by SUM(Hours_Worked__c) desc ]) {
+            
+                    for (AggregateResult ag : listAG) {
+                        if (ag.get('cId') == contactId) {
+                            iCurrent = iVol;
+                        }
+                        iVol++;
                     }
-                    iVol++;
-                }
+            }
+        } catch (Exception ex) {
+            // Allow the page to load without the ranking
         }
+        
         if (iVol > 2) {
             integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
             if (irank == 0) irank = 1;
@@ -434,6 +469,10 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     @TestVisible
     private String strRankLifetime() {
         try {
+            UTIL_Describe.checkReadAccess('Contact',
+            new Set<String>{'Id', UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c')});
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             Decimal contactTotalHours = [SELECT Id, Volunteer_Hours__c FROM Contact WHERE Id = :contactId LIMIT 1].Volunteer_Hours__c;
 
             if (contactTotalHours == null || contactTotalHours == 0) {
@@ -443,12 +482,15 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             String hoursField = String.valueOf(Contact.Volunteer_Hours__c);
             String totalVolunteersQuery = 'SELECT count() FROM Contact WHERE ' + hoursField + ' > 0';
             String totalVolunteersWithMoreHoursQuery = totalVolunteersQuery + ' AND ' + hoursField + ' > ' + contactTotalHours;
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             Integer totalVolunteers = Database.countQuery(totalVolunteersQuery);
 
             if (totalVolunteers <= 2) {
                 return '';
             }
-
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             Integer totalVolunteersWithMoreHours = Database.countQuery(totalVolunteersWithMoreHoursQuery);
 
             Integer rank = Integer.valueOf(
