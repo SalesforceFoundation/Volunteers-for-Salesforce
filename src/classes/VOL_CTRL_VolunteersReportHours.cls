@@ -257,8 +257,6 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
 
     // action method for saving the the volunteer's hours.    
-    // Scanner is timing out on the path evaluation, verified we are secure
-    /* sfca-disable-stack ApexFlsViolationRule */
     global virtual PageReference Save() {
         Savepoint sp = Database.setSavepoint();
         try {
