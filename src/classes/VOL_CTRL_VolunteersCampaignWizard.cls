@@ -104,8 +104,9 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         try {
             // Ensure the user can create the object 
-            UTIL_Describe.checkObjectCreateAccess('Campaign');            
-            insert cmpVols;
+            UTIL_Describe.checkObjectCreateAccess('Campaign');
+            SObjectAccessDecision campaignAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, new List<Campaign>{ cmpVols });
+            insert campaignAccessDecision.getRecords();
             
             if (campaignIdClone != null) {
                 CloneExistingJobsAndShifts();
@@ -143,7 +144,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         // Ensure the user has access to the object and fields before querying
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
-        insert listJobs;
+        SObjectAccessDecision jobAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listJobs);
+        insert jobAccessDecision.getRecords();
 
         // create the sample shifts
         for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
@@ -159,7 +161,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
         }
         // Ensure the user has access to the object and fields before querying
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
-        insert listShifts;
+        SObjectAccessDecision shiftAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listShifts);
+        insert shiftAccessDecision.getRecords();
     }
 
     /*******************************************************************************************************
@@ -496,7 +499,9 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 new Set<String>{'Id',
                     UTIL_Describe.StrTokenNSPrefix('First_Shift__c'),
                     UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
-                
+            
+            // Using a dynamic describe access check in the method called above.
+            /* sfca-disable-next-line ApexFlsViolationRule */
             list<Volunteer_Job__c> listJobs = [select Id, First_Shift__c from Volunteer_Job__c 
                 where Campaign__c = :campaignIdClone
                 order by First_Shift__c];

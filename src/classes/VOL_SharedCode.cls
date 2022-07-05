@@ -39,17 +39,15 @@ global with sharing class VOL_SharedCode {
             listSO.add(new SelectOption('', ''));
 
             // Ensure the user has access to the object before querying
-            try {
-                UTIL_Describe.checkObjectReadAccess(String.valueOf(Campaign.SObjectType));
-            } catch (Exception ex) {
-                // we will return an empty list vs throwing an error
-                return listSO;
+            if (Campaign.SObjectType.getDescribe().isAccessible() && Campaign.Name.getDescribe().isAccessible() &&
+                Campaign.IsActive.getDescribe().isAccessible() && Campaign.StartDate.getDescribe().isAccessible() &&
+                Campaign.RecordTypeId.getDescribe().isAccessible()) {
+                for (Campaign c : [select Name, Id from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
+                    and IsActive = true order by StartDate desc, Name asc limit 999]) {
+                    listSO.add(new SelectOption(c.id, c.name));
+                }
             }
-
-            for (Campaign c : [select Name, Id from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
-                and IsActive = true order by StartDate desc, Name asc limit 999]) {
-                listSO.add(new SelectOption(c.id, c.name));
-            }
+            
             return listSO;
         }
     }

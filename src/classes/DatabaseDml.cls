@@ -28,7 +28,7 @@
     POSSIBILITY OF SUCH DAMAGE.
 */
 /*
-    This file was created for situations where we need to run in system
+    This class was created for situations where we need to run in system
     mode.
 */
 /* sfca-disable ApexFlsViolationRule */

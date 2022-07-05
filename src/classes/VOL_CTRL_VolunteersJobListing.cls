@@ -79,6 +79,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
     global string strURLtoCSSFile { 
         get { 
             if (strURLtoCSSFile == null) {
+                // System query to find the css doc if the admin has added it for custom css
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersJobListingCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
                     Document doc = listDocs[0];
@@ -172,6 +174,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                 }
                 
             }
+            SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.READABLE, listVolunteerJobs);
+            listVolunteerJobs = (List<Volunteer_Job__c>) accessDecision.getRecords();
             return sortVolunteerJobs(listVolunteerJobs);
         }
         
@@ -253,13 +257,14 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                 vh.Start_Date__c = system.today();
                 VolunteerHoursBeforeInsert(vh); 
 
-                // Ensure the user has access to the object and fields before querying
+                // Ensure the user has access to the object and fields before inserting
                 access.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c'),
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
                         UTIL_Describe.StrTokenNSPrefix('Start_Date__c')});
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 access.insertRecords(new List<Volunteer_Hours__c>{ vh });
                 volunteerHoursIdSignUp = vh.Id;
             }

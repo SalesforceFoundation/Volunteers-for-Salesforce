@@ -122,6 +122,10 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                 // initial date range +- 1 month around passed in Shift or today (if no shift)
                 Date dt;
                 if (volunteerShiftId != null) {
+                    UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                        new Set<String>{UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
+                    // Using a dynamic describe access check in the method called above.
+                    /* sfca-disable-next-line ApexFlsViolationRule */
                     Volunteer_Shift__c shift = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                     dt = shift.Start_Date_Time__c.date();
                 } else {
@@ -209,8 +213,9 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
             strSoql += ' and Start_Date__c <= :dtEnd ';
         }
         strSoql += ' order by Full_Name__c, Start_Date__c ';
-        
-        listVolunteerHours = Database.Query(strSoql); 
+
+        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.READABLE, Database.Query(strSoql));
+        listVolunteerHours = (List<Volunteer_Hours__c>) accessDecision.getRecords(); 
                 
         AddMoreEmptyRowsToVolunteerHours();
     }
@@ -235,6 +240,8 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                         UTIL_Describe.StrTokenNSPrefix('Duration__c'),
                         UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
                 
+                // Using a dynamic describe access check in the method called above.
+                /* sfca-disable-next-line ApexFlsViolationRule */
                 Volunteer_Shift__c vs = [select Id, Duration__c, Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                 hoursWorked = vs.Duration__c;
                 dateStart = vs.Start_Date_Time__c.date();
@@ -308,12 +315,13 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                     listVolunteerHoursCreate.add(vh);
                 }
             }
-            
-            update listVolunteerHoursUpdate;
+            SObjectAccessDecision updateDecision = Security.stripInaccessible(AccessType.UPDATABLE, listVolunteerHoursUpdate);
+            update updateDecision.getRecords();
             
             // Ensure the user can create the object 
             UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
-            insert listVolunteerHoursCreate;
+            SObjectAccessDecision insertDecision = Security.stripInaccessible(AccessType.CREATABLE, listVolunteerHoursCreate);
+            insert insertDecision.getRecords();
             
             strSaveResults = String.valueOf(listVolunteerHoursCreate.size() + listVolunteerHoursUpdate.size()) + ' ' + Label.labelMassEditSaveSuccess;
             ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, strSaveResults));

@@ -55,7 +55,7 @@ public with sharing virtual class VOL_Access {
     }
 
     /**
-     * @description Calls the update check to verify the users create access
+     * @description Calls the create check to verify the users create access
      */
     public void checkCreateAccess(String objectName, Set<String> fieldNames) {
         UTIL_Describe.checkCreateAccess(objectName, fieldNames);
