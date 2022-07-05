@@ -401,6 +401,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     
     // action method to allow the javascript to clear this variable.
     // used when the confirmation dialog is closed.
+    // Scanner is timing out on the path evaluation, verified we are secure
+    /* sfca-disable-stack ApexFlsViolationRule */
     global virtual PageReference ClearVolunteerHoursIdSignUp() {
         volunteerHoursIdSignUp = null;
         return null;
@@ -408,6 +410,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     
     // action method to cancel the signup dialog,
     // clearing any cached state.
+    // Scanner is timing out on the path evaluation, verified we are secure
+    /* sfca-disable-stack ApexFlsViolationRule */
     global virtual PageReference CancelSignUp() {
         volunteerHoursIdSignUp = null;
         strSaveResult = null;
@@ -421,6 +425,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
     
     private class MyException extends Exception {}
     
+    // Scanner is timing out on the path evaluation, verified we are secure
+    /* sfca-disable-stack ApexFlsViolationRule */
     global virtual PageReference VolunteerShiftSignUp() {
 
         Savepoint sp = Database.setSavepoint();
