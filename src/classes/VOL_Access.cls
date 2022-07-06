@@ -1,3 +1,38 @@
+/*
+    Copyright (c) 2022, Salesforce.org
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of Salesforce.org nor the names of
+      its contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+    FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+    COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+*/
+/*
+    This class checks to see if the current user is a guest site user and
+    whether or not the admin has elevated the guest site user access. All
+    permission checks are expected to be done by the caller.
+*/
+/* sfca-disable ApexFlsViolationRule */
 public with sharing virtual class VOL_Access {
     protected VOL_Access() {}
 
@@ -83,9 +118,7 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        // When a guest user does not have elevated access we strip inaccessible
-        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.UPDATABLE, sObjects);
-        update accessDecision.getRecords();
+        update sObjects;
     }
 
     /*******************************************************************************************************
@@ -99,9 +132,7 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        // When a guest user does not have elevated access we strip inaccessible
-        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.UPDATABLE, sObjects);
-        Database.update(accessDecision.getRecords(), dmlDuplicateOptions);
+        Database.update(sObjects, dmlDuplicateOptions);
     }
 
     /*******************************************************************************************************
@@ -114,9 +145,7 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        // When a guest user does not have elevated access we strip inaccessible
-        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.CREATABLE, sObjects);
-        insert accessDecision.getRecords();
+        Database.insert(sObjects);
     }
 
     /*******************************************************************************************************
@@ -130,8 +159,6 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        // When a guest user does not have elevated access we strip inaccessible
-        SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.CREATABLE, sObjects);
-        Database.insert(accessDecision.getRecords(), dmlDuplicateOptions);
+        Database.insert(sObjects, dmlDuplicateOptions);
     }
 }
