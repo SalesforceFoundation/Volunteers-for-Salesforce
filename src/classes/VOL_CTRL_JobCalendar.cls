@@ -200,21 +200,17 @@ global with sharing class VOL_CTRL_JobCalendar {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', system.label.labelChoiceAllActiveCampaigns));
-            try {
-                UTIL_Describe.checkReadAccess('Campaign',
-                new Set<String>{'Id', 'Name', 'StartDate'});
-                // Using a dynamic describe access check in the method called above. Campaign.IsActive and
-                // Campaing.RecordTypeId are required by the system.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+            if (Campaign.SObjectType.getDescribe().isAccessible() && Campaign.Name.getDescribe().isAccessible() &&
+                Campaign.IsActive.getDescribe().isAccessible() && Campaign.StartDate.getDescribe().isAccessible() &&
+                Campaign.RecordTypeId.getDescribe().isAccessible()) {
                 for (Campaign c : [select Name, Id, StartDate from Campaign 
                     where RecordTypeId = :VOL_SharedCode.recordtypeIdVolunteersCampaign 
                     and IsActive = true order by Name asc limit 999]) {
                     listSO.add(new SelectOption(c.id, c.name));
                 }   
-            } catch(Exception ex) {
-                // Allow the page to load without options.
             }
-                
+            
+            // Allow the page to load without options.
             return listSO;
         }
         set;
@@ -240,12 +236,10 @@ global with sharing class VOL_CTRL_JobCalendar {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', system.label.labelChoiceAllJobs));
-            try {
-                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
-                    new Set<String>{'Id', 'Name', UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
+            if (Volunteer_Job__c.SObjectType.getDescribe().isAccessible() && Volunteer_Job__c.Campaign__c.getDescribe().isAccessible()
+                && Campaign.SObjectType.getDescribe().isAccessible() && Campaign.IsActive.getDescribe().isAccessible()) {
                 if (campaignId == null) {
-                    // Using a dynamic describe access check in the method called above. Campaign.IsActive is
-                    // required by the system.
+                    // Using a dynamic describe access check in the method called above.
                     /* sfca-disable-next-line ApexFlsViolationRule */
                     for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
                         where Campaign__r.IsActive = true order by name limit 999]) {
@@ -259,10 +253,8 @@ global with sharing class VOL_CTRL_JobCalendar {
                         listSO.add(new SelectOption(vj.id, vj.name));
                     }
                 }   
-            } catch(Exception ex) {
-                // Allow the page to load without options
-            }
-                
+            } // Allow the page to load without options
+
             return listSO;
         } 
         
@@ -396,11 +388,15 @@ global with sharing class VOL_CTRL_JobCalendar {
                     UTIL_Describe.StrTokenNSPrefix('Total_Volunteers__c'),
                     UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers_Still_Needed__c'),
                     UTIL_Describe.StrTokenNSPrefix('Description__c')});
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>{'Name',
+                    UTIL_Describe.StrTokenNSPrefix('Campaign__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Display_On_Website__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Campaign'),
+                new Set<String>{UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
                 
             if (!fAllJob) {
-                // Using a dynamic describe access check in the method called above.
-                // Display on Website and Volunteer Website Time Zone fields are required by the system.
-                /* sfca-disable-next-line ApexFlsViolationRule */
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c, 
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
@@ -410,9 +406,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                         and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
                     order by Start_Date_Time__c asc];           
             } else if (fAllCampaign && fAllJob) {
-                // Using a dynamic describe access check in the method called above. Campaign.IsActive is
-                // required by the system.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Campaign'), new Set<String>{'IsActive'});
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
@@ -426,8 +420,6 @@ global with sharing class VOL_CTRL_JobCalendar {
                 if (fShowCampaignHierarchy) {
                     listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(strCampaignId);    
                 }
-                // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c

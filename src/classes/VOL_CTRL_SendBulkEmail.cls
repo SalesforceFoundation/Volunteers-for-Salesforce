@@ -108,8 +108,6 @@ public with sharing class VOL_CTRL_SendBulkEmail {
 
         try {
             UTIL_Describe.checkReadAccess('EmailTemplate', new Set<String>{'Id','Name', 'Subject', 'Body'});
-            // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
             for (EmailTemplate et : [select Id, Name, Subject, Body from EmailTemplate 
                 where isActive=true and FolderId=:folderId order by name limit 999]) {
                 listSO.add(new SelectOption(et.id, et.name));
@@ -124,24 +122,11 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     // the list of Org Wide Email Addresses
     public list<SelectOption> getlistSOFromEmails() { 
         list<SelectOption> listSO = new list<SelectOption>();
-
-        // Getting current users email address to allow sending via there own email
-        // access check not necessary
-        /* sfca-disable-next-line ApexFlsViolationRule */
         User thisUser = [Select Name, Email from User where id = :UserInfo.getUserId()];
         listSO.add(new SelectOption('', thisUser.Name + ' <' + thisUser.Email + '>'));
-
-        try {
-            UTIL_Describe.checkReadAccess('User', new Set<String>{'Id','Name', 'Email'});
-            // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
-            for (OrgWideEmailAddress owa : [select id, Address, DisplayName from OrgWideEmailAddress]) {
-                listSO.add(new SelectOption(owa.id, owa.DisplayName + ' <' + owa.Address + '>'));
-            }       
-        } catch(Exception ex) {
-            // allow page to load with only current users email option
+        for (OrgWideEmailAddress owa : [select id, Address, DisplayName from OrgWideEmailAddress]) {
+            listSO.add(new SelectOption(owa.id, owa.DisplayName + ' <' + owa.Address + '>'));
         }
-        
         return listSO;
     }
     

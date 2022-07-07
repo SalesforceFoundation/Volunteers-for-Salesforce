@@ -364,21 +364,18 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         Date dtStart = date.today().addMonths(-cMonths + 1).toStartOfMonth();
         list<ChartData> listCD = new list<ChartData>();
 
-        try {
-            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
-                new Set<String>{'Id',
-                    UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Contact__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Status__c')});
-            // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+        if (Volunteer_Hours__c.SObjectType.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Start_Date__c.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Hours_Worked__c.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Contact__c.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Status__c.getDescribe().isAccessible()) {
+
             list<AggregateResult> listAG = [select CALENDAR_YEAR(Start_Date__c) theYear, CALENDAR_MONTH(Start_Date__c) theMonth, SUM(Hours_Worked__c) sumHours 
-                from Volunteer_Hours__c 
-                where Contact__c = :contactId and Status__c = 'Completed' and Start_Date__c >= :dtStart
-                group by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) 
-                order by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) ];
-            
+            from Volunteer_Hours__c 
+            where Contact__c = :contactId and Status__c = 'Completed' and Start_Date__c >= :dtStart
+            group by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) 
+            order by CALENDAR_YEAR(Start_Date__c), CALENDAR_MONTH(Start_Date__c) ];
+        
             Date dtNext = dtStart;
             Time timeT = Time.newInstance(1, 0, 0, 0);
             for (AggregateResult ag : listAG) {
@@ -393,9 +390,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 listCD.add(new ChartData(datetime.newInstance(dt,timeT).format(strChartDateFormat), integer.valueOf(ag.get('sumHours'))));
                 dtNext = dt.addMonths(1);
             }
-        } catch (Exception ex) {
-            // Allow the page to load without the chart data.
-        }
+        } // Allow the page to load without the chart data.
 
         return listCD;
     }
@@ -430,15 +425,11 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         integer iVol = 0;
         integer iCurrent = 0;
 
-        try {
-            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
-            new Set<String>{'Id',
-                UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
-                UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
-                UTIL_Describe.StrTokenNSPrefix('Contact__c'),
-                UTIL_Describe.StrTokenNSPrefix('Status__c')});
-            // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+        if (Volunteer_Hours__c.SObjectType.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Start_Date__c.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Hours_Worked__c.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Contact__c.getDescribe().isAccessible()
+            && Volunteer_Hours__c.Status__c.getDescribe().isAccessible()) {
             for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
                 from Volunteer_Hours__c 
                 where Status__c = 'Completed' and Start_Date__c >= :dtStart
@@ -452,11 +443,8 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                         }
                         iVol++;
                     }
-            }
-        } catch (Exception ex) {
-            // Allow the page to load without the ranking
+            } // Allow the page to load without the ranking
         }
-        
         if (iVol > 2) {
             integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
             if (irank == 0) irank = 1;
