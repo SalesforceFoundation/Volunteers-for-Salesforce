@@ -245,8 +245,6 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
     // Note that it stores the formatted Date in the Hours' Comment field (in memory only).
     private void dateTimeFixup(list<Volunteer_Hours__c> listHours) {
         // get default time zone for site guest user
-        // This is a field required by the system.
-        /* sfca-disable-next-line ApexFlsViolationRule */
         User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
         
         // javascript formatting used 'tt' for am/pm, whereas apex formatting uses 'a'.

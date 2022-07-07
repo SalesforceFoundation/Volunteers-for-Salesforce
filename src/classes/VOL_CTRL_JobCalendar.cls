@@ -433,8 +433,6 @@ global with sharing class VOL_CTRL_JobCalendar {
             // to avoid FullCalendar from displaying shifts based on the user's machine time zone,
             // we translate it to the desired time zone, then say it is GMT.
             // get default time zone for site guest user
-            // This is a field required by the system.
-            /* sfca-disable-next-line ApexFlsViolationRule */
             User u = [Select TimeZoneSidKey From User where id =: Userinfo.getUserId()];
                     
             for (Volunteer_Shift__c shift : listShifts) {
