@@ -106,7 +106,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             // Ensure the user can create the object 
             UTIL_Describe.checkObjectCreateAccess('Campaign');
             SObjectAccessDecision campaignAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, new List<Campaign>{ cmpVols });
-            insert campaignAccessDecision.getRecords();
+            cmpVols = (Campaign) campaignAccessDecision.getRecords()[0];
+            insert cmpVols;
             
             if (campaignIdClone != null) {
                 CloneExistingJobsAndShifts();
@@ -142,11 +143,18 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             listJobs.add(job);
         }
 
-        // Ensure the user has access to the object and fields before querying
-        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
-        SObjectAccessDecision jobAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listJobs);
-        insert jobAccessDecision.getRecords();
+        // Ensure the user has access to create the object and fields
+        UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+            new Set<String> {'Name', UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
+        insert listJobs;
 
+        UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+            new Set<String>{'Name',
+                UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
+                UTIL_Describe.StrTokenNSPrefix('Duration__c'),
+                UTIL_Describe.StrTokenNSPrefix('Description__c')
+            });
         // create the sample shifts
         for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
             for (Integer iShift = 0; iShift < cSampleShifts; iShift++) {
@@ -159,10 +167,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 listShifts.add(shift);
             }
         }
-        // Ensure the user has access to the object and fields before querying
-        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
-        SObjectAccessDecision shiftAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listShifts);
-        insert shiftAccessDecision.getRecords();
+        insert listShifts;
     }
 
     /*******************************************************************************************************
