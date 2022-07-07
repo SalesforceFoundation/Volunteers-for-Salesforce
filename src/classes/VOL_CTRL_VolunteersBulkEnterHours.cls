@@ -316,12 +316,14 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                 }
             }
             SObjectAccessDecision updateDecision = Security.stripInaccessible(AccessType.UPDATABLE, listVolunteerHoursUpdate);
-            update updateDecision.getRecords();
+            listVolunteerHoursUpdate = (List<Volunteer_Hours__c>) updateDecision.getRecords();
+            update listVolunteerHoursUpdate;
             
             // Ensure the user can create the object 
             UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
             SObjectAccessDecision insertDecision = Security.stripInaccessible(AccessType.CREATABLE, listVolunteerHoursCreate);
-            insert insertDecision.getRecords();
+            listVolunteerHoursCreate = (List<Volunteer_Hours__c>) insertDecision.getRecords();
+            insert listVolunteerHoursCreate;
             
             strSaveResults = String.valueOf(listVolunteerHoursCreate.size() + listVolunteerHoursUpdate.size()) + ' ' + Label.labelMassEditSaveSuccess;
             ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, strSaveResults));
