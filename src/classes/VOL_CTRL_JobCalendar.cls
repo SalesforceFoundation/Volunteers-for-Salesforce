@@ -393,7 +393,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                     UTIL_Describe.StrTokenNSPrefix('Campaign__c'),
                     UTIL_Describe.StrTokenNSPrefix('Display_On_Website__c'),
                     UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
-            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Campaign'),
+            UTIL_Describe.checkReadAccess('Campaign',
                 new Set<String>{UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
                 
             if (!fAllJob) {
@@ -406,7 +406,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                         and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
                     order by Start_Date_Time__c asc];           
             } else if (fAllCampaign && fAllJob) {
-                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Campaign'), new Set<String>{'IsActive'});
+                UTIL_Describe.checkReadAccess('Campaign', new Set<String>{'IsActive'});
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
