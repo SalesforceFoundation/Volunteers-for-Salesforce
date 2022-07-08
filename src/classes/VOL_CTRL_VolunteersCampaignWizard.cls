@@ -149,7 +149,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
         insert listJobs;
 
         UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
-            new Set<String>{'Name',
+            new Set<String>{
                 UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
                 UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
                 UTIL_Describe.StrTokenNSPrefix('Duration__c'),
