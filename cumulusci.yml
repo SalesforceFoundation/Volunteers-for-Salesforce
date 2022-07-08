@@ -4,7 +4,7 @@ project:
     package:
         name: Volunteers for Salesforce
         namespace: GW_Volunteers
-        api_version: '44.0'
+        api_version: '40.0'
         install_class: InstallScript
     git:
         prefix_release: rel/
