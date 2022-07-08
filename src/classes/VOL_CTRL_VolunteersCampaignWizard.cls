@@ -263,7 +263,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
     * @param Set<String> Set of fields that might contain the fields to be returned.
     */
     private Set<String> removeTabSpecificFields(Set<String> fieldNames) {
-        fieldNames.removeAll(new Set<String>{ LAST_REFERENCED_DATE, LAST_VIEWED_DATE });
+        fieldNames.removeAll(new Set<String>{ LAST_REFERENCED_DATE.toLowerCase(), LAST_VIEWED_DATE.toLowerCase() });
         return fieldNames;
     }
 
