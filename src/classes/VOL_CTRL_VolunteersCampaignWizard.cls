@@ -33,6 +33,8 @@
 * @description Page Controller class for the Volunteers Wizard visualforce page.  
 ********************************************************************************************************/
 public with sharing class VOL_CTRL_VolunteersCampaignWizard {
+    private static final String LAST_VIEWED_DATE = 'LastViewedDate';
+    private static final String LAST_REFERENCED_DATE = 'LastReferencedDate';
 
     // the new campaign we will create
     public Campaign cmpVols { 
@@ -231,7 +233,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             if (listStrFieldsShift == null) {
                 listStrFieldsShift = new List<string>();
                 Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Shift__c.fields.getMap();
-                listStrFieldsShift.addAll(mapS.keySet());
+                Set<String> fieldNames = removeTabSpecificFields(mapS.keySet());
+                listStrFieldsShift.addAll(fieldNames);
             }
             return listStrFieldsShift;
         }
@@ -246,11 +249,22 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             if (listStrFieldsHours == null) {
                 listStrFieldsHours = new List<string>();
                 Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
-                listStrFieldsHours.addAll(mapS.keySet());
+                Set<String> fieldNames = removeTabSpecificFields(mapS.keySet());
+                listStrFieldsHours.addAll(fieldNames);
             }
             return listStrFieldsHours;
         }
         set;
+    }
+
+    /*******************************************************************************************************
+    * @description removes fields that only exist when a tab for the object has been created
+    * https://help.salesforce.com/s/articleView?id=000315500&type=1
+    * @param Set<String> Set of fields that might contain the fields to be returned.
+    */
+    private Set<String> removeTabSpecificFields(Set<String> fieldNames) {
+        fieldNames.removeAll(new Set<String>{ LAST_REFERENCED_DATE, LAST_VIEWED_DATE });
+        return fieldNames;
     }
 
     /*******************************************************************************************************
