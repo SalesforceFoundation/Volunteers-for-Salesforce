@@ -423,25 +423,26 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         integer iVol = 0;
         integer iCurrent = 0;
 
-        if (Volunteer_Hours__c.SObjectType.getDescribe().isAccessible()
-            && Volunteer_Hours__c.Start_Date__c.getDescribe().isAccessible()
-            && Volunteer_Hours__c.Hours_Worked__c.getDescribe().isAccessible()
-            && Volunteer_Hours__c.Contact__c.getDescribe().isAccessible()
-            && Volunteer_Hours__c.Status__c.getDescribe().isAccessible()) {
-            for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
-                from Volunteer_Hours__c 
-                where Status__c = 'Completed' and Start_Date__c >= :dtStart
-                group by Contact__c 
-                having SUM(Hours_Worked__c) > 0 
-                order by SUM(Hours_Worked__c) desc ]) {
-            
-                    for (AggregateResult ag : listAG) {
-                        if (ag.get('cId') == contactId) {
-                            iCurrent = iVol;
-                        }
-                        iVol++;
+        UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
+            new Set<String>{'Id',
+                UTIL_Describe.StrTokenNSPrefix('Start_Date__c'),
+                UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
+                UTIL_Describe.StrTokenNSPrefix('Contact__c'),
+                UTIL_Describe.StrTokenNSPrefix('Status__c')});
+
+        for (list<AggregateResult> listAG : [select Contact__c cId, SUM(Hours_Worked__c) sumHours 
+            from Volunteer_Hours__c 
+            where Status__c = 'Completed' and Start_Date__c >= :dtStart
+            group by Contact__c 
+            having SUM(Hours_Worked__c) > 0 
+            order by SUM(Hours_Worked__c) desc ]) {
+        
+                for (AggregateResult ag : listAG) {
+                    if (ag.get('cId') == contactId) {
+                        iCurrent = iVol;
                     }
-            } // Allow the page to load without the ranking
+                    iVol++;
+                }
         }
         if (iVol > 2) {
             integer irank = integer.valueOf(100 * (decimal.valueOf(iCurrent)/decimal.valueOf(iVol - 1)));
