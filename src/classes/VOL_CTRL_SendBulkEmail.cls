@@ -344,9 +344,9 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                     UTIL_Describe.StrTokenNSPrefix('Status__c')
                 });
             UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
-                new Set<String>{
-                    UTIL_Describe.StrTokenNSPrefix('Campaign__c')
-                });
+                new Set<String>{ UTIL_Describe.StrTokenNSPrefix('Campaign__c') });
+            UTIL_Describe.checkReadAccess('Contact',
+                new Set<String>{ UTIL_Describe.StrTokenNSPrefix('Email') });
             string strSoql = 'select Contact__c, Volunteer_Shift__c, Volunteer_Job__c, Volunteer_Job__r.Campaign__c from Volunteer_Hours__c ' + 
                             ' where Status__c = \'' + VOL_SharedCode.StrEscape(hourStatus.Status__c) + '\' and ' +
                                 ' Contact__r.Email != null ';           
