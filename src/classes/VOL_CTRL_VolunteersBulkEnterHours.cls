@@ -123,7 +123,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                 Date dt;
                 if (volunteerShiftId != null) {
                     UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
-                        new Set<String>{UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
+                        new Set<String>{'Id', UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
                     // Using a dynamic describe access check in the method called above.
                     /* sfca-disable-next-line ApexFlsViolationRule */
                     Volunteer_Shift__c shift = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];

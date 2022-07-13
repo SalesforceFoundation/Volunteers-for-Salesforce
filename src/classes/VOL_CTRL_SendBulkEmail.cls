@@ -105,17 +105,10 @@ public with sharing class VOL_CTRL_SendBulkEmail {
     public list<SelectOption> getlistSOTemplates() {
         list<SelectOption> listSO = new list<SelectOption>();
         listSO.add(new SelectOption('', ''));
-
-        try {
-            UTIL_Describe.checkReadAccess('EmailTemplate', new Set<String>{'Id','Name', 'Subject', 'Body'});
-            for (EmailTemplate et : [select Id, Name, Subject, Body from EmailTemplate 
-                where isActive=true and FolderId=:folderId order by name limit 999]) {
-                listSO.add(new SelectOption(et.id, et.name));
-            } 
-        } catch(Exception ex) {
-            // Allow page to load without options
+        for (EmailTemplate et : [select Id, Name, Subject, Body from EmailTemplate 
+            where isActive=true and FolderId=:folderId order by name limit 999]) {
+            listSO.add(new SelectOption(et.id, et.name));
         }
-              
         return listSO;
     }   
     
@@ -347,7 +340,8 @@ public with sharing class VOL_CTRL_SendBulkEmail {
                 new Set<String>{
                     UTIL_Describe.StrTokenNSPrefix('Contact__c'),
                     UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
-                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Status__c')
                 });
             UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
                 new Set<String>{
