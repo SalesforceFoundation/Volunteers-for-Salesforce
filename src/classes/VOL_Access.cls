@@ -145,7 +145,7 @@ public with sharing virtual class VOL_Access {
             return;
         }
 
-        Database.insert(sObjects);
+        insert sObjects;
     }
 
     /*******************************************************************************************************

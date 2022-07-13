@@ -206,7 +206,15 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                 UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
-                        UTIL_Describe.StrTokenNSPrefix('Shift_Start_Date_Time__c')});
+                        UTIL_Describe.StrTokenNSPrefix('Shift_Start_Date_Time__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Contact__c')});
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    new Set<String>{'Name',
+                        UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
+                UTIL_Describe.checkReadAccess('Campaign',
+                    new Set<String>{UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                    new Set<String>{UTIL_Describe.StrTokenNSPrefix('Duration__c')});
            
                 if (listUpcomingVolunteerHours == null) {
                     string strSoql = 'select Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, ' +
