@@ -58,15 +58,13 @@ global with sharing class VOL_SharedCode {
         listSO.add(new SelectOption('', ''));
 
         // Ensure the user has access to the object before querying
-        try {
-            UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Job__c.SObjectType));
-        } catch (Exception ex) {
-            // we will return an empty list vs throwing an error
-            return listSO;
-        }
+        if (Volunteer_Job__c.SObjectType.getDescribe().isAccessible()
+            && Volunteer_Job__c.Name.getDescribe().isAccessible()
+            && Volunteer_Job__c.Campaign__c.getDescribe().isAccessible()) {
 
-        for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
-            listSO.add(new SelectOption(vj.id, vj.name));
+            for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
+                listSO.add(new SelectOption(vj.id, vj.name));
+            }
         }
         return listSO;
     }
