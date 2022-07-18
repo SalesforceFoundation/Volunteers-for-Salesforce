@@ -80,7 +80,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
         get { 
             if (strURLtoCSSFile == null) {
                 // System query to find the css doc if the admin has added it for custom css
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersJobListingCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
                     Document doc = listDocs[0];
@@ -264,7 +264,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
                         UTIL_Describe.StrTokenNSPrefix('Start_Date__c')});
                 // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 access.insertRecords(new List<Volunteer_Hours__c>{ vh });
                 volunteerHoursIdSignUp = vh.Id;
             }
