@@ -132,7 +132,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
 
                 // We are generating a task record as a system user to log for
                 // the admin when users are requesting their volunteer information
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 access.insertRecords(new List<SObject>{ taskRecord });
 
             } else {
@@ -151,7 +151,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
                     // Ensure the user has access to the object and fields before querying
                     UTIL_Describe.checkReadAccess('Contact', new Set<String>{'Id', 'Name', 'Email'});    
                     // Using a dynamic describe access check in the method called above.
-                    /* sfca-disable-next-line ApexFlsViolationRule */
+                    /* sfge-disable-next-line ApexFlsViolationRule */
                     list<Contact> listCon = [select Name, Email from Contact where Id =: objId];
                     string strDetails = '';
                     if (listCon.size() > 0) 

@@ -122,7 +122,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
              
             if (strURLtoCSSFile == null) {
                 // System query to find the css doc if the admin has added it for custom css
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersJobListingCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
                     Document doc = listDocs[0];
@@ -444,7 +444,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                 
                 // make sure we don't go over the number of volunteers still needed on the shift.
                 // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
                 if (listShift != null) {
                     if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {

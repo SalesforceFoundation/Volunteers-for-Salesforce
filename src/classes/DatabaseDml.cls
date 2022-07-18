@@ -31,7 +31,7 @@
     This class was created for situations where we need to run in system
     mode.
 */
-/* sfca-disable ApexFlsViolationRule */
+/* sfge-disable ApexFlsViolationRule */
 public without sharing virtual class DatabaseDml {
 
     protected DatabaseDml() {}

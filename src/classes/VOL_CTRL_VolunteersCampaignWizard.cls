@@ -110,7 +110,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             SObjectAccessDecision campaignAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, new List<Campaign>{ cmpVols });
             cmpVols = (Campaign) campaignAccessDecision.getRecords()[0];
             // Using strip inaccessible in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+            /* sfge-disable-next-line ApexFlsViolationRule */
             insert cmpVols;
             
             if (campaignIdClone != null) {
@@ -151,7 +151,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
         UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
             new Set<String> {'Name', UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
         // Using a dynamic describe access check in the method called above.
-        /* sfca-disable-next-line ApexFlsViolationRule */
+        /* sfge-disable-next-line ApexFlsViolationRule */
         insert listJobs;
 
         UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
@@ -174,7 +174,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             }
         }
         // Using a dynamic describe access check in the method called above.
-        /* sfca-disable-next-line ApexFlsViolationRule */
+        /* sfge-disable-next-line ApexFlsViolationRule */
         insert listShifts;
     }
 
@@ -532,7 +532,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                     UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
             
             // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+            /* sfge-disable-next-line ApexFlsViolationRule */
             list<Volunteer_Job__c> listJobs = [select Id, First_Shift__c from Volunteer_Job__c 
                 where Campaign__c = :campaignIdClone
                 order by First_Shift__c];

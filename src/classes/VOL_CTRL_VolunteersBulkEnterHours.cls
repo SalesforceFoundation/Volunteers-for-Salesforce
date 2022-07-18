@@ -125,7 +125,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                     UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
                         new Set<String>{'Id', UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
                     // Using a dynamic describe access check in the method called above.
-                    /* sfca-disable-next-line ApexFlsViolationRule */
+                    /* sfge-disable-next-line ApexFlsViolationRule */
                     Volunteer_Shift__c shift = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                     dt = shift.Start_Date_Time__c.date();
                 } else {
@@ -241,7 +241,7 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
                         UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
                 
                 // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 Volunteer_Shift__c vs = [select Id, Duration__c, Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                 hoursWorked = vs.Duration__c;
                 dateStart = vs.Start_Date_Time__c.date();
