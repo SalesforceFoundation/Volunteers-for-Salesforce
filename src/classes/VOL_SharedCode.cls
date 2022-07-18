@@ -400,7 +400,7 @@ global with sharing class VOL_SharedCode {
 
         string strSoql = 'select Id from Contact where Id = :contactId ';
         if (VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c) {
-            if (strEmail == null || strEmail == '' || Contact.Email.getDescribe().isAccessible())
+            if (strEmail == null || strEmail == '' || !Contact.Email.getDescribe().isAccessible())
                 return false;
             strEmail = strEmail.escapeHtml4();
             strSoql += 'and (Email= :strEmail';
