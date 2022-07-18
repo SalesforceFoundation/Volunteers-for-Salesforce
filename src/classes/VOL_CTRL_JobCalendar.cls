@@ -50,7 +50,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Campaign', new Set<String>{'Id', 'StartDate'});
                 // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Campaign> listCampaign = [select Id, StartDate from Campaign where Id = :p];
                 if (listCampaign.size() > 0) {
                     initialDate = Date.valueOf(listCampaign[0].StartDate);
@@ -72,7 +72,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                         UTIL_Describe.StrTokenNSPrefix('First_Shift__c'),
                         UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
                 // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Volunteer_Job__c> listJob = [select Id, First_Shift__c, Campaign__c
                     from Volunteer_Job__c where Id = :p];
                 if (listJob.size() > 0) {
@@ -96,7 +96,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                 UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
                     new Set<String>{UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
                 // Using a dynamic describe access check in the method called above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Volunteer_Shift__c> listShift = [select Id, Start_Date_Time__c, 
                     Volunteer_Job__c, Volunteer_Job__r.Campaign__c 
                     from Volunteer_Shift__c where Id = :p];
@@ -163,7 +163,7 @@ global with sharing class VOL_CTRL_JobCalendar {
             // only specify the css file if in the web page scenario.
             if (strURLtoCSSFile == null && fWeb) {
                 // System query to find the css doc if the admin has added it for custom css
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'JobCalendarCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
                     Document doc = listDocs[0];
@@ -240,14 +240,14 @@ global with sharing class VOL_CTRL_JobCalendar {
                 && Campaign.SObjectType.getDescribe().isAccessible() && Campaign.IsActive.getDescribe().isAccessible()) {
                 if (campaignId == null) {
                     // Using a dynamic describe access check in the method called above.
-                    /* sfca-disable-next-line ApexFlsViolationRule */
+                    /* sfge-disable-next-line ApexFlsViolationRule */
                     for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
                         where Campaign__r.IsActive = true order by name limit 999]) {
                         listSO.add(new SelectOption(vj.id, vj.name));
                     }           
                 } else {
                     // Using a dynamic describe access check in the method called above.
-                    /* sfca-disable-next-line ApexFlsViolationRule */
+                    /* sfge-disable-next-line ApexFlsViolationRule */
                     for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
                         where Campaign__c = :campaignId order by name limit 999]) {
                         listSO.add(new SelectOption(vj.id, vj.name));

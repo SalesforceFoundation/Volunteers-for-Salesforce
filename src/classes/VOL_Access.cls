@@ -32,7 +32,7 @@
     whether or not the admin has elevated the guest site user access. All
     permission checks are expected to be done by the caller.
 */
-/* sfca-disable ApexFlsViolationRule */
+/* sfge-disable ApexFlsViolationRule */
 public with sharing virtual class VOL_Access {
     protected VOL_Access() {}
 

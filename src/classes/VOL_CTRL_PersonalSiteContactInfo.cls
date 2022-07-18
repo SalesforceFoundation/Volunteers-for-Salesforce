@@ -231,7 +231,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                     strSoql += ' order by Shift_Start_Date_Time__c ASC ';        
                     strSoql += ' limit ' + cRowsUpcoming;
                     // Using a dynamic describe access check in the method called above.
-                    /* sfca-disable-next-line ApexFlsViolationRule */
+                    /* sfge-disable-next-line ApexFlsViolationRule */
                     listUpcomingVolunteerHours = Database.Query(strSoql);                
                     // store friendly datetime string in system field for display only
                     dateTimeFixup(listUpcomingVolunteerHours);
@@ -330,7 +330,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         try {
             if (hoursId != null) {
                 // We are dynamically check update access below, the query result is not being returned to the user.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
                 hr.Status__c = 'Canceled';
                 hr.Hours_Worked__c = 0;            
@@ -339,7 +339,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
                         UTIL_Describe.StrTokenNSPrefix('Status__c'),
                         UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c')});
                 // We are dynamically check update access above.
-                /* sfca-disable-next-line ApexFlsViolationRule */
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 access.updateRecords(new List<Volunteer_Hours__c>{hr});
 
                 hoursId = null; 
@@ -467,7 +467,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             UTIL_Describe.checkReadAccess('Contact',
             new Set<String>{'Id', UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c')});
             // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+            /* sfge-disable-next-line ApexFlsViolationRule */
             Decimal contactTotalHours = [SELECT Id, Volunteer_Hours__c FROM Contact WHERE Id = :contactId LIMIT 1].Volunteer_Hours__c;
 
             if (contactTotalHours == null || contactTotalHours == 0) {
@@ -478,14 +478,14 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
             String totalVolunteersQuery = 'SELECT count() FROM Contact WHERE ' + hoursField + ' > 0';
             String totalVolunteersWithMoreHoursQuery = totalVolunteersQuery + ' AND ' + hoursField + ' > ' + contactTotalHours;
             // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+            /* sfge-disable-next-line ApexFlsViolationRule */
             Integer totalVolunteers = Database.countQuery(totalVolunteersQuery);
 
             if (totalVolunteers <= 2) {
                 return '';
             }
             // Using a dynamic describe access check in the method called above.
-            /* sfca-disable-next-line ApexFlsViolationRule */
+            /* sfge-disable-next-line ApexFlsViolationRule */
             Integer totalVolunteersWithMoreHours = Database.countQuery(totalVolunteersWithMoreHoursQuery);
 
             Integer rank = Integer.valueOf(
