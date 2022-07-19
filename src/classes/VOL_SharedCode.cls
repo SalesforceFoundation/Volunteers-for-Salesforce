@@ -405,13 +405,13 @@ global with sharing class VOL_SharedCode {
             strEmail = strEmail.escapeHtml4();
             strSoql += 'and (Email= :strEmail';
             // any additional email fields to check
+            Map<String, SObjectField> fieldByName = Contact.getSObjectType().getDescribe().fields.getMap();
             if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
                 list<string> listStrEmail = new list<string>();
                 listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
 
-                Set<String> fieldNames = Contact.getSObjectType.getDescribe().fields.getMap().keySet();
                 for (string str : listStrEmail) {
-                    if (fieldNames.contains(str.toLowerCase())) {
+                    if (fieldByName.containsKey(str)) {
                         strSoql += ' or ' + str + ' = :strEmail ';
                     }
                 }
@@ -419,13 +419,13 @@ global with sharing class VOL_SharedCode {
             }
             // handle NPSP email fields
             if (IsNPSPInstalled) {
-                if (Contact.npe01__AlternateEmail__c.getDescribe().isAccessible()) {
+                if (fieldByName.containsKey('npe01__AlternateEmail__c') && fieldByName.get('npe01__AlternateEmail__c').getDescribe().isAccessible()) {
                     strSoql += ' or npe01__AlternateEmail__c = :strEmail '; 
                 }
-                if (Contact.npe01__HomeEmail__c.getDescribe().isAccessible()) {
+                if (fieldByName.containsKey('npe01__HomeEmail__c') && fieldByName.get('npe01__HomeEmail__c').getDescribe().isAccessible()) {
                     strSoql += ' or npe01__HomeEmail__c = :strEmail '; 
                 }
-                if (Contact.npe01__WorkEmail__c.getDescribe().isAccessible()) {
+                if (fieldByName.containsKey('npe01__WorkEmail__c') && fieldByName.get('npe01__WorkEmail__c').getDescribe().isAccessible()) {
                     strSoql += ' or npe01__WorkEmail__c = :strEmail '; 
                 }
                 
@@ -715,7 +715,7 @@ global with sharing class VOL_SharedCode {
         }
         strSoql += ' from ' + des.getName() + ' where Id = :id ';
         strSoql += ' limit 1';      
-        list<SObject> listSObj = Security.stripInaccessible(AccessType.READABLE, Database.Query(strSoql)); 
+        list<SObject> listSObj = Security.stripInaccessible(AccessType.READABLE, Database.Query(strSoql)).getRecords(); 
         
         if (listSObj.size() > 0) {          
             SObject sobjT = listSObj[0];
