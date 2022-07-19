@@ -636,6 +636,7 @@ global with sharing class VOL_SharedCode {
             Account accToUse = null;
             if (strAccountName != null
                 && Account.getSObjectType().getDescribe().isAccessible()) {
+                strAccountName = strAccountName.escapeHtml4();
                 list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
                 if (listAccount.size() > 0) accToUse = listAccount.get(0);
             }
