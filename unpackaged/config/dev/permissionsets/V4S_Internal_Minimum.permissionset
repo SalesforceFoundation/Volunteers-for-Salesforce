@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
-        <application>Groundwire_Volunteers</application>
+        <application>%%%NAMESPACE%%%Groundwire_Volunteers</application>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
@@ -17,319 +17,287 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ComponentControllerBase</apexClass>
+        <apexClass>%%%NAMESPACE%%%ComponentControllerBase</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DatabaseDml</apexClass>
+        <apexClass>%%%NAMESPACE%%%DatabaseDml</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DatabaseDml_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%DatabaseDml_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ForgotPasswordController</apexClass>
+        <apexClass>%%%NAMESPACE%%%InstallScript</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ForgotPasswordControllerTest</apexClass>
+        <apexClass>%%%NAMESPACE%%%InstallScript_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>InstallScript</apexClass>
+        <apexClass>%%%NAMESPACE%%%PageControllerBase</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>InstallScript_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%QueryBuilder</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MyProfilePageController</apexClass>
+        <apexClass>%%%NAMESPACE%%%QueryBuilder_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MyProfilePageControllerTest</apexClass>
+        <apexClass>%%%NAMESPACE%%%SoqlListView</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PageControllerBase</apexClass>
+        <apexClass>%%%NAMESPACE%%%Telemetry</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>QueryBuilder</apexClass>
+        <apexClass>%%%NAMESPACE%%%TelemetryService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>QueryBuilder_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%TelemetryService_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SiteLoginController</apexClass>
+        <apexClass>%%%NAMESPACE%%%Telemetry_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SiteLoginControllerTest</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_Describe</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SiteRegisterController</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_Describe_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SiteRegisterControllerTest</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_HtmlOutput_CTRL</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SoqlListView</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_HtmlOutput_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Telemetry</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_JavaScriptSanitizer</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TelemetryService</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_JavaScriptSanitizer_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TelemetryService_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_JobProgress_CTRL</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>Telemetry_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_PageMessages_CTRL</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_Describe</apexClass>
+        <apexClass>%%%NAMESPACE%%%UTIL_UnitTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_Describe_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_Access</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_HtmlOutput_CTRL</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_Access_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_HtmlOutput_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_BATCH_Recurrence</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_JavaScriptSanitizer</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_BATCH_Recurrence_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_JavaScriptSanitizer_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_BatchProgress</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_JobProgress_CTRL</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_BatchProgress_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_PageMessages_CTRL</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_JobCalendar</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UTIL_UnitTest</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_JobCalendar_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_Access</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_NewAndEditVRS</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_Access_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_NewAndEditVRS_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_BATCH_Recurrence</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_OpenReport</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_BATCH_Recurrence_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_OpenReport_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_BatchProgress</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteContactInfo</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_BatchProgress_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteContactInfo_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_JobCalendar</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteContactLookup</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_JobCalendar_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteContactLookup_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_NewAndEditVRS</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteJobCalendar</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_NewAndEditVRS_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteJobListing</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_OpenReport</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteReportHours</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_OpenReport_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteTemplate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteContactInfo</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_PersonalSiteTemplate_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteContactInfo_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_SendBulkEmail</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteContactLookup</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_SendBulkEmail_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteContactLookup_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersBulkEnterHours</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteJobCalendar</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersBulkEnterHours_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteJobListing</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersCampaignWizard</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteReportHours</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersCampaignWizard_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteTemplate</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersFind</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_PersonalSiteTemplate_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersFind_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_SendBulkEmail</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersJobListing</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_SendBulkEmail_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersJobListingFS</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersBulkEnterHours</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersJobListingFS_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersBulkEnterHours_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersJobListing_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersCampaignWizard</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersReportHours</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersCampaignWizard_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersReportHours_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersFind</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersSignup</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersFind_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersSignupFS</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersJobListing</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersSignupFS_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersJobListingFS</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_CTRL_VolunteersSignup_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersJobListingFS_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_JRS</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersJobListing_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_JRS_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersReportHours</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_SharedCode</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersReportHours_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_SharedCode_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersSignup</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_StateCountryPicklists</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersSignupFS</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_StateCountryPicklists_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersSignupFS_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_TEST_Campaign_Trigger</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_CTRL_VolunteersSignup_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_TEST_VolunteerHours_Trigger</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_JRS</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_VRS</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>VOL_JRS_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_SharedCode</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_SharedCode_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_StateCountryPicklists</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_StateCountryPicklists_TEST</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_TEST_Campaign_Trigger</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_TEST_VolunteerHours_Trigger</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_VRS</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>VOL_VRS_TEST</apexClass>
+        <apexClass>%%%NAMESPACE%%%VOL_VRS_TEST</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
@@ -959,22 +927,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Availability__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Availability__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Notes__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Notes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Skills__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.Volunteer_Status__c</field>
+        <field>Lead.%%%NAMESPACE%%%Volunteer_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1287,103 +1255,99 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
-        <apexPage>JobCalendar</apexPage>
+        <apexPage>%%%NAMESPACE%%%JobCalendar</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>NewAndEditVRS</apexPage>
+        <apexPage>%%%NAMESPACE%%%NewAndEditVRS</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteContactInfo</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteContactInfo</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteContactLookup</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteContactLookup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteJobCalendar</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteJobCalendar</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteJobListing</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteJobListing</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteReportHours</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteReportHours</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteTemplate</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteTemplate</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>PersonalSiteTemplateEspanol</apexPage>
+        <apexPage>%%%NAMESPACE%%%PersonalSiteTemplateEspanol</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>SendBulkEmail</apexPage>
+        <apexPage>%%%NAMESPACE%%%SendBulkEmail</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersAbout</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersAbout</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersBatchJobsProgress</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersBatchJobsProgress</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersBulkEnterHours</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersBulkEnterHours</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersCampaignWizard</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersCampaignWizard</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersFind</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersFind</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersJobListing</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersJobListing</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersJobListingFS</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersJobListingFS</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersReportHours</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersReportHours</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersSignup</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersSignup</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>VolunteersSignupFS</apexPage>
+        <apexPage>%%%NAMESPACE%%%VolunteersSignupFS</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <recordTypeVisibilities>
-        <recordType>Campaign.Volunteers_Campaign</recordType>
+        <recordType>Campaign.%%%NAMESPACE%%%Volunteers_Campaign</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
-        <tab>About_Volunteers</tab>
+        <tab>%%%NAMESPACE%%%About_Volunteers</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Find_Volunteers</tab>
+        <tab>%%%NAMESPACE%%%Find_Volunteers</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Shift_Calendar</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>%%%NAMESPACE%%%Volunteer_Hours__c</tab>
+        <tab>%%%NAMESPACE%%%Shift_Calendar</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
@@ -1392,10 +1356,6 @@
     </tabSettings>
     <tabSettings>
         <tab>%%%NAMESPACE%%%Volunteer_Recurrence_Schedule__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>%%%NAMESPACE%%%Volunteer_Shift__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
