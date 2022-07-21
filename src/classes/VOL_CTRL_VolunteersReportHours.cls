@@ -244,6 +244,12 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
         
         // set date and hours from shift
         if (volunteerShiftId != null) {
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+                new Set<String> {
+                    'Id',
+                    UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Duration__c')
+                });
             Volunteer_Shift__c shift = [select Start_Date_Time__c, Duration__c from Volunteer_Shift__c
                 where Id = :volunteerShiftId];
             vhours.Start_Date__c = shift.Start_Date_Time__c.Date();

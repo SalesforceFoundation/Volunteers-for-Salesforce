@@ -371,6 +371,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
         }
         // Ensure the user has access to the object and fields before saving
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
+        SObjectAccessDecision jobsAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listJobs);
+        listJobs = (List<Volunteer_Job__c>) jobsAccessDecision.getRecords();
         insert listJobs;
         return listJobs;
     }
@@ -428,6 +430,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         // Ensure the user has access to the object and fields before saving
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
+        SObjectAccessDecision shiftsAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listShifts);
+        listShifts = (List<Volunteer_Shift__c>) shiftsAccessDecision.getRecords();
         insert listShifts;
         return listShifts;
     }
@@ -505,6 +509,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         // Ensure the user has access to the object and fields before saving
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
+        SObjectAccessDecision hoursAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listHours);
+        listHours = (List<Volunteer_Hours__c>) hoursAccessDecision.getRecords();
         insert listHours;
         return listHours;
     }

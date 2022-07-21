@@ -5,6 +5,7 @@
         <name>Profile</name>
     </types>
     <types>
+        <members>V4S_Internal_Minimum</members>
         <members>V4S_Site_Minimum</members>
         <name>PermissionSet</name>
     </types>
