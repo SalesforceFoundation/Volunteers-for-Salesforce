@@ -27,6 +27,11 @@
     ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 */
+/*
+    This class was created for situations where we need to run in system
+    mode.
+*/
+/* sfge-disable ApexFlsViolationRule */
 public without sharing virtual class DatabaseDml {
 
     protected DatabaseDml() {}
