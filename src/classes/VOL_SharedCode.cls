@@ -39,17 +39,15 @@ global with sharing class VOL_SharedCode {
             listSO.add(new SelectOption('', ''));
 
             // Ensure the user has access to the object before querying
-            try {
-                UTIL_Describe.checkObjectReadAccess(String.valueOf(Campaign.SObjectType));
-            } catch (Exception ex) {
-                // we will return an empty list vs throwing an error
-                return listSO;
+            if (Campaign.SObjectType.getDescribe().isAccessible() && Campaign.Name.getDescribe().isAccessible() &&
+                Campaign.IsActive.getDescribe().isAccessible() && Campaign.StartDate.getDescribe().isAccessible() &&
+                Campaign.RecordTypeId.getDescribe().isAccessible()) {
+                for (Campaign c : [select Name, Id from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
+                    and IsActive = true order by StartDate desc, Name asc limit 999]) {
+                    listSO.add(new SelectOption(c.id, c.name));
+                }
             }
-
-            for (Campaign c : [select Name, Id from Campaign where RecordTypeId = :recordtypeIdVolunteersCampaign
-                and IsActive = true order by StartDate desc, Name asc limit 999]) {
-                listSO.add(new SelectOption(c.id, c.name));
-            }
+            
             return listSO;
         }
     }
@@ -60,15 +58,13 @@ global with sharing class VOL_SharedCode {
         listSO.add(new SelectOption('', ''));
 
         // Ensure the user has access to the object before querying
-        try {
-            UTIL_Describe.checkObjectReadAccess(String.valueOf(Volunteer_Job__c.SObjectType));
-        } catch (Exception ex) {
-            // we will return an empty list vs throwing an error
-            return listSO;
-        }
+        if (Volunteer_Job__c.SObjectType.getDescribe().isAccessible()
+            && Volunteer_Job__c.Name.getDescribe().isAccessible()
+            && Volunteer_Job__c.Campaign__c.getDescribe().isAccessible()) {
 
-        for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
-            listSO.add(new SelectOption(vj.id, vj.name));
+            for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c where Campaign__c = :campaignId order by name limit 999]) {
+                listSO.add(new SelectOption(vj.id, vj.name));
+            }
         }
         return listSO;
     }
@@ -222,7 +218,8 @@ global with sharing class VOL_SharedCode {
     global static ID SettingsBucketAccountId {
         get {
             if (SettingsBucketAccountId == null) {
-                if (VolunteersSettings.Signup_Bucket_Account_On_Create__c != null) {
+                if (VolunteersSettings.Signup_Bucket_Account_On_Create__c != null
+                    && Account.getSObjectType().getDescribe().isAccessible()) {
                     Account[] acc = [select Id from Account where name = :VolunteersSettings.Signup_Bucket_Account_On_Create__c limit 1];
                     if (acc.size() > 0) SettingsBucketAccountId = acc[0].Id;
                 }
@@ -354,7 +351,8 @@ global with sharing class VOL_SharedCode {
             Account accToUse = null;
 
             // see if we can find their company (which we assume the form used Department to record.)
-            if (contact.Department != null) {
+            if (contact.Department != null
+                && Account.getSObjectType().getDescribe().isAccessible()) {
                 list<Account> listAccount = [select Id, Name from Account where Name = :contact.Department limit 1];
                 if (listAccount.size() > 0) accToUse = listAccount.get(0);
                 contact.Volunteer_Organization__c = contact.Department;
@@ -396,24 +394,42 @@ global with sharing class VOL_SharedCode {
     // global code to verify the passed in ContactId is valid, as well as the email
     // exists on the Contact record.
     global static boolean isValidContactIdAndEmail(ID contactId, string strEmail) {
+        if (!Contact.getSObjectType().getDescribe().isAccessible()) {
+            return false;
+        }
+
         string strSoql = 'select Id from Contact where Id = :contactId ';
         if (VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c) {
-            if (strEmail == null || strEmail == '')
+            if (strEmail == null || strEmail == '' || !Contact.Email.getDescribe().isAccessible())
                 return false;
+            strEmail = strEmail.escapeHtml4();
             strSoql += 'and (Email= :strEmail';
             // any additional email fields to check
+            Map<String, SObjectField> fieldByName = Contact.getSObjectType().getDescribe().fields.getMap();
             if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
                 list<string> listStrEmail = new list<string>();
                 listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
+
                 for (string str : listStrEmail) {
-                    strSoql += ' or ' + str + ' = :strEmail ';
+                    if (fieldByName.containsKey(str)) {
+                        strSoql += ' or ' + str + ' = :strEmail ';
+                    }
                 }
+                
             }
             // handle NPSP email fields
             if (IsNPSPInstalled) {
-                strSoql += ' or npe01__AlternateEmail__c = :strEmail ';
-                strSoql += ' or npe01__HomeEmail__c = :strEmail ';
-                strSoql += ' or npe01__WorkEmail__c = :strEmail ';
+                if (fieldByName.containsKey('npe01__AlternateEmail__c') && fieldByName.get('npe01__AlternateEmail__c').getDescribe().isAccessible()) {
+                    strSoql += ' or npe01__AlternateEmail__c = :strEmail '; 
+                }
+                if (fieldByName.containsKey('npe01__HomeEmail__c') && fieldByName.get('npe01__HomeEmail__c').getDescribe().isAccessible()) {
+                    strSoql += ' or npe01__HomeEmail__c = :strEmail '; 
+                }
+                if (fieldByName.containsKey('npe01__WorkEmail__c') && fieldByName.get('npe01__WorkEmail__c').getDescribe().isAccessible()) {
+                    strSoql += ' or npe01__WorkEmail__c = :strEmail '; 
+                }
+                
+                
             }
             strSoql += ') ';
         }
@@ -618,7 +634,9 @@ global with sharing class VOL_SharedCode {
 
             // see if we can find their company
             Account accToUse = null;
-            if (strAccountName != null) {
+            if (strAccountName != null
+                && Account.getSObjectType().getDescribe().isAccessible()) {
+                strAccountName = strAccountName.escapeHtml4();
                 list<Account> listAccount = [select Id, Name from Account where Name = :strAccountName limit 1];
                 if (listAccount.size() > 0) accToUse = listAccount.get(0);
             }
@@ -698,7 +716,7 @@ global with sharing class VOL_SharedCode {
         }
         strSoql += ' from ' + des.getName() + ' where Id = :id ';
         strSoql += ' limit 1';      
-        list<SObject> listSObj = Database.Query(strSoql); 
+        list<SObject> listSObj = Security.stripInaccessible(AccessType.READABLE, Database.Query(strSoql)).getRecords(); 
         
         if (listSObj.size() > 0) {          
             SObject sobjT = listSObj[0];

@@ -49,7 +49,8 @@ global with sharing class VOL_CTRL_JobCalendar {
             if (p != null && p != '') {
                 // Ensure the user has access to the object and fields before querying
                 UTIL_Describe.checkReadAccess('Campaign', new Set<String>{'Id', 'StartDate'});
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Campaign> listCampaign = [select Id, StartDate from Campaign where Id = :p];
                 if (listCampaign.size() > 0) {
                     initialDate = Date.valueOf(listCampaign[0].StartDate);
@@ -70,7 +71,8 @@ global with sharing class VOL_CTRL_JobCalendar {
                     new Set<String>{'Id',
                         UTIL_Describe.StrTokenNSPrefix('First_Shift__c'),
                         UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Volunteer_Job__c> listJob = [select Id, First_Shift__c, Campaign__c
                     from Volunteer_Job__c where Id = :p];
                 if (listJob.size() > 0) {
@@ -91,7 +93,10 @@ global with sharing class VOL_CTRL_JobCalendar {
                     new Set<String>{'Id',
                         UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
                         UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
-                
+                UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                    new Set<String>{UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Volunteer_Shift__c> listShift = [select Id, Start_Date_Time__c, 
                     Volunteer_Job__c, Volunteer_Job__r.Campaign__c 
                     from Volunteer_Shift__c where Id = :p];
@@ -157,6 +162,8 @@ global with sharing class VOL_CTRL_JobCalendar {
             
             // only specify the css file if in the web page scenario.
             if (strURLtoCSSFile == null && fWeb) {
+                // System query to find the css doc if the admin has added it for custom css
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'JobCalendarCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
                     Document doc = listDocs[0];
@@ -193,11 +200,17 @@ global with sharing class VOL_CTRL_JobCalendar {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', system.label.labelChoiceAllActiveCampaigns));
-            for (Campaign c : [select Name, Id, StartDate from Campaign 
-                where RecordTypeId = :VOL_SharedCode.recordtypeIdVolunteersCampaign 
-                and IsActive = true order by Name asc limit 999]) {
-                listSO.add(new SelectOption(c.id, c.name));
-            }       
+            if (Campaign.SObjectType.getDescribe().isAccessible() && Campaign.Name.getDescribe().isAccessible() &&
+                Campaign.IsActive.getDescribe().isAccessible() && Campaign.StartDate.getDescribe().isAccessible() &&
+                Campaign.RecordTypeId.getDescribe().isAccessible()) {
+                for (Campaign c : [select Name, Id, StartDate from Campaign 
+                    where RecordTypeId = :VOL_SharedCode.recordtypeIdVolunteersCampaign 
+                    and IsActive = true order by Name asc limit 999]) {
+                    listSO.add(new SelectOption(c.id, c.name));
+                }   
+            }
+            
+            // Allow the page to load without options.
             return listSO;
         }
         set;
@@ -223,17 +236,25 @@ global with sharing class VOL_CTRL_JobCalendar {
         get {
             list<SelectOption> listSO = new list<SelectOption>();
             listSO.add(new SelectOption('', system.label.labelChoiceAllJobs));
-            if (campaignId == null) {
-                for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
-                    where Campaign__r.IsActive = true order by name limit 999]) {
-                    listSO.add(new SelectOption(vj.id, vj.name));
-                }           
-            } else {
-                for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
-                    where Campaign__c = :campaignId order by name limit 999]) {
-                    listSO.add(new SelectOption(vj.id, vj.name));
-                }
-            }       
+            if (Volunteer_Job__c.SObjectType.getDescribe().isAccessible() && Volunteer_Job__c.Campaign__c.getDescribe().isAccessible()
+                && Campaign.SObjectType.getDescribe().isAccessible() && Campaign.IsActive.getDescribe().isAccessible()) {
+                if (campaignId == null) {
+                    // Using a dynamic describe access check in the method called above.
+                    /* sfge-disable-next-line ApexFlsViolationRule */
+                    for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
+                        where Campaign__r.IsActive = true order by name limit 999]) {
+                        listSO.add(new SelectOption(vj.id, vj.name));
+                    }           
+                } else {
+                    // Using a dynamic describe access check in the method called above.
+                    /* sfge-disable-next-line ApexFlsViolationRule */
+                    for (Volunteer_Job__c vj : [select Name, Id from Volunteer_Job__c 
+                        where Campaign__c = :campaignId order by name limit 999]) {
+                        listSO.add(new SelectOption(vj.id, vj.name));
+                    }
+                }   
+            } // Allow the page to load without options
+
             return listSO;
         } 
         
@@ -367,8 +388,15 @@ global with sharing class VOL_CTRL_JobCalendar {
                     UTIL_Describe.StrTokenNSPrefix('Total_Volunteers__c'),
                     UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers_Still_Needed__c'),
                     UTIL_Describe.StrTokenNSPrefix('Description__c')});
+            UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                new Set<String>{'Name',
+                    UTIL_Describe.StrTokenNSPrefix('Campaign__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Display_On_Website__c'),
+                    UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
+            UTIL_Describe.checkReadAccess('Campaign',
+                new Set<String>{UTIL_Describe.StrTokenNSPrefix('Volunteer_Website_Time_Zone__c')});
                 
-            if (!fAllJob) {    
+            if (!fAllJob) {
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c, Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c, 
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
@@ -378,6 +406,7 @@ global with sharing class VOL_CTRL_JobCalendar {
                         and (Volunteer_Job__r.Display_On_Website__c = true or Volunteer_Job__r.Display_On_Website__c = :fWeb)
                     order by Start_Date_Time__c asc];           
             } else if (fAllCampaign && fAllJob) {
+                UTIL_Describe.checkReadAccess('Campaign', new Set<String>{'IsActive'});
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
@@ -391,7 +420,6 @@ global with sharing class VOL_CTRL_JobCalendar {
                 if (fShowCampaignHierarchy) {
                     listCampaignIds = VOL_SharedCode.listIdsCampaignsInHierarchy(strCampaignId);    
                 }
-                
                 listShifts = [select Id, Name, Volunteer_Job__c, Volunteer_Job__r.Name, Volunteer_Job__r.Volunteer_Website_Time_Zone__c,Volunteer_Job__r.Campaign__r.Volunteer_Website_Time_Zone__c,
                     Volunteer_Job__r.Campaign__c, Start_Date_Time__c, Duration__c,
                     Total_Volunteers__c, Number_of_Volunteers_Still_Needed__c, Description__c
