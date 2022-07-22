@@ -273,7 +273,8 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                 UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
                     new Set<String>{'Id',
                         UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c')});
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 Volunteer_Shift__c vs = [select Start_Date_Time__c from Volunteer_Shift__c where Id = :volunteerShiftId];
                 dtStart = date.valueOf(vs.Start_Date_Time__c);
             }
@@ -286,7 +287,8 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Contact__c'),
                         UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c')});
-            
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 listVHExisting = [select Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :volunteerJobId];
             } else {
                 // Ensure the user has access to the object and fields before querying
@@ -294,7 +296,8 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                     new Set<String>{
                         UTIL_Describe.StrTokenNSPrefix('Contact__c'),
                         UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c')});
-                
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 listVHExisting = [select Contact__c from Volunteer_Hours__c where Volunteer_Shift__c = :volunteerShiftId];              
             }
             set<ID> setContactId = new set<ID>();
@@ -334,6 +337,8 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                     UTIL_Describe.StrTokenNSPrefix('Status__c'),
                     UTIL_Describe.StrTokenNSPrefix('Hours_Worked__c'),
                     UTIL_Describe.StrTokenNSPrefix('Number_of_Volunteers__c')});
+            // Using a dynamic describe access check in the method called above.
+            /* sfge-disable-next-line ApexFlsViolationRule */
             insert listHours;  
             
             // if shift was specified, force its picklist to update with new numbers

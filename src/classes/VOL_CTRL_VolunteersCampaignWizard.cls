@@ -33,6 +33,8 @@
 * @description Page Controller class for the Volunteers Wizard visualforce page.  
 ********************************************************************************************************/
 public with sharing class VOL_CTRL_VolunteersCampaignWizard {
+    private static final String LAST_VIEWED_DATE = 'LastViewedDate';
+    private static final String LAST_REFERENCED_DATE = 'LastReferencedDate';
 
     // the new campaign we will create
     public Campaign cmpVols { 
@@ -104,7 +106,11 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         try {
             // Ensure the user can create the object 
-            UTIL_Describe.checkObjectCreateAccess('Campaign');            
+            UTIL_Describe.checkObjectCreateAccess('Campaign');
+            SObjectAccessDecision campaignAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, new List<Campaign>{ cmpVols });
+            cmpVols = (Campaign) campaignAccessDecision.getRecords()[0];
+            // Using strip inaccessible in the method called above.
+            /* sfge-disable-next-line ApexFlsViolationRule */
             insert cmpVols;
             
             if (campaignIdClone != null) {
@@ -141,10 +147,20 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             listJobs.add(job);
         }
 
-        // Ensure the user has access to the object and fields before querying
-        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
+        // Ensure the user has access to create the object and fields
+        UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+            new Set<String> {'Name', UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
+        // Using a dynamic describe access check in the method called above.
+        /* sfge-disable-next-line ApexFlsViolationRule */
         insert listJobs;
 
+        UTIL_Describe.checkCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'),
+            new Set<String>{
+                UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'),
+                UTIL_Describe.StrTokenNSPrefix('Start_Date_Time__c'),
+                UTIL_Describe.StrTokenNSPrefix('Duration__c'),
+                UTIL_Describe.StrTokenNSPrefix('Description__c')
+            });
         // create the sample shifts
         for (Integer iJob = 0; iJob < cSampleJobs; iJob++) {
             for (Integer iShift = 0; iShift < cSampleShifts; iShift++) {
@@ -157,8 +173,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 listShifts.add(shift);
             }
         }
-        // Ensure the user has access to the object and fields before querying
-        UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
+        // Using a dynamic describe access check in the method called above.
+        /* sfge-disable-next-line ApexFlsViolationRule */
         insert listShifts;
     }
 
@@ -223,7 +239,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             if (listStrFieldsShift == null) {
                 listStrFieldsShift = new List<string>();
                 Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Shift__c.fields.getMap();
-                listStrFieldsShift.addAll(mapS.keySet());
+                Set<String> fieldNames = removeTabSpecificFields(mapS.keySet());
+                listStrFieldsShift.addAll(fieldNames);
             }
             return listStrFieldsShift;
         }
@@ -238,11 +255,22 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
             if (listStrFieldsHours == null) {
                 listStrFieldsHours = new List<string>();
                 Map<String, Schema.SObjectField> mapS = Schema.SObjectType.Volunteer_Hours__c.fields.getMap();
-                listStrFieldsHours.addAll(mapS.keySet());
+                Set<String> fieldNames = removeTabSpecificFields(mapS.keySet());
+                listStrFieldsHours.addAll(fieldNames);
             }
             return listStrFieldsHours;
         }
         set;
+    }
+
+    /*******************************************************************************************************
+    * @description removes fields that only exist when a tab for the object has been created
+    * https://help.salesforce.com/s/articleView?id=000315500&type=1
+    * @param Set<String> Set of fields that might contain the fields to be returned.
+    */
+    private Set<String> removeTabSpecificFields(Set<String> fieldNames) {
+        fieldNames.removeAll(new Set<String>{ LAST_REFERENCED_DATE.toLowerCase(), LAST_VIEWED_DATE.toLowerCase() });
+        return fieldNames;
     }
 
     /*******************************************************************************************************
@@ -343,6 +371,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
         }
         // Ensure the user has access to the object and fields before saving
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Job__c'));
+        SObjectAccessDecision jobsAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listJobs);
+        listJobs = (List<Volunteer_Job__c>) jobsAccessDecision.getRecords();
         insert listJobs;
         return listJobs;
     }
@@ -400,6 +430,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         // Ensure the user has access to the object and fields before saving
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Shift__c'));
+        SObjectAccessDecision shiftsAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listShifts);
+        listShifts = (List<Volunteer_Shift__c>) shiftsAccessDecision.getRecords();
         insert listShifts;
         return listShifts;
     }
@@ -477,6 +509,8 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
 
         // Ensure the user has access to the object and fields before saving
         UTIL_Describe.checkObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'));
+        SObjectAccessDecision hoursAccessDecision = Security.stripInaccessible(AccessType.CREATABLE, listHours);
+        listHours = (List<Volunteer_Hours__c>) hoursAccessDecision.getRecords();
         insert listHours;
         return listHours;
     }
@@ -496,7 +530,9 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
                 new Set<String>{'Id',
                     UTIL_Describe.StrTokenNSPrefix('First_Shift__c'),
                     UTIL_Describe.StrTokenNSPrefix('Campaign__c')});
-                
+            
+            // Using a dynamic describe access check in the method called above.
+            /* sfge-disable-next-line ApexFlsViolationRule */
             list<Volunteer_Job__c> listJobs = [select Id, First_Shift__c from Volunteer_Job__c 
                 where Campaign__c = :campaignIdClone
                 order by First_Shift__c];

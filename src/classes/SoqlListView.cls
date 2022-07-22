@@ -146,7 +146,7 @@ public with sharing class SoqlListView extends ComponentControllerBase {
 	
 	// action method to delete an item from the database.
 	public PageReference DeleteItem() {
-		if (idDeleteItem != null) {
+		if (idDeleteItem != null && idDeleteItem.getSObjectType().getDescribe().isDeletable()) {
 			database.delete(idDeleteItem);
 			idDeleteItem = null;
 			setCon = null;

@@ -121,6 +121,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
             if (fPersonalSite) return null; // just use whatever CSS the Site Template includes.
              
             if (strURLtoCSSFile == null) {
+                // System query to find the css doc if the admin has added it for custom css
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Document> listDocs = [SELECT Name, Id From Document WHERE Name = 'VolunteersJobListingCSS.css' LIMIT 1 ];
                 if (listDocs.size() > 0) {
                     Document doc = listDocs[0];
@@ -345,6 +347,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
               
             }
             
+            SObjectAccessDecision accessDecision = Security.stripInaccessible(AccessType.READABLE, listVolunteerJobs);
+            listVolunteerJobs = (List<Volunteer_Job__c>) accessDecision.getRecords();
             VOL_SharedCode.dateTimeFixup(listVolunteerJobs, strDateFormat, strTimeFormat);
             return sortVolunteerJobs(listVolunteerJobs);
         }
@@ -439,6 +443,8 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
                         UTIL_Describe.StrTokenNSPrefix('Duration__c')});
                 
                 // make sure we don't go over the number of volunteers still needed on the shift.
+                // Using a dynamic describe access check in the method called above.
+                /* sfge-disable-next-line ApexFlsViolationRule */
                 list<Volunteer_Shift__c> listShift = [select Number_of_Volunteers_Still_Needed__c, Start_Date_Time__c, Duration__c from Volunteer_Shift__c where Id = :shiftIdSignUp];
                 if (listShift != null) {
                     if (vhours.Number_of_Volunteers__c > listShift[0].Number_of_Volunteers_Still_Needed__c) {
