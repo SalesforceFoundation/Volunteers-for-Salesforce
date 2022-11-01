@@ -1,227 +1,223 @@
 minimum_cumulusci_version: 3.23.0
 project:
-    name: Volunteers-for-Salesforce
-    package:
-        name: Volunteers for Salesforce
-        namespace: GW_Volunteers
-        api_version: '40.0'
-        install_class: InstallScript
-    git:
-        prefix_release: rel/
-        prefix_beta: beta/
-        repo_url: https://github.com/SalesforceFoundation/Volunteers-for-Salesforce
-    dependency_resolutions:
-        preproduction: include_beta
+  name: Volunteers-for-Salesforce
+  package:
+    name: Volunteers for Salesforce
+    namespace: GW_Volunteers
+    api_version: "40.0"
+    install_class: InstallScript
+  git:
+    prefix_release: rel/
+    prefix_beta: beta/
+    repo_url: https://github.com/SalesforceFoundation/Volunteers-for-Salesforce
+  dependency_resolutions:
+    preproduction: include_beta
 
 sources:
-    npsp:
-        github: https://github.com/SalesforceFoundation/NPSP 
+  npsp:
+    github: https://github.com/SalesforceFoundation/NPSP
 
 tasks:
-    deploy_dev_config:
-        description: Deploys the post install configuration for an unmanaged DE org
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            path: unpackaged/config/dev
+  deploy_dev_config:
+    description: Deploys the post install configuration for an unmanaged DE org
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      path: unpackaged/config/dev
 
-    deploy_qa_config:
-        description: Deploys the post install configuration for a regression or QA scratch org
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            path: unpackaged/config/qa
+  deploy_qa_config:
+    description: Deploys the post install configuration for a regression or QA scratch org
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      path: unpackaged/config/qa
 
-    deploy_tab_config:
-        description: Deploys the post install configuration for custom tabs
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            path: unpackaged/config/tabs
+  deploy_tab_config:
+    description: Deploys the post install configuration for custom tabs
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      path: unpackaged/config/tabs
 
-    deploy_v4s_only_page_layouts:
-        description: Deploys the page layouts for an org with Volunteers for Salesforce, but not NPSP
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            path: unpackaged/config/v4s_only_layouts
+  deploy_v4s_only_page_layouts:
+    description: Deploys the page layouts for an org with Volunteers for Salesforce, but not NPSP
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      path: unpackaged/config/v4s_only_layouts
 
-    deploy_npsp_v4s_page_layouts:
-        description: Deploys the page layouts for an org with Volunteers for Salesforce and NPSP
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            path: unpackaged/config/npsp_v4s_layouts
+  deploy_npsp_v4s_page_layouts:
+    description: Deploys the page layouts for an org with Volunteers for Salesforce and NPSP
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      path: unpackaged/config/npsp_v4s_layouts
 
-    deploy_delete_config:
-        description: Deploys the metadata deletions for the post install DE org config
-        class_path: cumulusci.tasks.salesforce.Deploy
-        options:
-            path: unpackaged/config/delete
+  deploy_delete_config:
+    description: Deploys the metadata deletions for the post install DE org config
+    class_path: cumulusci.tasks.salesforce.Deploy
+    options:
+      path: unpackaged/config/delete
 
-    deploy_package_settings:
-        description: Configure the default Volunteers Package Settings
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            path: scripts/DeployScript.cls
-            apex: insertPackageSettings();
+  deploy_package_settings:
+    description: Configure the default Volunteers Package Settings
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      path: scripts/DeployScript.cls
+      apex: insertPackageSettings();
 
-    assign_pset:
-        description: Runs anonymous apex to assign pset for guest user.
-        class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
-        options:
-            apex: >
-                Id psetId = [SELECT ID From PermissionSet WHERE Name = 'V4S_Site_Minimum' LIMIT 1][0].id;
-                Id guestId = [SELECT ID From User WHERE Name = 'Volunteers Site Guest User' LIMIT 1][0].id;
-                insert new PermissionSetAssignment(PermissionSetId=psetId, AssigneeId=guestId);
+  assign_pset:
+    description: Runs anonymous apex to assign pset for guest user.
+    class_path: cumulusci.tasks.apex.anon.AnonymousApexTask
+    options:
+      apex: >
+        Id psetId = [SELECT ID From PermissionSet WHERE Name = 'V4S_Site_Minimum' LIMIT 1][0].id;
+        Id guestId = [SELECT ID From User WHERE Name = 'Volunteers Site Guest User' LIMIT 1][0].id;
+        insert new PermissionSetAssignment(PermissionSetId=psetId, AssigneeId=guestId);
 
-    delete_data:
-        options:
-            objects:
-                - Volunteer_Hours__c
-                - Volunteer_Shift__c
-                - Job_Recurrence_Schedule__c
-                - Volunteer_Recurrence_Schedule__c
-                - Volunteer_Job__c
-                - Contact
-                - Account
-                - Campaign
+  delete_data:
+    options:
+      objects:
+        - Volunteer_Hours__c
+        - Volunteer_Shift__c
+        - Job_Recurrence_Schedule__c
+        - Volunteer_Recurrence_Schedule__c
+        - Volunteer_Job__c
+        - Contact
+        - Account
+        - Campaign
 
-    ensure_record_type:
-        name: Ensure Campaign Record Types
-        description: This will ensure Record Types are enabled for the Campaign object in your org before installing Volunteers for Salesforce. If there are no Campaign record types yet, it will create one called Default.
-        class_path: cumulusci.tasks.salesforce.EnsureRecordTypes
-        options:
-            record_type_label: Default
-            record_type_developer_name: Default
-            sobject: Campaign
+  ensure_record_type:
+    name: Ensure Campaign Record Types
+    description: This will ensure Record Types are enabled for the Campaign object in your org before installing Volunteers for Salesforce. If there are no Campaign record types yet, it will create one called Default.
+    class_path: cumulusci.tasks.salesforce.EnsureRecordTypes
+    options:
+      record_type_label: Default
+      record_type_developer_name: Default
+      sobject: Campaign
 
-    run_tests:
-        options:
-            retry_failures:
-                - "unable to obtain exclusive access to this record"
-                - "UNABLE_TO_LOCK_ROW"
-                - "connection was cancelled here"
-            retry_always: True
+  run_tests:
+    options:
+      retry_failures:
+        - "unable to obtain exclusive access to this record"
+        - "UNABLE_TO_LOCK_ROW"
+        - "connection was cancelled here"
+      retry_always: True
 
 flows:
-    config_unmanaged:
-        steps:
-            1:
-                task: deploy_delete_config
-            2:
-                task: deploy_dev_config
-            3:
-                task: deploy_tab_config
-            4:
-                task: deploy_package_settings
-                when: '"GW_Volunteers" not in org_config.installed_packages'
-            5:
-                task: assign_pset
-                ignore_failure: True
-            6:
-                task: load_dataset
+  config_unmanaged:
+    steps:
+      1:
+        task: deploy_delete_config
+      2:
+        task: deploy_dev_config
+      3:
+        task: deploy_tab_config
+      4:
+        task: deploy_package_settings
+        when: '"GW_Volunteers" not in org_config.installed_packages'
+      5:
+        task: assign_pset
+        ignore_failure: True
+      6:
+        task: load_dataset
 
-    config_managed:
-            steps:
-                3:
-                    task: deploy_tab_config
-    config_dev:
-        steps:
-            3:
-                flow: config_unmanaged
+  config_managed:
+    steps:
+      3:
+        task: deploy_tab_config
+  config_dev:
+    steps:
+      3:
+        flow: config_unmanaged
 
-    config_qa:
-        steps:
-            3:
-                flow: config_unmanaged
-            4:
-                task: deploy_qa_config
+  config_qa:
+    steps:
+      3:
+        flow: config_unmanaged
+      4:
+        task: deploy_qa_config
 
-    config_regression:
-        steps:
-            3:
-                flow: config_unmanaged
-            4:
-                task: deploy_qa_config
+  config_regression:
+    steps:
+      3:
+        flow: config_unmanaged
+      4:
+        task: deploy_qa_config
 
-    install_npsp:
-        steps:
-            1:
-                flow: npsp:install_prod
+  install_npsp:
+    steps:
+      1:
+        flow: npsp:install_prod
 
-    customer_org:
-        steps:
-            1:
-                task: ensure_record_type
-                ui_options:
-                    name: Default Campaign Record Type
-            2:
-                task: install_managed
-            3:
-                task: deploy_tab_config
-                checks:
-                    - when: "'GW_Volunteers' in tasks.get_installed_packages()" # Cached at start
-                      action: "hide"
-                options:
-                    unmanaged: False
-                ui_options:
-                    name: "Install Volunteers for Salesforce Tabs"
-            4:
-                task: deploy_npsp_v4s_page_layouts
-                checks:
-                    - when: "'npsp' not in tasks.get_installed_packages()"
-                      action: hide
-                options:
-                    unmanaged: False
-                ui_options:
-                    name: "Install Page Layouts (NPSP)"
-                    is_required: False
-                when: "org_config.has_minimum_package_version('npsp', '1.0')"
-            5:
-                task: deploy_v4s_only_page_layouts
-                checks:
-                    - when: "'npsp' in tasks.get_installed_packages()"
-                      action: hide
-                options:
-                    unmanaged: False
-                ui_options:
-                    name: "Install Page Layouts (V4S)"
-                    is_required: False
-                when: "not org_config.has_minimum_package_version('npsp', '1.0')"
+  customer_org:
+    steps:
+      1:
+        task: ensure_record_type
+        ui_options:
+          name: Default Campaign Record Type
+      2:
+        task: install_managed
+      3:
+        task: deploy_tab_config
+        checks:
+          - when: "'GW_Volunteers' in tasks.get_installed_packages()" # Cached at start
+            action: "hide"
+        options:
+          unmanaged: False
+        ui_options:
+          name: "Install Volunteers for Salesforce Tabs"
+      4:
+        task: deploy_npsp_v4s_page_layouts
+        checks:
+          - when: "'npsp' not in tasks.get_installed_packages()"
+            action: hide
+        options:
+          unmanaged: False
+        ui_options:
+          name: "Install Page Layouts (NPSP)"
+          is_required: False
+        when: "org_config.has_minimum_package_version('npsp', '1.0')"
+      5:
+        task: deploy_v4s_only_page_layouts
+        checks:
+          - when: "'npsp' in tasks.get_installed_packages()"
+            action: hide
+        options:
+          unmanaged: False
+        ui_options:
+          name: "Install Page Layouts (V4S)"
+          is_required: False
+        when: "not org_config.has_minimum_package_version('npsp', '1.0')"
 
 orgs:
-    scratch:
-        dev_namespaced:
-            config_file: orgs/dev.json
-            namespaced: True
-            days: 7
-        prerelease:
-            config_file: orgs/prerelease.json
+  scratch:
+    dev_namespaced:
+      config_file: orgs/dev.json
+      namespaced: True
+      days: 7
+    prerelease:
+      config_file: orgs/prerelease.json
 
 plans:
-    install:
-        slug: install
-        title: Install Volunteers for Salesforce
-        tier: primary
-        is_listed: True
-        checks:
-            - when: "not tasks.check_chatter_enabled()"
-              action: error
-              message: "Please enable Chatter in your org prior to installing."
-        steps:
-            1:
-                flow: customer_org
+  install:
+    slug: install
+    title: Install Volunteers for Salesforce
+    tier: primary
+    is_listed: True
+    steps:
+      1:
+        flow: customer_org
 
-    upgrade:
-        slug: upgrade
-        title: Product Upgrade
-        tier: additional
-        is_listed: False
-        preflight_message: "This installer upgrades this package and any required dependencies to the latest version in your org. This installer isn't supported and has risks. Please don't run this installer unless you're aware of its specific use cases and considerations."
-        post_install_message: "Installation complete and package is on the latest version."
-        steps:
-            1:
-                task: update_dependencies
-                options:
-                    security_type: PUSH
-                    packages_only: True
-            2:
-                task: install_managed
-                options:
-                    security_type: PUSH
+  upgrade:
+    slug: upgrade
+    title: Product Upgrade
+    tier: additional
+    is_listed: False
+    preflight_message: "This installer upgrades this package and any required dependencies to the latest version in your org. This installer isn't supported and has risks. Please don't run this installer unless you're aware of its specific use cases and considerations."
+    post_install_message: "Installation complete and package is on the latest version."
+    steps:
+      1:
+        task: update_dependencies
+        options:
+          security_type: PUSH
+          packages_only: True
+      2:
+        task: install_managed
+        options:
+          security_type: PUSH
