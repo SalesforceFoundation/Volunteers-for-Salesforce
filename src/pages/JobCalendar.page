@@ -289,6 +289,18 @@
     div.message-panel:empty {
         display: none;
     }
+    .fc-grid .fc-other-month .fc-day-number {
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+    }
+    .fc-state-active,
+    .fc-state-active .fc-button-inner {
+        background: #333;
+    }
+    .fc-state-disabled,
+    .fc-state-disabled .fc-button-inner {
+        color: #555;
+    }
 </style>
 
     <apex:outputPanel id="panelPrint" layout="block" style="float:right;margin-right:10px;margin-top:10px;" rendered="{!AND(NOT(fPrint),NOT(fWeb))}">
