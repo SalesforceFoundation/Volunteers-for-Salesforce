@@ -198,6 +198,7 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
                     VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
+                    VolunteersSettings.Enable_Site_Captcha__c = false;
                     if (UTIL_Describe.hasObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
                         insert VolunteersSettings;
                     }
@@ -944,6 +945,22 @@ global with sharing class VOL_SharedCode {
              OR Parent.Parent.Parent.Parent.ParentId =: campaignId)]
         );
         return new List<Id>(campaignsInHierarchy.keySet());
+    }
+
+    /*******************************************************************************************************
+    * @description Make web service callouts to external APIs
+    * Return the HttpResponse object
+    * @return HttpResponse value from the web service callout
+    ********************************************************************************************************/
+    public static HttpResponse makeHTTPCallout(String endpoint, String httpMethod, String body) {
+        Http http = new Http();
+        HttpResponse response;       
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(endpoint);
+        req.setMethod(httpMethod);
+        req.setBody(body);        
+        response = http.send(req);
+        return response;
     }
 
     /*******************************************************************************************************

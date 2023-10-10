@@ -29,10 +29,13 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersReportHours {
-    private VOL_SharedCode volSharedCode;
-
+    private VOL_SharedCode volSharedCode;        
+    
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
+    
+    @TestVisible
+    private static VOL_Captcha captcha = VOL_Captcha.getInstance();
 
     // constructor
     global VOL_CTRL_VolunteersReportHours() {
@@ -261,9 +264,12 @@ global virtual with sharing class VOL_CTRL_VolunteersReportHours {
 
     private class MyException extends Exception {}
 
-
     // action method for saving the the volunteer's hours.    
     global virtual PageReference Save() {
+        if (!captcha.verifyCaptcha()) {
+            strSaveResult = System.Label.CaptchaFailure;
+            return null;
+        }
         Savepoint sp = Database.setSavepoint();
         try {
             // because we need to use actionSupport immediate=false to support the combo's,
