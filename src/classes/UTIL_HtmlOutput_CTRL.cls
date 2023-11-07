@@ -101,13 +101,13 @@ public with sharing class UTIL_HtmlOutput_CTRL {
     */
     private String replaceAllowlist(String unescapedHtml) {
         String replacedHtml = unescapedHtml.normalizeSpace();
-        replacedHtml = replacedHtml.trim();
         
         for (String allowedTag : SUBSTITUTION_BY_ALLOWED_TAG.keySet()) {
             replacedHtml = replacedHtml.replace(allowedTag, SUBSTITUTION_BY_ALLOWED_TAG.get(allowedTag));
         }
-        
+
         if (hasURL) {
+            replacedHtml = replacedHtml.trim();
             for (String allowedUrl : SUBSTITUTION_BY_ALLOWED_URL.keySet()) {
                 String subbedValue = SUBSTITUTION_BY_ALLOWED_URL.get(allowedUrl);
                 replacedHtml = replacedHtml.replace(allowedUrl, subbedValue);
