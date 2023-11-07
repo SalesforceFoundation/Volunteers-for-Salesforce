@@ -46,7 +46,7 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = false;
 
-        System.assertEquals('Expected the bold tags with a space to be allowed.', html, controller.getSafeHtml());
+        System.assertEquals(html, controller.getSafeHtml(),'Expected the bold tags with a space to be allowed.');
     }
 
     /*******************************************************************************************************
@@ -60,7 +60,7 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = false;
 
-        System.assertEquals('Expected the bold tags to be allowed.', html, controller.getSafeHtml());
+        System.assertEquals(html, controller.getSafeHtml(), 'Expected the bold tags to be allowed.');
     }
 
     /*******************************************************************************************************
@@ -75,8 +75,8 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.hasUrl = false;
         String actualHtml = controller.getSafeHtml();
 
-        System.assert('Expected the img tag to be escaped.', actualHtml.startsWith('&lt;'));
-        System.assertNotEquals('Expected the html to have been escaped.', html, actualHtml);
+        System.assert(actualHtml.startsWith('&lt;'), 'Expected the img tag to be escaped.');
+        System.assertNotEquals(html, actualHtml, 'Expected the html to have been escaped.');
     }
 
     /*******************************************************************************************************
@@ -90,7 +90,7 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = true;
 
-        System.assertEquals('Expected the url to be allowed.', html, controller.getSafeHtml());
+        System.assertEquals(html, controller.getSafeHtml(), 'Expected the url to be allowed.');
     }
 
     /*******************************************************************************************************
@@ -105,7 +105,7 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = true;
 
-        System.assertEquals('Expected only the space to be removed from the url.', expectedHtml, controller.getSafeHtml());
+        System.assertEquals(expectedHtml, controller.getSafeHtml(), 'Expected only the space to be removed from the url.');
     }
 
     /*******************************************************************************************************
@@ -120,8 +120,8 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.hasUrl = true;
         String actualHtml = controller.getSafeHtml();
 
-        System.assert('Expected the url to be escaped.', actualHtml.startsWith('&lt;'));
-        System.assertNotEquals('Expected the html to be espaced.', html, actualHtml);
+        System.assert(actualHtml.startsWith('&lt;'), 'Expected the url to be escaped.');
+        System.assertNotEquals(html, actualHtml, 'Expected the html to be espaced.');
     }
     
     /*******************************************************************************************************
@@ -137,6 +137,22 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.hasUrl = true;
         String actualHtml = controller.getSafeHtml();
 
-        System.assertEquals('Expected the unallowed attributes to be removed from the url.', expectedHtml, controller.getSafeHtml());
+        System.assertEquals(expectedHtml, controller.getSafeHtml(), 'Expected the unallowed attributes to be removed from the url.');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies target remains in url.
+    */
+    @isTest
+    private static void shouldAllowTargetInUrl() {
+        String html = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage" target="_blank">';
+        String expectedHtml = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage" target="_blank">';
+        UTIL_HtmlOutput_CTRL controller = new UTIL_HtmlOutput_CTRL();
+
+        controller.unsafeHtml = html;
+        controller.hasUrl = true;
+        String actualHtml = controller.getSafeHtml();
+
+        System.assertEquals(expectedHtml, controller.getSafeHtml(), 'Expected the target to remain in the url.');
     }
 }
