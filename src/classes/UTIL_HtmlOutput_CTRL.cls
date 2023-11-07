@@ -53,11 +53,10 @@ public with sharing class UTIL_HtmlOutput_CTRL {
 
     /** @description The map of allowed urls and their temporary substitution values */
     private static final Map<String, String> SUBSTITUTION_BY_ALLOWED_URL = new Map<String, String> {
-        '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage' => '|schedBatch|',
-        '<a href="/08e?setupid=ScheduledJobs' => '|schedJobs|',
-        '" target="_blank"' => '|blankTarget|',
-        '" target="_new"' => '|newTarget|',
-        '"' => '|quote|'
+        'target="_blank"' => '|blankTarget|',
+        'target="_new"' => '|newTarget|',
+        '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage"' => '|schedBatch|',
+        '<a href="/08e?setupid=ScheduledJobs"' => '|schedJobs|'
     };
 
     /** @description The unescaped html passed in by the page. */
@@ -102,14 +101,23 @@ public with sharing class UTIL_HtmlOutput_CTRL {
     */
     private String replaceAllowlist(String unescapedHtml) {
         String replacedHtml = unescapedHtml.normalizeSpace();
-
+        replacedHtml = replacedHtml.trim();
+        
         for (String allowedTag : SUBSTITUTION_BY_ALLOWED_TAG.keySet()) {
             replacedHtml = replacedHtml.replace(allowedTag, SUBSTITUTION_BY_ALLOWED_TAG.get(allowedTag));
         }
-
+        
         if (hasURL) {
             for (String allowedUrl : SUBSTITUTION_BY_ALLOWED_URL.keySet()) {
-                replacedHtml = replacedHtml.replace(allowedUrl, SUBSTITUTION_BY_ALLOWED_URL.get(allowedUrl));
+                String subbedValue = SUBSTITUTION_BY_ALLOWED_URL.get(allowedUrl);
+                replacedHtml = replacedHtml.replace(allowedUrl, subbedValue);
+
+                String urlAttributes = replacedHtml.substringBetween(subbedValue, '|emptyClose|');
+                if (urlAttributes == null) {
+                    continue;
+                }
+
+                replacedHtml = replacedHtml.replace(urlAttributes, '');
             }
         }
 
