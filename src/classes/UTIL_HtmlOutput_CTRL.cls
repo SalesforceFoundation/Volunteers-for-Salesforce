@@ -31,7 +31,7 @@
 * @author Salesforce.org
 * @date 2020
 * @group Utilities
-* @description The UTIL_HtmlOutput_CTRL is used to safely unescape any allowlisted tags and urls
+* @description The UTIL_HtmlOutput_CTRL is used to safely unescape allowlisted tags and urls
 */
 public with sharing class UTIL_HtmlOutput_CTRL {
 
