@@ -53,11 +53,10 @@ public with sharing class UTIL_HtmlOutput_CTRL {
 
     /** @description The map of allowed urls and their temporary substitution values */
     private static final Map<String, String> SUBSTITUTION_BY_ALLOWED_URL = new Map<String, String> {
-        '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage' => '|schedBatch|',
-        '<a href="/08e?setupid=ScheduledJobs' => '|schedJobs|',
-        '" target="_blank"' => '|blankTarget|',
-        '" target="_new"' => '|newTarget|',
-        '"' => '|quote|'
+        '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage"' => '|schedBatch|',
+        '<a href="/08e?setupid=ScheduledJobs"' => '|schedJobs|',
+        'target="_blank"' => '|blankTarget|',
+        'target="_new"' => '|newTarget|'
     };
 
     /** @description The unescaped html passed in by the page. */
@@ -108,12 +107,31 @@ public with sharing class UTIL_HtmlOutput_CTRL {
         }
 
         if (hasURL) {
+            replacedHtml = replacedHtml.trim();
             for (String allowedUrl : SUBSTITUTION_BY_ALLOWED_URL.keySet()) {
-                replacedHtml = replacedHtml.replace(allowedUrl, SUBSTITUTION_BY_ALLOWED_URL.get(allowedUrl));
+                String subbedValue = SUBSTITUTION_BY_ALLOWED_URL.get(allowedUrl);
+                replacedHtml = replacedHtml.replace(allowedUrl, subbedValue);
             }
+
+            replacedHtml = cleanupUrl(replacedHtml, SUBSTITUTION_BY_ALLOWED_URL.values()[0]);
+            replacedHtml = cleanupUrl(replacedHtml, SUBSTITUTION_BY_ALLOWED_URL.values()[1]);
         }
 
         return replacedHtml;
+    }
+    
+    private String cleanupUrl(String replacedHtml, String urlSubstitution) {
+        String urlAttributes = replacedHtml.substringBetween(urlSubstitution, '|emptyClose|');
+			if (urlAttributes == null) {
+                return replacedHtml;
+            }
+            if (urlAttributes.contains(SUBSTITUTION_BY_ALLOWED_URL.values()[2])) {
+                urlAttributes = urlAttributes.substringAfter(SUBSTITUTION_BY_ALLOWED_URL.values()[2]);
+            } else if (urlAttributes.contains(SUBSTITUTION_BY_ALLOWED_URL.values()[3])) {
+                urlAttributes = urlAttributes.substringAfter(SUBSTITUTION_BY_ALLOWED_URL.values()[3]);
+            }
+
+            return replacedHtml.replace(urlAttributes, '');
     }
 
     /*******************************************************************************************************************
