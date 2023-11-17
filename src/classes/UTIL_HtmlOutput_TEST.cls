@@ -46,7 +46,7 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = false;
 
-        System.assertEquals(html, controller.getSafeHtml());
+        System.assertEquals(html, controller.getSafeHtml(),'Expected the bold tags with a space to be allowed.');
     }
 
     /*******************************************************************************************************
@@ -60,7 +60,7 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = false;
 
-        System.assertEquals(html, controller.getSafeHtml());
+        System.assertEquals(html, controller.getSafeHtml(), 'Expected the bold tags to be allowed.');
     }
 
     /*******************************************************************************************************
@@ -75,8 +75,8 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.hasUrl = false;
         String actualHtml = controller.getSafeHtml();
 
-        System.assert(actualHtml.startsWith('&lt;'));
-        System.assertNotEquals(html, actualHtml);
+        System.assert(actualHtml.startsWith('&lt;'), 'Expected the img tag to be escaped.');
+        System.assertNotEquals(html, actualHtml, 'Expected the html to have been escaped.');
     }
 
     /*******************************************************************************************************
@@ -90,21 +90,22 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.unsafeHtml = html;
         controller.hasUrl = true;
 
-        System.assertEquals(html, controller.getSafeHtml());
+        System.assertEquals(html, controller.getSafeHtml(), 'Expected the url to be allowed.');
     }
 
     /*******************************************************************************************************
-    * @description Verifies a string with allowlisted url with extra space is returned without escaping
+    * @description Verifies a string with allowlisted url with extra space is returned without the space
     */
     @isTest
-    private static void shouldReturnOriginalUrlWithSpace() {
+    private static void shouldRemoveWhiteSpaceFromUrl() {
         String html = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage" >';
+        String expectedHtml = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage">';
         UTIL_HtmlOutput_CTRL controller = new UTIL_HtmlOutput_CTRL();
 
         controller.unsafeHtml = html;
         controller.hasUrl = true;
 
-        System.assertEquals(html, controller.getSafeHtml());
+        System.assertEquals(expectedHtml, controller.getSafeHtml(), 'Expected only the space to be removed from the url.');
     }
 
     /*******************************************************************************************************
@@ -119,7 +120,39 @@ public with sharing class UTIL_HtmlOutput_TEST {
         controller.hasUrl = true;
         String actualHtml = controller.getSafeHtml();
 
-        System.assert(actualHtml.startsWith('&lt;'));
-        System.assertNotEquals(html, actualHtml);
+        System.assert(actualHtml.startsWith('&lt;'), 'Expected the url to be escaped.');
+        System.assertNotEquals(html, actualHtml, 'Expected the html to be espaced.');
+    }
+    
+    /*******************************************************************************************************
+    * @description Verifies unallowed attributes within the url are removed
+    */
+    @isTest
+    private static void shouldReturnCleanUrl() {
+        String html = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage" ONMOUSEOVER=alert(document.domain)>';
+        String expectedHtml = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage">';
+        UTIL_HtmlOutput_CTRL controller = new UTIL_HtmlOutput_CTRL();
+
+        controller.unsafeHtml = html;
+        controller.hasUrl = true;
+        String actualHtml = controller.getSafeHtml();
+
+        System.assertEquals(expectedHtml, controller.getSafeHtml(), 'Expected the unallowed attributes to be removed from the url.');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies target remains in url.
+    */
+    @isTest
+    private static void shouldAllowTargetInUrl() {
+        String html = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage" target="_blank">';
+        String expectedHtml = '<a href="/ui/setup/apex/batch/ScheduleBatchApexPage" target="_blank">';
+        UTIL_HtmlOutput_CTRL controller = new UTIL_HtmlOutput_CTRL();
+
+        controller.unsafeHtml = html;
+        controller.hasUrl = true;
+        String actualHtml = controller.getSafeHtml();
+
+        System.assertEquals(expectedHtml, controller.getSafeHtml(), 'Expected the target to remain in the url.');
     }
 }
