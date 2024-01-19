@@ -1,54 +1,68 @@
 {
-  "product": {
-    "title": {
-      "message": "Volunteers for Salesforce (V4S)",
-      "description": "name of product"
+    "product": {
+        "title": {
+            "message": "Volunteers for Salesforce (V4S)",
+            "description": "name of product"
+        },
+        "short_description": {
+            "message": "Volunteer management for your organization.",
+            "description": "tagline of product"
+        },
+        "description": {
+            "message": "Volunteer management for your organization.\r\n\r\nVolunteers for Salesforce helps manage your volunteer events and people. It manages volunteers, jobs, shifts, and hours, allowing you to track and report on all of the data as well as allow public signups via Sites pages on your website.\r\n\r\nOnce you've installed Volunteers for Salesforce, check out these great resources:\r\n\r\n* [Set Up and Configure Volunteers for Salesforce](https://powerofus.force.com/s/article/V4S-Before-You-Configure-V4S)\r\n\r\n* [Volunteers for Salesforce User Guide](https://powerofus.force.com/s/article/V4S-Plan-a-One-Time-Event)\r\n\r\n* [All Volunteers for Salesforce Documentation](https://powerofus.force.com/s/article/V4S-Documentation)\r\n\r\nQuestions? Become a member of the [Volunteers for Salesforce App customer group](https://powerofus.force.com/s/group/0F980000000CjjxCAC/volunteers-for-salesforce-app) in the Power of Us Hub.",
+            "description": "shown on product detail page (markdown)"
+        },
+        "click_through_agreement": {
+            "message": "Copyright (c) 2017, Salesforce.org  \r\nAll rights reserved.\r\n\r\nRedistribution and use in source and binary forms, with or without\r\nmodification, are permitted provided that the following conditions are met:\r\n\r\n* Redistributions of source code must retain the above copyright\r\nnotice, this list of conditions and the following disclaimer.\r\n* Redistributions in binary form must reproduce the above copyright\r\nnotice, this list of conditions and the following disclaimer in the\r\ndocumentation and/or other materials provided with the distribution.\r\n* Neither the name of Salesforce.org nor the names of\r\nits contributors may be used to endorse or promote products derived\r\nfrom this software without specific prior written permission.\r\n\r\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\r\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\r\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS\r\nFOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE\r\nCOPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,\r\nINCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,\r\nBUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;\r\nLOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\r\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT\r\nLIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN\r\nANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\r\nPOSSIBILITY OF SUCH DAMAGE.",
+            "description": "legal text shown in modal dialog"
+        }
     },
-    "short_description": {
-      "message": "Volunteer management for your organization.",
-      "description": "tagline of product"
+    "plan:install": {
+        "title": {
+            "message": "Install Volunteers for Salesforce",
+            "description": "title of installation plan"
+        }
     },
-    "description": {
-      "message": "Volunteer management for your organization.\r\n\r\nVolunteers for Salesforce helps manage your volunteer events and people. It manages volunteers, jobs, shifts, and hours, allowing you to track and report on all of the data as well as allow public signups via Sites pages on your website.\r\n\r\nOnce you've installed Volunteers for Salesforce, check out these great resources:\r\n\r\n* [Manage Volunteers for Nonprofits on Trailhead](https://trailhead.salesforce.com/content/learn/trails/nonprofit_volunteer)\r\n\r\n* [Salesforce.org Hub](https://trailhead.salesforce.com/trailblazer-community/groups/0F94S000000kHOwSAM?tab=discussion&sort=LAST_MODIFIED_DATE_DESC)\r\n\r\n* [All Volunteers for Salesforce Documentation](https://help.salesforce.com/s/articleView?id=sfdo.Volunteers_for_Salesforce.htm&type=5)",
-      "description": "shown on product detail page (markdown)"
+    "steps": {
+        "Default Campaign Record Type": {
+            "message": "Default Campaign Record Type",
+            "description": "title of installation step"
+        },
+        "Install {product} {version}": {
+            "message": "Install {product} {version}",
+            "description": "title of installation step"
+        },
+        "Install Volunteers for Salesforce Tabs": {
+            "message": "Install Volunteers for Salesforce Tabs",
+            "description": "title of installation step"
+        },
+        "Install Page Layouts (NPSP)": {
+            "message": "Install Page Layouts (NPSP)",
+            "description": "title of installation step"
+        },
+        "Install Page Layouts (V4S)": {
+            "message": "Install Page Layouts (V4S)",
+            "description": "title of installation step"
+        }
     },
-    "click_through_agreement": {
-      "message": "Copyright (c) 2017, Salesforce.org  \r\nAll rights reserved.\r\n\r\nRedistribution and use in source and binary forms, with or without\r\nmodification, are permitted provided that the following conditions are met:\r\n\r\n* Redistributions of source code must retain the above copyright\r\nnotice, this list of conditions and the following disclaimer.\r\n* Redistributions in binary form must reproduce the above copyright\r\nnotice, this list of conditions and the following disclaimer in the\r\ndocumentation and/or other materials provided with the distribution.\r\n* Neither the name of Salesforce.org nor the names of\r\nits contributors may be used to endorse or promote products derived\r\nfrom this software without specific prior written permission.\r\n\r\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS\r\n\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\r\nLIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS\r\nFOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE\r\nCOPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,\r\nINCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,\r\nBUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;\r\nLOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\r\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT\r\nLIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN\r\nANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\r\nPOSSIBILITY OF SUCH DAMAGE.",
-      "description": "legal text shown in modal dialog"
+    "checks": {
+        "Please enable Chatter in your org prior to installing.": {
+            "message": "Please enable Chatter in your org prior to installing.",
+            "description": "shown if validation fails"
+        }
+    },
+    "plan:upgrade": {
+        "title": {
+            "message": "Product Upgrade",
+            "description": "title of installation plan"
+        },
+        "preflight_message": {
+            "message": "This installer upgrades this package and any required dependencies to the latest version in your org. This installer isn't supported and has risks. Please don't run this installer unless you're aware of its specific use cases and considerations.",
+            "description": "shown before user starts installation (markdown)"
+        },
+        "post_install_message": {
+            "message": "Installation complete and package is on the latest version.",
+            "description": "shown after successful installation (markdown)"
+        }
     }
-  },
-  "plan:install": {
-    "title": {
-      "message": "Install Volunteers for Salesforce",
-      "description": "title of installation plan"
-    }
-  },
-  "steps": {
-    "Default Campaign Record Type": {
-      "message": "Default Campaign Record Type",
-      "description": "title of installation step"
-    },
-    "Install {product} {version}": {
-      "message": "Install {product} {version}",
-      "description": "title of installation step"
-    },
-    "Install Volunteers for Salesforce Tabs": {
-      "message": "Install Volunteers for Salesforce Tabs",
-      "description": "title of installation step"
-    },
-    "Install Page Layouts (NPSP)": {
-      "message": "Install Page Layouts (NPSP)",
-      "description": "title of installation step"
-    },
-    "Install Page Layouts (V4S)": {
-      "message": "Install Page Layouts (V4S)",
-      "description": "title of installation step"
-    }
-  },
-  "checks": {
-    "Please enable Chatter in your org prior to installing.": {
-      "message": "Please enable Chatter in your org prior to installing.",
-      "description": "shown if validation fails"
-    }
-  }
 }
