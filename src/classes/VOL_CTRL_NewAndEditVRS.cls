@@ -51,6 +51,20 @@ public with sharing class VOL_CTRL_NewAndEditVRS {
                 list<SelectOption> listSO = new list<SelectOption>();
                 listSO.add(new SelectOption('', ''));
                 ID jobId = vrs.Volunteer_Job__c;
+
+                // Ensure the user has access to the object before querying
+                try {
+                    UTIL_Describe.checkReadAccess(UTIL_Describe.StrTokenNSPrefix('Job_Recurrence_Schedule__c'),
+                    new Set<String>{
+                        UTIL_Describe.StrTokenNSPrefix('Days_of_Week__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Duration__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Schedule_Start_Date_Time__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Schedule_End_Date__c'),
+                        UTIL_Describe.StrTokenNSPrefix('Weekly_Occurrence__c')});
+                } catch (Exception ex) {
+                    // we will return an empty list vs throwing an error
+                    return listSO;
+                }
                 
                 for (Job_Recurrence_Schedule__c jrs : [select Id, Name, Days_of_Week__c, Duration__c, 
                     Schedule_Start_Date_Time__c, Schedule_End_Date__c, Weekly_Occurrence__c from Job_Recurrence_Schedule__c 
