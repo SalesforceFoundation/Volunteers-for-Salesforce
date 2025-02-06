@@ -66,8 +66,7 @@
             <tr>
             	<td></td>        
            		<td class="cssInputFieldsColumn" >
-                    <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
-                        onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();" rerender="frm"/>
+                    <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();" rerender="frm"/>						
                     <apex:actionFunction name="DoSave" action="{!Save}" />         
            		</td>
 			</tr>	
@@ -76,6 +75,9 @@
 				<td class="cssInputFieldsColumn" ><apex:outputLabel value="{!StrSaveResult}" /></td>
 			</tr>	
 		</table>
+		<div id="captcha">
+			<c:captcha></c:captcha>
+		</div>
 		<apex:messages style="color:red;" />		   	
 	</apex:form>
 </apex:page>

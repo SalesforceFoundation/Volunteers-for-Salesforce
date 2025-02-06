@@ -251,4 +251,11 @@ public class UTIL_UnitTest {
             Weekly_Occurrence__c = '1st');
     }
 
+    public static void setupCaptchaSettings(Boolean enabled) {
+        VOL_SharedCode.VolunteersSettings.Enable_Site_Captcha__c = enabled;
+        VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Endpoint__c = 'www.salesforce.com';
+        VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Site_Key__c = '1234567890';
+        VOL_SharedCode.VolunteersSettings.Google_reCaptcha_Secret_Key__c = '1234567890';
+    }
+
 }

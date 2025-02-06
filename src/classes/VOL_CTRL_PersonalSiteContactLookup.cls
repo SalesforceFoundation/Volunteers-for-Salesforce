@@ -31,6 +31,9 @@
 global with sharing class VOL_CTRL_PersonalSiteContactLookup {
     @TestVisible
     private static VOL_Access access = VOL_Access.getInstance();
+    
+    @TestVisible
+    private static VOL_Captcha captcha = VOL_Captcha.getInstance();
 
     // constructor
     global VOL_CTRL_PersonalSiteContactLookup() {
@@ -72,12 +75,16 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
     }
 
     global string strResult { get; set; }
-    global string strLanguage { get; set; }
+    global string strLanguage { get; set; }    
     
     // the action method called from the page to lookup the contact, and to send them email if found.
-    global PageReference LookupContact() {
-        
-        list<Contact> listCon = VOL_SharedCode.LookupContact(contact, null);
+    global PageReference LookupContact() {                                            
+        if (!captcha.verifyCaptcha()) {
+            strResult = System.Label.CaptchaFailure;
+            return null;
+        }
+
+        list<Contact> listCon = VOL_SharedCode.LookupContact(contact, null);        
         if (listCon == null || listCon.size() == 0) {
             strResult = System.Label.labelContactLookupAmbiguous;
         } else {
@@ -123,7 +130,7 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
             mail.setTemplateID(emailTemplateId);    
             if (orgWideEmailId != null) {
                 mail.setOrgWideEmailAddressId(orgWideEmailId);
-            }       
+            }
             list<Messaging.SendEmailResult> listSER;
             listSER = Messaging.sendEmail(new Messaging.Email[] { mail }, false);
             if (listSER[0].isSuccess()) {
@@ -188,5 +195,4 @@ global with sharing class VOL_CTRL_PersonalSiteContactLookup {
             null :
             closedTaskStatuses[0].ApiName;
     }
-
 }

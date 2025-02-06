@@ -29,7 +29,9 @@
 */
 
 global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
-     
+    @TestVisible
+    private static VOL_Captcha captcha = VOL_Captcha.getInstance();
+
     // constructor
     global VOL_CTRL_VolunteersSignupFS() {
 
@@ -96,6 +98,10 @@ global virtual with sharing class VOL_CTRL_VolunteersSignupFS {
     global Attachment attachment { get; set; }   
         
     global virtual PageReference Save() {  
+        if (!captcha.verifyCaptcha()) {
+            StrSaveResult = System.Label.CaptchaFailure;
+            return null;
+        }
         try { 
             // save or update the contact              
             ID contactId = VOL_SharedCode.CreateOrUpdateContactFS(null, contact, contact.Volunteer_Organization__c, listStrFields, true);
