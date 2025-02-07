@@ -40,7 +40,7 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListing {
     global boolean ShowLocationInfo { get; set; }
     global boolean ShowSkills { get; set; }
     global boolean ShowShifts { get; set; }
-    global boolean ShowCampaignHierarchy {get;set;}
+    global boolean ShowCampaignHierarchy { get; set; }
     
     
     // dummy contact record to bind the Contact SignUp form to.

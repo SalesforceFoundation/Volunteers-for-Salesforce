@@ -69,7 +69,7 @@ public with sharing class VOL_CTRL_VolunteersCampaignWizard {
     public integer cSampleShifts { get; set; } 
     public boolean fCopyVolunteers { get; set; }
 
-    private VOL_SharedCode volSharedCode;
+    private VOL_SharedCode volSharedCode { get; set; }
 
     // the list of Campaigns to put in the clone existing campaign dropdown
     public list<SelectOption> listSOVolunteersCampaigns { get; set; }

@@ -35,16 +35,16 @@
 */
 public with sharing class UTIL_JobProgress_CTRL {
  
-    public List<BatchJob> batchJobs;
+    public List<BatchJob> batchJobs  { get; set; }
     public UTIL_JobProgress_CTRL.BatchJob bj {get{
         //just kickoff the getter for batchJobs since it will properly populate the bj var for 
         // us w/o needing new logic
         List<BatchJob> tempList = getBatchJobs();
         return bj;
     } set;}
-    public Integer numberOfJobs {get; set;}
-    public String batchComponentLabel {get; set;}
-    public Boolean rerenderoncomplete {get; set;}
+    public Integer numberOfJobs { get; set; }
+    public String batchComponentLabel { get; set; }
+    public Boolean rerenderoncomplete { get; set; }
     
     public Boolean hasExtendedStatus {
         get {
@@ -136,8 +136,8 @@ public with sharing class UTIL_JobProgress_CTRL {
 
     //This is the wrapper class the includes the job itself and a value for the percent complete
     public Class BatchJob{
-        public AsyncApexJob job {get; set;}
-        public Integer percentComplete {get; set;}
+        public AsyncApexJob job { get; set; }
+        public Integer percentComplete { get; set; }
     }
 
     /**
@@ -182,16 +182,16 @@ public with sharing class UTIL_JobProgress_CTRL {
      * AsyncApexJob table.
      */
     public class BatchJobStatus {
-        public String className;
-        public String createdByName;
-        public DateTime createdDate;
-        public String status;
-        public String extendedStatus;
-        public DateTime completedDate;
-        public Integer jobItemsProcessed;
-        public Integer totalJobItems;
-        public Integer numberOfErrors;
-        public Long percentCompleted;
+        public String className { get; set; }
+        public String createdByName { get; set; }
+        public DateTime createdDate { get; set; }
+        public String status { get; set; }
+        public String extendedStatus { get; set; }
+        public DateTime completedDate { get; set; }
+        public Integer jobItemsProcessed { get; set; }
+        public Integer totalJobItems { get; set; }
+        public Integer numberOfErrors { get; set; }
+        public Long percentCompleted { get; set; }
 
         /**
          * @description Construct from an AsyncApexJob object.  This will

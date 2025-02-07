@@ -56,10 +56,10 @@ public with sharing class UTIL_PageMessages_CTRL {
      * This allows this data to be accessed within a Visualforce page.
      */
     public class Message {
-        public MessageSeverity severity {get; set;}
-        public String summary {get; set;}
-        public String detail {get; set;}
-        public String componentLabel {get; set;}
+        public MessageSeverity severity { get; set; }
+        public String summary { get; set; }
+        public String detail { get; set; }
+        public String componentLabel { get; set; }
 
         /**
          * @description Construct a Message data container object from a given

@@ -35,8 +35,8 @@ public with sharing class VOL_CTRL_BatchProgress {
     public boolean batchRunning { get; set; }
 
     // object id passed in via parameter
-    string objectId;
-    id oid;
+    string objectId { get; set; }
+    id oid { get; set; }
 
     // constructor
     public VOL_CTRL_BatchProgress() {

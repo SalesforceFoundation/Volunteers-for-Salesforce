@@ -833,7 +833,7 @@ global with sharing class VOL_SharedCode {
     /******************************************************************************************************
     * @description String helper property for getNamespace() method.
     *******************************************************************************************************/
-    private static string plainNamespace;
+    private static string plainNamespace { get; set; }
 
     /*******************************************************************************************************
     * @description Finds the namespace for the current context.
@@ -920,6 +920,7 @@ global with sharing class VOL_SharedCode {
             
             return dmlDuplicateOptions;
         }
+        set;
     }
 
     // This massively nested SOQL where statement looks hard coded and dumb, but as it turns out
