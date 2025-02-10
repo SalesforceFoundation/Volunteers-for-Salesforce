@@ -48,9 +48,9 @@
     /** @description our exceptions when a bogus object or field is provided. */
     public class SchemaDescribeException extends Exception {}
     /** @description String helper property for getNamespace() method. */
-    private static string plainNamespace { get; set; }
+    private static string plainNamespace;
     /** @description Map to hold global describe */
-    private static Map<String, Schema.SObjectType> gd  { get; set; }
+    private static Map<String, Schema.SObjectType> gd;
     /** @description Map to hold object describes */
     private static Map<String, Schema.DescribeSObjectResult> objectDescribes = new Map<String, Schema.DescribeSObjectResult>();
     /** @description Map to hold field token describes */

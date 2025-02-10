@@ -35,7 +35,7 @@
 */
 public with sharing class UTIL_JobProgress_CTRL {
  
-    public List<BatchJob> batchJobs  { get; set; }
+    public List<BatchJob> batchJobs;
     public UTIL_JobProgress_CTRL.BatchJob bj {get{
         //just kickoff the getter for batchJobs since it will properly populate the bj var for 
         // us w/o needing new logic
@@ -182,16 +182,16 @@ public with sharing class UTIL_JobProgress_CTRL {
      * AsyncApexJob table.
      */
     public class BatchJobStatus {
-        public String className { get; set; }
-        public String createdByName { get; set; }
-        public DateTime createdDate { get; set; }
-        public String status { get; set; }
-        public String extendedStatus { get; set; }
-        public DateTime completedDate { get; set; }
-        public Integer jobItemsProcessed { get; set; }
-        public Integer totalJobItems { get; set; }
-        public Integer numberOfErrors { get; set; }
-        public Long percentCompleted { get; set; }
+        public String className;
+        public String createdByName;
+        public DateTime createdDate;
+        public String status;
+        public String extendedStatus;
+        public DateTime completedDate;
+        public Integer jobItemsProcessed;
+        public Integer totalJobItems;
+        public Integer numberOfErrors;
+        public Long percentCompleted;
 
         /**
          * @description Construct from an AsyncApexJob object.  This will

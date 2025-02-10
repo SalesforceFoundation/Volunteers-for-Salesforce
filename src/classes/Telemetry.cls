@@ -43,11 +43,11 @@ public without sharing class Telemetry {
     private static final String TELEMETRY_PARAM_ERROR =
         'The telemetry param type {0} is already in use, only one type can be sent at a time.';
     @TestVisible
-    private SObjectType sObjType { get; set; }
+    private SObjectType sObjType;
     @TestVisible
-    private DeveloperName developerName { get; set; }
-    private String criteria { get; set; }
-    private Boolean booleanValue { get; set; }
+    private DeveloperName developerName;
+    private String criteria;
+    private Boolean booleanValue;
 
     @TestVisible
     private QueryBuilder queryBuilder {

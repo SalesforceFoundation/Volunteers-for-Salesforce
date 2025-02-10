@@ -36,8 +36,8 @@ global virtual with sharing class VOL_CTRL_VolunteersBulkEnterHours {
         }
     }
     
-    private VOL_SharedCode volSharedCode { get; set; }
-    private list<string> listStrFields { get; set; }
+    private VOL_SharedCode volSharedCode;
+    private list<string> listStrFields;
     
     global boolean redirect { get; private set; }
     global ID idRedirect { get; private set; }

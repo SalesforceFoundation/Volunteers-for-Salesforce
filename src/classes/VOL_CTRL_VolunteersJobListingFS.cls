@@ -140,7 +140,6 @@ global virtual with sharing class VOL_CTRL_VolunteersJobListingFS {
         get {
             return VOL_SharedCode.VolunteersSettings.Google_Maps_API_Key__c;
         }
-        set;
     }  
     
     // constructor

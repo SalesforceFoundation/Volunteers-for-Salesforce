@@ -833,7 +833,7 @@ global with sharing class VOL_SharedCode {
     /******************************************************************************************************
     * @description String helper property for getNamespace() method.
     *******************************************************************************************************/
-    private static string plainNamespace { get; set; }
+    private static string plainNamespace;
 
     /*******************************************************************************************************
     * @description Finds the namespace for the current context.
