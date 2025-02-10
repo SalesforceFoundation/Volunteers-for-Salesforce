@@ -42,9 +42,9 @@ public with sharing class UTIL_JobProgress_CTRL {
         List<BatchJob> tempList = getBatchJobs();
         return bj;
     } set;}
-    public Integer numberOfJobs { get; set; }
-    public String batchComponentLabel { get; set; }
-    public Boolean rerenderoncomplete { get; set; }
+    public Integer numberOfJobs {get; set;}
+    public String batchComponentLabel {get; set;}
+    public Boolean rerenderoncomplete {get; set;}
     
     public Boolean hasExtendedStatus {
         get {
@@ -136,8 +136,8 @@ public with sharing class UTIL_JobProgress_CTRL {
 
     //This is the wrapper class the includes the job itself and a value for the percent complete
     public Class BatchJob{
-        public AsyncApexJob job { get; set; }
-        public Integer percentComplete { get; set; }
+        public AsyncApexJob job {get; set;}
+        public Integer percentComplete {get; set;}
     }
 
     /**
