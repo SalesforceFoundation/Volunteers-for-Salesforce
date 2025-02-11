@@ -722,7 +722,7 @@ global with sharing class VOL_SharedCode {
             SObject sobjT = listSObj[0];
             //  now copy over all the non-null fields from the form's contact to the existing contact.
             for (string strF : listStrFields) {
-                if (sobjT.get(strF) != null) {
+                if (sobjT.isSet(strF)) {
                     try {
                         sobj.put(strF, sobjT.get(strF));
                     } catch(exception ex) { 
