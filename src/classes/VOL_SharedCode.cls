@@ -914,7 +914,7 @@ global with sharing class VOL_SharedCode {
     private static Database.DMLOptions dmlDuplicateOptions {
         get {
             if (dmlDuplicateOptions == null) {
-                Database.DMLOptions dmlDuplicateOptions = new Database.DMLOptions();
+                dmlDuplicateOptions = new Database.DMLOptions();
                 dmlDuplicateOptions.optAllOrNone = true; 
                 dmlDuplicateOptions.DuplicateRuleHeader.allowSave = true;
             }
