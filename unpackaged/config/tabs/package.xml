@@ -5,5 +5,5 @@
         <members>%%%NAMESPACE%%%Volunteer_Shift__c</members>
         <name>CustomTab</name>
     </types>
-    <version>40.0</version>
+    <version>62.0</version>
 </Package>
