@@ -1,5 +1,5 @@
-#GUSINFO:NPC Asteroids, SFDO Volunteers for Salesforce
-
+#ECCN:Open Source 5D002
+#GUSINFO:Open Source,Open Source Workflow
 # Python
 *.py                  @SalesforceFoundation/release-engineering-reviewers
 
