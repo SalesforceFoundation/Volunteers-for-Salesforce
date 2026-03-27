@@ -322,7 +322,6 @@ public with sharing class VOL_SharedCode_TEST {
 
     }
 
-
     /////////////////
     /// Helpers
     /////////////////
@@ -375,5 +374,5 @@ public with sharing class VOL_SharedCode_TEST {
 
     public static void setAccessMock() {
         VOL_SharedCode.access = (VOL_Access) Test.createStub(VOL_Access.class, accessMock);
-    }
+    }    
 }

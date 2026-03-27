@@ -4,6 +4,18 @@
     <description>Custom settings used by Volunteers for Salesforce.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Google_reCaptcha_Endpoint__c</fullName>
+        <externalId>false</externalId>
+        <description>Google reCaptcha verification endpoint URL</description>
+        <inlineHelpText>Google reCaptcha verification endpoint URL</inlineHelpText>
+        <label>Google reCaptcha Endpoint</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Match_Email_Fields__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>A semicolon separated list of additional Contact email fields to try to match against when doing Contact matching. Note that the fields are specified by their full API Name, including namespace prefix. NPSP email fields are automatically checked.</inlineHelpText>
@@ -131,6 +143,40 @@
         <label>Signup Matches Existing Contacts</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Site_Captcha__c</fullName>
+        <description>Enable captcha for Volunteers sites</description>
+        <inlineHelpText>Enable captcha for Volunteers sites</inlineHelpText>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Enable Site Captcha</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Google_reCaptcha_Secret_Key__c</fullName>
+        <description>Secret Key for Google reCaptcha</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Secret Key for Google reCaptcha</inlineHelpText>
+        <label>Google reCaptcha Secret Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Google_reCaptcha_Site_Key__c</fullName>
+        <description>Site Key for Google reCaptcha</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Site Key for Google reCaptcha</inlineHelpText>
+        <label>Google reCaptcha Site Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>Volunteers Settings</label>
     <visibility>Public</visibility>

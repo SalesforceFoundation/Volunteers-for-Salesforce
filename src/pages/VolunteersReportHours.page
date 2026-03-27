@@ -30,7 +30,7 @@
  
 <apex:page controller="VOL_CTRL_VolunteersReportHours" language="{!strLanguage}" showheader="false" sidebar="false" standardStylesheets="false" cache="false">
 
-    <apex:stylesheet value="{!strURLtoCSSFile}" /> 
+	<apex:stylesheet value="{!strURLtoCSSFile}" /> 
 
   	<apex:form styleClass="cssForm" id="formReportHours" >	
 		<table columns="2" >
@@ -52,7 +52,7 @@
                 <td class="cssInputFieldsColumn" >
                 	<apex:outputText rendered="{!NOT(hasVolunteerJobs)}" value="{!$Label.labelPersonalSiteNoJobsForContact}" />
 	                <apex:selectList rendered="{!hasVolunteerJobs}" value="{!volunteerJobId}" size="1" id="ddlVolunteerJobs">
-	                    <apex:actionSupport immediate="false" event="onchange" rerender="formReportHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" />
+	                    <apex:actionSupport immediate="false" event="onchange" rerender="formReportHours" status="retrieveStatus" action="{!ChangeVolunteerJob}" oncomplete="onloadCallback();" />
 	                    <apex:selectOptions value="{!listSOVolunteerJobs}" /> 
 	                </apex:selectList>&nbsp;&nbsp;  
 	                <apex:actionStatus startText="{!$Label.labelMessageLoading}" stopText=" " id="retrieveStatus" startStyle="color:green; font-style:italic" />
@@ -68,7 +68,7 @@
                 <td class="cssLabelsColumn" ><apex:outputLabel rendered="{!hasShifts}" value="{!$ObjectType.Volunteer_Hours__c.Fields.Volunteer_Shift__c.Label + '*'}" /></td>
 	            <td class="cssInputFieldsColumn" >
 		            <apex:selectList rendered="{!hasShifts}" value="{!volunteerShiftId}" size="1" id="ddlVolunteerShifts">
-		                <apex:actionSupport immediate="false" event="onchange" rerender="formReportHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" />
+		                <apex:actionSupport immediate="false" event="onchange" rerender="formReportHours" status="retrieveStatus" action="{!ChangeVolunteerShift}" oncomplete="onloadCallback();"/>
 		                <apex:selectOptions value="{!listSOVolunteerShifts}" /> 
 		            </apex:selectList>
 				</td>
@@ -115,7 +115,7 @@
                     <apex:commandButton value="{!$Label.labelSubmitButton}" id="btnSave" 
                         disabled="{!volunteerJobId == null || (hasShifts && volunteerShiftId == null)}"
                         onclick="document.getElementById('{!$Component.btnSave}').disabled=true;DoSave();" rerender="formReportHours"/>
-                    <apex:actionFunction name="DoSave" action="{!Save}" />         
+					<apex:actionFunction name="DoSave" action="{!Save}" />
            	    </td>
 			</tr>	
 			<tr>
@@ -123,6 +123,9 @@
 				<td class="cssInputFieldsColumn" ><apex:outputLabel value="{!strSaveResult}" /></td>
 			</tr>	
 		</table>
-		<apex:Messages style="color:red;" />	   	
+		<apex:Messages style="color:red;" />
+		<div id="captcha">
+			<c:captcha></c:captcha>
+		</div>
 	</apex:form>
 </apex:page>

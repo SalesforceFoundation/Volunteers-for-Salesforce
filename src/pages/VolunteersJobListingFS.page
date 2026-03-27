@@ -280,7 +280,7 @@
                 </tr>                       
             </table>                             
             <apex:Messages style="color:red;" />       
-            <p>         
+            <p>
             <apex:outputText value="{!strJobDisplayName}" id="txtJobDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent; width:100%;" /><br/>
             <apex:outputText value="{!strShiftDisplayName}" id="txtShiftDisplayName" styleClass="cssSignupDisplayName" style="border-style:none; background-color:transparent; width:100%;" /><br/>
             </p>
@@ -294,6 +294,9 @@
                     return false;" 
                 immediate="false" status="statusSignUp" styleClass="cssButton btn" />              
             <apex:commandButton value="{!$Label.labelButtonCancel}" immediate="true" onclick="j$('#dlgSignUp').dialog('close');" action="{!CancelSignUp}" styleClass="cssButton btn" />            
+            <div id="captcha" style="margin-top:5px;">
+                <c:captcha></c:captcha>
+            </div>
             <apex:actionStatus startText="{! '  ' + $Label.labelMessageSaving}" stopText="" id="statusSignUp" startStyle="color:green; font-style:italic" stopStyle="color:black;" />                             
         </apex:outputPanel>
                 

@@ -77,7 +77,51 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
             System.assertEquals(defaultClosedStatus, VOL_CTRL_PersonalSiteContactLookup.getClosedTaskStatus(), 'Expected the system to find the default closed task status when ran as a guest user.');
         }
     }
+
+    @IsTest
+    private static void shouldReturnErrorOnCaptchaFailure() {
+        //enable captcha
+        UTIL_UnitTest.setupCaptchaSettings(true);
+
+        //point to our VF page
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+
+        Test.startTest();
+        VOL_CTRL_PersonalSiteContactLookup ctrl = new VOL_CTRL_PersonalSiteContactLookup();        
+        ctrl.contact.Firstname = 'Test';
+        ctrl.contact.Lastname = 'User';
+        ctrl.contact.Email = 'testuser@salesforce.com';
+        ctrl.LookupContact();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.CaptchaFailure, ctrl.strResult);
+    }
     
+    @IsTest
+    private static void shouldReturnSuccessMessageOnCaptchaSuccess() {
+        //enable captcha
+        UTIL_UnitTest.setupCaptchaSettings(true);
+        
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":true}', new Map<String,String>());        
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        //point to our VF page
+        PageReference lookupPage = Page.PersonalSiteContactLookup;
+        Test.setCurrentPage(lookupPage);
+        System.currentPageReference().getParameters().put('g-recaptcha-response', '1234567890');
+
+        Test.startTest();
+        VOL_CTRL_PersonalSiteContactLookup ctrl = new VOL_CTRL_PersonalSiteContactLookup();        
+        ctrl.contact.Firstname = 'Test';
+        ctrl.contact.Lastname = 'User';
+        ctrl.contact.Email = 'testuser@salesforce.com';
+        ctrl.LookupContact();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.labelContactLookupAmbiguous, ctrl.strResult);
+    }
+
     @isTest(SeeAllData=true)  // SeeAllData so the CSS file is viewable
     /*******************************************************************************************************
     * @description test the visualforce page controller, running as the Sites Guest User, if such as user
@@ -104,6 +148,8 @@ private with sharing class VOL_CTRL_PersonalSiteContactLookup_TEST {
     }
 
     private static void TestPersonalSiteContactLookup() {
+        //disable captcha
+        UTIL_UnitTest.setupCaptchaSettings(false);
 
         //point to our VF page
         PageReference p = new PageReference('Page.PersonalSiteContactLookup');

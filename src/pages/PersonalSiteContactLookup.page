@@ -42,7 +42,7 @@
 
     <apex:includeScript value="{!URLFOR($Resource.jQueryFiles, 'js/jquery.validate.min.js')}" />
 
-    <apex:stylesheet value="{!strURLtoCSSFile}" />
+    <apex:stylesheet value="{!strURLtoCSSFile}" />    
 
     <script type="text/javascript"> 
 
@@ -105,7 +105,6 @@
     </script>
 
     <apex:form id="form1" styleclass="form1">
-
         <apex:outputPanel id="panelVolunteerLookup" styleClass="thumbnail center well well-small text-center cssContactLookupPanel">
 
             <h3>{!$Label.labelContactInfoLookupTitle}</h3>
@@ -139,15 +138,19 @@
                 <apex:inputText value="{!contact.Email}" id="Email" styleClass="Email" onfocus="updateHelpText('Email','');" />
             </div>
             <br/>
-
-            <apex:commandButton value="{!$Label.labelButtonSend}" immediate="false" action="{!LookupContact}" styleclass="btn btn-large"
-            />
+            <apex:commandButton id="contactLookupBtn" 
+                                value="{!$Label.labelButtonSend}" 
+                                immediate="false" 
+                                action="{!LookupContact}" 
+                                styleclass="btn btn-large" />
             <br/>
             <br/>
             <p>
                 <apex:outputText value="{!strResult}" />
             </p>
-
+            <div id="captcha" style="display: inline-block;">
+                <c:captcha></c:captcha>
+            </div>
         </apex:outputPanel>
 
     </apex:form>

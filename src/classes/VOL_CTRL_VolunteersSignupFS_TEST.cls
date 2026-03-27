@@ -59,6 +59,53 @@ private with sharing class VOL_CTRL_VolunteersSignupFS_TEST {
         //}
     }
 
+    @IsTest
+    private static void shouldReturnErrorOnCaptchaFailure() {
+        //enable captcha
+        UTIL_UnitTest.setupCaptchaSettings(true);
+
+        //point to our VF page
+        PageReference lookupPage = Page.VolunteersSignupFS;
+        Test.setCurrentPage(lookupPage);
+
+        Test.startTest();
+        VOL_CTRL_PersonalSiteContactLookup ctrl = new VOL_CTRL_PersonalSiteContactLookup();        
+        ctrl.contact.Firstname = 'Test';
+        ctrl.contact.Lastname = 'User';
+        ctrl.contact.Email = 'testuser@salesforce.com';
+        ctrl.LookupContact();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.CaptchaFailure, ctrl.strResult);
+    }
+    
+    @IsTest
+    private static void shouldReturnSuccessMessageOnCaptchaSuccess() {
+        //enable captcha
+        UTIL_UnitTest.setupCaptchaSettings(true);
+
+        HttpMockFactory mock = new HttpMockFactory(200, 'OK', '{"success":true}', new Map<String,String>());        
+        Test.setMock(HttpCalloutMock.class, mock);
+        
+        //point to our VF page
+        PageReference lookupPage = Page.VolunteersSignupFS;
+        Test.setCurrentPage(lookupPage);
+        System.currentPageReference().getParameters().put('g-recaptcha-response', '1234567890');
+
+        Test.startTest();
+        //instantiate the controller 
+        VOL_CTRL_VolunteersSignupFS ctrl = new VOL_CTRL_VolunteersSignupFS();
+        Contact contact = ctrl.contact;        
+        contact.FirstName = 'TestFirstName';
+        contact.LastName = 'TestLastName';
+        contact.Email = 'foovolunteer@bar.com';
+        contact.MailingState = 'wa';
+        ctrl.Save();
+        Test.stopTest();
+
+        System.assertEquals(System.Label.labelVolunteerSignupThankYou, ctrl.StrSaveResult);
+    }
+
     private static void CodeCoverageTests() {
 
         // create test bucket account
