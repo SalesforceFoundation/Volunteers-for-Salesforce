@@ -479,21 +479,21 @@ global with sharing class VOL_SharedCode {
             strSoql += ') ';
         }
         if (rule.containsIgnoreCase(String.valueOf(Contact.Email))) {
-            strSoql += strAnd + ' (Email=\'' + contactRecord.Email + '\'';
+            strSoql += strAnd + ' (Email=\'' + StrEscape(contactRecord.Email) + '\'';
             strAnd = ' and ';
             // any additional email fields to check
             if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
                 list<string> listStrEmail = new list<string>();
                 listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
                 for (string str : listStrEmail) {
-                    strSoql += ' or ' + str + '=\'' + contactRecord.Email + '\'';
+                    strSoql += ' or ' + str + '=\'' + StrEscape(contactRecord.Email) + '\'';
                 }
             }
             // handle NPSP email fields
             if (IsNPSPInstalled) {
-                strSoql += ' or npe01__AlternateEmail__c=\'' + contactRecord.Email + '\'';
-                strSoql += ' or npe01__HomeEmail__c=\'' + contactRecord.Email + '\'';
-                strSoql += ' or npe01__WorkEmail__c=\'' + contactRecord.Email + '\'';
+                strSoql += ' or npe01__AlternateEmail__c=\'' + StrEscape(contactRecord.Email) + '\'';
+                strSoql += ' or npe01__HomeEmail__c=\'' + StrEscape(contactRecord.Email) + '\'';
+                strSoql += ' or npe01__WorkEmail__c=\'' + StrEscape(contactRecord.Email) + '\'';
             }
             strSoql += ') ';
         }
