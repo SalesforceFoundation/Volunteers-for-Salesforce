@@ -159,6 +159,59 @@ private with sharing class VOL_CTRL_VolunteersJobListingFS_TEST {
         System.assertEquals(QUERY_LIMIT, jobListingCtrl.listVolunteerJobs[0].Volunteer_Job_Slots__r.size(), 'The number of shifts returned was not as expected.');
     }
 
+    /*******************************************************************************************************
+    * @description Verifies the by-Id lookup branches (jobId, and jobId+volunteerShiftId with
+    * nMonthsToShow=0) respect Display_on_Website__c, consistent with the campaign and default
+    * (no filter) branches.
+    * @return void
+    ********************************************************************************************************/
+    @IsTest
+    private static void shouldExcludeJobNotDisplayedOnWebsiteWhenJobIdIsProvided() {
+        Campaign campaignRecord = new Campaign(Name = 'Hidden Job Campaign', IsActive = true);
+        insert campaignRecord;
+        Volunteer_Job__c hiddenJob = new Volunteer_Job__c(
+            Name = 'Hidden Job',
+            Campaign__c = campaignRecord.Id,
+            Display_on_Website__c = false
+        );
+        insert hiddenJob;
+        insert new Volunteer_Shift__c(
+            Volunteer_Job__c = hiddenJob.Id,
+            Desired_Number_of_Volunteers__c = 10,
+            Duration__c = 2,
+            Start_Date_Time__c = System.today().addDays(1)
+        );
+
+        setupPage(new Map<String, String>{'jobId' => hiddenJob.Id});
+
+        System.assertEquals(0, jobListingCtrl.listVolunteerJobs.size(),
+            'A job not flagged Display_on_Website__c must not be exposed via a direct jobId link.');
+    }
+
+    @IsTest
+    private static void shouldExcludeJobNotDisplayedOnWebsiteWhenJobAndShiftIdAreProvided() {
+        Campaign campaignRecord = new Campaign(Name = 'Hidden Job Campaign', IsActive = true);
+        insert campaignRecord;
+        Volunteer_Job__c hiddenJob = new Volunteer_Job__c(
+            Name = 'Hidden Job',
+            Campaign__c = campaignRecord.Id,
+            Display_on_Website__c = false
+        );
+        insert hiddenJob;
+        Volunteer_Shift__c hiddenShift = new Volunteer_Shift__c(
+            Volunteer_Job__c = hiddenJob.Id,
+            Desired_Number_of_Volunteers__c = 10,
+            Duration__c = 2,
+            Start_Date_Time__c = System.today().addDays(1)
+        );
+        insert hiddenShift;
+
+        setupPage(new Map<String, String>{'jobId' => hiddenJob.Id, 'volunteerShiftId' => hiddenShift.Id, 'nMonthsToShow' => '0'});
+
+        System.assertEquals(0, jobListingCtrl.listVolunteerJobs.size(),
+            'A job not flagged Display_on_Website__c must not be exposed via a direct job+shift deep link.');
+    }
+
     private static void setupPage(Map<String, String> params) {
         PageReference pageRef = Page.VolunteersJobListingFS;
 
