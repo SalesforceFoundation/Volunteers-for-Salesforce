@@ -330,8 +330,9 @@ global with sharing class VOL_CTRL_PersonalSiteContactInfo {
         try {
             if (hoursId != null) {
                 // We are dynamically check update access below, the query result is not being returned to the user.
+                // Scope the query to the current session's contactId.
                 /* sfge-disable-next-line ApexFlsViolationRule */
-                Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId];
+                Volunteer_Hours__c hr = [select Id, Status__c, Hours_Worked__c from Volunteer_Hours__c where Id = :hoursId and Contact__c = :contactId];
                 hr.Status__c = 'Canceled';
                 hr.Hours_Worked__c = 0;            
                 access.checkUpdateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteer_Hours__c'),                
