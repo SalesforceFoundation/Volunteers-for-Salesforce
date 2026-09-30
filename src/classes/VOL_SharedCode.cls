@@ -735,6 +735,38 @@ global with sharing class VOL_SharedCode {
         return null;
     }
 
+    // Recalculates Total_Volunteers__c from scratch for the given Shifts, used by
+    // VOL_Contact_MaintainHours.trigger's Contact merge handling (W-23750608).
+    //
+    // Unlike VolunteerHoursTrigger's incremental delta approach, this uses GROUP BY
+    // aggregate queries instead of pulling raw Volunteer_Hours__c rows: aggregate result
+    // rows (one per Shift) count against the 50,000 SOQL query-row governor limit, not
+    // the underlying Hours rows. That's required here because after a Contact merge we
+    // must recompute each affected Shift's total across ALL of its volunteers (not just
+    // the merged Contact's hours), and a shift can have far more than 50k Hours in a
+    // large org.
+    public static void recalculateShiftTotalVolunteers(Set<Id> setShiftId) {
+        if (setShiftId == null || setShiftId.isEmpty()) {
+            return;
+        }
+
+        Map<Id, Decimal> mapShiftIdTotal = new Map<Id, Decimal>();
+        for (AggregateResult ar : [select Volunteer_Shift__c shiftId, sum(Number_of_Volunteers__c) total
+            from Volunteer_Hours__c
+            where Volunteer_Shift__c in :setShiftId and Status__c in ('Confirmed', 'Completed')
+            group by Volunteer_Shift__c]) {
+            mapShiftIdTotal.put((Id) ar.get('shiftId'), (Decimal) ar.get('total'));
+        }
+
+        list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
+        for (Id shiftId : setShiftId) {
+            Decimal total = mapShiftIdTotal.get(shiftId);
+            listShifts.add(new Volunteer_Shift__c(Id = shiftId, Total_Volunteers__c = (total == null ? 0 : total)));
+        }
+        // Note: We will not check CRUD / FLS for this process so that rollups are always in sync regardless of user
+        access.updateRecords(listShifts);
+    }
+
     public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {
 
         // consider both newMap and oldMap.

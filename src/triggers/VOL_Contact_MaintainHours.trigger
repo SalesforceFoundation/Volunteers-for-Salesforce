@@ -47,25 +47,28 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
     // now in the After Delete, we are able to see who the winning contacts are.
     // unfortunately, we can't tell which are the Hours that got moved to the winning contact,
     // so we have to recalc the Shifts rollups for all its hours.
+    //
+    // NOTE (W-23750608): we deliberately never pull raw Volunteer_Hours__c rows here. In
+    // orgs with many Hours, a popular Shift can have far more than 50,000 Hours, which
+    // would blow the SOQL query-row governor limit. Both queries below are GROUP BY
+    // aggregates instead, whose result rows (one per Shift) count against that limit --
+    // not the underlying Hours rows.
     if (trigger.isDelete && trigger.isAfter) {
         set<ID> setContactId = new set<ID>();
         for (Contact obj : trigger.old) {
-            setContactId.add(obj.MasterRecordId);
+            if (obj.MasterRecordId != null)
+                setContactId.add(obj.MasterRecordId);
         }
-        list<Volunteer_Hours__c> listHours = new list<Volunteer_Hours__c>();        
-        listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Contact__c in :setContactId];
-        
-        // get all the Hours for the affected Shifts
-        set<ID> setShiftId = new set<ID>();
-        for (Volunteer_Hours__c hr : listHours) {
-            if (hr.Volunteer_Shift__c != null)
-                setShiftId.add(hr.Volunteer_Shift__c);
+        if (setContactId.size() > 0) {
+            // get the Shifts affected by the winning contacts' (including newly reparented) hours
+            set<ID> setShiftId = new set<ID>();
+            for (AggregateResult ar : [select Volunteer_Shift__c shiftId from Volunteer_Hours__c
+                where Contact__c in :setContactId and Volunteer_Shift__c != null
+                group by Volunteer_Shift__c]) {
+                setShiftId.add((Id) ar.get('shiftId'));
+            }
+            VOL_SharedCode.recalculateShiftTotalVolunteers(setShiftId);
         }
-        if (setShiftId.size() > 0) {
-            listHours = [select Id, Status__c, Volunteer_Shift__c, Volunteer_Job__c, Number_Of_Volunteers__c from Volunteer_Hours__c where Volunteer_Shift__c in :setShiftId];
-            
-            VOL_SharedCode.VolunteerHoursTrigger(null, listHours, true);
-        }       
     }
 
     // similar issue with undeletes of contacts.  
