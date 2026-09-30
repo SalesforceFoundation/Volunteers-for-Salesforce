@@ -745,26 +745,28 @@ global with sharing class VOL_SharedCode {
     // must recompute each affected Shift's total across ALL of its volunteers (not just
     // the merged Contact's hours), and a shift can have far more than 50k Hours in a
     // large org.
-    public static void recalculateShiftTotalVolunteers(Set<Id> setShiftId) {
-        if (setShiftId == null || setShiftId.isEmpty()) {
+    public static void recalculateShiftTotalVolunteers(Set<Id> shiftIds) {
+        if (shiftIds == null || shiftIds.isEmpty()) {
             return;
         }
 
-        Map<Id, Decimal> mapShiftIdTotal = new Map<Id, Decimal>();
-        for (AggregateResult ar : [select Volunteer_Shift__c shiftId, sum(Number_of_Volunteers__c) total
-            from Volunteer_Hours__c
-            where Volunteer_Shift__c in :setShiftId and Status__c in ('Confirmed', 'Completed')
-            group by Volunteer_Shift__c]) {
-            mapShiftIdTotal.put((Id) ar.get('shiftId'), (Decimal) ar.get('total'));
+        Map<Id, Decimal> totalVolunteersByShiftId = new Map<Id, Decimal>();
+        for (AggregateResult aggregateResult : [
+            SELECT Volunteer_Shift__c shiftId, SUM(Number_of_Volunteers__c) total
+            FROM Volunteer_Hours__c
+            WHERE Volunteer_Shift__c IN :shiftIds AND Status__c IN ('Confirmed', 'Completed')
+            GROUP BY Volunteer_Shift__c
+        ]) {
+            totalVolunteersByShiftId.put((Id) aggregateResult.get('shiftId'), (Decimal) aggregateResult.get('total'));
         }
 
-        list<Volunteer_Shift__c> listShifts = new list<Volunteer_Shift__c>();
-        for (Id shiftId : setShiftId) {
-            Decimal total = mapShiftIdTotal.get(shiftId);
-            listShifts.add(new Volunteer_Shift__c(Id = shiftId, Total_Volunteers__c = (total == null ? 0 : total)));
+        List<Volunteer_Shift__c> shiftsToUpdate = new List<Volunteer_Shift__c>();
+        for (Id shiftId : shiftIds) {
+            Decimal total = totalVolunteersByShiftId.get(shiftId);
+            shiftsToUpdate.add(new Volunteer_Shift__c(Id = shiftId, Total_Volunteers__c = (total == null ? 0 : total)));
         }
         // Note: We will not check CRUD / FLS for this process so that rollups are always in sync regardless of user
-        access.updateRecords(listShifts);
+        access.updateRecords(shiftsToUpdate);
     }
 
     public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {

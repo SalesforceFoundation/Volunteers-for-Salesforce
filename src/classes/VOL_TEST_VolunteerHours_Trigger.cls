@@ -208,23 +208,23 @@ private class VOL_TEST_VolunteerHours_Trigger {
         Campaign cmp;
         Volunteer_Job__c job;
         Volunteer_Shift__c shift;
-        Contact master;
-        Contact victim;
+        Contact winningContact;
+        Contact duplicateContact;
     }
 
     private static MergeTestData setupMergeTestData() {
         MergeTestData data = new MergeTestData();
         data.acc = new Account(Name = 'W-23750608 Merge Test Account');
         insert data.acc;
-        data.cmp = new Campaign(recordtypeid = VOL_SharedCode.recordtypeIdVolunteersCampaign, name = 'W-23750608 Merge Test Campaign', IsActive = true);
+        data.cmp = new Campaign(RecordTypeId = VOL_SharedCode.recordtypeIdVolunteersCampaign, Name = 'W-23750608 Merge Test Campaign', IsActive = true);
         insert data.cmp;
-        data.job = new Volunteer_Job__c(name = 'W-23750608 Merge Test Job', campaign__c = data.cmp.Id);
+        data.job = new Volunteer_Job__c(Name = 'W-23750608 Merge Test Job', Campaign__c = data.cmp.Id);
         insert data.job;
         data.shift = new Volunteer_Shift__c(Volunteer_Job__c = data.job.Id, Duration__c = 1, Start_Date_Time__c = System.now());
         insert data.shift;
-        data.master = new Contact(Lastname = 'Master', AccountId = data.acc.Id, Volunteer_Status__c = 'inactive');
-        data.victim = new Contact(Lastname = 'Victim', AccountId = data.acc.Id, Volunteer_Status__c = 'inactive');
-        insert new List<Contact>{ data.master, data.victim };
+        data.winningContact = new Contact(LastName = 'WinningContact', AccountId = data.acc.Id, Volunteer_Status__c = 'inactive');
+        data.duplicateContact = new Contact(LastName = 'DuplicateContact', AccountId = data.acc.Id, Volunteer_Status__c = 'inactive');
+        insert new List<Contact>{ data.winningContact, data.duplicateContact };
         return data;
     }
 
@@ -240,24 +240,25 @@ private class VOL_TEST_VolunteerHours_Trigger {
     }
 
     private static Decimal totalVolunteersOnShift(Id shiftId) {
-        return [select Total_Volunteers__c from Volunteer_Shift__c where Id = :shiftId limit 1].Total_Volunteers__c;
+        return [SELECT Total_Volunteers__c FROM Volunteer_Shift__c WHERE Id = :shiftId LIMIT 1].Total_Volunteers__c;
     }
 
-    // Basic case: the master has no hours on the shift; the victim's confirmed hours are
-    // the shift's only contribution. The rollup must survive the reparent unchanged.
+    // Basic case: the winning contact has no hours on the shift; the duplicate contact's
+    // confirmed hours are the shift's only contribution. The rollup must survive the
+    // reparent unchanged.
     @IsTest
-    static void testMergeRecalculatesWhenOnlyVictimHadHoursOnShift() {
+    static void testMergeRecalculatesWhenOnlyDuplicateContactHadHoursOnShift() {
         MergeTestData data = setupMergeTestData();
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 3, 'Confirmed');
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 2, 'Confirmed');
-        system.assertEquals(5, totalVolunteersOnShift(data.shift.Id), 'sanity check before merge');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 3, 'Confirmed');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 2, 'Confirmed');
+        System.assertEquals(5, totalVolunteersOnShift(data.shift.Id), 'sanity check before merge');
 
         Test.startTest();
-        merge data.master data.victim;
+        merge data.winningContact data.duplicateContact;
         Test.stopTest();
 
-        system.assertEquals(5, totalVolunteersOnShift(data.shift.Id),
-            'Total should equal the victim\'s reparented hours after merge.');
+        System.assertEquals(5, totalVolunteersOnShift(data.shift.Id),
+            'Total should equal the duplicate contact\'s reparented hours after merge.');
     }
 
     // Key regression guard: a naive fix that filters the recompute query by Contact__c
@@ -266,62 +267,62 @@ private class VOL_TEST_VolunteerHours_Trigger {
     @IsTest
     static void testMergePreservesUnrelatedVolunteersOnShift() {
         MergeTestData data = setupMergeTestData();
-        Contact unrelated = new Contact(Lastname = 'Unrelated', AccountId = data.acc.Id);
-        insert unrelated;
+        Contact unrelatedContact = new Contact(LastName = 'Unrelated', AccountId = data.acc.Id);
+        insert unrelatedContact;
 
-        insert newHours(data.job.Id, data.shift.Id, unrelated.Id, 10, 'Confirmed');
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 3, 'Confirmed');
-        system.assertEquals(13, totalVolunteersOnShift(data.shift.Id), 'sanity check before merge');
+        insert newHours(data.job.Id, data.shift.Id, unrelatedContact.Id, 10, 'Confirmed');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 3, 'Confirmed');
+        System.assertEquals(13, totalVolunteersOnShift(data.shift.Id), 'sanity check before merge');
 
         Test.startTest();
-        merge data.master data.victim;
+        merge data.winningContact data.duplicateContact;
         Test.stopTest();
 
-        system.assertEquals(13, totalVolunteersOnShift(data.shift.Id),
+        System.assertEquals(13, totalVolunteersOnShift(data.shift.Id),
             'Total must still include the unrelated contact\'s hours after merge.');
     }
 
-    // The victim's hours span two shifts; both rollups must be recalculated correctly,
-    // and merging must not affect a shift the victim never touched.
+    // The duplicate contact's hours span two shifts; both rollups must be recalculated
+    // correctly, and merging must not affect a shift the duplicate contact never touched.
     @IsTest
     static void testMergeAcrossMultipleShiftsBothRecalculated() {
         MergeTestData data = setupMergeTestData();
         Volunteer_Shift__c shift2 = new Volunteer_Shift__c(Volunteer_Job__c = data.job.Id, Duration__c = 1, Start_Date_Time__c = System.now());
         insert shift2;
 
-        insert newHours(data.job.Id, data.shift.Id, data.master.Id, 2, 'Confirmed');
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 3, 'Confirmed');
-        insert newHours(data.job.Id, shift2.Id, data.victim.Id, 4, 'Confirmed');
-        system.assertEquals(5, totalVolunteersOnShift(data.shift.Id), 'sanity check shift 1 before merge');
-        system.assertEquals(4, totalVolunteersOnShift(shift2.Id), 'sanity check shift 2 before merge');
+        insert newHours(data.job.Id, data.shift.Id, data.winningContact.Id, 2, 'Confirmed');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 3, 'Confirmed');
+        insert newHours(data.job.Id, shift2.Id, data.duplicateContact.Id, 4, 'Confirmed');
+        System.assertEquals(5, totalVolunteersOnShift(data.shift.Id), 'sanity check shift 1 before merge');
+        System.assertEquals(4, totalVolunteersOnShift(shift2.Id), 'sanity check shift 2 before merge');
 
         Test.startTest();
-        merge data.master data.victim;
+        merge data.winningContact data.duplicateContact;
         Test.stopTest();
 
-        system.assertEquals(5, totalVolunteersOnShift(data.shift.Id), 'Shift 1 total unchanged (2 + 3) after merge.');
-        system.assertEquals(4, totalVolunteersOnShift(shift2.Id), 'Shift 2 total recalculated (victim-only) after merge.');
+        System.assertEquals(5, totalVolunteersOnShift(data.shift.Id), 'Shift 1 total unchanged (2 + 3) after merge.');
+        System.assertEquals(4, totalVolunteersOnShift(shift2.Id), 'Shift 2 total recalculated (duplicate-contact-only) after merge.');
     }
 
-    // Two sequential merges into the same master must each recalculate correctly and
-    // accumulate, rather than the second merge clobbering the first merge's contribution.
+    // Two sequential merges into the same winning contact must each recalculate correctly
+    // and accumulate, rather than the second merge clobbering the first merge's contribution.
     @IsTest
-    static void testSequentialMergesIntoSameMasterAccumulateCorrectly() {
+    static void testSequentialMergesIntoSameWinningContactAccumulateCorrectly() {
         MergeTestData data = setupMergeTestData();
-        Contact victim2 = new Contact(Lastname = 'Victim2', AccountId = data.acc.Id, Volunteer_Status__c = 'inactive');
-        insert victim2;
+        Contact duplicateContact2 = new Contact(LastName = 'DuplicateContact2', AccountId = data.acc.Id, Volunteer_Status__c = 'inactive');
+        insert duplicateContact2;
 
-        insert newHours(data.job.Id, data.shift.Id, data.master.Id, 2, 'Confirmed');
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 3, 'Confirmed');
-        insert newHours(data.job.Id, data.shift.Id, victim2.Id, 4, 'Confirmed');
-        system.assertEquals(9, totalVolunteersOnShift(data.shift.Id), 'sanity check before merges');
+        insert newHours(data.job.Id, data.shift.Id, data.winningContact.Id, 2, 'Confirmed');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 3, 'Confirmed');
+        insert newHours(data.job.Id, data.shift.Id, duplicateContact2.Id, 4, 'Confirmed');
+        System.assertEquals(9, totalVolunteersOnShift(data.shift.Id), 'sanity check before merges');
 
         Test.startTest();
-        merge data.master data.victim;
-        merge data.master victim2;
+        merge data.winningContact data.duplicateContact;
+        merge data.winningContact duplicateContact2;
         Test.stopTest();
 
-        system.assertEquals(9, totalVolunteersOnShift(data.shift.Id),
+        System.assertEquals(9, totalVolunteersOnShift(data.shift.Id),
             'Total should equal the sum of all three contacts\' hours after both merges.');
     }
 
@@ -330,16 +331,16 @@ private class VOL_TEST_VolunteerHours_Trigger {
     @IsTest
     static void testMergeIgnoresNullShiftAndNonConfirmedStatuses() {
         MergeTestData data = setupMergeTestData();
-        insert newHours(data.job.Id, null, data.victim.Id, 99, 'Web Sign Up');
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 50, 'Prospect');
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 3, 'Confirmed');
-        system.assertEquals(3, totalVolunteersOnShift(data.shift.Id), 'sanity check before merge');
+        insert newHours(data.job.Id, null, data.duplicateContact.Id, 99, 'Web Sign Up');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 50, 'Prospect');
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 3, 'Confirmed');
+        System.assertEquals(3, totalVolunteersOnShift(data.shift.Id), 'sanity check before merge');
 
         Test.startTest();
-        merge data.master data.victim;
+        merge data.winningContact data.duplicateContact;
         Test.stopTest();
 
-        system.assertEquals(3, totalVolunteersOnShift(data.shift.Id),
+        System.assertEquals(3, totalVolunteersOnShift(data.shift.Id),
             'Only the Confirmed hour should count; the null-shift and Prospect hours must not.');
     }
 
@@ -349,17 +350,18 @@ private class VOL_TEST_VolunteerHours_Trigger {
         MergeTestData data = setupMergeTestData();
 
         Test.startTest();
-        merge data.master data.victim;
+        merge data.winningContact data.duplicateContact;
         Test.stopTest();
 
-        system.assertEquals(null, totalVolunteersOnShift(data.shift.Id), 'Untouched shift is never written and stays null.');
+        System.assertEquals(null, totalVolunteersOnShift(data.shift.Id), 'Untouched shift is never written and stays null.');
     }
 
     // Repro for W-23750608: populate the shift with many hours belonging to OTHER
     // contacts (standing in, at unit-test scale, for the >50k Volunteer_Hours__c records
-    // in the reported org) plus one hour for the victim, then merge. The unfixed trigger
-    // re-queries every hour on the shift with no Contact filter, so query-row consumption
-    // scales with the number of unrelated hours; the fix must keep it a small constant.
+    // in the reported org) plus one hour for the duplicate contact, then merge. The
+    // unfixed trigger re-queries every hour on the shift with no Contact filter, so
+    // query-row consumption scales with the number of unrelated hours; the fix must
+    // keep it a small constant.
     @IsTest
     static void testMergeQueryRowsDoNotScaleWithHoursOnShift() {
         MergeTestData data = setupMergeTestData();
@@ -367,31 +369,31 @@ private class VOL_TEST_VolunteerHours_Trigger {
         Integer unrelatedCount = 50;
         List<Contact> unrelatedContacts = new List<Contact>();
         for (Integer i = 0; i < unrelatedCount; i++) {
-            unrelatedContacts.add(new Contact(Lastname = 'Unrelated' + i, AccountId = data.acc.Id));
+            unrelatedContacts.add(new Contact(LastName = 'Unrelated' + i, AccountId = data.acc.Id));
         }
         insert unrelatedContacts;
 
-        List<Volunteer_Hours__c> filler = new List<Volunteer_Hours__c>();
-        for (Contact c : unrelatedContacts) {
-            filler.add(newHours(data.job.Id, data.shift.Id, c.Id, 1, 'Confirmed'));
+        List<Volunteer_Hours__c> fillerHours = new List<Volunteer_Hours__c>();
+        for (Contact unrelatedContact : unrelatedContacts) {
+            fillerHours.add(newHours(data.job.Id, data.shift.Id, unrelatedContact.Id, 1, 'Confirmed'));
         }
-        insert filler;
-        insert newHours(data.job.Id, data.shift.Id, data.victim.Id, 3, 'Confirmed');
+        insert fillerHours;
+        insert newHours(data.job.Id, data.shift.Id, data.duplicateContact.Id, 3, 'Confirmed');
 
         Test.startTest();
         Integer queryRowsBefore = Limits.getQueryRows();
-        merge data.master data.victim;
+        merge data.winningContact data.duplicateContact;
         Integer queryRowsUsedByMerge = Limits.getQueryRows() - queryRowsBefore;
         Test.stopTest();
 
-        system.assertEquals(unrelatedCount + 3, totalVolunteersOnShift(data.shift.Id),
-            'Total should include the unrelated confirmed hours plus the victim\'s reparented hours.');
+        System.assertEquals(unrelatedCount + 3, totalVolunteersOnShift(data.shift.Id),
+            'Total should include the unrelated confirmed hours plus the duplicate contact\'s reparented hours.');
 
-        // The unfixed trigger queries "where Volunteer_Shift__c in :setShiftId" with no
+        // The unfixed trigger queries "WHERE Volunteer_Shift__c IN :shiftIds" with no
         // Contact filter, pulling all unrelatedCount + 1 hours on the shift into query rows.
         // The fix uses GROUP BY aggregates, whose result rows (one per shift) count against
         // the limit instead -- so this must stay small regardless of unrelatedCount.
-        system.assert(queryRowsUsedByMerge < 15,
+        System.assert(queryRowsUsedByMerge < 15,
             'Merge query-row consumption must not scale with the number of hours on the shift. Used=' + queryRowsUsedByMerge);
     }
 

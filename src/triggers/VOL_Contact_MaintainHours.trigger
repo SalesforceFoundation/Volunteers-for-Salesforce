@@ -54,20 +54,24 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
     // aggregates instead, whose result rows (one per Shift) count against that limit --
     // not the underlying Hours rows.
     if (trigger.isDelete && trigger.isAfter) {
-        set<ID> setContactId = new set<ID>();
-        for (Contact obj : trigger.old) {
-            if (obj.MasterRecordId != null)
-                setContactId.add(obj.MasterRecordId);
-        }
-        if (setContactId.size() > 0) {
-            // get the Shifts affected by the winning contacts' (including newly reparented) hours
-            set<ID> setShiftId = new set<ID>();
-            for (AggregateResult ar : [select Volunteer_Shift__c shiftId from Volunteer_Hours__c
-                where Contact__c in :setContactId and Volunteer_Shift__c != null
-                group by Volunteer_Shift__c]) {
-                setShiftId.add((Id) ar.get('shiftId'));
+        Set<Id> winningContactIds = new Set<Id>();
+        for (Contact duplicateContact : trigger.old) {
+            if (duplicateContact.MasterRecordId != null) {
+                winningContactIds.add(duplicateContact.MasterRecordId);
             }
-            VOL_SharedCode.recalculateShiftTotalVolunteers(setShiftId);
+        }
+        if (!winningContactIds.isEmpty()) {
+            // get the Shifts affected by the winning contacts' (including newly reparented) hours
+            Set<Id> affectedShiftIds = new Set<Id>();
+            for (AggregateResult aggregateResult : [
+                SELECT Volunteer_Shift__c shiftId
+                FROM Volunteer_Hours__c
+                WHERE Contact__c IN :winningContactIds AND Volunteer_Shift__c != null
+                GROUP BY Volunteer_Shift__c
+            ]) {
+                affectedShiftIds.add((Id) aggregateResult.get('shiftId'));
+            }
+            VOL_SharedCode.recalculateShiftTotalVolunteers(affectedShiftIds);
         }
     }
 
