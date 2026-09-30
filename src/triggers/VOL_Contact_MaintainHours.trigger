@@ -53,6 +53,11 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
     // would blow the SOQL query-row governor limit. Both queries below are GROUP BY
     // aggregates instead, whose result rows (one per Shift) count against that limit --
     // not the underlying Hours rows.
+    //
+    // Both queries run here, in the trigger (system mode), rather than inside
+    // VOL_SharedCode's "with sharing" class. Volunteer_Hours__c's sharing model is
+    // ControlledByParent (via Contact__c / Volunteer_Job__c), so a sharing-enforced query
+    // could silently miss hours the merging user can't see and undercount the rollup.
     if (trigger.isDelete && trigger.isAfter) {
         Set<Id> winningContactIds = new Set<Id>();
         for (Contact duplicateContact : trigger.old) {
@@ -71,7 +76,20 @@ trigger VOL_Contact_MaintainHours on Contact (before delete, after delete, after
             ]) {
                 affectedShiftIds.add((Id) aggregateResult.get('shiftId'));
             }
-            VOL_SharedCode.recalculateShiftTotalVolunteers(affectedShiftIds);
+
+            // recompute each affected Shift's total across ALL of its volunteers, not just
+            // the winning contact's hours
+            Map<Id, Decimal> totalVolunteersByShiftId = new Map<Id, Decimal>();
+            for (AggregateResult aggregateResult : [
+                SELECT Volunteer_Shift__c shiftId, SUM(Number_of_Volunteers__c) total
+                FROM Volunteer_Hours__c
+                WHERE Volunteer_Shift__c IN :affectedShiftIds AND Status__c IN ('Confirmed', 'Completed')
+                GROUP BY Volunteer_Shift__c
+            ]) {
+                totalVolunteersByShiftId.put((Id) aggregateResult.get('shiftId'), (Decimal) aggregateResult.get('total'));
+            }
+
+            VOL_SharedCode.recalculateShiftTotalVolunteers(affectedShiftIds, totalVolunteersByShiftId);
         }
     }
 

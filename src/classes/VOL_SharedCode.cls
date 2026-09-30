@@ -735,29 +735,20 @@ global with sharing class VOL_SharedCode {
         return null;
     }
 
-    // Recalculates Total_Volunteers__c from scratch for the given Shifts, used by
-    // VOL_Contact_MaintainHours.trigger's Contact merge handling (W-23750608).
+    // Writes Total_Volunteers__c for the given Shifts from a pre-computed total per Shift,
+    // used by VOL_Contact_MaintainHours.trigger's Contact merge handling (W-23750608).
     //
-    // Unlike VolunteerHoursTrigger's incremental delta approach, this uses GROUP BY
-    // aggregate queries instead of pulling raw Volunteer_Hours__c rows: aggregate result
-    // rows (one per Shift) count against the 50,000 SOQL query-row governor limit, not
-    // the underlying Hours rows. That's required here because after a Contact merge we
-    // must recompute each affected Shift's total across ALL of its volunteers (not just
-    // the merged Contact's hours), and a shift can have far more than 50k Hours in a
-    // large org.
-    public static void recalculateShiftTotalVolunteers(Set<Id> shiftIds) {
+    // The totals must be computed by the CALLER via a GROUP BY aggregate query over
+    // Volunteer_Hours__c run from the trigger (system mode), not from a fresh query here.
+    // VOL_SharedCode is a "with sharing" class, and Volunteer_Hours__c's sharing model is
+    // ControlledByParent (via Contact__c / Volunteer_Job__c); a sharing-enforced query
+    // could silently miss hours the merging user can't see and undercount the rollup.
+    // This mirrors VolunteerHoursTrigger below, which likewise never re-queries
+    // Volunteer_Hours__c itself -- it only works off hours lists the trigger already
+    // queried in system mode.
+    public static void recalculateShiftTotalVolunteers(Set<Id> shiftIds, Map<Id, Decimal> totalVolunteersByShiftId) {
         if (shiftIds == null || shiftIds.isEmpty()) {
             return;
-        }
-
-        Map<Id, Decimal> totalVolunteersByShiftId = new Map<Id, Decimal>();
-        for (AggregateResult aggregateResult : [
-            SELECT Volunteer_Shift__c shiftId, SUM(Number_of_Volunteers__c) total
-            FROM Volunteer_Hours__c
-            WHERE Volunteer_Shift__c IN :shiftIds AND Status__c IN ('Confirmed', 'Completed')
-            GROUP BY Volunteer_Shift__c
-        ]) {
-            totalVolunteersByShiftId.put((Id) aggregateResult.get('shiftId'), (Decimal) aggregateResult.get('total'));
         }
 
         List<Volunteer_Shift__c> shiftsToUpdate = new List<Volunteer_Shift__c>();
