@@ -175,6 +175,82 @@ public with sharing class VOL_SharedCode_TEST {
         }
     }
 
+    /*******************************************************************************************************
+    * @description Verifies LookupContact()'s Email branch escapes the caller-supplied Email value
+    * before concatenating it into dynamic SOQL.
+    * @return void
+    ********************************************************************************************************/
+    @IsTest
+    private static void testLookupContactEscapesEmail() {
+        Volunteers_Settings__c settings = new Volunteers_Settings__c();
+        settings.Contact_Matching_Rule__c = 'Email';
+        VOL_SharedCode.getVolunteersSettingsForTests(settings);
+
+        list<Contact> listCon = new list<Contact>();
+        listCon.add(new Contact(Firstname = 'Fred', Lastname = 'Smith', Email = 'fred@smith.com'));
+        listCon.add(new Contact(Firstname = 'Other', Lastname = 'Person', Email = 'other@person.com'));
+        insert listCon;
+
+        // verify an Email value containing a quote is escaped rather than altering the WHERE clause
+        Contact lookupBy = new Contact(Email = 'x\' or Lastname != null or Email = \'x');
+        list<Contact> listConResult = VOL_SharedCode.LookupContact(lookupBy, new list<string>{ 'Id' });
+
+        system.assertEquals(0, listConResult.size(),
+            'Email values containing quotes must be properly escaped.');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies LookupContact()'s Email branch also escapes contactRecord.Email before
+    * OR'ing it against each field listed in Contact_Match_Email_Fields__c, so configuring an additional
+    * match field still finds legitimate matches.
+    * @return void
+    ********************************************************************************************************/
+    @IsTest
+    private static void testLookupContactMatchesAdditionalEmailFieldWhenConfigured() {
+        Volunteers_Settings__c settings = new Volunteers_Settings__c();
+        settings.Contact_Matching_Rule__c = 'Email';
+        settings.Contact_Match_Email_Fields__c = 'Fax';
+        VOL_SharedCode.getVolunteersSettingsForTests(settings);
+
+        list<Contact> listCon = new list<Contact>();
+        listCon.add(new Contact(Firstname = 'Fred', Lastname = 'Smith', Email = 'fred@smith.com'));
+        // this contact's Email doesn't match, but its Fax does - it should only be found because
+        // Contact_Match_Email_Fields__c widens the match to also check the Fax field.
+        listCon.add(new Contact(Firstname = 'Other', Lastname = 'Person', Email = 'other@person.com', Fax = 'fred@smith.com'));
+        insert listCon;
+
+        Contact lookupBy = new Contact(Email = 'fred@smith.com');
+        list<Contact> listConResult = VOL_SharedCode.LookupContact(lookupBy, new list<string>{ 'Id' });
+
+        system.assertEquals(2, listConResult.size(),
+            'LookupContact should match on both the base Email field and the configured additional email field (Fax).');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies an Email value containing a quote is still escaped when
+    * Contact_Match_Email_Fields__c configures an additional field to check.
+    * @return void
+    ********************************************************************************************************/
+    @IsTest
+    private static void testLookupContactEscapesAdditionalEmailField() {
+        Volunteers_Settings__c settings = new Volunteers_Settings__c();
+        settings.Contact_Matching_Rule__c = 'Email';
+        settings.Contact_Match_Email_Fields__c = 'Fax';
+        VOL_SharedCode.getVolunteersSettingsForTests(settings);
+
+        list<Contact> listCon = new list<Contact>();
+        listCon.add(new Contact(Firstname = 'Fred', Lastname = 'Smith', Email = 'fred@smith.com'));
+        listCon.add(new Contact(Firstname = 'Other', Lastname = 'Person', Email = 'other@person.com'));
+        insert listCon;
+
+        // verify an Email value containing a quote is escaped rather than altering the WHERE clause
+        Contact lookupBy = new Contact(Email = 'x\' or Lastname != null or Email = \'x');
+        list<Contact> listConResult = VOL_SharedCode.LookupContact(lookupBy, new list<string>{ 'Id' });
+
+        system.assertEquals(0, listConResult.size(),
+            'Email values containing quotes must be properly escaped, even with an additional email field configured.');
+    }
+
 
     /*******************************************************************************************************
     * @description creates a hierarchy of volunteer campaigns, each with a job and a shift.

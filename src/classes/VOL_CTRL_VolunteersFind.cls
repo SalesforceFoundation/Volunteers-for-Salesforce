@@ -84,7 +84,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                     if (fAndNeeded) strSoql += ' and ';             
                     strSoql += f.getFieldPath() + ' includes (';      
                     for (string str : strVal.split(';')) {
-                        strSoql += '\'' + str + '\',';
+                        strSoql += '\'' + VOL_SharedCode.StrEscape(str) + '\',';
                     }
                     strSoql = strSoql.removeEnd(',');
                     strSoql += ') ';    
@@ -97,7 +97,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                     }   
                 } else {
                     if (fAndNeeded) strSoql += ' and ';             
-                    strSoql += f.getFieldPath() + ' = \'' + strVal  + '\' ';
+                    strSoql += f.getFieldPath() + ' = \'' + VOL_SharedCode.StrEscape(strVal)  + '\' ';
                     fAndNeeded = true;
                 }
             }
@@ -105,7 +105,7 @@ public with sharing class VOL_CTRL_VolunteersFind extends PageControllerBase {
                         
         if (ctrlSoqlListView.strAlphaFilter != null) {
             if (fAndNeeded) strSoql += ' and ';
-            strSoql += ' Name like \'' + ctrlSoqlListView.strAlphaFilter + '%\'';
+            strSoql += ' Name like \'' + VOL_SharedCode.StrEscape(ctrlSoqlListView.strAlphaFilter) + '%\'';
         }               
 
         // sorting handled by SoqlListView;     
