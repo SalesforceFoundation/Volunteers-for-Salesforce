@@ -735,6 +735,31 @@ global with sharing class VOL_SharedCode {
         return null;
     }
 
+    // Writes Total_Volunteers__c for the given Shifts from a pre-computed total per Shift,
+    // used by VOL_Contact_MaintainHours.trigger's Contact merge handling (W-23750608).
+    //
+    // The totals must be computed by the CALLER via a GROUP BY aggregate query over
+    // Volunteer_Hours__c run from the trigger (system mode), not from a fresh query here.
+    // VOL_SharedCode is a "with sharing" class, and Volunteer_Hours__c's sharing model is
+    // ControlledByParent (via Contact__c / Volunteer_Job__c); a sharing-enforced query
+    // could silently miss hours the merging user can't see and undercount the rollup.
+    // This mirrors VolunteerHoursTrigger below, which likewise never re-queries
+    // Volunteer_Hours__c itself -- it only works off hours lists the trigger already
+    // queried in system mode.
+    public static void recalculateShiftTotalVolunteers(Set<Id> shiftIds, Map<Id, Decimal> totalVolunteersByShiftId) {
+        if (shiftIds == null || shiftIds.isEmpty()) {
+            return;
+        }
+
+        List<Volunteer_Shift__c> shiftsToUpdate = new List<Volunteer_Shift__c>();
+        for (Id shiftId : shiftIds) {
+            Decimal total = totalVolunteersByShiftId.get(shiftId);
+            shiftsToUpdate.add(new Volunteer_Shift__c(Id = shiftId, Total_Volunteers__c = (total == null ? 0 : total)));
+        }
+        // Note: We will not check CRUD / FLS for this process so that rollups are always in sync regardless of user
+        access.updateRecords(shiftsToUpdate);
+    }
+
     public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {
 
         // consider both newMap and oldMap.
