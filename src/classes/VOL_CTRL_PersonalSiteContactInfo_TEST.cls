@@ -253,6 +253,40 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     }
 
     /*******************************************************************************************************
+    * @description Verifies cancelShift() scopes its update to the current session's contactId.
+    * @return void
+    ********************************************************************************************************/
+    @IsTest
+    private static void shouldNotCancelShiftBelongingToAnotherContact() {
+        Util_UnitTest.generateDataWithRecurrenceSchedules();
+
+        Contact contact = [SELECT Id FROM Contact LIMIT 1];
+        System.assertNotEquals(null, contact);
+
+        // a second, unrelated Contact with their own shift
+        Contact otherContact = contact.clone();
+        otherContact.LastName = 'OtherPersonalSiteContact';
+        insert otherContact;
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Volunteer_Hours__c otherHours = UTIL_UnitTest.createHours(otherContact.Id, jobId, null);
+        insert otherHours;
+
+        // setup the page as the first contact's personal-site session
+        PageReference pageRef = Page.PersonalSiteContactInfo;
+        pageRef.getParameters().put('contactId', contact.Id);
+        Test.setCurrentPage(pageRef);
+        VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
+
+        // reference the other contact's hoursId
+        ctrl.hoursId = otherHours.Id;
+        ctrl.cancelShift();
+
+        Volunteer_Hours__c hoursAfter = [SELECT Status__c FROM Volunteer_Hours__c WHERE Id = :otherHours.Id];
+        System.assertNotEquals('Canceled', hoursAfter.Status__c,
+            'A contact should not be able to cancel another contact\'s shift.');
+    }
+
+    /*******************************************************************************************************
     * @description test timezone handling for Shifts under LA timezone
     * @return void
     */
