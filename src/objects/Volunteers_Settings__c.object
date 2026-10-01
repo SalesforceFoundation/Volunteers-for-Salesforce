@@ -81,7 +81,7 @@
     </fields>
     <fields>
         <fullName>Personal_Site_Requires_URL_Email_Match__c</fullName>
-        <defaultValue>false</defaultValue>
+        <defaultValue>true</defaultValue>
         <description>If selected, the Personal Site link needs to include the Email URL parameter, which V4S uses to match against an email field on the specified Contact.</description>
         <externalId>false</externalId>
         <inlineHelpText>If selected, the Personal Site link needs to include the Email URL parameter, which V4S uses to match against an email field on the specified Contact.</inlineHelpText>
