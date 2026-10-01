@@ -360,6 +360,16 @@ public with sharing class VOL_SharedCode_TEST {
         system.assertEquals(true, VOL_SharedCode.isValidContactIdAndEmail(con.Id, 'foo@bar.com'));
     }
 
+    // an org that has never touched the Personal Site settings must default to requiring
+    // the URL Email match (W-23912148).
+    @IsTest
+    private static void testVolunteersSettingsDefaultsToRequiringUrlEmailMatch() {
+        delete [select id from Volunteers_Settings__c];
+        VOL_SharedCode.VolunteersSettings = null;
+
+        system.assertEquals(true, VOL_SharedCode.VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c);
+    }
+
     @IsTest
     private static void testAddressFieldDetection() {
         system.assertEquals(true, VOL_SharedCode.isMailingAddressField('MailingCity'));
