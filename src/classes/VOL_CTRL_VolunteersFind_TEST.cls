@@ -122,8 +122,111 @@ private with sharing class VOL_CTRL_VolunteersFind_TEST {
        	ctrl.Assign();
        	listVH = [select Id, Contact__c from Volunteer_Hours__c where Volunteer_Job__c = :job.Id];
        	system.assertEquals(1, listVH.size());
-       	system.assertEquals(listCon[3].Id, listVH[0].Contact__c); 
-		
+       	system.assertEquals(listCon[3].Id, listVH[0].Contact__c);
 
+
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies getStrSoql() escapes criteria field values before concatenating them
+    * into dynamic SOQL.
+    * @return void
+    ********************************************************************************************************/
+    private static testmethod void TestVolunteersFindEscapesFilterValue() {
+
+        list<Contact> listCon = new list<Contact>();
+        for (integer i = 0; i < 5; i++) {
+            listCon.add(new Contact(firstname = 'inj' + i, lastname = 'inj' + i));
+        }
+        insert listCon;
+
+        VOL_CTRL_VolunteersFind ctrl = new VOL_CTRL_VolunteersFind();
+        SoqlListView slv = new SoqlListView();
+        slv.pageController = ctrl;
+
+        // verify a filter value containing a quote is escaped rather than altering the WHERE clause
+        ctrl.conFilter.Volunteer_Status__c = 'x\' or Volunteer_Status__c != null or Volunteer_Status__c = \'x';
+        ctrl.Find();
+
+        system.assertEquals(0, ctrl.ctrlSoqlListView.NumberOfItems,
+            'Filter values containing quotes must be properly escaped.');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies getStrSoql() escapes multipicklist criteria values before concatenating
+    * them into the dynamic SOQL "includes (...)" clause.
+    * @return void
+    ********************************************************************************************************/
+    private static testmethod void TestVolunteersFindEscapesMultipicklistFilterValue() {
+
+        list<Contact> listCon = new list<Contact>();
+        for (integer i = 0; i < 5; i++) {
+            listCon.add(new Contact(firstname = 'minj' + i, lastname = 'minj' + i));
+        }
+        insert listCon;
+
+        VOL_CTRL_VolunteersFind ctrl = new VOL_CTRL_VolunteersFind();
+        SoqlListView slv = new SoqlListView();
+        slv.pageController = ctrl;
+
+        // verify a multipicklist value containing quotes is escaped rather than altering the WHERE clause
+        ctrl.conFilter.Volunteer_Availability__c = 'x\') or (Id != null) or (Id = \'x';
+        ctrl.Find();
+
+        system.assertEquals(0, ctrl.ctrlSoqlListView.NumberOfItems,
+            'Multipicklist filter values containing quotes must be properly escaped.');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies escaping each split token of a multipicklist criteria value does not break
+    * the normal case of filtering on more than one selected value - getStrSoql() should still OR them
+    * together via "includes (...)" and match a Contact having any one of the selected values.
+    * @return void
+    ********************************************************************************************************/
+    private static testmethod void TestVolunteersFindMatchesAnyOfMultipleMultipicklistFilterValues() {
+
+        list<Contact> listCon = new list<Contact>();
+        listCon.add(new Contact(firstname = 'multi0', lastname = 'multi0', Volunteer_Availability__c = 'Weekdays'));
+        listCon.add(new Contact(firstname = 'multi1', lastname = 'multi1', Volunteer_Availability__c = 'Weekends'));
+        listCon.add(new Contact(firstname = 'multi2', lastname = 'multi2', Volunteer_Availability__c = 'Morning'));
+        listCon.add(new Contact(firstname = 'multi3', lastname = 'multi3'));
+        insert listCon;
+
+        VOL_CTRL_VolunteersFind ctrl = new VOL_CTRL_VolunteersFind();
+        SoqlListView slv = new SoqlListView();
+        slv.pageController = ctrl;
+
+        // selecting two values should match a Contact with either one, not require both (AND) or neither (broken parsing).
+        ctrl.conFilter.Volunteer_Availability__c = 'Weekdays;Weekends';
+        ctrl.Find();
+
+        system.assertEquals(2, ctrl.ctrlSoqlListView.NumberOfItems,
+            'Escaping each semicolon-delimited value must not break matching on multiple selected multipicklist values.');
+    }
+
+    /*******************************************************************************************************
+    * @description Verifies getStrSoql() escapes the alpha filter value before concatenating it
+    * into the dynamic SOQL "Name like '...%'" clause.
+    * @return void
+    ********************************************************************************************************/
+    private static testmethod void TestVolunteersFindEscapesAlphaFilterValue() {
+
+        list<Contact> listCon = new list<Contact>();
+        for (integer i = 0; i < 5; i++) {
+            listCon.add(new Contact(firstname = 'ainj' + i, lastname = 'ainj' + i));
+        }
+        insert listCon;
+
+        VOL_CTRL_VolunteersFind ctrl = new VOL_CTRL_VolunteersFind();
+        SoqlListView slv = new SoqlListView();
+        slv.pageController = ctrl;
+
+        // paired with a criteria value no contact satisfies, so a correctly-escaped query returns 0 rows
+        ctrl.conFilter.Volunteer_Status__c = 'Active';
+        ctrl.ctrlSoqlListView.strAlphaFilter = 't\' or Name != null or Name like \'t';
+        ctrl.Find();
+
+        system.assertEquals(0, ctrl.ctrlSoqlListView.NumberOfItems,
+            'Alpha filter values containing quotes must be properly escaped.');
     }
 }
