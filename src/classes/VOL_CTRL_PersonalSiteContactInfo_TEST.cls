@@ -46,14 +46,15 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
         setAccessMock();
         Util_UnitTest.generateDataWithRecurrenceSchedules();
 
-        Contact contactRecord = [SELECT Id FROM Contact LIMIT 1];
+        Contact contactRecord = [SELECT Id, Email FROM Contact LIMIT 1];
         System.assertNotEquals(null, contactRecord);
 
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
         pageRef.getParameters().put('contactId', contactRecord.Id);
-        system.assertNotEquals(null, contactRecord.Id);   
-        Test.setCurrentPage(pageRef); 
+        pageRef.getParameters().put('Email', contactRecord.Email);
+        system.assertNotEquals(null, contactRecord.Id);
+        Test.setCurrentPage(pageRef);
 
         VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
         ctrl.contactEdit.LastName = 'ChangedLastName';
@@ -185,14 +186,15 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     }
     
     private static void testPSC() {
-        Contact contact = [SELECT Id FROM Contact LIMIT 1];
+        Contact contact = [SELECT Id, Email FROM Contact LIMIT 1];
         System.AssertNotEquals(null, contact);
 
         // setup page
         PageReference pageRef = Page.PersonalSiteContactInfo;
         pageRef.getParameters().put('contactId', contact.Id);
-        system.assertNotEquals(null, contact.Id);   
-        Test.setCurrentPage(pageRef); 
+        pageRef.getParameters().put('Email', contact.Email);
+        system.assertNotEquals(null, contact.Id);
+        Test.setCurrentPage(pageRef);
 
         //instantiate the controller 
         VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
@@ -253,6 +255,40 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
     }
 
     /*******************************************************************************************************
+    * @description Verifies cancelShift() scopes its update to the current session's contactId.
+    * @return void
+    ********************************************************************************************************/
+    @IsTest
+    private static void shouldNotCancelShiftBelongingToAnotherContact() {
+        Util_UnitTest.generateDataWithRecurrenceSchedules();
+
+        Contact contact = [SELECT Id FROM Contact LIMIT 1];
+        System.assertNotEquals(null, contact);
+
+        // a second, unrelated Contact with their own shift
+        Contact otherContact = contact.clone();
+        otherContact.LastName = 'OtherPersonalSiteContact';
+        insert otherContact;
+        Id jobId = [SELECT Id FROM Volunteer_Job__c LIMIT 1].Id;
+        Volunteer_Hours__c otherHours = UTIL_UnitTest.createHours(otherContact.Id, jobId, null);
+        insert otherHours;
+
+        // setup the page as the first contact's personal-site session
+        PageReference pageRef = Page.PersonalSiteContactInfo;
+        pageRef.getParameters().put('contactId', contact.Id);
+        Test.setCurrentPage(pageRef);
+        VOL_CTRL_PersonalSiteContactInfo ctrl = new VOL_CTRL_PersonalSiteContactInfo();
+
+        // reference the other contact's hoursId
+        ctrl.hoursId = otherHours.Id;
+        ctrl.cancelShift();
+
+        Volunteer_Hours__c hoursAfter = [SELECT Status__c FROM Volunteer_Hours__c WHERE Id = :otherHours.Id];
+        System.assertNotEquals('Canceled', hoursAfter.Status__c,
+            'A contact should not be able to cancel another contact\'s shift.');
+    }
+
+    /*******************************************************************************************************
     * @description test timezone handling for Shifts under LA timezone
     * @return void
     */
@@ -287,6 +323,10 @@ private with sharing class VOL_CTRL_PersonalSiteContactInfo_TEST {
 
         system.runAs(u) {
             Id conId = VOL_SharedCode_TEST.setupTimeZoneTestData();
+
+            // this test's Contact has no Email, and it isn't testing the Personal Site
+            // URL Email match behavior, so opt out of that unrelated requirement here.
+            VOL_SharedCode.VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c = false;
 
             // setup page
             PageReference pageRef = Page.PersonalSiteContactInfo;
