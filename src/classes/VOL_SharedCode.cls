@@ -198,6 +198,8 @@ global with sharing class VOL_SharedCode {
                     VolunteersSettings.Personal_Site_Org_Wide_Email_Name__c = null;
                     VolunteersSettings.Contact_Matching_Rule__c = 'Firstname;Lastname;Email';
                     VolunteersSettings.Personal_Site_Report_Hours_Filtered__c = false;
+                    // secure by default (W-23912148); see the work item for background.
+                    VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c = true;
                     if (UTIL_Describe.hasObjectCreateAccess(UTIL_Describe.StrTokenNSPrefix('Volunteers_Settings__c'))) {
                         insert VolunteersSettings;
                     }
@@ -479,21 +481,21 @@ global with sharing class VOL_SharedCode {
             strSoql += ') ';
         }
         if (rule.containsIgnoreCase(String.valueOf(Contact.Email))) {
-            strSoql += strAnd + ' (Email=\'' + contactRecord.Email + '\'';
+            strSoql += strAnd + ' (Email=\'' + StrEscape(contactRecord.Email) + '\'';
             strAnd = ' and ';
             // any additional email fields to check
             if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
                 list<string> listStrEmail = new list<string>();
                 listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
                 for (string str : listStrEmail) {
-                    strSoql += ' or ' + str + '=\'' + contactRecord.Email + '\'';
+                    strSoql += ' or ' + str + '=\'' + StrEscape(contactRecord.Email) + '\'';
                 }
             }
             // handle NPSP email fields
             if (IsNPSPInstalled) {
-                strSoql += ' or npe01__AlternateEmail__c=\'' + contactRecord.Email + '\'';
-                strSoql += ' or npe01__HomeEmail__c=\'' + contactRecord.Email + '\'';
-                strSoql += ' or npe01__WorkEmail__c=\'' + contactRecord.Email + '\'';
+                strSoql += ' or npe01__AlternateEmail__c=\'' + StrEscape(contactRecord.Email) + '\'';
+                strSoql += ' or npe01__HomeEmail__c=\'' + StrEscape(contactRecord.Email) + '\'';
+                strSoql += ' or npe01__WorkEmail__c=\'' + StrEscape(contactRecord.Email) + '\'';
             }
             strSoql += ') ';
         }
@@ -733,6 +735,31 @@ global with sharing class VOL_SharedCode {
             return sobjT;
         }
         return null;
+    }
+
+    // Writes Total_Volunteers__c for the given Shifts from a pre-computed total per Shift,
+    // used by VOL_Contact_MaintainHours.trigger's Contact merge handling (W-23750608).
+    //
+    // The totals must be computed by the CALLER via a GROUP BY aggregate query over
+    // Volunteer_Hours__c run from the trigger (system mode), not from a fresh query here.
+    // VOL_SharedCode is a "with sharing" class, and Volunteer_Hours__c's sharing model is
+    // ControlledByParent (via Contact__c / Volunteer_Job__c); a sharing-enforced query
+    // could silently miss hours the merging user can't see and undercount the rollup.
+    // This mirrors VolunteerHoursTrigger below, which likewise never re-queries
+    // Volunteer_Hours__c itself -- it only works off hours lists the trigger already
+    // queried in system mode.
+    public static void recalculateShiftTotalVolunteers(Set<Id> shiftIds, Map<Id, Decimal> totalVolunteersByShiftId) {
+        if (shiftIds == null || shiftIds.isEmpty()) {
+            return;
+        }
+
+        List<Volunteer_Shift__c> shiftsToUpdate = new List<Volunteer_Shift__c>();
+        for (Id shiftId : shiftIds) {
+            Decimal total = totalVolunteersByShiftId.get(shiftId);
+            shiftsToUpdate.add(new Volunteer_Shift__c(Id = shiftId, Total_Volunteers__c = (total == null ? 0 : total)));
+        }
+        // Note: We will not check CRUD / FLS for this process so that rollups are always in sync regardless of user
+        access.updateRecords(shiftsToUpdate);
     }
 
     public static void VolunteerHoursTrigger(list<Volunteer_Hours__c> listHoursOld, list<Volunteer_Hours__c> listHoursNew, boolean resetTotals) {
